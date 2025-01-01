@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Survivor : CustomObject
 {
@@ -32,6 +31,8 @@ public class Survivor : CustomObject
     [SerializeField] Vector2 rememberOriginalMoveDirection = Vector2.up;
 
     [SerializeField] List<Survivor> enemies = new();
+    [SerializeField] List<Item> items = new();
+    [SerializeField] Weapon currentWeapon;
 
     protected override void Start()
     {
@@ -68,10 +69,14 @@ public class Survivor : CustomObject
 
     void AI()
     {
-        if (enemies.Count == 0) Explore();
+        if (enemies.Count == 0)
+        {
+
+            Explore();
+        }
         else Combat(enemies[0]);
 
-        if (debug) Debug.Log(ObstaclesCheck());
+        //if (debug) Debug.Log(ObstaclesCheck());
         if(ObstaclesCheck())
         {
             AvoidObstacles();

@@ -11,9 +11,6 @@ public class GameManager : MonoBehaviour
     public CustomStart ManagerStart;
     public CustomUpdate ManagerUpdate;
 
-    public CustomStart GroundStart;
-    public CustomUpdate GroundUpdate;
-
     public CustomStart ObjectStart;
     public CustomUpdate ObjectUpdate;
     public CustomDestroy ObjectDestroy;
@@ -24,6 +21,11 @@ public class GameManager : MonoBehaviour
     public ResourceManager ResourceManager => resourceManager;
     PoolManager poolManager;
     public PoolManager PoolManager => poolManager;
+    ItemManager itemManager;
+    public ItemManager ItemManager => itemManager;
+    BattleRoyalManager battleRoyalManager;
+    public BattleRoyalManager BattleRoyalManager => battleRoyalManager;
+    
 
     public LoadingCanvas loadingCanvas;
 
@@ -37,6 +39,11 @@ public class GameManager : MonoBehaviour
         yield return resourceManager.Initiate();
         poolManager = new PoolManager();
         yield return poolManager.Initiate();
+        itemManager = new ItemManager();
+        yield return itemManager.Initiate();
+
+        battleRoyalManager = new BattleRoyalManager();
+        yield return battleRoyalManager.Initiate();
 
         CloseLoadInfo();
     }
@@ -45,13 +52,10 @@ public class GameManager : MonoBehaviour
     {
         ManagerStart?.Invoke();
         ManagerStart = null;
-        GroundStart?.Invoke();
-        GroundStart = null;
         ObjectStart?.Invoke();
         ObjectStart = null;
 
         ManagerUpdate?.Invoke(Time.deltaTime);
-        GroundUpdate?.Invoke(Time.deltaTime);
         ObjectUpdate?.Invoke(Time.deltaTime);
 
         ObjectDestroy?.Invoke();
