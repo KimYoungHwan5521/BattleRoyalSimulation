@@ -12,3 +12,12 @@ public class MeleeWeapon : Weapon
 
     }
 }
+
+public class Knife : MeleeWeapon
+{
+    public Knife(string itemName, float weight, float attackDamage, float attackRange)
+        : base(itemName, weight, attackDamage, attackRange)
+    {
+
+    }
+}
