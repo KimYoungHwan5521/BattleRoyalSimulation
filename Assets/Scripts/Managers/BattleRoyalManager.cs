@@ -20,7 +20,7 @@ public class BattleRoyalManager
             remainder = i < farmingItems.Count % farmingSections.Length ? 1 : 0;
             for(int j=0; j < farmingItems.Count / farmingSections.Length + remainder; j++)
             {
-                boxIndex = Random.Range(0, farmingSections[i].boxes.Count);
+                boxIndex = Random.Range(0, farmingSections[i].boxes.Length);
                 farmingSections[i].boxes[boxIndex].Items.Add(farmingItems[curruntIndex]);
                 curruntIndex++;
                 GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);

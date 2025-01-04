@@ -4,5 +4,12 @@ using UnityEngine;
 
 public class FarmingSection : CustomObject
 {
-    public List<Box> boxes;
+    public Box[] boxes;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        boxes = GetComponentsInChildren<Box>();
+    }
 }

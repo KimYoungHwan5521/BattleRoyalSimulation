@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Survivor : CustomObject
 {
+    enum Status{ Farming, InCombat }
+
     [SerializeField] CircleCollider2D recognizeCollider;
     Animator animator;
 
@@ -18,21 +20,32 @@ public class Survivor : CustomObject
             if(isDead) animator.SetBool("Attack", false);
         }
     }
-    [SerializeField] float maxHP;
+    [SerializeField] Status currentStatus;
+    [SerializeField] float maxHP = 100;
     [SerializeField] float curHP;
     public float CurHP => curHP;
-    [SerializeField] float attakDamage;
-    [SerializeField] float attackSpeed;
-    [SerializeField] float attackRange;
-    [SerializeField] float moveSpeed;
-    [SerializeField] float detectionRange;
+    [SerializeField] float attakDamage = 10f;
+    [SerializeField] float attackSpeed = 1f;
+    [SerializeField] float attackRange = 1.5f;
+    [SerializeField] float moveSpeed = 3f;
+    [SerializeField] float detectionRange = 10f;
+    [SerializeField] float farmingSpeed = 1f;
+
     [SerializeField] Vector2 moveDirection = Vector2.up;
     [SerializeField] Vector2 lookRotation = Vector2.up;
     [SerializeField] Vector2 rememberOriginalMoveDirection = Vector2.up;
 
-    [SerializeField] List<Survivor> enemies = new();
-    [SerializeField] List<Item> items = new();
     [SerializeField] Weapon currentWeapon;
+    [SerializeField] List<Survivor> enemies = new();
+    [SerializeField] List<Item> inventory = new();
+
+    // value : Had finished farming?
+    [SerializeField] Dictionary<FarmingSection, bool> farmingSections = new();
+    [SerializeField] FarmingSection targetFarmingSection;
+    [SerializeField] Dictionary<Box, bool> farmingBoxes;
+    [SerializeField] Box targetFarmingBox;
+    [SerializeField] float farmingTime = 3f;
+    [SerializeField] float curFarmingTime;
 
     protected override void Start()
     {
@@ -51,14 +64,14 @@ public class Survivor : CustomObject
     private void FixedUpdate()
     {
         if(isDead) return;
-        Move(moveDirection, Time.fixedDeltaTime);
+        Move(moveDirection);
         Look(lookRotation);
     }
 
-    void Move(Vector2 preferDirection, float deltaTime)
+    void Move(Vector2 preferDirection)
     {
         preferDirection.Normalize();
-        transform.position += deltaTime * moveSpeed * (Vector3)preferDirection;
+        transform.position += Time.fixedDeltaTime * moveSpeed * (Vector3)preferDirection;
     }
 
     void Look(Vector2 preferDirection)
@@ -71,10 +84,22 @@ public class Survivor : CustomObject
     {
         if (enemies.Count == 0)
         {
-
-            Explore();
+            currentStatus = Status.Farming;
+            if(targetFarmingSection != null)
+            {
+                FarmingSection();
+            }
+            else
+            {
+                Explore();
+                CheckFarmingSection();
+            }
         }
-        else Combat(enemies[0]);
+        else
+        {
+            currentStatus = Status.InCombat;
+            Combat(enemies[0]);
+        }
 
         //if (debug) Debug.Log(ObstaclesCheck());
         if(ObstaclesCheck())
@@ -87,15 +112,116 @@ public class Survivor : CustomObject
         }
     }
 
+    void CheckFarmingSection()
+    {
+        FarmingSection nearestFarmingSection = null;
+        float minDistance = float.MaxValue;
+        float distance;
+        foreach (KeyValuePair<FarmingSection, bool> farmingCandidate in farmingSections)
+        {
+            if (!farmingCandidate.Value)
+            {
+                distance = Vector2.Distance(transform.position, farmingCandidate.Key.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearestFarmingSection = farmingCandidate.Key;
+                }
+            }
+        }
+        if (nearestFarmingSection != null)
+        {
+            farmingBoxes = new();
+            foreach(Box box in nearestFarmingSection.boxes)
+            {
+                farmingBoxes.Add(box, false);
+            }
+        }
+        targetFarmingSection = nearestFarmingSection;
+    }
+
+    void FarmingSection()
+    {
+        if(targetFarmingBox == null)
+        {
+            Box nearestBox = null;
+            float minDistance = float.MaxValue;
+            float distance;
+            foreach (KeyValuePair<Box, bool> box in farmingBoxes)
+            {
+                if(!box.Value)
+                {
+                    distance = Vector2.Distance(transform.position, box.Key.transform.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        nearestBox = box.Key;
+                    }
+                }
+            }
+            if(nearestBox == null)
+            {
+                farmingSections[targetFarmingSection] = true;
+                targetFarmingSection = null;
+                return;
+            }
+            targetFarmingBox = nearestBox;
+        }
+        else
+        {
+            FarmingBox();
+        }
+    }
+
+    void FarmingBox()
+    {
+        if(Vector2.Distance(transform.position, targetFarmingBox.transform.position) < 1.5f)
+        {
+            moveDirection = Vector2.zero;
+            rememberOriginalMoveDirection = Vector2.zero;
+
+            curFarmingTime += Time.deltaTime * farmingSpeed;
+            if(curFarmingTime > farmingTime)
+            {
+                foreach (Item item in targetFarmingBox.Items)
+                    AcqireItem(item);
+                targetFarmingBox.Items.Clear();
+                farmingBoxes[targetFarmingBox] = true;
+                targetFarmingBox = null;
+                curFarmingTime = 0;
+            }
+        }
+        else
+        {
+            rememberOriginalMoveDirection = targetFarmingBox.transform.position - transform.position;
+            lookRotation = rememberOriginalMoveDirection;
+        }
+    }
+
+    void AcqireItem(Item item)
+    {
+        Debug.Log(item.itemName);
+        if(item is Weapon)
+        {
+            Weapon weapon = item as Weapon;
+            if (currentWeapon != null)
+            {
+                inventory.Add(currentWeapon);
+            }
+            currentWeapon = weapon;
+        }
+        else inventory.Add(item);
+    }
+
     bool ObstaclesCheck()
     {
         RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(transform.position, rememberOriginalMoveDirection.normalized, 2f);
+        hits = Physics2D.RaycastAll(transform.position, rememberOriginalMoveDirection.normalized, 10f);
         Debug.DrawRay(transform.position, rememberOriginalMoveDirection.normalized * 2f, Color.red);
         foreach (RaycastHit2D hit in hits)
         {
             string hitTag = hit.collider.gameObject.tag;
-            if (hitTag == "Wall")
+            if (hitTag == "Wall" || hitTag == "Box")
             {
                 return true;
             }
@@ -107,27 +233,33 @@ public class Survivor : CustomObject
     {
         RaycastHit2D[] hits;
         hits = Physics2D.RaycastAll(transform.position, moveDirection.normalized, 2f);
-        foreach (RaycastHit2D hit in hits)
+        foreach(RaycastHit2D hit in hits)
         {
-            string hitTag = hit.collider.gameObject.tag; 
-            if (hitTag == "Wall")
+            string hitTag = hit.collider.tag;
+            if(hitTag == "Wall" || hitTag == "Ground" || hitTag == "Box")
             {
-                if (Vector2.Angle(moveDirection.Rotate(-15), hit.normal) < Vector2.Angle(moveDirection.Rotate(15), hit.normal))
-                {
-                    moveDirection = moveDirection.Rotate(-15);
-                }
-                else
-                {
-                    moveDirection = moveDirection.Rotate(15);
-                }
-                lookRotation = moveDirection;
-                return;
+                //if (Vector2.Angle(moveDirection.Rotate(-15), hit.normal) < Vector2.Angle(moveDirection.Rotate(15), hit.normal))
+                //{
+                //    moveDirection = moveDirection.Rotate(-15);
+                //}
+                //else
+                //{
+                //    moveDirection = moveDirection.Rotate(15);
+                //}
+                moveDirection = moveDirection.Rotate(15);
             }
+
         }
+        lookRotation = moveDirection;
     }
 
     void Explore()
     {
+        if (rememberOriginalMoveDirection == Vector2.zero)
+        {
+            rememberOriginalMoveDirection = Vector2.up;
+            lookRotation = rememberOriginalMoveDirection;
+        }
         RaycastHit2D[] hits;
         hits = Physics2D.RaycastAll(transform.position, rememberOriginalMoveDirection.normalized, detectionRange);
         foreach (RaycastHit2D hit in hits)
@@ -168,6 +300,7 @@ public class Survivor : CustomObject
         moveDirection = Vector2.zero;
         rememberOriginalMoveDirection = Vector2.zero;
         animator.SetBool("Attack", true);
+        animator.SetFloat("AttackSpeed", attackSpeed);
     }
 
     public void TakeDamage(Survivor attacker, float damage)
@@ -192,9 +325,25 @@ public class Survivor : CustomObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.isTrigger && collision.TryGetComponent(out Survivor survivor) && !survivor.isDead)
+        if (!collision.isTrigger)
         {
-            enemies.Add(survivor);
+            if (collision.TryGetComponent(out Survivor survivor) && !survivor.isDead)
+            {
+                RaycastHit2D hit;
+                hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
+                if(hit.collider == null)
+                    enemies.Add(survivor);
+            }
+        }
+        else
+        {
+            if(collision.TryGetComponent(out FarmingSection farmingSection))
+            {
+                if(!farmingSections.ContainsKey(farmingSection))
+                {
+                    farmingSections.Add(farmingSection, false);
+                }
+            }
         }
     }
 
