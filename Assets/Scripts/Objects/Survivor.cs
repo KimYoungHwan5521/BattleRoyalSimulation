@@ -5,14 +5,14 @@ using UnityEngine.AI;
 
 public class Survivor : CustomObject
 {
-    enum Status{ Farming, InCombat }
+    public enum Status{ Farming, InCombat }
 
     [SerializeField] CircleCollider2D recognizeCollider;
     Animator animator;
     NavMeshAgent agent;
 
     [SerializeField] bool debug;
-    bool isDead;
+    [SerializeField] bool isDead;
     public bool IsDead 
     { 
         get { return isDead; }
@@ -22,7 +22,7 @@ public class Survivor : CustomObject
             if(isDead) animator.SetBool("Attack", false);
         }
     }
-    [SerializeField] Status currentStatus;
+    [SerializeField] public Status currentStatus;
     [SerializeField] float maxHP = 100;
     [SerializeField] float curHP;
     public float CurHP => curHP;
@@ -57,6 +57,7 @@ public class Survivor : CustomObject
 
         recognizeCollider.radius = detectionRange;
         curHP = maxHP;
+        agent.speed = moveSpeed;
     }
     private void Update()
     {
@@ -196,16 +197,50 @@ public class Survivor : CustomObject
 
     void AcqireItem(Item item)
     {
-        if(item is Weapon)
+        if (item is Weapon)
         {
             Weapon weapon = item as Weapon;
-            if (currentWeapon.IsValid())
-            {
-                inventory.Add(currentWeapon);
-            }
-            currentWeapon = weapon;
+            Equip(weapon);
         }
         else inventory.Add(item);
+    }
+
+    void Equip(Weapon wantWeapon)
+    {
+        if (currentWeapon.IsValid())
+        {
+            inventory.Add(currentWeapon);
+            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemName}");
+            if (curWeaponTF != null)
+            {
+                curWeaponTF.gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
+            }
+        }
+        if(wantWeapon.IsValid())
+        {
+            Transform weaponTF = null;
+            // Active가 꺼져있는 오브젝트는 Find로 찾을 수 없다.
+            foreach (Transform child in transform.Find("Right Hand"))
+            {
+                if (child.name == $"{wantWeapon.itemName}")
+                {
+                    weaponTF = child; // 이름이 일치하는 자식 반환
+                }
+            }
+            if (weaponTF != null)
+            {
+                weaponTF.gameObject.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning($"Can't find weapon : {wantWeapon.itemName}");
+            }
+            currentWeapon = wantWeapon;
+        }
     }
 
     void Explore()
@@ -239,6 +274,22 @@ public class Survivor : CustomObject
 
     public void TakeDamage(Survivor attacker, float damage)
     {
+        float probability = Random.Range(0, 1f);
+        if(probability < 0.2f)
+        {
+            // 회피
+            return;
+        }
+        else if(probability < 0.5f)
+        {
+            // 방어
+            damage *= 0.5f;
+        }
+        else if(probability > 0.9f)
+        {
+            // 치명타
+            damage *= 2;
+        }
         curHP -= damage;
         if (curHP <= 0)
         {
@@ -250,14 +301,28 @@ public class Survivor : CustomObject
     void AttackAE()
     {
         if (enemies.Count == 0) return;
-        if (Vector2.Distance(transform.position, enemies[0].transform.position) < attackRange)
+        if(currentWeapon.IsValid())
         {
-            enemies[0].TakeDamage(this, attakDamage);
-            if (enemies[0].isDead) enemies.Remove(enemies[0]);
+            if (Vector2.Distance(transform.position, enemies[0].transform.position) < currentWeapon.attackRange)
+            {
+                enemies[0].TakeDamage(this, currentWeapon.attakDamage);
+            }
+        }
+        else
+        {
+            if (Vector2.Distance(transform.position, enemies[0].transform.position) < attackRange)
+            {
+                enemies[0].TakeDamage(this, attakDamage);
+            }   
+        }
+        if (enemies[0].isDead)
+        {
+            enemies.Remove(enemies[0]);
+            animator.SetBool("Attack", false);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.isTrigger)
         {
@@ -265,8 +330,10 @@ public class Survivor : CustomObject
             {
                 RaycastHit2D hit;
                 hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
-                if(hit.collider == null)
+                if(hit.collider == null && !enemies.Contains(survivor))
+                {
                     enemies.Add(survivor);
+                }
             }
         }
         else

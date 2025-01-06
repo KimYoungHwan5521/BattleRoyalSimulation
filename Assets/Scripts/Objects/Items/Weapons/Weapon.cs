@@ -6,8 +6,8 @@ using UnityEngine;
 [Serializable]
 public class Weapon : Item
 {
-    [SerializeField] protected float attakDamage;
-    [SerializeField] protected float attackRange;
+    [SerializeField] public float attakDamage;
+    [SerializeField] public float attackRange;
 
     public Weapon(string itemName, float weight, float attakDamage, float attackRange) : base(itemName, weight)
     {
