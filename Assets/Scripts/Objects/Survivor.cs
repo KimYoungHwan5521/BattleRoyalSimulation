@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Survivor : CustomObject
 {
@@ -8,6 +9,7 @@ public class Survivor : CustomObject
 
     [SerializeField] CircleCollider2D recognizeCollider;
     Animator animator;
+    NavMeshAgent agent;
 
     [SerializeField] bool debug;
     bool isDead;
@@ -31,11 +33,9 @@ public class Survivor : CustomObject
     [SerializeField] float detectionRange = 10f;
     [SerializeField] float farmingSpeed = 1f;
 
-    [SerializeField] Vector2 moveDirection = Vector2.up;
-    [SerializeField] Vector2 lookRotation = Vector2.up;
-    [SerializeField] Vector2 rememberOriginalMoveDirection = Vector2.up;
+    [SerializeField] Vector2 lookRotation = Vector2.zero;
 
-    [SerializeField] Weapon currentWeapon;
+    [SerializeField] Weapon currentWeapon = null;
     [SerializeField] List<Survivor> enemies = new();
     [SerializeField] List<Item> inventory = new();
 
@@ -50,7 +50,10 @@ public class Survivor : CustomObject
     protected override void Start()
     {
         base.Start();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        agent = GetComponentInChildren<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
 
         recognizeCollider.radius = detectionRange;
         curHP = maxHP;
@@ -61,17 +64,19 @@ public class Survivor : CustomObject
         AI();
     }
 
+    Vector2 lastPos;
     private void FixedUpdate()
     {
         if(isDead) return;
-        Move(moveDirection);
-        Look(lookRotation);
-    }
-
-    void Move(Vector2 preferDirection)
-    {
-        preferDirection.Normalize();
-        transform.position += Time.fixedDeltaTime * moveSpeed * (Vector3)preferDirection;
+        if(lookRotation != Vector2.zero)
+        {
+            Look(lookRotation);
+        }
+        else
+        {
+            Look((Vector2)transform.position - lastPos);
+        }
+        lastPos = transform.position;
     }
 
     void Look(Vector2 preferDirection)
@@ -84,6 +89,7 @@ public class Survivor : CustomObject
     {
         if (enemies.Count == 0)
         {
+            lookRotation = Vector2.zero;
             currentStatus = Status.Farming;
             if(targetFarmingSection != null)
             {
@@ -99,16 +105,6 @@ public class Survivor : CustomObject
         {
             currentStatus = Status.InCombat;
             Combat(enemies[0]);
-        }
-
-        //if (debug) Debug.Log(ObstaclesCheck());
-        if(ObstaclesCheck())
-        {
-            AvoidObstacles();
-        }
-        else
-        {
-            moveDirection = rememberOriginalMoveDirection;
         }
     }
 
@@ -177,34 +173,33 @@ public class Survivor : CustomObject
     {
         if(Vector2.Distance(transform.position, targetFarmingBox.transform.position) < 1.5f)
         {
-            moveDirection = Vector2.zero;
-            rememberOriginalMoveDirection = Vector2.zero;
+            agent.SetDestination(transform.position);
 
             curFarmingTime += Time.deltaTime * farmingSpeed;
-            if(curFarmingTime > farmingTime)
+            if (curFarmingTime > farmingTime)
             {
                 foreach (Item item in targetFarmingBox.Items)
                     AcqireItem(item);
                 targetFarmingBox.Items.Clear();
                 farmingBoxes[targetFarmingBox] = true;
                 targetFarmingBox = null;
+                lookRotation = Vector2.zero;
                 curFarmingTime = 0;
             }
+            else lookRotation = targetFarmingBox.transform.position - transform.position;
         }
         else
         {
-            rememberOriginalMoveDirection = targetFarmingBox.transform.position - transform.position;
-            lookRotation = rememberOriginalMoveDirection;
+            agent.SetDestination(targetFarmingBox.transform.position);
         }
     }
 
     void AcqireItem(Item item)
     {
-        Debug.Log(item.itemName);
         if(item is Weapon)
         {
             Weapon weapon = item as Weapon;
-            if (currentWeapon != null)
+            if (currentWeapon.IsValid())
             {
                 inventory.Add(currentWeapon);
             }
@@ -213,71 +208,11 @@ public class Survivor : CustomObject
         else inventory.Add(item);
     }
 
-    bool ObstaclesCheck()
-    {
-        RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(transform.position, rememberOriginalMoveDirection.normalized, 10f);
-        Debug.DrawRay(transform.position, rememberOriginalMoveDirection.normalized * 2f, Color.red);
-        foreach (RaycastHit2D hit in hits)
-        {
-            string hitTag = hit.collider.gameObject.tag;
-            if (hitTag == "Wall" || hitTag == "Box")
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    void AvoidObstacles()
-    {
-        RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(transform.position, moveDirection.normalized, 2f);
-        foreach(RaycastHit2D hit in hits)
-        {
-            string hitTag = hit.collider.tag;
-            if(hitTag == "Wall" || hitTag == "Ground" || hitTag == "Box")
-            {
-                //if (Vector2.Angle(moveDirection.Rotate(-15), hit.normal) < Vector2.Angle(moveDirection.Rotate(15), hit.normal))
-                //{
-                //    moveDirection = moveDirection.Rotate(-15);
-                //}
-                //else
-                //{
-                //    moveDirection = moveDirection.Rotate(15);
-                //}
-                moveDirection = moveDirection.Rotate(15);
-            }
-
-        }
-        lookRotation = moveDirection;
-    }
-
     void Explore()
     {
-        if (rememberOriginalMoveDirection == Vector2.zero)
+        if(Vector2.Distance(agent.destination, transform.position) < 1f)
         {
-            rememberOriginalMoveDirection = Vector2.up;
-            lookRotation = rememberOriginalMoveDirection;
-        }
-        RaycastHit2D[] hits;
-        hits = Physics2D.RaycastAll(transform.position, rememberOriginalMoveDirection.normalized, detectionRange);
-        foreach (RaycastHit2D hit in hits)
-        {
-            string hitTag = hit.collider.gameObject.tag;
-            if (hitTag == "Ground")
-            {
-                if (Random.Range(0, 3) < 2)
-                {
-                    rememberOriginalMoveDirection = rememberOriginalMoveDirection.Rotate(90);
-                }
-                else
-                {
-                    rememberOriginalMoveDirection = rememberOriginalMoveDirection.Rotate(135);
-                }
-                lookRotation = rememberOriginalMoveDirection;
-                return;
-            }
+            agent.SetDestination(new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)));
         }
     }
 
@@ -287,7 +222,7 @@ public class Survivor : CustomObject
         if (Vector2.Distance(transform.position, target.transform.position) > attackRange)
         {
             animator.SetBool("Attack", false);
-            rememberOriginalMoveDirection = lookRotation;
+            agent.SetDestination(target.transform.position);
         }
         else
         {
@@ -297,8 +232,7 @@ public class Survivor : CustomObject
 
     void Attack(Survivor target)
     {
-        moveDirection = Vector2.zero;
-        rememberOriginalMoveDirection = Vector2.zero;
+        agent.SetDestination(transform.position);
         animator.SetBool("Attack", true);
         animator.SetFloat("AttackSpeed", attackSpeed);
     }

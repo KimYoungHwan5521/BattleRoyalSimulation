@@ -14,4 +14,10 @@ public class Item
         this.itemName = itemName;
         this.weight = weight;
     }
+
+    public bool IsValid()
+    {
+        if(itemName == null || itemName == "") return false;
+        return true;
+    }
 }
