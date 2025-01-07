@@ -2,7 +2,7 @@ namespace ResourceEnum
 {
     public enum Prefab
     {
-
+        Bullet,
     }
 
     public enum Sprite

@@ -2,7 +2,7 @@ public class ResourcesPath
 {
     public static string[] PrefabPathArray =
     {
-
+        "Prefabs/Bullet",
     };
 
     public static string[] SpritePathArray =

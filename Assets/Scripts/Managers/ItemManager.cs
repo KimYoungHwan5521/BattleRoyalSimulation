@@ -6,7 +6,10 @@ public class ItemManager
 {
     public enum Items
     {
+        // Melee Weapons
         Knife,
+        // Ranged Weapons
+        Revolver,
     }
     public Dictionary<Items, Item[]> itemDictionary = new();
     public IEnumerator Initiate()
@@ -32,7 +35,11 @@ public class ItemManager
         {
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon("Knife", 2f, 40, 1.7f);
+                    itemDictionary[wantItem][i] = new MeleeWeapon("Knife", 0.5f, 40, 1.7f, 0);
+                break;
+            case Items.Revolver:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1f, 30, 20f, 1f, 10f, 1f, 6, 3f, 0);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

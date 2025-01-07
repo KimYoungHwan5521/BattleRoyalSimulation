@@ -9,7 +9,8 @@ public class BattleRoyalManager
 
     public IEnumerator Initiate()
     {
-        AddItems(ItemManager.Items.Knife, 2);
+        // AddItems(ItemManager.Items.Knife, 2);
+        AddItems(ItemManager.Items.Revolver, 1);
         int boxIndex;
         int curruntIndex = 0;
         int remainder;

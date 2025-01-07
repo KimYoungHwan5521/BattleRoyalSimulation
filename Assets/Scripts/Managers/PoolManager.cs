@@ -99,7 +99,7 @@ public class PoolManager
 
         return inst;
     }
-    public void Destroy(GameObject target)
+    public static void Despawn(GameObject target)
     {
         if (target.TryGetComponent<PoolingInfo>(out PoolingInfo pool))
         {
