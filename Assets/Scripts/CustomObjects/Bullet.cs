@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : CustomObject
 {
+    SpriteRenderer spriteRenderer;
+    Collider2D col;
     float projectileSpeed;
     float damage;
     public float Damage => damage;
@@ -14,6 +16,13 @@ public class Bullet : CustomObject
     public float MaxRange => maxRange;
     public float TraveledDistance { get { return Vector2.Distance(transform.position, spawnedPosition); } }
     bool initiated;
+
+    protected override void Start()
+    {
+        base.Start();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        col = GetComponent<Collider2D>();
+    }
 
     public void Initiate(float projectileSpeed, float damage, Vector2 spawndPosition, Vector2 targetPosition, float maxRange)
     {
@@ -28,22 +37,44 @@ public class Bullet : CustomObject
         initiated = true;
     }
 
+    void DelayedDespawn()
+    {
+        initiated = false;
+        spriteRenderer.enabled = false;
+        col.enabled = false;
+
+        StartCoroutine(Despawn());
+    }
+
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        PoolManager.Despawn(gameObject);
+        spriteRenderer.enabled = true;
+        col.enabled = true;
+    }
+
     private void FixedUpdate()
     {
         if (!initiated) return;
         if (Vector2.Distance(transform.position, spawnedPosition) > maxRange)
         {
-            PoolManager.Despawn(gameObject);
+            DelayedDespawn();
         }
         transform.position += Time.fixedDeltaTime * projectileSpeed * direction;
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Survivor") && !collision.isTrigger)
+        if (!collision.isTrigger)
         {
-            Survivor victim = collision.GetComponent<Survivor>();
-            victim.TakeDamage(this);
-            PoolManager.Despawn(gameObject);
+            if (collision.CompareTag("Survivor"))
+            {
+                Survivor victim = collision.GetComponent<Survivor>();
+                victim.TakeDamage(this);
+            }
+            DelayedDespawn();
         }
     }
 }

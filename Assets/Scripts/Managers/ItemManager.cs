@@ -10,6 +10,8 @@ public class ItemManager
         Knife,
         // Ranged Weapons
         Revolver,
+        // Bullets
+        Bullet_Revolver,
     }
     public Dictionary<Items, Item[]> itemDictionary = new();
     public IEnumerator Initiate()
@@ -40,6 +42,10 @@ public class ItemManager
             case Items.Revolver:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1f, 30, 20f, 1f, 10f, 1f, 6, 3f, 0);
+                break;
+            case Items.Bullet_Revolver:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Item("Bullet(Revolver)", 0.008f, 30);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

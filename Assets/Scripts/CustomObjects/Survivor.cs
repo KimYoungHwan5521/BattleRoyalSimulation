@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,10 +38,36 @@ public class Survivor : CustomObject
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
+    RangedWeapon RWeapon
+    {
+        get
+        {
+            if (currentWeapon is RangedWeapon)
+            {
+                return currentWeapon as RangedWeapon;
+            }
+            return null;
+        }
+    }
     Animator currentWeaponAnimator;
     [SerializeField] List<Survivor> enemies = new();
     public Survivor targetEnemy => enemies[0];
     [SerializeField] List<Item> inventory = new();
+    Item ValidBullet
+    {
+        get
+        {
+            int index = inventory.FindIndex(x => x.itemName == $"Bullet({currentWeapon.itemName})");
+            if(index > -1)
+            {
+                if (inventory[index].amount > 0)
+                {
+                    return inventory[index];
+                }
+            }
+            return null;
+        }
+    }
 
     // value : Had finished farming?
     [SerializeField] Dictionary<FarmingSection, bool> farmingSections = new();
@@ -93,8 +120,18 @@ public class Survivor : CustomObject
 
     void AI()
     {
+
         if (enemies.Count == 0)
         {
+            if (RWeapon != null)
+            {
+                if (RWeapon.CurrentMagazine == 0 && ValidBullet != null)
+                {
+                    Reload();
+                    return;
+                }
+            }
+
             lookRotation = Vector2.zero;
             currentStatus = Status.Farming;
             if(targetFarmingSection != null)
@@ -207,11 +244,28 @@ public class Survivor : CustomObject
             Weapon weapon = item as Weapon;
             Equip(weapon);
         }
-        else inventory.Add(item);
+        else
+        {
+            inventory.Add(item);
+        }
+    }
+
+    void ConsumptionItem(Item item, int amount)
+    {
+        int index = inventory.IndexOf(item);
+        if(index > -1)
+        {
+            inventory[index].amount -= amount;
+            if(inventory[index].amount == 0)
+            {
+                inventory.Remove(item);
+            }
+        }
     }
 
     void Equip(Weapon wantWeapon)
     {
+        // 차고 있는 무기가 있으면 놓고
         if (currentWeapon.IsValid())
         {
             inventory.Add(currentWeapon);
@@ -225,6 +279,7 @@ public class Survivor : CustomObject
                 Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
             }
         }
+        // 새 무기 차기
         if(wantWeapon.IsValid())
         {
             Transform weaponTF = null;
@@ -253,33 +308,56 @@ public class Survivor : CustomObject
     {
         if(Vector2.Distance(agent.destination, transform.position) < 1f)
         {
-            agent.SetDestination(new Vector2(Random.Range(-20, 20), Random.Range(-20, 20)));
+            agent.SetDestination(new Vector2(UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20)));
         }
     }
 
     void Combat(Survivor target)
     {
         lookRotation = target.transform.position - transform.position;
+        float distance = Vector2.Distance(transform.position, enemies[0].transform.position);
         if (currentWeapon.IsValid())
         {
-            if (Vector2.Distance(transform.position, enemies[0].transform.position) < currentWeapon.attackRange)
+            if(RWeapon != null)
             {
-                if(currentWeapon is MeleeWeapon)
+                if (RWeapon.CurrentMagazine > 0)
                 {
-                    Attack();
+                    if (distance < RWeapon.attackRange)
+                    {
+                        Aim();
+                        return;
+                    }
+                }
+                else if(ValidBullet != null && distance > RWeapon.MinimumRange)
+                {
+                    Reload();
+                    return;
                 }
                 else
                 {
-                    Aim();
+                    isReloading = false;
+                    if(distance < attackRange)
+                    {
+                        Attack();
+                        return;
+                    }
                 }
-                return;
+            }
+            else
+            {
+                if (distance < currentWeapon.attackRange)
+                {
+                    Attack();
+                    return;
+                }
             }
         }
-        else if (Vector2.Distance(transform.position, target.transform.position) < attackRange)
+        else if (distance < attackRange)
         {
             Attack();
             return;
         }
+        isReloading = false;
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
         agent.SetDestination(target.transform.position);
@@ -288,6 +366,7 @@ public class Survivor : CustomObject
     void Attack()
     {
         agent.SetDestination(transform.position);
+        animator.SetBool("Aim", false);
         animator.SetBool("Attack", true);
         if(currentWeapon.IsValid())
         {
@@ -302,16 +381,17 @@ public class Survivor : CustomObject
 
     void Aim()
     {
-        RangedWeapon weapon = currentWeapon as RangedWeapon;
         agent.SetDestination(transform.position);
+        animator.SetBool("Attack", false);
         animator.SetBool("Aim", true);
 
         curShotTime += Time.deltaTime;
-        if(curShotTime > weapon.ShotCoolTime)
+        if(curShotTime > RWeapon.ShotCoolTime)
         {
             if (currentWeaponAnimator != null)
             {
                 currentWeaponAnimator.SetTrigger("Fire");
+                RWeapon.Fire();
             }
             curShotTime = 0;
         }
@@ -319,7 +399,7 @@ public class Survivor : CustomObject
 
     public void TakeDamage(Survivor attacker, float damage)
     {
-        float probability = Random.Range(0, 1f);
+        float probability = UnityEngine.Random.Range(0, 1f);
         if(probability < 0.2f)
         {
             // 회피
@@ -348,7 +428,7 @@ public class Survivor : CustomObject
     public void TakeDamage(Bullet bullet)
     {
         float damage;
-        float probability = Random.Range(0, 1f);
+        float probability = UnityEngine.Random.Range(0, 1f);
         // 헤드샷
         if(probability > 0.99f)
         {
@@ -375,6 +455,30 @@ public class Survivor : CustomObject
         {
             curHP = 0;
             IsDead = true;
+        }
+    }
+
+    bool isReloading;
+    void Reload()
+    {
+        if(!isReloading)
+        {
+            agent.SetDestination(transform.position);
+            currentWeaponAnimator.SetTrigger("Reload");
+            isReloading = true;
+        }
+        else
+        {
+            curReloadTime += Time.deltaTime;
+            if(curReloadTime > RWeapon.ReloadCoolTime)
+            {
+                int amount = Math.Clamp(ValidBullet.amount, 1, RWeapon.MagazineCapacity - RWeapon.CurrentMagazine);
+
+                ConsumptionItem(ValidBullet, amount);
+                RWeapon.Reload(amount);
+                curReloadTime = 0;
+                isReloading = false;
+            }
         }
     }
 
