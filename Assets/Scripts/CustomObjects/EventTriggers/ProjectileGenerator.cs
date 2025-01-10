@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class ProjectileGenerator : CustomObject
 {
-    [SerializeField] Survivor owner;
+    Survivor owner;
     [SerializeField] Transform muzzleTF;
     float err = 3f;
+
+    protected override void Start()
+    {
+        base.Start();
+        owner = GetComponent<Survivor>();
+    }
     public void SpawnProjectile()
     {
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);

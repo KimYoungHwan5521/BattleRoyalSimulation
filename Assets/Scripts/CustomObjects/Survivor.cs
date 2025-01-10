@@ -38,7 +38,7 @@ public class Survivor : CustomObject
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
-    RangedWeapon RWeapon
+    RangedWeapon CurrentWeaponAsRangedWeapon
     {
         get
         {
@@ -49,7 +49,6 @@ public class Survivor : CustomObject
             return null;
         }
     }
-    Animator currentWeaponAnimator;
     [SerializeField] List<Survivor> enemies = new();
     public Survivor targetEnemy => enemies[0];
     [SerializeField] List<Item> inventory = new();
@@ -123,9 +122,9 @@ public class Survivor : CustomObject
 
         if (enemies.Count == 0)
         {
-            if (RWeapon != null)
+            if (CurrentWeaponAsRangedWeapon != null)
             {
-                if (RWeapon.CurrentMagazine == 0 && ValidBullet != null)
+                if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet != null)
                 {
                     Reload();
                     return;
@@ -294,7 +293,6 @@ public class Survivor : CustomObject
             if (weaponTF != null)
             {
                 weaponTF.gameObject.SetActive(true);
-                currentWeaponAnimator = weaponTF.GetComponent<Animator>();
             }
             else
             {
@@ -318,17 +316,17 @@ public class Survivor : CustomObject
         float distance = Vector2.Distance(transform.position, enemies[0].transform.position);
         if (currentWeapon.IsValid())
         {
-            if(RWeapon != null)
+            if(CurrentWeaponAsRangedWeapon != null)
             {
-                if (RWeapon.CurrentMagazine > 0)
+                if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                 {
-                    if (distance < RWeapon.attackRange)
+                    if (distance < CurrentWeaponAsRangedWeapon.attackRange)
                     {
                         Aim();
                         return;
                     }
                 }
-                else if(ValidBullet != null && distance > RWeapon.MinimumRange)
+                else if(ValidBullet != null && distance > CurrentWeaponAsRangedWeapon.MinimumRange)
                 {
                     Reload();
                     return;
@@ -386,13 +384,11 @@ public class Survivor : CustomObject
         animator.SetBool("Aim", true);
 
         curShotTime += Time.deltaTime;
-        if(curShotTime > RWeapon.ShotCoolTime)
+        if(curShotTime > CurrentWeaponAsRangedWeapon.ShotCoolTime)
         {
-            if (currentWeaponAnimator != null)
-            {
-                currentWeaponAnimator.SetTrigger("Fire");
-                RWeapon.Fire();
-            }
+            animator.SetInteger("ShotAnimNumber", 0);
+            animator.SetTrigger("Fire");
+            CurrentWeaponAsRangedWeapon.Fire();
             curShotTime = 0;
         }
     }
@@ -464,25 +460,26 @@ public class Survivor : CustomObject
         if(!isReloading)
         {
             agent.SetDestination(transform.position);
-            currentWeaponAnimator.SetTrigger("Reload");
+            animator.SetInteger("ShotAnimNumber", 0);
+            animator.SetTrigger("Reload");
             isReloading = true;
         }
         else
         {
             curReloadTime += Time.deltaTime;
-            if(curReloadTime > RWeapon.ReloadCoolTime)
+            if(curReloadTime > CurrentWeaponAsRangedWeapon.ReloadCoolTime)
             {
-                int amount = Math.Clamp(ValidBullet.amount, 1, RWeapon.MagazineCapacity - RWeapon.CurrentMagazine);
+                int amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
 
                 ConsumptionItem(ValidBullet, amount);
-                RWeapon.Reload(amount);
+                CurrentWeaponAsRangedWeapon.Reload(amount);
                 curReloadTime = 0;
                 isReloading = false;
             }
         }
     }
 
-    void AttackAE()
+    void AE_Attack()
     {
         if (enemies.Count == 0) return;
         if(currentWeapon.IsValid())

@@ -41,7 +41,7 @@ public class ItemManager
                 break;
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1f, 30, 20f, 1f, 10f, 1f, 6, 3f, 0);
+                    itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1f, 30, 20f, 1f, 10f, 1f, 6, 3f, 0, 0);
                 break;
             case Items.Bullet_Revolver:
                 for (int i = start; i < end; i++)
