@@ -49,6 +49,8 @@ public class Survivor : CustomObject
             return null;
         }
     }
+    ProjectileGenerator projectileGenerator;
+
     [SerializeField] List<Survivor> enemies = new();
     public Survivor targetEnemy => enemies[0];
     [SerializeField] List<Item> inventory = new();
@@ -81,15 +83,17 @@ public class Survivor : CustomObject
     protected override void Start()
     {
         base.Start();
-        animator = GetComponentInChildren<Animator>();
-        agent = GetComponentInChildren<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        projectileGenerator = GetComponent<ProjectileGenerator>();
 
         recognizeCollider.radius = detectionRange;
         curHP = maxHP;
         agent.speed = moveSpeed;
     }
+
     private void Update()
     {
         if(isDead) return;
@@ -119,11 +123,13 @@ public class Survivor : CustomObject
 
     void AI()
     {
-
         if (enemies.Count == 0)
         {
+            animator.SetBool("Attack", false);
+            animator.SetBool("Aim", false);
             if (CurrentWeaponAsRangedWeapon != null)
             {
+                if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF();
                 if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet != null)
                 {
                     Reload();
@@ -146,7 +152,14 @@ public class Survivor : CustomObject
         else
         {
             currentStatus = Status.InCombat;
-            Combat(enemies[0]);
+            if (enemies[0].isDead)
+            {
+                enemies.Remove(enemies[0]);
+            }
+            else
+            {
+                Combat(enemies[0]);
+            }
         }
     }
 
@@ -241,7 +254,14 @@ public class Survivor : CustomObject
         if (item is Weapon)
         {
             Weapon weapon = item as Weapon;
-            Equip(weapon);
+            if(CompareWeaponValue(weapon))
+            {
+                Equip(weapon);
+            }
+            else
+            {
+                inventory.Add(item);
+            }
         }
         else
         {
@@ -262,6 +282,67 @@ public class Survivor : CustomObject
         }
     }
 
+    bool CompareWeaponValue(Weapon newWeapon)
+    {
+        if(!currentWeapon.IsValid()) return true;
+        else if (currentWeapon is MeleeWeapon)
+        {
+            if (newWeapon is RangedWeapon)
+            {
+                // 근 vs 원
+                RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
+                if (newWeaponAsRangedWeapon.MagazineCapacity > 0) return true;
+                else
+                {
+                    Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
+                    if (bullet != null) return true;
+                    else return false;
+                }
+            }
+            else
+            {
+                // 근 vs 근
+                if (newWeapon.attakDamage > currentWeapon.attakDamage) return true;
+                else return false;
+            }
+        }
+        else
+        {
+            if(newWeapon is MeleeWeapon)
+            {
+                // 원 vs 근
+                if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return true;
+                else return false;
+            }
+            else
+            {
+                // 원 vs 원
+                RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
+                Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
+                if (newWeaponAsRangedWeapon.MagazineCapacity > 0 || bullet != null)
+                {
+                    // 둘 다 총알이 있는 경우
+                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0)
+                    {
+                        if (newWeapon.attackRange > currentWeapon.attackRange) return true;
+                        else return false;
+                    }
+                    else return true;
+                }
+                else
+                {
+                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return false;
+                    else
+                    {
+                        // 둘 다 총알이 없는 경우
+                        if (newWeapon.attackRange > currentWeapon.attackRange) return true;
+                        else return false;
+                    }
+                }
+            }
+        }
+    }
+
     void Equip(Weapon wantWeapon)
     {
         // 차고 있는 무기가 있으면 놓고
@@ -272,6 +353,7 @@ public class Survivor : CustomObject
             if (curWeaponTF != null)
             {
                 curWeaponTF.gameObject.SetActive(false);
+                projectileGenerator.muzzleTF = null;
             }
             else
             {
@@ -386,7 +468,7 @@ public class Survivor : CustomObject
         curShotTime += Time.deltaTime;
         if(curShotTime > CurrentWeaponAsRangedWeapon.ShotCoolTime)
         {
-            animator.SetInteger("ShotAnimNumber", 0);
+            animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
             animator.SetTrigger("Fire");
             CurrentWeaponAsRangedWeapon.Fire();
             curShotTime = 0;
@@ -460,7 +542,7 @@ public class Survivor : CustomObject
         if(!isReloading)
         {
             agent.SetDestination(transform.position);
-            animator.SetInteger("ShotAnimNumber", 0);
+            animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
             animator.SetTrigger("Reload");
             isReloading = true;
         }
@@ -495,11 +577,6 @@ public class Survivor : CustomObject
             {
                 enemies[0].TakeDamage(this, attakDamage);
             }   
-        }
-        if (enemies[0].isDead)
-        {
-            enemies.Remove(enemies[0]);
-            animator.SetBool("Attack", false);
         }
     }
 

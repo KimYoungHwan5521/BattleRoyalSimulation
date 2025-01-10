@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProjectileGenerator : CustomObject
 {
     Survivor owner;
-    [SerializeField] Transform muzzleTF;
+    public Transform muzzleTF;
     float err = 3f;
 
     protected override void Start()
@@ -23,4 +23,10 @@ public class ProjectileGenerator : CustomObject
         Vector2 destination = ((Vector2)owner.targetEnemy.transform.position).Rotate(rand);
         bullet.Initiate(weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
     }
+
+    public void ResetMuzzleTF()
+    {
+        muzzleTF = transform.Find("Right Hand").Find($"{owner.CurrentWeapon.itemName}").Find("Muzzle");
+    }
+
 }

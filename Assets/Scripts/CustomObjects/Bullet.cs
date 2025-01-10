@@ -6,6 +6,7 @@ public class Bullet : CustomObject
 {
     SpriteRenderer spriteRenderer;
     Collider2D col;
+    TrailRenderer trailRenderer;
     float projectileSpeed;
     float damage;
     public float Damage => damage;
@@ -22,6 +23,7 @@ public class Bullet : CustomObject
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
+        trailRenderer = GetComponent<TrailRenderer>();
     }
 
     public void Initiate(float projectileSpeed, float damage, Vector2 spawndPosition, Vector2 targetPosition, float maxRange)
@@ -53,6 +55,8 @@ public class Bullet : CustomObject
         PoolManager.Despawn(gameObject);
         spriteRenderer.enabled = true;
         col.enabled = true;
+        trailRenderer.Clear();
+        
     }
 
     private void FixedUpdate()
