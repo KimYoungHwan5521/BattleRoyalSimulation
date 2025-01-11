@@ -12,8 +12,12 @@ public class BattleRoyalManager
         // AddItems(ItemManager.Items.Knife, 2);
         //AddItems(ItemManager.Items.Revolver, 1);
         //AddItems(ItemManager.Items.Bullet_Revolver, 1);
-        AddItems(ItemManager.Items.Pistol, 1);
-        AddItems(ItemManager.Items.Bullet_Pistol, 1);
+        //AddItems(ItemManager.Items.Pistol, 1);
+        //AddItems(ItemManager.Items.Bullet_Pistol, 1);
+        AddItems(ItemManager.Items.AssaultRifle, 1);
+        AddItems(ItemManager.Items.Bullet_AssaultRifle, 4);
+        AddItems(ItemManager.Items.SubMachineGun, 1);
+        AddItems(ItemManager.Items.Bullet_SubMachineGun, 4);
         int boxIndex;
         int curruntIndex = 0;
         int remainder;

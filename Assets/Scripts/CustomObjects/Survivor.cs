@@ -381,6 +381,7 @@ public class Survivor : CustomObject
                 Debug.LogWarning($"Can't find weapon : {wantWeapon.itemName}");
             }
             currentWeapon = wantWeapon;
+            animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
         }
     }
 
