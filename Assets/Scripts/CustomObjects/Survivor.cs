@@ -12,7 +12,7 @@ public class Survivor : CustomObject
     Animator animator;
     NavMeshAgent agent;
 
-    [SerializeField] bool debug;
+    //[SerializeField] bool debug;
     [SerializeField] bool isDead;
     public bool IsDead 
     { 
@@ -38,7 +38,7 @@ public class Survivor : CustomObject
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
-    RangedWeapon CurrentWeaponAsRangedWeapon
+    [SerializeField] RangedWeapon CurrentWeaponAsRangedWeapon
     {
         get
         {
@@ -78,7 +78,7 @@ public class Survivor : CustomObject
     [SerializeField] float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
     [SerializeField] float curShotTime;
-    [SerializeField] float curReloadTime;
+    //[SerializeField] float curReloadTime;
 
     protected override void Start()
     {
@@ -130,12 +130,13 @@ public class Survivor : CustomObject
             if (CurrentWeaponAsRangedWeapon != null)
             {
                 if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF();
-                if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet != null)
+                if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
                 {
                     Reload();
                     return;
                 }
             }
+            animator.SetBool("Reload", false);
 
             lookRotation = Vector2.zero;
             currentStatus = Status.Farming;
@@ -382,6 +383,7 @@ public class Survivor : CustomObject
             }
             currentWeapon = wantWeapon;
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
+            if(currentWeapon is RangedWeapon) animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
         }
     }
 
@@ -416,7 +418,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    isReloading = false;
+
                     if(distance < attackRange)
                     {
                         Attack();
@@ -438,9 +440,9 @@ public class Survivor : CustomObject
             Attack();
             return;
         }
-        isReloading = false;
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
+        animator.SetBool("Reload", false);
         agent.SetDestination(target.transform.position);
     }
 
@@ -448,6 +450,7 @@ public class Survivor : CustomObject
     {
         agent.SetDestination(transform.position);
         animator.SetBool("Aim", false);
+        animator.SetBool("Reload", false);
         animator.SetBool("Attack", true);
         if(currentWeapon.IsValid())
         {
@@ -537,29 +540,11 @@ public class Survivor : CustomObject
         }
     }
 
-    bool isReloading;
     void Reload()
     {
-        if(!isReloading)
-        {
-            agent.SetDestination(transform.position);
-            animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
-            animator.SetTrigger("Reload");
-            isReloading = true;
-        }
-        else
-        {
-            curReloadTime += Time.deltaTime;
-            if(curReloadTime > CurrentWeaponAsRangedWeapon.ReloadCoolTime)
-            {
-                int amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
-
-                ConsumptionItem(ValidBullet, amount);
-                CurrentWeaponAsRangedWeapon.Reload(amount);
-                curReloadTime = 0;
-                isReloading = false;
-            }
-        }
+        animator.SetBool("Attack", false);
+        agent.SetDestination(transform.position);
+        animator.SetBool("Reload", true);
     }
 
     void AE_Attack()
@@ -579,6 +564,16 @@ public class Survivor : CustomObject
                 enemies[0].TakeDamage(this, attakDamage);
             }   
         }
+    }
+
+    void AE_Reload()
+    {
+        int amount;
+        if (currentWeapon.itemName == "ShotGun" || currentWeapon.itemName == "SniperRifle") amount = 1;
+        else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
+
+        ConsumptionItem(ValidBullet, amount);
+        CurrentWeaponAsRangedWeapon.Reload(amount);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

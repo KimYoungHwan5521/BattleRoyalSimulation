@@ -114,11 +114,11 @@ public class ItemManager
                 break;
             case Items.Bullet_ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item("Bullet(Bullet_ShotGun)", 0.032f, 4);
+                    itemDictionary[wantItem][i] = new Item("Bullet(ShotGun)", 0.032f, 4);
                 break;
             case Items.Bullet_SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item("Bullet(Bullet_SniperRifle)", 0.012f, 5);
+                    itemDictionary[wantItem][i] = new Item("Bullet(SniperRifle)", 0.012f, 5);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");
