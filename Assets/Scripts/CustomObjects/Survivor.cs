@@ -376,6 +376,8 @@ public class Survivor : CustomObject
             if (weaponTF != null)
             {
                 weaponTF.gameObject.SetActive(true);
+                Debug.Log(weaponTF.gameObject);
+                Debug.Log(weaponTF.gameObject.activeSelf);
             }
             else
             {
@@ -569,9 +571,8 @@ public class Survivor : CustomObject
     void AE_Reload()
     {
         int amount;
-        if (currentWeapon.itemName == "ShotGun" || currentWeapon.itemName == "SniperRifle") amount = 1;
+        if (currentWeapon.itemName == "ShotGun") amount = 1;
         else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
-
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
     }

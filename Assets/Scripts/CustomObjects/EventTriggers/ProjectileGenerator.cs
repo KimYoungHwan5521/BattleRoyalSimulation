@@ -24,7 +24,6 @@ public class ProjectileGenerator : CustomObject
         for(int i = 0; i < num; i++)
         {
             float rand = Random.Range(-err, err);
-            Debug.Log(rand);
             Vector2 destination = ((Vector2)owner.targetEnemy.transform.position).Rotate(rand);
             bullet.Initiate(weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
         }

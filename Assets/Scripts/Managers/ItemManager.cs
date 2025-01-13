@@ -81,19 +81,19 @@ public class ItemManager
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("AssaultRifle", 3.8f, 70, 50f, 2f, 20f, 0.1f, 30, 3f, 1, 2);
+                    itemDictionary[wantItem][i] = new RangedWeapon("AssaultRifle", 3.8f, 70, 50f, 2f, 20f, 0.1f, 30, 3f, 2, 2);
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("SubMachineGun", 3.0f, 30, 25f, 2f, 12f, 0.075f, 30, 3f, 1, 3);
+                    itemDictionary[wantItem][i] = new RangedWeapon("SubMachineGun", 3.0f, 30, 25f, 2f, 12f, 0.075f, 30, 3f, 2, 3);
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("ShotGun", 3.4f, 10, 20.2f, 2f, 9f, 1.1f, 4, 1f, 1, 4);
+                    itemDictionary[wantItem][i] = new RangedWeapon("ShotGun", 3.4f, 10, 20.2f, 2f, 9f, 1.1f, 4, 1f, 2, 4);
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("SniperRifle", 3.7f, 100, 75f, 2f, 30f, 2.0f, 5, 3f, 1, 5);
+                    itemDictionary[wantItem][i] = new RangedWeapon("SniperRifle", 3.7f, 100, 75f, 2f, 30f, 2.0f, 5, 3f, 2, 5);
                 break;
             // Bullets
             case Items.Bullet_Revolver:
