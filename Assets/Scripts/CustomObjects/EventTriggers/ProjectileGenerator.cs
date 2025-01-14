@@ -15,14 +15,15 @@ public class ProjectileGenerator : CustomObject
     }
     public void SpawnProjectile()
     {
-        GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
-        Bullet bullet = prefab.GetComponent<Bullet>();
         RangedWeapon weapon = owner.CurrentWeapon as RangedWeapon;
+        weapon.Fire();
 
         int num = weapon.itemName == "ShotGun" ? 12 : 1;
 
         for(int i = 0; i < num; i++)
         {
+            GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
+            Bullet bullet = prefab.GetComponent<Bullet>();
             float rand = Random.Range(-err, err);
             Vector2 destination = ((Vector2)owner.targetEnemy.transform.position).Rotate(rand);
             bullet.Initiate(weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);

@@ -376,8 +376,6 @@ public class Survivor : CustomObject
             if (weaponTF != null)
             {
                 weaponTF.gameObject.SetActive(true);
-                Debug.Log(weaponTF.gameObject);
-                Debug.Log(weaponTF.gameObject.activeSelf);
             }
             else
             {
@@ -469,6 +467,7 @@ public class Survivor : CustomObject
     {
         agent.SetDestination(transform.position);
         animator.SetBool("Attack", false);
+        animator.SetBool("Reload", false);
         animator.SetBool("Aim", true);
 
         curShotTime += Time.deltaTime;
@@ -476,7 +475,6 @@ public class Survivor : CustomObject
         {
             animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
             animator.SetTrigger("Fire");
-            CurrentWeaponAsRangedWeapon.Fire();
             curShotTime = 0;
         }
     }
