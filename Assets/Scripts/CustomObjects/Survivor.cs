@@ -254,7 +254,20 @@ public class Survivor : CustomObject
     {
         if (item is Weapon)
         {
-            Weapon weapon = item as Weapon;
+            Weapon newWeapon = item as Weapon;
+            if(CompareWeaponValue(newWeapon))
+            {
+                Equip(newWeapon);
+            }
+            else
+            {
+                inventory.Add(item);
+            }
+        }
+        else if(item.itemName.Contains("Bullet"))
+        {
+            string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
+            RangedWeapon weapon = inventory.Find(x => x.itemName == wantWeapon) as RangedWeapon;
             if(CompareWeaponValue(weapon))
             {
                 Equip(weapon);
