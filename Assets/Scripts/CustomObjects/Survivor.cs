@@ -12,7 +12,7 @@ public class Survivor : CustomObject
     Animator animator;
     NavMeshAgent agent;
 
-    //[SerializeField] bool debug;
+    [SerializeField] bool debug;
     [SerializeField] bool isDead;
     public bool IsDead 
     { 
@@ -20,7 +20,10 @@ public class Survivor : CustomObject
         set 
         { 
             isDead = value;
+            agent.SetDestination(transform.position);
             if(isDead) animator.SetBool("Attack", false);
+            if(isDead) animator.SetBool("Aim", false);
+            if(isDead) animator.SetBool("Reload", false);
         }
     }
     [SerializeField] public Status currentStatus;
@@ -75,6 +78,8 @@ public class Survivor : CustomObject
     [SerializeField] FarmingSection targetFarmingSection;
     [SerializeField] Dictionary<Box, bool> farmingBoxes;
     [SerializeField] Box targetFarmingBox;
+    [SerializeField] Dictionary<Survivor, bool> farmingCorpses = new();
+    [SerializeField] Survivor targetFarmingCorpse;
     [SerializeField] float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
     [SerializeField] float curShotTime;
@@ -140,14 +145,18 @@ public class Survivor : CustomObject
 
             lookRotation = Vector2.zero;
             currentStatus = Status.Farming;
-            if(targetFarmingSection != null)
+            if(targetFarmingCorpse != null)
+            {
+                FarmingCorpse();
+            }
+            else if(targetFarmingSection != null)
             {
                 FarmingSection();
             }
             else
             {
                 Explore();
-                CheckFarmingSection();
+                CheckFarmingTarget();
             }
         }
         else
@@ -155,6 +164,11 @@ public class Survivor : CustomObject
             currentStatus = Status.InCombat;
             if (enemies[0].isDead)
             {
+                if (!farmingCorpses.ContainsKey(enemies[0]))
+                {
+                    farmingCorpses.Add(enemies[0], false);
+                    targetFarmingCorpse = enemies[0];
+                }
                 enemies.Remove(enemies[0]);
             }
             else
@@ -162,6 +176,24 @@ public class Survivor : CustomObject
                 Combat(enemies[0]);
             }
         }
+    }
+
+    void CheckFarmingTarget()
+    {
+        if(!CheckFarmingCorpse()) CheckFarmingSection();
+    }
+
+    bool CheckFarmingCorpse()
+    {
+        foreach(KeyValuePair<Survivor, bool> corpse in farmingCorpses)
+        {
+            if(!corpse.Value)
+            {
+                targetFarmingCorpse = corpse.Key;
+                return true;
+            }
+        }
+        return false;
     }
 
     void CheckFarmingSection()
@@ -190,6 +222,36 @@ public class Survivor : CustomObject
             }
         }
         targetFarmingSection = nearestFarmingSection;
+    }
+
+    void FarmingCorpse()
+    {
+        if (Vector2.Distance(transform.position, targetFarmingCorpse.transform.position) < 1.5f)
+        {
+            agent.SetDestination(transform.position);
+
+            curFarmingTime += Time.deltaTime * farmingSpeed;
+            if (curFarmingTime > farmingTime)
+            {
+                if(targetFarmingCorpse.currentWeapon.IsValid())
+                {
+                    AcqireItem(targetFarmingCorpse.currentWeapon);
+                    targetFarmingCorpse.Unequip();
+                }
+                foreach (Item item in targetFarmingCorpse.inventory)
+                    AcqireItem(item);
+                targetFarmingCorpse.inventory.Clear();
+                farmingCorpses[targetFarmingCorpse] = true;
+                targetFarmingCorpse = null;
+                lookRotation = Vector2.zero;
+                curFarmingTime = 0;
+            }
+            else lookRotation = targetFarmingCorpse.transform.position - transform.position;
+        }
+        else
+        {
+            agent.SetDestination(targetFarmingCorpse.transform.position);
+        }
     }
 
     void FarmingSection()
@@ -268,7 +330,7 @@ public class Survivor : CustomObject
         {
             string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
             RangedWeapon weapon = inventory.Find(x => x.itemName == wantWeapon) as RangedWeapon;
-            if(CompareWeaponValue(weapon))
+            if(weapon != null && CompareWeaponValue(weapon))
             {
                 Equip(weapon);
             }
@@ -360,20 +422,8 @@ public class Survivor : CustomObject
     void Equip(Weapon wantWeapon)
     {
         // 차고 있는 무기가 있으면 놓고
-        if (currentWeapon.IsValid())
-        {
-            inventory.Add(currentWeapon);
-            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemName}");
-            if (curWeaponTF != null)
-            {
-                curWeaponTF.gameObject.SetActive(false);
-                projectileGenerator.muzzleTF = null;
-            }
-            else
-            {
-                Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
-            }
-        }
+        Unequip();
+
         // 새 무기 차기
         if(wantWeapon.IsValid())
         {
@@ -397,6 +447,24 @@ public class Survivor : CustomObject
             currentWeapon = wantWeapon;
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
             if(currentWeapon is RangedWeapon) animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
+        }
+    }
+
+    void Unequip()
+    {
+        if (currentWeapon.IsValid())
+        {
+            inventory.Add(currentWeapon);
+            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemName}");
+            if (curWeaponTF != null)
+            {
+                curWeaponTF.gameObject.SetActive(false);
+                projectileGenerator.muzzleTF = null;
+            }
+            else
+            {
+                Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
+            }
         }
     }
 
@@ -541,7 +609,7 @@ public class Survivor : CustomObject
         // 실효 사거리 밖
         if(bullet.TraveledDistance > bullet.MaxRange * 0.5f)
         {
-            damage *= (bullet.MaxRange - bullet.TraveledDistance) / bullet.MaxRange;
+            damage *= (bullet.MaxRange * 1.5f - bullet.TraveledDistance) / bullet.MaxRange;
         }
 
         if(damage < 0) damage = 0;
@@ -590,15 +658,29 @@ public class Survivor : CustomObject
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if(isDead) return;
         if (!collision.isTrigger)
         {
-            if (collision.TryGetComponent(out Survivor survivor) && !survivor.isDead)
+            if (collision.TryGetComponent(out Survivor survivor))
             {
                 RaycastHit2D hit;
                 hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
-                if(hit.collider == null && !enemies.Contains(survivor))
+                if(hit.collider == null)
                 {
-                    enemies.Add(survivor);
+                    if(survivor.isDead)
+                    {
+                        if(!farmingCorpses.ContainsKey(survivor))
+                        {
+                            farmingCorpses.Add(survivor, false);
+                        }
+                    }
+                    else
+                    {
+                        if(!enemies.Contains(survivor))
+                        {
+                            enemies.Add(survivor);
+                        }
+                    }
                 }
             }
         }
