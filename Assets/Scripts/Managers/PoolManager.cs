@@ -6,10 +6,8 @@ public class PoolManager
 {
     protected static Dictionary<ResourceEnum.Prefab, Queue<GameObject>> poolDictionary = new();
 
-    Transform poolContainer;
     public IEnumerator Initiate()
     {
-        if (poolContainer == null) poolContainer = new GameObject("Pool Container").transform;
         yield return null;
     }
 

@@ -21,9 +21,7 @@ public class Survivor : CustomObject
         { 
             isDead = value;
             agent.SetDestination(transform.position);
-            if(isDead) animator.SetBool("Attack", false);
-            if(isDead) animator.SetBool("Aim", false);
-            if(isDead) animator.SetBool("Reload", false);
+            if(isDead) animator.SetTrigger("Dead");
         }
     }
     [SerializeField] public Status currentStatus;
@@ -115,7 +113,7 @@ public class Survivor : CustomObject
         }
         else
         {
-            Look((Vector2)transform.position - lastPos);
+            Look((Vector2)agent.velocity);
         }
         lastPos = transform.position;
     }
@@ -590,6 +588,7 @@ public class Survivor : CustomObject
 
     public void TakeDamage(Bullet bullet)
     {
+        if (isDead) return;
         float damage;
         float probability = UnityEngine.Random.Range(0, 1f);
         // Çìµå¼¦
