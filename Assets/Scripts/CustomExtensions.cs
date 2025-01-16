@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class CustomExtentions
@@ -39,5 +40,18 @@ public static class CustomExtentions
             }
         }
         return newPath[(path.LastIndexOf("/") + 1)..];
+    }
+
+    public static List<T> Shuffle<T>(this List<T> origin)
+    {
+        List<T> list = new();
+        int length = origin.Count;
+        for(int i=0; i<length; i++)
+        {
+            int index = Random.Range(0, origin.Count);
+            list.Add(origin[index]);
+            origin.RemoveAt(index);
+        }
+        return list;
     }
 }

@@ -2,6 +2,7 @@ public class ResourcesPath
 {
     public static string[] PrefabPathArray =
     {
+        "Prefabs/Survivor",
         "Prefabs/Bullet",
     };
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleRoyalManager
 {
-    FarmingSection[] farmingSections;
+    Area[] areas;
     List<Item> farmingItems = new();
 
     public IEnumerator Initiate()
@@ -22,20 +22,31 @@ public class BattleRoyalManager
         //AddItems(ItemManager.Items.Bullet_ShotGun, 4);
         AddItems(ItemManager.Items.SniperRifle, 1);
         AddItems(ItemManager.Items.Bullet_SniperRifle, 4);
+
+        farmingItems = farmingItems.Shuffle();
+
         int boxIndex;
         int curruntIndex = 0;
-        int remainder;
+        int areaRemainder;
+        int sectionRemainder;
 
-        farmingSections = GameObject.FindObjectsOfType<FarmingSection>();
-        for(int i=0; i< farmingSections.Length; i++)
+        areas = GameObject.FindObjectsOfType<Area>();
+
+        for(int i=0; i< areas.Length; i++)
         {
-            remainder = i < farmingItems.Count % farmingSections.Length ? 1 : 0;
-            for(int j=0; j < farmingItems.Count / farmingSections.Length + remainder; j++)
+            areaRemainder = i < farmingItems.Count % areas.Length ? 1 : 0;
+            int areaItemNum = farmingItems.Count / areas.Length + areaRemainder;
+            for(int j=0; j < areas[i].farmingSections.Length; j++)
             {
-                boxIndex = Random.Range(0, farmingSections[i].boxes.Length);
-                farmingSections[i].boxes[boxIndex].Items.Add(farmingItems[curruntIndex]);
-                curruntIndex++;
-                GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
+                sectionRemainder = j < areaItemNum % areas[i].farmingSections.Length ? 1 : 0;
+                int sectionItemNum = areaItemNum / areas[i].farmingSections.Length + sectionRemainder;
+                for (int k=0; k < sectionItemNum; k++)
+                {
+                    boxIndex = Random.Range(0, areas[i].farmingSections[j].boxes.Length);
+                    areas[i].farmingSections[j].boxes[boxIndex].Items.Add(farmingItems[curruntIndex]);
+                    curruntIndex++;
+                    GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
+                }
             }
         }
         yield return null;
