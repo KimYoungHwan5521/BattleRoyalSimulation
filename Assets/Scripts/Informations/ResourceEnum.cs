@@ -22,6 +22,12 @@ namespace ResourceEnum
 
     public enum SFX
     {
-
+        assaultriflereload1,
+        Handgun_reload,
+        Shotgun_singlebullet,
+        Rack,
+        bang_01,
+        bang_02,
+        bang_06,
     }
 }

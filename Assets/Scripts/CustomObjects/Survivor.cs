@@ -97,13 +97,12 @@ public class Survivor : CustomObject
         agent.speed = moveSpeed;
     }
 
-    private void Update()
+    override protected void MyUpdate()
     {
         if(isDead) return;
         AI();
     }
 
-    Vector2 lastPos;
     private void FixedUpdate()
     {
         if(isDead) return;
@@ -115,7 +114,6 @@ public class Survivor : CustomObject
         {
             Look((Vector2)agent.velocity);
         }
-        lastPos = transform.position;
     }
 
     void Look(Vector2 preferDirection)

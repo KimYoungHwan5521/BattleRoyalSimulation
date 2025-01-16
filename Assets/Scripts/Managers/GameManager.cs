@@ -3,7 +3,7 @@ using System.Resources;
 using UnityEngine;
 
 public delegate void CustomStart();
-public delegate void CustomUpdate(float deltaTime);
+public delegate void CustomUpdate();
 public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => instance;
     ResourceManager resourceManager;
     public ResourceManager ResourceManager => resourceManager;
+    SoundManager soundManager;
+    public SoundManager SoundManager => soundManager;
     PoolManager poolManager;
     public PoolManager PoolManager => poolManager;
     ItemManager itemManager;
@@ -37,6 +39,8 @@ public class GameManager : MonoBehaviour
     {
         resourceManager = new ResourceManager();
         yield return resourceManager.Initiate();
+        soundManager = new SoundManager();
+        yield return soundManager.Initiate();
         poolManager = new PoolManager();
         yield return poolManager.Initiate();
         itemManager = new ItemManager();
@@ -55,8 +59,8 @@ public class GameManager : MonoBehaviour
         ObjectStart?.Invoke();
         ObjectStart = null;
 
-        ManagerUpdate?.Invoke(Time.deltaTime);
-        ObjectUpdate?.Invoke(Time.deltaTime);
+        ManagerUpdate?.Invoke();
+        ObjectUpdate?.Invoke();
 
         ObjectDestroy?.Invoke();
         ObjectDestroy = null;

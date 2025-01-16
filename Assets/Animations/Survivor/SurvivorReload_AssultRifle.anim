@@ -187,29 +187,29 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -878054840, guid: a6e5fc368891b49439b873b2aafb438c, type: 3}
-    - time: 0.083333336
+    - time: 1
       value: {fileID: 1046309812, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.1
+    - time: 1.0166667
       value: {fileID: -1256478765, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.11666667
+    - time: 1.0333333
       value: {fileID: 1602133595, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.13333334
+    - time: 1.05
       value: {fileID: 1349964993, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.15
+    - time: 1.0666667
       value: {fileID: 1569317708, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.16666667
+    - time: 1.0833334
       value: {fileID: -1852780003, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.18333334
+    - time: 1.1
       value: {fileID: -1602573134, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.2
+    - time: 1.1166667
       value: {fileID: 77821343, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.21666667
+    - time: 1.1333333
       value: {fileID: 1044945019, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.23333333
+    - time: 1.15
       value: {fileID: 1385201345, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.25
+    - time: 1.1666666
       value: {fileID: 652576156, guid: 0be5403f939affc478216d077ab298e5, type: 3}
-    - time: 0.26666668
+    - time: 1.1833333
       value: {fileID: -1443714698, guid: 0be5403f939affc478216d077ab298e5, type: 3}
     - time: 2.0166667
       value: {fileID: -1589372886, guid: 85b4b913df85f784890749283712757a, type: 3}
@@ -925,6 +925,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 1
+    functionName: PlaySFX
+    data: assaultriflereload1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 2.2833333
     functionName: AE_Reload
     data: 

@@ -187,29 +187,29 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 208830580, guid: 82a5ecc1b3012a9439ebc30f7f1631fb, type: 3}
-    - time: 0.5
+    - time: 1
       value: {fileID: -1184326339, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.51666665
+    - time: 1.0166667
       value: {fileID: 626736334, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.53333336
+    - time: 1.0333333
       value: {fileID: -1245984361, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.55
+    - time: 1.05
       value: {fileID: -1073793103, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.56666666
+    - time: 1.0666667
       value: {fileID: 402647977, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.5833333
+    - time: 1.0833334
       value: {fileID: -1231513934, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.6
+    - time: 1.1
       value: {fileID: 753719721, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.6166667
+    - time: 1.1166667
       value: {fileID: -1645837907, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.6333333
+    - time: 1.1333333
       value: {fileID: -413311510, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.65
+    - time: 1.15
       value: {fileID: -70952813, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.6666667
+    - time: 1.1666666
       value: {fileID: -1361891167, guid: 87884b7bec70342488596141c790c340, type: 3}
-    - time: 0.68333334
+    - time: 1.1833333
       value: {fileID: 363666287, guid: 87884b7bec70342488596141c790c340, type: 3}
     - time: 2.0333333
       value: {fileID: 747134917, guid: cfdb09f9ecfa6e346a58d4df3682eeb1, type: 3}
@@ -925,6 +925,13 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 1
+    functionName: PlaySFX
+    data: assaultriflereload1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 2.2166667
     functionName: AE_Reload
     data: 
