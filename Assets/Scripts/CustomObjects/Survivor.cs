@@ -1,29 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class Survivor : CustomObject
 {
-    public enum Status{ Farming, InCombat }
+    public enum Status { Farming, InCombat }
 
     [SerializeField] CircleCollider2D recognizeCollider;
+    [SerializeField] CircleCollider2D bodyCollider;
     Animator animator;
     NavMeshAgent agent;
 
     [SerializeField] bool debug;
     [SerializeField] bool isDead;
-    public bool IsDead 
-    { 
+    public bool IsDead
+    {
         get { return isDead; }
-        set 
-        { 
+        set
+        {
             isDead = value;
-            agent.SetDestination(transform.position);
-            if(isDead) animator.SetTrigger("Dead");
+            agent.enabled = false;
+            if (isDead) animator.SetTrigger("Dead");
+            bodyCollider.enabled = false;
         }
     }
+    public string survivorName;
     [SerializeField] public Status currentStatus;
     [SerializeField] float maxHP = 100;
     [SerializeField] float curHP;
@@ -53,7 +58,15 @@ public class Survivor : CustomObject
     ProjectileGenerator projectileGenerator;
 
     [SerializeField] List<Survivor> enemies = new();
-    public Survivor targetEnemy => enemies[0];
+    public Survivor TargetEnemy 
+    { 
+        get
+        {
+            if (enemies.Count == 0) return null;
+            else return enemies[0];
+        }
+    }
+
     [SerializeField] List<Item> inventory = new();
     Item ValidBullet
     {
@@ -72,9 +85,23 @@ public class Survivor : CustomObject
     }
 
     // value : Had finished farming?
+    [SerializeField] public Dictionary<Area, bool> farmingAreas = new();
+    [SerializeField] Area currentFarmingArea;
+    [SerializeField] public Area CurrentFarmingArea
+    {
+        get => currentFarmingArea;
+        set
+        {
+            currentFarmingArea = value;
+            foreach(FarmingSection farmingSection in value.farmingSections)
+            {
+                if(!farmingSections.ContainsKey(farmingSection)) farmingSections.Add(farmingSection, false);
+            }
+        }
+    }
     [SerializeField] Dictionary<FarmingSection, bool> farmingSections = new();
     [SerializeField] FarmingSection targetFarmingSection;
-    [SerializeField] Dictionary<Box, bool> farmingBoxes;
+    [SerializeField] Dictionary<Box, bool> farmingBoxes = new();
     [SerializeField] Box targetFarmingBox;
     [SerializeField] Dictionary<Survivor, bool> farmingCorpses = new();
     [SerializeField] Survivor targetFarmingCorpse;
@@ -151,8 +178,8 @@ public class Survivor : CustomObject
             }
             else
             {
-                Explore();
                 CheckFarmingTarget();
+                Explore();
             }
         }
         else
@@ -194,21 +221,7 @@ public class Survivor : CustomObject
 
     void CheckFarmingSection()
     {
-        FarmingSection nearestFarmingSection = null;
-        float minDistance = float.MaxValue;
-        float distance;
-        foreach (KeyValuePair<FarmingSection, bool> farmingCandidate in farmingSections)
-        {
-            if (!farmingCandidate.Value)
-            {
-                distance = Vector2.Distance(transform.position, farmingCandidate.Key.transform.position);
-                if (distance < minDistance)
-                {
-                    minDistance = distance;
-                    nearestFarmingSection = farmingCandidate.Key;
-                }
-            }
-        }
+        FarmingSection nearestFarmingSection = FindNearest(farmingSections);
         if (nearestFarmingSection != null)
         {
             farmingBoxes = new();
@@ -218,6 +231,45 @@ public class Survivor : CustomObject
             }
         }
         targetFarmingSection = nearestFarmingSection;
+    }
+
+    TKey FindNearest<TKey>(Dictionary<TKey, bool> candidates) where TKey : MonoBehaviour
+    {
+        TKey nearest = default;
+        float minDistance = float.MaxValue;
+        float distance;
+        foreach (KeyValuePair<TKey, bool> candidate in candidates)
+        {
+            if (typeof(TKey) == typeof(Area))
+            {
+                Area area = candidate.Key as Area;
+                if (area.IsProhibited) continue;
+            }
+            if (!candidate.Value)
+            {
+                distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearest = candidate.Key;
+                }
+            }
+        }
+        return nearest;
+    }
+
+    void CheckAreaClear()
+    {
+        bool farmingSectionLeft = false;
+        foreach (FarmingSection farminSection in currentFarmingArea.farmingSections)
+        {
+            if (!farmingSections[farminSection])
+            {
+                farmingSectionLeft = true;
+                return;
+            }
+        }
+        if (!farmingSectionLeft) farmingAreas[currentFarmingArea] = true;
     }
 
     void FarmingCorpse()
@@ -254,25 +306,12 @@ public class Survivor : CustomObject
     {
         if(targetFarmingBox == null)
         {
-            Box nearestBox = null;
-            float minDistance = float.MaxValue;
-            float distance;
-            foreach (KeyValuePair<Box, bool> box in farmingBoxes)
-            {
-                if(!box.Value)
-                {
-                    distance = Vector2.Distance(transform.position, box.Key.transform.position);
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        nearestBox = box.Key;
-                    }
-                }
-            }
+            Box nearestBox = FindNearest(farmingBoxes);
             if(nearestBox == null)
             {
                 farmingSections[targetFarmingSection] = true;
                 targetFarmingSection = null;
+                CheckAreaClear();
                 return;
             }
             targetFarmingBox = nearestBox;
@@ -306,6 +345,57 @@ public class Survivor : CustomObject
         {
             agent.SetDestination(targetFarmingBox.transform.position);
         }
+    }
+
+    bool noMoreFarmingArea;
+    void Explore()
+    {
+        if (!farmingAreas[currentFarmingArea]) return;
+        if (Vector2.Distance(agent.destination, transform.position) < 1f)
+        {
+            if (!noMoreFarmingArea)
+            {
+                foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
+                {
+                    if (!farmingArea.IsProhibited && !farmingAreas[farmingArea])
+                    {
+                        CurrentFarmingArea = farmingArea;
+                        return;
+                    }
+                }
+                Area area = FindNearest(farmingAreas);
+                if (area != null)
+                {
+                    CurrentFarmingArea = area;
+                    return;
+                }
+                else noMoreFarmingArea = true;
+            }
+
+            Vector2 wantPosition = transform.position;
+            wantPosition = new(
+                currentFarmingArea.transform.position.x + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.x * 0.5f, currentFarmingArea.transform.localScale.x * 0.5f),
+                currentFarmingArea.transform.position.y + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.y * 0.5f, currentFarmingArea.transform.localScale.y * 0.5f)
+                );
+
+            agent.SetDestination(wantPosition);
+        }
+    }
+
+    public void LeaveCurrentArea()
+    {
+        farmingAreas[currentFarmingArea] = true;
+        foreach (FarmingSection farmingSection in currentFarmingArea.farmingSections)
+        {
+            if (farmingSections.ContainsKey(farmingSection)) farmingSections[farmingSection] = true;
+            foreach (Box box in farmingSection.boxes)
+            {
+                if(farmingBoxes.ContainsKey(box)) farmingBoxes[box] = true;
+            }
+        }
+        targetFarmingBox = null;
+        targetFarmingSection = null;
+        CurrentFarmingArea = FindNearest(farmingAreas);
     }
 
     void AcqireItem(Item item)
@@ -357,7 +447,9 @@ public class Survivor : CustomObject
     bool CompareWeaponValue(Weapon newWeapon)
     {
         if(!currentWeapon.IsValid()) return true;
-        else if (currentWeapon is MeleeWeapon)
+        if(newWeapon.itemName == currentWeapon.itemName) return false;
+        
+        if (currentWeapon is MeleeWeapon)
         {
             if (newWeapon is RangedWeapon)
             {
@@ -461,14 +553,6 @@ public class Survivor : CustomObject
             {
                 Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
             }
-        }
-    }
-
-    void Explore()
-    {
-        if(Vector2.Distance(agent.destination, transform.position) < 1f)
-        {
-            agent.SetDestination(new Vector2(UnityEngine.Random.Range(-20, 20), UnityEngine.Random.Range(-20, 20)));
         }
     }
 
@@ -582,6 +666,19 @@ public class Survivor : CustomObject
             curHP = 0;
             IsDead = true;
         }
+
+        if(enemies.Contains(attacker))
+        {
+            if(attacker != enemies[0])
+            {
+                enemies.Remove(attacker);
+                enemies.Insert(0, attacker);
+            }
+        }
+        else
+        {
+            enemies.Insert(0, attacker);
+        }
     }
 
     public void TakeDamage(Bullet bullet)
@@ -681,16 +778,16 @@ public class Survivor : CustomObject
                 }
             }
         }
-        else
-        {
-            if(collision.TryGetComponent(out FarmingSection farmingSection))
-            {
-                if(!farmingSections.ContainsKey(farmingSection))
-                {
-                    farmingSections.Add(farmingSection, false);
-                }
-            }
-        }
+        //else
+        //{
+        //    if(collision.TryGetComponent(out FarmingSection farmingSection))
+        //    {
+        //        if(!farmingSections.ContainsKey(farmingSection))
+        //        {
+        //            farmingSections.Add(farmingSection, false);
+        //        }
+        //    }
+        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -704,6 +801,7 @@ public class Survivor : CustomObject
 
     private void OnDrawGizmos()
     {
+        if(isDead) return;
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
     }

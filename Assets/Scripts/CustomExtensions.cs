@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class CustomExtentions
 {
@@ -53,5 +56,12 @@ public static class CustomExtentions
             origin.RemoveAt(index);
         }
         return list;
+    }
+
+    public static T[] Shuffle<T>(this T[] origin)
+    {
+        List<T> list = origin.ToList<T>();
+        list = list.Shuffle();
+        return list.ToArray();
     }
 }

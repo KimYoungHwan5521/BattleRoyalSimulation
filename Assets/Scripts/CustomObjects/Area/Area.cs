@@ -5,7 +5,18 @@ using UnityEngine;
 public class Area : CustomObject
 {
     public FarmingSection[] farmingSections;
-    public bool isProhibited;
+    bool isProhibited;
+    public bool IsProhibited
+    {
+        get => isProhibited;
+        set
+        {
+            isProhibited = value;
+            markProhibitedArea.SetActive(value);
+        }
+    }
+    public Area[] adjacentAreas;
+    [SerializeField] GameObject markProhibitedArea;
 
     protected override void Start()
     {

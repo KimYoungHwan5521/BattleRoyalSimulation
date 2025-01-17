@@ -536,6 +536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recognizeCollider: {fileID: 2722895448075990014}
+  bodyCollider: {fileID: 2819874960600584012}
   debug: 0
   isDead: 0
   currentStatus: 0
@@ -557,6 +558,7 @@ MonoBehaviour:
     attackAnimNumber: 0
   enemies: []
   inventory: []
+  currentFarmingArea: {fileID: 0}
   targetFarmingSection: {fileID: 0}
   targetFarmingBox: {fileID: 0}
   targetFarmingCorpse: {fileID: 0}

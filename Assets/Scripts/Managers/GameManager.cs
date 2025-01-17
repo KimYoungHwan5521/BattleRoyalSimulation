@@ -52,6 +52,15 @@ public class GameManager : MonoBehaviour
         CloseLoadInfo();
     }
 
+    public void Test()
+    {
+        battleRoyalManager.SetProhibitArea(2);
+    }
+    public void Test2()
+    {
+        Time.timeScale = 4;
+    }
+
     void Update()
     {
         ManagerStart?.Invoke();
