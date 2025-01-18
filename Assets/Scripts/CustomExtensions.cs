@@ -48,12 +48,13 @@ public static class CustomExtentions
     public static List<T> Shuffle<T>(this List<T> origin)
     {
         List<T> list = new();
+        List<T> copyOrigin = origin;
         int length = origin.Count;
         for(int i=0; i<length; i++)
         {
-            int index = Random.Range(0, origin.Count);
-            list.Add(origin[index]);
-            origin.RemoveAt(index);
+            int index = Random.Range(0, copyOrigin.Count);
+            list.Add(copyOrigin[index]);
+            copyOrigin.RemoveAt(index);
         }
         return list;
     }

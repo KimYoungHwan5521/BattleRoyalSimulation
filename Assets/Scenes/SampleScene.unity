@@ -3111,6 +3111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 1
   farmingSections: []
   adjacentAreas:
   - {fileID: 1459877933}
@@ -4153,6 +4154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 7
   farmingSections: []
   adjacentAreas:
   - {fileID: 1858561956}
@@ -14458,6 +14460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 8
   farmingSections: []
   adjacentAreas:
   - {fileID: 1574664678}
@@ -19675,6 +19678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 0
   farmingSections: []
   adjacentAreas:
   - {fileID: 227156984}
@@ -20209,6 +20213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 3
   farmingSections: []
   adjacentAreas:
   - {fileID: 1459877933}
@@ -20678,6 +20683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 5
   farmingSections: []
   adjacentAreas:
   - {fileID: 1921566380}
@@ -23985,6 +23991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 4
   farmingSections: []
   adjacentAreas:
   - {fileID: 227156984}
@@ -24984,6 +24991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 2
   farmingSections: []
   adjacentAreas:
   - {fileID: 227156984}
@@ -25515,6 +25523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e6881c026b710f4291567cc25bed300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  areaID: 6
   farmingSections: []
   adjacentAreas:
   - {fileID: 1534498857}

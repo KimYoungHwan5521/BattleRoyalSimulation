@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BattleRoyalManager
@@ -107,8 +108,15 @@ public class BattleRoyalManager
         int count = 0;
         foreach (Area area in areas) if (!area.IsProhibited) count++;
         if (number > count) return;
+        int esc = 0;
         for (int i = 0; i < number; i++)
         {
+            esc++;
+            if (esc > 100)
+            {
+                Debug.LogWarning("Infinite loop detected!");
+                return;
+            }
             Area candidate = areas[Random.Range(0, areas.Length)];
             if (candidate.IsProhibited)
             {
@@ -117,12 +125,60 @@ public class BattleRoyalManager
             }
             else
             {
-                candidate.IsProhibited = true;
-                foreach (Survivor survivor in survivors)
+                if(!CheckPathBlock(candidate))
                 {
-                    if (survivor.CurrentFarmingArea == candidate) survivor.LeaveCurrentArea();
+                    candidate.IsProhibited = true;
+                    foreach (Survivor survivor in survivors)
+                    {
+                        if (survivor.CurrentFarmingArea == candidate) survivor.LeaveCurrentArea();
+                    }
+                }
+                else
+                {
+                    i--;
+                    continue;
                 }
             }
         }
+    }
+
+    // true : blocked, false : not blocked
+    bool CheckPathBlock(Area wantProhibit)
+    {
+        Dictionary<Area, bool> leftAreas = new();
+        foreach(Area area in areas)
+        {
+            if(!area.IsProhibited && area != wantProhibit)
+            {
+                leftAreas.Add(area, false);
+            }
+        }
+
+        Queue<Area> queue = new();
+        List<Area> remember = new();
+        queue.Enqueue(leftAreas.ElementAt(0).Key);
+        remember.Add(leftAreas.ElementAt(0).Key);
+        leftAreas[queue.Peek()] = true;
+        int esc = 0;
+        while(queue.Count > 0)
+        {
+            esc++;
+            if (esc > 100)
+            {
+                Debug.LogWarning("Infinite loop detected!");
+                break;
+            }
+            foreach(Area adjecentArea in queue.Peek().adjacentAreas)
+            {
+                if(!remember.Contains(adjecentArea) && !adjecentArea.IsProhibited && adjecentArea != wantProhibit)
+                {
+                    remember.Add(adjecentArea);
+                    queue.Enqueue(adjecentArea);
+                    leftAreas[adjecentArea] = true;
+                }
+            }
+            queue.Dequeue();
+        }
+        return remember.Count < leftAreas.Count;
     }
 }
