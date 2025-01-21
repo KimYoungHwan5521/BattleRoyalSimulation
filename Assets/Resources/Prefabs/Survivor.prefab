@@ -537,8 +537,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recognizeCollider: {fileID: 2722895448075990014}
   bodyCollider: {fileID: 2819874960600584012}
+  bodySprites:
+  - {fileID: 8473496120922568577}
+  - {fileID: 4349758009342059253}
+  - {fileID: 4366150907094748614}
   debug: 0
   isDead: 0
+  survivorName: 
   currentStatus: 0
   maxHP: 100
   curHP: 0

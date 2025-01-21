@@ -73,11 +73,11 @@ public class ItemManager
             // Ranged Weapons
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1.1f, 50, 20f, 1f, 27f, 1f, 7, 3f, 0, 0);
+                    itemDictionary[wantItem][i] = new RangedWeapon("Revolver", 1.1f, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0);
                 break;
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("Pistol", 0.625f, 30, 20.1f, 1f, 38f, 0.7f, 17, 3f, 0, 1);
+                    itemDictionary[wantItem][i] = new RangedWeapon("Pistol", 0.625f, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1);
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
@@ -93,7 +93,7 @@ public class ItemManager
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("SniperRifle", 3.7f, 100, 75f, 2f, 78f, 2.0f, 5, 3f, 2, 5);
+                    itemDictionary[wantItem][i] = new RangedWeapon("SniperRifle", 3.7f, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5);
                 break;
             // Bullets
             case Items.Bullet_Revolver:

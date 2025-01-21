@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class Survivor : CustomObject
 {
@@ -12,6 +10,7 @@ public class Survivor : CustomObject
 
     [SerializeField] CircleCollider2D recognizeCollider;
     [SerializeField] CircleCollider2D bodyCollider;
+    [SerializeField] SpriteRenderer[] bodySprites;
     Animator animator;
     NavMeshAgent agent;
 
@@ -41,6 +40,7 @@ public class Survivor : CustomObject
     [SerializeField] float farmingSpeed = 1f;
 
     [SerializeField] Vector2 lookRotation = Vector2.zero;
+    public Vector2 LookRotation => lookRotation;
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
@@ -93,6 +93,7 @@ public class Survivor : CustomObject
         set
         {
             currentFarmingArea = value;
+            if (value == null) return;
             foreach(FarmingSection farmingSection in value.farmingSections)
             {
                 if(!farmingSections.ContainsKey(farmingSection)) farmingSections.Add(farmingSection, false);
@@ -350,7 +351,7 @@ public class Survivor : CustomObject
     bool noMoreFarmingArea;
     void Explore()
     {
-        if (!farmingAreas[currentFarmingArea]) return;
+        if (currentFarmingArea == null || !farmingAreas[currentFarmingArea]) return;
         if (Vector2.Distance(agent.destination, transform.position) < 1f)
         {
             if (!noMoreFarmingArea)
@@ -640,6 +641,31 @@ public class Survivor : CustomObject
         }
     }
 
+    void ApplyDamage(Survivor attacker, float damage)
+    {
+        if (damage < 0) damage = 0;
+        curHP -= damage;
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            IsDead = true;
+        }
+
+        if (enemies.Contains(attacker))
+        {
+            if (attacker != enemies[0])
+            {
+                enemies.Remove(attacker);
+                enemies.Insert(0, attacker);
+            }
+        }
+        else
+        {
+            enemies.Insert(0, attacker);
+        }
+
+    }
+
     public void TakeDamage(Survivor attacker, float damage)
     {
         float probability = UnityEngine.Random.Range(0, 1f);
@@ -659,26 +685,7 @@ public class Survivor : CustomObject
             damage *= 2;
         }
 
-        if (damage < 0) damage = 0;
-        curHP -= damage;
-        if (curHP <= 0)
-        {
-            curHP = 0;
-            IsDead = true;
-        }
-
-        if(enemies.Contains(attacker))
-        {
-            if(attacker != enemies[0])
-            {
-                enemies.Remove(attacker);
-                enemies.Insert(0, attacker);
-            }
-        }
-        else
-        {
-            enemies.Insert(0, attacker);
-        }
+        ApplyDamage(attacker, damage);
     }
 
     public void TakeDamage(Bullet bullet)
@@ -689,12 +696,12 @@ public class Survivor : CustomObject
         // Çìµå¼¦
         if(probability > 0.99f)
         {
-            damage = 1000;
+            damage = bullet.Damage * 4;
         }
         // ¹Ùµð¼¦
         else if(probability > 0.3f)
         {
-            damage = bullet.Damage * 3;
+            damage = bullet.Damage * 2;
         }
         else
         {
@@ -706,13 +713,7 @@ public class Survivor : CustomObject
             damage *= (bullet.MaxRange * 1.5f - bullet.TraveledDistance) / bullet.MaxRange;
         }
 
-        if(damage < 0) damage = 0;
-        curHP -= damage;
-        if (curHP <= 0)
-        {
-            curHP = 0;
-            IsDead = true;
-        }
+        ApplyDamage(bullet.Launcher, damage);
     }
 
     void Reload()
@@ -778,16 +779,6 @@ public class Survivor : CustomObject
                 }
             }
         }
-        //else
-        //{
-        //    if(collision.TryGetComponent(out FarmingSection farmingSection))
-        //    {
-        //        if(!farmingSections.ContainsKey(farmingSection))
-        //        {
-        //            farmingSections.Add(farmingSection, false);
-        //        }
-        //    }
-        //}
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -797,6 +788,19 @@ public class Survivor : CustomObject
             if(enemies.Contains(survivor)) enemies.Remove(survivor);
         }
 
+    }
+
+    public void SetColor(float r, float g, float b, float a = 1.0f)
+    {
+        foreach(var sprite in bodySprites)
+        {
+            sprite.color = new Color(r, g, b, a);
+        }
+    }
+
+    public void SetColor(Vector3 rgbVector)
+    {
+        SetColor(rgbVector.x, rgbVector.y, rgbVector.z);
     }
 
     private void OnDrawGizmos()

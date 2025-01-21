@@ -29,6 +29,9 @@ namespace ResourceEnum
         Rack,
         bang_01,
         bang_02,
+        bang_03,
+        bang_04,
+        bang_05,
         bang_06,
     }
 }

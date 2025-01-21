@@ -11,6 +11,17 @@ public class BattleRoyalManager
     public int survivorNumber = 10;
     List<Survivor> survivors = new();
 
+    Vector3[] colorInfo = new Vector3[] 
+    { 
+        new(0, 0, 0), new(1, 0, 0), new(0, 1, 0), new(0, 0, 1), 
+        new(1, 1, 0), new(1, 0, 1), new(0, 1, 1), new(1, 1, 1), 
+        new(0.5f, 0, 0), new(0.5f, 0, 1), new(0.5f, 1, 0), new(0.5f, 1, 1),
+        new(0, 0.5f, 0), new(0, 0.5f, 1), new(1, 0.5f, 0), new(1, 0.5f, 1),
+        new(0, 0, 0.5f), new(0, 1, 0.5f), new(1, 0, 0.5f), new(1, 1, 0.5f),
+        new(0.5f, 0.5f, 0), new(0.5f, 0.5f, 1), new(0.5f, 0, 0.5f), new(0.5f, 1, 0.5f),
+        new(0, 0.5f, 0.5f), new(1, 0.5f, 0.5f), new(0.5f, 0.5f, 0.5f),
+    };
+
     public IEnumerator Initiate()
     {
         areas = GameObject.FindObjectsOfType<Area>();
@@ -33,18 +44,18 @@ public class BattleRoyalManager
     void ItemSetting()
     {
         // AddItems(ItemManager.Items.Knife, 2);
-        AddItems(ItemManager.Items.Revolver, 1);
-        AddItems(ItemManager.Items.Bullet_Revolver, 4);
-        AddItems(ItemManager.Items.Pistol, 1);
-        AddItems(ItemManager.Items.Bullet_Pistol, 4);
+        AddItems(ItemManager.Items.Revolver, 3);
+        AddItems(ItemManager.Items.Bullet_Revolver, 30);
+        AddItems(ItemManager.Items.Pistol, 3);
+        AddItems(ItemManager.Items.Bullet_Pistol, 30);
         AddItems(ItemManager.Items.AssaultRifle, 1);
-        AddItems(ItemManager.Items.Bullet_AssaultRifle, 4);
-        AddItems(ItemManager.Items.SubMachineGun, 1);
-        AddItems(ItemManager.Items.Bullet_SubMachineGun, 4);
-        AddItems(ItemManager.Items.ShotGun, 1);
-        AddItems(ItemManager.Items.Bullet_ShotGun, 4);
+        AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
+        AddItems(ItemManager.Items.SubMachineGun, 2);
+        AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
+        AddItems(ItemManager.Items.ShotGun, 2);
+        AddItems(ItemManager.Items.Bullet_ShotGun, 20);
         AddItems(ItemManager.Items.SniperRifle, 1);
-        AddItems(ItemManager.Items.Bullet_SniperRifle, 4);
+        AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
 
     }
 
@@ -81,7 +92,7 @@ public class BattleRoyalManager
     {
         areas = areas.Shuffle();
 
-        int survivorIndex = 1;
+        int survivorIndex = 0;
         int survivorRemainder;
         for (int i = 0; i < areas.Length; i++)
         {
@@ -97,6 +108,14 @@ public class BattleRoyalManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorName = $"Survivor{survivorIndex}";
+                if(survivorIndex < colorInfo.Length)
+                {
+                    survivor.SetColor(colorInfo[survivorIndex]);
+                }
+                else
+                {
+                    survivor.SetColor(new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1)));
+                }
                 survivorIndex++;
                 survivors.Add(survivor);
             }

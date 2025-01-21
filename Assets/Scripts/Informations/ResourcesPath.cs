@@ -29,6 +29,9 @@ public class ResourcesPath
         "Sounds/SFXs/Guns/Rack",
         "Sounds/SFXs/Guns/bang_01",
         "Sounds/SFXs/Guns/bang_02",
+        "Sounds/SFXs/Guns/bang_03",
+        "Sounds/SFXs/Guns/bang_04",
+        "Sounds/SFXs/Guns/bang_05",
         "Sounds/SFXs/Guns/bang_06",
 
     };

@@ -24,9 +24,10 @@ public class ProjectileGenerator : CustomObject
         {
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
+            Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
             float rand = Random.Range(-err, err);
-            Vector2 destination = ((Vector2)owner.TargetEnemy.transform.position).Rotate(rand);
-            bullet.Initiate(weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
+            destination = destination.Rotate(rand);
+            bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
         }
     }
 

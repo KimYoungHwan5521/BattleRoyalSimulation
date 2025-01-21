@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Bullet : CustomObject
 {
+    Survivor launcher;
+    public Survivor Launcher => launcher;
     SpriteRenderer spriteRenderer;
     Collider2D col;
     TrailRenderer trailRenderer;
@@ -26,8 +28,9 @@ public class Bullet : CustomObject
         trailRenderer = GetComponent<TrailRenderer>();
     }
 
-    public void Initiate(float projectileSpeed, float damage, Vector2 spawndPosition, Vector2 targetPosition, float maxRange)
+    public void Initiate(Survivor launcher, float projectileSpeed, float damage, Vector2 spawndPosition, Vector2 targetPosition, float maxRange)
     {
+        this.launcher = launcher;
         this.projectileSpeed = projectileSpeed;
         this.damage = damage;
         this.spawnedPosition = spawndPosition;
