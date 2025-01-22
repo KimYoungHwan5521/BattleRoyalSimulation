@@ -22,9 +22,13 @@ public class Survivor : CustomObject
         set
         {
             isDead = value;
-            agent.enabled = false;
-            if (isDead) animator.SetTrigger("Dead");
-            bodyCollider.enabled = false;
+            if (isDead)
+            {
+                agent.enabled = false;
+                animator.SetTrigger("Dead");
+                bodyCollider.enabled = false;
+                currentFarmingArea = GetCorpseArea();
+            }
         }
     }
     public string survivorName;
@@ -275,6 +279,12 @@ public class Survivor : CustomObject
 
     void FarmingCorpse()
     {
+        if (targetFarmingCorpse.CurrentFarmingArea == null || targetFarmingCorpse.currentFarmingArea.IsProhibited)
+        {
+            farmingCorpses[targetFarmingCorpse] = true;
+            targetFarmingCorpse = null;
+            return;
+        }
         if (Vector2.Distance(transform.position, targetFarmingCorpse.transform.position) < 1.5f)
         {
             agent.SetDestination(transform.position);
@@ -649,6 +659,7 @@ public class Survivor : CustomObject
         {
             curHP = 0;
             IsDead = true;
+            Debug.Log($"{survivorName} is eliminated by {attacker.survivorName}");
         }
 
         if (enemies.Contains(attacker))
@@ -786,6 +797,7 @@ public class Survivor : CustomObject
         if (!collision.isTrigger && collision.TryGetComponent(out Survivor survivor))
         {
             if(enemies.Contains(survivor)) enemies.Remove(survivor);
+            if (survivor.isDead && !farmingCorpses.ContainsKey(survivor)) farmingCorpses.Add(survivor, false);
         }
 
     }
@@ -801,6 +813,22 @@ public class Survivor : CustomObject
     public void SetColor(Vector3 rgbVector)
     {
         SetColor(rgbVector.x, rgbVector.y, rgbVector.z);
+    }
+
+    Area GetCorpseArea()
+    {
+        foreach(var area in farmingAreas)
+        {
+            Transform areaTransform = area.Key.transform;
+            if (transform.position.x > areaTransform.position.x - areaTransform.localScale.x * 0.5f 
+                && transform.position.x < areaTransform.position.x + areaTransform.localScale.x * 0.5f
+                && transform.position.y > areaTransform.position.y - areaTransform.localScale.y * 0.5f
+                && transform.position.y < areaTransform.position.y + areaTransform.localScale.y * 0.5f)
+            {
+                return area.Key;
+            }
+        }
+        return null;
     }
 
     private void OnDrawGizmos()

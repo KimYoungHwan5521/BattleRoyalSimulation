@@ -18,17 +18,33 @@ public class ProjectileGenerator : CustomObject
         RangedWeapon weapon = owner.CurrentWeapon as RangedWeapon;
         weapon.Fire();
 
-        int num = weapon.itemName == "ShotGun" ? 12 : 1;
+        if(weapon.itemName == "ShotGun")
+        {
+            SpawnProjectile_ShotGun(weapon);
+            return;
+        }
 
-        for(int i = 0; i < num; i++)
+        GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
+        Bullet bullet = prefab.GetComponent<Bullet>();
+        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
+        float rand = Random.Range(-err, err);
+        if (weapon.itemName == "SniperRifle") rand *= 0.67f;
+        destination = destination.Rotate(rand);
+        bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
+    }
+    
+    void SpawnProjectile_ShotGun(RangedWeapon weapon)
+    {
+        for(int i = 0; i < 12; i++)
         {
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
             Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
-            float rand = Random.Range(-err, err);
+            float rand = Random.Range(-15, 15);
             destination = destination.Rotate(rand);
             bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
         }
+
     }
 
     public void ResetMuzzleTF()

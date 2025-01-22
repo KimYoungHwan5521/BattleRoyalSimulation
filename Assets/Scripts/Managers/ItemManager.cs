@@ -89,7 +89,7 @@ public class ItemManager
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon("ShotGun", 3.4f, 10, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4);
+                    itemDictionary[wantItem][i] = new RangedWeapon("ShotGun", 3.4f, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4);
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
