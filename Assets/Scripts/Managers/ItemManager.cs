@@ -26,6 +26,14 @@ public class ItemManager
         Bullet_SubMachineGun,
         Bullet_ShotGun,
         Bullet_SniperRifle,
+        // BulletproofHat
+        LowLevelBulletproofHat,
+        MiddleLevelBulletproofHat,
+        HighLevelBulletproofHat,
+        // BulletproofVest
+        LowLevelBulletproofVest,
+        MiddleLevelBulletproofVest,
+        HighLevelBulletproofVest,
     }
     public Dictionary<Items, Item[]> itemDictionary = new();
     public IEnumerator Initiate()
@@ -119,6 +127,30 @@ public class ItemManager
             case Items.Bullet_SniperRifle:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new Item("Bullet(SniperRifle)", 0.012f, 5);
+                break;
+            case Items.LowLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofVest("LowLevelBulletproofVest", 3f, 15);
+                break;
+            case Items.MiddleLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofVest("MiddleLevelBulletproofVest", 7f, 25);
+                break;
+            case Items.HighLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofVest("HighLevelBulletproofVest", 10f, 40);
+                break;
+            case Items.LowLevelBulletproofHat:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofHat("LowLevelBulletproofHat", 0.7f, 60);
+                break;
+            case Items.MiddleLevelBulletproofHat:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofHat("MiddleLevelBulletproofHat", 1.2f, 100);
+                break;
+            case Items.HighLevelBulletproofHat:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new BulletproofHat("HighLevelBulletproofHat", 1.6f, 140);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

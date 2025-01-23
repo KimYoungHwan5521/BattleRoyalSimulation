@@ -10,6 +10,8 @@ public class BattleRoyalManager
 
     public int survivorNumber = 10;
     List<Survivor> survivors = new();
+    static List<Survivor> aliveSurvivors = new();
+    public static List<Survivor> AliveSurvivors => aliveSurvivors;
 
     Vector3[] colorInfo = new Vector3[] 
     { 
@@ -56,6 +58,12 @@ public class BattleRoyalManager
         AddItems(ItemManager.Items.Bullet_ShotGun, 20);
         AddItems(ItemManager.Items.SniperRifle, 1);
         AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
+        AddItems(ItemManager.Items.LowLevelBulletproofHat, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofHat, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofHat, 1);
+        AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
 
     }
 
@@ -118,6 +126,7 @@ public class BattleRoyalManager
                 }
                 survivorIndex++;
                 survivors.Add(survivor);
+                aliveSurvivors.Add(survivor);
             }
         }
     }
@@ -199,5 +208,14 @@ public class BattleRoyalManager
             queue.Dequeue();
         }
         return remember.Count < leftAreas.Count;
+    }
+
+    public static void SurvivorDead(Survivor survivor)
+    {
+        if(aliveSurvivors.Contains(survivor))
+        {
+            aliveSurvivors.Remove(survivor);
+            if(aliveSurvivors.Count == 1) Debug.Log($"{aliveSurvivors[0]} wins!");
+        }
     }
 }
