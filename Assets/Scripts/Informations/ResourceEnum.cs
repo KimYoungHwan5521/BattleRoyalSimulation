@@ -33,5 +33,7 @@ namespace ResourceEnum
         bang_04,
         bang_05,
         bang_06,
+        ricochet,
+        ricochet2,
     }
 }

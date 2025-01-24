@@ -98,7 +98,7 @@ public class ResourceManager
         try
         {
             value loadedData = Resources.Load<value>(path);
-            if (loadedData == null) throw new Exception("File not found");
+            if (loadedData == null) throw new Exception($"File not found : '{path}'");
             return loadedData;
 
         }

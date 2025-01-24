@@ -27,9 +27,9 @@ public class ItemManager
         Bullet_ShotGun,
         Bullet_SniperRifle,
         // BulletproofHat
-        LowLevelBulletproofHat,
-        MiddleLevelBulletproofHat,
-        HighLevelBulletproofHat,
+        LowLevelBulletproofHelmet,
+        MiddleLevelBulletproofHelmet,
+        HighLevelBulletproofHelmet,
         // BulletproofVest
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
@@ -140,17 +140,17 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new BulletproofVest("HighLevelBulletproofVest", 10f, 40);
                 break;
-            case Items.LowLevelBulletproofHat:
+            case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHat("LowLevelBulletproofHat", 0.7f, 60);
+                    itemDictionary[wantItem][i] = new BulletproofHelmet("LowLevelBulletproofHelmet", 0.7f, 60);
                 break;
-            case Items.MiddleLevelBulletproofHat:
+            case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHat("MiddleLevelBulletproofHat", 1.2f, 100);
+                    itemDictionary[wantItem][i] = new BulletproofHelmet("MiddleLevelBulletproofHelmet", 1.2f, 100);
                 break;
-            case Items.HighLevelBulletproofHat:
+            case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHat("HighLevelBulletproofHat", 1.6f, 140);
+                    itemDictionary[wantItem][i] = new BulletproofHelmet("HighLevelBulletproofHelmet", 1.6f, 140);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

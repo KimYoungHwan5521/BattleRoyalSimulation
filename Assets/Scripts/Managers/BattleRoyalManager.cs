@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BattleRoyalManager
 {
@@ -58,9 +59,9 @@ public class BattleRoyalManager
         AddItems(ItemManager.Items.Bullet_ShotGun, 20);
         AddItems(ItemManager.Items.SniperRifle, 1);
         AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
-        AddItems(ItemManager.Items.LowLevelBulletproofHat, 4);
-        AddItems(ItemManager.Items.MiddleLevelBulletproofHat, 2);
-        AddItems(ItemManager.Items.HighLevelBulletproofHat, 1);
+        AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
         AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
         AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
         AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
@@ -128,6 +129,11 @@ public class BattleRoyalManager
                 survivors.Add(survivor);
                 aliveSurvivors.Add(survivor);
             }
+        }
+
+        foreach(Survivor survivor in survivors)
+        {
+            survivor.GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 

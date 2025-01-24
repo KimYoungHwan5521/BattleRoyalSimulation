@@ -81,6 +81,17 @@ public class Bullet : CustomObject
                 Survivor victim = collision.GetComponent<Survivor>();
                 victim.TakeDamage(this);
             }
+            else
+            {
+                if(Random.Range(0, 1f) < 0.5f)
+                {
+                    SoundManager.Play(ResourceEnum.SFX.ricochet, transform.position);
+                }
+                else
+                {
+                    SoundManager.Play(ResourceEnum.SFX.ricochet2, transform.position);
+                }
+            }
             DelayedDespawn();
         }
     }

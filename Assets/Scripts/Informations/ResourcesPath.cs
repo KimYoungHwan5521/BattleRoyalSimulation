@@ -33,7 +33,8 @@ public class ResourcesPath
         "Sounds/SFXs/Guns/bang_04",
         "Sounds/SFXs/Guns/bang_05",
         "Sounds/SFXs/Guns/bang_06",
-
+        "Sounds/SFXs/Guns/ricochet",
+        "Sounds/SFXs/Guns/ricochet2",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";
