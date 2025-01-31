@@ -14,10 +14,13 @@ public class Bullet : CustomObject
     public float Damage => damage;
     Vector2 spawnedPosition;
     Vector2 targetPosition;
-    Vector3 direction;
+    Vector2 direction;
     float maxRange;
     public float MaxRange => maxRange;
     public float TraveledDistance { get { return Vector2.Distance(transform.position, spawnedPosition); } }
+
+    float err = 5f;
+
     bool initiated;
 
     protected override void Start()
@@ -35,8 +38,14 @@ public class Bullet : CustomObject
         this.damage = damage;
         this.spawnedPosition = spawndPosition;
         this.targetPosition = targetPosition;
+
         direction = targetPosition - spawnedPosition;
         direction.Normalize();
+        if (launcher.CurrentWeapon.itemName == "Shotgun") err = 7.5f;
+        float rand = Random.Range(-err, err);
+        if (launcher.CurrentWeapon.itemName == "SniperRifle") rand *= 0.67f;
+        direction = direction.Rotate(rand);
+
         this.maxRange = maxRange;
 
         initiated = true;
@@ -69,7 +78,7 @@ public class Bullet : CustomObject
         {
             DelayedDespawn();
         }
-        transform.position += Time.fixedDeltaTime * projectileSpeed * direction;
+        transform.position += Time.fixedDeltaTime * projectileSpeed * (Vector3)direction;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

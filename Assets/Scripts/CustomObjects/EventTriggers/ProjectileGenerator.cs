@@ -6,7 +6,6 @@ public class ProjectileGenerator : CustomObject
 {
     Survivor owner;
     public Transform muzzleTF;
-    [SerializeField]float err = 15f;
 
     protected override void Start()
     {
@@ -27,9 +26,6 @@ public class ProjectileGenerator : CustomObject
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
         Bullet bullet = prefab.GetComponent<Bullet>();
         Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
-        float rand = Random.Range(-err, err);
-        if (weapon.itemName == "SniperRifle") rand *= 0.67f;
-        destination = destination.Rotate(rand);
         bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
     }
     
@@ -40,8 +36,6 @@ public class ProjectileGenerator : CustomObject
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
             Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
-            float rand = Random.Range(-15, 15);
-            destination = destination.Rotate(rand);
             bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
         }
 

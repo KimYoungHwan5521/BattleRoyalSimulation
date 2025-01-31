@@ -9,7 +9,7 @@ public class BattleRoyalManager
     Area[] areas;
     List<Item> farmingItems = new();
 
-    public int survivorNumber = 10;
+    public int survivorNumber = 2;
     List<Survivor> survivors = new();
     static List<Survivor> aliveSurvivors = new();
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
@@ -47,24 +47,24 @@ public class BattleRoyalManager
     void ItemSetting()
     {
         // AddItems(ItemManager.Items.Knife, 2);
-        AddItems(ItemManager.Items.Revolver, 3);
-        AddItems(ItemManager.Items.Bullet_Revolver, 30);
-        AddItems(ItemManager.Items.Pistol, 3);
-        AddItems(ItemManager.Items.Bullet_Pistol, 30);
-        AddItems(ItemManager.Items.AssaultRifle, 1);
-        AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
-        AddItems(ItemManager.Items.SubMachineGun, 2);
-        AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
-        AddItems(ItemManager.Items.ShotGun, 2);
+        //AddItems(ItemManager.Items.Revolver, 3);
+        //AddItems(ItemManager.Items.Bullet_Revolver, 30);
+        //AddItems(ItemManager.Items.Pistol, 3);
+        //AddItems(ItemManager.Items.Bullet_Pistol, 30);
+        //AddItems(ItemManager.Items.AssaultRifle, 1);
+        //AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
+        //AddItems(ItemManager.Items.SubMachineGun, 2);
+        //AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
+        AddItems(ItemManager.Items.ShotGun, 1);
         AddItems(ItemManager.Items.Bullet_ShotGun, 20);
-        AddItems(ItemManager.Items.SniperRifle, 1);
-        AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
-        AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
-        AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
-        AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
-        AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
-        AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
-        AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
+        //AddItems(ItemManager.Items.SniperRifle, 1);
+        //AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
+        //AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
+        //AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
+        //AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
+        //AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
+        //AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
+        //AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
 
     }
 
