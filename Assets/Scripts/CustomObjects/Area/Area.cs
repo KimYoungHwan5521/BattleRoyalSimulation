@@ -5,6 +5,16 @@ using UnityEngine;
 public class Area : CustomObject
 {
     public FarmingSection[] farmingSections;
+    bool isProhibited_Plan;
+    public bool IsProhibited_Plan
+    {
+        get => isProhibited_Plan;
+        set
+        {
+            isProhibited_Plan = value;
+            markProhibitedArea_Plan.SetActive(value);
+        }
+    }
     bool isProhibited;
     public bool IsProhibited
     {
@@ -13,9 +23,11 @@ public class Area : CustomObject
         {
             isProhibited = value;
             markProhibitedArea.SetActive(value);
+            IsProhibited_Plan = !value;
         }
     }
     public Area[] adjacentAreas;
+    [SerializeField] GameObject markProhibitedArea_Plan;
     [SerializeField] GameObject markProhibitedArea;
 
     protected override void Start()

@@ -10,6 +10,10 @@ public class BattleRoyalManager
     List<Item> farmingItems = new();
 
     public int survivorNumber = 2;
+    bool isBattleRoyalStart;
+    float areaProhibitTime = 3;
+    float curAreaProhibitTime;
+
     List<Survivor> survivors = new();
     static List<Survivor> aliveSurvivors = new();
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
@@ -28,11 +32,26 @@ public class BattleRoyalManager
     public IEnumerator Initiate()
     {
         areas = GameObject.FindObjectsOfType<Area>();
+        GameManager.Instance.ManagerUpdate += BattleRoyalManagerUpdate;
 
         ItemSetting();
         ItemPlacing();
         SpawnPlayers();
+        BattleRoyalStart();
         yield return null;
+    }
+
+    void BattleRoyalManagerUpdate()
+    {
+        if(isBattleRoyalStart)
+        {
+            curAreaProhibitTime += Time.deltaTime;
+            if(curAreaProhibitTime > areaProhibitTime)
+            {
+                SetProhibitArea(1);
+                curAreaProhibitTime = 0;
+            }
+        }
     }
 
     void AddItems(ItemManager.Items wantItem, int count = 1)
@@ -110,8 +129,8 @@ public class BattleRoyalManager
             for (int j = 0; j < areaSurvivorNum; j++)
             {
                 Vector2 spawnPosition = new(
-                    areas[i].transform.position.x + Random.Range(-areas[i].transform.localScale.x * 0.5f, areas[i].transform.localScale.x * 0.5f),
-                    areas[i].transform.position.y + Random.Range(-areas[i].transform.localScale.y * 0.5f, areas[i].transform.localScale.y * 0.5f)
+                    areas[i].transform.position.x + Random.Range(-areas[i].transform.localScale.x * 0.5f + 20, areas[i].transform.localScale.x * 0.5f - 20),
+                    areas[i].transform.position.y + Random.Range(-areas[i].transform.localScale.y * 0.5f + 20, areas[i].transform.localScale.y * 0.5f - 20)
                     );
                 Survivor survivor = PoolManager.Spawn(ResourceEnum.Prefab.Survivor, spawnPosition).GetComponent<Survivor>();
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
@@ -130,18 +149,14 @@ public class BattleRoyalManager
                 aliveSurvivors.Add(survivor);
             }
         }
-
-        foreach(Survivor survivor in survivors)
-        {
-            survivor.GetComponent<NavMeshAgent>().enabled = true;
-        }
     }
 
     public void SetProhibitArea(int number)
     {
         int count = 0;
-        foreach (Area area in areas) if (!area.IsProhibited) count++;
-        if (number > count) return;
+        foreach (Area area in areas) if (area.IsProhibited_Plan) area.IsProhibited = true;
+        foreach (Area area in areas) if (!area.IsProhibited_Plan && !area.IsProhibited) count++;
+        if (number >= count) return;
         int esc = 0;
         for (int i = 0; i < number; i++)
         {
@@ -152,7 +167,7 @@ public class BattleRoyalManager
                 return;
             }
             Area candidate = areas[Random.Range(0, areas.Length)];
-            if (candidate.IsProhibited)
+            if (candidate.IsProhibited || candidate.IsProhibited_Plan)
             {
                 i--;
                 continue;
@@ -161,7 +176,7 @@ public class BattleRoyalManager
             {
                 if(!CheckPathBlock(candidate))
                 {
-                    candidate.IsProhibited = true;
+                    candidate.IsProhibited_Plan = true;
                     foreach (Survivor survivor in survivors)
                     {
                         if (survivor.CurrentFarmingArea == candidate) survivor.LeaveCurrentArea();
@@ -182,7 +197,7 @@ public class BattleRoyalManager
         Dictionary<Area, bool> leftAreas = new();
         foreach(Area area in areas)
         {
-            if(!area.IsProhibited && area != wantProhibit)
+            if(!area.IsProhibited && !area.IsProhibited_Plan && area != wantProhibit)
             {
                 leftAreas.Add(area, false);
             }
@@ -204,7 +219,7 @@ public class BattleRoyalManager
             }
             foreach(Area adjecentArea in queue.Peek().adjacentAreas)
             {
-                if(!remember.Contains(adjecentArea) && !adjecentArea.IsProhibited && adjecentArea != wantProhibit)
+                if(!remember.Contains(adjecentArea) && !adjecentArea.IsProhibited && !adjecentArea.IsProhibited_Plan && adjecentArea != wantProhibit)
                 {
                     remember.Add(adjecentArea);
                     queue.Enqueue(adjecentArea);
@@ -223,5 +238,14 @@ public class BattleRoyalManager
             aliveSurvivors.Remove(survivor);
             if(aliveSurvivors.Count == 1) Debug.Log($"{aliveSurvivors[0]} wins!");
         }
+    }
+
+    void BattleRoyalStart()
+    {
+        foreach (Survivor survivor in survivors)
+        {
+            survivor.GetComponent<NavMeshAgent>().enabled = true;
+        }
+        isBattleRoyalStart = true;
     }
 }

@@ -41,7 +41,7 @@ public class Survivor : CustomObject
     [SerializeField] float attackSpeed = 1f;
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
-    [SerializeField] float detectionRange = 10f;
+    [SerializeField] float detectionRange = 30f;
     [SerializeField] float farmingSpeed = 1f;
 
     [SerializeField] Vector2 lookRotation = Vector2.zero;
@@ -251,7 +251,7 @@ public class Survivor : CustomObject
             if (typeof(TKey) == typeof(Area))
             {
                 Area area = candidate.Key as Area;
-                if (area.IsProhibited) continue;
+                if (area.IsProhibited || area.IsProhibited_Plan) continue;
             }
             if (!candidate.Value)
             {
@@ -282,7 +282,7 @@ public class Survivor : CustomObject
 
     void FarmingCorpse()
     {
-        if (targetFarmingCorpse.CurrentFarmingArea == null || targetFarmingCorpse.currentFarmingArea.IsProhibited)
+        if (targetFarmingCorpse.CurrentFarmingArea == null || targetFarmingCorpse.currentFarmingArea.IsProhibited || targetFarmingCorpse.currentFarmingArea.IsProhibited_Plan)
         {
             farmingCorpses[targetFarmingCorpse] = true;
             targetFarmingCorpse = null;
@@ -371,7 +371,7 @@ public class Survivor : CustomObject
             {
                 foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
                 {
-                    if (!farmingArea.IsProhibited && !farmingAreas[farmingArea])
+                    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
                     {
                         CurrentFarmingArea = farmingArea;
                         return;
