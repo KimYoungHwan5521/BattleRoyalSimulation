@@ -2,6 +2,7 @@ namespace ResourceEnum
 {
     public enum Prefab
     {
+        Test,
         Survivor,
         Bullet,
     }

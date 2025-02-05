@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,19 @@ public class InGameUIManager : MonoBehaviour
 
     Vector2 navVector;
 
+    [SerializeField] CustomObject selectedObject;
+    [SerializeField] GameObject selectedObjectInfo;
+    [SerializeField] TextMeshProUGUI selectedObjectName;
+
     private void Update()
+    {
+        ManualCameraMove();
+        SetSelectedObjectInfo();
+    }
+    //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
+    //public void Accelerate() { if (Time.timeScale < 16) Time.timeScale *= 2; else Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
+
+    void ManualCameraMove()
     {
         Camera.main.transform.position += (Vector3)navVector * Camera.main.orthographicSize * 0.2f;
         if (isClicked)
@@ -19,8 +32,6 @@ public class InGameUIManager : MonoBehaviour
             Camera.main.transform.position = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
         }
     }
-    //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
-    //public void Accelerate() { if (Time.timeScale < 16) Time.timeScale *= 2; else Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
 
     void OnNavigate(InputValue value)
     {
@@ -39,6 +50,55 @@ public class InGameUIManager : MonoBehaviour
         {
             clickPos = Input.mousePosition;
             cameraPosBeforeClick = Camera.main.transform.position;
+            
+            SelectObject();
+        }
+
+    }
+
+    void SelectObject()
+    {
+        Vector2 targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D[] hits = Physics2D.OverlapPointAll(targetPos);
+
+        bool selectedNotNull = false;
+        foreach (Collider2D hit in hits)
+        {
+            if(!hit.isTrigger && hit.TryGetComponent(out CustomObject clickedObject))
+            {
+                if(clickedObject is Survivor || clickedObject is Box)
+                {
+                    selectedObject = clickedObject;
+                    selectedNotNull = true;
+                    break;
+                }
+            }
+        }
+        if(!selectedNotNull) selectedObject = null;
+    }
+
+    void SetSelectedObjectInfo()
+    {
+        if(selectedObject == null)
+        {
+            selectedObjectInfo.SetActive(false);
+        }
+        else
+        {
+            selectedObjectInfo.SetActive(true);
+            if(selectedObject is Survivor)
+            {
+                Survivor selectedSurvivor = selectedObject as Survivor;
+                selectedObjectName.text = selectedSurvivor.survivorName;
+            }
+            else if(selectedObject is Box)
+            {
+                selectedObjectName.text = "Box";
+            }
+            else
+            {
+                selectedObjectInfo.SetActive(false);
+            }
         }
     }
 }
