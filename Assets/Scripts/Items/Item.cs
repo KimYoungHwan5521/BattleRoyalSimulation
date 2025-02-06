@@ -17,9 +17,4 @@ public class Item
         this.amount = amount;
     }
 
-    public bool IsValid()
-    {
-        if(itemName == null || itemName == "") return false;
-        return true;
-    }
 }

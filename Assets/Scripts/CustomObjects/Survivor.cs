@@ -61,8 +61,10 @@ public class Survivor : CustomObject
         }
     }
     ProjectileGenerator projectileGenerator;
-    [SerializeField] BulletproofHelmet bulletproofHelmet;
-    [SerializeField] BulletproofVest bulletproofVest;
+    [SerializeField] BulletproofHelmet currentHelmet;
+    public BulletproofHelmet CurrentHelmet => currentHelmet;
+    [SerializeField] BulletproofVest currentVest;
+    public BulletproofVest CurrentVest => currentVest;
 
     [SerializeField] List<Survivor> enemies = new();
     public Survivor TargetEnemy 
@@ -75,6 +77,7 @@ public class Survivor : CustomObject
     }
 
     [SerializeField] List<Item> inventory = new();
+    public List<Item> Inventory => inventory;
     Item ValidBullet
     {
         get
@@ -295,7 +298,7 @@ public class Survivor : CustomObject
             curFarmingTime += Time.deltaTime * farmingSpeed;
             if (curFarmingTime > farmingTime)
             {
-                if(targetFarmingCorpse.currentWeapon.IsValid())
+                if(IsValid(targetFarmingCorpse.currentWeapon))
                 {
                     AcqireItem(targetFarmingCorpse.currentWeapon);
                     targetFarmingCorpse.UnequipWeapon();
@@ -345,9 +348,9 @@ public class Survivor : CustomObject
             curFarmingTime += Time.deltaTime * farmingSpeed;
             if (curFarmingTime > farmingTime)
             {
-                foreach (Item item in targetFarmingBox.Items)
+                foreach (Item item in targetFarmingBox.items)
                     AcqireItem(item);
-                targetFarmingBox.Items.Clear();
+                targetFarmingBox.items.Clear();
                 farmingBoxes[targetFarmingBox] = true;
                 targetFarmingBox = null;
                 lookRotation = Vector2.zero;
@@ -412,6 +415,12 @@ public class Survivor : CustomObject
         CurrentFarmingArea = FindNearest(farmingAreas);
     }
 
+    public bool IsValid(Item item)
+    {
+        if (item == null || item.itemName == null ||  item.itemName == "") return false;
+        return true;
+    }
+
     void AcqireItem(Item item)
     {
         if (item is Weapon)
@@ -423,7 +432,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                inventory.Add(item);
+                GetItem(item);
             }
         }
         else if(item is BulletproofHelmet)
@@ -435,7 +444,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                inventory.Add(item);
+                GetItem(item);
             }
         }
         else if(item is BulletproofVest)
@@ -447,7 +456,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                inventory.Add(item);
+                GetItem(item);
             }
         }
         else if(item.itemName.Contains("Bullet"))
@@ -460,8 +469,21 @@ public class Survivor : CustomObject
             }
             else
             {
-                inventory.Add(item);
+                GetItem(item);
             }
+        }
+        else
+        {
+            GetItem(item);
+        }
+    }
+
+    void GetItem(Item item)
+    {
+        Item sameItem = inventory.Find(x => x.itemName == item.itemName);
+        if (sameItem != null)
+        {
+            sameItem.amount += item.amount;
         }
         else
         {
@@ -484,7 +506,7 @@ public class Survivor : CustomObject
 
     bool CompareWeaponValue(Weapon newWeapon)
     {
-        if(currentWeapon == null || !currentWeapon.IsValid()) return true;
+        if(!IsValid(currentWeapon)) return true;
         if(newWeapon.itemName == currentWeapon.itemName) return false;
         
         if (currentWeapon is MeleeWeapon)
@@ -547,14 +569,14 @@ public class Survivor : CustomObject
 
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
     {
-        if (bulletproofHelmet == null || !bulletproofHelmet.IsValid()) return true;
-        return newBulletproofHelmet.Armor > bulletproofHelmet.Armor;
+        if (!IsValid(currentHelmet)) return true;
+        return newBulletproofHelmet.Armor > currentHelmet.Armor;
     }
 
     bool CompareBulletproofVestValue(BulletproofVest newBulletproofVest)
     {
-        if (bulletproofVest == null || !bulletproofVest.IsValid()) return true;
-        return newBulletproofVest.Armor > bulletproofVest.Armor;
+        if (!IsValid(currentVest)) return true;
+        return newBulletproofVest.Armor > currentVest.Armor;
     }
 
     void Equip(Weapon wantWeapon)
@@ -563,7 +585,7 @@ public class Survivor : CustomObject
         UnequipWeapon();
 
         // 새 무기 차기
-        if(wantWeapon.IsValid())
+        if(IsValid(wantWeapon))
         {
             Transform weaponTF = null;
             // Active가 꺼져있는 오브젝트는 Find로 찾을 수 없다.
@@ -590,9 +612,9 @@ public class Survivor : CustomObject
 
     void UnequipWeapon()
     {
-        if (currentWeapon != null && currentWeapon.IsValid())
+        if (IsValid(currentWeapon))
         {
-            inventory.Add(currentWeapon);
+            GetItem(currentWeapon);
             Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemName}");
             if (curWeaponTF != null)
             {
@@ -611,7 +633,7 @@ public class Survivor : CustomObject
     {
         UnequipBulletproofHelmet();
 
-        if (wantBulletproofHelmet.IsValid())
+        if (IsValid(wantBulletproofHelmet))
         {
             Transform weaponTF = null;
             foreach (Transform child in transform.Find("Head"))
@@ -629,25 +651,25 @@ public class Survivor : CustomObject
             {
                 Debug.LogWarning($"Can't find helmet : {wantBulletproofHelmet.itemName}");
             }
-            bulletproofHelmet = wantBulletproofHelmet;
+            currentHelmet = wantBulletproofHelmet;
         }
     }
 
     void UnequipBulletproofHelmet()
     {
-        if (bulletproofHelmet != null && bulletproofHelmet.IsValid())
+        if (IsValid(currentHelmet))
         {
-            inventory.Add(bulletproofHelmet);
-            Transform curWeaponTF = transform.Find("Head").Find($"{bulletproofHelmet.itemName}");
+            inventory.Add(currentHelmet);
+            Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemName}");
             if (curWeaponTF != null)
             {
                 curWeaponTF.gameObject.SetActive(false);
             }
             else
             {
-                Debug.LogWarning($"Can't find helmet : {bulletproofHelmet.itemName}");
+                Debug.LogWarning($"Can't find helmet : {currentHelmet.itemName}");
             }
-            bulletproofHelmet = null;
+            currentHelmet = null;
         }
     }
 
@@ -655,25 +677,25 @@ public class Survivor : CustomObject
     {
         UnequipBulletproofVest();
 
-        if (wantBulletproofVest.IsValid())
+        if (IsValid(wantBulletproofVest))
         {
-            bulletproofVest = wantBulletproofVest;
+            currentVest = wantBulletproofVest;
         }
     }
 
     void UnequipBulletproofVest()
     {
-        if (bulletproofVest != null && bulletproofVest.IsValid())
+        if (IsValid(currentVest))
         {
-            inventory.Add(bulletproofVest);
-            bulletproofVest = null;
+            inventory.Add(currentVest);
+            currentVest = null;
         }
     }
     void Combat(Survivor target)
     {
         lookRotation = target.transform.position - transform.position;
         float distance = Vector2.Distance(transform.position, enemies[0].transform.position);
-        if (currentWeapon.IsValid())
+        if (IsValid(currentWeapon))
         {
             if(CurrentWeaponAsRangedWeapon != null)
             {
@@ -726,7 +748,7 @@ public class Survivor : CustomObject
         animator.SetBool("Aim", false);
         animator.SetBool("Reload", false);
         animator.SetBool("Attack", true);
-        if(currentWeapon.IsValid())
+        if(IsValid(currentWeapon))
         {
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
         }
@@ -832,9 +854,9 @@ public class Survivor : CustomObject
 
         if(damagePart == 0)
         {
-            if (bulletproofHelmet != null)
+            if (currentHelmet != null)
             {
-                damage -= bulletproofHelmet.Armor;
+                damage -= currentHelmet.Armor;
                 if (UnityEngine.Random.Range(0, 1f) < 0.5f)
                 {
                     SoundManager.Play(ResourceEnum.SFX.ricochet, transform.position);
@@ -847,7 +869,7 @@ public class Survivor : CustomObject
         }
         else if(damagePart == 1)
         {
-            if(bulletproofVest != null) damage -= bulletproofVest.Armor;
+            if(currentVest != null) damage -= currentVest.Armor;
         }
 
         ApplyDamage(bullet.Launcher, damage);
@@ -863,7 +885,7 @@ public class Survivor : CustomObject
     void AE_Attack()
     {
         if (enemies.Count == 0) return;
-        if(currentWeapon.IsValid())
+        if(IsValid(currentWeapon))
         {
             if (Vector2.Distance(transform.position, enemies[0].transform.position) < currentWeapon.attackRange)
             {

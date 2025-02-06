@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Box : CustomObject
 {
-    public List<Item> Items = new();
+    public List<Item> items = new();
 }

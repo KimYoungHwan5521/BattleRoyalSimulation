@@ -11,7 +11,7 @@ public class BattleRoyalManager
 
     public int survivorNumber = 2;
     bool isBattleRoyalStart;
-    float areaProhibitTime = 3;
+    float areaProhibitTime = 30;
     float curAreaProhibitTime;
 
     List<Survivor> survivors = new();
@@ -108,7 +108,7 @@ public class BattleRoyalManager
                 for (int k = 0; k < sectionItemNum; k++)
                 {
                     boxIndex = Random.Range(0, areas[i].farmingSections[j].boxes.Length);
-                    areas[i].farmingSections[j].boxes[boxIndex].Items.Add(farmingItems[curruntIndex]);
+                    areas[i].farmingSections[j].boxes[boxIndex].items.Add(farmingItems[curruntIndex]);
                     curruntIndex++;
                     GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
                 }

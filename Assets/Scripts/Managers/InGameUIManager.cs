@@ -15,6 +15,10 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] CustomObject selectedObject;
     [SerializeField] GameObject selectedObjectInfo;
     [SerializeField] TextMeshProUGUI selectedObjectName;
+    [SerializeField] GameObject selectedObjectsCurrentWeapon;
+    [SerializeField] GameObject selectedObjectsCurrentHelmet;
+    [SerializeField] GameObject selectedObjectsCurrentVest;
+    [SerializeField] GameObject[] selectedObjectsItems;
 
     private void Update()
     {
@@ -90,10 +94,44 @@ public class InGameUIManager : MonoBehaviour
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;
                 selectedObjectName.text = selectedSurvivor.survivorName;
+                selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon) ? selectedSurvivor.CurrentWeapon.itemName : "None";
+                selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName : "None";
+                selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
+                selectedObjectsCurrentWeapon.SetActive(true);
+                selectedObjectsCurrentHelmet.SetActive(true);
+                selectedObjectsCurrentVest.SetActive(true);
+                for(int i = 0; i<selectedObjectsItems.Length; i++)
+                {
+                    if(selectedSurvivor.Inventory.Count > i)
+                    {
+                        selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivor.Inventory[i].itemName} x {selectedSurvivor.Inventory[i].amount}";
+                        selectedObjectsItems[i].SetActive(true);
+                    }
+                    else
+                    {
+                        selectedObjectsItems[i].SetActive(false);
+                    }
+                }
             }
             else if(selectedObject is Box)
             {
+                Box selectedBox = selectedObject as Box;
                 selectedObjectName.text = "Box";
+                selectedObjectsCurrentWeapon.SetActive(false);
+                selectedObjectsCurrentHelmet.SetActive(false);
+                selectedObjectsCurrentVest.SetActive(false);
+                for (int i = 0; i < selectedObjectsItems.Length; i++)
+                {
+                    if (selectedBox.items.Count > i)
+                    {
+                        selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName} x {selectedBox.items[i].amount}";
+                        selectedObjectsItems[i].SetActive(true);
+                    }
+                    else
+                    {
+                        selectedObjectsItems[i].SetActive(false);
+                    }
+                }
             }
             else
             {
