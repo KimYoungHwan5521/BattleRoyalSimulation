@@ -9,7 +9,7 @@ public class BattleRoyalManager
     Area[] areas;
     List<Item> farmingItems = new();
 
-    public int survivorNumber = 2;
+    public int survivorNumber = 5;
     bool isBattleRoyalStart;
     float areaProhibitTime = 30;
     float curAreaProhibitTime;
@@ -18,10 +18,10 @@ public class BattleRoyalManager
     static List<Survivor> aliveSurvivors = new();
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
 
-    Vector3[] colorInfo = new Vector3[] 
+    public static Vector3[] colorInfo = new Vector3[] 
     { 
-        new(0, 0, 0), new(1, 0, 0), new(0, 1, 0), new(0, 0, 1), 
-        new(1, 1, 0), new(1, 0, 1), new(0, 1, 1), new(1, 1, 1), 
+        new(1, 1, 1), new(1, 0, 0), new(0, 1, 0), new(0, 0, 1), 
+        new(1, 1, 0), new(1, 0, 1), new(0, 1, 1), new(0, 0, 0), 
         new(0.5f, 0, 0), new(0.5f, 0, 1), new(0.5f, 1, 0), new(0.5f, 1, 1),
         new(0, 0.5f, 0), new(0, 0.5f, 1), new(1, 0.5f, 0), new(1, 0.5f, 1),
         new(0, 0, 0.5f), new(0, 1, 0.5f), new(1, 0, 0.5f), new(1, 1, 0.5f),
@@ -72,18 +72,18 @@ public class BattleRoyalManager
         //AddItems(ItemManager.Items.Bullet_Pistol, 30);
         //AddItems(ItemManager.Items.AssaultRifle, 1);
         //AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
-        //AddItems(ItemManager.Items.SubMachineGun, 2);
-        //AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
+        AddItems(ItemManager.Items.SubMachineGun, 2);
+        AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
         AddItems(ItemManager.Items.ShotGun, 1);
         AddItems(ItemManager.Items.Bullet_ShotGun, 20);
         //AddItems(ItemManager.Items.SniperRifle, 1);
         //AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
-        //AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
-        //AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
-        //AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
-        //AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
-        //AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
-        //AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
+        AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
+        AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
 
     }
 
@@ -135,6 +135,7 @@ public class BattleRoyalManager
                 Survivor survivor = PoolManager.Spawn(ResourceEnum.Prefab.Survivor, spawnPosition).GetComponent<Survivor>();
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
+                survivor.survivorID = survivorIndex;
                 survivor.survivorName = $"Survivor{survivorIndex}";
                 if(survivorIndex < colorInfo.Length)
                 {

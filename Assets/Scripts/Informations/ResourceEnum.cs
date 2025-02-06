@@ -9,7 +9,30 @@ namespace ResourceEnum
 
     public enum Sprite
     {
-
+        Survivor,
+        Box,
+        // RangedWeapon
+        Revolver,
+        Pistol,
+        AssaultRifle,
+        SubMachineGun,
+        ShotGun,
+        SniperRifle,
+        // Bullets
+        Bullet_Revolver,
+        Bullet_Pistol,
+        Bullet_AssaultRifle,
+        Bullet_SubMachineGun,
+        Bullet_ShotGun,
+        Bullet_SniperRifle,
+        // BulletproofHat
+        LowLevelBulletproofHelmet,
+        MiddleLevelBulletproofHelmet,
+        HighLevelBulletproofHelmet,
+        // BulletproofVest
+        LowLevelBulletproofVest,
+        MiddleLevelBulletproofVest,
+        HighLevelBulletproofVest,
     }
 
     public enum Material

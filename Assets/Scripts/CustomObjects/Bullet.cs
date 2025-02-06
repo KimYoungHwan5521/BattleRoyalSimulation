@@ -41,7 +41,7 @@ public class Bullet : CustomObject
 
         direction = targetPosition - spawnedPosition;
         direction.Normalize();
-        if (launcher.CurrentWeapon.itemName == "Shotgun") err = 7.5f;
+        if (launcher.CurrentWeapon.itemName == "ShotGun") err = 7.5f;
         float rand = Random.Range(-err, err);
         if (launcher.CurrentWeapon.itemName == "SniperRifle") rand *= 0.67f;
         direction = direction.Rotate(rand);

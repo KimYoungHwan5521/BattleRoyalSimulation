@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
@@ -12,13 +14,41 @@ public class InGameUIManager : MonoBehaviour
 
     Vector2 navVector;
 
+    [SerializeField] GameObject seletedImage;
+
     [SerializeField] CustomObject selectedObject;
     [SerializeField] GameObject selectedObjectInfo;
+
+    [SerializeField] Image selectedObjectImage;
     [SerializeField] TextMeshProUGUI selectedObjectName;
+
+    [SerializeField] GameObject selectedSurvivorsHealthBar;
+    [SerializeField] Image selectedSurvivorsHealthBarImage;
+    [SerializeField] TextMeshProUGUI selectedSurvivorsHealthText;
+
     [SerializeField] GameObject selectedObjectsCurrentWeapon;
+    Image selectedObjectsCurrentWeaponImage;
+    TextMeshProUGUI selectedObjectsCurrentWeaponText;
+
     [SerializeField] GameObject selectedObjectsCurrentHelmet;
+    Image selectedObjectsCurrentHelmetImage;
+    TextMeshProUGUI selectedObjectsCurrentHelmetText;
+
     [SerializeField] GameObject selectedObjectsCurrentVest;
+    Image selectedObjectsCurrentVestImage;
+    TextMeshProUGUI selectedObjectsCurrentVestText;
+
     [SerializeField] GameObject[] selectedObjectsItems;
+
+    private void Start()
+    {
+        selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentInChildren<Image>();
+        selectedObjectsCurrentWeaponText = selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>();
+        selectedObjectsCurrentHelmetImage = selectedObjectsCurrentHelmet.GetComponentInChildren<Image>();
+        selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
+        selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentInChildren<Image>();
+        selectedObjectsCurrentVestText = selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     private void Update()
     {
@@ -68,11 +98,23 @@ public class InGameUIManager : MonoBehaviour
         bool selectedNotNull = false;
         foreach (Collider2D hit in hits)
         {
-            if(!hit.isTrigger && hit.TryGetComponent(out CustomObject clickedObject))
+            if(!hit.isTrigger)
             {
-                if(clickedObject is Survivor || clickedObject is Box)
+                if(hit.TryGetComponent(out CustomObject clickedObject))
                 {
-                    selectedObject = clickedObject;
+                    if(clickedObject is Survivor || clickedObject is Box)
+                    {
+                        selectedObject = clickedObject;
+                        selectedNotNull = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                if(hit.TryGetComponent(out Survivor survivor) && survivor.IsDead)
+                {
+                    selectedObject = survivor;
                     selectedNotNull = true;
                     break;
                 }
@@ -85,18 +127,45 @@ public class InGameUIManager : MonoBehaviour
     {
         if(selectedObject == null)
         {
+            seletedImage.SetActive(false);
             selectedObjectInfo.SetActive(false);
         }
         else
         {
+            seletedImage.transform.position = selectedObject.transform.position;
+            seletedImage.SetActive(true);
             selectedObjectInfo.SetActive(true);
             if(selectedObject is Survivor)
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;
+                selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Survivor);
+                Vector3 colorVector = BattleRoyalManager.colorInfo[selectedSurvivor.survivorID];
+                selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
                 selectedObjectName.text = selectedSurvivor.survivorName;
-                selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon) ? selectedSurvivor.CurrentWeapon.itemName : "None";
-                selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName : "None";
-                selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>().text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
+
+                selectedSurvivorsHealthBarImage.fillAmount = selectedSurvivor.CurHP / selectedSurvivor.MaxHP;
+                selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP} / {selectedSurvivor.MaxHP}";
+
+                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
+                {
+                    selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(weaponSpriteEnum);
+                    selectedObjectsCurrentWeaponImage.GetComponent<AspectRatioFitter>().aspectRatio
+                        = selectedObjectsCurrentWeaponImage.sprite.textureRect.width / selectedObjectsCurrentWeaponImage.sprite.textureRect.height;
+                }
+                else selectedObjectsCurrentWeaponImage.sprite = null;
+                selectedObjectsCurrentWeaponText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon) ? selectedSurvivor.CurrentWeapon.itemName : "None";
+
+                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
+                    selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
+                else selectedObjectsCurrentHelmetImage.sprite = null;
+                selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName : "None";
+
+                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
+                    selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
+                else selectedObjectsCurrentVestImage.sprite = null;
+                selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
+                
+                selectedSurvivorsHealthBar.SetActive(true);
                 selectedObjectsCurrentWeapon.SetActive(true);
                 selectedObjectsCurrentHelmet.SetActive(true);
                 selectedObjectsCurrentVest.SetActive(true);
@@ -104,6 +173,14 @@ public class InGameUIManager : MonoBehaviour
                 {
                     if(selectedSurvivor.Inventory.Count > i)
                     {
+                        if(Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.Inventory[i].itemType}", out var spriteEnum))
+                        {
+                            selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = ResourceManager.Get(spriteEnum);
+                        }
+                        else
+                        {
+                            selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
+                        }
                         selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivor.Inventory[i].itemName} x {selectedSurvivor.Inventory[i].amount}";
                         selectedObjectsItems[i].SetActive(true);
                     }
@@ -116,7 +193,10 @@ public class InGameUIManager : MonoBehaviour
             else if(selectedObject is Box)
             {
                 Box selectedBox = selectedObject as Box;
+                selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
+                selectedObjectImage.color = Color.white;
                 selectedObjectName.text = "Box";
+                selectedSurvivorsHealthBar.SetActive(false);
                 selectedObjectsCurrentWeapon.SetActive(false);
                 selectedObjectsCurrentHelmet.SetActive(false);
                 selectedObjectsCurrentVest.SetActive(false);
@@ -124,6 +204,14 @@ public class InGameUIManager : MonoBehaviour
                 {
                     if (selectedBox.items.Count > i)
                     {
+                        if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedBox.items[i].itemType}", out var spriteEnum))
+                        {
+                            selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = ResourceManager.Get(spriteEnum);
+                        }
+                        else
+                        {
+                            selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
+                        }
                         selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName} x {selectedBox.items[i].amount}";
                         selectedObjectsItems[i].SetActive(true);
                     }

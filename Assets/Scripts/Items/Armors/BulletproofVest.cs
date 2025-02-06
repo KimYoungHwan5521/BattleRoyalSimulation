@@ -8,7 +8,8 @@ public class BulletproofVest : Item
 {
     float armor;
     public float Armor => armor;
-    public BulletproofVest(string itemName, float weight, float armor, int amount = 1) : base(itemName, weight, amount)
+    public BulletproofVest(ItemManager.Items itemType, string itemName, float weight, float armor, int amount = 1) 
+        : base(itemType, itemName, weight, amount)
     {
         this.itemName = itemName;
         this.weight = weight;

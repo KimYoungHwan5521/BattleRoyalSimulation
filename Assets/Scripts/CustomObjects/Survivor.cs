@@ -26,15 +26,18 @@ public class Survivor : CustomObject
             {
                 agent.enabled = false;
                 animator.SetTrigger("Dead");
-                bodyCollider.enabled = false;
+                recognizeCollider.enabled = false;
+                bodyCollider.isTrigger = true;
                 currentFarmingArea = GetCorpseArea();
                 BattleRoyalManager.SurvivorDead(this);
             }
         }
     }
+    public int survivorID;
     public string survivorName;
     [SerializeField] public Status currentStatus;
     [SerializeField] float maxHP = 100;
+    public float MaxHP => maxHP;
     [SerializeField] float curHP;
     public float CurHP => curHP;
     [SerializeField] float attakDamage = 10f;
@@ -302,6 +305,16 @@ public class Survivor : CustomObject
                 {
                     AcqireItem(targetFarmingCorpse.currentWeapon);
                     targetFarmingCorpse.UnequipWeapon();
+                }
+                if (IsValid(targetFarmingCorpse.currentHelmet))
+                {
+                    AcqireItem(targetFarmingCorpse.currentHelmet);
+                    targetFarmingCorpse.UnequipBulletproofHelmet();
+                }
+                if (IsValid(targetFarmingCorpse.currentVest))
+                {
+                    AcqireItem(targetFarmingCorpse.currentVest);
+                    targetFarmingCorpse.UnequipBulletproofVest();
                 }
                 foreach (Item item in targetFarmingCorpse.inventory)
                     AcqireItem(item);
@@ -921,18 +934,26 @@ public class Survivor : CustomObject
                 hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
                 if(hit.collider == null)
                 {
-                    if(survivor.isDead)
+                    if(!enemies.Contains(survivor))
                     {
-                        if(!farmingCorpses.ContainsKey(survivor))
+                        enemies.Add(survivor);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (collision.TryGetComponent(out Survivor survivor))
+            {
+                RaycastHit2D hit;
+                hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
+                if (hit.collider == null)
+                {
+                    if (survivor.isDead)
+                    {
+                        if (!farmingCorpses.ContainsKey(survivor))
                         {
                             farmingCorpses.Add(survivor, false);
-                        }
-                    }
-                    else
-                    {
-                        if(!enemies.Contains(survivor))
-                        {
-                            enemies.Add(survivor);
                         }
                     }
                 }

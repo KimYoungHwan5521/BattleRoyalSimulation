@@ -11,8 +11,8 @@ public class Weapon : Item
     [SerializeField] protected int attackAnimNumber;
     public int AttackAnimNumber => attackAnimNumber;
 
-    public Weapon(string itemName, float weight, float attakDamage, float attackRange, int attackAnimNumber, int amount = 1) 
-        : base(itemName, weight, amount)
+    public Weapon(ItemManager.Items itemType, string itemName, float weight, float attakDamage, float attackRange, int attackAnimNumber, int amount = 1) 
+        : base(itemType, itemName, weight, amount)
     {
         this.attakDamage = attakDamage;
         this.attackRange = attackRange;
