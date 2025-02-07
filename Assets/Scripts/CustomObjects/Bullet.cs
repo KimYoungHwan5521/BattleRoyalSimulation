@@ -19,7 +19,7 @@ public class Bullet : CustomObject
     public float MaxRange => maxRange;
     public float TraveledDistance { get { return Vector2.Distance(transform.position, spawnedPosition); } }
 
-    float err = 5f;
+    float err;
 
     bool initiated;
 
@@ -31,17 +31,17 @@ public class Bullet : CustomObject
         trailRenderer = GetComponent<TrailRenderer>();
     }
 
-    public void Initiate(Survivor launcher, float projectileSpeed, float damage, Vector2 spawndPosition, Vector2 targetPosition, float maxRange)
+    public void Initiate(Survivor launcher, float projectileSpeed, float damage, Vector2 spawnedPosition, Vector2 targetPosition, float maxRange)
     {
         this.launcher = launcher;
         this.projectileSpeed = projectileSpeed;
         this.damage = damage;
-        this.spawnedPosition = spawndPosition;
+        this.spawnedPosition = spawnedPosition;
         this.targetPosition = targetPosition;
 
-        direction = targetPosition - spawnedPosition;
+        direction = targetPosition - this.spawnedPosition;
         direction.Normalize();
-        if (launcher.CurrentWeapon.itemName == "ShotGun") err = 7.5f;
+        err = launcher.CurrentWeapon.itemName == "ShotGun"?  7.5f : launcher.AimErrorRange;
         float rand = Random.Range(-err, err);
         if (launcher.CurrentWeapon.itemName == "SniperRifle") rand *= 0.67f;
         direction = direction.Rotate(rand);
@@ -88,7 +88,8 @@ public class Bullet : CustomObject
             if (collision.CompareTag("Survivor"))
             {
                 Survivor victim = collision.GetComponent<Survivor>();
-                victim.TakeDamage(this);
+                if (victim != launcher) victim.TakeDamage(this);
+                else Debug.LogWarning("Launcer shot himself");
             }
             else
             {

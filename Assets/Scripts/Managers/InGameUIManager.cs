@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -14,6 +15,13 @@ public class InGameUIManager : MonoBehaviour
 
     Vector2 navVector;
 
+    [SerializeField] GraphicRaycaster raycaster;
+    [SerializeField] EventSystem eventSystem;
+
+    [Header("Toolbar")]
+    [SerializeField] TextMeshProUGUI currentTimeScaleText;
+
+    [Header("Selected Object Info")]
     [SerializeField] GameObject seletedImage;
 
     [SerializeField] CustomObject selectedObject;
@@ -39,7 +47,7 @@ public class InGameUIManager : MonoBehaviour
     TextMeshProUGUI selectedObjectsCurrentVestText;
 
     [SerializeField] GameObject[] selectedObjectsItems;
-
+    
     private void Start()
     {
         selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentInChildren<Image>();
@@ -52,7 +60,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void Update()
     {
-        ManualCameraMove();
+        if(!IsPointerOverUI()) ManualCameraMove();
         SetSelectedObjectInfo();
     }
     //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
@@ -74,20 +82,35 @@ public class InGameUIManager : MonoBehaviour
 
     void OnScrollWheel(InputValue value)
     {
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.01f, 1, 30);
+        if(!IsPointerOverUI())Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.01f, 1, 30);
     }
 
     void OnClick(InputValue value)
     {
+        if (IsPointerOverUI()) return;
+
         isClicked = value.Get<float>() > 0;
         if (isClicked)
         {
             clickPos = Input.mousePosition;
             cameraPosBeforeClick = Camera.main.transform.position;
-            
+        }
+        else if(Vector2.Distance(Input.mousePosition, clickPos) < 30f)
+        {
             SelectObject();
         }
+    }
 
+    public void TimeScaleNormalize()
+    {
+        Time.timeScale = 1;
+        currentTimeScaleText.text = "x 1";
+    }
+
+    public void TimeScaleUp()
+    {
+        Time.timeScale = Mathf.Clamp(Time.timeScale + 1, Time.timeScale, 5);
+        currentTimeScaleText.text = $"x {(int)Time.timeScale}";
     }
 
     void SelectObject()
@@ -144,9 +167,9 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectName.text = selectedSurvivor.survivorName;
 
                 selectedSurvivorsHealthBarImage.fillAmount = selectedSurvivor.CurHP / selectedSurvivor.MaxHP;
-                selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP} / {selectedSurvivor.MaxHP}";
+                selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP:0} / {selectedSurvivor.MaxHP}";
 
-                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
+                if (selectedSurvivor.CurrentWeapon != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
                 {
                     selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(weaponSpriteEnum);
                     selectedObjectsCurrentWeaponImage.GetComponent<AspectRatioFitter>().aspectRatio
@@ -155,12 +178,12 @@ public class InGameUIManager : MonoBehaviour
                 else selectedObjectsCurrentWeaponImage.sprite = null;
                 selectedObjectsCurrentWeaponText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon) ? selectedSurvivor.CurrentWeapon.itemName : "None";
 
-                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
+                if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
                     selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
                 else selectedObjectsCurrentHelmetImage.sprite = null;
                 selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName : "None";
 
-                if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
+                if (selectedSurvivor.CurrentVest != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
                     selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
                 else selectedObjectsCurrentVestImage.sprite = null;
                 selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
@@ -226,5 +249,17 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectInfo.SetActive(false);
             }
         }
+    }
+    bool IsPointerOverUI()
+    {
+        PointerEventData pointerData = new(eventSystem)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        return results.Count > 0;
     }
 }

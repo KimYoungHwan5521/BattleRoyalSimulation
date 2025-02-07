@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     
 
     public LoadingCanvas loadingCanvas;
+    [SerializeField] GameObject inGameUICanvas;
+    [SerializeField] GameObject outCanvas;
 
     void Awake()
     {
@@ -46,19 +48,20 @@ public class GameManager : MonoBehaviour
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
 
+        CloseLoadInfo();
+    }
+
+    public IEnumerator BattleRoyalStart()
+    {
+        outCanvas.SetActive(false);
         battleRoyalManager = new BattleRoyalManager();
         yield return battleRoyalManager.Initiate();
-
-        CloseLoadInfo();
+        inGameUICanvas.SetActive(true);
     }
 
     public void Test()
     {
-        battleRoyalManager.SetProhibitArea(2);
-    }
-    public void Test2()
-    {
-        Time.timeScale = 4;
+        StartCoroutine(BattleRoyalStart());
     }
 
     void Update()

@@ -8,13 +8,16 @@ public class Survivor : CustomObject
 {
     public enum Status { Farming, InCombat }
 
+    [Header("Components")]
     [SerializeField] CircleCollider2D recognizeCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
     Animator animator;
     NavMeshAgent agent;
 
-    [SerializeField] bool debug;
+    ProjectileGenerator projectileGenerator;
+
+    [Header("Status")]
     [SerializeField] bool isDead;
     public bool IsDead
     {
@@ -46,13 +49,15 @@ public class Survivor : CustomObject
     [SerializeField] float moveSpeed = 3f;
     [SerializeField] float detectionRange = 30f;
     [SerializeField] float farmingSpeed = 1f;
+    [SerializeField] float aimErrorRange = 7.5f;
+    public float AimErrorRange => aimErrorRange;
 
     [SerializeField] Vector2 lookRotation = Vector2.zero;
     public Vector2 LookRotation => lookRotation;
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
-    [SerializeField] RangedWeapon CurrentWeaponAsRangedWeapon
+    RangedWeapon CurrentWeaponAsRangedWeapon
     {
         get
         {
@@ -63,21 +68,10 @@ public class Survivor : CustomObject
             return null;
         }
     }
-    ProjectileGenerator projectileGenerator;
     [SerializeField] BulletproofHelmet currentHelmet;
     public BulletproofHelmet CurrentHelmet => currentHelmet;
     [SerializeField] BulletproofVest currentVest;
     public BulletproofVest CurrentVest => currentVest;
-
-    [SerializeField] List<Survivor> enemies = new();
-    public Survivor TargetEnemy 
-    { 
-        get
-        {
-            if (enemies.Count == 0) return null;
-            else return enemies[0];
-        }
-    }
 
     [SerializeField] List<Item> inventory = new();
     public List<Item> Inventory => inventory;
@@ -97,10 +91,21 @@ public class Survivor : CustomObject
         }
     }
 
+    [SerializeField] List<Survivor> enemies = new();
+    public Survivor TargetEnemy 
+    { 
+        get
+        {
+            if (enemies.Count == 0) return null;
+            else return enemies[0];
+        }
+    }
+
+    [Header("Farming")]
     // value : Had finished farming?
-    [SerializeField] public Dictionary<Area, bool> farmingAreas = new();
+    public Dictionary<Area, bool> farmingAreas = new();
     [SerializeField] Area currentFarmingArea;
-    [SerializeField] public Area CurrentFarmingArea
+    public Area CurrentFarmingArea
     {
         get => currentFarmingArea;
         set
@@ -301,6 +306,8 @@ public class Survivor : CustomObject
             curFarmingTime += Time.deltaTime * farmingSpeed;
             if (curFarmingTime > farmingTime)
             {
+                foreach (Item item in targetFarmingCorpse.inventory)
+                    AcqireItem(item);
                 if(IsValid(targetFarmingCorpse.currentWeapon))
                 {
                     AcqireItem(targetFarmingCorpse.currentWeapon);
@@ -316,8 +323,6 @@ public class Survivor : CustomObject
                     AcqireItem(targetFarmingCorpse.currentVest);
                     targetFarmingCorpse.UnequipBulletproofVest();
                 }
-                foreach (Item item in targetFarmingCorpse.inventory)
-                    AcqireItem(item);
                 targetFarmingCorpse.inventory.Clear();
                 farmingCorpses[targetFarmingCorpse] = true;
                 targetFarmingCorpse = null;
@@ -517,6 +522,7 @@ public class Survivor : CustomObject
         }
     }
 
+    // if newWeapon value > current weapon : return true
     bool CompareWeaponValue(Weapon newWeapon)
     {
         if(!IsValid(currentWeapon)) return true;
@@ -934,6 +940,7 @@ public class Survivor : CustomObject
                 hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
                 if(hit.collider == null)
                 {
+                    Debug.DrawLine(transform.position, survivor.transform.position, Color.red);
                     if(!enemies.Contains(survivor))
                     {
                         enemies.Add(survivor);
@@ -998,6 +1005,17 @@ public class Survivor : CustomObject
             }
         }
         return null;
+    }
+
+    public void SetSurvivorInfo(SurvivorInfo survivorInfo)
+    {
+        survivorName = survivorInfo.survivorName;
+        curHP = maxHP = survivorInfo.hp;
+        attakDamage = survivorInfo.attackDamage;
+        attackSpeed = survivorInfo.attackSpeed;
+        moveSpeed = survivorInfo.moveSpeed;
+        farmingSpeed = survivorInfo.farmingSpeed;
+
     }
 
     private void OnDrawGizmos()
