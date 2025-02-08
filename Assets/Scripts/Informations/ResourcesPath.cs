@@ -13,6 +13,11 @@ public class ResourcesPath
     {
         "Icons/Survivor",
         "Icons/Box",
+        "Icons/Knife",
+        "Icons/Dagger",
+        "Icons/Bat",
+        "Icons/LongSword",
+        "Icons/Shovel",
         "Icons/Revolver",
         "Icons/Pistol",
         "Icons/AssaultRifle",

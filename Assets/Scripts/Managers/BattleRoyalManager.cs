@@ -9,9 +9,9 @@ public class BattleRoyalManager
     Area[] areas;
     List<Item> farmingItems = new();
 
-    public int survivorNumber = 5;
+    public int survivorNumber = 4;
     bool isBattleRoyalStart;
-    float areaProhibitTime = 30;
+    float areaProhibitTime = 60;
     float curAreaProhibitTime;
 
     List<Survivor> survivors = new();

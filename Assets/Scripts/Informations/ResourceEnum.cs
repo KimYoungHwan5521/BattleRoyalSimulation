@@ -11,6 +11,12 @@ namespace ResourceEnum
     {
         Survivor,
         Box,
+        // Melee Weapons
+        Knife,
+        Dagger,
+        Bat,
+        LongSword,
+        Shovel,
         // RangedWeapon
         Revolver,
         Pistol,

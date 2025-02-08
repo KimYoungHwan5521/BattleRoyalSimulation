@@ -57,7 +57,7 @@ public class Survivor : CustomObject
 
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
-    RangedWeapon CurrentWeaponAsRangedWeapon
+    public RangedWeapon CurrentWeaponAsRangedWeapon
     {
         get
         {
@@ -75,7 +75,7 @@ public class Survivor : CustomObject
 
     [SerializeField] List<Item> inventory = new();
     public List<Item> Inventory => inventory;
-    Item ValidBullet
+    public Item ValidBullet
     {
         get
         {
@@ -479,15 +479,12 @@ public class Survivor : CustomObject
         }
         else if(item.itemName.Contains("Bullet"))
         {
+            GetItem(item);
             string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
             RangedWeapon weapon = inventory.Find(x => x.itemName == wantWeapon) as RangedWeapon;
             if(weapon != null && CompareWeaponValue(weapon))
             {
                 Equip(weapon);
-            }
-            else
-            {
-                GetItem(item);
             }
         }
         else
@@ -526,6 +523,8 @@ public class Survivor : CustomObject
     bool CompareWeaponValue(Weapon newWeapon)
     {
         if(!IsValid(currentWeapon)) return true;
+        Debug.Log($"{survivorName} try compare weapon value : {currentWeapon.itemName} vs {newWeapon.itemName}");
+        Camera.main.transform.position = new(transform.position.x, transform.position.y, -10);
         if(newWeapon.itemName == currentWeapon.itemName) return false;
         
         if (currentWeapon is MeleeWeapon)
@@ -538,6 +537,8 @@ public class Survivor : CustomObject
                 else
                 {
                     Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
+                    if (bullet == null) Debug.LogWarning("No bullet");
+                    else Debug.LogWarning("Yes bullet");
                     if (bullet != null) return true;
                     else return false;
                 }
@@ -554,8 +555,9 @@ public class Survivor : CustomObject
             if(newWeapon is MeleeWeapon)
             {
                 // ¿ø vs ±Ù
-                if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return true;
-                else return false;
+                Debug.LogWarning($"ValidBullet : {ValidBullet}");
+                if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return false;
+                else return true;
             }
             else
             {
@@ -904,7 +906,7 @@ public class Survivor : CustomObject
     void AE_Attack()
     {
         if (enemies.Count == 0) return;
-        if(IsValid(currentWeapon))
+        if(IsValid(currentWeapon) && currentWeapon is MeleeWeapon)
         {
             if (Vector2.Distance(transform.position, enemies[0].transform.position) < currentWeapon.attackRange)
             {

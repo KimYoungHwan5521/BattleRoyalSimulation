@@ -6,6 +6,7 @@ public class ItemManager
 {
     public enum Items
     {
+        NotValid,
         // Melee Weapons
         Knife,
         Dagger,

@@ -176,7 +176,22 @@ public class InGameUIManager : MonoBehaviour
                         = selectedObjectsCurrentWeaponImage.sprite.textureRect.width / selectedObjectsCurrentWeaponImage.sprite.textureRect.height;
                 }
                 else selectedObjectsCurrentWeaponImage.sprite = null;
-                selectedObjectsCurrentWeaponText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon) ? selectedSurvivor.CurrentWeapon.itemName : "None";
+                if(selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon))
+                {
+                    if(selectedSurvivor.CurrentWeapon is RangedWeapon)
+                    {
+                        int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
+                        selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {validBulletAmount})";
+                    }
+                    else
+                    {
+                        selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName;
+                    }
+                }
+                else
+                {
+                    selectedObjectsCurrentWeaponText.text = "None";
+                }
 
                 if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
                     selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
