@@ -90,6 +90,7 @@ public class Survivor : CustomObject
             return null;
         }
     }
+    bool currentWeaponisBestWeapon;
 
     [SerializeField] List<Survivor> enemies = new();
     public Survivor TargetEnemy 
@@ -145,13 +146,13 @@ public class Survivor : CustomObject
 
     override protected void MyUpdate()
     {
-        if(isDead) return;
+        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         AI();
     }
 
     private void FixedUpdate()
     {
-        if(isDead) return;
+        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         if(lookRotation != Vector2.zero)
         {
             Look(lookRotation);
@@ -385,17 +386,20 @@ public class Survivor : CustomObject
     bool noMoreFarmingArea;
     void Explore()
     {
-        if (currentFarmingArea == null || !farmingAreas[currentFarmingArea]) return;
+        if (currentFarmingArea != null && !farmingAreas[currentFarmingArea]) return;
         if (Vector2.Distance(agent.destination, transform.position) < 1f)
         {
             if (!noMoreFarmingArea)
             {
-                foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
+                if(currentFarmingArea != null)
                 {
-                    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
+                    foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
                     {
-                        CurrentFarmingArea = farmingArea;
-                        return;
+                        if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
+                        {
+                            CurrentFarmingArea = farmingArea;
+                            return;
+                        }
                     }
                 }
                 Area area = FindNearest(farmingAreas);
@@ -443,6 +447,7 @@ public class Survivor : CustomObject
     {
         if (item is Weapon)
         {
+            currentWeaponisBestWeapon = false;
             Weapon newWeapon = item as Weapon;
             if(CompareWeaponValue(newWeapon))
             {
@@ -479,6 +484,7 @@ public class Survivor : CustomObject
         }
         else if(item.itemName.Contains("Bullet"))
         {
+            currentWeaponisBestWeapon = false;
             GetItem(item);
             string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
             RangedWeapon weapon = inventory.Find(x => x.itemName == wantWeapon) as RangedWeapon;
@@ -523,8 +529,6 @@ public class Survivor : CustomObject
     bool CompareWeaponValue(Weapon newWeapon)
     {
         if(!IsValid(currentWeapon)) return true;
-        Debug.Log($"{survivorName} try compare weapon value : {currentWeapon.itemName} vs {newWeapon.itemName}");
-        Camera.main.transform.position = new(transform.position.x, transform.position.y, -10);
         if(newWeapon.itemName == currentWeapon.itemName) return false;
         
         if (currentWeapon is MeleeWeapon)
@@ -533,12 +537,10 @@ public class Survivor : CustomObject
             {
                 // 근 vs 원
                 RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
-                if (newWeaponAsRangedWeapon.MagazineCapacity > 0) return true;
+                if (newWeaponAsRangedWeapon.CurrentMagazine > 0) return true;
                 else
                 {
                     Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
-                    if (bullet == null) Debug.LogWarning("No bullet");
-                    else Debug.LogWarning("Yes bullet");
                     if (bullet != null) return true;
                     else return false;
                 }
@@ -555,8 +557,7 @@ public class Survivor : CustomObject
             if(newWeapon is MeleeWeapon)
             {
                 // 원 vs 근
-                Debug.LogWarning($"ValidBullet : {ValidBullet}");
-                if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return false;
+                if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) return false;
                 else return true;
             }
             else
@@ -564,10 +565,10 @@ public class Survivor : CustomObject
                 // 원 vs 원
                 RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
                 Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
-                if (newWeaponAsRangedWeapon.MagazineCapacity > 0 || bullet != null)
+                if (newWeaponAsRangedWeapon.CurrentMagazine > 0 || bullet != null)
                 {
                     // 둘 다 총알이 있는 경우
-                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0)
+                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                     {
                         if (newWeapon.attackRange > currentWeapon.attackRange) return true;
                         else return false;
@@ -576,7 +577,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.MagazineCapacity > 0) return false;
+                    if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) return false;
                     else
                     {
                         // 둘 다 총알이 없는 경우
@@ -720,7 +721,15 @@ public class Survivor : CustomObject
         {
             if(CurrentWeaponAsRangedWeapon != null)
             {
-                if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
+                if(distance < CurrentWeaponAsRangedWeapon.MinimumRange)
+                {
+                    if(distance < attackRange)
+                    {
+                        Attack();
+                        return;
+                    }
+                }
+                else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                 {
                     if (distance < CurrentWeaponAsRangedWeapon.attackRange)
                     {
@@ -728,19 +737,21 @@ public class Survivor : CustomObject
                         return;
                     }
                 }
-                else if(ValidBullet != null && distance > CurrentWeaponAsRangedWeapon.MinimumRange)
+                else if(ValidBullet != null)
                 {
                     Reload();
                     return;
                 }
-                else
+                else if(!currentWeaponisBestWeapon)
                 {
-
-                    if(distance < attackRange)
+                    Debug.LogWarning("@@@@@@@@@@@@@@@@@@@@@@");
+                    List<Item> candidates = inventory.FindAll(x => x is Weapon);
+                    foreach(Item candidate in candidates)
                     {
-                        Attack();
-                        return;
+                        if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
                     }
+                    currentWeaponisBestWeapon = true;
+                    return;
                 }
             }
             else
@@ -933,7 +944,7 @@ public class Survivor : CustomObject
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(isDead) return;
+        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         if (!collision.isTrigger)
         {
             if (collision.TryGetComponent(out Survivor survivor))

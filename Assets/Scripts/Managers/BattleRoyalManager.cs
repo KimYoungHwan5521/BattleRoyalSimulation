@@ -6,11 +6,13 @@ using UnityEngine.AI;
 
 public class BattleRoyalManager
 {
+    Animator count3Animator;
+
     Area[] areas;
     List<Item> farmingItems = new();
 
-    public int survivorNumber = 4;
-    bool isBattleRoyalStart;
+    public int survivorNumber = 1;
+    public static bool isBattleRoyalStart;
     float areaProhibitTime = 60;
     float curAreaProhibitTime;
 
@@ -37,7 +39,6 @@ public class BattleRoyalManager
         ItemSetting();
         ItemPlacing();
         SpawnPlayers();
-        GameManager.CloseLoadInfo();
 
         BattleRoyalStart();
         yield return null;
@@ -245,17 +246,24 @@ public class BattleRoyalManager
         if(aliveSurvivors.Contains(survivor))
         {
             aliveSurvivors.Remove(survivor);
-            if(aliveSurvivors.Count == 1) Debug.Log($"{aliveSurvivors[0]} wins!");
+            if(aliveSurvivors.Count == 1) Debug.Log($"{aliveSurvivors[0].survivorName} wins!");
         }
     }
 
     void BattleRoyalStart()
     {
+        if(count3Animator == null)
+        {
+            count3Animator = GameObject.FindAnyObjectByType<Count3>().GetComponent<Animator>();
+            count3Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        }
         foreach (Survivor survivor in survivors)
         {
             survivor.GetComponent<NavMeshAgent>().enabled = true;
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
-        isBattleRoyalStart = true;
+        Time.timeScale = 0;
+        count3Animator.SetTrigger("Count");
+        GameManager.CloseLoadInfo();
     }
 }

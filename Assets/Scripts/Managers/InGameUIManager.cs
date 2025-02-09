@@ -101,10 +101,10 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
-    public void TimeScaleNormalize()
+    public void SetTimeScale(int wantScale)
     {
-        Time.timeScale = 1;
-        currentTimeScaleText.text = "x 1";
+        Time.timeScale = wantScale;
+        currentTimeScaleText.text = $"x {wantScale}";
     }
 
     public void TimeScaleUp()

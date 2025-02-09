@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Resources;
+using TMPro;
 using UnityEngine;
 
 public delegate void CustomStart();
@@ -54,9 +55,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator BattleRoyalStart()
     {
         outCanvas.SetActive(false);
+        inGameUICanvas.SetActive(true);
         battleRoyalManager = new BattleRoyalManager();
         yield return battleRoyalManager.Initiate();
-        inGameUICanvas.SetActive(true);
     }
 
     public void Test()
