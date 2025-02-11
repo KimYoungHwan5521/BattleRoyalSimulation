@@ -153,7 +153,7 @@ public class Survivor : CustomObject
     private void FixedUpdate()
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
-        if(lookRotation != Vector2.zero)
+        if (lookRotation != Vector2.zero)
         {
             Look(lookRotation);
         }
@@ -165,8 +165,12 @@ public class Survivor : CustomObject
 
     void Look(Vector2 preferDirection)
     {
-        float angle = Mathf.Atan2(preferDirection.y, preferDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+        Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
+        if(Vector2.Angle(currentLookVector, preferDirection) > 3)
+        {
+            float direction = Vector2.SignedAngle(currentLookVector, preferDirection) > 0 ? 1 : -1;
+            transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 300 * Time.fixedDeltaTime);
+        }
     }
 
     void AI()
