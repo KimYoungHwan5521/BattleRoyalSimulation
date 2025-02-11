@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,6 +13,10 @@ public class Survivor : CustomObject
     [SerializeField] CircleCollider2D recognizeCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
+    [SerializeField] MeshFilter sightMeshFilter;
+    Mesh sightMesh;
+    Vector3[] sightVertices;
+    int[] sightTriangles;
     Animator animator;
     NavMeshAgent agent;
 
@@ -38,7 +43,7 @@ public class Survivor : CustomObject
     }
     public int survivorID;
     public string survivorName;
-    [SerializeField] public Status currentStatus;
+    public Status currentStatus;
     [SerializeField] float maxHP = 100;
     public float MaxHP => maxHP;
     [SerializeField] float curHP;
@@ -48,6 +53,9 @@ public class Survivor : CustomObject
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
     [SerializeField] float detectionRange = 30f;
+    float sightAngle = 120;
+    public LayerMask obstacleMask;
+    [SerializeField] int sightEdgeCount = 24;
     [SerializeField] float farmingSpeed = 1f;
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
@@ -138,16 +146,20 @@ public class Survivor : CustomObject
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         projectileGenerator = GetComponent<ProjectileGenerator>();
+        sightMesh = new();
+        sightMeshFilter.mesh = sightMesh;
 
         recognizeCollider.radius = detectionRange;
         curHP = maxHP;
         agent.speed = moveSpeed;
     }
 
+
     override protected void MyUpdate()
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         AI();
+        DrawSightMesh();
     }
 
     private void FixedUpdate()
@@ -809,6 +821,58 @@ public class Survivor : CustomObject
             animator.SetTrigger("Fire");
             curShotTime = 0;
         }
+    }
+
+    void DrawSightMesh()
+    {
+        float angleStep = sightAngle / sightEdgeCount;  // 각도 간격
+
+        sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
+        sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
+
+        sightVertices[0] = Vector3.zero;  // 시야의 중심
+
+        for (int i = 0; i <= sightEdgeCount; i++)
+        {
+            float angle = -sightAngle / 2 + i * angleStep;  // 시작 각도부터 각도 간격만큼 더해가기
+            Vector2 direction = DirFromAngle(angle);  // Ray를 쏠 때는 월드 기준
+            Vector2 meshDirection = DirFromAngle(angle, true);  // 메쉬는 Survivor의 Head의 Sight가 들고있어서 로컬 기준
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, detectionRange, LayerMask.GetMask("Wall"));
+            if(hits.Length > 0)
+            {
+                sightVertices[i + 1] = meshDirection.normalized * hits[0].distance;
+                Debug.DrawRay(transform.position, direction.normalized * hits[0].distance, Color.red);
+            }
+            else
+            {
+                sightVertices[i + 1] = meshDirection.normalized * detectionRange;  // 해당 방향으로 끝 점을 그리기
+                Debug.DrawRay(transform.position, direction.normalized * detectionRange, Color.red);
+            }
+        }
+
+        for (int i = 0; i < sightEdgeCount; i++)
+        {
+            sightTriangles[i * 3] = 0;  // 중심 점
+            sightTriangles[i * 3 + 1] = i + 1;  // 시작 점
+            sightTriangles[i * 3 + 2] = i + 2;  // 끝 점
+        }
+
+        // 마지막 삼각형을 첫 번째 점과 연결
+        sightTriangles[sightTriangles.Length - 3] = 0;
+        sightTriangles[sightTriangles.Length - 2] = sightEdgeCount - 1;
+        sightTriangles[sightTriangles.Length - 1] = sightEdgeCount;
+        
+        sightMesh.Clear();
+        sightMesh.vertices = sightVertices;
+        sightMesh.triangles = sightTriangles;
+        sightMesh.RecalculateNormals();  // 법선 벡터 계산
+    }
+
+    // 각도에서 방향 벡터를 계산하는 함수
+    Vector2 DirFromAngle(float angleInDegrees, bool isLocal = false)
+    {
+        float rad = isLocal ? (angleInDegrees + 90) * Mathf.Deg2Rad : (angleInDegrees + transform.eulerAngles.z + 90) * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));  // 2D에서는 Z축은 0
     }
 
     void ApplyDamage(Survivor attacker, float damage)

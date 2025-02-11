@@ -40,6 +40,9 @@ public class ResourcesPath
 
     public static string[] MaterialPathArray =
     {
+        "Materials/Sight/Sight_Normal",
+        "Materials/Sight/Sight_Suspicious",
+        "Materials/Sight/Sight_Alert",
 
     };
 

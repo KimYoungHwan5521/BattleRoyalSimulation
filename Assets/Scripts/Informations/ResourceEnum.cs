@@ -43,7 +43,9 @@ namespace ResourceEnum
 
     public enum Material
     {
-
+        Sight_Normal,
+        Sight_Suspicious,
+        Sight_Alert,
     }
 
     public enum BGM
