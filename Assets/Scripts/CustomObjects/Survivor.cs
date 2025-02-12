@@ -1,22 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Survivor : CustomObject
 {
+    #region Variables and Properties
     public enum Status { Farming, InCombat }
 
     [Header("Components")]
-    [SerializeField] CircleCollider2D recognizeCollider;
+    [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
     [SerializeField] MeshFilter sightMeshFilter;
     Mesh sightMesh;
     Vector3[] sightVertices;
     int[] sightTriangles;
+    Vector2[] sightColliderPoints;
     Animator animator;
     NavMeshAgent agent;
 
@@ -34,8 +35,10 @@ public class Survivor : CustomObject
             {
                 agent.enabled = false;
                 animator.SetTrigger("Dead");
-                recognizeCollider.enabled = false;
+                sightCollider.enabled = false;
                 bodyCollider.isTrigger = true;
+                sightMeshFilter.gameObject.SetActive(false);
+
                 currentFarmingArea = GetCorpseArea();
                 BattleRoyalManager.SurvivorDead(this);
             }
@@ -109,6 +112,7 @@ public class Survivor : CustomObject
             else return enemies[0];
         }
     }
+    [SerializeField] Vector2 targetEnemiesLastPosition;
 
     [Header("Farming")]
     // value : Had finished farming?
@@ -136,7 +140,11 @@ public class Survivor : CustomObject
     [SerializeField] float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
     [SerializeField] float curShotTime;
-    //[SerializeField] float curReloadTime;
+
+    [SerializeField] float lookAroundTime = 0.3f;
+    [SerializeField] float curLookAroundTime;
+    [SerializeField] int LookAroundCount;
+    #endregion
 
     protected override void Start()
     {
@@ -149,7 +157,10 @@ public class Survivor : CustomObject
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
 
-        recognizeCollider.radius = detectionRange;
+        sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
+        sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
+        sightColliderPoints = new Vector2[sightVertices.Length];
+
         curHP = maxHP;
         agent.speed = moveSpeed;
     }
@@ -202,20 +213,13 @@ public class Survivor : CustomObject
             }
             animator.SetBool("Reload", false);
 
-            lookRotation = Vector2.zero;
-            currentStatus = Status.Farming;
-            if(targetFarmingCorpse != null)
+            if(targetEnemiesLastPosition != Vector2.zero)
             {
-                FarmingCorpse();
-            }
-            else if(targetFarmingSection != null)
-            {
-                FarmingSection();
+                TraceEnemy();
             }
             else
             {
-                CheckFarmingTarget();
-                Explore();
+                Farming();
             }
         }
         else
@@ -228,13 +232,39 @@ public class Survivor : CustomObject
                     farmingCorpses.Add(enemies[0], false);
                     targetFarmingCorpse = enemies[0];
                 }
+                else if (!farmingCorpses[enemies[0]])
+                {
+                    targetFarmingCorpse = enemies[0];
+                }
                 enemies.Remove(enemies[0]);
+                targetEnemiesLastPosition = Vector2.zero;
             }
             else
             {
                 Combat(enemies[0]);
             }
         }
+    }
+
+    #region Farming
+    void Farming()
+    {
+        lookRotation = Vector2.zero;
+        currentStatus = Status.Farming;
+        if (targetFarmingCorpse != null)
+        {
+            FarmingCorpse();
+        }
+        else if (targetFarmingSection != null)
+        {
+            FarmingSection();
+        }
+        else
+        {
+            CheckFarmingTarget();
+            Explore();
+        }
+
     }
 
     void CheckFarmingTarget()
@@ -452,7 +482,9 @@ public class Survivor : CustomObject
         targetFarmingSection = null;
         CurrentFarmingArea = FindNearest(farmingAreas);
     }
+    #endregion
 
+    #region Item
     public bool IsValid(Item item)
     {
         if (item == null || item.itemName == null ||  item.itemName == "") return false;
@@ -729,6 +761,34 @@ public class Survivor : CustomObject
             currentVest = null;
         }
     }
+    #endregion
+
+    #region Combat
+    void TraceEnemy()
+    {
+        if (Vector2.Distance(transform.position, targetEnemiesLastPosition) < 0.1f)
+        {
+            curLookAroundTime += Time.deltaTime;
+            if(curLookAroundTime > lookAroundTime)
+            {
+                curLookAroundTime = 0;
+                if(LookAroundCount > 3)
+                {
+                    targetEnemiesLastPosition = Vector2.zero;
+                    LookAroundCount = 0;
+                    return;
+                }
+                lookRotation = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
+                LookAroundCount++;
+            }
+        }
+        else
+        {
+            agent.SetDestination(targetEnemiesLastPosition);
+            lookRotation = Vector2.zero;
+        }
+    }
+
     void Combat(Survivor target)
     {
         lookRotation = target.transform.position - transform.position;
@@ -760,7 +820,6 @@ public class Survivor : CustomObject
                 }
                 else if(!currentWeaponisBestWeapon)
                 {
-                    Debug.LogWarning("@@@@@@@@@@@@@@@@@@@@@@");
                     List<Item> candidates = inventory.FindAll(x => x is Weapon);
                     foreach(Item candidate in candidates)
                     {
@@ -823,18 +882,22 @@ public class Survivor : CustomObject
         }
     }
 
+    void Reload()
+    {
+        animator.SetBool("Attack", false);
+        agent.SetDestination(transform.position);
+        animator.SetBool("Reload", true);
+    }
+    #endregion
+
+    #region Sight
     void DrawSightMesh()
     {
-        float angleStep = sightAngle / sightEdgeCount;  // 각도 간격
-
-        sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
-        sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
-
         sightVertices[0] = Vector3.zero;  // 시야의 중심
 
         for (int i = 0; i <= sightEdgeCount; i++)
         {
-            float angle = -sightAngle / 2 + i * angleStep;  // 시작 각도부터 각도 간격만큼 더해가기
+            float angle = -sightAngle / 2 + i * (sightAngle / sightEdgeCount);  // 시작 각도부터 각도 간격만큼 더해가기
             Vector2 direction = DirFromAngle(angle);  // Ray를 쏠 때는 월드 기준
             Vector2 meshDirection = DirFromAngle(angle, true);  // 메쉬는 Survivor의 Head의 Sight가 들고있어서 로컬 기준
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, detectionRange, LayerMask.GetMask("Wall"));
@@ -857,15 +920,17 @@ public class Survivor : CustomObject
             sightTriangles[i * 3 + 2] = i + 2;  // 끝 점
         }
 
-        // 마지막 삼각형을 첫 번째 점과 연결
-        sightTriangles[sightTriangles.Length - 3] = 0;
-        sightTriangles[sightTriangles.Length - 2] = sightEdgeCount - 1;
-        sightTriangles[sightTriangles.Length - 1] = sightEdgeCount;
-        
         sightMesh.Clear();
         sightMesh.vertices = sightVertices;
         sightMesh.triangles = sightTriangles;
         sightMesh.RecalculateNormals();  // 법선 벡터 계산
+
+        for (int i=0; i < sightVertices.Length; i++)
+        {
+            sightColliderPoints[i] = sightVertices[i];
+        }
+        sightCollider.pathCount = 1;
+        sightCollider.SetPath(0, sightColliderPoints);
     }
 
     // 각도에서 방향 벡터를 계산하는 함수
@@ -874,7 +939,9 @@ public class Survivor : CustomObject
         float rad = isLocal ? (angleInDegrees + 90) * Mathf.Deg2Rad : (angleInDegrees + transform.eulerAngles.z + 90) * Mathf.Deg2Rad;
         return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));  // 2D에서는 Z축은 0
     }
+    #endregion
 
+    #region Take Damage
     void ApplyDamage(Survivor attacker, float damage)
     {
         if (damage < 0) damage = 0;
@@ -974,14 +1041,9 @@ public class Survivor : CustomObject
 
         ApplyDamage(bullet.Launcher, damage);
     }
+    #endregion
 
-    void Reload()
-    {
-        animator.SetBool("Attack", false);
-        agent.SetDestination(transform.position);
-        animator.SetBool("Reload", true);
-    }
-
+    #region Animation Events
     void AE_Attack()
     {
         if (enemies.Count == 0) return;
@@ -1009,23 +1071,18 @@ public class Survivor : CustomObject
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
     }
+    #endregion
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
+        if (!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         if (!collision.isTrigger)
         {
             if (collision.TryGetComponent(out Survivor survivor))
             {
-                RaycastHit2D hit;
-                hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
-                if(hit.collider == null)
+                if (!enemies.Contains(survivor))
                 {
-                    Debug.DrawLine(transform.position, survivor.transform.position, Color.red);
-                    if(!enemies.Contains(survivor))
-                    {
-                        enemies.Add(survivor);
-                    }
+                    enemies.Add(survivor);
                 }
             }
         }
@@ -1033,16 +1090,11 @@ public class Survivor : CustomObject
         {
             if (collision.TryGetComponent(out Survivor survivor))
             {
-                RaycastHit2D hit;
-                hit = Physics2D.Linecast(transform.position, survivor.transform.position, LayerMask.GetMask("Wall"));
-                if (hit.collider == null)
+                if (survivor.isDead)
                 {
-                    if (survivor.isDead)
+                    if (!farmingCorpses.ContainsKey(survivor))
                     {
-                        if (!farmingCorpses.ContainsKey(survivor))
-                        {
-                            farmingCorpses.Add(survivor, false);
-                        }
+                        farmingCorpses.Add(survivor, false);
                     }
                 }
             }
@@ -1051,12 +1103,17 @@ public class Survivor : CustomObject
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (!collision.isTrigger && collision.TryGetComponent(out Survivor survivor))
+        if(collision.TryGetComponent(out Survivor survivor))
         {
-            if(enemies.Contains(survivor)) enemies.Remove(survivor);
-            if (survivor.isDead && !farmingCorpses.ContainsKey(survivor)) farmingCorpses.Add(survivor, false);
+            if (!collision.isTrigger)
+            {
+                if(survivor == TargetEnemy)
+                {
+                    targetEnemiesLastPosition = survivor.transform.position;
+                    enemies.Remove(survivor);
+                }
+            }
         }
-
     }
 
     public void SetColor(float r, float g, float b, float a = 1.0f)

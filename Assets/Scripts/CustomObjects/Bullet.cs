@@ -12,9 +12,9 @@ public class Bullet : CustomObject
     float projectileSpeed;
     float damage;
     public float Damage => damage;
-    Vector2 spawnedPosition;
-    Vector2 targetPosition;
     Vector2 direction;
+    Vector2 spawnedPosition;
+    Vector2 lastPosition;
     float maxRange;
     public float MaxRange => maxRange;
     public float TraveledDistance { get { return Vector2.Distance(transform.position, spawnedPosition); } }
@@ -37,9 +37,9 @@ public class Bullet : CustomObject
         this.projectileSpeed = projectileSpeed;
         this.damage = damage;
         this.spawnedPosition = spawnedPosition;
-        this.targetPosition = targetPosition;
+        lastPosition = spawnedPosition;
 
-        direction = targetPosition - this.spawnedPosition;
+        direction = targetPosition - spawnedPosition;
         direction.Normalize();
         err = launcher.CurrentWeapon.itemName == "ShotGun"?  7.5f : launcher.AimErrorRange;
         float rand = Random.Range(-err, err);
@@ -79,11 +79,28 @@ public class Bullet : CustomObject
             DelayedDespawn();
         }
         transform.position += Time.fixedDeltaTime * projectileSpeed * (Vector3)direction;
+
+        // 총알이 너무 빠르면 Collision Detection Mode가 Continious여도 검출되지 않는 경우가 있어서 보조 계산
+        RaycastHit2D[] hits = Physics2D.LinecastAll(transform.position, lastPosition);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if(hit.collider.CompareTag("Survivor") && !hit.collider.isTrigger)
+            {
+                Survivor victim = hit.collider.GetComponent<Survivor>();
+                if (victim != launcher)
+                {
+                    victim.TakeDamage(this);
+                    DelayedDespawn();
+                }
+            }
+        }
+        lastPosition = transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.isTrigger)
+        if(!initiated) return;
+        if (!collision.isTrigger && collision.CompareTag("Survivor") || collision.CompareTag("Wall"))
         {
             if (collision.CompareTag("Survivor"))
             {

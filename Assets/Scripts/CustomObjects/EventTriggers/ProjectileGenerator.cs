@@ -38,13 +38,18 @@ public class ProjectileGenerator : CustomObject
             Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
             bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attakDamage, muzzleTF.position, destination, weapon.attackRange);
         }
-
     }
 
     public void ResetMuzzleTF()
     {
         if(transform.Find("Right Hand")?.Find($"{owner.CurrentWeapon.itemName}")?.Find("Muzzle") != null)
+        {
             muzzleTF = transform.Find("Right Hand").Find($"{owner.CurrentWeapon.itemName}").Find("Muzzle");
+        }
+        else
+        {
+            Debug.LogWarning("Muzzle not found!");
+        }
     }
 
 }
