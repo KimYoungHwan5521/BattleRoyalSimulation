@@ -663,6 +663,7 @@ MonoBehaviour:
   - {fileID: 4349758009342059253}
   - {fileID: 4366150907094748614}
   sightMeshFilter: {fileID: 3036747485122323761}
+  emotion: {fileID: 8710398529662247968}
   isDead: 0
   survivorID: 0
   survivorName: 
@@ -673,11 +674,12 @@ MonoBehaviour:
   attackSpeed: 1
   attackRange: 1.5
   moveSpeed: 3
-  detectionRange: 30
-  obstacleMask:
+  sightRange: 45
+  sightObstacleMask:
     serializedVersion: 2
     m_Bits: 64
   sightEdgeCount: 24
+  hearingAbility: 10
   farmingSpeed: 1
   aimErrorRange: 7.5
   lookRotation: {x: 0, y: 0}
@@ -702,6 +704,7 @@ MonoBehaviour:
   inventory: []
   enemies: []
   targetEnemiesLastPosition: {x: 0, y: 0}
+  threateningSoundPosition: {x: 0, y: 0}
   currentFarmingArea: {fileID: 0}
   targetFarmingSection: {fileID: 0}
   targetFarmingBox: {fileID: 0}
@@ -711,7 +714,9 @@ MonoBehaviour:
   curShotTime: 0
   lookAroundTime: 0.3
   curLookAroundTime: 0
-  LookAroundCount: 0
+  lookAroundCount: 0
+  keepAnEyeOnTime: 3
+  curKeepAnEyeOnTime: 0
 --- !u!58 &2819874960600584012
 CircleCollider2D:
   m_ObjectHideFlags: 0

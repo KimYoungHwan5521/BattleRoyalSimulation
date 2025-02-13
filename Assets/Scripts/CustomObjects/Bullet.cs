@@ -112,11 +112,11 @@ public class Bullet : CustomObject
             {
                 if(Random.Range(0, 1f) < 0.5f)
                 {
-                    SoundManager.Play(ResourceEnum.SFX.ricochet, transform.position);
+                    PlaySFX("ricochet,10", launcher);
                 }
                 else
                 {
-                    SoundManager.Play(ResourceEnum.SFX.ricochet2, transform.position);
+                    PlaySFX("ricochet2,10", launcher);
                 }
             }
             DelayedDespawn();

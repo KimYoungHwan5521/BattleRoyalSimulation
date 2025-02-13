@@ -213,7 +213,10 @@ public class InGameUIManager : MonoBehaviour
                     {
                         if(Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.Inventory[i].itemType}", out var spriteEnum))
                         {
-                            selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = ResourceManager.Get(spriteEnum);
+                            Image itemImage = selectedObjectsItems[i].GetComponentInChildren<Image>();
+                            itemImage.sprite = ResourceManager.Get(spriteEnum);
+                            selectedObjectsItems[i].GetComponentInChildren<AspectRatioFitter>().aspectRatio
+                                = itemImage.sprite.textureRect.width / itemImage.sprite.textureRect.height;
                         }
                         else
                         {

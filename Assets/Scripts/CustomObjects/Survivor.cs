@@ -7,19 +7,24 @@ using UnityEngine.AI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, InCombat }
+    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain }
 
     [Header("Components")]
     [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
+    Animator animator;
+    NavMeshAgent agent;
+
     [SerializeField] MeshFilter sightMeshFilter;
     Mesh sightMesh;
+    MeshRenderer sightMeshRenderer;
     Vector3[] sightVertices;
     int[] sightTriangles;
     Vector2[] sightColliderPoints;
-    Animator animator;
-    NavMeshAgent agent;
+
+    [SerializeField] GameObject emotion;
+    Animator emotionAnimator;
 
     ProjectileGenerator projectileGenerator;
 
@@ -38,6 +43,7 @@ public class Survivor : CustomObject
                 sightCollider.enabled = false;
                 bodyCollider.isTrigger = true;
                 sightMeshFilter.gameObject.SetActive(false);
+                emotion.SetActive(false);
 
                 currentFarmingArea = GetCorpseArea();
                 BattleRoyalManager.SurvivorDead(this);
@@ -55,10 +61,11 @@ public class Survivor : CustomObject
     [SerializeField] float attackSpeed = 1f;
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
-    [SerializeField] float detectionRange = 30f;
+    [SerializeField] float sightRange = 45f;
     float sightAngle = 120;
-    public LayerMask obstacleMask;
+    public LayerMask sightObstacleMask;
     [SerializeField] int sightEdgeCount = 24;
+    [SerializeField] float hearingAbility = 10f;
     [SerializeField] float farmingSpeed = 1f;
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
@@ -66,6 +73,7 @@ public class Survivor : CustomObject
     [SerializeField] Vector2 lookRotation = Vector2.zero;
     public Vector2 LookRotation => lookRotation;
 
+    [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
     public RangedWeapon CurrentWeaponAsRangedWeapon
@@ -113,6 +121,7 @@ public class Survivor : CustomObject
         }
     }
     [SerializeField] Vector2 targetEnemiesLastPosition;
+    [SerializeField] Vector2 threateningSoundPosition;
 
     [Header("Farming")]
     // value : Had finished farming?
@@ -143,7 +152,10 @@ public class Survivor : CustomObject
 
     [SerializeField] float lookAroundTime = 0.3f;
     [SerializeField] float curLookAroundTime;
-    [SerializeField] int LookAroundCount;
+    [SerializeField] int lookAroundCount;
+    Vector2 keepAnEyeOnPosition;
+    [SerializeField] float keepAnEyeOnTime = 3f;
+    [SerializeField] float curKeepAnEyeOnTime;
     #endregion
 
     protected override void Start()
@@ -154,8 +166,11 @@ public class Survivor : CustomObject
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         projectileGenerator = GetComponent<ProjectileGenerator>();
+        emotion.transform.parent = null;
+        emotionAnimator = emotion.GetComponent<Animator>();
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
+        sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
 
         sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
         sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
@@ -169,6 +184,7 @@ public class Survivor : CustomObject
     override protected void MyUpdate()
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
+        emotion.transform.position = new(transform.position.x, transform.position.y + 1);
         AI();
         DrawSightMesh();
     }
@@ -176,7 +192,17 @@ public class Survivor : CustomObject
     private void FixedUpdate()
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
-        if (lookRotation != Vector2.zero)
+        if(keepAnEyeOnPosition != Vector2.zero)
+        {
+            curKeepAnEyeOnTime += Time.fixedDeltaTime;
+            Look(keepAnEyeOnPosition);
+            if(curKeepAnEyeOnTime > keepAnEyeOnTime)
+            {
+                keepAnEyeOnPosition = Vector2.zero;
+                curKeepAnEyeOnTime = 0;
+            }
+        }
+        else if (lookRotation != Vector2.zero)
         {
             Look(lookRotation);
         }
@@ -196,24 +222,54 @@ public class Survivor : CustomObject
         }
     }
 
+    void LookAround()
+    {
+        curLookAroundTime += Time.deltaTime;
+        sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
+        if (curLookAroundTime > lookAroundTime)
+        {
+            curLookAroundTime = 0;
+            if (lookAroundCount > 3)
+            {
+                targetEnemiesLastPosition = Vector2.zero;
+                threateningSoundPosition = Vector2.zero;
+                lookAroundCount = 0;
+                return;
+            }
+            lookRotation = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
+            lookAroundCount++;
+        }
+    }
+
     void AI()
     {
         if (enemies.Count == 0)
         {
             animator.SetBool("Attack", false);
             animator.SetBool("Aim", false);
+            if(keepAnEyeOnPosition != Vector2.zero)
+            {
+                agent.SetDestination(transform.position);
+                return;
+            }
+
             if (CurrentWeaponAsRangedWeapon != null)
             {
                 if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF();
                 if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
                 {
+                    currentStatus = Status.Maintain;
                     Reload();
                     return;
                 }
             }
             animator.SetBool("Reload", false);
 
-            if(targetEnemiesLastPosition != Vector2.zero)
+            if(threateningSoundPosition != Vector2.zero)
+            {
+                InvestigateThreateningSound();
+            }
+            else if(targetEnemiesLastPosition != Vector2.zero)
             {
                 TraceEnemy();
             }
@@ -251,6 +307,7 @@ public class Survivor : CustomObject
     {
         lookRotation = Vector2.zero;
         currentStatus = Status.Farming;
+        sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Normal);
         if (targetFarmingCorpse != null)
         {
             FarmingCorpse();
@@ -764,23 +821,26 @@ public class Survivor : CustomObject
     #endregion
 
     #region Combat
+    void InvestigateThreateningSound()
+    {
+        currentStatus = Status.TraceEnemy;
+        if (Vector2.Distance(transform.position, threateningSoundPosition) < 0.1f)
+        {
+            LookAround();
+        }
+        else
+        {
+            agent.SetDestination(threateningSoundPosition);
+            lookRotation = Vector2.zero;
+        }
+    }
+
     void TraceEnemy()
     {
+        currentStatus = Status.TraceEnemy;
         if (Vector2.Distance(transform.position, targetEnemiesLastPosition) < 0.1f)
         {
-            curLookAroundTime += Time.deltaTime;
-            if(curLookAroundTime > lookAroundTime)
-            {
-                curLookAroundTime = 0;
-                if(LookAroundCount > 3)
-                {
-                    targetEnemiesLastPosition = Vector2.zero;
-                    LookAroundCount = 0;
-                    return;
-                }
-                lookRotation = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
-                LookAroundCount++;
-            }
+            LookAround();
         }
         else
         {
@@ -900,7 +960,7 @@ public class Survivor : CustomObject
             float angle = -sightAngle / 2 + i * (sightAngle / sightEdgeCount);  // 시작 각도부터 각도 간격만큼 더해가기
             Vector2 direction = DirFromAngle(angle);  // Ray를 쏠 때는 월드 기준
             Vector2 meshDirection = DirFromAngle(angle, true);  // 메쉬는 Survivor의 Head의 Sight가 들고있어서 로컬 기준
-            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, detectionRange, LayerMask.GetMask("Wall"));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, sightRange, sightObstacleMask);
             if(hits.Length > 0)
             {
                 sightVertices[i + 1] = meshDirection.normalized * hits[0].distance;
@@ -908,8 +968,8 @@ public class Survivor : CustomObject
             }
             else
             {
-                sightVertices[i + 1] = meshDirection.normalized * detectionRange;  // 해당 방향으로 끝 점을 그리기
-                Debug.DrawRay(transform.position, direction.normalized * detectionRange, Color.red);
+                sightVertices[i + 1] = meshDirection.normalized * sightRange;  // 해당 방향으로 끝 점을 그리기
+                Debug.DrawRay(transform.position, direction.normalized * sightRange, Color.red);
             }
         }
 
@@ -941,6 +1001,31 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    #region Hearing
+    public void HearSound(float volume, Vector2 soundOrigin, CustomObject noiseMaker)
+    {
+        if (noiseMaker == this || enemies.Contains(noiseMaker as Survivor)) return;
+        float distance = Vector2.Distance(transform.position, soundOrigin);
+        float heardVolume = volume * hearingAbility / (distance * distance);
+        Debug.Log($"{survivorName}, {heardVolume}");
+
+        if(heardVolume > 10f)
+        {
+            // 어떤 소리인지 명확한 인지
+            threateningSoundPosition = soundOrigin;
+            sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
+            emotionAnimator.SetTrigger("Alert");
+        }
+        else if( heardVolume > 1f)
+        {
+            // 불분명한 인지
+            keepAnEyeOnPosition = soundOrigin;
+            sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
+            emotionAnimator.SetTrigger("Suspicious");
+        }
+    }
+    #endregion
+
     #region Take Damage
     void ApplyDamage(Survivor attacker, float damage)
     {
@@ -964,6 +1049,8 @@ public class Survivor : CustomObject
         else
         {
             enemies.Insert(0, attacker);
+            sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
+            emotionAnimator.SetTrigger("Alert");
         }
 
     }
@@ -1026,11 +1113,11 @@ public class Survivor : CustomObject
                 damage -= currentHelmet.Armor;
                 if (UnityEngine.Random.Range(0, 1f) < 0.5f)
                 {
-                    SoundManager.Play(ResourceEnum.SFX.ricochet, transform.position);
+                    PlaySFX("ricochet,10");
                 }
                 else
                 {
-                    SoundManager.Play(ResourceEnum.SFX.ricochet2, transform.position);
+                    PlaySFX("ricochet2,10");
                 }
             }
         }
@@ -1083,6 +1170,8 @@ public class Survivor : CustomObject
                 if (!enemies.Contains(survivor))
                 {
                     enemies.Add(survivor);
+                    sightMeshRenderer.material = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
+                    emotionAnimator.SetTrigger("Alert");
                 }
             }
         }
@@ -1159,7 +1248,5 @@ public class Survivor : CustomObject
     private void OnDrawGizmos()
     {
         if(isDead) return;
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
     }
 }

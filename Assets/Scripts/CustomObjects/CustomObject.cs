@@ -17,11 +17,29 @@ public class CustomObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual void PlaySFX(string wantSound)
+    public virtual void PlaySFX(string wantSoundAndVolume)
     {
-        if(Enum.TryParse(wantSound, out ResourceEnum.SFX result))
+        PlaySFX(wantSoundAndVolume, this);
+    }
+
+    public virtual void PlaySFX(string wantSoundAndVolume, CustomObject noiseMaker)
+    {
+        wantSoundAndVolume = wantSoundAndVolume.Replace(" ", "");
+        string wantSound = wantSoundAndVolume.Split(",")[0];
+        if (Enum.TryParse(wantSound, out ResourceEnum.SFX result))
         {
             SoundManager.Play(result, transform.position);
+            if (float.TryParse(wantSoundAndVolume.Split(",")[1], out float wantVolume))
+            {
+                foreach (Survivor survivor in BattleRoyalManager.AliveSurvivors)
+                {
+                    survivor.HearSound(wantVolume, transform.position, noiseMaker);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Unvalid wantSoundAndVoulume : {wantSoundAndVolume} (Valid : wantSound,wantVolume)");
+            }
         }
         else
         {
