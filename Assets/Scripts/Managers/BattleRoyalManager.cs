@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class BattleRoyalManager
 {
-    Animator count3Animator;
+    public Animator count3Animator;
 
     Area[] areas;
     List<Item> farmingItems = new();
@@ -37,7 +37,10 @@ public class BattleRoyalManager
 
     public IEnumerator Initiate()
     {
+        count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
+        count3Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         areas = GameObject.FindObjectsOfType<Area>();
+        GameManager.Instance.ManagerUpdate -= BattleRoyalManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyalManagerUpdate;
 
         ResetArea();
@@ -146,8 +149,10 @@ public class BattleRoyalManager
     {
         foreach(Survivor survivor in survivors)
         {
-            GameObject.Destroy(survivor.gameObject);
+            survivor.MyDestroy();
         }
+        survivors.Clear();
+        aliveSurvivors.Clear();
 
         areas = areas.Shuffle();
 
@@ -282,7 +287,7 @@ public class BattleRoyalManager
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
-                battleWinner = survivor;
+                battleWinner = aliveSurvivors[0];
                 isBattleRoyalStart = false;
             }
         }
@@ -290,11 +295,6 @@ public class BattleRoyalManager
 
     void BattleRoyalStart()
     {
-        if(count3Animator == null)
-        {
-            count3Animator = GameObject.FindAnyObjectByType<Count3>().GetComponent<Animator>();
-            count3Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-        }
         foreach (Survivor survivor in survivors)
         {
             survivor.GetComponent<NavMeshAgent>().enabled = true;
@@ -302,6 +302,7 @@ public class BattleRoyalManager
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
         Time.timeScale = 0;
         battleWinner = null;
+        count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");
         GameManager.CloseLoadInfo();
     }

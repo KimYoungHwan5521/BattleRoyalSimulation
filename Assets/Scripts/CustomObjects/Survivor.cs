@@ -196,7 +196,7 @@ public class Survivor : CustomObject
     }
 
 
-    override protected void MyUpdate()
+    override public void MyUpdate()
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
@@ -516,19 +516,19 @@ public class Survivor : CustomObject
         float rand = UnityEngine.Random.Range(0, 1f);
         if(rand > 0.75f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise01,10");
+            targetFarmingBox.PlaySFX("farmingNoise01,20");
         }
         else if (rand > 0.5f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise02,10");
+            targetFarmingBox.PlaySFX("farmingNoise02,20");
         }
         else if (rand > 0.25f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise03,10");
+            targetFarmingBox.PlaySFX("farmingNoise03,20");
         }
         else
         {
-            targetFarmingBox.PlaySFX("farmingNoise04,10");
+            targetFarmingBox.PlaySFX("farmingNoise04,20");
         }
     }
 
@@ -870,7 +870,7 @@ public class Survivor : CustomObject
     void InvestigateThreateningSound()
     {
         currentStatus = Status.TraceEnemy;
-        if (Vector2.Distance(transform.position, threateningSoundPosition) < 0.1f)
+        if (Vector2.Distance(transform.position, threateningSoundPosition) < 0.3f)
         {
             LookAround();
         }
@@ -884,7 +884,7 @@ public class Survivor : CustomObject
     void TraceEnemy()
     {
         currentStatus = Status.TraceEnemy;
-        if (Vector2.Distance(transform.position, targetEnemiesLastPosition) < 0.1f)
+        if (Vector2.Distance(transform.position, targetEnemiesLastPosition) < 0.3f)
         {
             LookAround();
         }
@@ -1119,21 +1119,21 @@ public class Survivor : CustomObject
             {
                 // 회피
                 damage = 0;
-                hitSound = "avoid, 1";
+                hitSound = "avoid, 5";
             }
             else if (probability < 0.5f)
             {
                 // 방어
                 damage *= 0.5f;
-                hitSound = "guard, 5";
+                hitSound = "guard, 10";
             }
             else if (probability > 0.9f)
             {
                 // 치명타
                 damage *= 2;
-                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
+                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
             }
-            else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
+            else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
         }
 
         PlaySFX(hitSound, this);

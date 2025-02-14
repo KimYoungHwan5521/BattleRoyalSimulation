@@ -9,9 +9,9 @@ public class CustomObject : MonoBehaviour
         GameManager.Instance.ObjectUpdate += MyUpdate;
     }
 
-    protected virtual void MyStart() { }
-    protected virtual void MyUpdate() { }
-    protected virtual void MyDestroy()
+    public virtual void MyStart() { }
+    public virtual void MyUpdate() { }
+    public virtual void MyDestroy()
     {
         GameManager.Instance.ObjectUpdate -= MyUpdate;
         Destroy(gameObject);

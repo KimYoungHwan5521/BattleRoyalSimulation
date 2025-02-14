@@ -5,7 +5,7 @@ using UnityEngine;
 public class Area : CustomObject
 {
     public FarmingSection[] farmingSections;
-    bool isProhibited_Plan;
+    [SerializeField] bool isProhibited_Plan;
     public bool IsProhibited_Plan
     {
         get => isProhibited_Plan;

@@ -37,7 +37,7 @@ public class GameResult : MonoBehaviour
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
         Survivor survivor = BattleRoyalManager.Survivors[0];
-        gameResultText.text = BattleRoyalManager.BattleWinner == survivor ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
+        gameResultText.text = BattleRoyalManager.BattleWinner != null && BattleRoyalManager.BattleWinner.survivorID == 0 ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
         survivedTimeText.text = $"Survived Time : {(int)BattleRoyalManager.battleTime / 60:00m} {(int)BattleRoyalManager.battleTime - ((int)BattleRoyalManager.battleTime / 60) * 60:00s}";
         killsText.text = $"Kills : {survivor.KillCount}";
         totalDamageText.text = $"Total Damage : {(int)survivor.TotalDamage}";
