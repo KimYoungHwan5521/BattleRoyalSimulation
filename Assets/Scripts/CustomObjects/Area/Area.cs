@@ -36,4 +36,12 @@ public class Area : CustomObject
 
         farmingSections = GetComponentsInChildren<FarmingSection>();
     }
+
+    public void ResetProhibitArea()
+    {
+        IsProhibited_Plan = false;
+        isProhibited = false;
+        markProhibitedArea_Plan.SetActive(false);
+        markProhibitedArea.SetActive(false);
+    }
 }

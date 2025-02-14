@@ -921,7 +921,7 @@ AnimationClip:
   m_Events:
   - time: 1
     functionName: PlaySFX
-    data: assaultriflereload1
+    data: assaultriflereload1,10
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

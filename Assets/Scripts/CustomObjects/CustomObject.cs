@@ -33,7 +33,7 @@ public class CustomObject : MonoBehaviour
             {
                 foreach (Survivor survivor in BattleRoyalManager.AliveSurvivors)
                 {
-                    survivor.HearSound(wantVolume, transform.position, noiseMaker);
+                    if(noiseMaker != this) survivor.HearSound(wantVolume, transform.position, noiseMaker);
                 }
             }
             else

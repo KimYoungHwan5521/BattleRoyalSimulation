@@ -65,6 +65,14 @@ public class ResourcesPath
         "Sounds/SFXs/Guns/bang_06",
         "Sounds/SFXs/Guns/ricochet",
         "Sounds/SFXs/Guns/ricochet2",
+        "Sounds/SFXs/hit01",
+        "Sounds/SFXs/hit02",
+        "Sounds/SFXs/guard",
+        "Sounds/SFXs/avoid",
+        "Sounds/SFXs/farmingNoise01",
+        "Sounds/SFXs/farmingNoise02",
+        "Sounds/SFXs/farmingNoise03",
+        "Sounds/SFXs/farmingNoise04",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

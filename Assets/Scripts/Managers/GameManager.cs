@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
     
 
     public LoadingCanvas loadingCanvas;
-    [SerializeField] GameObject inGameUICanvas;
-    [SerializeField] GameObject outCanvas;
+    public GameObject inGameUICanvas;
+    public GameObject outCanvas;
 
     void Awake()
     {
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        StartCoroutine(BattleRoyalStart());
+
     }
 
     void Update()

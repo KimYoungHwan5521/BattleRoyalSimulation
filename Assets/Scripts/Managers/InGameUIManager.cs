@@ -15,7 +15,7 @@ public class InGameUIManager : MonoBehaviour
 
     Vector2 navVector;
 
-    [SerializeField] GraphicRaycaster raycaster;
+    [SerializeField] GraphicRaycaster[] raycasters;
     [SerializeField] EventSystem eventSystem;
 
     [Header("Toolbar")]
@@ -60,7 +60,7 @@ public class InGameUIManager : MonoBehaviour
 
     private void Update()
     {
-        if(!IsPointerOverUI()) ManualCameraMove();
+        ManualCameraMove();
         SetSelectedObjectInfo();
     }
     //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
@@ -68,8 +68,8 @@ public class InGameUIManager : MonoBehaviour
 
     void ManualCameraMove()
     {
-        Camera.main.transform.position += (Vector3)navVector * Camera.main.orthographicSize * 0.2f;
-        if (isClicked)
+        Camera.main.transform.position += (Vector3)navVector * Camera.main.orthographicSize * 0.1f;
+        if (!IsPointerOverUI() && isClicked)
         {
             Camera.main.transform.position = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
         }
@@ -275,9 +275,13 @@ public class InGameUIManager : MonoBehaviour
             position = Input.mousePosition
         };
 
-        List<RaycastResult> results = new List<RaycastResult>();
-        raycaster.Raycast(pointerData, results);
+        List<RaycastResult> results = new();
+        foreach (GraphicRaycaster raycaster in raycasters)
+        {
+            raycaster.Raycast(pointerData, results);
+            return results.Count > 0;
+        }
 
-        return results.Count > 0;
+        return false;
     }
 }

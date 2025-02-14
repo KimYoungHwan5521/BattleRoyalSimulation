@@ -431,7 +431,7 @@ AnimationClip:
   m_Events:
   - time: 0.48333332
     functionName: PlaySFX
-    data: Shotgun_singlebullet
+    data: Shotgun_singlebullet,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

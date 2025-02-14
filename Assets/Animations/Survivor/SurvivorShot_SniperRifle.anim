@@ -429,7 +429,7 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PlaySFX
-    data: bang_05
+    data: bang_05,1500
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

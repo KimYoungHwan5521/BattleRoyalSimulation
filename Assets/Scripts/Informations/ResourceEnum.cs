@@ -67,5 +67,13 @@ namespace ResourceEnum
         bang_06,
         ricochet,
         ricochet2,
+        hit01,
+        hit02,
+        guard,
+        avoid,
+        farmingNoise01,
+        farmingNoise02,
+        farmingNoise03,
+        farmingNoise04,
     }
 }

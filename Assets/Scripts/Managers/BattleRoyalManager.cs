@@ -13,12 +13,16 @@ public class BattleRoyalManager
 
     public int survivorNumber = 4;
     public static bool isBattleRoyalStart;
+    public static float battleTime;
     float areaProhibitTime = 60;
     float curAreaProhibitTime;
 
-    List<Survivor> survivors = new();
+    static List<Survivor> survivors = new();
+    public static List<Survivor> Survivors => survivors;
     static List<Survivor> aliveSurvivors = new();
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
+    static Survivor battleWinner;
+    public static Survivor BattleWinner => battleWinner;
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -36,6 +40,7 @@ public class BattleRoyalManager
         areas = GameObject.FindObjectsOfType<Area>();
         GameManager.Instance.ManagerUpdate += BattleRoyalManagerUpdate;
 
+        ResetArea();
         ItemSetting();
         ItemPlacing();
         SpawnPlayers();
@@ -48,6 +53,7 @@ public class BattleRoyalManager
     {
         if(isBattleRoyalStart)
         {
+            battleTime += Time.deltaTime;
             curAreaProhibitTime += Time.deltaTime;
             if(curAreaProhibitTime > areaProhibitTime)
             {
@@ -68,6 +74,8 @@ public class BattleRoyalManager
 
     void ItemSetting()
     {
+        GameManager.Instance.ItemManager.itemDictionary.Clear();
+        farmingItems.Clear();
         AddItems(ItemManager.Items.Knife, 1);
         AddItems(ItemManager.Items.Dagger, 1);
         AddItems(ItemManager.Items.Bat, 1);
@@ -96,6 +104,17 @@ public class BattleRoyalManager
 
     void ItemPlacing()
     {
+        foreach(Area area in areas)
+        {
+            foreach(FarmingSection section in area.farmingSections)
+            {
+                foreach(Box box in  section.boxes)
+                {
+                    box.items.Clear();
+                }
+            }
+        }
+
         farmingItems = farmingItems.Shuffle();
 
         int boxIndex;
@@ -125,6 +144,11 @@ public class BattleRoyalManager
 
     void SpawnPlayers()
     {
+        foreach(Survivor survivor in survivors)
+        {
+            GameObject.Destroy(survivor.gameObject);
+        }
+
         areas = areas.Shuffle();
 
         int survivorIndex = 0;
@@ -158,6 +182,14 @@ public class BattleRoyalManager
                 survivors.Add(survivor);
                 aliveSurvivors.Add(survivor);
             }
+        }
+    }
+
+    void ResetArea()
+    {
+        foreach(Area area in areas)
+        {
+            area.ResetProhibitArea();
         }
     }
 
@@ -246,7 +278,13 @@ public class BattleRoyalManager
         if(aliveSurvivors.Contains(survivor))
         {
             aliveSurvivors.Remove(survivor);
-            if(aliveSurvivors.Count == 1) Debug.Log($"{aliveSurvivors[0].survivorName} wins!");
+            if (survivor.survivorID == 0) GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
+            if (aliveSurvivors.Count == 1)
+            {
+                GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
+                battleWinner = survivor;
+                isBattleRoyalStart = false;
+            }
         }
     }
 
@@ -263,6 +301,7 @@ public class BattleRoyalManager
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
         Time.timeScale = 0;
+        battleWinner = null;
         count3Animator.SetTrigger("Count");
         GameManager.CloseLoadInfo();
     }

@@ -868,7 +868,7 @@ AnimationClip:
   m_Events:
   - time: 1
     functionName: PlaySFX
-    data: Handgun_reload
+    data: Handgun_reload,10
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
