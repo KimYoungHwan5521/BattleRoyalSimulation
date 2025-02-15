@@ -36,11 +36,11 @@ public class GameResult : MonoBehaviour
         Time.timeScale = 0;
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
-        Survivor survivor = BattleRoyalManager.Survivors[0];
+        Survivor playerSurvivor = BattleRoyalManager.Survivors[0];
         gameResultText.text = BattleRoyalManager.BattleWinner != null && BattleRoyalManager.BattleWinner.survivorID == 0 ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
-        survivedTimeText.text = $"Survived Time : {(int)BattleRoyalManager.battleTime / 60:00m} {(int)BattleRoyalManager.battleTime - ((int)BattleRoyalManager.battleTime / 60) * 60:00s}";
-        killsText.text = $"Kills : {survivor.KillCount}";
-        totalDamageText.text = $"Total Damage : {(int)survivor.TotalDamage}";
+        survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
+        killsText.text = $"Kills : {playerSurvivor.KillCount}";
+        totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";
     }
 
     public void DelayedShowGameResult()

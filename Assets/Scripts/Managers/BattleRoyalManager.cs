@@ -300,7 +300,7 @@ public class BattleRoyalManager
             survivor.GetComponent<NavMeshAgent>().enabled = true;
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
-        Time.timeScale = 0;
+        GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(0);
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");

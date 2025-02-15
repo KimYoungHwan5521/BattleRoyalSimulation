@@ -48,7 +48,7 @@ public class Survivor : CustomObject
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
 
-                currentFarmingArea = GetCorpseArea();
+                currentFarmingArea = GetCurrentArea();
                 BattleRoyalManager.SurvivorDead(this);
             }
         }
@@ -164,6 +164,8 @@ public class Survivor : CustomObject
     [SerializeField] float curKeepAnEyeOnTime;
 
     [Header("GameResult")]
+    float survivedTime;
+    public float SurvivedTime => survivedTime;
     int killCount;
     public int KillCount => killCount;
     float totalDamage;
@@ -200,6 +202,8 @@ public class Survivor : CustomObject
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
+        survivedTime += Time.deltaTime;
+
         AI();
         DrawSightMesh();
     }
@@ -252,6 +256,11 @@ public class Survivor : CustomObject
                 threateningSoundPosition = Vector2.zero;
                 lastTargetEnemy = null;
                 lookAroundCount = 0;
+
+                CurrentFarmingArea = FindNearest(farmingAreas);
+                targetFarmingSection = FindNearest(farmingSections);
+                targetFarmingBox = FindNearest(farmingBoxes);
+                targetFarmingCorpse = null;
                 return;
             }
             lookRotation = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
@@ -315,6 +324,10 @@ public class Survivor : CustomObject
                 inSightEnemies.Remove(inSightEnemies[0]);
                 targetEnemiesLastPosition = Vector2.zero;
                 lastTargetEnemy = null;
+
+                CurrentFarmingArea = FindNearest(farmingAreas);
+                targetFarmingSection = FindNearest(farmingSections);
+                targetFarmingBox = FindNearest(farmingBoxes);
             }
             else
             {
@@ -451,6 +464,9 @@ public class Survivor : CustomObject
                 targetFarmingCorpse.inventory.Clear();
                 farmingCorpses[targetFarmingCorpse] = true;
                 targetFarmingCorpse = null;
+                CurrentFarmingArea = FindNearest(farmingAreas);
+                targetFarmingSection = FindNearest(farmingSections);
+                targetFarmingBox = FindNearest(farmingBoxes);
                 lookRotation = Vector2.zero;
                 curFarmingTime = 0;
             }
@@ -1282,7 +1298,7 @@ public class Survivor : CustomObject
         SetColor(rgbVector.x, rgbVector.y, rgbVector.z);
     }
 
-    Area GetCorpseArea()
+    Area GetCurrentArea()
     {
         foreach(var area in farmingAreas)
         {
