@@ -369,6 +369,11 @@ public class Survivor : CustomObject
         {
             if(!corpse.Value)
             {
+                if(corpse.Key.CurrentFarmingArea.IsProhibited || corpse.Key.CurrentFarmingArea.IsProhibited_Plan)
+                {
+                    farmingCorpses[corpse.Key] = true;
+                    return false;
+                }
                 targetFarmingCorpse = corpse.Key;
                 return true;
             }
@@ -395,21 +400,52 @@ public class Survivor : CustomObject
         TKey nearest = default;
         float minDistance = float.MaxValue;
         float distance;
+        List<Area> reserveRemoves = new();
         foreach (KeyValuePair<TKey, bool> candidate in candidates)
         {
             if (typeof(TKey) == typeof(Area))
             {
                 Area area = candidate.Key as Area;
-                if (area.IsProhibited || area.IsProhibited_Plan) continue;
+                if (area.IsProhibited || area.IsProhibited_Plan)
+                {
+                    reserveRemoves.Add(area);
+                    continue;
+                }
             }
             if (!candidate.Value)
             {
+                if(typeof(TKey) == typeof(FarmingSection))
+                {
+                    FarmingSection farmingSection = candidate.Key as FarmingSection;
+                    if (farmingSection.ownerArea.IsProhibited || farmingSection.ownerArea.IsProhibited_Plan)
+                    {
+                        farmingSections[farmingSection] = true;
+                        return null;
+                    }
+                }
+                else if (typeof(TKey) == typeof(Box))
+                {
+                    Box farmingBox = candidate.Key as Box;
+                    if (farmingBox.ownerArea == null) Debug.LogWarning($"ownerArea null:{farmingBox.transform.position}");
+                    if (farmingBox.ownerArea.IsProhibited || farmingBox.ownerArea.IsProhibited_Plan)
+                    {
+                        farmingBoxes[farmingBox] = true;
+                        return null;
+                    }
+                }
                 distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
                 if (distance < minDistance)
                 {
                     minDistance = distance;
                     nearest = candidate.Key;
                 }
+            }
+        }
+        if(typeof(TKey) == typeof(Area))
+        {
+            foreach (Area reserveRemove in reserveRemoves)
+            {
+                farmingAreas[reserveRemove] = true;
             }
         }
         return nearest;
@@ -1071,14 +1107,14 @@ public class Survivor : CustomObject
         float heardVolume = volume * hearingAbility / (distance * distance);
         Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
 
-        if(heardVolume > 10f)
+        if(heardVolume > 1f)
         {
             // 어떤 소리인지 명확한 인지
             threateningSoundPosition = soundOrigin;
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
         }
-        else if( heardVolume > 1f)
+        else if( heardVolume > 0.1f)
         {
             // 불분명한 인지
             keepAnEyeOnPosition = soundOrigin;

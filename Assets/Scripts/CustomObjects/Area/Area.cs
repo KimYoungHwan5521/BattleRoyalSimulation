@@ -35,6 +35,12 @@ public class Area : CustomObject
         base.Start();
 
         farmingSections = GetComponentsInChildren<FarmingSection>();
+        foreach(FarmingSection farmingSection in farmingSections)
+        {
+            farmingSection.ownerArea = this;
+            farmingSection.boxes = farmingSection.GetComponentsInChildren<Box>();
+            foreach(Box box in farmingSection.boxes) box.ownerArea = this;
+        }
     }
 
     public void ResetProhibitArea()

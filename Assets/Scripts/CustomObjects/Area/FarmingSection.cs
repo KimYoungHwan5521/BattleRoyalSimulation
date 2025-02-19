@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class FarmingSection : CustomObject
 {
+    public Area ownerArea;
     public Box[] boxes;
 
-    protected override void Start()
-    {
-        base.Start();
-
-        boxes = GetComponentsInChildren<Box>();
-    }
 }

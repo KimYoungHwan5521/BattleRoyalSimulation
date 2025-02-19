@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Box : CustomObject
 {
+    public Area ownerArea;
     public List<Item> items = new();
 }
