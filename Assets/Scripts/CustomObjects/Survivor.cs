@@ -32,6 +32,7 @@ public class Survivor : CustomObject
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject nameTag;
 
+    InGameUIManager inGameUIManager;
     ProjectileGenerator projectileGenerator;
 
     [Header("Status")]
@@ -198,6 +199,7 @@ public class Survivor : CustomObject
         m_SightSuspicious = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
         m_SightAlert = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
 
+        inGameUIManager = GameManager.Instance.GetComponent<InGameUIManager>();
         curHP = maxHP;
         agent.speed = moveSpeed;
     }
@@ -439,6 +441,7 @@ public class Survivor : CustomObject
                     }
                 }
                 distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                Debug.Log($"{candidate}, distance : {distance}");
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -926,7 +929,7 @@ public class Survivor : CustomObject
     #region Combat
     void InvestigateThreateningSound()
     {
-        currentStatus = Status.TraceEnemy;
+        currentStatus = Status.InvestigateThreateningSound;
         if (Vector2.Distance(transform.position, threateningSoundPosition) < 0.3f)
         {
             LookAround();
@@ -1107,7 +1110,7 @@ public class Survivor : CustomObject
     #region Hearing
     public void HearSound(float volume, Vector2 soundOrigin, CustomObject noiseMaker)
     {
-        if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor)) return;
+        if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor) || noiseMaker == lastTargetEnemy) return;
         float distance = Vector2.Distance(transform.position, soundOrigin);
         float heardVolume = volume * hearingAbility / (distance * distance);
         Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
@@ -1138,9 +1141,9 @@ public class Survivor : CustomObject
         if (curHP <= 0)
         {
             curHP = 0;
-            Debug.Log($"{survivorName} is eliminated by {attacker.survivorName}");
             attacker.killCount++;
             IsDead = true;
+            inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
         }
 
         if (inSightEnemies.Contains(attacker))

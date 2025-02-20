@@ -7,6 +7,9 @@ public class ResourcesPath
         "Prefabs/Test",
         "Prefabs/Survivor",
         "Prefabs/Bullet",
+
+        // UI
+        "Prefabs/UIs/KillLog",
     };
 
     public static string[] SpritePathArray =

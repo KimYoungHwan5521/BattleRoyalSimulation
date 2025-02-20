@@ -18,6 +18,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] GraphicRaycaster[] raycasters;
     [SerializeField] EventSystem eventSystem;
 
+    [SerializeField] TextMeshProUGUI leftSurvivors;
+    [SerializeField] RectTransform display;
+
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
 
@@ -111,6 +114,17 @@ public class InGameUIManager : MonoBehaviour
     {
         Time.timeScale = Mathf.Clamp(Time.timeScale + 1, Time.timeScale, 5);
         currentTimeScaleText.text = $"x {(int)Time.timeScale}";
+    }
+
+    public void SetLeftSurvivors(int survivorsCount)
+    {
+        leftSurvivors.text = $"Left Survivors : {survivorsCount}";
+    }
+
+    public void ShowKillLog(string victim, string killer)
+    {
+        TextMeshProUGUI killLog = PoolManager.Spawn(ResourceEnum.Prefab.KillLog, display).GetComponentInChildren<TextMeshProUGUI>();
+        killLog.text = $"<color=red>{victim}</color> has eliminated by <color=yellow>{killer}</color>";
     }
 
     void SelectObject()

@@ -188,6 +188,7 @@ public class BattleRoyalManager
                 aliveSurvivors.Add(survivor);
             }
         }
+        GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
     }
 
     void ResetArea()
@@ -283,6 +284,7 @@ public class BattleRoyalManager
         if(aliveSurvivors.Contains(survivor))
         {
             aliveSurvivors.Remove(survivor);
+            GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
             if (survivor.survivorID == 0) GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
             if (aliveSurvivors.Count == 1)
             {

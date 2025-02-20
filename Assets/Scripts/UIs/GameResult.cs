@@ -16,6 +16,7 @@ public class GameResult : MonoBehaviour
     bool resultClaimed;
     float resultDelay = 2f;
     float curResultDelay;
+    int lastTimeScale;
 
     private void Update()
     {
@@ -33,6 +34,7 @@ public class GameResult : MonoBehaviour
 
     void ShowGameResult(bool isBattleEnd)
     {
+        lastTimeScale = (int)Time.timeScale;
         Time.timeScale = 0;
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
@@ -58,7 +60,7 @@ public class GameResult : MonoBehaviour
     public void KeepWatching()
     {
         gameResult.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = lastTimeScale;
     }
 
     void OnCancel(InputValue value)

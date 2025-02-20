@@ -5,6 +5,9 @@ namespace ResourceEnum
         Test,
         Survivor,
         Bullet,
+
+        // UI
+        KillLog,
     }
 
     public enum Sprite
