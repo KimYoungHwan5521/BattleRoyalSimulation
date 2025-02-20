@@ -29,6 +29,9 @@ public class Survivor : CustomObject
     [SerializeField] GameObject emotion;
     Animator emotionAnimator;
 
+    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject nameTag;
+
     ProjectileGenerator projectileGenerator;
 
     [Header("Status")]
@@ -47,6 +50,7 @@ public class Survivor : CustomObject
                 bodyCollider.isTrigger = true;
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
+                canvas.SetActive(false);
 
                 currentFarmingArea = GetCurrentArea();
                 BattleRoyalManager.SurvivorDead(this);
@@ -182,6 +186,7 @@ public class Survivor : CustomObject
         projectileGenerator = GetComponent<ProjectileGenerator>();
         emotion.transform.parent = null;
         emotionAnimator = emotion.GetComponent<Animator>();
+        canvas.transform.SetParent(null);
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
         sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
@@ -202,6 +207,7 @@ public class Survivor : CustomObject
     {
         if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
+        nameTag.transform.position = new(transform.position.x, transform.position.y - 0.75f);
         survivedTime += Time.deltaTime;
 
         AI();
@@ -426,7 +432,6 @@ public class Survivor : CustomObject
                 else if (typeof(TKey) == typeof(Box))
                 {
                     Box farmingBox = candidate.Key as Box;
-                    if (farmingBox.ownerArea == null) Debug.LogWarning($"ownerArea null:{farmingBox.transform.position}");
                     if (farmingBox.ownerArea.IsProhibited || farmingBox.ownerArea.IsProhibited_Plan)
                     {
                         farmingBoxes[farmingBox] = true;
@@ -1004,7 +1009,7 @@ public class Survivor : CustomObject
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
         animator.SetBool("Reload", false);
-        agent.SetDestination(target.transform.position);
+        if(Vector2.Distance(agent.destination, target.transform.position) > 3f) agent.SetDestination(target.transform.position);
     }
 
     void Attack()
