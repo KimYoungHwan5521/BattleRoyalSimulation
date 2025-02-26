@@ -10,6 +10,7 @@ public class ResourcesPath
 
         // UI
         "Prefabs/UIs/KillLog",
+        "Prefabs/UIs/Headshot",
     };
 
     public static string[] SpritePathArray =

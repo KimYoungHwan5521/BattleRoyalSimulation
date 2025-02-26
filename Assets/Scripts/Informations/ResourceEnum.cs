@@ -8,6 +8,7 @@ namespace ResourceEnum
 
         // UI
         KillLog,
+        Headshot,
     }
 
     public enum Sprite

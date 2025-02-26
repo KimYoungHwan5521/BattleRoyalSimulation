@@ -51,7 +51,7 @@ public class Survivor : CustomObject
                 bodyCollider.isTrigger = true;
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
-                canvas.SetActive(false);
+                nameTag.SetActive(false);
 
                 currentFarmingArea = GetCurrentArea();
                 BattleRoyalManager.SurvivorDead(this);
@@ -441,7 +441,7 @@ public class Survivor : CustomObject
                     }
                 }
                 distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
-                Debug.Log($"{candidate}, distance : {distance}");
+                if (typeof(TKey) == typeof(Area)) Debug.Log($"{candidate}, distance : {distance}");
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -1133,7 +1133,7 @@ public class Survivor : CustomObject
     #endregion
 
     #region Take Damage
-    void ApplyDamage(Survivor attacker, float damage)
+    void ApplyDamage(Survivor attacker, float damage, int damagePart)
     {
         if (damage < 0) damage = 0;
         curHP -= damage;
@@ -1143,6 +1143,11 @@ public class Survivor : CustomObject
             curHP = 0;
             attacker.killCount++;
             IsDead = true;
+            if (damagePart == 0)
+            {
+                GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
+                headshot.transform.SetParent(canvas.transform);
+            }
             inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
         }
 
@@ -1197,7 +1202,7 @@ public class Survivor : CustomObject
         }
 
         PlaySFX(hitSound, this);
-        ApplyDamage(attacker, damage);
+        ApplyDamage(attacker, damage, -1);
     }
 
     public void TakeDamage(Bullet bullet)
@@ -1249,7 +1254,7 @@ public class Survivor : CustomObject
             if(currentVest != null) damage -= currentVest.Armor;
         }
 
-        ApplyDamage(bullet.Launcher, damage);
+        ApplyDamage(bullet.Launcher, damage, damagePart);
     }
     #endregion
 
