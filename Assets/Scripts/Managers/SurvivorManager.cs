@@ -26,9 +26,9 @@ public class SurvivorManager : MonoBehaviour
 
     public void SetCandidates()
     {
-        candidates[0].SetInfo("survivor0", 200, 10, 1, 3, 1, 7.5f);
-        candidates[1].SetInfo("survivor0", 100, 20, 1, 3, 1, 7.5f);
-        candidates[2].SetInfo("survivor0", 100, 10, 1, 4.5f, 1.5f, 7.5f);
+        candidates[0].SetInfo(Names.SurvivorName[Random.Range(0, Names.SurvivorName.Length)], 200, 10, 1, 3, 1, 7.5f);
+        candidates[1].SetInfo(Names.SurvivorName[Random.Range(0, Names.SurvivorName.Length)], 100, 20, 1, 3, 1, 7.5f);
+        candidates[2].SetInfo(Names.SurvivorName[Random.Range(0, Names.SurvivorName.Length)], 100, 10, 1, 4.5f, 1.5f, 7.5f);
     }
 
     public void ChooseSurvivor(int candidate)

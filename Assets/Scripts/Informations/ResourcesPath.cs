@@ -1,5 +1,3 @@
-using UnityEngine.Rendering.VirtualTexturing;
-
 public class ResourcesPath
 {
     public static string[] PrefabPathArray =
