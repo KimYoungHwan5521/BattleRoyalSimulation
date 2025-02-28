@@ -21,6 +21,8 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI leftSurvivors;
     [SerializeField] RectTransform display;
 
+    Transform cameraTarget;
+
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
 
@@ -63,11 +65,17 @@ public class InGameUIManager : MonoBehaviour
 
     private void Update()
     {
+        AutoCameraMove();
         ManualCameraMove();
         SetSelectedObjectInfo();
     }
     //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
     //public void Accelerate() { if (Time.timeScale < 16) Time.timeScale *= 2; else Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
+
+    void AutoCameraMove()
+    {
+        if(cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
+    }
 
     void ManualCameraMove()
     {
@@ -75,6 +83,7 @@ public class InGameUIManager : MonoBehaviour
         if (!IsPointerOverUI() && isClicked)
         {
             Camera.main.transform.position = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
+            cameraTarget = null;
         }
     }
 
@@ -142,6 +151,7 @@ public class InGameUIManager : MonoBehaviour
                     if(clickedObject is Survivor || clickedObject is Box)
                     {
                         selectedObject = clickedObject;
+                        cameraTarget = selectedObject.transform;
                         selectedNotNull = true;
                         break;
                     }
