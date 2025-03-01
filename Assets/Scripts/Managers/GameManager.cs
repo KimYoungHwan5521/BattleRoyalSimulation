@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject inGameUICanvas;
     public GameObject outCanvas;
     public GameObject count3;
+    public GameObject description;
 
     void Awake()
     {
