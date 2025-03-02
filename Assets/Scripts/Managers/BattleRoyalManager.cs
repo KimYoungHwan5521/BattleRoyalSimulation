@@ -172,7 +172,7 @@ public class BattleRoyalManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorID = survivorIndex;
-                if(survivorIndex == 0) survivor.SetSurvivorInfo(SurvivorManager.MySurvivorInfo);
+                if(survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorInfo);
                 else survivor.survivorName = $"Survivor{survivorIndex}";
 
                 if(survivorIndex < colorInfo.Length)
