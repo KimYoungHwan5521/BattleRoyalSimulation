@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -54,7 +55,7 @@ public class Survivor : CustomObject
                 nameTag.SetActive(false);
 
                 currentFarmingArea = GetCurrentArea();
-                BattleRoyalManager.SurvivorDead(this);
+                BattleRoyaleManager.SurvivorDead(this);
             }
         }
     }
@@ -207,7 +208,7 @@ public class Survivor : CustomObject
 
     override public void MyUpdate()
     {
-        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
+        if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
         nameTag.transform.position = new(transform.position.x, transform.position.y - 0.75f);
         survivedTime += Time.deltaTime;
@@ -219,7 +220,7 @@ public class Survivor : CustomObject
     #region FixedUpdate, Look
     private void FixedUpdate()
     {
-        if(!BattleRoyalManager.isBattleRoyalStart || isDead) return;
+        if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if(keepAnEyeOnPosition != Vector2.zero)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
@@ -1290,7 +1291,7 @@ public class Survivor : CustomObject
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!BattleRoyalManager.isBattleRoyalStart || isDead) return;
+        if (!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if (!collision.isTrigger)
         {
             if (collision.TryGetComponent(out Survivor survivor))
@@ -1363,9 +1364,10 @@ public class Survivor : CustomObject
         return null;
     }
 
-    public void SetSurvivorInfo(SurvivorInfo survivorInfo)
+    public void SetSurvivorInfo(SurvivorData survivorInfo)
     {
         survivorName = survivorInfo.survivorName;
+        nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
         curHP = maxHP = survivorInfo.hp;
         attakDamage = survivorInfo.attackDamage;
         attackSpeed = survivorInfo.attackSpeed;

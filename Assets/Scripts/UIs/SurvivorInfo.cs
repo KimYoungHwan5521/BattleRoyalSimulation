@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Candidate : MonoBehaviour
+public class SurvivorInfo : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI survivorNameText;
     [SerializeField] TextMeshProUGUI hpText;
@@ -13,17 +13,17 @@ public class Candidate : MonoBehaviour
     [SerializeField] TextMeshProUGUI farmingSpeedText;
     [SerializeField] TextMeshProUGUI aimErrorRangeText;
 
-    public SurvivorInfo candidateInfo;
+    public SurvivorData suruvivorData;
 
     public void SetInfo(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float aimErrorRange)
     {
-        candidateInfo.survivorName = survivorName;
-        candidateInfo.hp = hp;
-        candidateInfo.attackDamage = attackDamage;
-        candidateInfo.attackSpeed = attackSpeed;
-        candidateInfo.moveSpeed = moveSpeed;
-        candidateInfo.farmingSpeed = farmingSpeed;
-        candidateInfo.aimErrorRange = aimErrorRange;
+        suruvivorData.survivorName = survivorName;
+        suruvivorData.hp = hp;
+        suruvivorData.attackDamage = attackDamage;
+        suruvivorData.attackSpeed = attackSpeed;
+        suruvivorData.moveSpeed = moveSpeed;
+        suruvivorData.farmingSpeed = farmingSpeed;
+        suruvivorData.aimErrorRange = aimErrorRange;
 
         survivorNameText.text = survivorName;
         hpText.text = $"HP\t\t\t: {hp}";
@@ -32,5 +32,11 @@ public class Candidate : MonoBehaviour
         moveSpeedText.text = $"Move Speed\t: {moveSpeed}";
         farmingSpeedText.text = $"Farming Speed\t: {farmingSpeed}";
         aimErrorRangeText.text = $"Aim Error Range\t: {aimErrorRange}";
+    }
+
+    public void SetInfo(SurvivorData wnatSurvivorData)
+    {
+        SetInfo(wnatSurvivorData.survivorName, wnatSurvivorData.hp, wnatSurvivorData.attackDamage, wnatSurvivorData.attackSpeed,
+            wnatSurvivorData.moveSpeed, wnatSurvivorData.farmingSpeed, wnatSurvivorData.aimErrorRange);
     }
 }

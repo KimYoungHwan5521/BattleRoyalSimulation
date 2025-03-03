@@ -27,7 +27,7 @@ public class GameResult : MonoBehaviour
             {
                 curResultDelay = 0;
                 resultClaimed = false;
-                ShowGameResult(BattleRoyalManager.BattleWinner != null);
+                ShowGameResult(BattleRoyaleManager.BattleWinner != null);
             }
         }
     }
@@ -38,8 +38,8 @@ public class GameResult : MonoBehaviour
         Time.timeScale = 0;
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
-        Survivor playerSurvivor = BattleRoyalManager.Survivors[0];
-        gameResultText.text = BattleRoyalManager.BattleWinner != null && BattleRoyalManager.BattleWinner.survivorID == 0 ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
+        Survivor playerSurvivor = BattleRoyaleManager.Survivors[0];
+        gameResultText.text = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0 ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
         survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
         killsText.text = $"Kills : {playerSurvivor.KillCount}";
         totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";
@@ -65,7 +65,7 @@ public class GameResult : MonoBehaviour
 
     void OnCancel(InputValue value)
     {
-        if(value.Get<float>() > 0 && BattleRoyalManager.BattleWinner == null)
+        if(value.Get<float>() > 0 && BattleRoyaleManager.BattleWinner == null)
         {
             gameResult.SetActive(true);
         }

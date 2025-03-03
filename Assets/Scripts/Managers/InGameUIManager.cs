@@ -186,7 +186,7 @@ public class InGameUIManager : MonoBehaviour
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;
                 selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Survivor);
-                Vector3 colorVector = BattleRoyalManager.colorInfo[selectedSurvivor.survivorID];
+                Vector3 colorVector = BattleRoyaleManager.colorInfo[selectedSurvivor.survivorID];
                 selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
                 selectedObjectName.text = selectedSurvivor.survivorName;
 

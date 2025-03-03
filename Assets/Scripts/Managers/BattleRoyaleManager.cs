@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BattleRoyalManager
+public class BattleRoyaleManager
 {
     public Animator count3Animator;
 
@@ -12,7 +12,7 @@ public class BattleRoyalManager
     List<Item> farmingItems = new();
 
     public int survivorNumber = 4;
-    public static bool isBattleRoyalStart;
+    public static bool isBattleRoyaleStart;
     public static float battleTime;
     float areaProhibitTime = 60;
     float curAreaProhibitTime;
@@ -40,21 +40,21 @@ public class BattleRoyalManager
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
         count3Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         areas = GameObject.FindObjectsOfType<Area>();
-        GameManager.Instance.ManagerUpdate -= BattleRoyalManagerUpdate;
-        GameManager.Instance.ManagerUpdate += BattleRoyalManagerUpdate;
+        GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
+        GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
 
         ResetArea();
         ItemSetting();
         ItemPlacing();
         SpawnPlayers();
 
-        BattleRoyalStart();
+        BattleRoyaleStart();
         yield return null;
     }
 
-    void BattleRoyalManagerUpdate()
+    void BattleRoyaleManagerUpdate()
     {
-        if(isBattleRoyalStart)
+        if(isBattleRoyaleStart)
         {
             battleTime += Time.deltaTime;
             curAreaProhibitTime += Time.deltaTime;
@@ -172,7 +172,7 @@ public class BattleRoyalManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorID = survivorIndex;
-                if(survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorInfo);
+                if(survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
                 else survivor.survivorName = $"Survivor{survivorIndex}";
 
                 if(survivorIndex < colorInfo.Length)
@@ -290,12 +290,12 @@ public class BattleRoyalManager
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
-                isBattleRoyalStart = false;
+                isBattleRoyaleStart = false;
             }
         }
     }
 
-    void BattleRoyalStart()
+    void BattleRoyaleStart()
     {
         foreach (Survivor survivor in survivors)
         {

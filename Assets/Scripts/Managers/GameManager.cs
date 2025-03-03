@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour
     public PoolManager PoolManager => poolManager;
     ItemManager itemManager;
     public ItemManager ItemManager => itemManager;
-    BattleRoyalManager battleRoyalManager;
-    public BattleRoyalManager BattleRoyalManager => battleRoyalManager;
+    BattleRoyaleManager battleRoyaleManager;
+    public BattleRoyaleManager BattleRoyalManager => battleRoyaleManager;
     
 
     public LoadingCanvas loadingCanvas;
@@ -54,12 +54,12 @@ public class GameManager : MonoBehaviour
         CloseLoadInfo();
     }
 
-    public IEnumerator BattleRoyalStart()
+    public IEnumerator BattleRoyaleStart()
     {
         outCanvas.SetActive(false);
         inGameUICanvas.SetActive(true);
-        battleRoyalManager = new BattleRoyalManager();
-        yield return battleRoyalManager.Initiate();
+        battleRoyaleManager = new BattleRoyaleManager();
+        yield return battleRoyaleManager.Initiate();
     }
 
     public void Test()
