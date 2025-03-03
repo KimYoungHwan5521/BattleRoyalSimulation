@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        GetComponent<InGameUIManager>().ShowKillLog("test1", "test2");
+        GetComponent<OutGameUIManager>().ResetHireMarket();
     }
 
     void Update()

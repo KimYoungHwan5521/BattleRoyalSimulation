@@ -7,6 +7,9 @@ public class ResourcesPath
         "Prefabs/Bullet",
 
         // UI
+        "Prefabs/UIs/Alert",
+
+        // In Game UI
         "Prefabs/UIs/KillLog",
         "Prefabs/UIs/Headshot",
     };

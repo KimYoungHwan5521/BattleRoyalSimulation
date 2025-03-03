@@ -7,6 +7,9 @@ namespace ResourceEnum
         Bullet,
 
         // UI
+        Alert,
+
+        // In Game UI
         KillLog,
         Headshot,
     }

@@ -1373,7 +1373,7 @@ public class Survivor : CustomObject
         attackSpeed = survivorInfo.attackSpeed;
         moveSpeed = survivorInfo.moveSpeed;
         farmingSpeed = survivorInfo.farmingSpeed;
-
+        aimErrorRange = 7.5f / survivorInfo.shooting;
     }
 
     private void OnDrawGizmos()
