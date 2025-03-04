@@ -46,6 +46,13 @@ namespace ResourceEnum
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
         HighLevelBulletproofVest,
+
+        // Leagues
+        BronzeLeague,
+        SilverLeague,
+        GoldLeague,
+        SeasonChampionship,
+        WorldChampionship,
     }
 
     public enum Material

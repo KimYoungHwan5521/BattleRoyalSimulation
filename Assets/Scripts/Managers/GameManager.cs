@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     public GameObject count3;
     public GameObject description;
 
+    bool gameReady;
+
     void Awake()
     {
         instance = this;
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
 
+        gameReady = true;
         CloseLoadInfo();
     }
 
@@ -64,11 +67,14 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        GetComponent<OutGameUIManager>().ResetHireMarket();
+        Calendar.Today++;
+        GetComponent<Calendar>().TurnPageCalendar(0);
     }
 
     void Update()
     {
+        if (!gameReady) return;
+
         ManagerStart?.Invoke();
         ManagerStart = null;
         ObjectStart?.Invoke();
