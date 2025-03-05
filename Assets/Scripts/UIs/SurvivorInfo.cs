@@ -26,18 +26,12 @@ public class SurvivorInfo : MonoBehaviour
         }
     }
 
-    public SurvivorData suruvivorData;
+    public SurvivorData survivorData;
 
-    public void SetInfo(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float shooting, int price)
+    public void SetInfo(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed, 
+        float farmingSpeed, float shooting, int price, Tier tier)
     {
-        suruvivorData.survivorName = survivorName;
-        suruvivorData.hp = hp;
-        suruvivorData.attackDamage = attackDamage;
-        suruvivorData.attackSpeed = attackSpeed;
-        suruvivorData.moveSpeed = moveSpeed;
-        suruvivorData.farmingSpeed = farmingSpeed;
-        suruvivorData.shooting = shooting;
-        suruvivorData.price = price;
+        survivorData = new(survivorName, hp, attackDamage, attackSpeed, moveSpeed, farmingSpeed, shooting, price, tier);
 
         survivorNameText.text = survivorName;
         hpText.text = $"HP\t\t\t: {hp:0}";
@@ -49,9 +43,9 @@ public class SurvivorInfo : MonoBehaviour
         if(priceText != null) priceText.text = $"$ {price}";
     }
 
-    public void SetInfo(SurvivorData wnatSurvivorData)
+    public void SetInfo(SurvivorData wantSurvivorData)
     {
-        SetInfo(wnatSurvivorData.survivorName, wnatSurvivorData.hp, wnatSurvivorData.attackDamage, wnatSurvivorData.attackSpeed,
-            wnatSurvivorData.moveSpeed, wnatSurvivorData.farmingSpeed, wnatSurvivorData.shooting, wnatSurvivorData.price);
+        SetInfo(wantSurvivorData.survivorName, wantSurvivorData.hp, wantSurvivorData.attackDamage, wantSurvivorData.attackSpeed,
+            wantSurvivorData.moveSpeed, wantSurvivorData.farmingSpeed, wantSurvivorData.shooting, wantSurvivorData.price, wantSurvivorData.tier);
     }
 }

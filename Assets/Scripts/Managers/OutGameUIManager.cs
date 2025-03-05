@@ -4,8 +4,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using System;
 
-public struct SurvivorData
+[Serializable]
+public class SurvivorData
 {
     public string survivorName;
     public float hp;
@@ -15,7 +17,39 @@ public struct SurvivorData
     public float farmingSpeed;
     public float shooting;
     public int price;
+    public Tier tier;
+
+    public bool isReserved;
+
+    public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
+        float farmingSpeed, float shooting, int price, Tier tier)
+    {
+        this.survivorName = survivorName;
+        this.hp = hp;
+        this.attackDamage = attackDamage;
+        this.attackSpeed = attackSpeed;
+        this.moveSpeed = moveSpeed;
+        this.farmingSpeed = farmingSpeed;
+        this.shooting = shooting;
+        this.price = price;
+        this.tier = tier;
+    }
+
+    public SurvivorData(SurvivorData survivorData)
+    {
+        this.survivorName = survivorData.survivorName;
+        this.hp = survivorData.hp;
+        this.attackDamage = survivorData.attackDamage;
+        this.attackSpeed = survivorData.attackSpeed;
+        this.moveSpeed = survivorData.moveSpeed;
+        this.farmingSpeed = survivorData.farmingSpeed;
+        this.shooting = survivorData.shooting;
+        this.price = survivorData.price;
+        this.tier = survivorData.tier;
+    }
 }
+
+public enum Tier { Bronze, Silver, Gold }
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -43,11 +77,11 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject hireClose;
     [SerializeField] SurvivorInfo[] survivorsInHireMarket;
     [SerializeField] TMP_Dropdown survivorsDropdown;
+    public TMP_Dropdown SurvivorsDropdown => survivorsDropdown;
     [SerializeField] SurvivorInfo selectedSurvivor;
 
-    [SerializeField] TMP_Dropdown survivorWhoParticipateInBattleRoyaleDropdown;
-
-    List<SurvivorData> mySurvivorsData;
+    [SerializeField] List<SurvivorData> mySurvivorsData;
+    public List<SurvivorData> MySurvivorsData => mySurvivorsData;
     static SurvivorData mySurvivorDataInBattleRoyale;
     public static SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
@@ -60,9 +94,9 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 200, 10, 1, 3, 1, 7.5f, 100);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 20, 1, 3, 1, 7.5f, 100);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 4.5f, 1.5f, 7.5f, 100);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 200, 10, 1, 3, 1, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 20, 1, 3, 1, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 4.5f, 1.5f, 1f, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
@@ -71,12 +105,12 @@ public class OutGameUIManager : MonoBehaviour
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
-            float rand0 = Random.Range(0.5f, 2.0f);
-            float rand1 = Random.Range(0.5f, 2.0f);
-            float rand2 = Random.Range(0.5f, 2.0f);
-            float rand3 = Random.Range(0.5f, 2.0f);
-            float rand4 = Random.Range(0.5f, 2.0f);
-            float rand5 = Random.Range(0.5f, 2.0f);
+            float rand0 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand1 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand2 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand3 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
             float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
             if ((totalRand < 0.4f || totalRand > 3) && check < 100)
             {
@@ -93,24 +127,25 @@ public class OutGameUIManager : MonoBehaviour
                 value * 3 * rand3,
                 value * 1 * rand4,
                 value * 1 * rand5,
-                (int)(value * 100 * totalRand));
+                (int)(value * 100 * totalRand),
+                Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
     }
 
     public void HireSurvivor(int candidate)
     {
-        OpenConfirmCanvas($"Are you sure to hire \"{survivorsInHireMarket[candidate].suruvivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].suruvivorData.price} ?",
+        OpenConfirmCanvas($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
             () => {
-                if(money < survivorsInHireMarket[candidate].suruvivorData.price)
+                if(money < survivorsInHireMarket[candidate].survivorData.price)
                 {
                     Alert("Not enough money.");
                 }
                 else
                 {
-                    Money -= survivorsInHireMarket[candidate].suruvivorData.price;
-                    mySurvivorsData.Add(survivorsInHireMarket[candidate].suruvivorData);
-                    mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].suruvivorData;
+                    Money -= survivorsInHireMarket[candidate].survivorData.price;
+                    mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
+                    mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
 
                     if(mySurvivorsData.Count == 1)
                     {
@@ -118,7 +153,7 @@ public class OutGameUIManager : MonoBehaviour
                         selectedSurvivor.SetInfo(mySurvivorsData[0]);
                         hireClose.SetActive(true);
                     }
-                    survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].suruvivorData.survivorName });
+                    survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.survivorName });
                     survivorsInHireMarket[candidate].SoldOut = true;
 
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
@@ -136,9 +171,9 @@ public class OutGameUIManager : MonoBehaviour
             return "(Failed to load name)";
         }
 
-        string candidate = Names.SurvivorName[Random.Range(0, Names.SurvivorName.Length)];
+        string candidate = Names.SurvivorName[UnityEngine.Random.Range(0, Names.SurvivorName.Length)];
         for (int i = 0; i < 3; i++)
-            if (survivorsInHireMarket[0].suruvivorData.survivorName == candidate) return GetRandomName(depth++);
+            if (survivorsInHireMarket[0].survivorData.survivorName == candidate) return GetRandomName(depth++);
         for (int i = 0; i < mySurvivorsData.Count; i++)
             if (mySurvivorsData[i].survivorName == candidate) return GetRandomName(depth++);
         return candidate;
@@ -148,18 +183,6 @@ public class OutGameUIManager : MonoBehaviour
     {
         SurvivorData survivorInfo = mySurvivorsData.Find(x => x.survivorName == survivorsDropdown.options[survivorsDropdown.value].text);
         selectedSurvivor.SetInfo(survivorInfo);
-    }
-
-    public void SetBattleRoyaleStartBox()
-    {
-        survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
-        survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(survivorsDropdown.options);
-        mySurvivorDataInBattleRoyale = mySurvivorsData.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorsDropdown.value].text);
-    }
-
-    public void OnSurvivorParticipatingInBattleRoyaleSelected()
-    {
-        mySurvivorDataInBattleRoyale = mySurvivorsData.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorsDropdown.value].text);
     }
 
     public void StartBattleRoyale()
