@@ -185,9 +185,9 @@ public class OutGameUIManager : MonoBehaviour
         selectedSurvivor.SetInfo(survivorInfo);
     }
 
-    public void StartBattleRoyale()
+    public void StartBattleRoyale(SurvivorData participant)
     {
-
+        mySurvivorDataInBattleRoyale = new(participant);
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
 

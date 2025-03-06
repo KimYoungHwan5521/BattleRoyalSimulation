@@ -22,18 +22,19 @@ public class Calendar : CustomObject
 
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
 
-    static int today = 1;
-    public static int Today
+    int today = 1;
+    public int Today
     {
         get { return today; }
         set
         {
             today = value;
+            todayText.text = $"{monthName[Month - 1]} {today % 28}, {Year}";
         }
     }
-    public static int Week{ get { return 1 + (today - 1) / 7; } }
-    public static int Month { get { return 1 + (today - 1) / 28; } }
-    public static int Year { get { return 2101 + (Month - 1) / 12; } }
+    public int Week{ get { return 1 + (today - 1) / 7; } }
+    public int Month { get { return 1 + (today - 1) / 28; } }
+    public int Year { get { return 2101 + (Month - 1) / 12; } }
 
     string[] monthName = { 
         "January", "February", "March", "April", "May", "June",
@@ -79,6 +80,9 @@ public class Calendar : CustomObject
     GameObject[] datesGone;
     Image[] datesEvent;
     GameObject[] reserved;
+
+    [Header("Global UI")]
+    [SerializeField] TextMeshProUGUI todayText;
 
     [Header("Reserve Battle Royale")]
     [SerializeField] GameObject reserveForm;
@@ -150,6 +154,7 @@ public class Calendar : CustomObject
             datesEvent[i] = dates[i].transform.Find("Event").GetComponent<Image>();
             reserved[i] = datesEvent[i].transform.GetChild(0).gameObject;
         }
+        Today = 1;
         TurnPageCalendar(0);
     }
 
@@ -161,24 +166,40 @@ public class Calendar : CustomObject
     public void OpenReserveBattleRoyaleForm(int date)
     {
         wantReserveDate = date + 28 * (calendarPage - 1);
-        if (leagueReserveInfo.ContainsKey(date + 28 * (calendarPage - 1)))
+        if (leagueReserveInfo.ContainsKey(wantReserveDate))
         {
-            if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
+            if(today - 1 == wantReserveDate)
             {
-                reserveText.text = "Choose who want participate in battle royale.";
-                SetBattleRoyaleReserveBox();
-                survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
-                reserveButton.SetActive(true);
-                reserveCancelButton.SetActive(false);
+                outGameUIManager.OpenConfirmCanvas("Go battle royale?", 
+                    () => { outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver); });
             }
             else
             {
-                reserveText.text = $"The Battle Royale for that date has been booked by \"{leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver.survivorName}\"";
-                survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
-                reserveButton.SetActive(false);
-                reserveCancelButton.SetActive(true);
+                if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
+                {
+                    outGameUIManager.Alert("Championships cannot be reserved. If you win the Gold League, you will be automatically booked for the Season Championship, and if you win the Season Championship, you will be automatically booked for the World Championship.");
+                }
+                else
+                {
+                    if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
+                    {
+                        reserveText.text = "Choose who want participate in battle royale.";
+                        SetBattleRoyaleReserveBox();
+                        survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
+                        reserveButton.SetActive(true);
+                        reserveCancelButton.SetActive(false);
+                    }
+                    else
+                    {
+                        reserveText.text = $"The Battle Royale for that date has been booked by \"{leagueReserveInfo[wantReserveDate].reserver.survivorName}\"";
+                        survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
+                        reserveButton.SetActive(false);
+                        reserveCancelButton.SetActive(true);
+                    }
+                    reserveForm.SetActive(true);
+                }
+
             }
-            reserveForm.SetActive(true);
         }
     }
 
@@ -196,16 +217,37 @@ public class Calendar : CustomObject
 
     public void ReserveBattleRoyale()
     {
-        if(!wantReserver.isReserved)
+        if(wantReserver.tier != GetNeedTier(leagueReserveInfo[wantReserveDate].league))
+        {
+            outGameUIManager.Alert($"{wantReserver.survivorName}'s tier does not match this league.\n" +
+                $"({wantReserver.survivorName}'s tier : {wantReserver.tier}, league need tier : {GetNeedTier(leagueReserveInfo[wantReserveDate].league)})");
+        }
+        else if(wantReserver.isReserved)
+        {
+            outGameUIManager.Alert($"\"{wantReserver.survivorName}\" already has other reservations.\n" +
+                $"Leagues other than the Championship can be reserved one at a time.");
+        }
+        else
         {
             leagueReserveInfo[wantReserveDate].reserver = wantReserver;
             wantReserver.isReserved = true;
             TurnPageCalendar(0);
         }
-        else
+    }
+
+    Tier GetNeedTier(League league)
+    {
+        switch(league)
         {
-            outGameUIManager.Alert($"\"{wantReserver.survivorName}\" already has other reservations. " +
-                $"\nLeagues other than the Championship can be reserved one at a time.");
+            case League.BronzeLeague:
+                return Tier.Bronze;
+            case League.SilverLeague:
+                return Tier.Silver;
+            case League.GoldLeague:
+                return Tier.Gold;
+            default:
+                Debug.LogWarning($"Unkown league : {league}");
+                return Tier.Gold;
         }
     }
 

@@ -55,6 +55,7 @@ public class GameResult : MonoBehaviour
         gameResult.SetActive(false);
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
+        GameManager.Instance.globalCanvas.SetActive(true);
     }
 
     public void KeepWatching()

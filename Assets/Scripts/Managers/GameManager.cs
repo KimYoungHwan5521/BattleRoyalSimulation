@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public LoadingCanvas loadingCanvas;
     public GameObject inGameUICanvas;
     public GameObject outCanvas;
+    public GameObject globalCanvas;
+
     public GameObject count3;
     public GameObject description;
 
@@ -60,6 +62,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator BattleRoyaleStart()
     {
         outCanvas.SetActive(false);
+        globalCanvas.SetActive(false);
         inGameUICanvas.SetActive(true);
         battleRoyaleManager = new BattleRoyaleManager();
         yield return battleRoyaleManager.Initiate();
@@ -67,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        Calendar.Today++;
+        GetComponent<Calendar>().Today++;
         GetComponent<Calendar>().TurnPageCalendar(0);
     }
 
