@@ -8,6 +8,7 @@ namespace ResourceEnum
 
         // UI
         Alert,
+        SurvivorSchedule,
 
         // In Game UI
         KillLog,

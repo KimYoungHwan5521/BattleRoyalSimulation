@@ -50,10 +50,6 @@ public class Calendar : CustomObject
             calendarPage = value;
             monthText.text = monthName[(calendarPage - 1) % 12];
             yearText.text = $"{2101 + (calendarPage - 1) / 12}";
-            weeksText[0].text = $"{(calendarPage - 1) * 4 + 1}";
-            weeksText[1].text = $"{(calendarPage - 1) * 4 + 2}";
-            weeksText[2].text = $"{(calendarPage - 1) * 4 + 3}";
-            weeksText[3].text = $"{(calendarPage - 1) * 4 + 4}";
             for (int i = 0; i < 28; i++)
             {
                 datesGone[i].SetActive((calendarPage - 1) * 28 + i < today - 1);
@@ -75,7 +71,6 @@ public class Calendar : CustomObject
     [Header("Calendar UI")]
     [SerializeField] TextMeshProUGUI monthText;
     [SerializeField] TextMeshProUGUI yearText;
-    [SerializeField] TextMeshProUGUI[] weeksText;
     [SerializeField] GameObject[] dates;
     GameObject[] datesGone;
     Image[] datesEvent;
@@ -107,7 +102,8 @@ public class Calendar : CustomObject
             {
                 leagueReserveInfo.Add(i, new(League.WorldChampionship));
             }
-            else if(i % 84 == 83)
+            
+            if(i % 112 == 83)
             {
                 leagueReserveInfo.Add(i, new(League.SeasonChampionship));
             }
@@ -118,7 +114,7 @@ public class Calendar : CustomObject
                 {
                     leagueReserveInfo.Add(i, new(League.GoldLeague));
                 }
-                else
+                else if (leagueReserveInfo[i].league != League.SeasonChampionship)
                 {
                     leagueReserveInfo.Add(i - 1, new(League.GoldLeague));
                 }
@@ -153,6 +149,7 @@ public class Calendar : CustomObject
             datesGone[i] = dates[i].transform.Find("Gone").gameObject;
             datesEvent[i] = dates[i].transform.Find("Event").GetComponent<Image>();
             reserved[i] = datesEvent[i].transform.GetChild(0).gameObject;
+            dates[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{i + 1}";
         }
         Today = 1;
         TurnPageCalendar(0);
@@ -170,8 +167,11 @@ public class Calendar : CustomObject
         {
             if(today - 1 == wantReserveDate)
             {
-                outGameUIManager.OpenConfirmCanvas("Go battle royale?", 
-                    () => { outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver); });
+                if (leagueReserveInfo[wantReserveDate].reserver != null)
+                {
+                    outGameUIManager.OpenConfirmCanvas("Go battle royale?", 
+                        () => { outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver); });
+                }
             }
             else
             {

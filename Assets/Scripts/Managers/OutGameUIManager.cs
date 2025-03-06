@@ -20,6 +20,7 @@ public class SurvivorData
     public Tier tier;
 
     public bool isReserved;
+    public Training assignedTraining;
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
@@ -50,6 +51,7 @@ public class SurvivorData
 }
 
 public enum Tier { Bronze, Silver, Gold }
+public enum Training { None, Fighting, Shooting, Agility }
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -82,6 +84,24 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] List<SurvivorData> mySurvivorsData;
     public List<SurvivorData> MySurvivorsData => mySurvivorsData;
+
+    [Header("Training")]
+    [SerializeField] TextMeshProUGUI fightTrainingNameText;
+    [SerializeField] TextMeshProUGUI shootingTraningNameText;
+    [SerializeField] TextMeshProUGUI agilityTrainingNameText;
+    int fightTrainingLevel = 1;
+    int shootingTrainingLevel = 1;
+    int agilityTrainingLevel = 1;
+    [SerializeField] TextMeshProUGUI fightTrainingBookers;
+    [SerializeField] TextMeshProUGUI shootingTrainingBookers;
+    [SerializeField] TextMeshProUGUI agilityTrainingBookers;
+    [SerializeField] TextMeshProUGUI assignTrainingNameText;
+    [SerializeField] Transform survivorsAssignedThis;
+    [SerializeField] Transform survivorsWithoutSchedule; 
+    [SerializeField] Transform survivorsWithOtherSchedule;
+    bool autoAssign = true;
+
+    [Header("Schedule")]
     static SurvivorData mySurvivorDataInBattleRoyale;
     public static SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
@@ -183,6 +203,74 @@ public class OutGameUIManager : MonoBehaviour
     {
         SurvivorData survivorInfo = mySurvivorsData.Find(x => x.survivorName == survivorsDropdown.options[survivorsDropdown.value].text);
         selectedSurvivor.SetInfo(survivorInfo);
+    }
+
+    public void OpenAssignTraining(int trainingIndex)
+    {
+        assignTrainingNameText.text = $"{(Training)trainingIndex} Training";
+        for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
+        {
+            PoolManager.Despawn(survivorsAssignedThis.GetChild(i).gameObject);
+        }
+        for (int i=survivorsWithoutSchedule.childCount - 1; i>=0; i--)
+        {
+            PoolManager.Despawn(survivorsWithoutSchedule.GetChild(i).gameObject);
+        }
+        for (int i = survivorsWithOtherSchedule.childCount - 1; i >= 0; i--)
+        {
+            PoolManager.Despawn(survivorsWithOtherSchedule.GetChild(i).gameObject);
+        }
+
+        foreach(SurvivorData survivor in mySurvivorsData)
+        {
+            Transform fitParent;
+            SurvivorSchedule survivorSchedule;
+            if (survivor.assignedTraining == (Training)trainingIndex) fitParent = survivorsAssignedThis;
+            else if (survivor.assignedTraining == Training.None) fitParent = survivorsWithoutSchedule;
+            else fitParent = survivorsWithOtherSchedule;
+            survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
+            survivorSchedule.SetSurvivorData(survivor, trainingIndex);
+        }
+    }
+
+    public void ConfirmAssignTraining()
+    {
+        fightTrainingBookers.text = "";
+        shootingTrainingBookers.text = "";
+        agilityTrainingBookers.text = "";
+        foreach(SurvivorData survivor in mySurvivorsData)
+        {
+            TextMeshProUGUI targetText;
+            switch(survivor.assignedTraining)
+            {
+                case Training.Fighting:
+                    targetText = fightTrainingBookers;
+                    break;
+                case Training.Shooting:
+                    targetText = shootingTrainingBookers;
+                    break;
+                case Training.Agility:
+                    targetText = agilityTrainingBookers;
+                    break;
+                default:
+                    targetText = null;
+                    break;
+            }
+
+            if (targetText != null)
+            {
+                if (targetText.text != "") targetText.text += $"\n";
+                targetText.text += $"{survivor.survivorName}";
+            }
+        }
+        Invoke("RefreshUI", 0.1f);
+    }
+
+    void RefreshUI()
+    {
+        fightTrainingBookers.text += " ";
+        shootingTrainingBookers.text += " ";
+        agilityTrainingBookers.text += " ";
     }
 
     public void StartBattleRoyale(SurvivorData participant)

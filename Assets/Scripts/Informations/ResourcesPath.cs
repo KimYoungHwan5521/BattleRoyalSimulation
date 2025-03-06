@@ -8,6 +8,7 @@ public class ResourcesPath
 
         // UI
         "Prefabs/UIs/Alert",
+        "Prefabs/UIs/SurvivorSchedule",
 
         // In Game UI
         "Prefabs/UIs/KillLog",
