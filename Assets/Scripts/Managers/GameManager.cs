@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Resources;
-using TMPro;
 using UnityEngine;
 
 public delegate void CustomStart();

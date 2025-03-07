@@ -35,17 +35,29 @@ public class SurvivorInfo : MonoBehaviour
 
         survivorNameText.text = survivorName;
         hpText.text = $"HP\t\t\t: {hp:0}";
-        attackDamageText.text = $"Attack Damage\t: {attackDamage:0}";
-        attackSpeedText.text = $"Attack Speed\t: {attackSpeed:0.##}";
-        moveSpeedText.text = $"Move Speed\t: {moveSpeed:0.##}";
-        farmingSpeedText.text = $"Farming Speed\t: {farmingSpeed:0.##}";
+        attackDamageText.text = $"Attack Damage\t: {attackDamage:0.##}";
+        attackSpeedText.text = $"Attack Speed\t: {attackSpeed:0.###}";
+        moveSpeedText.text = $"Move Speed\t: {moveSpeed:0.###}";
+        farmingSpeedText.text = $"Farming Speed\t: {farmingSpeed:0.###}";
         shootingText.text = $"Shooting\t: {shooting:0.##}";
         if(priceText != null) priceText.text = $"$ {price}";
     }
 
     public void SetInfo(SurvivorData wantSurvivorData)
     {
-        SetInfo(wantSurvivorData.survivorName, wantSurvivorData.hp, wantSurvivorData.attackDamage, wantSurvivorData.attackSpeed,
-            wantSurvivorData.moveSpeed, wantSurvivorData.farmingSpeed, wantSurvivorData.shooting, wantSurvivorData.price, wantSurvivorData.tier);
+        survivorNameText.text = wantSurvivorData.survivorName;
+        hpText.text = $"HP\t\t\t: {wantSurvivorData.hp:0}";
+        if (wantSurvivorData.increaseComparedToPrevious_hp > 0) hpText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_hp})</color>";
+        attackDamageText.text = $"Attack Damage\t: {wantSurvivorData.attackDamage:0.##}";
+        if (wantSurvivorData.increaseComparedToPrevious_attackDamage > 0) attackDamageText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_attackDamage:0.##})</color>";
+        attackSpeedText.text = $"Attack Speed\t: {wantSurvivorData.attackSpeed:0.###}";
+        if (wantSurvivorData.increaseComparedToPrevious_attackSpeed > 0) attackSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_attackSpeed:0.###})</color>";
+        moveSpeedText.text = $"Move Speed\t: {wantSurvivorData.moveSpeed:0.###}";
+        if (wantSurvivorData.increaseComparedToPrevious_moveSpeed > 0) moveSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_moveSpeed:0.###})</color>";
+        farmingSpeedText.text = $"Farming Speed\t: {wantSurvivorData.farmingSpeed:0.###}";
+        if (wantSurvivorData.increaseComparedToPrevious_farmingSpeed > 0) farmingSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_farmingSpeed:0.###})</color>";
+        shootingText.text = $"Shooting\t: {wantSurvivorData.shooting:0.##}";
+        if (wantSurvivorData.increaseComparedToPrevious_shooting > 0) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting:0.##})</color>";
+        if (priceText != null) priceText.text = $"$ {wantSurvivorData.price}";
     }
 }

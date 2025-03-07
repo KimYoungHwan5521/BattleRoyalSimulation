@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 
+#region SurvivorData
 [Serializable]
 public class SurvivorData
 {
@@ -21,6 +22,13 @@ public class SurvivorData
 
     public bool isReserved;
     public Training assignedTraining;
+
+    public float increaseComparedToPrevious_hp;
+    public float increaseComparedToPrevious_attackDamage;
+    public float increaseComparedToPrevious_attackSpeed;
+    public float increaseComparedToPrevious_moveSpeed;
+    public float increaseComparedToPrevious_farmingSpeed;
+    public float increaseComparedToPrevious_shooting;
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
@@ -48,9 +56,27 @@ public class SurvivorData
         this.price = survivorData.price;
         this.tier = survivorData.tier;
     }
-}
 
+    public void IncreaseStats(float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float shooting)
+    {
+        this.hp += hp;
+        this.attackDamage += attackDamage;
+        this.attackSpeed += attackSpeed;
+        this.moveSpeed += moveSpeed;
+        this.farmingSpeed += farmingSpeed;
+        this.shooting += shooting;
+
+        increaseComparedToPrevious_hp += hp;
+        increaseComparedToPrevious_attackDamage += attackDamage;
+        increaseComparedToPrevious_attackSpeed += attackSpeed;
+        increaseComparedToPrevious_moveSpeed += moveSpeed;
+        increaseComparedToPrevious_farmingSpeed += farmingSpeed;
+        increaseComparedToPrevious_shooting += shooting;
+    }
+}
 public enum Tier { Bronze, Silver, Gold }
+#endregion
+
 public enum Training { None, Fighting, Shooting, Agility }
 
 public class OutGameUIManager : MonoBehaviour
@@ -100,18 +126,22 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Transform survivorsWithoutSchedule; 
     [SerializeField] Transform survivorsWithOtherSchedule;
     bool autoAssign = true;
+    [SerializeField] GameObject autoAssignCheckBox;
 
     [Header("Schedule")]
+    Calendar calendar;
     static SurvivorData mySurvivorDataInBattleRoyale;
     public static SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
     private void Start()
     {
+        calendar = GetComponent<Calendar>();
         mySurvivorsData = new();
         SetHireMarketFirst();
         Money = 1000;
     }
 
+    #region Hire
     public void SetHireMarketFirst()
     {
         survivorsInHireMarket[0].SetInfo(GetRandomName(), 200, 10, 1, 3, 1, 1f, 100, Tier.Bronze);
@@ -132,7 +162,7 @@ public class OutGameUIManager : MonoBehaviour
             float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
             float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
             float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
-            if ((totalRand < 0.4f || totalRand > 3) && check < 100)
+            if ((totalRand < 0.7f || totalRand > 2) && check < 100)
             {
                 i--;
                 check++;
@@ -198,6 +228,7 @@ public class OutGameUIManager : MonoBehaviour
             if (mySurvivorsData[i].survivorName == candidate) return GetRandomName(depth++);
         return candidate;
     }
+    #endregion
 
     public void OnSurvivorSelected()
     {
@@ -273,10 +304,84 @@ public class OutGameUIManager : MonoBehaviour
         agilityTrainingBookers.text += " ";
     }
 
+    public void ToggleAutoAssign()
+    {
+        autoAssign = !autoAssign;
+        autoAssignCheckBox.SetActive(autoAssign);
+    }
+
     public void StartBattleRoyale(SurvivorData participant)
     {
         mySurvivorDataInBattleRoyale = new(participant);
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
+    }
+
+    public void EndTheDay()
+    {
+        string message = "Are you done for the day?";
+        bool thereAreUnassignedSurvivors = false;
+        string warning = "\n<color=red><i>There are unassigned survivors : ";
+        foreach (SurvivorData survivor in mySurvivorsData)
+        {
+            if (survivor.assignedTraining == Training.None)
+            {
+                thereAreUnassignedSurvivors = true;
+                warning += $"{survivor.survivorName}, ";
+            }
+        }
+        warning += "</i></color>";
+        if (thereAreUnassignedSurvivors) message += warning;
+        OpenConfirmCanvas(message, () =>
+        {
+            calendar.Today++;
+            calendar.TurnPageCalendar(0);
+            foreach (SurvivorData survivor in mySurvivorsData)
+            {
+                ApplyTraining(survivor, survivor.assignedTraining);
+                if(!autoAssign)
+                {
+                    survivor.assignedTraining = Training.None;
+                    ConfirmAssignTraining();
+                }
+            }
+            selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
+        });
+    }
+
+    void ApplyTraining(SurvivorData survivor, Training training)
+    {
+        int survivorAtkDmgLv = (int)(Mathf.Max(survivor.attackDamage - 10, 0) / 10);
+        int survivorAtkSpdLv = (int)(Mathf.Max(survivor.attackSpeed - 1, 0) / 0.3f);
+        int survivorShtLv = (int)(Mathf.Max(survivor.shooting - 1, 0));
+        int survivorMvSpdLv = (int)(Mathf.Max(survivor.moveSpeed - 3, 0) / 0.8f);
+        int survivorFrmSpdLv = (int)(Mathf.Max(survivor.farmingSpeed - 1, 0) / 0.3f);
+
+        survivor.increaseComparedToPrevious_hp = 0;
+        survivor.increaseComparedToPrevious_attackDamage = 0;
+        survivor.increaseComparedToPrevious_attackSpeed = 0;
+        survivor.increaseComparedToPrevious_moveSpeed = 0;
+        survivor.increaseComparedToPrevious_farmingSpeed = 0;
+        survivor.increaseComparedToPrevious_shooting = 0;
+
+        switch (training)
+        {
+            case Training.Fighting:
+                float increaseAtkDmg = Mathf.Max(UnityEngine.Random.Range(0.1f, 0.3f) * (fightTrainingLevel - survivorAtkDmgLv), 0.001f);
+                float increaseAtkSpeed = Mathf.Max(UnityEngine.Random.Range(0.003f, 0.009f) * (fightTrainingLevel - survivorAtkSpdLv), 0.0001f);
+                survivor.IncreaseStats(0, increaseAtkDmg, increaseAtkSpeed, 0, 0, 0);
+                break;
+            case Training.Shooting:
+                float increseShooting = Mathf.Max(UnityEngine.Random.Range(0.01f, 0.03f) * (shootingTrainingLevel - survivorShtLv), 0.001f);
+                survivor.IncreaseStats(0, 0, 0, 0, 0, increseShooting);
+                break;
+            case Training.Agility:
+                float increseMoveSpeed = Mathf.Max(UnityEngine.Random.Range(0.008f, 0.024f) * (agilityTrainingLevel - survivorMvSpdLv), 0.0001f);
+                float increseFarmingSpeed = Mathf.Max(UnityEngine.Random.Range(0.01f, 0.02f) * (agilityTrainingLevel - survivorFrmSpdLv), 0.0001f);
+                survivor.IncreaseStats(0, 0, 0, increseMoveSpeed, increseFarmingSpeed, 0);
+                break;
+            default:
+                break;
+        }
     }
 
     public void OpenConfirmCanvas(string wantText, UnityAction wantAction)
