@@ -100,7 +100,7 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    [Header("Survivors / Hire")]
+    [Header("Survivors / Hire Market")]
     [SerializeField] GameObject hireSurvivor;
     [SerializeField] GameObject hireClose;
     [SerializeField] SurvivorInfo[] survivorsInHireMarket;
@@ -111,7 +111,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] List<SurvivorData> mySurvivorsData;
     public List<SurvivorData> MySurvivorsData => mySurvivorsData;
 
-    [Header("Training")]
+    [Header("Training Room")]
+    [SerializeField] GameObject trainingRoom;
     [SerializeField] TextMeshProUGUI fightTrainingNameText;
     [SerializeField] TextMeshProUGUI shootingTraningNameText;
     [SerializeField] TextMeshProUGUI agilityTrainingNameText;
@@ -236,6 +237,19 @@ public class OutGameUIManager : MonoBehaviour
         selectedSurvivor.SetInfo(survivorInfo);
     }
 
+    #region Training
+    public void OpenTrainingRoom()
+    {
+        if(calendar.Today % 7 > 4)
+        {
+            Alert("The training room is closed on weekendns");
+        }
+        else
+        {
+            trainingRoom.SetActive(true);
+        }
+    }
+
     public void OpenAssignTraining(int trainingIndex)
     {
         assignTrainingNameText.text = $"{(Training)trainingIndex} Training";
@@ -315,22 +329,35 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorDataInBattleRoyale = new(participant);
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
+    #endregion
 
     public void EndTheDay()
     {
         string message = "Are you done for the day?";
-        bool thereAreUnassignedSurvivors = false;
-        string warning = "\n<color=red><i>There are unassigned survivors : ";
-        foreach (SurvivorData survivor in mySurvivorsData)
+        string warning = "";
+        if(calendar.Today % 7 < 5)
         {
-            if (survivor.assignedTraining == Training.None)
+            bool thereAreUnassignedSurvivors = false;
+            warning = "\n<color=red><i>There are unassigned survivors : ";
+            foreach (SurvivorData survivor in mySurvivorsData)
             {
-                thereAreUnassignedSurvivors = true;
-                warning += $"{survivor.survivorName}, ";
+                if (survivor.assignedTraining == Training.None)
+                {
+                    thereAreUnassignedSurvivors = true;
+                    warning += $"{survivor.survivorName}, ";
+                }
+            }
+            warning += "</i></color>";
+            if (thereAreUnassignedSurvivors) message += warning;
+        }
+        else
+        {
+            if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver}</i>");
+                return;
             }
         }
-        warning += "</i></color>";
-        if (thereAreUnassignedSurvivors) message += warning;
         OpenConfirmCanvas(message, () =>
         {
             calendar.Today++;

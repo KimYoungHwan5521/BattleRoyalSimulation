@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     RectTransform rect;
-    [SerializeField] string description;
+    [SerializeField, TextArea] string description;
 
     private void Start()
     {

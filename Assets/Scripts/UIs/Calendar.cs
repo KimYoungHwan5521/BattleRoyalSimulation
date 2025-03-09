@@ -9,7 +9,7 @@ public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampio
 
 public class Calendar : CustomObject
 {
-    class LeagueReserveData
+    public class LeagueReserveData
     {
         public League league;
         public SurvivorData reserver;
@@ -21,19 +21,19 @@ public class Calendar : CustomObject
     }
 
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
+    public Dictionary<int, LeagueReserveData> LeagueReserveInfo => leagueReserveInfo;
 
-    int today = 1;
+    int today = 0;
     public int Today
     {
         get { return today; }
         set
         {
             today = value;
-            todayText.text = $"{monthName[Month - 1]} {today % 28}, {Year}";
+            todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}";
         }
     }
-    public int Week{ get { return 1 + (today - 1) / 7; } }
-    public int Month { get { return 1 + (today - 1) / 28; } }
+    public int Month { get { return 1 + today / 28; } }
     public int Year { get { return 2101 + (Month - 1) / 12; } }
 
     string[] monthName = { 
@@ -52,7 +52,7 @@ public class Calendar : CustomObject
             yearText.text = $"{2101 + (calendarPage - 1) / 12}";
             for (int i = 0; i < 28; i++)
             {
-                datesGone[i].SetActive((calendarPage - 1) * 28 + i < today - 1);
+                datesGone[i].SetActive((calendarPage - 1) * 28 + i < today);
                 if (leagueReserveInfo.ContainsKey(i + 28 * (calendarPage - 1)))
                 {
                     if (Enum.TryParse(leagueReserveInfo[i + 28 * (calendarPage - 1)].league.ToString(), out ResourceEnum.Sprite result))
@@ -149,9 +149,11 @@ public class Calendar : CustomObject
             datesGone[i] = dates[i].transform.Find("Gone").gameObject;
             datesEvent[i] = dates[i].transform.Find("Event").GetComponent<Image>();
             reserved[i] = datesEvent[i].transform.GetChild(0).gameObject;
-            dates[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{i + 1}";
+            TextMeshProUGUI dateText = dates[i].GetComponentInChildren<TextMeshProUGUI>();
+            dateText.text = $"{i + 1}";
+            dateText.raycastTarget = false;
         }
-        Today = 1;
+        Today = 0;
         TurnPageCalendar(0);
     }
 
@@ -165,7 +167,7 @@ public class Calendar : CustomObject
         wantReserveDate = date + 28 * (calendarPage - 1);
         if (leagueReserveInfo.ContainsKey(wantReserveDate))
         {
-            if(today - 1 == wantReserveDate)
+            if(today == wantReserveDate)
             {
                 if (leagueReserveInfo[wantReserveDate].reserver != null)
                 {
