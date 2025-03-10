@@ -66,16 +66,22 @@ public class Survivor : CustomObject
     public float MaxHP => maxHP;
     [SerializeField] float curHP;
     public float CurHP => curHP;
-    [SerializeField] float attakDamage = 10f;
+    [SerializeField] float attackDamage = 10f;
+    public float AttackDamage => attackDamage;
     [SerializeField] float attackSpeed = 1f;
+    public float AttackSpeed => attackSpeed;
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
+    public float MoveSpeed => moveSpeed;
     [SerializeField] float sightRange = 45f;
     float sightAngle = 120;
     public LayerMask sightObstacleMask;
     [SerializeField] int sightEdgeCount = 24;
     [SerializeField] float hearingAbility = 10f;
     [SerializeField] float farmingSpeed = 1f;
+    public float FarmingSpeed => farmingSpeed;
+    float shooting = 1;
+    public float Shooting => shooting;
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
 
@@ -760,7 +766,7 @@ public class Survivor : CustomObject
             else
             {
                 // ±Ù vs ±Ù
-                if (newWeapon.attakDamage > currentWeapon.attakDamage) return true;
+                if (newWeapon.attackDamage > currentWeapon.attackDamage) return true;
                 else return false;
             }
         }
@@ -931,7 +937,7 @@ public class Survivor : CustomObject
     void InvestigateThreateningSound()
     {
         currentStatus = Status.InvestigateThreateningSound;
-        if (Vector2.Distance(transform.position, threateningSoundPosition) < 0.3f)
+        if (Vector2.Distance(transform.position, threateningSoundPosition) < 1f)
         {
             LookAround();
         }
@@ -1013,7 +1019,7 @@ public class Survivor : CustomObject
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
         animator.SetBool("Reload", false);
-        if(Vector2.Distance(agent.destination, target.transform.position) > 3f) agent.SetDestination(target.transform.position);
+        if(Vector2.Distance(agent.destination, target.transform.position) > attackRange) agent.SetDestination(target.transform.position);
     }
 
     void Attack()
@@ -1267,14 +1273,14 @@ public class Survivor : CustomObject
         {
             if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < currentWeapon.attackRange)
             {
-                inSightEnemies[0].TakeDamage(this, currentWeapon.attakDamage);
+                inSightEnemies[0].TakeDamage(this, currentWeapon.attackDamage);
             }
         }
         else
         {
             if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < attackRange)
             {
-                inSightEnemies[0].TakeDamage(this, attakDamage);
+                inSightEnemies[0].TakeDamage(this, attackDamage);
             }   
         }
     }
@@ -1369,10 +1375,11 @@ public class Survivor : CustomObject
         survivorName = survivorInfo.survivorName;
         nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
         curHP = maxHP = survivorInfo.hp;
-        attakDamage = survivorInfo.attackDamage;
+        attackDamage = survivorInfo.attackDamage;
         attackSpeed = survivorInfo.attackSpeed;
         moveSpeed = survivorInfo.moveSpeed;
         farmingSpeed = survivorInfo.farmingSpeed;
+        shooting = survivorInfo.shooting;
         aimErrorRange = 7.5f / survivorInfo.shooting;
     }
 

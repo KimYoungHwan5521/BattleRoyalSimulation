@@ -237,7 +237,7 @@ public class Calendar : CustomObject
         }
     }
 
-    Tier GetNeedTier(League league)
+    public Tier GetNeedTier(League league)
     {
         switch(league)
         {
@@ -248,7 +248,6 @@ public class Calendar : CustomObject
             case League.GoldLeague:
                 return Tier.Gold;
             default:
-                Debug.LogWarning($"Unkown league : {league}");
                 return Tier.Gold;
         }
     }

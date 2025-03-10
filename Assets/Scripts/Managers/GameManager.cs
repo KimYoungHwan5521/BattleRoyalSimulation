@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     public ItemManager ItemManager => itemManager;
     BattleRoyaleManager battleRoyaleManager;
     public BattleRoyaleManager BattleRoyalManager => battleRoyaleManager;
+
+    OutGameUIManager outGameUIManger;
+    public OutGameUIManager OutGameUIManager => outGameUIManger;
     
 
     public LoadingCanvas loadingCanvas;
@@ -52,6 +55,8 @@ public class GameManager : MonoBehaviour
         yield return poolManager.Initiate();
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
+
+        outGameUIManger = GetComponent<OutGameUIManager>();
 
         gameReady = true;
         CloseLoadInfo();

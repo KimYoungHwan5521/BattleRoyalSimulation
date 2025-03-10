@@ -131,8 +131,8 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Schedule")]
     Calendar calendar;
-    static SurvivorData mySurvivorDataInBattleRoyale;
-    public static SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
+    SurvivorData mySurvivorDataInBattleRoyale;
+    public SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
     private void Start()
     {
@@ -145,9 +145,9 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 200, 10, 1, 3, 1, 1f, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 20, 1, 3, 1, 1f, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 4.5f, 1.5f, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 120, 10, 1, 3, 1, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 12, 1.1f, 3, 1, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 3.5f, 1.1f, 1f, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
@@ -326,7 +326,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void StartBattleRoyale(SurvivorData participant)
     {
-        mySurvivorDataInBattleRoyale = new(participant);
+        mySurvivorDataInBattleRoyale = participant;
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
     #endregion
@@ -352,27 +352,39 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
-            if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
-                Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver}</i>");
+                Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName}</i>");
                 return;
             }
         }
-        OpenConfirmCanvas(message, () =>
+
+        if(calendar.Today % 7 < 5)
         {
-            calendar.Today++;
-            calendar.TurnPageCalendar(0);
-            foreach (SurvivorData survivor in mySurvivorsData)
+            OpenConfirmCanvas(message, () =>
             {
-                ApplyTraining(survivor, survivor.assignedTraining);
-                if(!autoAssign)
+                foreach (SurvivorData survivor in mySurvivorsData)
                 {
-                    survivor.assignedTraining = Training.None;
-                    ConfirmAssignTraining();
+                    ApplyTraining(survivor, survivor.assignedTraining);
+                    if(!autoAssign)
+                    {
+                        survivor.assignedTraining = Training.None;
+                        ConfirmAssignTraining();
+                    }
                 }
-            }
-            selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
-        });
+                selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
+                calendar.Today++;
+                calendar.TurnPageCalendar(0);
+            });
+        }
+        else EndTheDayWeekend();
+    }
+
+    public void EndTheDayWeekend()
+    {
+        calendar.Today++;
+        calendar.TurnPageCalendar(0);
+        Alert("Ended weekend");
     }
 
     void ApplyTraining(SurvivorData survivor, Training training)
@@ -409,6 +421,43 @@ public class OutGameUIManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public SurvivorData CreateRandomSurvivorData()
+    {
+        float value = 1;
+        int check = 0;
+        int i = 0;
+        while (i < 1)
+        {
+            float rand0 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand1 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand2 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand3 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
+            float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
+            if ((totalRand < 0.7f || totalRand > 1.3f) && check < 100)
+            {
+                check++;
+                continue;
+            }
+            if (check >= 100) Debug.LogWarning("Infinite roof has detected");
+            check = 0;
+            SurvivorData survivorData = new(
+                GetRandomName(),
+                value * 100 * rand0,
+                value * 10 * rand1,
+                value * 1 * rand2,
+                value * 3 * rand3,
+                value * 1 * rand4,
+                value * 1 * rand5,
+                (int)(value * 100 * totalRand),
+                calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
+                );
+            return survivorData;
+        }
+        return new(GetRandomName(), 100, 10, 1, 3, 1, 1f, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
     public void OpenConfirmCanvas(string wantText, UnityAction wantAction)

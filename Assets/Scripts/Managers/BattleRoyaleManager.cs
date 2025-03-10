@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class BattleRoyaleManager
 {
+    OutGameUIManager outGameUIManager => GameManager.Instance.OutGameUIManager;
     public Animator count3Animator;
 
     Area[] areas;
@@ -172,8 +173,8 @@ public class BattleRoyaleManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorID = survivorIndex;
-                if(survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
-                else survivor.survivorName = $"Survivor{survivorIndex}";
+                if (survivorIndex == 0) survivor.SetSurvivorInfo(outGameUIManager.MySurvivorDataInBattleRoyale);
+                else survivor.SetSurvivorInfo(outGameUIManager.CreateRandomSurvivorData());
 
                 if(survivorIndex < colorInfo.Length)
                 {

@@ -39,6 +39,30 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image selectedSurvivorsHealthBarImage;
     [SerializeField] TextMeshProUGUI selectedSurvivorsHealthText;
 
+    [SerializeField] GameObject seletedObjectTab;
+
+    int currentTab = 1;
+    public int CurrentTab
+    {
+        get { return currentTab; }
+        set
+        {
+            currentTab = value;
+            statTab.SetActive(value == 0);
+            inventoryTab.SetActive(value == 1);
+        }
+    }
+
+    [Header("Stat / Status")]
+    [SerializeField] GameObject statTab;
+    [SerializeField] TextMeshProUGUI attackDamageText;
+    [SerializeField] TextMeshProUGUI attackSpeedText;
+    [SerializeField] TextMeshProUGUI moveSpeedText;
+    [SerializeField] TextMeshProUGUI farmingSpeedText;
+    [SerializeField] TextMeshProUGUI shootingText;
+
+    [Header("Inventory")]
+    [SerializeField] GameObject inventoryTab;
     [SerializeField] GameObject selectedObjectsCurrentWeapon;
     Image selectedObjectsCurrentWeaponImage;
     TextMeshProUGUI selectedObjectsCurrentWeaponText;
@@ -151,7 +175,18 @@ public class InGameUIManager : MonoBehaviour
                     if(clickedObject is Survivor || clickedObject is Box)
                     {
                         selectedObject = clickedObject;
-                        cameraTarget = selectedObject.transform;
+                        seletedObjectTab.SetActive(clickedObject is Survivor);
+                        if (clickedObject is Survivor)
+                        {
+                            Survivor survivor = clickedObject as Survivor;
+                            cameraTarget = selectedObject.transform;
+                            attackDamageText.text = $"{survivor.AttackDamage:0.##}";
+                            attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
+                            moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
+                            farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
+                            shootingText.text = $"{survivor.Shooting:0.##}";
+                        }
+                        else CurrentTab = 1;
                         selectedNotNull = true;
                         break;
                     }
@@ -191,7 +226,7 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectName.text = selectedSurvivor.survivorName;
 
                 selectedSurvivorsHealthBarImage.fillAmount = selectedSurvivor.CurHP / selectedSurvivor.MaxHP;
-                selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP:0} / {selectedSurvivor.MaxHP}";
+                selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP:0} / {selectedSurvivor.MaxHP:0}";
 
                 if (selectedSurvivor.CurrentWeapon != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
                 {

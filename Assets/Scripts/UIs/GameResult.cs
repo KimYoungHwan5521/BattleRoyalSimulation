@@ -56,6 +56,7 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);
+        GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
     }
 
     public void KeepWatching()
