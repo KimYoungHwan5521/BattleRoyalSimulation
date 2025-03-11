@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class GameResult : MonoBehaviour
 {
+    OutGameUIManager outGameUIManager => GameManager.Instance.OutGameUIManager;
+
     [SerializeField] GameObject gameResult;
     [SerializeField] TextMeshProUGUI gameResultText;
     [SerializeField] TextMeshProUGUI survivedTimeText;
@@ -39,7 +41,7 @@ public class GameResult : MonoBehaviour
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
         Survivor playerSurvivor = BattleRoyaleManager.Survivors[0];
-        gameResultText.text = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0 ? "Your Survivor Has Won!" : "Your Survivor Has Lost";
+        gameResultText.text = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0 ? $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Won!" : $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Lost";
         survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
         killsText.text = $"Kills : {playerSurvivor.KillCount}";
         totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";

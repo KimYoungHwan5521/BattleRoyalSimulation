@@ -286,7 +286,7 @@ public class BattleRoyaleManager
         {
             aliveSurvivors.Remove(survivor);
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
-            if (survivor.survivorID == 0) GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
+            //if (survivor.survivorID == 0) GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();

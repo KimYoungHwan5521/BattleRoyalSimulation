@@ -4,11 +4,60 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using static Survivor;
 
 public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain }
+    public enum InjurySiteMajor { Head, Torso, Arms, Legs }
+    public enum InjurySite 
+    { 
+        None,
+        // Head
+        Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain, RightEarDrum, LeftEarDrum,
+
+        // Torso
+        Chest, Libs, Abdomen, Organ, 
+        
+        // Arms
+        RightArm, LeftArm, RightHand, LeftHand, RightThumb, RightIndexFinger, RightMiddleFinger, RightRingFinger, 
+        RightLittleFinger, LeftThumb, LeftIndexFinger, LeftMiddleFinger, LeftRingFinger, LeftLittleFinger,
+        RightShoulder, LeftShoulder,
+
+        // Legs
+        RightLeg, LeftLeg, RightKnee, LeftKnee, RightAncle, LeftAncle, RightBigToe, LeftBigToe,
+    }
+    public enum InjuryType 
+    { 
+        Contusion, // 타박상
+        Fracture, // 골절
+        Cutting, // 잘림/베임
+        Amputation, // 절단
+        Dislocation, // 탈골
+        Penetrating, // 관통
+        Damage, // 손상
+        Rupture, // 파열
+        Loss, // 손실
+        Concussion, // 뇌진탕
+        RecoveringFromSurgery,
+    }
+
+    [Serializable]
+    public class Injury
+    {
+        public InjurySite site;
+        public InjuryType type;
+        // 0: 완치, 1: 완전 손실(Loss)
+        [Range(0, 1)]public float degree;
+
+        public Injury(InjurySite site, InjuryType type, float degree)
+        {
+            this.site = site;
+            this.type = type;
+            this.degree = degree;
+        }
+    }
 
     [Header("Components")]
     [SerializeField] PolygonCollider2D sightCollider;
@@ -87,6 +136,9 @@ public class Survivor : CustomObject
 
     [SerializeField] Vector2 lookRotation = Vector2.zero;
     public Vector2 LookRotation => lookRotation;
+
+    public List<Injury> injuries = new();
+    public List<Injury> disabilities = new();
 
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
@@ -1140,7 +1192,7 @@ public class Survivor : CustomObject
     #endregion
 
     #region Take Damage
-    void ApplyDamage(Survivor attacker, float damage, int damagePart)
+    void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, DamageType damageType)
     {
         if (damage < 0) damage = 0;
         curHP -= damage;
@@ -1150,13 +1202,15 @@ public class Survivor : CustomObject
             curHP = 0;
             attacker.killCount++;
             IsDead = true;
-            if (damagePart == 0)
+            if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
             {
                 GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
                 headshot.transform.SetParent(canvas.transform);
             }
             inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
         }
+
+        if (damage > 0) GetInjury(damagePart, damageType, damage);
 
         if (inSightEnemies.Contains(attacker))
         {
@@ -1178,10 +1232,22 @@ public class Survivor : CustomObject
     public void TakeDamage(Survivor attacker, float damage)
     {
         string hitSound;
+        DamageType damageType = DamageType.Strike;
+        if (currentWeapon != null && IsValid(currentWeapon))
+        {
+            if(currentWeapon is MeleeWeapon) damageType = (currentWeapon as MeleeWeapon).DamageType;
+        }
+
+        InjurySiteMajor damagePart;
+        // 타격 무기면 머리를 주로 노릴 것이고, 날붙이면 몸을 노릴 것이라 가정
+        if ((UnityEngine.Random.Range(0, 1f) < 0.8f) ^ damageType == DamageType.Strike) damagePart = InjurySiteMajor.Torso;
+        else damagePart = InjurySiteMajor.Head;
+
         if(!inSightEnemies.Contains(attacker))
         {
             // 시야 밖에서 맞으면 무조건 치명타
             damage *= 2;
+            damagePart = InjurySiteMajor.Head;
             hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
         }
         else
@@ -1197,19 +1263,22 @@ public class Survivor : CustomObject
             {
                 // 방어
                 damage *= 0.5f;
+                damagePart = InjurySiteMajor.Arms;
                 hitSound = "guard, 10";
             }
             else if (probability > 0.9f)
             {
                 // 치명타
                 damage *= 2;
+                if (damageType == DamageType.Strike) damagePart = InjurySiteMajor.Head;
+                else damagePart = InjurySiteMajor.Torso;
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
             }
             else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
         }
 
         PlaySFX(hitSound, this);
-        ApplyDamage(attacker, damage, -1);
+        ApplyDamage(attacker, damage, damagePart, damageType);
     }
 
     public void TakeDamage(Bullet bullet)
@@ -1217,23 +1286,24 @@ public class Survivor : CustomObject
         if (isDead) return;
         float damage;
         float probability = UnityEngine.Random.Range(0, 1f);
-        int damagePart; // 0 : 헤드, 1 : 바디, 2 : 기타
+        InjurySiteMajor damagePart;
         // 헤드샷
         if(probability > 0.99f)
         {
             damage = bullet.Damage * 4;
-            damagePart = 0;
+            damagePart = InjurySiteMajor.Head;
         }
         // 바디샷
         else if(probability > 0.3f)
         {
             damage = bullet.Damage * 2;
-            damagePart = 1;
+            damagePart = InjurySiteMajor.Torso;
         }
         else
         {
             damage = bullet.Damage;
-            damagePart = 2;
+            if(UnityEngine.Random.Range(0, 1f) < 0.5f) damagePart = InjurySiteMajor.Arms;
+            else damagePart = InjurySiteMajor.Legs;
         }
         // 실효 사거리 밖
         if(bullet.TraveledDistance > bullet.MaxRange * 0.5f)
@@ -1241,7 +1311,7 @@ public class Survivor : CustomObject
             damage *= (bullet.MaxRange * 1.5f - bullet.TraveledDistance) / bullet.MaxRange;
         }
 
-        if(damagePart == 0)
+        if(damagePart == InjurySiteMajor.Head)
         {
             if (currentHelmet != null)
             {
@@ -1256,12 +1326,365 @@ public class Survivor : CustomObject
                 }
             }
         }
-        else if(damagePart == 1)
+        else if(damagePart == InjurySiteMajor.Torso)
         {
             if(currentVest != null) damage -= currentVest.Armor;
         }
 
-        ApplyDamage(bullet.Launcher, damage, damagePart);
+        ApplyDamage(bullet.Launcher, damage, damagePart, DamageType.GunShot);
+    }
+
+    void GetInjury(InjurySiteMajor damagePart, DamageType damageType, float damage)
+    {
+        InjurySite injurySite = InjurySite.None;
+        InjuryType injuryType = InjuryType.Fracture;
+        float injuryDegree = 0;
+        float rand;
+        switch(damagePart)
+        {
+            case InjurySiteMajor.Head:
+                if (damageType == DamageType.Strike) rand = UnityEngine.Random.Range(0, 1f);
+                else rand = UnityEngine.Random.Range(0, 0.5f);
+
+                if (rand < 0.5f && rand > 0.45f) injurySite = InjurySite.RightEye;
+                else if (rand > 0.4f) injurySite = InjurySite.LeftEye;
+                else if (rand > 0.3f) injurySite = InjurySite.Head;
+                else if (rand > 0.25f) injurySite = InjurySite.RightEar;
+                else if (rand > 0.2f) injurySite = InjurySite.LeftEar;
+                else if (rand > 0.1f) injurySite = InjurySite.Nose;
+                else if (rand < 0.1f) injurySite = InjurySite.Jaw;
+                break;
+            case InjurySiteMajor.Torso:
+                if (damageType == DamageType.Strike) rand = UnityEngine.Random.Range(0, 1f);
+                else rand = UnityEngine.Random.Range(0, 0.5f);
+
+                if (rand < 0.5f && rand > 0.25f) injurySite = InjurySite.Chest;
+                else if (rand < 0.25f) injurySite = InjurySite.Abdomen;
+                break;
+            case InjurySiteMajor.Arms:
+                rand = UnityEngine.Random.Range(0, 1f);
+                if (rand > 0.95f) injurySite = InjurySite.RightShoulder;
+                else if (rand > 0.9f) injurySite = InjurySite.LeftShoulder;
+                else if (rand > 0.6f) injurySite = InjurySite.RightArm;
+                else if (rand > 0.3f) injurySite = InjurySite.LeftArm;
+                else if (rand > 0.2f) injurySite = InjurySite.RightHand;
+                else if (rand > 0.1f) injurySite = InjurySite.LeftHand;
+                else if (rand > 0.09f) injurySite = InjurySite.RightThumb;
+                else if (rand > 0.08f) injurySite = InjurySite.LeftThumb;
+                else if (rand > 0.07f) injurySite = InjurySite.RightIndexFinger;
+                else if (rand > 0.06f) injurySite = InjurySite.LeftIndexFinger;
+                else if (rand > 0.05f) injurySite = InjurySite.RightMiddleFinger;
+                else if (rand > 0.04f) injurySite = InjurySite.LeftMiddleFinger;
+                else if (rand > 0.03f) injurySite = InjurySite.RightRingFinger;
+                else if (rand > 0.02f) injurySite = InjurySite.LeftRingFinger;
+                else if (rand > 0.01f) injurySite = InjurySite.RightLittleFinger;
+                else injurySite = InjurySite.LeftLittleFinger;
+                break;
+            case InjurySiteMajor.Legs:
+                rand = UnityEngine.Random.Range(0, 1f);
+                if (rand > 0.75f) injurySite = InjurySite.RightLeg;
+                else if (rand > 0.5f) injurySite = InjurySite.LeftLeg;
+                else if (rand > 0.4f) injurySite = InjurySite.RightKnee;
+                else if (rand > 0.3f) injurySite = InjurySite.LeftKnee;
+                else if (rand > 0.2f) injurySite = InjurySite.RightAncle;
+                else if (rand > 0.1f) injurySite = InjurySite.LeftAncle;
+                else if (rand > 0.5f) injurySite = InjurySite.RightBigToe;
+                else injurySite = InjurySite.LeftBigToe;
+                break;
+        }
+
+        if (injurySite == InjurySite.None) return;
+
+        switch(injurySite)
+        {
+            case InjurySite.Head:
+                if(damageType == DamageType.Strike)
+                {
+                    injurySite = InjurySite.Skull;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
+                    else injuryType = InjuryType.Contusion;
+                    if(injuryDegree > 0.7f)
+                    {
+                        AddInjury(InjurySite.Brain, InjuryType.Concussion, Mathf.Clamp((injuryDegree - 0.7f) / 0.3f, 0, 0.99f));
+                    }
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                else
+                {
+                    injurySite = InjurySite.Skull;
+                    injuryType = InjuryType.Penetrating;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                break;
+            case InjurySite.RightEye:
+            case InjurySite.LeftEye:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 1);
+                if(damageType == DamageType.Strike)
+                {
+                    injuryType = InjuryType.Contusion;
+                    if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                    AddInjury(injurySite, InjuryType.Loss, 1);
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                    AddInjury(injurySite, InjuryType.Loss, 1);
+                }
+                break;
+            case InjurySite.RightEar:
+            case InjurySite.LeftEar:
+                if(damageType == DamageType.Strike)
+                {
+                    injuryDegree = 0;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1);
+                    if (injurySite == InjurySite.RightEar) AddInjury(InjurySite.RightEarDrum, InjuryType.Loss, 1);
+                    else AddInjury(InjurySite.LeftEarDrum, InjuryType.Loss, 1);
+                }
+                break;
+            case InjurySite.Nose:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                if(damageType == DamageType.Strike)
+                {
+                    injuryType = InjuryType.Fracture;
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.Jaw:
+                if (damageType == DamageType.Strike)
+                {
+                    injuryType = InjuryType.Fracture;
+                    injuryDegree = Mathf.Clamp((damage - 20) / 80, 0, 0.99f);
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                break;
+            case InjurySite.Chest:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                if (damageType == DamageType.Strike)
+                {
+                    if (injuryDegree > 0.3f)
+                    {
+                        injurySite = InjurySite.Libs;
+                        injuryType = InjuryType.Fracture;
+                    }
+                    else injuryType = InjuryType.Contusion;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.Abdomen:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                if (damageType == DamageType.Strike)
+                {
+                    if (injuryDegree > 0.3f)
+                    {
+                        injurySite = InjurySite.Organ;
+                        if (injuryDegree >= 1)
+                        {
+                            injuryType = InjuryType.Rupture;
+                            AddInjury(InjurySite.Organ, InjuryType.Rupture, 1);
+                        }
+                        else injuryType = InjuryType.Damage;
+                    }
+                    else injuryType = InjuryType.Contusion;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    if (injuryDegree > 0.3f)
+                    {
+                        injurySite = InjurySite.Organ;
+                        if (injuryDegree >= 1)
+                        {
+                            injuryType = InjuryType.Rupture;
+                            AddInjury(InjurySite.Organ, InjuryType.Rupture, 1);
+                        }
+                        else injuryType = InjuryType.Damage;
+                    }
+                    else injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    if (injuryDegree > 0.3f)
+                    {
+                        injurySite = InjurySite.Organ;
+                        if (injuryDegree >= 1)
+                        {
+                            injuryType = InjuryType.Rupture;
+                            AddInjury(InjurySite.Organ, InjuryType.Rupture, 1);
+                        }
+                        else injuryType = InjuryType.Damage;
+                    }
+                    else injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.RightShoulder:
+            case InjurySite.LeftShoulder:
+                if(damageType == DamageType.Strike)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    if (injuryDegree > 0.4f) injuryType = InjuryType.Fracture;
+                    else if (injuryDegree > 0.3f) injuryType = InjuryType.Dislocation;
+                    else injuryType = InjuryType.Contusion;
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
+                    else injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.RightArm:
+            case InjurySite.LeftArm:
+                if (damageType == DamageType.Strike)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
+                    else injuryType = InjuryType.Contusion;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
+                    else injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.RightHand:
+            case InjurySite.LeftHand:
+                if (damageType == DamageType.Strike)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
+                    else injuryType = InjuryType.Contusion;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
+                    else injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.RightThumb:
+            case InjurySite.LeftThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.RightLittleFinger:
+            case InjurySite.LeftLittleFinger:
+                injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                if (injuryDegree >= 1f) AddInjury(injurySite, InjuryType.Loss, 1);
+                else if (damageType == DamageType.Strike)
+                {
+                    injuryType = InjuryType.Fracture;
+                }
+                else if (damageType == DamageType.Cut)
+                {
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
+                    else injuryType = InjuryType.Cutting;
+                }
+                else
+                {
+                    injuryType = InjuryType.Penetrating;
+                }
+                break;
+            case InjurySite.RightLeg:
+            case InjurySite.LeftLeg:
+            case InjurySite.RightKnee:
+            case InjurySite.LeftKnee:
+            case InjurySite.RightAncle:
+            case InjurySite.LeftAncle:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                injuryType = InjuryType.Penetrating;
+                break;
+            case InjurySite.RightBigToe:
+            case InjurySite.LeftBigToe:
+                injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                if (injuryDegree >= 1) injuryType = InjuryType.Loss;
+                else injuryType = InjuryType.Penetrating;
+                break;
+            default:
+                Debug.LogWarning($"Unknown injurySite : {injurySite}");
+                injuryDegree = 0;
+                break;
+        }
+        AddInjury(injurySite, injuryType, injuryDegree);
+    }
+
+    public void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
+    {
+        if (injuryDegree == 0) return;
+        if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture)
+        {
+            int index = disabilities.FindIndex(x => x.site == injurySite);
+            if (index == -1) disabilities.Add(new(injurySite, injuryType, 1));
+            // (추가)팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
+        }
+        else
+        {
+            int index = injuries.FindIndex(x => x.site == injurySite);
+            if (index != -1)
+            {
+                injuries[index].degree += injuryDegree;
+                // (추가)dgree가 1이 되면 loss
+            }
+            else injuries.Add(new(injurySite, injuryType, injuryDegree));
+        }
     }
     #endregion
 

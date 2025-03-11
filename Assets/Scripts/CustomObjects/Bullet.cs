@@ -143,5 +143,20 @@ public class Bullet : CustomObject
             }
             DelayedDespawn();
         }
+        else if(collision.TryGetComponent(out Obstacle obstacle))
+        {
+            float rand = Random.Range(0, 1f);
+            if(rand < obstacle.OpstructionRate)
+            {
+                if (Random.Range(0, 1f) < 0.5f)
+                {
+                    PlaySFX("ricochet,10", launcher);
+                }
+                else
+                {
+                    PlaySFX("ricochet2,10", launcher);
+                }
+            }
+        }
     }
 }

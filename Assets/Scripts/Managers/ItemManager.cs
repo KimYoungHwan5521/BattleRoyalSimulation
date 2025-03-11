@@ -61,23 +61,23 @@ public class ItemManager
             // Melee Weapons
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Knife", 0.5f, 40, 1.7f, 0);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Knife", 0.5f, DamageType.Cut, 40, 1.7f, 0);
                 break;
             case Items.Dagger:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Dagger", 1f, 50, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Dagger", 1f, DamageType.Cut, 50, 2f, 1);
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Bat", 1f, 25, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Bat", 1f, DamageType.Strike, 25, 2f, 1);
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "LongSword", 2f, 40, 2.4f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "LongSword", 2f, DamageType.Cut, 40, 2.4f, 1);
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Shovel", 2f, 35, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Shovel", 2f, DamageType.Strike, 35, 2f, 1);
                 break;
             // Ranged Weapons
             case Items.Revolver:

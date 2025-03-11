@@ -39,7 +39,11 @@ public class Area : CustomObject
         {
             farmingSection.ownerArea = this;
             farmingSection.boxes = farmingSection.GetComponentsInChildren<Box>();
-            foreach(Box box in farmingSection.boxes) box.ownerArea = this;
+            foreach(Box box in farmingSection.boxes)
+            {
+                box.ownerArea = this;
+                box.SetObstructionRate(0.3f);
+            }
         }
     }
 

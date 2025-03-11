@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Box : CustomObject
+public class Box : Obstacle
 {
     public Area ownerArea;
     public List<Item> items = new();
