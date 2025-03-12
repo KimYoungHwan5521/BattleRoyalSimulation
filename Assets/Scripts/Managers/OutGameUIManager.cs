@@ -30,6 +30,8 @@ public class SurvivorData
     public float increaseComparedToPrevious_farmingSpeed;
     public float increaseComparedToPrevious_shooting;
 
+    public List<Injury> injuries = new();
+
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
     {
@@ -235,6 +237,11 @@ public class OutGameUIManager : MonoBehaviour
     {
         SurvivorData survivorInfo = mySurvivorsData.Find(x => x.survivorName == survivorsDropdown.options[survivorsDropdown.value].text);
         selectedSurvivor.SetInfo(survivorInfo);
+    }
+
+    public void ResetSelectedSurvivorInfo()
+    {
+        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
     }
 
     #region Training

@@ -17,12 +17,12 @@ public class CustomObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public virtual void PlaySFX(string wantSoundAndVolume)
+    public virtual void PlaySFX(string wantSoundAndVolume, CustomObject noiseMaker)
     {
-        PlaySFX(wantSoundAndVolume, this);
+        PlaySFX(wantSoundAndVolume, noiseMaker, transform.position);
     }
 
-    public virtual void PlaySFX(string wantSoundAndVolume, CustomObject noiseMaker)
+    public virtual void PlaySFX(string wantSoundAndVolume, CustomObject noiseMaker, Vector2 noisePosition)
     {
         wantSoundAndVolume = wantSoundAndVolume.Replace(" ", "");
         string wantSound = wantSoundAndVolume.Split(",")[0];
@@ -33,7 +33,7 @@ public class CustomObject : MonoBehaviour
             {
                 foreach (Survivor survivor in BattleRoyaleManager.AliveSurvivors)
                 {
-                    if(noiseMaker != this) survivor.HearSound(wantVolume, transform.position, noiseMaker);
+                    if(noiseMaker != survivor) survivor.HearSound(wantVolume, transform.position, noiseMaker);
                 }
             }
             else

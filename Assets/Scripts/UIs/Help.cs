@@ -14,6 +14,7 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (description == "") return;
         RectTransform descriptionRT = GameManager.Instance.description.GetComponent<RectTransform>();
         TextMeshProUGUI descriptionText = descriptionRT.GetComponentInChildren<TextMeshProUGUI>();
         descriptionText.text = description;
@@ -27,5 +28,15 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData)
     {
         GameManager.Instance.description.SetActive(false);
+    }
+
+    public void SetDescription(InjurySite injurySite)
+    {
+        switch(injurySite)
+        {
+            default:
+                description = "";
+                break;
+        }
     }
 }

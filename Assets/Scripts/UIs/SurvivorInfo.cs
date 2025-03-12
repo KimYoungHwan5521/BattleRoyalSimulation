@@ -14,6 +14,8 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI shootingText;
     [SerializeField] TextMeshProUGUI priceText;
 
+    [SerializeField] GameObject[] injuries;
+
     [SerializeField] GameObject soldOutImage;
     bool soldOut;
     public bool SoldOut
@@ -40,7 +42,7 @@ public class SurvivorInfo : MonoBehaviour
         moveSpeedText.text = $"Move Speed\t: {moveSpeed:0.###}";
         farmingSpeedText.text = $"Farming Speed\t: {farmingSpeed:0.###}";
         shootingText.text = $"Shooting\t: {shooting:0.##}";
-        if(priceText != null) priceText.text = $"$ {price}";
+        priceText.text = $"$ {price}";
     }
 
     public void SetInfo(SurvivorData wantSurvivorData)
@@ -58,6 +60,20 @@ public class SurvivorInfo : MonoBehaviour
         if (wantSurvivorData.increaseComparedToPrevious_farmingSpeed > 0) farmingSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_farmingSpeed:0.###})</color>";
         shootingText.text = $"Shooting\t: {wantSurvivorData.shooting:0.##}";
         if (wantSurvivorData.increaseComparedToPrevious_shooting > 0) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting:0.##})</color>";
-        if (priceText != null) priceText.text = $"$ {wantSurvivorData.price}";
+
+        for (int i = 0; i < injuries.Length; i++)
+        {
+            if (wantSurvivorData.injuries.Count > i)
+            {
+                injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{wantSurvivorData.injuries[i].site} {wantSurvivorData.injuries[i].type}";
+                injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{wantSurvivorData.injuries[i].degree:0.##}";
+                injuries[i].GetComponentInChildren<Help>().SetDescription(wantSurvivorData.injuries[i].site);
+                injuries[i].SetActive(true);
+            }
+            else
+            {
+                injuries[i].SetActive(false);
+            }
+        }
     }
 }

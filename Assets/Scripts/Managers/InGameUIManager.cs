@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -60,6 +61,8 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI moveSpeedText;
     [SerializeField] TextMeshProUGUI farmingSpeedText;
     [SerializeField] TextMeshProUGUI shootingText;
+
+    [SerializeField] GameObject[] injuries;
 
     [Header("Inventory")]
     [SerializeField] GameObject inventoryTab;
@@ -228,6 +231,7 @@ public class InGameUIManager : MonoBehaviour
                 selectedSurvivorsHealthBarImage.fillAmount = selectedSurvivor.CurHP / selectedSurvivor.MaxHP;
                 selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP:0} / {selectedSurvivor.MaxHP:0}";
 
+                #region Inventory
                 if (selectedSurvivor.CurrentWeapon != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
                 {
                     selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(weaponSpriteEnum);
@@ -289,6 +293,25 @@ public class InGameUIManager : MonoBehaviour
                         selectedObjectsItems[i].SetActive(false);
                     }
                 }
+
+                #endregion
+                
+                #region Injury
+                for(int i = 0; i<injuries.Length; i++)
+                {
+                    if(selectedSurvivor.injuries.Count > i)
+                    {
+                        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{selectedSurvivor.injuries[i].site} {selectedSurvivor.injuries[i].type}";
+                        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{selectedSurvivor.injuries[i].degree:0.##}";
+                        injuries[i].GetComponentInChildren<Help>().SetDescription(selectedSurvivor.injuries[i].site);
+                        injuries[i].SetActive(true);
+                    }
+                    else
+                    {
+                        injuries[i].SetActive(false);
+                    }
+                }
+                #endregion
             }
             else if(selectedObject is Box)
             {

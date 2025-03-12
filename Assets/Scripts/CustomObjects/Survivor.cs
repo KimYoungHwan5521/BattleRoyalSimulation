@@ -4,60 +4,62 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static Survivor;
+
+#region Injury
+public enum InjurySiteMajor { Head, Torso, Arms, Legs }
+public enum InjurySite 
+{ 
+    None,
+    // Head
+    Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain, RightEarDrum, LeftEarDrum,
+
+    // Torso
+    Chest, Libs, Abdomen, Organ, 
+        
+    // Arms
+    RightArm, LeftArm, RightHand, LeftHand, RightThumb, RightIndexFinger, RightMiddleFinger, RightRingFinger, 
+    RightLittleFinger, LeftThumb, LeftIndexFinger, LeftMiddleFinger, LeftRingFinger, LeftLittleFinger,
+    RightShoulder, LeftShoulder,
+
+    // Legs
+    RightLeg, LeftLeg, RightKnee, LeftKnee, RightAncle, LeftAncle, RightBigToe, LeftBigToe,
+}
+public enum InjuryType 
+{ 
+    Contusion, // 타박상
+    Fracture, // 골절
+    Cutting, // 잘림/베임
+    Amputation, // 절단
+    Dislocation, // 탈골
+    Penetrating, // 관통
+    Damage, // 손상
+    Rupture, // 파열
+    Loss, // 손실
+    Concussion, // 뇌진탕
+    RecoveringFromSurgery,
+}
+
+[Serializable]
+public class Injury
+{
+    public InjurySite site;
+    public InjuryType type;
+    // 0: 완치, 1: 완전 손실(Loss)
+    [Range(0, 1)]public float degree;
+
+    public Injury(InjurySite site, InjuryType type, float degree)
+    {
+        this.site = site;
+        this.type = type;
+        this.degree = degree;
+    }
+}
+#endregion
 
 public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain }
-    public enum InjurySiteMajor { Head, Torso, Arms, Legs }
-    public enum InjurySite 
-    { 
-        None,
-        // Head
-        Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain, RightEarDrum, LeftEarDrum,
-
-        // Torso
-        Chest, Libs, Abdomen, Organ, 
-        
-        // Arms
-        RightArm, LeftArm, RightHand, LeftHand, RightThumb, RightIndexFinger, RightMiddleFinger, RightRingFinger, 
-        RightLittleFinger, LeftThumb, LeftIndexFinger, LeftMiddleFinger, LeftRingFinger, LeftLittleFinger,
-        RightShoulder, LeftShoulder,
-
-        // Legs
-        RightLeg, LeftLeg, RightKnee, LeftKnee, RightAncle, LeftAncle, RightBigToe, LeftBigToe,
-    }
-    public enum InjuryType 
-    { 
-        Contusion, // 타박상
-        Fracture, // 골절
-        Cutting, // 잘림/베임
-        Amputation, // 절단
-        Dislocation, // 탈골
-        Penetrating, // 관통
-        Damage, // 손상
-        Rupture, // 파열
-        Loss, // 손실
-        Concussion, // 뇌진탕
-        RecoveringFromSurgery,
-    }
-
-    [Serializable]
-    public class Injury
-    {
-        public InjurySite site;
-        public InjuryType type;
-        // 0: 완치, 1: 완전 손실(Loss)
-        [Range(0, 1)]public float degree;
-
-        public Injury(InjurySite site, InjuryType type, float degree)
-        {
-            this.site = site;
-            this.type = type;
-            this.degree = degree;
-        }
-    }
 
     [Header("Components")]
     [SerializeField] PolygonCollider2D sightCollider;
@@ -86,6 +88,8 @@ public class Survivor : CustomObject
     ProjectileGenerator projectileGenerator;
 
     [Header("Status")]
+    SurvivorData linkedSurvivorData;
+    public SurvivorData LinkedSurvivorData => linkedSurvivorData;
     [SerializeField] bool isDead;
     public bool IsDead
     {
@@ -635,19 +639,19 @@ public class Survivor : CustomObject
         float rand = UnityEngine.Random.Range(0, 1f);
         if(rand > 0.75f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise01,20");
+            targetFarmingBox.PlaySFX("farmingNoise01,20", this);
         }
         else if (rand > 0.5f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise02,20");
+            targetFarmingBox.PlaySFX("farmingNoise02,20", this);
         }
         else if (rand > 0.25f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise03,20");
+            targetFarmingBox.PlaySFX("farmingNoise03,20", this);
         }
         else
         {
-            targetFarmingBox.PlaySFX("farmingNoise04,20");
+            targetFarmingBox.PlaySFX("farmingNoise04,20", this);
         }
     }
 
@@ -678,14 +682,16 @@ public class Survivor : CustomObject
                 }
                 else noMoreFarmingArea = true;
             }
+            else
+            {
+                Vector2 wantPosition = transform.position;
+                wantPosition = new(
+                    currentFarmingArea.transform.position.x + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.x * 0.5f, currentFarmingArea.transform.localScale.x * 0.5f),
+                    currentFarmingArea.transform.position.y + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.y * 0.5f, currentFarmingArea.transform.localScale.y * 0.5f)
+                    );
 
-            Vector2 wantPosition = transform.position;
-            wantPosition = new(
-                currentFarmingArea.transform.position.x + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.x * 0.5f, currentFarmingArea.transform.localScale.x * 0.5f),
-                currentFarmingArea.transform.position.y + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.y * 0.5f, currentFarmingArea.transform.localScale.y * 0.5f)
-                );
-
-            agent.SetDestination(wantPosition);
+                agent.SetDestination(wantPosition);
+            }
         }
     }
 
@@ -1169,10 +1175,11 @@ public class Survivor : CustomObject
     #region Hearing
     public void HearSound(float volume, Vector2 soundOrigin, CustomObject noiseMaker)
     {
+        Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {volume}");
         if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor) || noiseMaker == lastTargetEnemy) return;
         float distance = Vector2.Distance(transform.position, soundOrigin);
         float heardVolume = volume * hearingAbility / (distance * distance);
-        Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
+        //Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
 
         if(heardVolume > 1f)
         {
@@ -1318,11 +1325,11 @@ public class Survivor : CustomObject
                 damage -= currentHelmet.Armor;
                 if (UnityEngine.Random.Range(0, 1f) < 0.5f)
                 {
-                    PlaySFX("ricochet,10");
+                    PlaySFX("ricochet,10", this);
                 }
                 else
                 {
-                    PlaySFX("ricochet2,10");
+                    PlaySFX("ricochet2,10", this);
                 }
             }
         }
@@ -1333,7 +1340,9 @@ public class Survivor : CustomObject
 
         ApplyDamage(bullet.Launcher, damage, damagePart, DamageType.GunShot);
     }
+    #endregion
 
+    #region Injury
     void GetInjury(InjurySiteMajor damagePart, DamageType damageType, float damage)
     {
         InjurySite injurySite = InjurySite.None;
@@ -1393,7 +1402,7 @@ public class Survivor : CustomObject
                 break;
         }
 
-        if (injurySite == InjurySite.None) return;
+        if (injurySite == InjurySite.None || injuryDegree < 0.1f) return;
 
         switch(injurySite)
         {
@@ -1674,17 +1683,181 @@ public class Survivor : CustomObject
             int index = disabilities.FindIndex(x => x.site == injurySite);
             if (index == -1) disabilities.Add(new(injurySite, injuryType, 1));
             // (추가)팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
+            List<InjurySite> subparts = GetSubparts(injurySite);
+            List<Injury> toRemove = new();
+            foreach(var injury in injuries)
+            {
+                if(subparts.Contains(injury.site)) toRemove.Add(injury);
+            }
+            foreach(var injury in toRemove)
+            {
+                injuries.Remove(injury);
+            }
         }
         else
         {
+            // 상위 부위가 이미 절단된 상태면 return
+            List<InjurySite> upperParts = GetUpperParts(injurySite);
+            bool upperPartAlreadyLost = false;
+            foreach (var injury in injuries)
+            {
+                if (upperParts.Contains(injury.site))
+                {
+                    upperPartAlreadyLost = true;
+                    break;
+                }
+            }
+            if (upperPartAlreadyLost) return;
+
             int index = injuries.FindIndex(x => x.site == injurySite);
             if (index != -1)
             {
                 injuries[index].degree += injuryDegree;
                 // (추가)dgree가 1이 되면 loss
+                if (injuries[index].degree >= 1)
+                {
+                    switch(injuries[index].site)
+                    {
+                        // Unlosable
+                        case InjurySite.Head:
+                        case InjurySite.Skull:
+                        case InjurySite.Brain:
+                        case InjurySite.RightEar:
+                        case InjurySite.LeftEar:
+                        case InjurySite.Nose:
+                        case InjurySite.Jaw:
+                        case InjurySite.Chest:
+                        case InjurySite.Libs:
+                        case InjurySite.Abdomen:
+                            injuries[index].degree = 0.99f;
+                            break;
+                        // Losable
+                        default:
+                            AddInjury(injurySite, InjuryType.Rupture, 1);
+                            break;
+                    }
+                }
             }
             else injuries.Add(new(injurySite, injuryType, injuryDegree));
         }
+    }
+
+    List<InjurySite> GetSubparts(InjurySite upperPart)
+    {
+        List<InjurySite> result = new();
+        if(upperPart == InjurySite.RightShoulder || upperPart == InjurySite.RightArm || upperPart == InjurySite.RightHand)
+        {
+            result.Add(InjurySite.RightThumb);
+            result.Add(InjurySite.RightIndexFinger);
+            result.Add(InjurySite.RightMiddleFinger);
+            result.Add(InjurySite.RightRingFinger);
+            result.Add(InjurySite.RightLittleFinger);
+            if(upperPart == InjurySite.RightShoulder || upperPart == InjurySite.RightArm)
+            {
+                result.Add(InjurySite.RightHand);
+                if(upperPart == InjurySite.RightShoulder) result.Add(InjurySite.RightArm);
+            }
+        }
+        else if (upperPart == InjurySite.LeftShoulder || upperPart == InjurySite.LeftArm || upperPart == InjurySite.LeftHand)
+        {
+            result.Add(InjurySite.LeftThumb);
+            result.Add(InjurySite.LeftIndexFinger);
+            result.Add(InjurySite.LeftMiddleFinger);
+            result.Add(InjurySite.LeftRingFinger);
+            result.Add(InjurySite.LeftLittleFinger);
+            if (upperPart == InjurySite.LeftShoulder || upperPart == InjurySite.LeftArm)
+            {
+                result.Add(InjurySite.LeftHand);
+                if (upperPart == InjurySite.LeftShoulder) result.Add(InjurySite.LeftArm);
+            }
+        }
+        else if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee || upperPart == InjurySite.RightAncle)
+        {
+            result.Add(InjurySite.RightBigToe);
+            if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee)
+            {
+                result.Add(InjurySite.RightAncle);
+                if (upperPart == InjurySite.RightLeg) result.Add(InjurySite.RightKnee);
+            }
+        }
+        else if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee || upperPart == InjurySite.LeftAncle)
+        {
+            result.Add(InjurySite.LeftBigToe);
+            if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee)
+            {
+                result.Add(InjurySite.LeftAncle);
+                if (upperPart == InjurySite.LeftLeg) result.Add(InjurySite.LeftKnee);
+            }
+        }
+
+        return result;
+    }
+
+    List<InjurySite> GetUpperParts(InjurySite subpart)
+    {
+        List<InjurySite> result = new();
+        switch(subpart)
+        {
+            case InjurySite.RightThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.RightLittleFinger:
+                result.Add(InjurySite.RightHand);
+                result.Add(InjurySite.RightArm);
+                result.Add(InjurySite.RightShoulder);
+                break;
+            case InjurySite.LeftThumb:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.LeftLittleFinger:
+                result.Add(InjurySite.LeftHand);
+                result.Add(InjurySite.LeftArm);
+                result.Add(InjurySite.LeftShoulder);
+                break;
+            case InjurySite.RightHand:
+                result.Add(InjurySite.RightArm);
+                result.Add(InjurySite.RightShoulder);
+                break;
+            case InjurySite.LeftHand:
+                result.Add(InjurySite.LeftArm);
+                result.Add(InjurySite.LeftShoulder);
+                break;
+            case InjurySite.RightArm:
+                result.Add(InjurySite.RightShoulder);
+                break;
+            case InjurySite.LeftArm:
+                result.Add(InjurySite.LeftShoulder);
+                break;
+            case InjurySite.RightBigToe:
+                result.Add(InjurySite.RightAncle);
+                result.Add(InjurySite.RightKnee);
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftBigToe:
+                result.Add(InjurySite.LeftAncle);
+                result.Add(InjurySite.LeftKnee);
+                result.Add(InjurySite.LeftLeg);
+                break;
+            case InjurySite.RightAncle:
+                result.Add(InjurySite.RightKnee);
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftAncle:
+                result.Add(InjurySite.LeftKnee);
+                result.Add(InjurySite.LeftLeg);
+                break;
+            case InjurySite.RightKnee:
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftKnee:
+                result.Add(InjurySite.LeftLeg);
+                break;
+            default:
+                break;
+        }
+        return result;
     }
     #endregion
 
@@ -1795,6 +1968,7 @@ public class Survivor : CustomObject
 
     public void SetSurvivorInfo(SurvivorData survivorInfo)
     {
+        linkedSurvivorData = survivorInfo;
         survivorName = survivorInfo.survivorName;
         nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
         curHP = maxHP = survivorInfo.hp;
@@ -1804,6 +1978,8 @@ public class Survivor : CustomObject
         farmingSpeed = survivorInfo.farmingSpeed;
         shooting = survivorInfo.shooting;
         aimErrorRange = 7.5f / survivorInfo.shooting;
+
+        injuries = survivorInfo.injuries;
     }
 
     private void OnDrawGizmos()
