@@ -330,13 +330,20 @@ public class OutGameUIManager : MonoBehaviour
         autoAssign = !autoAssign;
         autoAssignCheckBox.SetActive(autoAssign);
     }
+    #endregion
+
+    public int MeasureTreatmentCost(Injury injury)
+    {
+        float cost = 0;
+
+        return (int)cost;
+    }
 
     public void StartBattleRoyale(SurvivorData participant)
     {
         mySurvivorDataInBattleRoyale = participant;
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
-    #endregion
 
     public void EndTheDay()
     {

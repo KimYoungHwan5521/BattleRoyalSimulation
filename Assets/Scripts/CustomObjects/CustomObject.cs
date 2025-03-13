@@ -17,6 +17,13 @@ public class CustomObject : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public virtual void PlaySFX(string wantSoundAndVolume)
+    {
+        CustomObject noiseMaker = this;
+        if (this is not Survivor) noiseMaker = GetComponent<Survivor>();
+        PlaySFX(wantSoundAndVolume, noiseMaker, transform.position);
+    }
+
     public virtual void PlaySFX(string wantSoundAndVolume, CustomObject noiseMaker)
     {
         PlaySFX(wantSoundAndVolume, noiseMaker, transform.position);

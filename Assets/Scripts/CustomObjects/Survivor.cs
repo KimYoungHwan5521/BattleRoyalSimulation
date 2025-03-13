@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -142,7 +143,7 @@ public class Survivor : CustomObject
     public Vector2 LookRotation => lookRotation;
 
     public List<Injury> injuries = new();
-    public List<Injury> disabilities = new();
+    //public List<Injury> disabilities = new();
 
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
@@ -196,9 +197,9 @@ public class Survivor : CustomObject
     [SerializeField] Vector2 targetEnemiesLastPosition;
     [SerializeField] Vector2 threateningSoundPosition;
 
-    [Header("Farming")]
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
+    [Header("Farming")]
     [SerializeField] Area currentFarmingArea;
     public Area CurrentFarmingArea
     {
@@ -663,24 +664,26 @@ public class Survivor : CustomObject
         {
             if (!noMoreFarmingArea)
             {
-                if(currentFarmingArea != null)
+                foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
                 {
-                    foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
+                    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
                     {
-                        if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
-                        {
-                            CurrentFarmingArea = farmingArea;
-                            return;
-                        }
+                        CurrentFarmingArea = farmingArea;
+                        return;
                     }
                 }
+
                 Area area = FindNearest(farmingAreas);
                 if (area != null)
                 {
                     CurrentFarmingArea = area;
                     return;
                 }
-                else noMoreFarmingArea = true;
+                else
+                {
+                    noMoreFarmingArea = true;
+                    CurrentFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
+                }
             }
             else
             {
@@ -1175,20 +1178,19 @@ public class Survivor : CustomObject
     #region Hearing
     public void HearSound(float volume, Vector2 soundOrigin, CustomObject noiseMaker)
     {
-        Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {volume}");
         if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor) || noiseMaker == lastTargetEnemy) return;
         float distance = Vector2.Distance(transform.position, soundOrigin);
         float heardVolume = volume * hearingAbility / (distance * distance);
         //Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
 
-        if(heardVolume > 1f)
+        if(heardVolume > 10f)
         {
             // 어떤 소리인지 명확한 인지
             threateningSoundPosition = soundOrigin;
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
         }
-        else if( heardVolume > 0.1f)
+        else if( heardVolume > 1f)
         {
             // 불분명한 인지
             keepAnEyeOnPosition = soundOrigin;
@@ -1402,7 +1404,7 @@ public class Survivor : CustomObject
                 break;
         }
 
-        if (injurySite == InjurySite.None || injuryDegree < 0.1f) return;
+        if (injurySite == InjurySite.None) return;
 
         switch(injurySite)
         {
@@ -1672,7 +1674,7 @@ public class Survivor : CustomObject
                 injuryDegree = 0;
                 break;
         }
-        AddInjury(injurySite, injuryType, injuryDegree);
+        if(injuryDegree > 0.1f) AddInjury(injurySite, injuryType, injuryDegree);
     }
 
     public void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
@@ -1680,9 +1682,9 @@ public class Survivor : CustomObject
         if (injuryDegree == 0) return;
         if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture)
         {
-            int index = disabilities.FindIndex(x => x.site == injurySite);
-            if (index == -1) disabilities.Add(new(injurySite, injuryType, 1));
-            // (추가)팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
+            int index = injuries.FindIndex(x => x.site == injurySite);
+            if (index == -1) injuries.Add(new(injurySite, injuryType, 1));
+            // 팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
             List<InjurySite> subparts = GetSubparts(injurySite);
             List<Injury> toRemove = new();
             foreach(var injury in injuries)
@@ -1713,7 +1715,7 @@ public class Survivor : CustomObject
             if (index != -1)
             {
                 injuries[index].degree += injuryDegree;
-                // (추가)dgree가 1이 되면 loss
+                // dgree가 1이 되면 loss
                 if (injuries[index].degree >= 1)
                 {
                     switch(injuries[index].site)
