@@ -336,6 +336,63 @@ public class OutGameUIManager : MonoBehaviour
     {
         float cost = 0;
 
+        switch(injury.site)
+        {
+            case InjurySite.Skull:
+            case InjurySite.Brain:
+                cost = injury.degree * 300;
+                break;
+            case InjurySite.Head:
+            case InjurySite.RightEye:
+            case InjurySite.LeftEye:
+            case InjurySite.RightEar:
+            case InjurySite.LeftEar:
+            case InjurySite.Nose:
+            case InjurySite.Jaw:
+                cost = injury.degree * 50;
+                break;
+            case InjurySite.Chest:
+            case InjurySite.Libs:
+            case InjurySite.Abdomen:
+                cost = injury.degree * 100;
+                break;
+            case InjurySite.Organ:
+                cost = injury.degree * 300;
+                break;
+            case InjurySite.RightShoulder:
+            case InjurySite.LeftShoulder:
+            case InjurySite.RightLeg:
+            case InjurySite.LeftLeg:
+                cost = injury.degree * 100;
+                break;
+            case InjurySite.RightArm:
+            case InjurySite.LeftArm:
+            case InjurySite.RightKnee:
+            case InjurySite.LeftKnee:
+                cost = injury.degree * 50; 
+                break;
+            case InjurySite.RightHand:
+            case InjurySite.LeftHand:
+            case InjurySite.RightAncle:
+            case InjurySite.LeftAncle:
+                cost = injury.degree * 25;
+                break;
+            case InjurySite.RightThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.RightLittleFinger:
+            case InjurySite.LeftThumb:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.LeftLittleFinger:
+            case InjurySite.RightBigToe:
+            case InjurySite.LeftBigToe:
+                cost = injury.degree * 10;
+                break;
+        }
+
         return (int)cost;
     }
 
@@ -434,6 +491,26 @@ public class OutGameUIManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    public void SurvivorsRecovery()
+    {
+        foreach(SurvivorData survivor in mySurvivorsData)
+        {
+            List<Injury> fullyRecovered = new();
+            foreach(Injury injury in survivor.injuries)
+            {
+                if(injury.degree < 1)
+                {
+                    injury.degree -= 0.1f;
+                    if(injury.degree < 0.1) fullyRecovered.Add(injury);
+                }
+            }
+            foreach(Injury recovered in fullyRecovered)
+            {
+                survivor.injuries.Remove(recovered);
+            }
         }
     }
 

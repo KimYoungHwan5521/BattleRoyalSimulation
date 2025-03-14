@@ -12,7 +12,7 @@ public enum InjurySite
 { 
     None,
     // Head
-    Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain, RightEarDrum, LeftEarDrum,
+    Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain,
 
     // Torso
     Chest, Libs, Abdomen, Organ, 
@@ -127,7 +127,8 @@ public class Survivor : CustomObject
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
     public float MoveSpeed => moveSpeed;
-    [SerializeField] float sightRange = 45f;
+    [SerializeField] float leftSightRange = 45f;
+    [SerializeField] float rightSightRange = 45f;
     float sightAngle = 120;
     public LayerMask sightObstacleMask;
     [SerializeField] int sightEdgeCount = 24;
@@ -1134,6 +1135,10 @@ public class Survivor : CustomObject
             float angle = -sightAngle / 2 + i * (sightAngle / sightEdgeCount);  // 시작 각도부터 각도 간격만큼 더해가기
             Vector2 direction = DirFromAngle(angle);  // Ray를 쏠 때는 월드 기준
             Vector2 meshDirection = DirFromAngle(angle, true);  // 메쉬는 Survivor의 Head의 Sight가 들고있어서 로컬 기준
+            float sightRange;
+            if (i <= sightEdgeCount / 3) sightRange = leftSightRange;
+            else if(i <= sightEdgeCount * 2 / 3) sightRange = Mathf.Max(rightSightRange, leftSightRange);
+            else sightRange = rightSightRange;
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, sightRange, sightObstacleMask);
             if(hits.Length > 0)
             {
@@ -1466,8 +1471,7 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Penetrating;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 1);
-                    if (injurySite == InjurySite.RightEar) AddInjury(InjurySite.RightEarDrum, InjuryType.Loss, 1);
-                    else AddInjury(InjurySite.LeftEarDrum, InjuryType.Loss, 1);
+                    if(injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
                 }
                 break;
             case InjurySite.Nose:
@@ -1861,6 +1865,39 @@ public class Survivor : CustomObject
         }
         return result;
     }
+
+    void ApplyInjuryPenalty()
+    {
+        float moveSpeedPenalty = 0;
+        float penaltiedHearingAbility;
+        float ear1Penalty = 0;
+        float ear2Penalty = 0;
+        foreach(Injury injury in injuries)
+        {
+            switch(injury.site)
+            {
+                case InjurySite.RightEar:
+                    ear1Penalty = injury.degree;
+                    break;
+                case InjurySite.LeftEar:
+                    ear2Penalty = injury.degree;
+                    break;
+                case InjurySite.RightEye:
+                    rightSightRange = 45 * (1 - injury.degree);
+                    break;
+                case InjurySite.LeftEye:
+                    leftSightRange = 45 * (1 - injury.degree);
+                    break;
+            }
+        }
+
+        if(ear1Penalty < ear2Penalty)
+        {
+            (ear2Penalty, ear1Penalty) = (ear1Penalty, ear2Penalty);
+        }
+        penaltiedHearingAbility = (1 - ear1Penalty) * (1 - 0.3f * ear2Penalty);
+        hearingAbility = 10 * penaltiedHearingAbility;
+    }
     #endregion
 
     #region Animation Events
@@ -1982,6 +2019,7 @@ public class Survivor : CustomObject
         aimErrorRange = 7.5f / survivorInfo.shooting;
 
         injuries = survivorInfo.injuries;
+        ApplyInjuryPenalty();
     }
 
     private void OnDrawGizmos()
