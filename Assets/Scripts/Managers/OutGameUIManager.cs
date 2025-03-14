@@ -359,8 +359,6 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.Organ:
                 cost = injury.degree * 300;
                 break;
-            case InjurySite.RightShoulder:
-            case InjurySite.LeftShoulder:
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
                 cost = injury.degree * 100;

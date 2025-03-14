@@ -20,7 +20,6 @@ public enum InjurySite
     // Arms
     RightArm, LeftArm, RightHand, LeftHand, RightThumb, RightIndexFinger, RightMiddleFinger, RightRingFinger, 
     RightLittleFinger, LeftThumb, LeftIndexFinger, LeftMiddleFinger, LeftRingFinger, LeftLittleFinger,
-    RightShoulder, LeftShoulder,
 
     // Legs
     RightLeg, LeftLeg, RightKnee, LeftKnee, RightAncle, LeftAncle, RightBigToe, LeftBigToe,
@@ -1379,11 +1378,9 @@ public class Survivor : CustomObject
                 break;
             case InjurySiteMajor.Arms:
                 rand = UnityEngine.Random.Range(0, 1f);
-                if (rand > 0.95f) injurySite = InjurySite.RightShoulder;
-                else if (rand > 0.9f) injurySite = InjurySite.LeftShoulder;
-                else if (rand > 0.6f) injurySite = InjurySite.RightArm;
-                else if (rand > 0.3f) injurySite = InjurySite.LeftArm;
-                else if (rand > 0.2f) injurySite = InjurySite.RightHand;
+                if (rand > 0.7f) injurySite = InjurySite.RightArm;
+                else if (rand > 0.4f) injurySite = InjurySite.LeftArm;
+                else if (rand > 0.25f) injurySite = InjurySite.RightHand;
                 else if (rand > 0.1f) injurySite = InjurySite.LeftHand;
                 else if (rand > 0.09f) injurySite = InjurySite.RightThumb;
                 else if (rand > 0.08f) injurySite = InjurySite.LeftThumb;
@@ -1571,27 +1568,6 @@ public class Survivor : CustomObject
                     else injuryType = InjuryType.Penetrating;
                 }
                 break;
-            case InjurySite.RightShoulder:
-            case InjurySite.LeftShoulder:
-                if(damageType == DamageType.Strike)
-                {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                    if (injuryDegree > 0.4f) injuryType = InjuryType.Fracture;
-                    else if (injuryDegree > 0.3f) injuryType = InjuryType.Dislocation;
-                    else injuryType = InjuryType.Contusion;
-                }
-                else if(damageType == DamageType.Cut)
-                {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
-                    if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
-                    else injuryType = InjuryType.Cutting;
-                }
-                else
-                {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                    injuryType = InjuryType.Penetrating;
-                }
-                break;
             case InjurySite.RightArm:
             case InjurySite.LeftArm:
                 if (damageType == DamageType.Strike)
@@ -1751,30 +1727,28 @@ public class Survivor : CustomObject
     List<InjurySite> GetSubparts(InjurySite upperPart)
     {
         List<InjurySite> result = new();
-        if(upperPart == InjurySite.RightShoulder || upperPart == InjurySite.RightArm || upperPart == InjurySite.RightHand)
+        if(upperPart == InjurySite.RightArm || upperPart == InjurySite.RightHand)
         {
             result.Add(InjurySite.RightThumb);
             result.Add(InjurySite.RightIndexFinger);
             result.Add(InjurySite.RightMiddleFinger);
             result.Add(InjurySite.RightRingFinger);
             result.Add(InjurySite.RightLittleFinger);
-            if(upperPart == InjurySite.RightShoulder || upperPart == InjurySite.RightArm)
+            if(upperPart == InjurySite.RightArm)
             {
                 result.Add(InjurySite.RightHand);
-                if(upperPart == InjurySite.RightShoulder) result.Add(InjurySite.RightArm);
             }
         }
-        else if (upperPart == InjurySite.LeftShoulder || upperPart == InjurySite.LeftArm || upperPart == InjurySite.LeftHand)
+        else if (upperPart == InjurySite.LeftArm || upperPart == InjurySite.LeftHand)
         {
             result.Add(InjurySite.LeftThumb);
             result.Add(InjurySite.LeftIndexFinger);
             result.Add(InjurySite.LeftMiddleFinger);
             result.Add(InjurySite.LeftRingFinger);
             result.Add(InjurySite.LeftLittleFinger);
-            if (upperPart == InjurySite.LeftShoulder || upperPart == InjurySite.LeftArm)
+            if (upperPart == InjurySite.LeftArm)
             {
                 result.Add(InjurySite.LeftHand);
-                if (upperPart == InjurySite.LeftShoulder) result.Add(InjurySite.LeftArm);
             }
         }
         else if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee || upperPart == InjurySite.RightAncle)
@@ -1811,7 +1785,6 @@ public class Survivor : CustomObject
             case InjurySite.RightLittleFinger:
                 result.Add(InjurySite.RightHand);
                 result.Add(InjurySite.RightArm);
-                result.Add(InjurySite.RightShoulder);
                 break;
             case InjurySite.LeftThumb:
             case InjurySite.LeftIndexFinger:
@@ -1820,21 +1793,12 @@ public class Survivor : CustomObject
             case InjurySite.LeftLittleFinger:
                 result.Add(InjurySite.LeftHand);
                 result.Add(InjurySite.LeftArm);
-                result.Add(InjurySite.LeftShoulder);
                 break;
             case InjurySite.RightHand:
                 result.Add(InjurySite.RightArm);
-                result.Add(InjurySite.RightShoulder);
                 break;
             case InjurySite.LeftHand:
                 result.Add(InjurySite.LeftArm);
-                result.Add(InjurySite.LeftShoulder);
-                break;
-            case InjurySite.RightArm:
-                result.Add(InjurySite.RightShoulder);
-                break;
-            case InjurySite.LeftArm:
-                result.Add(InjurySite.LeftShoulder);
                 break;
             case InjurySite.RightBigToe:
                 result.Add(InjurySite.RightAncle);
@@ -1868,10 +1832,18 @@ public class Survivor : CustomObject
 
     void ApplyInjuryPenalty()
     {
-        float moveSpeedPenalty = 0;
         float penaltiedHearingAbility;
         float ear1Penalty = 0;
         float ear2Penalty = 0;
+        bool eyeInjured = false;
+        float penaltiedFarmingSpeedByEyes = 0;
+        float penaltiedFarmingSpeedByOrgan = 1;
+        float penaltiedAttackSpeedByOrgan = 1;
+        float penaltiedMoveSpeedByOrgan = 1;
+        float penaltiedAttackDamageByRightArm = 1;
+        float penaltiedAttackDamageByLeftArm = 1;
+        float penaltiedMoveSpeedByRightLeg = 1;
+        float penaltiedMoveSpeedByLeftLeg = 1;
         foreach(Injury injury in injuries)
         {
             switch(injury.site)
@@ -1884,9 +1856,68 @@ public class Survivor : CustomObject
                     break;
                 case InjurySite.RightEye:
                     rightSightRange = 45 * (1 - injury.degree);
+                    penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
+                    eyeInjured = true;
                     break;
                 case InjurySite.LeftEye:
                     leftSightRange = 45 * (1 - injury.degree);
+                    penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
+                    eyeInjured = true;
+                    break;
+                case InjurySite.Organ:
+                    penaltiedFarmingSpeedByOrgan = 1 - injury.degree;
+                    penaltiedAttackSpeedByOrgan = 1 - injury.degree;
+                    penaltiedMoveSpeedByOrgan = 1 - injury.degree;
+                    break;
+                case InjurySite.RightArm:
+                    penaltiedAttackDamageByRightArm *= (1 - injury.degree);
+                    break;
+                case InjurySite.RightHand:
+                    penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
+                    break;
+                case InjurySite.RightThumb:
+                case InjurySite.RightIndexFinger:
+                case InjurySite.RightMiddleFinger:
+                case InjurySite.RightRingFinger:
+                case InjurySite.RightLittleFinger:
+                    penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.1f);
+                    break;
+                case InjurySite.LeftArm:
+                    penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
+                    break;
+                case InjurySite.LeftHand:
+                    penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
+                    break;
+                case InjurySite.LeftThumb:
+                case InjurySite.LeftIndexFinger:
+                case InjurySite.LeftMiddleFinger:
+                case InjurySite.LeftRingFinger:
+                case InjurySite.LeftLittleFinger:
+                    penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
+                    break;
+                case InjurySite.RightLeg:
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.RightKnee:
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.RightAncle:
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.RightBigToe:
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.1f);
+                    break;
+                case InjurySite.LeftLeg:
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.LeftKnee:
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.LeftAncle:
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    break;
+                case InjurySite.LeftBigToe:
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.1f);
                     break;
             }
         }
@@ -1897,6 +1928,15 @@ public class Survivor : CustomObject
         }
         penaltiedHearingAbility = (1 - ear1Penalty) * (1 - 0.3f * ear2Penalty);
         hearingAbility = 10 * penaltiedHearingAbility;
+
+        if (!eyeInjured) penaltiedFarmingSpeedByEyes = 1;
+        farmingSpeed = Mathf.Max(linkedSurvivorData.farmingSpeed * penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan, 0.1f);
+
+        attackSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * penaltiedAttackSpeedByOrgan, 0.1f);
+        
+        moveSpeed = Mathf.Max(linkedSurvivorData.moveSpeed * penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg, 0.1f);
+
+        attackDamage = linkedSurvivorData.attackDamage * Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
     }
     #endregion
 
