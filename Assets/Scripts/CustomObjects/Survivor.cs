@@ -143,7 +143,41 @@ public class Survivor : CustomObject
     public Vector2 LookRotation => lookRotation;
 
     public List<Injury> injuries = new();
-    //public List<Injury> disabilities = new();
+
+    [SerializeField] bool rightHandDisabled;
+    bool RightHandDisabled
+    {
+        get { return rightHandDisabled; }
+        set 
+        { 
+            rightHandDisabled = value; 
+            currentWeapon = null;
+            currentWeaponisBestWeapon = false;
+            List<Item> candidates = inventory.FindAll(x => x is Weapon);
+            foreach (Item candidate in candidates)
+            {
+                if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
+            }
+            currentWeaponisBestWeapon = true;
+        }
+    }
+    [SerializeField] bool leftHandDisabled;
+    bool LeftHandDisabled
+    {
+        get { return leftHandDisabled; }
+        set
+        {
+            leftHandDisabled = value;
+            currentWeapon = null;
+            currentWeaponisBestWeapon = false;
+            List<Item> candidates = inventory.FindAll(x => x is Weapon);
+            foreach (Item candidate in candidates)
+            {
+                if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
+            }
+            currentWeaponisBestWeapon = true;
+        }
+    }
 
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
@@ -722,6 +756,16 @@ public class Survivor : CustomObject
         return true;
     }
 
+    public bool CanUse(Weapon weapon)
+    {
+        if (rightHandDisabled && leftHandDisabled) return false;
+        if(weapon.NeedHand == NeedHand.TwoHand)
+        {
+            if (rightHandDisabled || leftHandDisabled) return false;
+        }
+        return true;
+    }
+
     void AcqireItem(Item item)
     {
         if (item is Weapon)
@@ -807,9 +851,10 @@ public class Survivor : CustomObject
     // if newWeapon value > current weapon : return true
     bool CompareWeaponValue(Weapon newWeapon)
     {
+        if (!CanUse(newWeapon)) return false;
         if(!IsValid(currentWeapon)) return true;
         if(newWeapon.itemName == currentWeapon.itemName) return false;
-        
+
         if (currentWeapon is MeleeWeapon)
         {
             if (newWeapon is RangedWeapon)
@@ -827,7 +872,7 @@ public class Survivor : CustomObject
             else
             {
                 // 근 vs 근
-                if (newWeapon.attackDamage > currentWeapon.attackDamage) return true;
+                if (newWeapon.AttackDamage > currentWeapon.AttackDamage) return true;
                 else return false;
             }
         }
@@ -849,7 +894,7 @@ public class Survivor : CustomObject
                     // 둘 다 총알이 있는 경우
                     if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                     {
-                        if (newWeapon.attackRange > currentWeapon.attackRange) return true;
+                        if (newWeapon.AttackDamage > currentWeapon.AttackDamage) return true;
                         else return false;
                     }
                     else return true;
@@ -860,7 +905,7 @@ public class Survivor : CustomObject
                     else
                     {
                         // 둘 다 총알이 없는 경우
-                        if (newWeapon.attackRange > currentWeapon.attackRange) return true;
+                        if (newWeapon.AttackDamage > currentWeapon.AttackDamage) return true;
                         else return false;
                     }
                 }
@@ -1041,7 +1086,7 @@ public class Survivor : CustomObject
                 }
                 else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                 {
-                    if (distance < CurrentWeaponAsRangedWeapon.attackRange)
+                    if (distance < CurrentWeaponAsRangedWeapon.AttackRange)
                     {
                         Aim();
                         return;
@@ -1065,7 +1110,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                if (distance < currentWeapon.attackRange)
+                if (distance < currentWeapon.AttackRange)
                 {
                     Attack();
                     return;
@@ -1207,23 +1252,31 @@ public class Survivor : CustomObject
     #region Take Damage
     void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, DamageType damageType)
     {
-        if (damage < 0) damage = 0;
-        curHP -= damage;
-        attacker.totalDamage += damage;
-        if (curHP <= 0)
+        if (damage > 0)
         {
-            curHP = 0;
-            attacker.killCount++;
-            IsDead = true;
-            if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
+            InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
+            Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
+            if (alreadyHaveInjury != null)
             {
-                GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
-                headshot.transform.SetParent(canvas.transform);
+                if(damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1) damage *= 1 + alreadyHaveInjury.degree;
             }
-            inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
-        }
+            curHP -= damage;
+            attacker.totalDamage += damage;
+            if (curHP <= 0)
+            {
+                curHP = 0;
+                attacker.killCount++;
+                IsDead = true;
+                if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
+                {
+                    GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
+                    headshot.transform.SetParent(canvas.transform);
+                }
+                inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
+            }
 
-        if (damage > 0) GetInjury(damagePart, damageType, damage);
+            GetInjury(specificDamagePart, damageType, damage);
+        }
 
         if (inSightEnemies.Contains(attacker))
         {
@@ -1266,20 +1319,26 @@ public class Survivor : CustomObject
         else
         {
             float probability = UnityEngine.Random.Range(0, 1f);
-            if (probability < 0.2f)
+            float avoidRate = 0.2f * (moveSpeed / 3 + attackSpeed) / (attacker.moveSpeed / 3 + attacker.moveSpeed);
+            float defendRate = 0.3f;
+            if (rightHandDisabled) defendRate -= 0.15f;
+            if (leftHandDisabled) defendRate -= 0.15f;
+            float criticalRate = 0.1f;
+
+            if (probability < avoidRate)
             {
                 // 회피
                 damage = 0;
                 hitSound = "avoid, 5";
             }
-            else if (probability < 0.5f)
+            else if (probability < avoidRate + defendRate)
             {
                 // 방어
                 damage *= 0.5f;
                 damagePart = InjurySiteMajor.Arms;
                 hitSound = "guard, 10";
             }
-            else if (probability > 0.9f)
+            else if (probability > 1 - criticalRate)
             {
                 // 치명타
                 damage *= 2;
@@ -1349,13 +1408,11 @@ public class Survivor : CustomObject
     #endregion
 
     #region Injury
-    void GetInjury(InjurySiteMajor damagePart, DamageType damageType, float damage)
+    InjurySite GetSpecificDamagePart(InjurySiteMajor damagePart, DamageType damageType)
     {
         InjurySite injurySite = InjurySite.None;
-        InjuryType injuryType = InjuryType.Fracture;
-        float injuryDegree = 0;
         float rand;
-        switch(damagePart)
+        switch (damagePart)
         {
             case InjurySiteMajor.Head:
                 if (damageType == DamageType.Strike) rand = UnityEngine.Random.Range(0, 1f);
@@ -1406,9 +1463,14 @@ public class Survivor : CustomObject
                 break;
         }
 
-        if (injurySite == InjurySite.None) return;
+        return injurySite;
+    }
 
-        switch(injurySite)
+    void GetInjury(InjurySite injurySite, DamageType damageType, float damage)
+    {
+        InjuryType injuryType = InjuryType.Fracture;
+        float injuryDegree = 0;
+        switch (injurySite)
         {
             case InjurySite.Head:
                 if(damageType == DamageType.Strike)
@@ -1669,7 +1731,7 @@ public class Survivor : CustomObject
             List<Injury> toRemove = new();
             foreach(var injury in injuries)
             {
-                if(subparts.Contains(injury.site)) toRemove.Add(injury);
+                if(subparts.Contains(injury.site) && injury.degree >= 1) toRemove.Add(injury);
             }
             foreach(var injury in toRemove)
             {
@@ -1683,7 +1745,7 @@ public class Survivor : CustomObject
             bool upperPartAlreadyLost = false;
             foreach (var injury in injuries)
             {
-                if (upperParts.Contains(injury.site))
+                if (upperParts.Contains(injury.site) && injury.degree >= 1)
                 {
                     upperPartAlreadyLost = true;
                     break;
@@ -1871,9 +1933,11 @@ public class Survivor : CustomObject
                     break;
                 case InjurySite.RightArm:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree);
+                    if(injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightHand:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
+                    if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightThumb:
                 case InjurySite.RightIndexFinger:
@@ -1884,9 +1948,11 @@ public class Survivor : CustomObject
                     break;
                 case InjurySite.LeftArm:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
+                    if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftHand:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
+                    if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftThumb:
                 case InjurySite.LeftIndexFinger:
@@ -1937,6 +2003,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max(linkedSurvivorData.moveSpeed * penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg, 0.1f);
 
         attackDamage = linkedSurvivorData.attackDamage * Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
+
     }
     #endregion
 
@@ -1946,17 +2013,21 @@ public class Survivor : CustomObject
         if (inSightEnemies.Count == 0) return;
         if(IsValid(currentWeapon) && currentWeapon is MeleeWeapon)
         {
-            if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < currentWeapon.attackRange)
+            if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < currentWeapon.AttackRange)
             {
-                inSightEnemies[0].TakeDamage(this, currentWeapon.attackDamage);
+                float damage = currentWeapon.AttackDamage + attackDamage;
+                if (currentWeapon.NeedHand == NeedHand.OneOrTwoHand && (rightHandDisabled || leftHandDisabled)) damage *= 0.7f;
+                inSightEnemies[0].TakeDamage(this, damage);
             }
+            else PlaySFX("avoid, 5", this);
         }
         else
         {
             if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < attackRange)
             {
                 inSightEnemies[0].TakeDamage(this, attackDamage);
-            }   
+            }
+            else PlaySFX("avoid, 5", this);
         }
     }
 

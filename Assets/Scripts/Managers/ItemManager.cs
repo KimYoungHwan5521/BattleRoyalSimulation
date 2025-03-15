@@ -61,48 +61,48 @@ public class ItemManager
             // Melee Weapons
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Knife", 0.5f, DamageType.Cut, 40, 1.7f, 0);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Cut, 30, 1.7f, 0);
                 break;
             case Items.Dagger:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Dagger", 1f, DamageType.Cut, 50, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Cut, 40, 2f, 1);
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Bat", 1f, DamageType.Strike, 25, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 15, 2f, 1);
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "LongSword", 2f, DamageType.Cut, 40, 2.4f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Cut, 30, 2.4f, 1);
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Shovel", 2f, DamageType.Strike, 35, 2f, 1);
+                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 25, 2f, 1);
                 break;
             // Ranged Weapons
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Revolver", 1.1f, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0);
                 break;
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Pistol", 0.625f, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1);
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "AssaultRifle", 3.8f, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2);
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SubMachineGun", 3.0f, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3);
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "ShotGun", 3.4f, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4);
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SniperRifle", 3.7f, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5);
+                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5);
                 break;
             // Bullets
             case Items.Bullet_Revolver:

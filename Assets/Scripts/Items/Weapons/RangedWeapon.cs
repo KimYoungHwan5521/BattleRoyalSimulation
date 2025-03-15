@@ -21,10 +21,10 @@ public class RangedWeapon : Weapon
     public float ReloadCoolTime => reloadCoolTime;
     public int CurrentMagazine => currentMagazine;
     public int ShotAnimNumber => shotAnimNumber;
-    public RangedWeapon(ItemManager.Items itemType, string itemName, float weight, float attackDamage, float attackRange, 
+    public RangedWeapon(ItemManager.Items itemType, string itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, 
         float minimumRange, float projectileSpeed, float shotCoolTime, int magazineCapacity, 
         float reloadCoolTime, int attackAnimNumber, int shotAnimNumber, int amount = 1)
-        : base(itemType, itemName, weight, attackDamage, attackRange, attackAnimNumber, amount)
+        : base(itemType, itemName, weight, needHand, attackDamage, attackRange, attackAnimNumber, amount)
     {
         this.minimumRange = minimumRange;
         this.projectileSpeed = projectileSpeed;

@@ -26,7 +26,7 @@ public class ProjectileGenerator : CustomObject
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
         Bullet bullet = prefab.GetComponent<Bullet>();
         Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
-        bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attackDamage, muzzleTF.position, destination, weapon.attackRange);
+        bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
     
     void SpawnProjectile_ShotGun(RangedWeapon weapon)
@@ -36,7 +36,7 @@ public class ProjectileGenerator : CustomObject
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
             Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
-            bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.attackDamage, muzzleTF.position, destination, weapon.attackRange);
+            bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
         }
     }
 
