@@ -72,6 +72,7 @@ namespace ResourceEnum
     {
         assaultriflereload1,
         Handgun_reload,
+        revolver_reload,
         Shotgun_singlebullet,
         Rack,
         bang_01,

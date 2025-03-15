@@ -62,10 +62,12 @@ public class Survivor : CustomObject
     public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain }
 
     [Header("Components")]
+    [SerializeField] GameObject rightHand;
+    [SerializeField] GameObject leftHand;
     [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
-    Animator animator;
+    Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
 
     [SerializeField] MeshFilter sightMeshFilter;
@@ -150,7 +152,10 @@ public class Survivor : CustomObject
         get { return rightHandDisabled; }
         set 
         { 
-            rightHandDisabled = value; 
+            rightHandDisabled = value;
+            animator.SetBool("RightHandDisabled", value);
+            rightHand.SetActive(!value);
+
             currentWeapon = null;
             currentWeaponisBestWeapon = false;
             List<Item> candidates = inventory.FindAll(x => x is Weapon);
@@ -168,6 +173,9 @@ public class Survivor : CustomObject
         set
         {
             leftHandDisabled = value;
+            animator.SetBool("LeftHandDisabled", value);
+            leftHand.SetActive(!value);
+
             currentWeapon = null;
             currentWeaponisBestWeapon = false;
             List<Item> candidates = inventory.FindAll(x => x is Weapon);
@@ -178,6 +186,22 @@ public class Survivor : CustomObject
             currentWeaponisBestWeapon = true;
         }
     }
+    [SerializeField] bool haveConcussion;
+    bool dizzy;
+    bool Dizzy
+    {
+        get { return dizzy; }
+        set
+        {
+            dizzy = value;
+            emotionAnimator.SetTrigger("Dizzy");
+        }
+    }
+    float dizzyRate = 0;
+    float dizzyCoolTime = 10f;
+    float curDizzyCool;
+    float dizzyDuration = 3f;
+    float curDizzyDuration;
 
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
@@ -278,7 +302,7 @@ public class Survivor : CustomObject
     protected override void Start()
     {
         base.Start();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -310,6 +334,7 @@ public class Survivor : CustomObject
         nameTag.transform.position = new(transform.position.x, transform.position.y - 0.75f);
         survivedTime += Time.deltaTime;
 
+        if (dizzy) return;
         AI();
         DrawSightMesh();
     }
@@ -318,6 +343,30 @@ public class Survivor : CustomObject
     private void FixedUpdate()
     {
         if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
+
+        if(haveConcussion)
+        {
+            if(dizzy)
+            {
+                curDizzyDuration += Time.fixedDeltaTime;
+                if (curDizzyDuration > dizzyDuration)
+                {
+                    Dizzy = false;
+                }
+                else return;
+            }
+            else
+            {
+                curDizzyCool += Time.fixedDeltaTime;
+                if(curDizzyCool > dizzyCoolTime)
+                {
+                    if(UnityEngine.Random.Range(0, 1f) < dizzyRate) Dizzy = true;
+                    curDizzyCool = 0;
+                    return;
+                }
+            }
+        }
+        
         if(keepAnEyeOnPosition != Vector2.zero)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
@@ -934,8 +983,10 @@ public class Survivor : CustomObject
         if(IsValid(wantWeapon))
         {
             Transform weaponTF = null;
+            Transform hand = rightHand.transform;
+            if (rightHandDisabled) hand = leftHand.transform;
             // Active가 꺼져있는 오브젝트는 Find로 찾을 수 없다.
-            foreach (Transform child in transform.Find("Right Hand"))
+            foreach (Transform child in hand)
             {
                 if (child.name == $"{wantWeapon.itemName}")
                 {
@@ -1725,7 +1776,11 @@ public class Survivor : CustomObject
         if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture)
         {
             int index = injuries.FindIndex(x => x.site == injurySite);
-            if (index == -1) injuries.Add(new(injurySite, injuryType, 1));
+            if (index == -1)
+            {
+                injuries.Add(new(injurySite, injuryType, 1));
+                ApplyInjuryPenalty();
+            }
             // 팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
             List<InjurySite> subparts = GetSubparts(injurySite);
             List<Injury> toRemove = new();
@@ -1782,7 +1837,11 @@ public class Survivor : CustomObject
                     }
                 }
             }
-            else injuries.Add(new(injurySite, injuryType, injuryDegree));
+            else
+            {
+                injuries.Add(new(injurySite, injuryType, injuryDegree));
+                ApplyInjuryPenalty();
+            }
         }
     }
 
@@ -1984,6 +2043,10 @@ public class Survivor : CustomObject
                     break;
                 case InjurySite.LeftBigToe:
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.1f);
+                    break;
+                case InjurySite.Brain:
+                    haveConcussion = true;
+                    dizzyRate = injury.degree;
                     break;
             }
         }

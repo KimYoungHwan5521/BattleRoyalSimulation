@@ -68,6 +68,7 @@ public class ResourcesPath
     {
         "Sounds/SFXs/Guns/assaultriflereload1",
         "Sounds/SFXs/Guns/Handgun_reload",
+        "Sounds/SFXs/Guns/revolver_reload",
         "Sounds/SFXs/Guns/Shotgun_singlebullet",
         "Sounds/SFXs/Guns/Rack",
         "Sounds/SFXs/Guns/bang_01",
