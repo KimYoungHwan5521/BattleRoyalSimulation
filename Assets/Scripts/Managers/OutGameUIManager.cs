@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 #region SurvivorData
 [Serializable]
@@ -31,6 +32,7 @@ public class SurvivorData
     public float increaseComparedToPrevious_shooting;
 
     public List<Injury> injuries = new();
+    public bool surgeryScheduled;
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
@@ -135,6 +137,19 @@ public class OutGameUIManager : MonoBehaviour
     bool autoAssign = true;
     [SerializeField] GameObject autoAssignCheckBox;
 
+    [Header("Operating Room")]
+    [SerializeField] TMP_Dropdown selectSurvivorGetSurgeryDropdown;
+    [SerializeField] SurvivorInfo survivorInfoGetSurgery;
+    SurvivorData survivorWhoWantSurgery;
+    [SerializeField] Toggle surgeryType_Transplantation;
+    [SerializeField] Toggle surgeryType_Alteration;
+
+    [SerializeField] GameObject[] surgeries;
+    [SerializeField] ToggleGroup surgeriesToggleGroup;
+    Dictionary<string, int> surgeryList;
+    string wantSurgeryName;
+    int wantSurgeryCost;
+
     [Header("Schedule")]
     Calendar calendar;
     SurvivorData mySurvivorDataInBattleRoyale;
@@ -207,7 +222,7 @@ public class OutGameUIManager : MonoBehaviour
                     if(mySurvivorsData.Count == 1)
                     {
                         survivorsDropdown.ClearOptions();
-                        selectedSurvivor.SetInfo(mySurvivorsData[0]);
+                        selectedSurvivor.SetInfo(mySurvivorsData[0], true);
                         hireClose.SetActive(true);
                     }
                     survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.survivorName });
@@ -240,12 +255,12 @@ public class OutGameUIManager : MonoBehaviour
     public void OnSurvivorSelected()
     {
         SurvivorData survivorInfo = mySurvivorsData.Find(x => x.survivorName == survivorsDropdown.options[survivorsDropdown.value].text);
-        selectedSurvivor.SetInfo(survivorInfo);
+        selectedSurvivor.SetInfo(survivorInfo, true);
     }
 
     public void ResetSelectedSurvivorInfo()
     {
-        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
+        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
     }
 
     #region Training
@@ -287,10 +302,10 @@ public class OutGameUIManager : MonoBehaviour
             else if (survivor.assignedTraining == Training.None)
             {
                 fitParent = survivorsWithoutSchedule;
-                if(!Trainable(survivor, (Training)trainingIndex, out Injury cause))
+                if(!Trainable(survivor, (Training)trainingIndex, out string cause))
                 {
                     assignable = false;
-                    description = $"{survivor.survivorName} can't cannot be assigned to this training due to injury.\n<color=red><i>Cause : {cause.site} {cause.type}</i></color>";
+                    description = $"{survivor.survivorName} can't cannot be assigned to this training due to injury.\n<color=red><i>Cause : {cause}</i></color>";
                 }
             }
             else
@@ -344,11 +359,11 @@ public class OutGameUIManager : MonoBehaviour
 
     public void CheckTrainable(SurvivorData survivor)
     {
-        if (Trainable(survivor, survivor.assignedTraining, out Injury cause)) return;
+        if (Trainable(survivor, survivor.assignedTraining, out string cause)) return;
         else
         {
             survivor.assignedTraining = Training.None;
-            Alert($"{survivor.survivorName} was released from training assignment due to injury.\n<color=red><i>Cause : {cause.site} {cause.type}</i></color>");
+            Alert($"{survivor.survivorName} was released from training assignment due to injury.\n<color=red><i>Cause : {cause}</i></color>");
         }
     }
 
@@ -363,11 +378,17 @@ public class OutGameUIManager : MonoBehaviour
 
     bool Trainable(SurvivorData survivor, Training training)
     {
-        return Trainable(survivor, training, out Injury cause);
+        return Trainable(survivor, training, out string cause);
     }
 
-    bool Trainable(SurvivorData survivor, Training training, out Injury cause)
+    bool Trainable(SurvivorData survivor, Training training, out string cause)
     {
+        if(survivor.surgeryScheduled)
+        {
+            cause = "Surgery scheduled";
+            return false;
+        }
+
         int eyeInjury = 0;
         foreach(Injury injury in survivor.injuries)
         {
@@ -387,12 +408,12 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftKnee:
                         case InjurySite.RightAncle:
                         case InjurySite.LeftAncle:
-                            cause = injury;
+                            cause = $"{injury.site} {injury.type}";
                             return false;
                         default:
                             if (injury.degree < 1)
                             {
-                                cause = injury;
+                                cause = $"{injury.site} {injury.type}";
                                 return false;
                             }
                             break;
@@ -406,12 +427,12 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftArm:
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
-                            cause = injury;
+                            cause = $"{injury.site} {injury.type}";
                             return false;
                         case InjurySite.Organ:
                             if(injury.degree >= 1)
                             {
-                                cause = injury;
+                                cause = $"{injury.site} {injury.type}";
                                 return false;
                             }
                             break;
@@ -420,7 +441,7 @@ public class OutGameUIManager : MonoBehaviour
                             eyeInjury++;
                             if (eyeInjury >= 2)
                             {
-                                cause = injury;
+                                cause = $"Both eyes injured";
                                 return false;
                             }
                             break;
@@ -446,14 +467,14 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftAncle:
                         case InjurySite.RightBigToe:
                         case InjurySite.LeftBigToe:
-                            cause = injury;
+                            cause = $"{injury.site} {injury.type}";
                             return false;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
                             eyeInjury++;
                             if (eyeInjury >= 2)
                             {
-                                cause = injury;
+                                cause = $"Both eyes injured";
                                 return false;
                             }
                             break;
@@ -471,7 +492,7 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftArm:
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
-                            cause = injury;
+                            cause = $"{injury.site} {injury.type}";
                             return false;
                     }
                     break;
@@ -496,6 +517,123 @@ public class OutGameUIManager : MonoBehaviour
     {
         autoAssign = !autoAssign;
         autoAssignCheckBox.SetActive(autoAssign);
+    }
+    #endregion
+
+    #region Operating Room
+    public void SetOperatingRoom()
+    {
+        selectSurvivorGetSurgeryDropdown.ClearOptions();
+        selectSurvivorGetSurgeryDropdown.AddOptions(survivorsDropdown.options);
+        SelectSurvivorToSurgery();
+    }
+
+    public void SelectSurvivorToSurgery()
+    {
+        survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.value], false);
+        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.survivorName == selectSurvivorGetSurgeryDropdown.options[selectSurvivorGetSurgeryDropdown.value].text);
+        GetListOfSurgeryCanUndergo(survivorWhoWantSurgery);
+    }
+
+    public void GetListOfSurgeryCanUndergo(SurvivorData survivor)
+    {
+        surgeryList = new();
+        string surgeryName;
+        int cost = 0;
+        if(surgeryType_Transplantation.isOn)
+        {
+            foreach(Injury injury in survivor.injuries)
+            {
+                if(injury.degree >= 1)
+                {
+                    surgeryName = $"Artifical {injury.site} transplant";
+                    switch(injury.site)
+                    {
+                        case InjurySite.RightBigToe:
+                        case InjurySite.LeftBigToe:
+                        case InjurySite.RightThumb:
+                        case InjurySite.LeftThumb:
+                        case InjurySite.RightIndexFinger:
+                        case InjurySite.LeftIndexFinger:
+                        case InjurySite.RightMiddleFinger:
+                        case InjurySite.LeftMiddleFinger:
+                        case InjurySite.RightRingFinger:
+                        case InjurySite.LeftRingFinger:
+                        case InjurySite.RightLittleFinger:
+                        case InjurySite.LeftLittleFinger:
+                            cost = 100;
+                            break;
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                            cost = 500;
+                            break;
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                            cost = 1000;
+                            break;
+                        case InjurySite.RightAncle:
+                        case InjurySite.LeftAncle:
+                            string side = injury.site == InjurySite.RightAncle ? "right" : "left";
+                            surgeryName = $"Artifical {side} foot transplant";
+                            cost = 500;
+                            break;
+                        case InjurySite.RightKnee:
+                        case InjurySite.LeftKnee:
+                            side = injury.site == InjurySite.RightKnee ? "right" : "left";
+                            surgeryName = $"Artifical {side} leg(under knee) transplant";
+                            cost = 1000;
+                            break;
+                        case InjurySite.RightLeg:
+                        case InjurySite.LeftLeg:
+                            side = injury.site == InjurySite.RightLeg ? "right" : "left";
+                            surgeryName = $"Artifical {side} leg transplant";
+                            cost = 2000;
+                            break;
+                    }
+                    surgeryList.Add(surgeryName, cost);
+                }
+            }
+        }
+
+        for(int i = 0; i < surgeries.Length; i++)
+        {
+            if(i < surgeryList.Count)
+            {
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList.ElementAt(i).Key;
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList.ElementAt(i).Value}";
+            }
+            else
+            {
+                surgeries[i].SetActive(false);
+            }
+        }
+        surgeries[0].GetComponentInChildren<Toggle>().isOn = true;
+    }
+
+    public void ScheduleSurgery()
+    {
+        int index = 0;
+        for(int i=0; i< surgeries.Length; i++)
+        {
+            if (surgeries[i].GetComponentInChildren<Toggle>().isOn)
+            {
+                index = i;
+                break;
+            }
+        }
+        
+        if(index > surgeryList.Count)
+        {
+            Debug.LogWarning("Wrong surgeryList index");
+            return;
+        }
+
+        OpenConfirmCanvas($"Do you confirm surgery?\n{survivorWhoWantSurgery.survivorName} : {surgeryList.ElementAt(index).Key}($ {surgeryList.ElementAt(index).Value})", ()=>
+        {
+            if (survivorWhoWantSurgery.assignedTraining != Training.None) Alert($"{survivorWhoWantSurgery.survivorName}'s training has canceled");
+            survivorWhoWantSurgery.assignedTraining = Training.None;
+            survivorWhoWantSurgery.surgeryScheduled = true;
+        });
     }
     #endregion
 
@@ -608,7 +746,7 @@ public class OutGameUIManager : MonoBehaviour
                         ConfirmAssignTraining();
                     }
                 }
-                selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value]);
+                selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
                 calendar.Today++;
                 calendar.TurnPageCalendar(0);
             });
@@ -704,7 +842,6 @@ public class OutGameUIManager : MonoBehaviour
                 continue;
             }
             if (check >= 100) Debug.LogWarning("Infinite roof has detected");
-            check = 0;
             SurvivorData survivorData = new(
                 GetRandomName(),
                 value * 100 * rand0,
