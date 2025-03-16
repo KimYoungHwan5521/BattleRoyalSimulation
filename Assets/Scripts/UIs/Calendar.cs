@@ -29,6 +29,12 @@ public class Calendar : CustomObject
         get { return today; }
         set
         {
+            if (leagueReserveInfo.ContainsKey(today) && leagueReserveInfo[today].reserver != null)
+            {
+                leagueReserveInfo[today].reserver.isReserved = false;
+                leagueReserveInfo[today].reserver = null;
+            }
+
             today = value;
             todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}";
             outGameUIManager.SurvivorsRecovery();
@@ -37,7 +43,7 @@ public class Calendar : CustomObject
     public int Month { get { return 1 + today / 28; } }
     public int Year { get { return 2101 + (Month - 1) / 12; } }
 
-    string[] monthName = { 
+    readonly string[] monthName = { 
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     };
@@ -229,6 +235,15 @@ public class Calendar : CustomObject
         {
             outGameUIManager.Alert($"\"{wantReserver.survivorName}\" already has other reservations.\n" +
                 $"Leagues other than the Championship can be reserved one at a time.");
+        }
+        else if(wantReserver.injuries.Count > 0)
+        {
+            outGameUIManager.OpenConfirmCanvas($"{wantReserver.survivorName} is injured. Should he still apply for Battle Royale?", () =>
+            {
+                leagueReserveInfo[wantReserveDate].reserver = wantReserver;
+                wantReserver.isReserved = true;
+                TurnPageCalendar(0);
+            });
         }
         else
         {

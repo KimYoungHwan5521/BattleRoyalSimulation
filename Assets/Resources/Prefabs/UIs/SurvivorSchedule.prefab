@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 6645278759894292318}
   - component: {fileID: 8673378917370581273}
   - component: {fileID: 3291331881470463444}
+  - component: {fileID: 7677469715757574468}
   m_Layer: 0
   m_Name: SurvivorSchedule
   m_TagString: Untagged
@@ -461,3 +462,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   survivorName: {fileID: 7439390700783424290}
   checkBox: {fileID: 5336119386558507063}
+--- !u!114 &7677469715757574468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9048374229511393588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1124886e2896acb4c8b1224e2c4755fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 

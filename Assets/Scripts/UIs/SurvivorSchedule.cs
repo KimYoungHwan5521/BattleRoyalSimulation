@@ -8,11 +8,12 @@ public class SurvivorSchedule : MonoBehaviour
     [SerializeField] GameObject checkBox;
     int trainingIndex;
 
-    public void SetSurvivorData(SurvivorData wantSurvivor, int wantTraining)
+    public void SetSurvivorData(SurvivorData wantSurvivor, int wantTraining, bool trainable)
     {
         survivor = wantSurvivor;
         trainingIndex = wantTraining;
-        survivorName.text = survivor.survivorName;
+        if (trainable) survivorName.text = survivor.survivorName;
+        else survivorName.text = $"<color=red>{survivor.survivorName}</color>";
 
         checkBox.SetActive(survivor.assignedTraining == (Training)wantTraining);
     }

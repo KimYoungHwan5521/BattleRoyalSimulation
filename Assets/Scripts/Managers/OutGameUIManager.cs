@@ -79,7 +79,7 @@ public class SurvivorData
 public enum Tier { Bronze, Silver, Gold }
 #endregion
 
-public enum Training { None, Fighting, Shooting, Agility }
+public enum Training { None, Fighting, Shooting, Agility, Weight }
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -118,12 +118,16 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI fightTrainingNameText;
     [SerializeField] TextMeshProUGUI shootingTraningNameText;
     [SerializeField] TextMeshProUGUI agilityTrainingNameText;
+    [SerializeField] TextMeshProUGUI weightTrainingNameText;
     int fightTrainingLevel = 1;
     int shootingTrainingLevel = 1;
     int agilityTrainingLevel = 1;
+    int weightTrainingLevel = 1;
     [SerializeField] TextMeshProUGUI fightTrainingBookers;
     [SerializeField] TextMeshProUGUI shootingTrainingBookers;
     [SerializeField] TextMeshProUGUI agilityTrainingBookers;
+    [SerializeField] TextMeshProUGUI weightTrainingBookers;
+
     [SerializeField] TextMeshProUGUI assignTrainingNameText;
     [SerializeField] Transform survivorsAssignedThis;
     [SerializeField] Transform survivorsWithoutSchedule; 
@@ -277,11 +281,27 @@ public class OutGameUIManager : MonoBehaviour
         {
             Transform fitParent;
             SurvivorSchedule survivorSchedule;
+            string description = "";
+            bool assignable = true;
             if (survivor.assignedTraining == (Training)trainingIndex) fitParent = survivorsAssignedThis;
-            else if (survivor.assignedTraining == Training.None) fitParent = survivorsWithoutSchedule;
-            else fitParent = survivorsWithOtherSchedule;
+            else if (survivor.assignedTraining == Training.None)
+            {
+                fitParent = survivorsWithoutSchedule;
+                if(!Trainable(survivor, (Training)trainingIndex, out Injury cause))
+                {
+                    assignable = false;
+                    description = $"{survivor.survivorName} can't cannot be assigned to this training due to injury.\n<color=red><i>Cause : {cause.site} {cause.type}</i></color>";
+                }
+            }
+            else
+            {
+                fitParent = survivorsWithOtherSchedule;
+                description = $"{survivor.survivorName} is assigned to {survivor.assignedTraining} training.";
+            }
             survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
-            survivorSchedule.SetSurvivorData(survivor, trainingIndex);
+            survivorSchedule.SetSurvivorData(survivor, trainingIndex, assignable);
+            survivorSchedule.GetComponent<Help>().SetDescription(description);
+            survivorSchedule.GetComponent<Button>().enabled = assignable;
         }
     }
 
@@ -290,6 +310,7 @@ public class OutGameUIManager : MonoBehaviour
         fightTrainingBookers.text = "";
         shootingTrainingBookers.text = "";
         agilityTrainingBookers.text = "";
+        weightTrainingBookers.text = "";
         foreach(SurvivorData survivor in mySurvivorsData)
         {
             TextMeshProUGUI targetText;
@@ -303,6 +324,9 @@ public class OutGameUIManager : MonoBehaviour
                     break;
                 case Training.Agility:
                     targetText = agilityTrainingBookers;
+                    break;
+                case Training.Weight:
+                    targetText = weightTrainingBookers;
                     break;
                 default:
                     targetText = null;
@@ -318,11 +342,154 @@ public class OutGameUIManager : MonoBehaviour
         Invoke("RefreshUI", 0.1f);
     }
 
+    public void CheckTrainable(SurvivorData survivor)
+    {
+        if (Trainable(survivor, survivor.assignedTraining, out Injury cause)) return;
+        else
+        {
+            survivor.assignedTraining = Training.None;
+            Alert($"{survivor.survivorName} was released from training assignment due to injury.\n<color=red><i>Cause : {cause.site} {cause.type}</i></color>");
+        }
+    }
+
+    bool TrainableAnything(SurvivorData survivor)
+    {
+        if (Trainable(survivor, Training.Fighting)) return true;
+        if (Trainable(survivor, Training.Shooting)) return true;
+        if (Trainable(survivor, Training.Agility)) return true;
+        if (Trainable(survivor, Training.Weight)) return true;
+        return false;
+    }
+
+    bool Trainable(SurvivorData survivor, Training training)
+    {
+        return Trainable(survivor, training, out Injury cause);
+    }
+
+    bool Trainable(SurvivorData survivor, Training training, out Injury cause)
+    {
+        int eyeInjury = 0;
+        foreach(Injury injury in survivor.injuries)
+        {
+            switch(training)
+            {
+                case Training.Fighting:
+                    switch(injury.site)
+                    {
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                        case InjurySite.RightLeg:
+                        case InjurySite.LeftLeg:
+                        case InjurySite.RightKnee:
+                        case InjurySite.LeftKnee:
+                        case InjurySite.RightAncle:
+                        case InjurySite.LeftAncle:
+                            cause = injury;
+                            return false;
+                        default:
+                            if (injury.degree < 1)
+                            {
+                                cause = injury;
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training.Shooting:
+                    switch(injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                            cause = injury;
+                            return false;
+                        case InjurySite.Organ:
+                            if(injury.degree >= 1)
+                            {
+                                cause = injury;
+                                return false;
+                            }
+                            break;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            eyeInjury++;
+                            if (eyeInjury >= 2)
+                            {
+                                cause = injury;
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training.Agility:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.Chest:
+                        case InjurySite.Libs:
+                        case InjurySite.Abdomen:
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                        case InjurySite.RightLeg:
+                        case InjurySite.LeftLeg:
+                        case InjurySite.RightKnee:
+                        case InjurySite.LeftKnee:
+                        case InjurySite.RightAncle:
+                        case InjurySite.LeftAncle:
+                        case InjurySite.RightBigToe:
+                        case InjurySite.LeftBigToe:
+                            cause = injury;
+                            return false;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            eyeInjury++;
+                            if (eyeInjury >= 2)
+                            {
+                                cause = injury;
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training.Weight:
+                    switch(injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.Chest:
+                        case InjurySite.Libs:
+                        case InjurySite.Abdomen:
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                            cause = injury;
+                            return false;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        cause = null;
+        return true;
+    }
+
     void RefreshUI()
     {
         fightTrainingBookers.text += " ";
         shootingTrainingBookers.text += " ";
         agilityTrainingBookers.text += " ";
+        weightTrainingBookers.text += " ";
     }
 
     public void ToggleAutoAssign()
@@ -410,7 +577,7 @@ public class OutGameUIManager : MonoBehaviour
             warning = "\n<color=red><i>There are unassigned survivors : ";
             foreach (SurvivorData survivor in mySurvivorsData)
             {
-                if (survivor.assignedTraining == Training.None)
+                if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
                 {
                     thereAreUnassignedSurvivors = true;
                     warning += $"{survivor.survivorName}, ";
@@ -458,6 +625,7 @@ public class OutGameUIManager : MonoBehaviour
 
     void ApplyTraining(SurvivorData survivor, Training training)
     {
+        int survivorHpLv = (int)(Mathf.Max(survivor.hp - 100, 0) / 25);
         int survivorAtkDmgLv = (int)(Mathf.Max(survivor.attackDamage - 10, 0) / 10);
         int survivorAtkSpdLv = (int)(Mathf.Max(survivor.attackSpeed - 1, 0) / 0.3f);
         int survivorShtLv = (int)(Mathf.Max(survivor.shooting - 1, 0));
@@ -475,7 +643,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             case Training.Fighting:
                 float increaseAtkDmg = Mathf.Max(UnityEngine.Random.Range(0.1f, 0.3f) * (fightTrainingLevel - survivorAtkDmgLv), 0.001f);
-                float increaseAtkSpeed = Mathf.Max(UnityEngine.Random.Range(0.003f, 0.009f) * (fightTrainingLevel - survivorAtkSpdLv), 0.0001f);
+                float increaseAtkSpeed = Mathf.Max(UnityEngine.Random.Range(0.03f, 0.09f) * (fightTrainingLevel - survivorAtkSpdLv), 0.0001f);
                 survivor.IncreaseStats(0, increaseAtkDmg, increaseAtkSpeed, 0, 0, 0);
                 break;
             case Training.Shooting:
@@ -484,8 +652,12 @@ public class OutGameUIManager : MonoBehaviour
                 break;
             case Training.Agility:
                 float increseMoveSpeed = Mathf.Max(UnityEngine.Random.Range(0.008f, 0.024f) * (agilityTrainingLevel - survivorMvSpdLv), 0.0001f);
-                float increseFarmingSpeed = Mathf.Max(UnityEngine.Random.Range(0.01f, 0.02f) * (agilityTrainingLevel - survivorFrmSpdLv), 0.0001f);
+                float increseFarmingSpeed = Mathf.Max(UnityEngine.Random.Range(0.03f, 0.09f) * (agilityTrainingLevel - survivorFrmSpdLv), 0.0001f);
                 survivor.IncreaseStats(0, 0, 0, increseMoveSpeed, increseFarmingSpeed, 0);
+                break;
+            case Training.Weight:
+                float increseHp = Mathf.Max(UnityEngine.Random.Range(0.25f, 0.75f) * (weightTrainingLevel - survivorHpLv), 0.001f);
+                survivor.IncreaseStats(increseHp, 0, 0, 0, 0, 0);
                 break;
             default:
                 break;

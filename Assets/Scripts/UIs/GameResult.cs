@@ -115,6 +115,7 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);
+        GameManager.Instance.OutGameUIManager.CheckTrainable(BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
         GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
         GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
     }

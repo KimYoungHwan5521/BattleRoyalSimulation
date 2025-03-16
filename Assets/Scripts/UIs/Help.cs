@@ -32,6 +32,11 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         GameManager.Instance.description.SetActive(false);
     }
 
+    public void SetDescription(string description)
+    {
+        this.description = description;
+    }
+
     public void SetDescription(InjurySite injurySite)
     {
         switch (injurySite)
