@@ -30,13 +30,13 @@ public enum InjuryType
     Fracture, // °ñÀý
     Cutting, // Àß¸²/º£ÀÓ
     Amputation, // Àý´Ü
-    Dislocation, // Å»°ñ
-    Penetrating, // °üÅë
+    GunshotWound, // ÃÑ»ó
     Damage, // ¼Õ»ó
     Rupture, // ÆÄ¿­
     Loss, // ¼Õ½Ç
     Concussion, // ³úÁøÅÁ
     RecoveringFromSurgery,
+    ArtificalPartsTransplanted,
 }
 
 [Serializable]
@@ -145,6 +145,7 @@ public class Survivor : CustomObject
     public Vector2 LookRotation => lookRotation;
 
     public List<Injury> injuries = new();
+    public List<InjurySite> rememberAlreadyHaveInjury;
 
     [SerializeField] bool rightHandDisabled;
     bool RightHandDisabled
@@ -1307,11 +1308,30 @@ public class Survivor : CustomObject
         {
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
             Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
+            bool damagedPartIsArtifical = false;
+            bool noPain = false;
             if (alreadyHaveInjury != null)
             {
-                if(damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1) damage *= 1 + alreadyHaveInjury.degree;
+                if(alreadyHaveInjury.type == InjuryType.ArtificalPartsTransplanted)
+                {
+                    damagedPartIsArtifical = true;
+                    switch(alreadyHaveInjury.site)
+                    {
+                        case InjurySite.Organ:
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                        case InjurySite.RightEar:
+                        case InjurySite.LeftEar:
+                            noPain = false;
+                            break;
+                        default:
+                            noPain = true;
+                            break;
+                    }
+                }
+                if(!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
             }
-            curHP -= damage;
+            if(!(damagedPartIsArtifical && noPain))curHP -= damage;
             attacker.totalDamage += damage;
             if (curHP <= 0)
             {
@@ -1326,7 +1346,8 @@ public class Survivor : CustomObject
                 inGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
             }
 
-            GetInjury(specificDamagePart, damageType, damage);
+            if(damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
+            else GetInjury(specificDamagePart, damageType, damage);
         }
 
         if (inSightEnemies.Contains(attacker))
@@ -1543,7 +1564,7 @@ public class Survivor : CustomObject
                 else
                 {
                     injurySite = InjurySite.Skull;
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                 }
                 break;
@@ -1562,7 +1583,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                     AddInjury(injurySite, InjuryType.Loss, 1);
                 }
                 break;
@@ -1579,7 +1600,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 1);
                     if(injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
                 }
@@ -1596,7 +1617,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.Jaw:
@@ -1612,7 +1633,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                 }
                 break;
@@ -1633,7 +1654,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.Abdomen:
@@ -1678,7 +1699,7 @@ public class Survivor : CustomObject
                         }
                         else injuryType = InjuryType.Damage;
                     }
-                    else injuryType = InjuryType.Penetrating;
+                    else injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.RightArm:
@@ -1698,7 +1719,7 @@ public class Survivor : CustomObject
                 else
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.RightHand:
@@ -1718,7 +1739,7 @@ public class Survivor : CustomObject
                 else
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.RightThumb:
@@ -1744,7 +1765,7 @@ public class Survivor : CustomObject
                 }
                 else
                 {
-                    injuryType = InjuryType.Penetrating;
+                    injuryType = InjuryType.GunshotWound;
                 }
                 break;
             case InjurySite.RightLeg:
@@ -1754,13 +1775,13 @@ public class Survivor : CustomObject
             case InjurySite.RightAncle:
             case InjurySite.LeftAncle:
                 injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                injuryType = InjuryType.Penetrating;
+                injuryType = InjuryType.GunshotWound;
                 break;
             case InjurySite.RightBigToe:
             case InjurySite.LeftBigToe:
                 injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
                 if (injuryDegree >= 1) injuryType = InjuryType.Loss;
-                else injuryType = InjuryType.Penetrating;
+                else injuryType = InjuryType.GunshotWound;
                 break;
             default:
                 Debug.LogWarning($"Unknown injurySite : {injurySite}");
@@ -1770,7 +1791,33 @@ public class Survivor : CustomObject
         if(injuryDegree > 0.1f) AddInjury(injurySite, injuryType, injuryDegree);
     }
 
-    public void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
+    void GetDamageArtificalPart(Injury artificalPart, float damage)
+    {
+        float degree;
+        switch(artificalPart.site)
+        {
+            case InjurySite.RightThumb:
+            case InjurySite.LeftThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.RightLittleFinger:
+            case InjurySite.LeftLittleFinger:
+            case InjurySite.RightBigToe:
+            case InjurySite.LeftBigToe:
+                degree = Mathf.Clamp(damage / 40, 0, 1f);
+                break;
+            default:
+                degree = Mathf.Clamp(damage / 100, 0, 1f);
+                break;
+        }
+        AddInjury(artificalPart.site, InjuryType.ArtificalPartsTransplanted, degree);
+    }
+
+    void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
     {
         if (injuryDegree == 0) return;
         if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture)
@@ -2193,6 +2240,10 @@ public class Survivor : CustomObject
         aimErrorRange = 7.5f / survivorInfo.shooting;
 
         injuries = survivorInfo.injuries;
+        foreach(Injury injury in injuries)
+        {
+            if (injury.type == InjuryType.ArtificalPartsTransplanted || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
+        }
         ApplyInjuryPenalty();
     }
 

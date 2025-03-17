@@ -90,11 +90,17 @@ public class GameResult : MonoBehaviour
         {
             if (i < playerSurvivor.injuries.Count)
             {
+                if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
+                {
+                    treatments[i].SetActive(false);
+                    continue;
+                }
                 treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
                 int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
                 treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
                 treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
                 totalTreatmentCost += cost;
+                treatments[i].SetActive(true);
             }
             else treatments[i].SetActive(false);
         }
@@ -102,6 +108,7 @@ public class GameResult : MonoBehaviour
         int totalProfit = winPrize + killPrize - totalTreatmentCost;
         if (totalProfit >= 0) totalProfitText.text = $"Total Profit/Loss : <color=green>$ {totalProfit}</color>";
         else totalProfitText.text = $"Total Profit/Loss : <color=red>- $ {-totalProfit}</color>";
+        outGameUIManager.Money += totalProfit;
     }
 
     public void DelayedShowGameResult()

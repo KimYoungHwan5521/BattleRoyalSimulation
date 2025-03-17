@@ -178,7 +178,7 @@ public class Calendar : CustomObject
             {
                 if (leagueReserveInfo[wantReserveDate].reserver != null)
                 {
-                    outGameUIManager.OpenConfirmCanvas("Go battle royale?", 
+                    outGameUIManager.OpenConfirmWindow("Go battle royale?", 
                         () => { outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver); });
                 }
             }
@@ -226,31 +226,55 @@ public class Calendar : CustomObject
 
     public void ReserveBattleRoyale()
     {
-        if(wantReserver.tier != GetNeedTier(leagueReserveInfo[wantReserveDate].league))
+        if (wantReserver.tier != GetNeedTier(leagueReserveInfo[wantReserveDate].league))
         {
             outGameUIManager.Alert($"{wantReserver.survivorName}'s tier does not match this league.\n" +
                 $"({wantReserver.survivorName}'s tier : {wantReserver.tier}, league need tier : {GetNeedTier(leagueReserveInfo[wantReserveDate].league)})");
         }
-        else if(wantReserver.isReserved)
+        else if (wantReserver.isReserved)
         {
             outGameUIManager.Alert($"\"{wantReserver.survivorName}\" already has other reservations.\n" +
                 $"Leagues other than the Championship can be reserved one at a time.");
         }
-        else if(wantReserver.injuries.Count > 0)
+        else if (wantReserver.injuries.Count > 0)
         {
-            outGameUIManager.OpenConfirmCanvas($"{wantReserver.survivorName} is injured. Should he still apply for Battle Royale?", () =>
+            bool availiable = true;
+            bool injured = false;
+            foreach (Injury injury in wantReserver.injuries)
             {
-                leagueReserveInfo[wantReserveDate].reserver = wantReserver;
-                wantReserver.isReserved = true;
-                TurnPageCalendar(0);
-            });
+                if(injury.site == InjurySite.Organ && injury.degree >= 1)
+                {
+                    availiable = false;
+                    break;
+                }
+                if (injury.degree > 0)
+                {
+                    injured = true;
+                }
+            }
+
+            if (!availiable)
+            {
+                outGameUIManager.Alert("He can't reserve battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
+            }
+            else if (injured)
+            {
+                outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still apply for Battle Royale?", () =>
+                {
+                    Reserve();
+                });
+            }
+            else Reserve();
         }
-        else
-        {
-            leagueReserveInfo[wantReserveDate].reserver = wantReserver;
-            wantReserver.isReserved = true;
-            TurnPageCalendar(0);
-        }
+        else Reserve();
+    }
+
+    public void Reserve()
+    {
+        leagueReserveInfo[wantReserveDate].reserver = wantReserver;
+        wantReserver.isReserved = true;
+        TurnPageCalendar(0);
+        outGameUIManager.Alert("Battle royale reserved.");
     }
 
     public Tier GetNeedTier(League league)

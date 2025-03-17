@@ -56,7 +56,7 @@ public class SurvivorInfo : MonoBehaviour
         shootingText.text = $"Shooting\t: {wantSurvivorData.shooting:0.##}";
         if(showIncrease)
         {
-            if (wantSurvivorData.increaseComparedToPrevious_hp > 0) hpText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_hp})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_hp > 0) hpText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_hp:0.##})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_attackDamage > 0) attackDamageText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_attackDamage:0.##})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_attackSpeed > 0) attackSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_attackSpeed:0.###})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_moveSpeed > 0) moveSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_moveSpeed:0.###})</color>";

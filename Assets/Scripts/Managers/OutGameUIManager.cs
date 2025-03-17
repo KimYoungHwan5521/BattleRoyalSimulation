@@ -33,6 +33,11 @@ public class SurvivorData
 
     public List<Injury> injuries = new();
     public bool surgeryScheduled;
+    public string scheduledSurgeryName;
+    public int shceduledSurgeryCost;
+    public InjurySite surgerySite;
+    public SurgeryType surgeryType;
+
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
@@ -83,6 +88,8 @@ public enum Tier { Bronze, Silver, Gold }
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
+public enum SurgeryType { Transplant, Alteration }
+
 public class OutGameUIManager : MonoBehaviour
 {
     [Header("Confirm / Alert")]
@@ -100,7 +107,8 @@ public class OutGameUIManager : MonoBehaviour
         set
         {
             money = value;
-            moneyText.text = $"{money:###,###,###,##0}";
+            if(money < 0) moneyText.text = $"<color=red>{money:###,###,###,##0}</color>";
+            else moneyText.text = $"{money:###,###,###,##0}";
         }
     }
 
@@ -138,17 +146,36 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject autoAssignCheckBox;
 
     [Header("Operating Room")]
+    [SerializeField] GameObject operatingRoom;
     [SerializeField] TMP_Dropdown selectSurvivorGetSurgeryDropdown;
     [SerializeField] SurvivorInfo survivorInfoGetSurgery;
-    SurvivorData survivorWhoWantSurgery;
+    [SerializeField] SurvivorData survivorWhoWantSurgery;
     [SerializeField] Toggle surgeryType_Transplantation;
     [SerializeField] Toggle surgeryType_Alteration;
 
+    [SerializeField] GameObject selectSurgery;
+    [SerializeField] GameObject scheduledSurgery;
+    [SerializeField] GameObject buttonScheduleSurgery;
+    [SerializeField] GameObject buttonCancelSurgery;
+
     [SerializeField] GameObject[] surgeries;
     [SerializeField] ToggleGroup surgeriesToggleGroup;
-    Dictionary<string, int> surgeryList;
-    string wantSurgeryName;
-    int wantSurgeryCost;
+    struct SurgeryInfo
+    {
+        public string surgeryName;
+        public int surgeryCost;
+        public InjurySite surgerySite;
+        public SurgeryType surgeryType;
+
+        public SurgeryInfo(string surgeryName, int surgeryCost, InjurySite surgerySite, SurgeryType surgeryType)
+        {
+            this.surgeryName = surgeryName;
+            this.surgeryCost = surgeryCost;
+            this.surgerySite = surgerySite;
+            this.surgeryType = surgeryType;
+        }
+    }
+    List<SurgeryInfo> surgeryList;
 
     [Header("Schedule")]
     Calendar calendar;
@@ -207,7 +234,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HireSurvivor(int candidate)
     {
-        OpenConfirmCanvas($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
+        OpenConfirmWindow($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
             () => {
                 if(money < survivorsInHireMarket[candidate].survivorData.price)
                 {
@@ -363,6 +390,7 @@ public class OutGameUIManager : MonoBehaviour
         else
         {
             survivor.assignedTraining = Training.None;
+            ConfirmAssignTraining();
             Alert($"{survivor.survivorName} was released from training assignment due to injury.\n<color=red><i>Cause : {cause}</i></color>");
         }
     }
@@ -392,6 +420,7 @@ public class OutGameUIManager : MonoBehaviour
         int eyeInjury = 0;
         foreach(Injury injury in survivor.injuries)
         {
+            if (injury.type == InjuryType.ArtificalPartsTransplanted) continue;
             switch(training)
             {
                 case Training.Fighting:
@@ -521,6 +550,19 @@ public class OutGameUIManager : MonoBehaviour
     #endregion
 
     #region Operating Room
+    public void OpenOperatingRoom()
+    {
+        if (calendar.Today % 7 > 4)
+        {
+            Alert("The operating room is closed on weekendns");
+        }
+        else
+        {
+            SetOperatingRoom();
+            operatingRoom.SetActive(true);
+        }
+    }
+
     public void SetOperatingRoom()
     {
         selectSurvivorGetSurgeryDropdown.ClearOptions();
@@ -532,17 +574,33 @@ public class OutGameUIManager : MonoBehaviour
     {
         survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.value], false);
         survivorWhoWantSurgery = MySurvivorsData.Find(x => x.survivorName == selectSurvivorGetSurgeryDropdown.options[selectSurvivorGetSurgeryDropdown.value].text);
-        GetListOfSurgeryCanUndergo(survivorWhoWantSurgery);
+        
+        if(survivorWhoWantSurgery.surgeryScheduled)
+        {
+            scheduledSurgery.SetActive(true);
+            buttonCancelSurgery.SetActive(true);
+            selectSurgery.SetActive(false);
+            buttonScheduleSurgery.SetActive(false);
+            scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.scheduledSurgeryName}";
+        }
+        else
+        {
+            scheduledSurgery.SetActive(false);
+            buttonCancelSurgery.SetActive(false);
+            selectSurgery.SetActive(true);
+            buttonScheduleSurgery.SetActive(true);
+            GetListOfSurgeryCanUndergo();
+        }
     }
 
-    public void GetListOfSurgeryCanUndergo(SurvivorData survivor)
+    public void GetListOfSurgeryCanUndergo()
     {
         surgeryList = new();
         string surgeryName;
         int cost = 0;
         if(surgeryType_Transplantation.isOn)
         {
-            foreach(Injury injury in survivor.injuries)
+            foreach(Injury injury in survivorWhoWantSurgery.injuries)
             {
                 if(injury.degree >= 1)
                 {
@@ -574,23 +632,39 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.RightAncle:
                         case InjurySite.LeftAncle:
                             string side = injury.site == InjurySite.RightAncle ? "right" : "left";
-                            surgeryName = $"Artifical {side} foot transplant";
+                            surgeryName = $"Artifical foot({side}) transplant";
                             cost = 500;
                             break;
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
                             side = injury.site == InjurySite.RightKnee ? "right" : "left";
-                            surgeryName = $"Artifical {side} leg(under knee) transplant";
+                            surgeryName = $"Artifical leg({side}, under knee) transplant";
                             cost = 1000;
                             break;
                         case InjurySite.RightLeg:
                         case InjurySite.LeftLeg:
                             side = injury.site == InjurySite.RightLeg ? "right" : "left";
-                            surgeryName = $"Artifical {side} leg transplant";
+                            surgeryName = $"Artifical leg({side}) transplant";
                             cost = 2000;
                             break;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            side = injury.site == InjurySite.RightEye ? "right" : "left";
+                            surgeryName = $"Artifical eye({side}) transplant";
+                            cost = 3000;
+                            break;
+                        case InjurySite.RightEar:
+                        case InjurySite.LeftEar:
+                            side = injury.site == InjurySite.RightEar ? "right" : "left";
+                            surgeryName = $"Artifical ear({side}) transplant";
+                            cost = 1000;
+                            break;
+                        case InjurySite.Organ:
+                            surgeryName = $"Artifical organ transplant";
+                            cost = 3000;
+                            break;
                     }
-                    surgeryList.Add(surgeryName, cost);
+                    surgeryList.Add(new(surgeryName, cost, injury.site, SurgeryType.Transplant));
                 }
             }
         }
@@ -599,8 +673,9 @@ public class OutGameUIManager : MonoBehaviour
         {
             if(i < surgeryList.Count)
             {
-                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList.ElementAt(i).Key;
-                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList.ElementAt(i).Value}";
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName;
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
+                surgeries[i].SetActive(true);
             }
             else
             {
@@ -628,11 +703,41 @@ public class OutGameUIManager : MonoBehaviour
             return;
         }
 
-        OpenConfirmCanvas($"Do you confirm surgery?\n{survivorWhoWantSurgery.survivorName} : {surgeryList.ElementAt(index).Key}($ {surgeryList.ElementAt(index).Value})", ()=>
+        survivorWhoWantSurgery.scheduledSurgeryName = surgeryList[index].surgeryName;
+        survivorWhoWantSurgery.shceduledSurgeryCost = surgeryList[index].surgeryCost;
+        survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
+        survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
+        OpenConfirmWindow($"Do you confirm surgery?\n{survivorWhoWantSurgery.survivorName} : {survivorWhoWantSurgery.scheduledSurgeryName}($ {survivorWhoWantSurgery.shceduledSurgeryCost})", ()=>
         {
-            if (survivorWhoWantSurgery.assignedTraining != Training.None) Alert($"{survivorWhoWantSurgery.survivorName}'s training has canceled");
-            survivorWhoWantSurgery.assignedTraining = Training.None;
-            survivorWhoWantSurgery.surgeryScheduled = true;
+            if(money < survivorWhoWantSurgery.shceduledSurgeryCost)
+            {
+                Alert("Not enough money.");
+            }
+            else
+            {
+                if (survivorWhoWantSurgery.assignedTraining != Training.None)
+                {
+                    ConfirmAssignTraining();
+                    Alert($"{survivorWhoWantSurgery.survivorName}'s training has canceled");
+                }
+                survivorWhoWantSurgery.assignedTraining = Training.None;
+                survivorWhoWantSurgery.surgeryScheduled = true;
+                Money -= survivorWhoWantSurgery.shceduledSurgeryCost;
+                SelectSurvivorToSurgery();
+                Alert("Surgery scheduled.");
+            }
+        });
+    }
+
+    public void CancelSurgery()
+    {
+        OpenConfirmWindow("Are you sure to cancel his surgery?", () =>
+        {
+            survivorWhoWantSurgery.surgeryScheduled = false;
+            Money += survivorWhoWantSurgery.shceduledSurgeryCost;
+            survivorWhoWantSurgery.shceduledSurgeryCost = 0;
+            SelectSurvivorToSurgery();
+            Alert("Surgery canceled.");
         });
     }
     #endregion
@@ -735,7 +840,7 @@ public class OutGameUIManager : MonoBehaviour
 
         if(calendar.Today % 7 < 5)
         {
-            OpenConfirmCanvas(message, () =>
+            OpenConfirmWindow(message, () =>
             {
                 foreach (SurvivorData survivor in mySurvivorsData)
                 {
@@ -745,6 +850,7 @@ public class OutGameUIManager : MonoBehaviour
                         survivor.assignedTraining = Training.None;
                         ConfirmAssignTraining();
                     }
+                    Surgery(survivor);
                 }
                 selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
                 calendar.Today++;
@@ -802,6 +908,20 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
+    void Surgery(SurvivorData survivor)
+    {
+        if (!survivor.surgeryScheduled) return;
+        if(survivor.surgeryType == SurgeryType.Transplant)
+        {
+            Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
+            surgeryInjury.type = InjuryType.ArtificalPartsTransplanted;
+            surgeryInjury.degree = 0;
+        }
+
+        survivor.shceduledSurgeryCost = 0;
+        survivor.surgeryScheduled = false;
+    }
+
     public void SurvivorsRecovery()
     {
         foreach(SurvivorData survivor in mySurvivorsData)
@@ -809,9 +929,10 @@ public class OutGameUIManager : MonoBehaviour
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {
-                if(injury.degree < 1)
+                if(injury.degree < 1 && injury.type != InjuryType.ArtificalPartsTransplanted)
                 {
-                    injury.degree -= 0.1f;
+                    if (injury.type == InjuryType.Contusion) injury.degree -= 0.1f;
+                    else injury.degree -= 0.05f;
                     if(injury.degree < 0.1) fullyRecovered.Add(injury);
                 }
             }
@@ -820,6 +941,7 @@ public class OutGameUIManager : MonoBehaviour
                 survivor.injuries.Remove(recovered);
             }
         }
+        ResetSelectedSurvivorInfo();
     }
 
     public SurvivorData CreateRandomSurvivorData()
@@ -858,7 +980,7 @@ public class OutGameUIManager : MonoBehaviour
         return new(GetRandomName(), 100, 10, 1, 3, 1, 1f, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
-    public void OpenConfirmCanvas(string wantText, UnityAction wantAction)
+    public void OpenConfirmWindow(string wantText, UnityAction wantAction)
     {
         confirmButton.onClick.RemoveAllListeners();
         confirmText.text = wantText;
