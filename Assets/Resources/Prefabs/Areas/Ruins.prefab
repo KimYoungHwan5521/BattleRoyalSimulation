@@ -99,6 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &5108764337534593094
 MonoBehaviour:
@@ -171,6 +173,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1989667517801575334}
   - component: {fileID: 7779482627447914082}
+  - component: {fileID: 3255222045185693163}
+  - component: {fileID: 9112915051070170822}
   m_Layer: 0
   m_Name: Prohibited
   m_TagString: Untagged
@@ -245,6 +249,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3255222045185693163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173198887210656548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 394bc9f08fc47b44793214b175548c99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &9112915051070170822
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173198887210656548}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &513520193804478862
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,6 +426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmingSections:
   - {fileID: 8728288949399671103}
+  isProhibited_Plan: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
@@ -467,6 +529,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &5621236973286632631
 MonoBehaviour:
@@ -588,6 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a56773bcba76a4ea619f3b8b0391a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerArea: {fileID: 0}
   boxes: []
 --- !u!1 &2059891060504669258
 GameObject:
@@ -688,6 +753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &8890622350838637771
 MonoBehaviour:
@@ -849,6 +916,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &6275333660089031840
 MonoBehaviour:
@@ -1056,6 +1125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &5789694621907299879
 MonoBehaviour:
@@ -1217,6 +1288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &2731177557424818172
 MonoBehaviour:
@@ -26706,6 +26779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &3697794783838424240
 MonoBehaviour:
@@ -26867,6 +26942,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &1792430182777124132
 MonoBehaviour:
@@ -27028,6 +27105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &806848409358808088
 MonoBehaviour:
@@ -27189,6 +27268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &8035008677465822761
 MonoBehaviour:
@@ -27350,6 +27431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &7938720363222277670
 MonoBehaviour:
@@ -29025,6 +29108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &3855758688267134114
 MonoBehaviour:
@@ -29186,6 +29271,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &3805551392117704802
 MonoBehaviour:
@@ -29347,6 +29434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &5917281511753947222
 MonoBehaviour:
@@ -29508,6 +29597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 335329c05de39fd48bd9097d8a137cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstructionRate: 0
+  ownerArea: {fileID: 0}
   items: []
 --- !u!114 &5720605587663962055
 MonoBehaviour:

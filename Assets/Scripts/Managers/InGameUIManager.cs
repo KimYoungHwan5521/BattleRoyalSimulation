@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +25,10 @@ public class InGameUIManager : MonoBehaviour
 
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
+
+    [Header("Log")]
+    [SerializeField] ScrollRect logScrollView;
+    [SerializeField] TextMeshProUGUI log;
 
     [Header("Selected Object Info")]
     [SerializeField] GameObject seletedImage;
@@ -96,8 +99,6 @@ public class InGameUIManager : MonoBehaviour
         ManualCameraMove();
         SetSelectedObjectInfo();
     }
-    //public void RegularSpeed() { Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
-    //public void Accelerate() { if (Time.timeScale < 16) Time.timeScale *= 2; else Time.timeScale = 1; timeScaleText.text = $"x{(int)Time.timeScale}"; }
 
     void AutoCameraMove()
     {
@@ -157,10 +158,18 @@ public class InGameUIManager : MonoBehaviour
         leftSurvivors.text = $"Left Survivors : {survivorsCount}";
     }
 
-    public void ShowKillLog(string victim, string killer)
+    public void ShowKillLog(string victim, string cause)
     {
         TextMeshProUGUI killLog = PoolManager.Spawn(ResourceEnum.Prefab.KillLog, display).GetComponentInChildren<TextMeshProUGUI>();
-        killLog.text = $"<color=red>{victim}</color> has eliminated by <color=yellow>{killer}</color>";
+        string message = $"<color=red>{victim}</color> has defeated by <color=yellow>{cause}</color>";
+        killLog.text = message;
+        log.text += "\n" + message;
+        logScrollView.verticalNormalizedPosition = 0;
+    }
+
+    public void ClearLog()
+    {
+        log.text = "";
     }
 
     void SelectObject()
@@ -293,7 +302,6 @@ public class InGameUIManager : MonoBehaviour
                         selectedObjectsItems[i].SetActive(false);
                     }
                 }
-
                 #endregion
                 
                 #region Injury

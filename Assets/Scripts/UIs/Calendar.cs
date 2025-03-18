@@ -37,7 +37,7 @@ public class Calendar : CustomObject
 
             today = value;
             todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}";
-            outGameUIManager.SurvivorsRecovery();
+            if(value > 1)outGameUIManager.SurvivorsRecovery();
         }
     }
     public int Month { get { return 1 + today / 28; } }

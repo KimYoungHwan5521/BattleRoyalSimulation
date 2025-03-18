@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
-using System.Linq;
 
 #region SurvivorData
 [Serializable]

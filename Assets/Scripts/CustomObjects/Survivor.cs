@@ -204,6 +204,9 @@ public class Survivor : CustomObject
     float dizzyDuration = 3f;
     float curDizzyDuration;
 
+    public bool inPorohibitedArea;
+    float prohibitedAreaTime = 3f;
+
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
@@ -334,6 +337,7 @@ public class Survivor : CustomObject
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
         nameTag.transform.position = new(transform.position.x, transform.position.y - 0.75f);
         survivedTime += Time.deltaTime;
+        CheckProhibitArea();
 
         if (dizzy) return;
         AI();
@@ -424,6 +428,19 @@ public class Survivor : CustomObject
         }
     }
     #endregion
+
+    void CheckProhibitArea()
+    {
+        if(inPorohibitedArea)
+        {
+            prohibitedAreaTime -= Time.deltaTime;
+            if(prohibitedAreaTime < 0)
+            {
+                IsDead = true;
+                inGameUIManager.ShowKillLog(survivorName, "prohibited area");
+            }
+        }
+    }
 
     void AI()
     {
@@ -1783,6 +1800,9 @@ public class Survivor : CustomObject
                 if (injuryDegree >= 1) injuryType = InjuryType.Loss;
                 else injuryType = InjuryType.GunshotWound;
                 break;
+            case InjurySite.None:
+                injuryDegree = 0;
+                break;
             default:
                 Debug.LogWarning($"Unknown injurySite : {injurySite}");
                 injuryDegree = 0;
@@ -2187,7 +2207,7 @@ public class Survivor : CustomObject
         {
             if (!collision.isTrigger)
             {
-                if(survivor == TargetEnemy)
+                if(survivor == TargetEnemy && survivor != isDead)
                 {
                     targetEnemiesLastPosition = survivor.transform.position;
                     lastTargetEnemy = survivor;

@@ -22,9 +22,9 @@ public class GameResult : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalProfitText;
     [SerializeField] GameObject[] treatments;
 
-    bool resultClaimed;
-    float resultDelay = 2f;
-    float curResultDelay;
+    [SerializeField] bool resultClaimed;
+    readonly float resultDelay = 2f;
+    [SerializeField] float curResultDelay;
     int lastTimeScale;
 
     private void Update()

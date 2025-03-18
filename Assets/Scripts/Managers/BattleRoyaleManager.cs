@@ -39,7 +39,6 @@ public class BattleRoyaleManager
     public IEnumerator Initiate()
     {
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
-        count3Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         areas = GameObject.FindObjectsOfType<Area>();
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
@@ -304,6 +303,7 @@ public class BattleRoyaleManager
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
         GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(0);
+        GameManager.Instance.GetComponent<InGameUIManager>().ClearLog();
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");
