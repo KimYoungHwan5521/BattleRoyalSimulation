@@ -5,6 +5,7 @@ public class ResourcesPath
         "Prefabs/Test",
         "Prefabs/Survivor",
         "Prefabs/Bullet",
+        "Prefabs/Blood",
 
         // UI
         "Prefabs/UIs/Alert",
@@ -87,6 +88,7 @@ public class ResourcesPath
         "Sounds/SFXs/farmingNoise02",
         "Sounds/SFXs/farmingNoise03",
         "Sounds/SFXs/farmingNoise04",
+        "Sounds/SFXs/piep",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

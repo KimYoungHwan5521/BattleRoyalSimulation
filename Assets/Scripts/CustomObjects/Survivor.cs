@@ -85,6 +85,7 @@ public class Survivor : CustomObject
 
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject nameTag;
+    [SerializeField] GameObject prohibitTimer;
 
     InGameUIManager inGameUIManager;
     ProjectileGenerator projectileGenerator;
@@ -108,6 +109,7 @@ public class Survivor : CustomObject
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
                 nameTag.SetActive(false);
+                prohibitTimer.SetActive(false);
 
                 currentFarmingArea = GetCurrentArea();
                 BattleRoyaleManager.SurvivorDead(this);
@@ -187,7 +189,6 @@ public class Survivor : CustomObject
             currentWeaponisBestWeapon = true;
         }
     }
-    [SerializeField] bool haveConcussion;
     bool dizzy;
     bool Dizzy
     {
@@ -198,14 +199,53 @@ public class Survivor : CustomObject
             emotionAnimator.SetTrigger("Dizzy");
         }
     }
-    float dizzyRate = 0;
+    [SerializeField] float dizzyRateByConcussion = 0;
+    float DizzyRateByBleeding
+    {
+        get
+        {
+            return Mathf.Min(0, (0.8f - (curBlood / maxBlood)) / 0.3f);
+        }
+    }
+    float DizzyRate
+    {
+        get
+        {
+            return 1 - (1 - dizzyRateByConcussion) * (1 - DizzyRateByBleeding);
+        }
+    }
     float dizzyCoolTime = 10f;
     float curDizzyCool;
     float dizzyDuration = 3f;
     float curDizzyDuration;
 
-    public bool inPorohibitedArea;
-    float prohibitedAreaTime = 3f;
+    bool inProhibitedArea;
+    public bool InProhibitedArea
+    {
+        get { return InProhibitedArea; }
+        set
+        {
+            inProhibitedArea = value;
+            prohibitTimer.SetActive(value);
+        }
+    }
+    [SerializeField] float prohibitedAreaTime = 3.1f;
+    int timerSound = 3;
+
+    public float maxBlood;
+    public float curBlood;
+    [SerializeField] float bleedingAmount = 0;
+    float BleedingAmount
+    {
+        get { return bleedingAmount; }
+        set
+        {
+            bleedingAmount = Mathf.Max(value, 0);
+        }
+    }
+    public float naturalHemostasis = 1f;
+    float bleedingSprite;
+    public List<GameObject> bloods = new();
 
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
@@ -314,6 +354,7 @@ public class Survivor : CustomObject
         emotion.transform.parent = null;
         emotionAnimator = emotion.GetComponent<Animator>();
         canvas.transform.SetParent(null);
+        prohibitTimer.SetActive(false);
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
         sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
@@ -335,9 +376,12 @@ public class Survivor : CustomObject
     {
         if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
-        nameTag.transform.position = new(transform.position.x, transform.position.y - 0.75f);
+        canvas.transform.position = new(transform.position.x, transform.position.y);
+        
         survivedTime += Time.deltaTime;
         CheckProhibitArea();
+        Bleeding();
+        if(isDead) return;
 
         if (dizzy) return;
         AI();
@@ -349,7 +393,7 @@ public class Survivor : CustomObject
     {
         if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
 
-        if(haveConcussion)
+        if(DizzyRate > 0)
         {
             if(dizzy)
             {
@@ -365,7 +409,7 @@ public class Survivor : CustomObject
                 curDizzyCool += Time.fixedDeltaTime;
                 if(curDizzyCool > dizzyCoolTime)
                 {
-                    if(UnityEngine.Random.Range(0, 1f) < dizzyRate) Dizzy = true;
+                    if(UnityEngine.Random.Range(0, 1f) < dizzyRateByConcussion) Dizzy = true;
                     curDizzyCool = 0;
                     return;
                 }
@@ -431,14 +475,37 @@ public class Survivor : CustomObject
 
     void CheckProhibitArea()
     {
-        if(inPorohibitedArea)
+        if(inProhibitedArea)
         {
             prohibitedAreaTime -= Time.deltaTime;
+            if(prohibitedAreaTime < timerSound)
+            {
+                prohibitTimer.GetComponent<TextMeshProUGUI>().text = timerSound.ToString();
+                SoundManager.Play(ResourceEnum.SFX.piep, transform.position);
+                timerSound--;
+                Debug.Log(survivorName);
+            }
             if(prohibitedAreaTime < 0)
             {
                 IsDead = true;
                 inGameUIManager.ShowKillLog(survivorName, "prohibited area");
             }
+        }
+    }
+
+    void Bleeding()
+    {
+        curBlood -= BleedingAmount * Time.deltaTime;
+        BleedingAmount -= naturalHemostasis * Time.deltaTime;
+        if(curBlood < bleedingSprite)
+        {
+            bloods.Add(PoolManager.Spawn(ResourceEnum.Prefab.Blood, transform.position));
+            bleedingSprite -= 100;
+        }
+        if(curBlood / maxBlood < 0.5f)
+        {
+            IsDead = true;
+            inGameUIManager.ShowKillLog(survivorName, "excessive bleeding");
         }
     }
 
@@ -456,7 +523,7 @@ public class Survivor : CustomObject
 
             if (CurrentWeaponAsRangedWeapon != null)
             {
-                if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF();
+                if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
                 if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
                 {
                     currentStatus = Status.Maintain;
@@ -1700,7 +1767,7 @@ public class Survivor : CustomObject
                             injuryType = InjuryType.Rupture;
                             AddInjury(InjurySite.Organ, InjuryType.Rupture, 1);
                         }
-                        else injuryType = InjuryType.Damage;
+                        else injuryType = InjuryType.Cutting;
                     }
                     else injuryType = InjuryType.Cutting;
                 }
@@ -1714,7 +1781,7 @@ public class Survivor : CustomObject
                             injuryType = InjuryType.Rupture;
                             AddInjury(InjurySite.Organ, InjuryType.Rupture, 1);
                         }
-                        else injuryType = InjuryType.Damage;
+                        else injuryType = InjuryType.GunshotWound;
                     }
                     else injuryType = InjuryType.GunshotWound;
                 }
@@ -1808,7 +1875,11 @@ public class Survivor : CustomObject
                 injuryDegree = 0;
                 break;
         }
-        if(injuryDegree > 0.1f) AddInjury(injurySite, injuryType, injuryDegree);
+        if(injuryDegree > 0.1f)
+        {
+            AddInjury(injurySite, injuryType, injuryDegree);
+            AddBleeding(injurySite, injuryType, injuryDegree);
+        }
     }
 
     void GetDamageArtificalPart(Injury artificalPart, float damage)
@@ -1846,9 +1917,14 @@ public class Survivor : CustomObject
             if (index == -1)
             {
                 injuries.Add(new(injurySite, injuryType, 1));
-                ApplyInjuryPenalty();
+            }
+            else
+            {
+                injuries[index].type = injuryType;
+                injuries[index].degree = 1;
             }
             // 팔이 절단 됐으면 손, 손가락 부상 다 빼줘야함
+            // 출혈도 빼줘야함? 보류
             List<InjurySite> subparts = GetSubparts(injurySite);
             List<Injury> toRemove = new();
             foreach(var injury in injuries)
@@ -1859,21 +1935,12 @@ public class Survivor : CustomObject
             {
                 injuries.Remove(injury);
             }
+            ApplyInjuryPenalty();
         }
         else
         {
             // 상위 부위가 이미 절단된 상태면 return
-            List<InjurySite> upperParts = GetUpperParts(injurySite);
-            bool upperPartAlreadyLost = false;
-            foreach (var injury in injuries)
-            {
-                if (upperParts.Contains(injury.site) && injury.degree >= 1)
-                {
-                    upperPartAlreadyLost = true;
-                    break;
-                }
-            }
-            if (upperPartAlreadyLost) return;
+            if (UpperPartAlreadyLoss(injurySite)) return;
 
             int index = injuries.FindIndex(x => x.site == injurySite);
             if (index != -1)
@@ -1910,6 +1977,72 @@ public class Survivor : CustomObject
                 ApplyInjuryPenalty();
             }
         }
+    }
+
+    void AddBleeding(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
+    {
+        // upper part 체크
+        if (UpperPartAlreadyLoss(injurySite)) return;
+
+        float amount = 0;
+        switch (injurySite)
+        {
+            case InjurySite.RightThumb:
+            case InjurySite.LeftThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.RightLittleFinger:
+            case InjurySite.LeftLittleFinger:
+            case InjurySite.RightBigToe:
+            case InjurySite.LeftBigToe:
+                if(injuryDegree >= 1) curBlood -= 10;
+                amount = 20 * injuryDegree;
+                break;
+            case InjurySite.RightHand:
+            case InjurySite.LeftHand:
+                if (injuryDegree >= 1) curBlood -= 100;
+                amount = 100 * injuryDegree;
+                break;
+            case InjurySite.RightAncle:
+            case InjurySite.LeftAncle:
+                if (injuryDegree >= 1) curBlood -= 100;
+                amount = 200 * injuryDegree;
+                break;
+            case InjurySite.RightArm:
+            case InjurySite.LeftArm:
+            case InjurySite.RightKnee:
+            case InjurySite.LeftKnee:
+                if (injuryDegree >= 1) curBlood -= 250;
+                amount = 400 * injuryDegree;
+                break;
+            case InjurySite.RightLeg:
+            case InjurySite.LeftLeg:
+                if (injuryDegree >= 1) curBlood -= 500;
+                amount = 600 * injuryDegree;
+                break;
+            case InjurySite.Head:
+            case InjurySite.RightEye:
+            case InjurySite.LeftEye:
+            case InjurySite.RightEar:
+            case InjurySite.LeftEar:
+            case InjurySite.Nose:
+            case InjurySite.Jaw:
+                amount = 100 * injuryDegree;
+                break;
+            case InjurySite.Chest:
+                amount = 300 * injuryDegree;
+                break;
+            case InjurySite.Abdomen:
+            case InjurySite.Organ:
+                amount = 600 * injuryDegree;
+                break;
+        }
+        if (injuryType == InjuryType.Damage || injuryType == InjuryType.GunshotWound) amount *= 0.5f;
+        BleedingAmount += amount;
     }
 
     List<InjurySite> GetSubparts(InjurySite upperPart)
@@ -2018,6 +2151,16 @@ public class Survivor : CustomObject
         return result;
     }
 
+    bool UpperPartAlreadyLoss(InjurySite injurySite)
+    {
+        List<InjurySite> upperParts = GetUpperParts(injurySite);
+        foreach (var injury in injuries)
+        {
+            if (upperParts.Contains(injury.site) && injury.degree >= 1) return true;
+        }
+        return false;
+
+    }
     void ApplyInjuryPenalty()
     {
         float penaltiedHearingAbility;
@@ -2112,8 +2255,7 @@ public class Survivor : CustomObject
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.1f);
                     break;
                 case InjurySite.Brain:
-                    haveConcussion = true;
-                    dizzyRate = injury.degree;
+                    dizzyRateByConcussion = injury.degree;
                     break;
             }
         }
@@ -2252,6 +2394,8 @@ public class Survivor : CustomObject
         survivorName = survivorInfo.survivorName;
         nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
         curHP = maxHP = survivorInfo.hp;
+        curBlood = maxBlood = survivorInfo.hp * 80;
+        bleedingSprite = curBlood - 100;
         attackDamage = survivorInfo.attackDamage;
         attackSpeed = survivorInfo.attackSpeed;
         moveSpeed = survivorInfo.moveSpeed;

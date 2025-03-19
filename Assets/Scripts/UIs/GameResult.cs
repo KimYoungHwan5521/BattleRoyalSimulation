@@ -88,19 +88,35 @@ public class GameResult : MonoBehaviour
         killPrizeText.text = $"Kill Prize : <color=green>$ {killPrize}</color>";
         for(int i = 0; i<treatments.Length; i++)
         {
-            if (i < playerSurvivor.injuries.Count)
+            if (i < playerSurvivor.injuries.Count + 1)
             {
-                if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
+                if(i < playerSurvivor.injuries.Count)
                 {
-                    treatments[i].SetActive(false);
-                    continue;
+                    if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
+                    {
+                        treatments[i].SetActive(false);
+                        continue;
+                    }
+                    treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
+                    int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
+                    treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
+                    treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
+                    totalTreatmentCost += cost;
+                    treatments[i].SetActive(true);
                 }
-                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
-                int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
-                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
-                totalTreatmentCost += cost;
-                treatments[i].SetActive(true);
+                else 
+                {
+                    if(playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
+                    {
+                        // ¼öÇ÷ºñ
+                        int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
+                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"Blood transfusion fee";
+                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
+                        treatments[i].GetComponentInChildren<Help>().SetDescription("$1 per 10mL");
+                        treatments[i].SetActive(true);
+                    }
+                    else treatments[i].SetActive(false);
+                }
             }
             else treatments[i].SetActive(false);
         }
@@ -119,6 +135,10 @@ public class GameResult : MonoBehaviour
     public void ExitBattle()
     {
         gameResult.SetActive(false);
+        foreach(Survivor survivor in BattleRoyaleManager.Survivors)
+        {
+            foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
+        }
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);

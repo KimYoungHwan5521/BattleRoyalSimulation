@@ -65782,7 +65782,7 @@ MonoBehaviour:
   shootingTraningNameText: {fileID: 960522633}
   agilityTrainingNameText: {fileID: 343108839}
   weightTrainingNameText: {fileID: 1985242291}
-  fightTrainingBookers: {fileID: 287432383}
+  fightTrainingBookers: {fileID: 1205948642}
   shootingTrainingBookers: {fileID: 2118817503}
   agilityTrainingBookers: {fileID: 889985355}
   weightTrainingBookers: {fileID: 287432383}

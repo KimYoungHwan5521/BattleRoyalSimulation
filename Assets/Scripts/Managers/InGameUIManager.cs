@@ -209,6 +209,11 @@ public class InGameUIManager : MonoBehaviour
                 if(hit.TryGetComponent(out Survivor survivor) && survivor.IsDead)
                 {
                     selectedObject = survivor;
+                    attackDamageText.text = $"{survivor.AttackDamage:0.##}";
+                    attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
+                    moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
+                    farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
+                    shootingText.text = $"{survivor.Shooting:0.##}";
                     selectedNotNull = true;
                     break;
                 }

@@ -5,6 +5,7 @@ namespace ResourceEnum
         Test,
         Survivor,
         Bullet,
+        Blood,
 
         // UI
         Alert,
@@ -91,5 +92,6 @@ namespace ResourceEnum
         farmingNoise02,
         farmingNoise03,
         farmingNoise04,
+        piep,
     }
 }
