@@ -27,14 +27,16 @@ public class ItemManager
         Bullet_SubMachineGun,
         Bullet_ShotGun,
         Bullet_SniperRifle,
-        // BulletproofHat
+        // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
         HighLevelBulletproofHelmet,
-        // BulletproofVest
+        // BulletproofVests
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
         HighLevelBulletproofVest,
+        // Consumables
+        BandageRoll,
     }
     public Dictionary<Items, Item[]> itemDictionary = new();
     public IEnumerator Initiate()
@@ -129,6 +131,7 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(SniperRifle)", 0.012f, 5);
                 break;
+            // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new BulletproofVest(wantItem, "LowLevelBulletproofVest", 3f, 15);
@@ -141,6 +144,7 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new BulletproofVest(wantItem, "HighLevelBulletproofVest", 10f, 40);
                 break;
+            // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new BulletproofHelmet(wantItem, "LowLevelBulletproofHelmet", 0.7f, 60);
@@ -152,6 +156,11 @@ public class ItemManager
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new BulletproofHelmet(wantItem, "HighLevelBulletproofHelmet", 1.6f, 140);
+                break;
+            // Consumables
+            case Items.BandageRoll:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "BandageRoll", 0.027f);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

@@ -235,7 +235,7 @@ public class Survivor : CustomObject
     public float maxBlood;
     public float curBlood;
     [SerializeField] float bleedingAmount = 0;
-    float BleedingAmount
+    public float BleedingAmount
     {
         get { return bleedingAmount; }
         set
@@ -505,8 +505,14 @@ public class Survivor : CustomObject
         if(curBlood / maxBlood < 0.5f)
         {
             IsDead = true;
-            inGameUIManager.ShowKillLog(survivorName, "excessive bleeding");
+            inGameUIManager.ShowKillLog(survivorName, "hemorrhage");
         }
+    }
+
+    void StopBleeding()
+    {
+        agent.SetDestination(transform.position);
+        animator.SetBool("StopBleeding", true);
     }
 
     void AI()
@@ -521,18 +527,33 @@ public class Survivor : CustomObject
                 return;
             }
 
-            if (CurrentWeaponAsRangedWeapon != null)
+            if(!(rightHandDisabled && leftHandDisabled))
             {
-                if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
-                if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
+                if(BleedingAmount >= 10)
                 {
-                    currentStatus = Status.Maintain;
-                    sightMeshRenderer.material = m_SightNormal;
-                    Reload();
-                    return;
+                    int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll);
+                    if(bandageIndex != -1)
+                    {
+                        currentStatus = Status.Maintain;
+                        StopBleeding();
+                        return;
+                    }
                 }
+                animator.SetBool("StopBleeding", false);
+
+                if (CurrentWeaponAsRangedWeapon != null)
+                {
+                    if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
+                    if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
+                    {
+                        currentStatus = Status.Maintain;
+                        sightMeshRenderer.material = m_SightNormal;
+                        Reload();
+                        return;
+                    }
+                }
+                animator.SetBool("Reload", false);
             }
-            animator.SetBool("Reload", false);
 
             if(threateningSoundPosition != Vector2.zero)
             {
@@ -1261,6 +1282,7 @@ public class Survivor : CustomObject
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
         animator.SetBool("Reload", false);
+        animator.SetBool("StopBleeding", false);
         if(Vector2.Distance(agent.destination, target.transform.position) > attackRange) agent.SetDestination(target.transform.position);
     }
 
@@ -1269,6 +1291,7 @@ public class Survivor : CustomObject
         agent.SetDestination(transform.position);
         animator.SetBool("Aim", false);
         animator.SetBool("Reload", false);
+        animator.SetBool("StopBleeding", false);
         animator.SetBool("Attack", true);
         if(IsValid(currentWeapon))
         {
@@ -1286,6 +1309,7 @@ public class Survivor : CustomObject
         agent.SetDestination(transform.position);
         animator.SetBool("Attack", false);
         animator.SetBool("Reload", false);
+        animator.SetBool("StopBleeding", false);
         animator.SetBool("Aim", true);
 
         curShotTime += Time.deltaTime;
@@ -1300,6 +1324,7 @@ public class Survivor : CustomObject
     void Reload()
     {
         animator.SetBool("Attack", false);
+        animator.SetBool("StopBleeding", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
     }
@@ -2268,7 +2293,10 @@ public class Survivor : CustomObject
         hearingAbility = 10 * penaltiedHearingAbility;
 
         if (!eyeInjured) penaltiedFarmingSpeedByEyes = 1;
-        farmingSpeed = Mathf.Max(linkedSurvivorData.farmingSpeed * penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan, 0.1f);
+        float penaltiedFarmingSpeedByHands = 1;
+        if (rightHandDisabled && leftHandDisabled) penaltiedFarmingSpeedByHands = 0.1f;
+        else if (rightHandDisabled || leftHandDisabled) penaltiedFarmingSpeedByHands = 0.7f;
+        farmingSpeed = Mathf.Max(linkedSurvivorData.farmingSpeed * penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan * penaltiedFarmingSpeedByHands, 0.1f);
 
         attackSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * penaltiedAttackSpeedByOrgan, 0.1f);
         
@@ -2310,6 +2338,12 @@ public class Survivor : CustomObject
         else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
+    }
+
+    void AE_Taping()
+    {
+        ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll), 1);
+        BleedingAmount -= 100;
     }
     #endregion
 

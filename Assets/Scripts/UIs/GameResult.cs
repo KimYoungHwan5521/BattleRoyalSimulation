@@ -58,31 +58,28 @@ public class GameResult : MonoBehaviour
         int winPrize = 0;
         int killPrize = 0;
         int totalTreatmentCost = 0;
-        if(playerWin)
+        switch(calendar.LeagueReserveInfo[calendar.Today].league)
         {
-            switch(calendar.LeagueReserveInfo[calendar.Today].league)
-            {
-                case League.BronzeLeague:
-                    winPrize = 1000;
-                    killPrize = playerSurvivor.KillCount * 100;
-                    break;
-                case League.SilverLeague:
-                    winPrize = 3000;
-                    killPrize = playerSurvivor.KillCount * 200;
-                    break;
-                case League.GoldLeague:
-                    winPrize = 10000;
-                    killPrize = playerSurvivor.KillCount * 500;
-                    break;
-                case League.SeasonChampionship:
-                    winPrize = 30000;
-                    killPrize = playerSurvivor.KillCount * 1000;
-                    break;
-                case League.WorldChampionship:
-                    winPrize = 100000;
-                    killPrize = playerSurvivor.KillCount * 3000;
-                    break;
-            }
+            case League.BronzeLeague:
+                if(playerWin) winPrize = 1000;
+                killPrize = playerSurvivor.KillCount * 100;
+                break;
+            case League.SilverLeague:
+                if (playerWin) winPrize = 3000;
+                killPrize = playerSurvivor.KillCount * 200;
+                break;
+            case League.GoldLeague:
+                if (playerWin) winPrize = 10000;
+                killPrize = playerSurvivor.KillCount * 500;
+                break;
+            case League.SeasonChampionship:
+                if (playerWin) winPrize = 30000;
+                killPrize = playerSurvivor.KillCount * 1000;
+                break;
+            case League.WorldChampionship:
+                if (playerWin) winPrize = 100000;
+                killPrize = playerSurvivor.KillCount * 3000;
+                break;
         }
         winPrizeText.text = $"Win Prize : <color=green>$ {winPrize}</color>";
         killPrizeText.text = $"Kill Prize : <color=green>$ {killPrize}</color>";

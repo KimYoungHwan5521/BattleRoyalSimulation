@@ -102,6 +102,7 @@ public class BattleRoyaleManager
         AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
         AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
         AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
+        AddItems(ItemManager.Items.BandageRoll, 10);
 
     }
 

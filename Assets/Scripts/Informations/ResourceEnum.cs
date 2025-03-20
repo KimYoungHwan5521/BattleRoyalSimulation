@@ -40,14 +40,16 @@ namespace ResourceEnum
         Bullet_SubMachineGun,
         Bullet_ShotGun,
         Bullet_SniperRifle,
-        // BulletproofHat
+        // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
         HighLevelBulletproofHelmet,
-        // BulletproofVest
+        // BulletproofVests
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
         HighLevelBulletproofVest,
+        // Consumables
+        BandageRoll,
 
         // Leagues
         BronzeLeague,
@@ -93,5 +95,6 @@ namespace ResourceEnum
         farmingNoise03,
         farmingNoise04,
         piep,
+        taping,
     }
 }

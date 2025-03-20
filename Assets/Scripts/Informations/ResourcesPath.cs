@@ -43,6 +43,7 @@ public class ResourcesPath
         "Sprites/Icons/LowLevelBulletproofVest",
         "Sprites/Icons/MiddleLevelBulletproofVest",
         "Sprites/Icons/HighLevelBulletproofVest",
+        "Sprites/Icons/BandageRoll",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",
@@ -89,6 +90,7 @@ public class ResourcesPath
         "Sounds/SFXs/farmingNoise03",
         "Sounds/SFXs/farmingNoise04",
         "Sounds/SFXs/piep",
+        "Sounds/SFXs/taping",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

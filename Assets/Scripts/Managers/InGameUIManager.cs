@@ -43,6 +43,10 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image selectedSurvivorsHealthBarImage;
     [SerializeField] TextMeshProUGUI selectedSurvivorsHealthText;
 
+    [SerializeField] GameObject selectedSurvivorBleedingBar;
+    [SerializeField] Image selectedSurvivorBleedingBarImage;
+    [SerializeField] Animator bleedingAnim;
+
     [SerializeField] GameObject seletedObjectTab;
 
     int currentTab = 1;
@@ -245,6 +249,8 @@ public class InGameUIManager : MonoBehaviour
                 selectedSurvivorsHealthBarImage.fillAmount = selectedSurvivor.CurHP / selectedSurvivor.MaxHP;
                 selectedSurvivorsHealthText.text = $"{selectedSurvivor.CurHP:0} / {selectedSurvivor.MaxHP:0}";
 
+                selectedSurvivorBleedingBarImage.fillAmount = (selectedSurvivor.maxBlood - selectedSurvivor.curBlood) / (selectedSurvivor.maxBlood * 0.5f);
+                
                 #region Inventory
                 if (selectedSurvivor.CurrentWeapon != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
                 {
@@ -281,6 +287,8 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
                 
                 selectedSurvivorsHealthBar.SetActive(true);
+                selectedSurvivorBleedingBar.SetActive(true); 
+                bleedingAnim.SetBool("Bleeding", selectedSurvivor.BleedingAmount > 0);
                 selectedObjectsCurrentWeapon.SetActive(true);
                 selectedObjectsCurrentHelmet.SetActive(true);
                 selectedObjectsCurrentVest.SetActive(true);
@@ -333,6 +341,7 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectImage.color = Color.white;
                 selectedObjectName.text = "Box";
                 selectedSurvivorsHealthBar.SetActive(false);
+                selectedSurvivorBleedingBar.SetActive(false);
                 selectedObjectsCurrentWeapon.SetActive(false);
                 selectedObjectsCurrentHelmet.SetActive(false);
                 selectedObjectsCurrentVest.SetActive(false);
