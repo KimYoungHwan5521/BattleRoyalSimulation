@@ -12,6 +12,7 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI moveSpeedText;
     [SerializeField] TextMeshProUGUI farmingSpeedText;
     [SerializeField] TextMeshProUGUI shootingText;
+    [SerializeField] AutoNewLineLayoutGroup characteristicsLayout;
     [SerializeField] TextMeshProUGUI priceText;
 
     [SerializeField] GameObject[] injuries;
@@ -30,8 +31,8 @@ public class SurvivorInfo : MonoBehaviour
 
     public SurvivorData survivorData;
 
-    public void SetInfo(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed, 
-        float farmingSpeed, float shooting, int price, Tier tier)
+    public void SetInfo(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
+        float farmingSpeed, float shooting, int characteristicsCount, int price, Tier tier)
     {
         survivorData = new(survivorName, hp, attackDamage, attackSpeed, moveSpeed, farmingSpeed, shooting, price, tier);
 
@@ -42,11 +43,14 @@ public class SurvivorInfo : MonoBehaviour
         moveSpeedText.text = $"Move Speed\t: {moveSpeed:0.###}";
         farmingSpeedText.text = $"Farming Speed\t: {farmingSpeed:0.###}";
         shootingText.text = $"Shooting\t: {shooting:0.##}";
+        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
+        SetCharacteristic();
     }
 
     public void SetInfo(SurvivorData wantSurvivorData, bool showIncrease)
     {
+        survivorData = wantSurvivorData;
         survivorNameText.text = wantSurvivorData.survivorName;
         hpText.text = $"HP\t\t\t: {wantSurvivorData.hp:0}";
         attackDamageText.text = $"Attack Damage\t: {wantSurvivorData.attackDamage:0.##}";
@@ -78,5 +82,11 @@ public class SurvivorInfo : MonoBehaviour
                 injuries[i].SetActive(false);
             }
         }
+        SetCharacteristic();
+    }
+
+    public void SetCharacteristic()
+    {
+        characteristicsLayout.ArrangeCharacteristics(survivorData);
     }
 }

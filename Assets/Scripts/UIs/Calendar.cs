@@ -23,6 +23,30 @@ public class Calendar : CustomObject
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
     public Dictionary<int, LeagueReserveData> LeagueReserveInfo => leagueReserveInfo;
 
+    public LeagueReserveData NeareastSeasonChampionship
+    {
+        get
+        {
+            for(int i = Today; i <1008; i++)
+            {
+                if(i % 112 == 83) return leagueReserveInfo[i];
+            }
+            return null;
+        }
+    }
+
+    public LeagueReserveData NeareastWorldChampionship
+    {
+        get
+        {
+            for (int i = Today; i < 1008; i++)
+            {
+                if (i % 336 == 335) return leagueReserveInfo[i];
+            }
+            return null;
+        }
+    }
+
     int today = 0;
     public int Today
     {
@@ -37,7 +61,12 @@ public class Calendar : CustomObject
 
             today = value;
             todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}";
-            if(value > 1)outGameUIManager.SurvivorsRecovery();
+            if(value > 0)
+            {
+                outGameUIManager.SurvivorsRecovery();
+                outGameUIManager.ResetHireMarket();
+            }
+
         }
     }
     public int Month { get { return 1 + today / 28; } }

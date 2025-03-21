@@ -143,6 +143,9 @@ public class Survivor : CustomObject
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
 
+    [SerializeField] List<Characteristic> charicteristics;
+    public List<Characteristic> Characteristics => charicteristics;
+
     [SerializeField] Vector2 lookRotation = Vector2.zero;
     public Vector2 LookRotation => lookRotation;
 
@@ -2186,6 +2189,7 @@ public class Survivor : CustomObject
         return false;
 
     }
+
     void ApplyInjuryPenalty()
     {
         float penaltiedHearingAbility;
@@ -2436,6 +2440,7 @@ public class Survivor : CustomObject
         farmingSpeed = survivorInfo.farmingSpeed;
         shooting = survivorInfo.shooting;
         aimErrorRange = 7.5f / survivorInfo.shooting;
+        charicteristics = survivorInfo.characteristics;
 
         injuries = survivorInfo.injuries;
         foreach(Injury injury in injuries)

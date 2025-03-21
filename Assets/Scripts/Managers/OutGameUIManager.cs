@@ -17,6 +17,7 @@ public class SurvivorData
     public float moveSpeed;
     public float farmingSpeed;
     public float shooting;
+    public List<Characteristic> characteristics = new();
     public int price;
     public Tier tier;
 
@@ -132,6 +133,11 @@ public class OutGameUIManager : MonoBehaviour
     int shootingTrainingLevel = 1;
     int agilityTrainingLevel = 1;
     int weightTrainingLevel = 1;
+    int[] facilityUpgradeCost = { 1000, 3000, 10000, 30000 };
+    [SerializeField] GameObject fightTrainingRoomUpgradeButtion;
+    [SerializeField] GameObject shootingTrainingRoomUpgradeButtion;
+    [SerializeField] GameObject agilityTrainingRoomUpgradeButtion;
+    [SerializeField] GameObject weightTrainingRoomUpgradeButtion;
     [SerializeField] TextMeshProUGUI fightTrainingBookers;
     [SerializeField] TextMeshProUGUI shootingTrainingBookers;
     [SerializeField] TextMeshProUGUI agilityTrainingBookers;
@@ -192,9 +198,9 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 120, 10, 1, 3, 1, 1f, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 12, 1.1f, 3, 1, 1f, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 3.5f, 1.1f, 1f, 100, Tier.Bronze);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 110, 11, 1, 3, 1, 1f, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 10, 1.1f, 3.3f, 1.1f, 1f, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 3, 1, 1.1f, 0, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
@@ -210,13 +216,13 @@ public class OutGameUIManager : MonoBehaviour
             float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
             float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
             float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
-            if ((totalRand < 0.7f || totalRand > 2) && check < 100)
+            if ((totalRand < 0.7f || totalRand > 1.3) && check < 100)
             {
                 i--;
                 check++;
                 continue;
             }
-            if (check >= 100) Debug.LogWarning("Infinite roof has detected");
+            if (check >= 100) Debug.LogWarning("Infinite loop detected");
             check = 0;
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
                 value * 100 * rand0,
@@ -225,6 +231,7 @@ public class OutGameUIManager : MonoBehaviour
                 value * 3 * rand3,
                 value * 1 * rand4,
                 value * 1 * rand5,
+                UnityEngine.Random.Range(0, 4),
                 (int)(value * 100 * totalRand),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
@@ -243,6 +250,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Money -= survivorsInHireMarket[candidate].survivorData.price;
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
+                    mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
                     mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
 
                     if(mySurvivorsData.Count == 1)
@@ -380,7 +388,7 @@ public class OutGameUIManager : MonoBehaviour
                 targetText.text += $"{survivor.survivorName}";
             }
         }
-        Invoke("RefreshUI", 0.1f);
+        Invoke(nameof(RefreshUI), 0.1f);
     }
 
     public void CheckTrainable(SurvivorData survivor)
@@ -545,6 +553,81 @@ public class OutGameUIManager : MonoBehaviour
     {
         autoAssign = !autoAssign;
         autoAssignCheckBox.SetActive(autoAssign);
+    }
+
+    public void UpgradeTrainingRoom(int trainingRoomIndex)
+    {
+        switch (trainingRoomIndex)
+        {
+            case 0:
+                OpenConfirmWindow("Are you sure to upgrade Fight Training Room?", ()=>
+                {
+                    if(money < facilityUpgradeCost[fightTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[fightTrainingLevel - 1];
+                        fightTrainingLevel++;
+                        fightTrainingNameText.text = $"Fight Training (lv {fightTrainingLevel})";
+                        if (fightTrainingLevel > facilityUpgradeCost.Length) fightTrainingRoomUpgradeButtion.SetActive(false);
+                        else fightTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[fightTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 1:
+                OpenConfirmWindow("Are you sure to upgrade Shooting Training Room?", () =>
+                {
+                    if (money < facilityUpgradeCost[shootingTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
+                        shootingTrainingLevel++;
+                        fightTrainingNameText.text = $"Shooting Training (lv {shootingTrainingLevel})";
+                        if (shootingTrainingLevel > facilityUpgradeCost.Length) shootingTrainingRoomUpgradeButtion.SetActive(false);
+                        else shootingTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[shootingTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 2:
+                OpenConfirmWindow("Are you sure to upgrade Agility Training Room?", () =>
+                {
+                    if (money < facilityUpgradeCost[agilityTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[agilityTrainingLevel - 1];
+                        agilityTrainingLevel++;
+                        fightTrainingNameText.text = $"Agility Training (lv {agilityTrainingLevel})";
+                        if (agilityTrainingLevel > facilityUpgradeCost.Length) agilityTrainingRoomUpgradeButtion.SetActive(false);
+                        else agilityTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[agilityTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 3:
+                OpenConfirmWindow("Are you sure to upgrade Weight Training Room?", () =>
+                {
+                    if (money < facilityUpgradeCost[weightTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[weightTrainingLevel - 1];
+                        weightTrainingLevel++;
+                        fightTrainingNameText.text = $"Weight Training (lv {weightTrainingLevel})";
+                        if (weightTrainingLevel > facilityUpgradeCost.Length) weightTrainingRoomUpgradeButtion.SetActive(false);
+                        else weightTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[weightTrainingLevel - 1]}";
+                    }
+                });
+                break;
+        }
     }
     #endregion
 

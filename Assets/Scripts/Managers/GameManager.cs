@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     public SoundManager SoundManager => soundManager;
     PoolManager poolManager;
     public PoolManager PoolManager => poolManager;
+    CharacteristicManager characteristicManager;
+    public CharacteristicManager CharacteristicManager => characteristicManager;
     ItemManager itemManager;
     public ItemManager ItemManager => itemManager;
     BattleRoyaleManager battleRoyaleManager;
@@ -53,6 +55,8 @@ public class GameManager : MonoBehaviour
         yield return soundManager.Initiate();
         poolManager = new PoolManager();
         yield return poolManager.Initiate();
+        characteristicManager = new CharacteristicManager();
+        yield return characteristicManager.Initiate();
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
 
@@ -92,6 +96,7 @@ public class GameManager : MonoBehaviour
         ObjectDestroy?.Invoke();
         ObjectDestroy = null;
     }
+
     public static void ClaimLoadInfo(string info, int numerator = 0, int denominator = 1)
     {
         if (instance && instance.loadingCanvas)

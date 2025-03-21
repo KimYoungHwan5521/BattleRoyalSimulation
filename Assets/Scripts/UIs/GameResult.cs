@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+public delegate void ReserveNotification();
 
 public class GameResult : MonoBehaviour
 {
@@ -26,6 +26,8 @@ public class GameResult : MonoBehaviour
     readonly float resultDelay = 2f;
     [SerializeField] float curResultDelay;
     int lastTimeScale;
+
+    ReserveNotification notification;
 
     private void Update()
     {
@@ -122,6 +124,29 @@ public class GameResult : MonoBehaviour
         if (totalProfit >= 0) totalProfitText.text = $"Total Profit/Loss : <color=green>$ {totalProfit}</color>";
         else totalProfitText.text = $"Total Profit/Loss : <color=red>- $ {-totalProfit}</color>";
         outGameUIManager.Money += totalProfit;
+
+        if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
+    }
+
+    void Promote(SurvivorData survivor)
+    {
+        switch(calendar.LeagueReserveInfo[calendar.Today].league)
+        {
+            case League.BronzeLeague:
+                survivor.tier = Tier.Silver;
+                break;
+            case League.SilverLeague:
+                survivor.tier = Tier.Gold;
+                break;
+            case League.GoldLeague:
+                calendar.NeareastSeasonChampionship.reserver = survivor;
+                notification += () => { outGameUIManager.Alert($"{survivor.survivorName} has been booked for next Season Championship\n<i>(In the meantime, he can join other leagues)</i>"); };
+                break;
+            case League.SeasonChampionship:
+                calendar.NeareastWorldChampionship.reserver = survivor;
+                notification += () => { outGameUIManager.Alert($"{survivor.survivorName} has been booked for next World Championship\n<i>(In the meantime, he can join other leagues)</i>"); };
+                break;
+        }
     }
 
     public void DelayedShowGameResult()
@@ -142,6 +167,8 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.OutGameUIManager.CheckTrainable(BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
         GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
         GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
+        notification?.Invoke();
+        notification = null;
     }
 
     public void KeepWatching()

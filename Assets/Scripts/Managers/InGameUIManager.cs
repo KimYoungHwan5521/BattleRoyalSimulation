@@ -68,6 +68,7 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI moveSpeedText;
     [SerializeField] TextMeshProUGUI farmingSpeedText;
     [SerializeField] TextMeshProUGUI shootingText;
+    [SerializeField] AutoNewLineLayoutGroup characteristics;
 
     [SerializeField] GameObject[] injuries;
 
@@ -201,6 +202,7 @@ public class InGameUIManager : MonoBehaviour
                             moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
                             farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
                             shootingText.text = $"{survivor.Shooting:0.##}";
+                            characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
                         }
                         else CurrentTab = 1;
                         selectedNotNull = true;
@@ -218,6 +220,7 @@ public class InGameUIManager : MonoBehaviour
                     moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
                     farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
                     shootingText.text = $"{survivor.Shooting:0.##}";
+                    characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
                     selectedNotNull = true;
                     break;
                 }
