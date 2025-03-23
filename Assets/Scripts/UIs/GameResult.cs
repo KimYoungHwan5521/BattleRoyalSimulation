@@ -144,6 +144,13 @@ public class GameResult : MonoBehaviour
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
+                int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
+                if (characteristic != -1)
+                {
+                    survivor.characteristics.RemoveAt(characteristic);
+                    CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
+                    notification += () => { outGameUIManager.Alert($"{survivor.survivorName} overcame <i>Chocking Under Pressure</i> and acquired new characteristic <i>Clutch Performance</i>"); };
+                }
                 notification += () => { outGameUIManager.Alert($"{survivor.survivorName} has been booked for next World Championship\n<i>(In the meantime, he can join other leagues)</i>"); };
                 break;
         }

@@ -143,6 +143,11 @@ public class Survivor : CustomObject
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
 
+    float meleeHitRate = 1;
+    float meleeAvoidRate = 1;
+    float meleeGuardRate = 1;
+    float meleeCriticalRate = 1;
+
     [SerializeField] List<Characteristic> charicteristics;
     public List<Characteristic> Characteristics => charicteristics;
 
@@ -1427,19 +1432,12 @@ public class Survivor : CustomObject
                 if(alreadyHaveInjury.type == InjuryType.ArtificalPartsTransplanted)
                 {
                     damagedPartIsArtifical = true;
-                    switch(alreadyHaveInjury.site)
+                    // Àç¹Õ´Â switch ¿ë¹ý
+                    noPain = alreadyHaveInjury.site switch
                     {
-                        case InjurySite.Organ:
-                        case InjurySite.RightEye:
-                        case InjurySite.LeftEye:
-                        case InjurySite.RightEar:
-                        case InjurySite.LeftEar:
-                            noPain = false;
-                            break;
-                        default:
-                            noPain = true;
-                            break;
-                    }
+                        InjurySite.Organ or InjurySite.RightEye or InjurySite.LeftEye or InjurySite.RightEar or InjurySite.LeftEar => false,
+                        _ => true,
+                    };
                 }
                 if(!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
             }
@@ -1503,11 +1501,11 @@ public class Survivor : CustomObject
         else
         {
             float probability = UnityEngine.Random.Range(0, 1f);
-            float avoidRate = 0.2f * (moveSpeed / 3 + attackSpeed) / (attacker.moveSpeed / 3 + attacker.moveSpeed);
-            float defendRate = 0.3f;
-            if (rightHandDisabled) defendRate -= 0.15f;
-            if (leftHandDisabled) defendRate -= 0.15f;
-            float criticalRate = 0.1f;
+            float avoidRate = 0.2f * (moveSpeed / 3 + attackSpeed) / (attacker.moveSpeed / 3 + attacker.moveSpeed) * (meleeAvoidRate / attacker.meleeHitRate);
+            float defendRate = 0.3f * meleeGuardRate;
+            if (rightHandDisabled) defendRate -= defendRate * 0.5f;
+            if (leftHandDisabled) defendRate -= defendRate * 0.5f;
+            float criticalRate = 0.1f * attacker.meleeCriticalRate;
 
             if (probability < avoidRate)
             {
@@ -2190,9 +2188,13 @@ public class Survivor : CustomObject
 
     }
 
+    float injuryCorrection_HearingAbility = 1;
+    float injuryCorrection_FarmingSpeed = 1;
+    float injuryCorrection_AttackSpeed = 1;
+    float injuryCorrection_MoveSpeed = 1;
+    float injuryCorrection_AttackDamage = 1;
     void ApplyInjuryPenalty()
     {
-        float penaltiedHearingAbility;
         float ear1Penalty = 0;
         float ear2Penalty = 0;
         bool eyeInjured = false;
@@ -2293,23 +2295,114 @@ public class Survivor : CustomObject
         {
             (ear2Penalty, ear1Penalty) = (ear1Penalty, ear2Penalty);
         }
-        penaltiedHearingAbility = (1 - ear1Penalty) * (1 - 0.3f * ear2Penalty);
-        hearingAbility = 10 * penaltiedHearingAbility;
+        injuryCorrection_HearingAbility = (1 - ear1Penalty) * (1 - 0.3f * ear2Penalty);
 
         if (!eyeInjured) penaltiedFarmingSpeedByEyes = 1;
         float penaltiedFarmingSpeedByHands = 1;
         if (rightHandDisabled && leftHandDisabled) penaltiedFarmingSpeedByHands = 0.1f;
         else if (rightHandDisabled || leftHandDisabled) penaltiedFarmingSpeedByHands = 0.7f;
-        farmingSpeed = Mathf.Max(linkedSurvivorData.farmingSpeed * penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan * penaltiedFarmingSpeedByHands, 0.1f);
+        injuryCorrection_FarmingSpeed = penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan * penaltiedFarmingSpeedByHands;
 
-        attackSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * penaltiedAttackSpeedByOrgan, 0.1f);
-        
-        moveSpeed = Mathf.Max(linkedSurvivorData.moveSpeed * penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg, 0.1f);
+        injuryCorrection_AttackSpeed = penaltiedAttackSpeedByOrgan;
 
-        attackDamage = linkedSurvivorData.attackDamage * Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
+        injuryCorrection_MoveSpeed = penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg;
 
+        injuryCorrection_AttackDamage = Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
+        ApplyCorrectionStats();
     }
     #endregion
+
+    float characteristicCorrection_SightRange;
+    float characteristicCorrection_HearingAbility;
+    float characteristicCorrection_AttackDamage;
+    float characteristicCorrection_AttackSpeed;
+    float characteristicCorrection_MoveSpeed;
+    float characteristicCorrection_FarmingSpeed;
+    float characteristicCorrection_Shooting;
+    float characteristicCorrection_MeleeHitRate;
+    float characteristicCorrection_MeleeAvoidRate;
+    float characteristicCorrection_MeleeGuardRate;
+    float characteristicCorrection_MeleeCriticalRate;
+    void ApplyCharacteristics()
+    {
+        characteristicCorrection_SightRange = 1;
+        characteristicCorrection_HearingAbility = 1;
+        characteristicCorrection_AttackDamage = 1;
+        characteristicCorrection_AttackSpeed = 1;
+        characteristicCorrection_MoveSpeed = 1;
+        characteristicCorrection_FarmingSpeed = 1;
+        characteristicCorrection_Shooting = 1;
+        characteristicCorrection_MeleeHitRate = 1;
+        characteristicCorrection_MeleeAvoidRate = 1;
+        characteristicCorrection_MeleeGuardRate = 1;
+        characteristicCorrection_MeleeCriticalRate = 1;
+
+        Calendar calender = GameManager.Instance.GetComponent<Calendar>();
+
+        foreach (var characteristic in Characteristics)
+        {
+            switch(characteristic.type)
+            {
+                case CharacteristicType.EagleEye:
+                    characteristicCorrection_SightRange *= 1.3f;
+                    break;
+                case CharacteristicType.BadEye:
+                    characteristicCorrection_SightRange *= 0.7f;
+                    break;
+                case CharacteristicType.KeenHearing:
+                    characteristicCorrection_HearingAbility *= 1.3f;
+                    break;
+                case CharacteristicType.BadHearing:
+                    characteristicCorrection_HearingAbility *= 0.7f;
+                    break;
+                case CharacteristicType.ClutchPerformance:
+                    if (calender.LeagueReserveInfo[calender.Today].league == League.SeasonChampionship || calender.LeagueReserveInfo[calender.Today].league == League.WorldChampionship)
+                    {
+                        characteristicCorrection_AttackDamage *= 1.1f;
+                        characteristicCorrection_AttackSpeed *= 1.1f;
+                        characteristicCorrection_MoveSpeed *= 1.1f;
+                        characteristicCorrection_FarmingSpeed *= 1.1f;
+                        characteristicCorrection_Shooting *= 1.1f;
+                    }
+                    break;
+                case CharacteristicType.ChokingUnderPressure:
+                    if (calender.LeagueReserveInfo[calender.Today].league == League.SeasonChampionship || calender.LeagueReserveInfo[calender.Today].league == League.WorldChampionship)
+                    {
+                        characteristicCorrection_AttackDamage *= 0.9f;
+                        characteristicCorrection_AttackSpeed *= 0.9f;
+                        characteristicCorrection_MoveSpeed *= 0.9f;
+                        characteristicCorrection_FarmingSpeed *= 0.9f;
+                        characteristicCorrection_Shooting *= 0.9f;
+                    }
+                    break;
+                case CharacteristicType.Boxer:
+                    characteristicCorrection_AttackDamage *= 1.2f;
+                    characteristicCorrection_AttackSpeed *= 1.2f;
+                    characteristicCorrection_MeleeHitRate *= 1.5f;
+                    characteristicCorrection_MeleeAvoidRate *= 1.5f;
+                    characteristicCorrection_MeleeGuardRate *= 1.5f;
+                    characteristicCorrection_MeleeCriticalRate *= 1.5f;
+                    break;
+            }
+        }
+    }
+
+    void ApplyCorrectionStats()
+    {
+        leftSightRange = 45 * characteristicCorrection_SightRange;
+        rightSightRange = 45 * characteristicCorrection_SightRange;
+        hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
+        attackDamage = linkedSurvivorData.attackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
+        attackSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);
+        moveSpeed = Mathf.Max(linkedSurvivorData.moveSpeed * injuryCorrection_MoveSpeed * characteristicCorrection_MoveSpeed, 0.1f);
+        farmingSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
+        shooting = linkedSurvivorData.shooting * characteristicCorrection_Shooting;
+        aimErrorRange = 7.5f / shooting;
+        meleeHitRate = characteristicCorrection_MeleeHitRate;
+        meleeAvoidRate = characteristicCorrection_MeleeAvoidRate;
+        meleeGuardRate = characteristicCorrection_MeleeGuardRate;
+        meleeCriticalRate = characteristicCorrection_MeleeCriticalRate;
+    }
 
     #region Animation Events
     void AE_Attack()
@@ -2447,6 +2540,7 @@ public class Survivor : CustomObject
         {
             if (injury.type == InjuryType.ArtificalPartsTransplanted || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
         }
+        ApplyCharacteristics();
         ApplyInjuryPenalty();
     }
 

@@ -52,21 +52,22 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.ChokingUnderPressure, "Choking under pressure", "Most abilities decrease during the championship", 0, CharacteristicType.ClutchPerformance));
         characteristics.Add(new(CharacteristicType.Giant, "Giant", "Size, HP, Attack damage + 30%/ Attack speed, Move speed - 30%", 0, CharacteristicType.Dwarf));
         characteristics.Add(new(CharacteristicType.Dwarf, "Dwarf", "Size, HP, Attack damage - 30%/ Attack speed, Move speed + 30%", 0, CharacteristicType.Giant));
-        characteristics.Add(new(CharacteristicType.Boxer, "Boxer", "Attack damage, Attack speed + 20%/ Increase hit, guard, avoid rate when fighting", 0));
+        characteristics.Add(new(CharacteristicType.Boxer, "Boxer", "Attack damage, Attack speed + 20%/ Increase hit, guard, avoid, critical rate when melee fighting", 0));
         yield return null;
     }
 
-    public static bool AddCharaicteristic(SurvivorData survivor, Characteristic wantCharacteristic)
+    public static bool AddCharaicteristic(SurvivorData survivor, CharacteristicType wantCharacteristic)
     {
-        if(survivor.characteristics.Contains(wantCharacteristic)) return false;
+        int hasAleady = survivor.characteristics.FindIndex(x => x.type  == wantCharacteristic);
+        if(hasAleady > 0) return false;
         foreach(Characteristic survivorChar in survivor.characteristics)
         {
-            if(survivorChar.notPossbleTogether.ToList().Contains(wantCharacteristic.type))
+            if(survivorChar.notPossbleTogether.ToList().Contains(wantCharacteristic))
             {
                 return false;
             }
         }
-        survivor.characteristics.Add(wantCharacteristic);
+        survivor.characteristics.Add(characteristics.Find(x => x.type == wantCharacteristic));
         return true;
     }
 
@@ -80,7 +81,7 @@ public class CharacteristicManager
                 Debug.LogWarning("Infinite loop detected");
                 return;
             }
-            if(!AddCharaicteristic(survivor, characteristics[UnityEngine.Random.Range(0, characteristics.Count())]))
+            if(!AddCharaicteristic(survivor, (CharacteristicType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(CharacteristicType)).Length)))
             {
                 i--;
                 check++;
