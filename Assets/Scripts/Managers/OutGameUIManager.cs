@@ -1013,8 +1013,12 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(injury.degree < 1 && injury.type != InjuryType.ArtificalPartsTransplanted)
                 {
-                    if (injury.type == InjuryType.Contusion) injury.degree -= 0.1f;
-                    else injury.degree -= 0.05f;
+                    float recoveryRate = 1;
+                    if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
+                    else if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
+                    
+                    if (injury.type == InjuryType.Contusion) injury.degree -= 0.1f * recoveryRate;
+                    else injury.degree -= 0.05f * recoveryRate;
                     if(injury.degree < 0.1) fullyRecovered.Add(injury);
                 }
             }

@@ -15,6 +15,9 @@ public enum CharacteristicType
     Boxer,
     Giant,
     Dwarf,
+    CarefulShooter,
+    Fragile,
+    Sturdy,
 }
 
 [Serializable]
@@ -53,13 +56,16 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Giant, "Giant", "Size, HP, Attack damage + 30%/ Attack speed, Move speed - 30%", 0, CharacteristicType.Dwarf));
         characteristics.Add(new(CharacteristicType.Dwarf, "Dwarf", "Size, HP, Attack damage - 30%/ Attack speed, Move speed + 30%", 0, CharacteristicType.Giant));
         characteristics.Add(new(CharacteristicType.Boxer, "Boxer", "Attack damage, Attack speed + 20%/ Increase hit, guard, avoid, critical rate when melee fighting", 0));
+        characteristics.Add(new(CharacteristicType.CarefulShooter, "Careful shooter", "Aiming delay +, Increase shot accuracy", 0));
+        characteristics.Add(new(CharacteristicType.Fragile, "Fragile", "Increase injury rate/ Decrease recovery rate, hemostasis rate", 0, CharacteristicType.Sturdy));
+        characteristics.Add(new(CharacteristicType.Sturdy, "Sturdy", "Decrease injury rate / Increase recovery rate, hemostasis rate", 0, CharacteristicType.Fragile));
         yield return null;
     }
 
     public static bool AddCharaicteristic(SurvivorData survivor, CharacteristicType wantCharacteristic)
     {
         int hasAleady = survivor.characteristics.FindIndex(x => x.type  == wantCharacteristic);
-        if(hasAleady > 0) return false;
+        if(hasAleady > -1) return false;
         foreach(Characteristic survivorChar in survivor.characteristics)
         {
             if(survivorChar.notPossbleTogether.ToList().Contains(wantCharacteristic))

@@ -197,12 +197,7 @@ public class InGameUIManager : MonoBehaviour
                         {
                             Survivor survivor = clickedObject as Survivor;
                             cameraTarget = selectedObject.transform;
-                            attackDamageText.text = $"{survivor.AttackDamage:0.##}";
-                            attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
-                            moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
-                            farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
-                            shootingText.text = $"{survivor.Shooting:0.##}";
-                            characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
+                            SetSelectedObjectInfoOnce(survivor);
                         }
                         else CurrentTab = 1;
                         selectedNotNull = true;
@@ -215,18 +210,65 @@ public class InGameUIManager : MonoBehaviour
                 if(hit.TryGetComponent(out Survivor survivor) && survivor.IsDead)
                 {
                     selectedObject = survivor;
-                    attackDamageText.text = $"{survivor.AttackDamage:0.##}";
-                    attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
-                    moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
-                    farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
-                    shootingText.text = $"{survivor.Shooting:0.##}";
-                    characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
+                    SetSelectedObjectInfoOnce(survivor);
                     selectedNotNull = true;
                     break;
                 }
             }
         }
         if(!selectedNotNull) selectedObject = null;
+    }
+
+    public void SetSelectedObjectInfoOnce(Survivor survivor)
+    {
+        if(survivor != selectedObject) return;
+        attackDamageText.text = $"{survivor.AttackDamage:0.##}";
+        if (survivor.affectionList_AttackDamage.Count > 0)
+        {
+            if (survivor.AttackDamage > survivor.LinkedSurvivorData.attackDamage) attackDamageText.text += $"(<#009900>¡ã{survivor.AttackDamage - survivor.LinkedSurvivorData.attackDamage:0.##})</color>";
+            else attackDamageText.text += $"(<color=red>¡å{survivor.AttackDamage - survivor.LinkedSurvivorData.attackDamage:0.##})</color>";
+            string description = "Affected by : ";
+            foreach (string affect in survivor.affectionList_AttackDamage) description += $"{affect}, ";
+            attackDamageText.GetComponent<Help>().SetDescription(description);
+        }
+        attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
+        if (survivor.affectionList_AttackSpeed.Count > 0)
+        {
+            if (survivor.AttackSpeed > survivor.LinkedSurvivorData.attackSpeed) attackSpeedText.text += $"(<#009900>¡ã{survivor.AttackSpeed - survivor.LinkedSurvivorData.attackSpeed:0.##})</color>";
+            else attackSpeedText.text += $"(<color=red>¡å{survivor.AttackSpeed - survivor.LinkedSurvivorData.attackSpeed:0.##})</color>";
+            string description = "Affected by : ";
+            foreach (string affect in survivor.affectionList_AttackSpeed) description += $"{affect}, ";
+            attackSpeedText.GetComponent<Help>().SetDescription(description);
+        }
+        moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
+        if (survivor.affectionList_MoveSpeed.Count > 0)
+        {
+            if (survivor.MoveSpeed > survivor.LinkedSurvivorData.moveSpeed) moveSpeedText.text += $"(<#009900>¡ã{survivor.MoveSpeed - survivor.LinkedSurvivorData.moveSpeed:0.##})</color>";
+            else moveSpeedText.text += $"(<color=red>¡å{survivor.MoveSpeed - survivor.LinkedSurvivorData.moveSpeed:0.##})</color>";
+            string description = "Affected by : ";
+            foreach (string affect in survivor.affectionList_MoveSpeed) description += $"{affect}, ";
+            moveSpeedText.GetComponent<Help>().SetDescription(description);
+        }
+        farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
+        if (survivor.affectionList_FarmingSpeed.Count > 0)
+        {
+            if (survivor.FarmingSpeed > survivor.LinkedSurvivorData.farmingSpeed) farmingSpeedText.text += $"(<#009900>¡ã{survivor.FarmingSpeed - survivor.LinkedSurvivorData.farmingSpeed:0.##})</color>";
+            else farmingSpeedText.text += $"(<color=red>¡å{survivor.FarmingSpeed - survivor.LinkedSurvivorData.farmingSpeed:0.##})</color>";
+            string description = "Affected by : ";
+            foreach (string affect in survivor.affectionList_FarmingSpeed) description += $"{affect}, ";
+            farmingSpeedText.GetComponent<Help>().SetDescription(description);
+        }
+        shootingText.text = $"{survivor.Shooting:0.##}";
+        if (survivor.affectionList_Shooting.Count > 0)
+        {
+            if (survivor.Shooting > survivor.LinkedSurvivorData.shooting) shootingText.text += $"(<#009900>¡ã{survivor.Shooting - survivor.LinkedSurvivorData.shooting:0.##})</color>";
+            else shootingText.text += $"(<color=red>¡å{survivor.Shooting - survivor.LinkedSurvivorData.shooting:0.##})</color>";
+            string description = "Affected by : ";
+            foreach (string affect in survivor.affectionList_Shooting) description += $"{affect}, ";
+            shootingText.GetComponent<Help>().SetDescription(description);
+        }
+        characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
+
     }
 
     void SetSelectedObjectInfo()
