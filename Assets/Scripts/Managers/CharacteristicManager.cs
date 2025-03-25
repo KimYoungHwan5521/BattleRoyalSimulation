@@ -18,6 +18,9 @@ public enum CharacteristicType
     CarefulShooter,
     Fragile,
     Sturdy,
+    Avenger,
+    Regenerator,
+    UpsAndDowns,
 }
 
 [Serializable]
@@ -51,14 +54,17 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.BadEye, "Bad eye", "Eye sight - 30%", 0, CharacteristicType.EagleEye));
         characteristics.Add(new(CharacteristicType.KeenHearing, "Keen hearing", "Hearing ability + 30%", 0, CharacteristicType.BadHearing));
         characteristics.Add(new(CharacteristicType.BadHearing, "Bad hearing", "Hearing ability - 30%", 0, CharacteristicType.KeenHearing));
-        characteristics.Add(new(CharacteristicType.ClutchPerformance, "Clutch performance", "Most abilities increase during the championship", 0, CharacteristicType.ChokingUnderPressure));
-        characteristics.Add(new(CharacteristicType.ChokingUnderPressure, "Choking under pressure", "Most abilities decrease during the championship", 0, CharacteristicType.ClutchPerformance));
+        characteristics.Add(new(CharacteristicType.ClutchPerformance, "Clutch performance", "Abilities increase during the championship", 0, CharacteristicType.ChokingUnderPressure));
+        characteristics.Add(new(CharacteristicType.ChokingUnderPressure, "Choking under pressure", "Abilities decrease during the championship", 0, CharacteristicType.ClutchPerformance));
         characteristics.Add(new(CharacteristicType.Giant, "Giant", "Size, HP, Attack damage + 30%/ Attack speed, Move speed - 30%", 0, CharacteristicType.Dwarf));
         characteristics.Add(new(CharacteristicType.Dwarf, "Dwarf", "Size, HP, Attack damage - 30%/ Attack speed, Move speed + 30%", 0, CharacteristicType.Giant));
         characteristics.Add(new(CharacteristicType.Boxer, "Boxer", "Attack damage, Attack speed + 20%/ Increase hit, guard, avoid, critical rate when melee fighting", 0));
         characteristics.Add(new(CharacteristicType.CarefulShooter, "Careful shooter", "Aiming delay +, Increase shot accuracy", 0));
         characteristics.Add(new(CharacteristicType.Fragile, "Fragile", "Increase injury rate/ Decrease recovery rate, hemostasis rate", 0, CharacteristicType.Sturdy));
         characteristics.Add(new(CharacteristicType.Sturdy, "Sturdy", "Decrease injury rate / Increase recovery rate, hemostasis rate", 0, CharacteristicType.Fragile));
+        characteristics.Add(new(CharacteristicType.Avenger, "Avenger", "Increase attack damage and attack speed when bleeding/ Decrease hemostasis rate", 0));
+        characteristics.Add(new(CharacteristicType.Regenerator, "Regenerator", "Increase hemostasis rate/ Blood and HP regenerate", 0));
+        characteristics.Add(new(CharacteristicType.UpsAndDowns, "Ups and downs", "Ability increases or decreases depending on the condition of the day", 0));
         yield return null;
     }
 

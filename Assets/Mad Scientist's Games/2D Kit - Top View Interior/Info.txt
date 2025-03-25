@@ -1,0 +1,12 @@
+Categories of sprites (167 sprites total):
+	Walls and doors (13 sprites);
+	Floors (7 sprites);
+	Garage (48 sprites);
+	Kitchen (58 sprites);	
+	Bathroom (3 sprites);	
+	WC (6 sprites);	
+	Room (32 sprites).
+
+Technical details:
+	The sprites is presented in two variations: 72 ppi, 150 ppi;
+	All sprites are designed in vector format (AI file).

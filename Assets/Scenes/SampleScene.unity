@@ -35832,6 +35832,7 @@ GameObject:
   - component: {fileID: 549070071}
   - component: {fileID: 549070070}
   - component: {fileID: 549070069}
+  - component: {fileID: 549070072}
   m_Layer: 5
   m_Name: Bleeding
   m_TagString: Untagged
@@ -35918,6 +35919,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549070067}
   m_CullTransparentMesh: 1
+--- !u!114 &549070072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1124886e2896acb4c8b1224e2c4755fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Bleeding
 --- !u!1 &550683525
 GameObject:
   m_ObjectHideFlags: 0
@@ -68508,7 +68522,7 @@ MonoBehaviour:
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: 2901a2ebbe9dc07418991df1fb7704d8, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!114 &1071479993
 MonoBehaviour:
   m_ObjectHideFlags: 0

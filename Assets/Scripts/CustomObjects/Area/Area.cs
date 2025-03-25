@@ -44,7 +44,7 @@ public class Area : CustomObject
             foreach(Box box in farmingSection.boxes)
             {
                 box.ownerArea = this;
-                box.SetObstructionRate(0.3f);
+                //box.SetObstructionRate(0.3f);
             }
         }
     }

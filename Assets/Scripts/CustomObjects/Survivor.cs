@@ -148,6 +148,9 @@ public class Survivor : CustomObject
     float meleeGuardRate = 1;
     float meleeCriticalRate = 1;
 
+    float bloodRegeneration = 1;
+    float hpRegeneration = 1;
+
     [SerializeField] List<Characteristic> charicteristics;
     public List<Characteristic> Characteristics => charicteristics;
 
@@ -249,6 +252,15 @@ public class Survivor : CustomObject
         set
         {
             bleedingAmount = Mathf.Max(value, 0);
+            if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Avenger) > -1)
+            {
+                ApplyCorrectionStats();
+                if(bleedingAmount > 0)
+                {
+                    attackDamage *= 1.5f;
+                    attackSpeed *= 1.3f;
+                }
+            }
         }
     }
     public float naturalHemostasis = 1f;
@@ -395,6 +407,7 @@ public class Survivor : CustomObject
         CheckProhibitArea();
         Bleeding();
         if(isDead) return;
+        Regenerate();
 
         if (dizzy) return;
         AI();
@@ -526,6 +539,12 @@ public class Survivor : CustomObject
     {
         agent.SetDestination(transform.position);
         animator.SetBool("StopBleeding", true);
+    }
+
+    void Regenerate()
+    {
+        curBlood += bloodRegeneration * Time.deltaTime;
+        curHP = Mathf.Min(curHP + 0.17f * hpRegeneration * Time.deltaTime, maxHP);
     }
 
     void AI()
@@ -2364,6 +2383,8 @@ public class Survivor : CustomObject
     float characteristicCorrection_MeleeCriticalRate;
     float characteristicCorrection_AimTime;
     float characteristicCorrection_NatualHemostasis;
+    float characteristicCorrection_BloodRegeneration;
+    float characteristicCorrection_HpRegeneration;
 
     public List<string> affectionList_AttackDamage = new();
     public List<string> affectionList_AttackSpeed = new();
@@ -2386,6 +2407,8 @@ public class Survivor : CustomObject
         characteristicCorrection_MeleeCriticalRate = 1;
         characteristicCorrection_AimTime = 1;
         characteristicCorrection_NatualHemostasis = 1;
+        characteristicCorrection_BloodRegeneration = 1;
+        characteristicCorrection_HpRegeneration = 1;
 
         Calendar calender = GameManager.Instance.GetComponent<Calendar>();
 
@@ -2484,6 +2507,22 @@ public class Survivor : CustomObject
                 case CharacteristicType.Sturdy:
                     characteristicCorrection_NatualHemostasis *= 2;
                     break;
+                case CharacteristicType.Avenger:
+                    characteristicCorrection_NatualHemostasis *= 0.5f;
+                    break;
+                case CharacteristicType.Regenerator:
+                    characteristicCorrection_NatualHemostasis *= 5f;
+                    characteristicCorrection_BloodRegeneration *= 5f;
+                    characteristicCorrection_HpRegeneration *= 5f;
+                    break;
+                case CharacteristicType.UpsAndDowns:
+                    float condition = UnityEngine.Random.Range(0.7f, 1.3f);
+                    characteristicCorrection_AttackDamage *= condition;
+                    characteristicCorrection_AttackSpeed *= condition;
+                    characteristicCorrection_MoveSpeed *= condition;
+                    characteristicCorrection_FarmingSpeed *= condition;
+                    characteristicCorrection_Shooting *= condition;
+                    break;
                 default:
                     Debug.LogWarning($"Unknown CharacteristicType : {characteristic.type}");
                     break;
@@ -2509,6 +2548,8 @@ public class Survivor : CustomObject
         meleeCriticalRate = characteristicCorrection_MeleeCriticalRate;
         aimTime = 3 * characteristicCorrection_AimTime;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
+        bloodRegeneration = characteristicCorrection_BloodRegeneration;
+        hpRegeneration = characteristicCorrection_HpRegeneration;
         InGameUIManager.SetSelectedObjectInfoOnce(this);
     }
 

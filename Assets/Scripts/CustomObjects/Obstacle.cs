@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Obstacle : CustomObject
 {
-    [SerializeField] float obstructionRate;
+    [SerializeField, Range(0, 1f)] float obstructionRate;
     public float OpstructionRate => obstructionRate;
 
     public void SetObstructionRate(float value)
