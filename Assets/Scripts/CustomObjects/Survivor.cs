@@ -318,6 +318,7 @@ public class Survivor : CustomObject
     Survivor lastTargetEnemy;
     [SerializeField] Vector2 targetEnemiesLastPosition;
     [SerializeField] Vector2 threateningSoundPosition;
+    float curSetDestinationCool = 1f;
 
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
@@ -412,6 +413,13 @@ public class Survivor : CustomObject
         if (dizzy) return;
         AI();
         DrawSightMesh();
+    }
+
+    public override void MyDestroy()
+    {
+        Destroy(emotion);
+        Destroy(canvas);
+        base.MyDestroy();
     }
 
     #region FixedUpdate, Look
@@ -831,7 +839,7 @@ public class Survivor : CustomObject
     bool farmingSFXPlayed;
     void FarmingBox()
     {
-        if(Vector2.Distance(transform.position, targetFarmingBox.transform.position) < 1.5f)
+        if(Vector2.Distance(bodyCollider.ClosestPoint(targetFarmingBox.transform.position), targetFarmingBox.Collider.ClosestPoint(transform.position)) < 1f)
         {
             if (!farmingSFXPlayed) PlayFarmingNoise();
             farmingSFXPlayed = true;
@@ -1317,7 +1325,15 @@ public class Survivor : CustomObject
         curAimTime = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
-        if(Vector2.Distance(agent.destination, target.transform.position) > attackRange) agent.SetDestination(target.transform.position);
+        if(Vector2.Distance(agent.destination, target.transform.position) > attackRange)
+        {
+            curSetDestinationCool += Time.deltaTime;
+            if(curSetDestinationCool > 1)
+            {
+                agent.SetDestination(target.transform.position);
+                curSetDestinationCool = 0;
+            }
+        }
     }
 
     void Attack()
@@ -2657,10 +2673,10 @@ public class Survivor : CustomObject
         foreach(var area in farmingAreas)
         {
             Transform areaTransform = area.Key.transform;
-            if (transform.position.x > areaTransform.position.x - areaTransform.localScale.x * 0.5f 
-                && transform.position.x < areaTransform.position.x + areaTransform.localScale.x * 0.5f
-                && transform.position.y > areaTransform.position.y - areaTransform.localScale.y * 0.5f
-                && transform.position.y < areaTransform.position.y + areaTransform.localScale.y * 0.5f)
+            if (transform.position.x > areaTransform.position.x - 25 
+                && transform.position.x < areaTransform.position.x + 25
+                && transform.position.y > areaTransform.position.y - 25
+                && transform.position.y < areaTransform.position.y + 25)
             {
                 return area.Key;
             }

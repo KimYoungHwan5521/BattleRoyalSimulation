@@ -303,6 +303,7 @@ public class BattleRoyaleManager
             survivor.GetComponent<NavMeshAgent>().enabled = true;
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
+        Camera.main.orthographicSize = 10;
         GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(0);
         GameManager.Instance.GetComponent<InGameUIManager>().ClearLog();
         battleWinner = null;

@@ -3,7 +3,7 @@ guid: 4b2dae65e39b5a24ca543f3a7e211744
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,9 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -54,10 +57,15 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -69,11 +77,6745 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Parquet 3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f52f3cbb496702143b344d5e41934759
+      internalID: 1970399004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6232dc4de7b80dd4a93c99332f55a22f
+      internalID: 332670640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91ea81b9e62d2343abbc6bb9331e5e2
+      internalID: -948406077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_3
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82ab43e8cbacf147874296c7b9ef3a6
+      internalID: 2039940443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_4
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ad0c1cfb438de34db0bc0e05040576b
+      internalID: 989142149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_5
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52c2aa1bb4e3be843ba4bae02e14821c
+      internalID: 2050536255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_6
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ecd9b30fb0e53c42a598c6f951cb946
+      internalID: -1560541113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_7
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3fab72018361b1449e43b6ed7a9646e
+      internalID: 347976286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_8
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ebf8be0e7f8f394e8fce25037517ed0
+      internalID: 836494723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_9
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 033110df0b5f36c4ea39c61225611326
+      internalID: 1304782532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_10
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c18fc5f4821f77a489e9127be2b906c4
+      internalID: -1787564590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_11
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6747cfb9cb429ec4ebddfd634b390f52
+      internalID: -1417876192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_12
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c4e7095df449e428c01d758b5b5eac
+      internalID: 1261698016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_13
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bb0eb2859134d48b32cba9ea5c498f
+      internalID: 101462155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_14
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cee0aa9751f9174ca18236e1ba63bcb
+      internalID: 1662248868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_15
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1218.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7db33a54a519c31429aa01fd8747cd20
+      internalID: -1560054181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a6e4caa8a78bb34fafd1ef95d217126
+      internalID: -207001262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_17
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bd43b8565b7ffe4697bdecf275ddc05
+      internalID: 1793876946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_18
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9eac31071f021d54ab499246659e4f0a
+      internalID: -2114855104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_19
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54dff8d355ba034b99c21d9f126cb15
+      internalID: -1688221481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_20
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b393d6be72af5a243af42a2f0e83a2fe
+      internalID: 828750975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_21
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 487be38d07a5c894bbc920054413c816
+      internalID: 1024729031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_22
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 572f13fcc817471428bb96b2ed08ade0
+      internalID: 469210177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_23
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f98defb8b51e945a1e4c20568b1ad0
+      internalID: 1169184763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_24
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fde39210da554b4a942d66e72aab33f
+      internalID: 931615873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_25
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cbde9d2fe273a44d91c4f8bc5e1f959
+      internalID: -368671969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_26
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8ef7b1149f05c1478c41367d63e7647
+      internalID: 1750982312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_27
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dd2426424ca0a84b9fe15c667ecda10
+      internalID: -405696345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_28
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77615a1bad04f544385eaee6f8c5236d
+      internalID: 1313818633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_29
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e8f5d07a8749724e8409c0b952f95c7
+      internalID: 1502395790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_30
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9f093cf9817c234ca984d2790c9c2a3
+      internalID: -1409781565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_31
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1154.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f9f047604f24524f884a31c7b92331a
+      internalID: -691087044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f0727903505b654ca07e50bc98211e1
+      internalID: 1689541031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_33
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c038c297ff2c6b4db1bd696f7fc8271
+      internalID: 1077089860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_34
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4adea2590e79de24191ace581aff41fb
+      internalID: -371631856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_35
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc0ac600d6792bb4aa6ae7e5e0a37738
+      internalID: 2094737637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_36
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5db2cf1ddf6250a4b86915c1e102a1a7
+      internalID: -1224244139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_37
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdf5dce6276983f4ca178aae7bd1c59a
+      internalID: 1907666901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_38
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bb2921f6e311374fbfa0d9ef51aaa2d
+      internalID: -1852381337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_39
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede3765f41cad9640a041f90b13049af
+      internalID: 1850320921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_40
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05922c0d9b8cf254ea3bbdf290a7f3a1
+      internalID: 1684243446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_41
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 495c108a227b6e545b5a712d3439ee10
+      internalID: 1018347996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_42
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049bd4181b3746748a51408b4a42f22d
+      internalID: 304490805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_43
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9d7df9e71f11a04d88a84fa7b357b13
+      internalID: 1080356818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_44
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 014281a1b0b50f94fa9abcc715293d68
+      internalID: -1442281695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_45
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea75a123462bb4d47bf234ef0dfe5772
+      internalID: 50111945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_46
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21c123b4013680f4982fe63fa66aa9b9
+      internalID: 1758976533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_47
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1090.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70be24f5ff574e5479cb415030d4ea29
+      internalID: 453691364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae2cf0c5ebbae5648a0ee6c51f24a09d
+      internalID: 1763074501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_49
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712acac090f1e324db6b3cb6f25da12f
+      internalID: -982971020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_50
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d024980f63dec68478c500ac6d890d32
+      internalID: 1367305298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_51
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d53bd103fdfc144d93b1f3f24a1363c
+      internalID: 554315449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_52
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab281596b8cbf2c488044e2f0a63461d
+      internalID: -413504791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_53
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46415327359dbb04ab735b670b4e0d31
+      internalID: 1375808541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_54
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4222fe667b9d374cbd3bd094190781d
+      internalID: 693794685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_55
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aab6e63b4626ad44083b6784f915cf5b
+      internalID: 679297449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_56
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e1db9d6fbfbd594fa1830f5fde7ea75
+      internalID: 156547733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_57
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56d2d891d71a1c54494b03958fb4d57a
+      internalID: 1661549984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_58
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea3ce06e2f6b72b4eb1cb2dbc0aca0a8
+      internalID: -1418330514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_59
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38feb3732a652cb4aa475eca8d1db085
+      internalID: 1074448311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_60
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09503ec26acf3e04a9463a318560dd29
+      internalID: 747031756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_61
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca0621be8242a584b83e510e9a760c28
+      internalID: 1736509674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_62
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e1d23ac37b7c5469aa213778c78675
+      internalID: -306352020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_63
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1026.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce59b08ff143e22408671409b603ecd0
+      internalID: 219489584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9af1b514c99fcd4ab3b19e7380b9f5e
+      internalID: -149802653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_65
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc10171d463b975418ea3c0af69dbf97
+      internalID: 1423483242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_66
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc947dd28399f4418192eac90742c45
+      internalID: 1841910277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_67
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f132999ad5b517468e7335ab05c7cf1
+      internalID: 1066335649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_68
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29bc2f26c3d6820409754b566f5cec24
+      internalID: -834066304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_69
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed8cc88034695eb4997c77b3a938e9d8
+      internalID: 1150583266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_70
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8154b4a4f1f7f5744b031d4d9f72c11c
+      internalID: 1627281914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_71
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31ac8ac7eaa7a864cb0672b6054123cc
+      internalID: 1059610933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_72
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22eabb9a36504e446a258ae88b9c40bb
+      internalID: 178801407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_73
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4054d91afe3ae47448b7559dfed847fa
+      internalID: -489826256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_74
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b3d02518b5ad73468595bcf47a92558
+      internalID: 1713870810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_75
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97179e5c8435c59499bd007d676028ae
+      internalID: 612835238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_76
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02b9a4a15fa2b4946b61a89d6bdb1732
+      internalID: -216917235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_77
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 176ccaa6a55082c4d86efa1b3267d29a
+      internalID: -202848611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_78
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cf9ba13416b10e4d9d0aa56d07cb169
+      internalID: -450167861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_79
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 962.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cfed5b1a7f8b0048a730245f64c0cf1
+      internalID: -1640422076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968a8e2da3a2d414bb10af551b6e766c
+      internalID: 18258569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_81
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389902971eb09f14e9224ab148d2a9e5
+      internalID: -609262892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_82
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb2479c6aca38fb4e921c222f463ba82
+      internalID: -1008837835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_83
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56f0712d85ae2234784096f5a5f3dfca
+      internalID: 1708390752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_84
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1dee4cf6f78b694eafe64dd0ddfaa3a
+      internalID: -1127114663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_85
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc32cd43c6991b34a9f2e312a888313f
+      internalID: -33519256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_86
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddd8a302a907d064da2f70283a0edf4e
+      internalID: 1981389121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_87
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2d9ece6e0de93c48ae04c19828617b8
+      internalID: -933657710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_88
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 759cba8c9a330194a99adca896cac400
+      internalID: -444708695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_89
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42ccb1de88e700c48999186ae9f21cca
+      internalID: 1301522746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_90
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a7fbfde4e1dee54db3d72b3e3f00436
+      internalID: 1703336717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_91
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80aeddc031abc5342b549cd6e0aba5d8
+      internalID: 217814311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_92
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5193f30d62192a243a9eff497363d56f
+      internalID: -1029887617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_93
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c64c8fdca3fae346b4dce73599190a8
+      internalID: -74625076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_94
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9beb44d9c925c341a2a4a8d0b97ecea
+      internalID: 2106195056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_95
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 898.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b878d18540ac99b479d1a5b7de7a9922
+      internalID: -571193131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73eaea621f15ea3488dd9e845d85dfb7
+      internalID: -1035395481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_97
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 622210a759e9dad4da706954db84f234
+      internalID: 673766999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_98
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 684c1db958497314d9b810432fe67dec
+      internalID: -831166632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_99
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409472a5746ea3f429c5a31a523f3714
+      internalID: 401248164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_100
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad806f03f8a1531439bb2940cb49e070
+      internalID: 1461741150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_101
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d22c1dc7b0fefa6448f0a642ecd02383
+      internalID: -830520056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_102
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9481f33864a2f6b4cbfffc6583229829
+      internalID: 1237874775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_103
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b635aa0cd0f55d4791ce2bf0bb3666f
+      internalID: 686865224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_104
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21c9f2b3f22005a418d5fa19629a0204
+      internalID: -895628762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_105
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 552851557e2f1c94ab957e6b664d161f
+      internalID: -206062254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_106
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f26724e3e0e5bda4b9ebd588bc84485c
+      internalID: 1003726881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_107
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f87ffd78d470bbe44bb34c3d947894bb
+      internalID: -1957709101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_108
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b0ff974cefa2e04eb37fa472c550f25
+      internalID: 260390160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_109
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7587ff2e0235ea54298eac7bab66724e
+      internalID: -607110781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_110
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5efd621cb4b03ff4eb2287cd04dfebfb
+      internalID: -268921492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_111
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 834.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37e6951bde4df434cac58273e09a4d94
+      internalID: -1918385848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_112
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 742179f6abd8e614589d7fcb225a7f65
+      internalID: 309891114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_113
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b78e308ef66aafd4d96839209d197d41
+      internalID: -1436763664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_114
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 235e878680e9b7d48a4d2ec656d2c4c1
+      internalID: 1537752047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_115
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0886a292c907f3049a4fc79be456892a
+      internalID: -1617184817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_116
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae8ccab5473a4c348a6ab7250614ed8c
+      internalID: 1320844254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_117
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1077f44926c0a1f47acbd15c67b14f23
+      internalID: 624551746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_118
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea54cae77704cb8418a1346df89ba4c6
+      internalID: 2020117683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_119
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed5240c5626930643b830c1706bac4fa
+      internalID: -2119587625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_120
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97129ef452d763748a05f798c9ddf16f
+      internalID: -1123793772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_121
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeb9d4901596cfd4cafa4174770bc580
+      internalID: 126900156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_122
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3c5f65dc49a5e648ac58f213bce3d91
+      internalID: -1617288832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_123
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 740103c9d1a6c864198e03a007a5bd80
+      internalID: -1249681245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_124
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d406a387f34acbe4381644907f816414
+      internalID: -777128114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_125
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2df9618866356f4e91a4147766a33c6
+      internalID: 309057087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_126
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b0665b2a8f51f4dae9eaff07cb0556
+      internalID: 196815615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_127
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 770.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6792263b2567d6a4c8c799dc071a1206
+      internalID: 162577408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_128
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26815a114e6d8b74193d82fb51f519e3
+      internalID: -1034642242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_129
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8af20ae2c0c521e43bfad7e4d67ed8c4
+      internalID: -485819978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_130
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0077575ec9e5edf49bf1c0283699468a
+      internalID: 1447437746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_131
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc26bd77514932446b4cc9e53f26adb1
+      internalID: -1008694060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_132
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a775426cbfff740a58b8957eee5eda
+      internalID: -472385487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_133
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17765d6ea91729b4a8812784bf685306
+      internalID: 668750534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_134
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47ec64989dacfec4289ba9e5731eedde
+      internalID: -2065779480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_135
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 069ffcf785d14b94e88f6abc572f9306
+      internalID: 593375915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_136
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf9d1ad955186d0429ffe2acff4ce1c5
+      internalID: -1207576172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_137
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfbf0f7ac63b26e449792941ef349305
+      internalID: 1655464377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_138
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f50c59e43080e4b4cb2d4cc6be953ee8
+      internalID: 1921476183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_139
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8986a62880a57ba4cb261d234fb4f74b
+      internalID: -1438672088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_140
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a7c3557649d6994ea86bd13bb03864e
+      internalID: -970084145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_141
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66e73be6277be54a8a7475229dd5c06
+      internalID: 741229345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_142
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d959f5f9ad8a10c4ebff90fae93b8cc6
+      internalID: 1142580539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_143
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 706.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42e4f0c1587631c42b0060419f408b59
+      internalID: 88735514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_144
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5424b629711d0714c86649d8f227c528
+      internalID: -1137422267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_145
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16c58a34c94d831408c82cc9ada25e2c
+      internalID: 215800643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_146
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14937c596bf17a541a04304d5810103a
+      internalID: 1934449411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_147
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 492d4336e02790241b8c14620e65203e
+      internalID: 897975927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_148
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cc29a81fcca6644a5b43cd1ec15aad
+      internalID: 461911237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_149
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f3dabac8f61e70448a839c117a1bf64
+      internalID: -193367866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_150
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bcf68f16292d47479d985c065c0628d
+      internalID: -1687590476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_151
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ef9ab53680cc045954ad5224150ba4
+      internalID: 1963080875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_152
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b67701e1a0bf104a8584f585a601a03
+      internalID: -680683762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_153
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f17ba5cb6ffa6984d96b935d8e6e356b
+      internalID: -154573212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_154
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50a40a7ef5700164da6ef7d973c94c4a
+      internalID: -898093544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_155
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5706f6d8867dc443a17518747cdcb67
+      internalID: 811985919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_156
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e7acf2eab093f44ebeaeb8f3d846779
+      internalID: 2089630645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_157
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 707a5c414d8b83b4da4da761563d739b
+      internalID: 302372467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_158
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe4bf6c2d5719be449bb4b89aa33fa3c
+      internalID: 1159613024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_159
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 642.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea2422e8a168bfa44a7cbfd2497b01d2
+      internalID: 252780812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_160
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13df26efb21139f4b8ac387c7f6c0d23
+      internalID: 1788184358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_161
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e1c685ace24554da167edac8afe91b
+      internalID: -1450229859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_162
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59ecf14545626d04fa3f4b995bdc7d87
+      internalID: 631398243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_163
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f9013ce85c9fb4ca5b37751f8279d2
+      internalID: 2008334135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_164
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c101ff8c83cf08147813d1561c231961
+      internalID: 655530150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_165
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21f9bc1a584579a4ca885a7c5bcc9263
+      internalID: -579700874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_166
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41d5ee9d35bfa624894f733600077cfc
+      internalID: 175302487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_167
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 269a44b5c1ae5f442be5a9519f505fae
+      internalID: 1482285717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_168
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f9230e37df3a9a488f6045bd16385a7
+      internalID: 866115090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_169
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea2a7a2be9767d046ad80adf1e623b49
+      internalID: -132085417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_170
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3ac3209614a3334b82574cb4c38bcc1
+      internalID: -900842025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_171
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f771ad14953da714facaaa88d5eebe99
+      internalID: 552085876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_172
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1b196aa5ed0ed746bd98d2185557f0e
+      internalID: 1905454448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_173
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 183bd6f6e5b9b9345a8d9632eea6b3a9
+      internalID: -511132412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_174
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f91e86b6cb1be974bb208108ca5ec295
+      internalID: 326163924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_175
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 578.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb3390e2e5bfd84e8a5de7509e0a852
+      internalID: 683304173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_176
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e911332226f99904996457740a6f69ca
+      internalID: -1829551607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_177
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d034aa7d10c75498be4e0630e5fb57
+      internalID: -1000943449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_178
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9373d4939596b7e4ca654699cc145e8b
+      internalID: -1566839572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_179
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a487612b3f5edbc4992d51aa5c14350e
+      internalID: 349136593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_180
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32658eea469b6a64cb0a780f6798c612
+      internalID: 315052361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_181
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cca9a3342be3f541a5809e3439cc48f
+      internalID: 1310998957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_182
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9de8e6ec179f8d4e8a6187ed129bff5
+      internalID: -1736431618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_183
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 685c01dd24bf1ca489203525dfef7c63
+      internalID: 336441417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_184
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d5d41369602d5a499ea6e3a103002a6
+      internalID: 1209360615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_185
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c40cecc942763c45982625be01fb0f5
+      internalID: -413578764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_186
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41616df1ced88e14990d1fc4e93aee6b
+      internalID: -881951997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_187
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dc65142f784dbb46b1bcd2dae7c9d64
+      internalID: 1656778890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_188
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b795f6dda0712e149b028616aa5ca873
+      internalID: 1649417666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_189
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dcd0d51681ee3a43b8cd3e342b067c8
+      internalID: -1289947178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_190
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d54a075cd3f350b4bb540a8cd4576e91
+      internalID: 233851022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_191
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 514.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e04fa966e096fa41b5d609a4ff589e5
+      internalID: 1420134731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_192
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d4bf73750052d24d8794ece44b5c77f
+      internalID: 379265192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_193
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f136a1cb292a984189905c21c4b882c
+      internalID: 2065306280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_194
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bef27cf3483c564cb93046136d36312
+      internalID: 1654817218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_195
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 670155ed82b156449a187fcaa5910a72
+      internalID: 889954513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_196
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9867ce31718aaa45b5fb1f01f04fcab
+      internalID: 322271803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_197
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1882285692a083c48895f5af05834d09
+      internalID: -814323972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_198
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b27d48654698ee4d9916586175b5978
+      internalID: 1757550839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_199
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c03cdd7770a9746bd9b48739d9fee4
+      internalID: -1880733290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_200
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cabe5d1c45262a4e897c1fa2816437d
+      internalID: -1469689368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_201
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcc8a7bda2d348547ba5608a0762fdfa
+      internalID: 1059020000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_202
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 078df1f13dc627b4882ae604849c61e5
+      internalID: -963978741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_203
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c49f4075380238147a09135a5a3d89f7
+      internalID: 1660377281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_204
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b142e30312ded540a7afc7ae8116031
+      internalID: -119024906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_205
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f6bfbba9363a3641a06f77f231e4ed4
+      internalID: 1809959075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_206
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71f7e776f9a6caa4aa2a78291d66783d
+      internalID: 483089767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_207
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 450.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b080558e82290dd4681a67fcfd6ce77b
+      internalID: -1419326330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_208
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 037e18ae86de61a4d9bb6dfb0810c82b
+      internalID: -1520640927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_209
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f6ebc71d06bdf40adbbeedf4d5eafd
+      internalID: 1503312484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_210
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f0911d7b663a748b194157d6aef046
+      internalID: -308546614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_211
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdd4f8cb9939ed246a4254d87815927a
+      internalID: -1485038701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_212
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eeeba4dfe035ef408b4d9d9973dd50e
+      internalID: 965511070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_213
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d85bd674283daa54680aa362ba23f60a
+      internalID: 1132831550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_214
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0660e41023d642d44b55654978f67c21
+      internalID: -1805711359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_215
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a694e80f287bee448972d30f6dc9058
+      internalID: 1051848997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_216
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c65db02fd3761849a0ccef5ba3a0a44
+      internalID: -1069752689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_217
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e84db7a43595fb948bf16a915e569172
+      internalID: 2044594464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_218
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abcbbebd06097094da82840acd195896
+      internalID: -39247673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_219
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d97c62dbb8117d64c8e4e27148758f7f
+      internalID: 634187914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_220
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f17a86a602fb234195c2713c27b78b6
+      internalID: 823752793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_221
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd257ffbf6a5f94468f223ed0b93e051
+      internalID: -933467192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_222
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c8938a6799f86d409afa160e0be2fcc
+      internalID: -1582226900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_223
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 386.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 016336c47ce82a4409b1b23b00694561
+      internalID: 436292991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_224
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6cb6e8ccf1d695429c938d927ab7fd4
+      internalID: -1636739905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_225
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a385c721f976743b17be57ff835e57
+      internalID: -116832275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_226
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5861734355dbdc47892eff9c9546e7b
+      internalID: -1479749886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_227
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3017ef32d4955dd49b4bc9068308b8fb
+      internalID: -648074457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_228
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ccb9540c53f75a42bf77a36f61e4b44
+      internalID: 1833131735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_229
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b94179eddfc2d942bcfe0770448a7cd
+      internalID: 1719140593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_230
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d860459a4c0fbeb408f36fd2b33af0fe
+      internalID: -619939506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_231
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdbac2795f648a44d813bf42a79cd25c
+      internalID: 1963806425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_232
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 042d991488569fa4abbc6bcab0bf8093
+      internalID: 337864801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_233
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba65aec28e804d843850b0f13b50f17d
+      internalID: -1860810101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_234
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2470cd466cb5b094c9f92d47c00f2c6b
+      internalID: 1783769532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_235
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefe99bd97fa49341ba540baf270216d
+      internalID: 15607353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_236
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83e8f20bc4a640a40bcc63395f1235af
+      internalID: 787382865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_237
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cd54a447bd5aab46a62c7f6c0718592
+      internalID: 566760064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_238
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb85f1f0fdfce1409dd537e50185d7f
+      internalID: 1422039428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_239
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 322.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ab46891083bb5145bcde7129e38ebb0
+      internalID: 101639416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_240
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d61ba84623d24846b8a74cb0a9bb352
+      internalID: -1747269575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_241
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 864a615eceffe044ba38880c4c6a21b5
+      internalID: 348296375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_242
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b365b1f9d4444a498f031a233f4ae8b
+      internalID: -719473863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_243
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4753e86a84673e947a59cd76cbaf8bda
+      internalID: -1800672157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_244
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcdf0c0761d55594490fec3902def376
+      internalID: 1047672189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_245
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a1286d2a43d26d49b131e00a3cfed5a
+      internalID: 734399392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_246
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5c952a90495ada44b251aea84b8197e
+      internalID: -1776314656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_247
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2456218011cb7b43aa56cc6992a4fdc
+      internalID: -472085680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_248
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fcdbd6721dbad74bb03534caf019a39
+      internalID: 1242583242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_249
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7eee351ec0d59340b4db2e2b7b44aba
+      internalID: 1287745234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_250
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 658af5869053c1f408d2ea5781312349
+      internalID: -1167986697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_251
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38610cbaa6c18644599b75365f0883b3
+      internalID: -605936839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_252
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccff076bfa685e54fbf54d3ccdd1d558
+      internalID: 2117392020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_253
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1438bc0774d8b34a8020db015dc8585
+      internalID: -759392949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_254
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d69fd5097b87b84da46297e953c9df8
+      internalID: -1787978101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_255
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 258.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fe643a27230ca34bbfb0dd03376cd19
+      internalID: 832695656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_256
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f888e2e194bafc459be242ad03a5935
+      internalID: -397342833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_257
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55dd09ac7d3003b4d8f6efdaf6bdfbbc
+      internalID: 1471004168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_258
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79b70bdacfb053a4189f9446bfbf9738
+      internalID: -228185319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_259
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3b5c9360944734a86009ad4b1bfee2
+      internalID: -787863764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_260
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68fd3ad1017ed1f4185fd9998b7d097f
+      internalID: 1471948579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_261
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c05554121965ca94faace088fe727f4b
+      internalID: -1080478431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_262
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 791efa1accd75844683e62e9a8e15564
+      internalID: -822310253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_263
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bbf36e80aea027448115fd2c0021502
+      internalID: 1613163104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_264
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1957eefedb1b91143b844fa660753aff
+      internalID: 2017418161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_265
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82e8bf90db8fb9542b5eea8200e91167
+      internalID: -1967538265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_266
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19c0b69dfd312d148ad4c937d3ee5a2e
+      internalID: 878898487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_267
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 245e0ab59fb94e2439f597e47a2d1659
+      internalID: 2100961251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_268
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b86764ed873920541be9702b00218b9a
+      internalID: 178455922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_269
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb48670154757d0469dce6e25b459c60
+      internalID: -1875059203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_270
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d7715bc3b69d74d826a684c528c2f0
+      internalID: -1269580113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_271
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 194.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8889729de0747b447828bb57bc30dbf3
+      internalID: -157793954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_272
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e22e0f66f656ed498a703bd524fd8b2
+      internalID: 2123167839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_273
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aa083beb62c0f04ba7ac0934a08e5ca
+      internalID: -93423795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_274
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1c211012f1fd29429c3531783564db7
+      internalID: -1712055513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_275
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10cb4bf8f924a274faf5565dc79921d7
+      internalID: 1297785213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_276
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdb76a368db66464f86de021b20d296b
+      internalID: 253344939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_277
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 641cf2e459fabea458e34169d037d416
+      internalID: -1075166305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_278
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9b4fc56ab26f5b4bb38752bd6967168
+      internalID: 1799841983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_279
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ec4d4d40acdf44cb14f7f6c50409f8
+      internalID: 1758464395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_280
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b0f10c0654b3714d9aa67fb03f9b902
+      internalID: 2129339044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_281
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38df4dbcc0830ef47b8f5c92892be916
+      internalID: -1684262496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_282
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a475b6aee62d50a499ae0cdb8bf9949a
+      internalID: 1164192729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_283
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0c2725dba1ce294d8c9746bc0bd6973
+      internalID: 957299714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_284
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6495a380bef5aab408a6ffc9717e9dcc
+      internalID: 1193544762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_285
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4677054c4027dcf47a10ab0318b82abe
+      internalID: 1670281738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_286
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f941d42d784062a4ca3e50487d371952
+      internalID: -174603937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_287
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 130.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae19a6408214e7c49a997138edc7eaa4
+      internalID: -1959752015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_288
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b225a6e8ccfc134cba10e65530d86a0
+      internalID: -1171316279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_289
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c992eb152070a3e45840d7583a635e66
+      internalID: -196926636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_290
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0b9296f82a5a6a4b8e2eb9522de39e7
+      internalID: 1467520651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_291
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c550b531d48534799f225c79864796
+      internalID: -399737324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_292
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94729fa3731fa764795724aa2a9c740f
+      internalID: 139298315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_293
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56273f4fbbcfbca49891ccbd801c52f1
+      internalID: -821847145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_294
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7fbaf00a62e7c04c8481d04b4cbf298
+      internalID: 391988271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_295
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a7ee72338683614f8b9625898b0929d
+      internalID: -984436830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_296
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c90f6fdbb26fe94f9fce4502dda632d
+      internalID: -1467336385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_297
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee6768459731c5e45bbd606cda8587d6
+      internalID: 1870886707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_298
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27e3b42cb4b26534397aaabb526b8da1
+      internalID: -1461947101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_299
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c3db31c2d97e44e8886a0ef8d4fded
+      internalID: 1130138974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_300
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c96bcca6d1dda2e4db8885cbe7041b87
+      internalID: 723192702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_301
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9093b3783c7a91d45866780f7a39987f
+      internalID: -977164584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_302
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23640274d5a734047b7ba2bfcde6e6ac
+      internalID: 269340912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_303
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 66.85
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363172f55c4ede747bb81716fb3c59a6
+      internalID: -1076035786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_304
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4ba53bafd521894fb333ab7c0a46338
+      internalID: 666495362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_305
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2661ebaae58bbd240a76fbcda4784105
+      internalID: -428917458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_306
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ef55602dd70af24db1eb31552d330da
+      internalID: -1614479079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_307
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e4cd6852b7cd44a9b42e92dc8af730
+      internalID: 1508315813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_308
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48a87b444be8466418f546a03a922c4a
+      internalID: 594735790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_309
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db769317ad879914a96277df8ec6eec0
+      internalID: 1012933809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_310
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f8a6cd776f8a7d45b4145934f866056
+      internalID: -1870569129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_311
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72cc603ca5749f64f93429b66763a2de
+      internalID: -1432804484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_312
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d994023f106dd4d8241ae1ff516cfe
+      internalID: 1172979923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_313
+      rect:
+        serializedVersion: 2
+        x: 450
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abb58a352c26a994bab8d950e7230ef4
+      internalID: 24991073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_314
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a065baf707d6ce409959ae97a8f9ed4
+      internalID: -1343262059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_315
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c76f414472e4f44eabf33b6eb2e4ebc
+      internalID: -645805742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_316
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f31dddacc885e74496280a431f6865d
+      internalID: 929323115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_317
+      rect:
+        serializedVersion: 2
+        x: 650
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 178d0c7091102ec4599c18deba602ff9
+      internalID: 2068112998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_318
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46f38e21c0d67a64ba44ba482705a007
+      internalID: 908639109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parquet 3_319
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 2.8499985
+        width: 50.1875
+        height: 64.15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 692c9c7b838a43b4599120f8b098fdba
+      internalID: 739524148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -84,9 +6826,329 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Parquet 3_0: 1970399004
+      Parquet 3_1: 332670640
+      Parquet 3_10: -1787564590
+      Parquet 3_100: 1461741150
+      Parquet 3_101: -830520056
+      Parquet 3_102: 1237874775
+      Parquet 3_103: 686865224
+      Parquet 3_104: -895628762
+      Parquet 3_105: -206062254
+      Parquet 3_106: 1003726881
+      Parquet 3_107: -1957709101
+      Parquet 3_108: 260390160
+      Parquet 3_109: -607110781
+      Parquet 3_11: -1417876192
+      Parquet 3_110: -268921492
+      Parquet 3_111: -1918385848
+      Parquet 3_112: 309891114
+      Parquet 3_113: -1436763664
+      Parquet 3_114: 1537752047
+      Parquet 3_115: -1617184817
+      Parquet 3_116: 1320844254
+      Parquet 3_117: 624551746
+      Parquet 3_118: 2020117683
+      Parquet 3_119: -2119587625
+      Parquet 3_12: 1261698016
+      Parquet 3_120: -1123793772
+      Parquet 3_121: 126900156
+      Parquet 3_122: -1617288832
+      Parquet 3_123: -1249681245
+      Parquet 3_124: -777128114
+      Parquet 3_125: 309057087
+      Parquet 3_126: 196815615
+      Parquet 3_127: 162577408
+      Parquet 3_128: -1034642242
+      Parquet 3_129: -485819978
+      Parquet 3_13: 101462155
+      Parquet 3_130: 1447437746
+      Parquet 3_131: -1008694060
+      Parquet 3_132: -472385487
+      Parquet 3_133: 668750534
+      Parquet 3_134: -2065779480
+      Parquet 3_135: 593375915
+      Parquet 3_136: -1207576172
+      Parquet 3_137: 1655464377
+      Parquet 3_138: 1921476183
+      Parquet 3_139: -1438672088
+      Parquet 3_14: 1662248868
+      Parquet 3_140: -970084145
+      Parquet 3_141: 741229345
+      Parquet 3_142: 1142580539
+      Parquet 3_143: 88735514
+      Parquet 3_144: -1137422267
+      Parquet 3_145: 215800643
+      Parquet 3_146: 1934449411
+      Parquet 3_147: 897975927
+      Parquet 3_148: 461911237
+      Parquet 3_149: -193367866
+      Parquet 3_15: -1560054181
+      Parquet 3_150: -1687590476
+      Parquet 3_151: 1963080875
+      Parquet 3_152: -680683762
+      Parquet 3_153: -154573212
+      Parquet 3_154: -898093544
+      Parquet 3_155: 811985919
+      Parquet 3_156: 2089630645
+      Parquet 3_157: 302372467
+      Parquet 3_158: 1159613024
+      Parquet 3_159: 252780812
+      Parquet 3_16: -207001262
+      Parquet 3_160: 1788184358
+      Parquet 3_161: -1450229859
+      Parquet 3_162: 631398243
+      Parquet 3_163: 2008334135
+      Parquet 3_164: 655530150
+      Parquet 3_165: -579700874
+      Parquet 3_166: 175302487
+      Parquet 3_167: 1482285717
+      Parquet 3_168: 866115090
+      Parquet 3_169: -132085417
+      Parquet 3_17: 1793876946
+      Parquet 3_170: -900842025
+      Parquet 3_171: 552085876
+      Parquet 3_172: 1905454448
+      Parquet 3_173: -511132412
+      Parquet 3_174: 326163924
+      Parquet 3_175: 683304173
+      Parquet 3_176: -1829551607
+      Parquet 3_177: -1000943449
+      Parquet 3_178: -1566839572
+      Parquet 3_179: 349136593
+      Parquet 3_18: -2114855104
+      Parquet 3_180: 315052361
+      Parquet 3_181: 1310998957
+      Parquet 3_182: -1736431618
+      Parquet 3_183: 336441417
+      Parquet 3_184: 1209360615
+      Parquet 3_185: -413578764
+      Parquet 3_186: -881951997
+      Parquet 3_187: 1656778890
+      Parquet 3_188: 1649417666
+      Parquet 3_189: -1289947178
+      Parquet 3_19: -1688221481
+      Parquet 3_190: 233851022
+      Parquet 3_191: 1420134731
+      Parquet 3_192: 379265192
+      Parquet 3_193: 2065306280
+      Parquet 3_194: 1654817218
+      Parquet 3_195: 889954513
+      Parquet 3_196: 322271803
+      Parquet 3_197: -814323972
+      Parquet 3_198: 1757550839
+      Parquet 3_199: -1880733290
+      Parquet 3_2: -948406077
+      Parquet 3_20: 828750975
+      Parquet 3_200: -1469689368
+      Parquet 3_201: 1059020000
+      Parquet 3_202: -963978741
+      Parquet 3_203: 1660377281
+      Parquet 3_204: -119024906
+      Parquet 3_205: 1809959075
+      Parquet 3_206: 483089767
+      Parquet 3_207: -1419326330
+      Parquet 3_208: -1520640927
+      Parquet 3_209: 1503312484
+      Parquet 3_21: 1024729031
+      Parquet 3_210: -308546614
+      Parquet 3_211: -1485038701
+      Parquet 3_212: 965511070
+      Parquet 3_213: 1132831550
+      Parquet 3_214: -1805711359
+      Parquet 3_215: 1051848997
+      Parquet 3_216: -1069752689
+      Parquet 3_217: 2044594464
+      Parquet 3_218: -39247673
+      Parquet 3_219: 634187914
+      Parquet 3_22: 469210177
+      Parquet 3_220: 823752793
+      Parquet 3_221: -933467192
+      Parquet 3_222: -1582226900
+      Parquet 3_223: 436292991
+      Parquet 3_224: -1636739905
+      Parquet 3_225: -116832275
+      Parquet 3_226: -1479749886
+      Parquet 3_227: -648074457
+      Parquet 3_228: 1833131735
+      Parquet 3_229: 1719140593
+      Parquet 3_23: 1169184763
+      Parquet 3_230: -619939506
+      Parquet 3_231: 1963806425
+      Parquet 3_232: 337864801
+      Parquet 3_233: -1860810101
+      Parquet 3_234: 1783769532
+      Parquet 3_235: 15607353
+      Parquet 3_236: 787382865
+      Parquet 3_237: 566760064
+      Parquet 3_238: 1422039428
+      Parquet 3_239: 101639416
+      Parquet 3_24: 931615873
+      Parquet 3_240: -1747269575
+      Parquet 3_241: 348296375
+      Parquet 3_242: -719473863
+      Parquet 3_243: -1800672157
+      Parquet 3_244: 1047672189
+      Parquet 3_245: 734399392
+      Parquet 3_246: -1776314656
+      Parquet 3_247: -472085680
+      Parquet 3_248: 1242583242
+      Parquet 3_249: 1287745234
+      Parquet 3_25: -368671969
+      Parquet 3_250: -1167986697
+      Parquet 3_251: -605936839
+      Parquet 3_252: 2117392020
+      Parquet 3_253: -759392949
+      Parquet 3_254: -1787978101
+      Parquet 3_255: 832695656
+      Parquet 3_256: -397342833
+      Parquet 3_257: 1471004168
+      Parquet 3_258: -228185319
+      Parquet 3_259: -787863764
+      Parquet 3_26: 1750982312
+      Parquet 3_260: 1471948579
+      Parquet 3_261: -1080478431
+      Parquet 3_262: -822310253
+      Parquet 3_263: 1613163104
+      Parquet 3_264: 2017418161
+      Parquet 3_265: -1967538265
+      Parquet 3_266: 878898487
+      Parquet 3_267: 2100961251
+      Parquet 3_268: 178455922
+      Parquet 3_269: -1875059203
+      Parquet 3_27: -405696345
+      Parquet 3_270: -1269580113
+      Parquet 3_271: -157793954
+      Parquet 3_272: 2123167839
+      Parquet 3_273: -93423795
+      Parquet 3_274: -1712055513
+      Parquet 3_275: 1297785213
+      Parquet 3_276: 253344939
+      Parquet 3_277: -1075166305
+      Parquet 3_278: 1799841983
+      Parquet 3_279: 1758464395
+      Parquet 3_28: 1313818633
+      Parquet 3_280: 2129339044
+      Parquet 3_281: -1684262496
+      Parquet 3_282: 1164192729
+      Parquet 3_283: 957299714
+      Parquet 3_284: 1193544762
+      Parquet 3_285: 1670281738
+      Parquet 3_286: -174603937
+      Parquet 3_287: -1959752015
+      Parquet 3_288: -1171316279
+      Parquet 3_289: -196926636
+      Parquet 3_29: 1502395790
+      Parquet 3_290: 1467520651
+      Parquet 3_291: -399737324
+      Parquet 3_292: 139298315
+      Parquet 3_293: -821847145
+      Parquet 3_294: 391988271
+      Parquet 3_295: -984436830
+      Parquet 3_296: -1467336385
+      Parquet 3_297: 1870886707
+      Parquet 3_298: -1461947101
+      Parquet 3_299: 1130138974
+      Parquet 3_3: 2039940443
+      Parquet 3_30: -1409781565
+      Parquet 3_300: 723192702
+      Parquet 3_301: -977164584
+      Parquet 3_302: 269340912
+      Parquet 3_303: -1076035786
+      Parquet 3_304: 666495362
+      Parquet 3_305: -428917458
+      Parquet 3_306: -1614479079
+      Parquet 3_307: 1508315813
+      Parquet 3_308: 594735790
+      Parquet 3_309: 1012933809
+      Parquet 3_31: -691087044
+      Parquet 3_310: -1870569129
+      Parquet 3_311: -1432804484
+      Parquet 3_312: 1172979923
+      Parquet 3_313: 24991073
+      Parquet 3_314: -1343262059
+      Parquet 3_315: -645805742
+      Parquet 3_316: 929323115
+      Parquet 3_317: 2068112998
+      Parquet 3_318: 908639109
+      Parquet 3_319: 739524148
+      Parquet 3_32: 1689541031
+      Parquet 3_33: 1077089860
+      Parquet 3_34: -371631856
+      Parquet 3_35: 2094737637
+      Parquet 3_36: -1224244139
+      Parquet 3_37: 1907666901
+      Parquet 3_38: -1852381337
+      Parquet 3_39: 1850320921
+      Parquet 3_4: 989142149
+      Parquet 3_40: 1684243446
+      Parquet 3_41: 1018347996
+      Parquet 3_42: 304490805
+      Parquet 3_43: 1080356818
+      Parquet 3_44: -1442281695
+      Parquet 3_45: 50111945
+      Parquet 3_46: 1758976533
+      Parquet 3_47: 453691364
+      Parquet 3_48: 1763074501
+      Parquet 3_49: -982971020
+      Parquet 3_5: 2050536255
+      Parquet 3_50: 1367305298
+      Parquet 3_51: 554315449
+      Parquet 3_52: -413504791
+      Parquet 3_53: 1375808541
+      Parquet 3_54: 693794685
+      Parquet 3_55: 679297449
+      Parquet 3_56: 156547733
+      Parquet 3_57: 1661549984
+      Parquet 3_58: -1418330514
+      Parquet 3_59: 1074448311
+      Parquet 3_6: -1560541113
+      Parquet 3_60: 747031756
+      Parquet 3_61: 1736509674
+      Parquet 3_62: -306352020
+      Parquet 3_63: 219489584
+      Parquet 3_64: -149802653
+      Parquet 3_65: 1423483242
+      Parquet 3_66: 1841910277
+      Parquet 3_67: 1066335649
+      Parquet 3_68: -834066304
+      Parquet 3_69: 1150583266
+      Parquet 3_7: 347976286
+      Parquet 3_70: 1627281914
+      Parquet 3_71: 1059610933
+      Parquet 3_72: 178801407
+      Parquet 3_73: -489826256
+      Parquet 3_74: 1713870810
+      Parquet 3_75: 612835238
+      Parquet 3_76: -216917235
+      Parquet 3_77: -202848611
+      Parquet 3_78: -450167861
+      Parquet 3_79: -1640422076
+      Parquet 3_8: 836494723
+      Parquet 3_80: 18258569
+      Parquet 3_81: -609262892
+      Parquet 3_82: -1008837835
+      Parquet 3_83: 1708390752
+      Parquet 3_84: -1127114663
+      Parquet 3_85: -33519256
+      Parquet 3_86: 1981389121
+      Parquet 3_87: -933657710
+      Parquet 3_88: -444708695
+      Parquet 3_89: 1301522746
+      Parquet 3_9: 1304782532
+      Parquet 3_90: 1703336717
+      Parquet 3_91: 217814311
+      Parquet 3_92: -1029887617
+      Parquet 3_93: -74625076
+      Parquet 3_94: 2106195056
+      Parquet 3_95: -571193131
+      Parquet 3_96: -1035395481
+      Parquet 3_97: 673766999
+      Parquet 3_98: -831166632
+      Parquet 3_99: 401248164
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

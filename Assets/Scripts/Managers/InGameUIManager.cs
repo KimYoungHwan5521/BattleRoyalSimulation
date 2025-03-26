@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -174,7 +175,12 @@ public class InGameUIManager : MonoBehaviour
 
     public void ClearLog()
     {
-        log.text = "";
+        log.text = ""; 
+        attackDamageText.GetComponent<Help>().SetDescription("");
+        attackSpeedText.GetComponent<Help>().SetDescription("");
+        moveSpeedText.GetComponent<Help>().SetDescription("");
+        farmingSpeedText.GetComponent<Help>().SetDescription("");
+        shootingText.GetComponent<Help>().SetDescription("");
     }
 
     void SelectObject()

@@ -1,0 +1,7154 @@
+fileFormatVersion: 2
+guid: 6d9fc379f7cd73d43ae229b37e196e35
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Wood floor 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6bedeaf37be42541b7ab4c765bdf81c
+      internalID: -971490959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_1
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893720533aaa62842aceb4e210d734f0
+      internalID: 300271576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_2
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4360e39ebade892499e438c8ba81b271
+      internalID: -1372329287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_3
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f87b4e4baac51488a0285308b97efc
+      internalID: -1489381340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_4
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c673764f1e436bd4a8467c9ee6d36174
+      internalID: -1540807495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_5
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fed1057146a36d4fae7642bd8371248
+      internalID: 1236686090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_6
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d9c09d5322b4b40b77e7d190e85b15
+      internalID: 1773367233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_7
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b95c11dbc781d4444b2514cfa9288923
+      internalID: -1206911155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_8
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 112473e316a3a194cbae791b02cbe4c3
+      internalID: 547113424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_9
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adb38abdc90643846a6e6a8c6ac7d370
+      internalID: 1037528822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_10
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 305d28e3d516b1b449aa1338eb6712d1
+      internalID: 1830786384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_11
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ac09db6e2d623d4882a8400c582135e
+      internalID: 1027930323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_12
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18cf1dfacfc15794fba2e558a6779d26
+      internalID: 1455618416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_13
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821decacb74f44f4ea9486637bd951e9
+      internalID: 1753461650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_14
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b6bda54154c8f64b921560f2c44621a
+      internalID: 693544433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_15
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38286bf3bee3d5745b89f13d5b8d623a
+      internalID: 625543392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2b4c4ca4972abe47b9618004c4f6d4f
+      internalID: 1942497010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_17
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4312c892d0d08ac458b4d9e9455dfffa
+      internalID: -191697660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_18
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bafbf1f339f7a104aaa47065d9dc48a5
+      internalID: 1542961011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_19
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca6e6ef5539b764fb7db7f0382f4996
+      internalID: -499292780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_20
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c694c021e5c34fa48bc020d3b854f96a
+      internalID: -2028274031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_21
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef7c827d6b2b41b43872a27b79203622
+      internalID: -907051424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_22
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fdb79a05321dc748b02becf8ac30aba
+      internalID: -1180284907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_23
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86d8e032cddeeba4086438c7f324265f
+      internalID: 1891644939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_24
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08fb3ac21e48bff4b843d1f381635765
+      internalID: 1482208694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_25
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62ffef9710962814ab391ede7035c310
+      internalID: -34782014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_26
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7d069749097468409e389b18f5cf444
+      internalID: 1423858754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_27
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a46b9557b53f474cb934f65e6650b8c
+      internalID: 1293704352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_28
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc680be24d8b9e84fb632d518a304c46
+      internalID: -488868792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_29
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0ef50f71d3452e468519b82be317f41
+      internalID: 406648087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_30
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56fe9ae71ee6e4644b92a0489b09e1d9
+      internalID: 1662099421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_31
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 928857dbeb49169429ef17ea654d9e70
+      internalID: 2130578895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e37afaf32722243a282fd4d334983f
+      internalID: 1914086134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_33
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ade4d18803957cd4aadb46c7d2a41700
+      internalID: 1655119613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_34
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99bd2b75e13734645b847f8abc2125da
+      internalID: 409517417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_35
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee1dc24da9efa0649bb1d170245383f6
+      internalID: -1313121117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_36
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96f56882152e7d94ea4b0698cedc5505
+      internalID: 974996158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_37
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4003eeef04169e2408cba04e6e78bbfd
+      internalID: 770544370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_38
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25a673e42a02dd44babbc726c36768da
+      internalID: -1127821861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_39
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b270594b3e9b6d149b57fb80780b5ecb
+      internalID: 1282578470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_40
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4cc34d952d8f3a42a9955065fe39179
+      internalID: -1436114123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_41
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97e63b040f7a5d2468fde316a0a5b127
+      internalID: 1402509025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_42
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0606ffcc7767904687c50081dfcb75e
+      internalID: 1539907109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_43
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 672aa4e3b34458a4bb0a83b3d704e00f
+      internalID: 413797007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_44
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1330f93f859127d4785971cacff0f40a
+      internalID: 914739922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_45
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ff609a61939fa8478cebaf04067f10a
+      internalID: 1063658235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_46
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e77a7a479a671e4a8440aed30dfaeba
+      internalID: 1087824935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_47
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab4d2d814646b924993a47d586197f82
+      internalID: -1128018125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecdf65a911221164c81f8e8beb6bff86
+      internalID: 756614133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_49
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6707615fb31c22469bdde81659711f7
+      internalID: -1902826511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_50
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b95983a3d10323d499d4cd9c7d83ccf8
+      internalID: -490292048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_51
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5cdd767afaba254f84bf2f35031de99
+      internalID: -222211560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_52
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f8caedde1558c47b808ae3ef693b9b
+      internalID: 1036356498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_53
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ca0abd6689d844081f17ae4b757eb6
+      internalID: -18734160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_54
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 487af4d203b4d974b957856ce103b17e
+      internalID: -532090371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_55
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e54b5feb0e402fc468639ab5bb4f140e
+      internalID: -1785701645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_56
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7371e4620b5a46543be1de7821525033
+      internalID: -927345650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_57
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0626663c2902f74f9ae0db60b468b53
+      internalID: 2124312648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_58
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f152c961cc1a69041a8f0ee38a35cbe6
+      internalID: -1931805086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_59
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ed2231f0e22084408d8d4609a1c640c
+      internalID: 1002993728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_60
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a743cf6a79f6024a87aa79226624ceb
+      internalID: 1974089273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_61
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 336b619d5f4bf164e9302cb0a4f84349
+      internalID: -1132613922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_62
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30a9e0cbfd4a2d844ad50cdc1299ff1c
+      internalID: 814428589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_63
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b60e9f67ea99b4243800e07d8da9d179
+      internalID: -814542290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271e3471ade8f294d80b2a06ff57d274
+      internalID: 102053574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_65
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719d9134646efa24f8e9c713a28a9c68
+      internalID: -1105403804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_66
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8336e12bd08bb3f4889e8c6ed44fa379
+      internalID: 970170056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_67
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aabe3d34838eb354dae0d8e8abe4976a
+      internalID: -767805367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_68
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687a1d3b2fdabfb49bf7334f5e8d820d
+      internalID: 1913916244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_69
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c30622dafc8cd047af908c455e71b72
+      internalID: -1122592882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_70
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 960ede9915ec3684290aaa2dc4afbcfa
+      internalID: 1028380834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_71
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 786b780cf9e6f364bb1b7df3dcd900a3
+      internalID: -1775903154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_72
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05485ab54e5fbf848a861cf97c5f0fd6
+      internalID: -1118845285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_73
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc9d1ec6668a854b97d425da21f940f
+      internalID: -2014859134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_74
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f978529811022f409ffb955cc361028
+      internalID: -1779672608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_75
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f45e7f8f78c3d4490ccef98ed0c4b6
+      internalID: -868970852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_76
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e2fcd011474c1b4f89e0e0776d5932e
+      internalID: -894245343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_77
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f43ab54d7417c240bbba4b010e9547f
+      internalID: 1630980010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_78
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5d0aa8a54974dc41b9c4e532cb433b9
+      internalID: -375702879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_79
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1090bfa12944fda41b5befb0ee3fd6d6
+      internalID: 547507668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_80
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06a425f718a897540be19ed93bb9345f
+      internalID: -2078992118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_81
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01dfcb06fbc1e424daf7f2a963103a9c
+      internalID: 1889345280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_82
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 979dcc65ec48c6641aa04a7a11534640
+      internalID: -1358079257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_83
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d7c3d878f310bb47a9520eddb18e2ac
+      internalID: -1938097037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_84
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c036b7a2a6442dd47ae5b267cdaef4b2
+      internalID: -74419623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_85
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7104776e888c2d4429695b84fe5196b2
+      internalID: 586364094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_86
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abe0a5b959de65c41accbd7d95b0c9a2
+      internalID: -98989941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_87
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e35d178d5eb5dae45800405159539bd1
+      internalID: -358278161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_88
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8123cfe52f10b0f43a96f6ff010604f8
+      internalID: 293464829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_89
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04b7b7987d6afa84eb48aaa24901b155
+      internalID: -2140001915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_90
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a4547a51e489644bd3aae3fb3c1c71
+      internalID: 1646610086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_91
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b914b29bc839c1743af04977ed46f271
+      internalID: -1483199654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_92
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f5191f4edb61c04598c97b96e219857
+      internalID: 96591041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_93
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ec7c498b8e8887438838943eb95d4ae
+      internalID: -1316799506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_94
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc340c18ce5f57541959786827fc64f6
+      internalID: -1760871176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_95
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23ed55bbd79ceef4c822a15d6f604b16
+      internalID: 191753901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_96
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0c9c938139f913429b3f1769d0cad82
+      internalID: -58668264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_97
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792eb01e589810941b171c45a4fa55e0
+      internalID: -1111132687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_98
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fedcbdec0c24384aa0574c0c09885d3
+      internalID: -197346974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_99
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6ea03d2af01a0e42891f5e1d8f6fd3b
+      internalID: 1907119354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_100
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb88bca78b60a694d872d8a7f4a71999
+      internalID: 1050116058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_101
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30dd01cf25415f4419ca457eac745dbb
+      internalID: -26548438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_102
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b668d064d00f29d41aa72f8a6df87526
+      internalID: 1033259337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_103
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4365452cc95f8ca4dbadb97b1cec620f
+      internalID: 70922592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_104
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 799300e3fc7e7d040981574a8fbec9ba
+      internalID: 1995909324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_105
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b26c47db86243144e949fcb41f58f8a4
+      internalID: -1772909520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_106
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bd83c8861a2f6b4b986ba3f576f6ce1
+      internalID: -1858182255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_107
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 429259ebf9f50194ab028b3c920fa3e0
+      internalID: 1599814360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_108
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 787e8c37092748d4487cc152e996e945
+      internalID: 775767761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_109
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb48f11690c04924ea7b520820add5dc
+      internalID: 1527864993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_110
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dadeb0cb5a54ce4cbf32176eb6633a4
+      internalID: 1656145971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_111
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0c7641da7f2233479b4645112d63399
+      internalID: 1817220962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_112
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ec0e99ecfa5ea64fa6dc7b41e722bd8
+      internalID: 1163969683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_113
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 195784599d100774f9165c70b893f9e8
+      internalID: -1057247836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_114
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf441f106a2637643970ff185d44395a
+      internalID: 1596251659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_115
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fbf5b9198444034a99d1645b88eb0d8
+      internalID: 1046973869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_116
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c21ba82f38c068e4198af65aa3ab384d
+      internalID: 799955456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_117
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8e723f47f6eef94bb740bfb41f3a34c
+      internalID: -1479465267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_118
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe494d907a200d64e92a2cb8daea4f53
+      internalID: -784760561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_119
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2202d5b13ecc904088a3253279169f4
+      internalID: -265913497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_120
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c1862cac2749ed479d05350595fcb49
+      internalID: 908810678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_121
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd30ed9a5aea9fc44b34da6cd6b0850a
+      internalID: 1030979247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_122
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea100dd13cab3d949af858d17444efee
+      internalID: 952606111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_123
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26e238db28401234c99b6b36ca00b73c
+      internalID: -599717352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_124
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2ab0b9a8e8ff145bd2d865d20a74c6
+      internalID: 1156613420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_125
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e728b78f03a6c634d9b7403659a8f1ab
+      internalID: 1607194610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_126
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4892a32199018af42886c735a90587c4
+      internalID: -1631844651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_127
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b5434a9703ef6845b1168124206263f
+      internalID: -674467983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_128
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f350d285c97b594c96b12bf5cca5286
+      internalID: -209220404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_129
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d35882c35b835c448a468bce84a4550
+      internalID: -847253476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_130
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a320aeb57bba5b543aed792d3cde744f
+      internalID: -1307969031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_131
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d94a09a04877a14db577bd326d0356a
+      internalID: -2053712382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_132
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48dc4a87d3dafcb4798c3928a06577e5
+      internalID: -1107688336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_133
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a4f37e0f5ad53e4e9a56bc219732fcc
+      internalID: 740237951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_134
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfda95b534ed670469f010281d94c262
+      internalID: -1669006080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_135
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28f70e09a22125e49abb0d361690a550
+      internalID: -2069902748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_136
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d68e38337e0bd8e459bcebb4677baec0
+      internalID: -1012626607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_137
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8081a5851d5371044888b1dc254b8ab4
+      internalID: 1841199423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_138
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b5ec333abab3ef4286adeaf38f58ac0
+      internalID: 1980912030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_139
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e917381f1eb85f4ca00e8cc5b5b31f0
+      internalID: 926493745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_140
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1075c112a5cbaa34b857cbbc0f4cb8a0
+      internalID: 671066000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_141
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad008ed3484660459573d8f5b225eec
+      internalID: 506852484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_142
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1449d7a11c501094384bfc84ddab86bb
+      internalID: 1882892750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_143
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3a4d8fb7baad0348b680af387bb1da4
+      internalID: -1810355751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_144
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd6d9348562ce8c44bde4b3fbe5a8b49
+      internalID: -868240301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_145
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445fd36a7f6a4254ebf3d119284eaa05
+      internalID: 132157895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_146
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3760a7c56cbdb3540837b3519bf6ad51
+      internalID: 1305297792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_147
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f0b0adfb40794b4b9a0c4fee472000e
+      internalID: 1750118511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_148
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2fee76238a69d440bb3e283885d805f
+      internalID: 821131439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_149
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 950a86bf466041d45ab6537893fc4dbf
+      internalID: -295742447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_150
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee3f5fc1e8b933c47a03f0e50dacca29
+      internalID: 2008273091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_151
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544ab8f6715008c4590f1c7ade4578a9
+      internalID: 1946468194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_152
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 056c84af7bed45a40bc17a5ad60bb23c
+      internalID: 1196602914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_153
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c0482e40ca86b04d92cef40b8db52f7
+      internalID: -860881574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_154
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50bd4c1f36d803544a2b9ea4c2ccb1ad
+      internalID: 1606082858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_155
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 475d7e47f087af7489ca00d8630573f0
+      internalID: -1417751747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_156
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da07080bf67c5d4a9b22689500588a6
+      internalID: -1813498980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_157
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2404b3bad9dc18a4699b5c2ffc1a4798
+      internalID: 2083080166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_158
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 574997681d9448b43be05ffef72c8cfa
+      internalID: 972985224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_159
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 1004.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba64ec1b8a04454090ff4d0e2edbee6
+      internalID: -1625082312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_160
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97549c9e144747e4197c365d91bdd88e
+      internalID: 809314008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_161
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70e8791e8982a3545b7da788f9fe97e9
+      internalID: -310150987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_162
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b0fcf60178bdc54ea902d3975a32bd3
+      internalID: 934968074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_163
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97c115b0e9de33146a0eafd408fbd322
+      internalID: -1726114299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_164
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ff52b8e2b59e50468723694c51fd87e
+      internalID: 780594907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_165
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad2adf995a6da394e989ee9f996bd7a5
+      internalID: 291635784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_166
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb9fdacaa5958d2489e9b6916612070c
+      internalID: -91263473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_167
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41ffc27e70219e84182e3189d9ebf464
+      internalID: -1716595085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_168
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 778e67cddbc5bdb41aaaa7a8f3f75099
+      internalID: 1582038572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_169
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb3e57b73548594d8f01456ae032a36
+      internalID: -749319486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_170
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d3c2b0ba825d7b4885753eba45f6341
+      internalID: -1773156008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_171
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 655c19dabc7ecf44eabef30edd507a14
+      internalID: -1411981586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_172
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 177f78d6052d348439bf8095aecfa0e5
+      internalID: -735278024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_173
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e1eb408aa2eeab42b661d0e80a8578e
+      internalID: -2137813856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_174
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccc9e49a5aaf4c240b12bb2ad2589b99
+      internalID: 268277052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_175
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 904.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fb36be94918152499145c6276c158b9
+      internalID: 1150978817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_176
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9810f92081ecf91478617a8d19b6382d
+      internalID: 299451815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_177
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c3237ff6153f9c46980f5e52075158c
+      internalID: -1733264684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_178
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff1defc8a430f7945964e7580d8fe5bb
+      internalID: 119355872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_179
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d2df940a1b4e2b4e88b82774d1e508e
+      internalID: 1024843673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_180
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d0b48a6c5e7fcf45bc72d2ece9405bb
+      internalID: 128845300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_181
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c885447d1ae2a774e92a19eee9b4b382
+      internalID: -1523971899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_182
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c36038ca26631b04eb8bc64a5bc245d2
+      internalID: 1152233917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_183
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a9208853e806e948a5bb959494bcd62
+      internalID: 17312842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_184
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02a392d5975d65d47b1f0e90613d92cc
+      internalID: -1885285476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_185
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6733d2b7bdcef964a82b6ebe0ab50103
+      internalID: 1770154959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_186
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ede6e92efdddffd47a0863d46f2a1b7e
+      internalID: -204492660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_187
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a3ba0a094465ad479f426e1adf110d0
+      internalID: 895578312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_188
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 254c5a1c3505b3049a0c63382072185d
+      internalID: 1154403230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_189
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8089b1a1ff16f9246bf3978421b6bdbb
+      internalID: 1004026987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_190
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cea7a9beadd9b24d9a2cac78225c98a
+      internalID: 1649610490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_191
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 804.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e952f0237e417b4d9dccf9ac06ad3f6
+      internalID: 962063677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_192
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a444c2ddc13882842816a78c925a86cd
+      internalID: 227558109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_193
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8bd29433c12c3b4289749eace85ab4c
+      internalID: -1000206806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_194
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 740fcea2d030edc4ea0cf659414770a0
+      internalID: 570121188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_195
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8d5365078c7d446a51ea7a9c1dcc57
+      internalID: 1148094212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_196
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48b8bd19178734040b061a31525fe4d2
+      internalID: -300321064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_197
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc7241bde5c87cc46af3172b6470c86d
+      internalID: -14242091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_198
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877a4131f02b9cc4aaa5bfa3cde7ad2b
+      internalID: -513332399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_199
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 975d8ecda993a0a4f93dfa652d718b35
+      internalID: -1979382034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_200
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7009e6b1d8006ba489e97b4596f004ec
+      internalID: 302622567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_201
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac60f2864dec4b429bcc04c6523ed3d
+      internalID: 2004071223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_202
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544574572c991444fa596d58472eb068
+      internalID: 85014876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_203
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6386c1e929981d447b3b25893d105507
+      internalID: -2011999908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_204
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5943b0338e4da4da58ec6b6b906a1f
+      internalID: -262451957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_205
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f09a25499eaba4097fdfc0e6370301
+      internalID: -504648457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_206
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bda5536443ae41648a4354b643e93774
+      internalID: -227444881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_207
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 704.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 156bcf6789e466c469dea9b5ddcb9224
+      internalID: 1403497270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_208
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d06e1d02c284bc64e87f1dc74cee8c60
+      internalID: 108498503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_209
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a558786b18071a48b27c0690b96f27f
+      internalID: -1019948639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_210
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ba5d6184ecc094997be387141a421a
+      internalID: -1854299252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_211
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97ec99e1c7e1e4a4b8241af45e223d1f
+      internalID: -2049675181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_212
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2793c980b34d3484dae89e18aecfaa53
+      internalID: 1623590970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_213
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2f085651c4b26d4b97900f70a3bf009
+      internalID: -1505968308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_214
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89514ab43a37e37459d6fe8acf879bf6
+      internalID: -170948802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_215
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e05fdc84f0ad8d418a8668b64c34d40
+      internalID: -1992872051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_216
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e46a99fab6dc33c44b1dfc4aeb0a6fc6
+      internalID: 763638871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_217
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e48888d5946c044ad918822e91f988
+      internalID: 779484759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_218
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc91a226cd91e724e8c19ce36c088e22
+      internalID: -121015819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_219
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9acbad25fb448db4c942a1cc12458e0a
+      internalID: 665581831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_220
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8b6f72055dd7df4185d01afb5175a68
+      internalID: -1505445070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_221
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c392ee2633fb1c047baed22fef9a325d
+      internalID: -1356066870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_222
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b705fde01a4c07141b7473d27dfad8d5
+      internalID: -369242212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_223
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 604.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 951f1f52acd992a4e9bf8c8b12c4f69b
+      internalID: -530499752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_224
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3428eca3b99a85d47af45bc8595629e7
+      internalID: -1654250758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_225
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6927bce9ce3fc641938b12682842f71
+      internalID: -1679038840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_226
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f446dff8e99f0254ebadb3dc9c459595
+      internalID: -1583537198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_227
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4459d870599c1484e97caae428f54cd8
+      internalID: 55708117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_228
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46bf35efcdd975345bd47063f3d448fd
+      internalID: -826994106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_229
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74902d4a6df0cdc4884349d5cfcb0d83
+      internalID: -2093775983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_230
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fce80183a3f16f8498c5dbed3dbcb45d
+      internalID: -1440026065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_231
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 446ef46fe1a717c49ae5d71a875fd82a
+      internalID: 989652151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_232
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba87fc77b15ae8e46b9e94a2d578c8db
+      internalID: 98509751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_233
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f73332c77bf427a42bb4bc565beee7fc
+      internalID: 2003980219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_234
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f56fad7d805dfa46a46a24fb843c7aa
+      internalID: 1020629039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_235
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f81338e62e009e4f9c1aa39b00e242f
+      internalID: -1908098869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_236
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb710e6f63888164f8a2bfb9c78b02fb
+      internalID: -259150710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_237
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6d8d63a37caea949ba2f7785bd0182e
+      internalID: -1059678048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_238
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b249f9cb8ff6f2341aec192ff35a9439
+      internalID: -718412035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_239
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 504.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba907d3211b5d6b4d99832741cf05c68
+      internalID: -411613634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_240
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddceeeb12c625414bb0fc842cdb63912
+      internalID: -427533336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_241
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3600c79dc769284abb3e7f54414f846
+      internalID: -169091819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_242
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03a496f2fbbc91c439bdd6f96bbef8d2
+      internalID: 1454461414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_243
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b95cd057829eb364294fc762c699786b
+      internalID: -566541399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_244
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2687927c4f5bfb2468aeb05f07ea8f94
+      internalID: 342449408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_245
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85cb44d38a70aa944b7b4fac07cff2de
+      internalID: -487714396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_246
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70c5c5de840db344ab98fc7db4fa0b3e
+      internalID: -431783902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_247
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 336e7dd172360b944b78e12203ce6ba4
+      internalID: -914721084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_248
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfd7755469e7765469106721afe3f358
+      internalID: -287311651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_249
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89467b954c685e649991177a1e04abea
+      internalID: -1097738576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_250
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56c3098f6c26dd54398700eddc666cdc
+      internalID: -712710715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_251
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60e43d57d742931448de12bebae7e6f5
+      internalID: 1023145052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_252
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d015589dd25bd948825af30be7b6ace
+      internalID: 958627848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_253
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c185f12c2fbe5f4481270631579dd1d
+      internalID: 1907854802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_254
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d31b8f6840d2a4f8bfb3e38a6bb523
+      internalID: -2145033218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_255
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 404.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33250aa213bea014b831e9d9edd8f5d4
+      internalID: 1148906111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_256
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb7c77c372b87f246a3b6cc169567a30
+      internalID: 1976961977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_257
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f4e7432f5132d74a869ca2f3556147b
+      internalID: -1313450334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_258
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ada559f87683264cb3ceeabca7463e1
+      internalID: 1135615664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_259
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4c62c115017be4ca5f666a402c22a8
+      internalID: 1385327291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_260
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e522da62b69f14cba87394f715dcb4
+      internalID: 987167925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_261
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53b516ccde6c37f43bbe8f17485245b6
+      internalID: 1405739031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_262
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d49f2cfbfb56924e98c9e79dd77c0bd
+      internalID: -864157371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_263
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c491b61af60a2574b8f801a5acc7d1ce
+      internalID: -1159393370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_264
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdbfab2d26364d041bd7e8baa6c4e907
+      internalID: 908400753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_265
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99ac5cf65a19a4c43a8f1371d3bdc65b
+      internalID: 858490970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_266
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0fdb2b91c28ca74d9fe663494479ea0
+      internalID: 151243416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_267
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d0295239e7a7643a223b7fd084ba8a
+      internalID: 507329855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_268
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfe98e8df873cc448947f1da895cff76
+      internalID: -418616469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_269
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c157e234c0ba1b741b8e230884167903
+      internalID: 1959897557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_270
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddaf106b141b3f843aa753840b0e958b
+      internalID: -1907257649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_271
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 304.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad1969aeb963e24c9cf24b8f7a6a309
+      internalID: 1999144478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_272
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1232f85591e5c4b4eba6ad22632beb81
+      internalID: 909028452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_273
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db53459b452f3d149a73192fd94de71e
+      internalID: -487579299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_274
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7dabf0a68b191b4ba22a7483d68190f
+      internalID: 1300072897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_275
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 442feb2bc50a0114581de1bdbb232580
+      internalID: 1900141586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_276
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98313768915c33945878880d7d6f4c07
+      internalID: -641473806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_277
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 472288e6179196e48b20633407271ed6
+      internalID: -420492955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_278
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 469e3c1aee502244097da7aa9efb11a1
+      internalID: -503036845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_279
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f33340bc05eaae4cab1040e511bb8a4
+      internalID: -1772121086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_280
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5a2d5b56509b9847b8dc13e7786a0f2
+      internalID: 256369651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_281
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acab4ce08d771d04cb10d042fa6c921e
+      internalID: 929845049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_282
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30208db6075e8a7468d655cc85687a9f
+      internalID: 1124195025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_283
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f956603d333464ca4c6980a8ee9ba2
+      internalID: -44990325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_284
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20461bff1dfe0634aba8110c15308199
+      internalID: 107556384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_285
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b35e0cea7f9619147a93a3ed0276be50
+      internalID: 419589027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_286
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e8bbff218a981b46854be8a1c837046
+      internalID: -1978697642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_287
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 204.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5e6846ed0a237e4ea94278780a8434c
+      internalID: 1999524928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_288
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893f859893e715e428626db791fd7409
+      internalID: -581142310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_289
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 023c8d8b7bd22764eb1f706e77afd5a2
+      internalID: -1442481178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_290
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 894ca610bf06f9d41b0b2c840f5bb84e
+      internalID: -1062006098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_291
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc82041413bcf9e44a3e553e13367c1a
+      internalID: 1865362077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_292
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6270b4d41295eeb40a65d68b32c4f8d2
+      internalID: -1954805788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_293
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b98d9c9ca5ee4584d87096938fae193c
+      internalID: 650016036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_294
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5920c68e9d6d14cb8d9e7a99a7ff3d
+      internalID: 482815360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_295
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c721066f64f8c6a4f8241f7811b99a08
+      internalID: -892598984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_296
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae96578bad2135d42bcb640c3096f38a
+      internalID: 1918370401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_297
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f41bfa87ae5c924a9e24637c5c8079e
+      internalID: -1979966431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_298
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89fa8804c45a3104fa2b67d8bc39813a
+      internalID: -1104623100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_299
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24c1095ce7db05d439902f73305a8c1f
+      internalID: 1952350232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_300
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3993e138c68b10243a350c3942ec6c65
+      internalID: -1129049112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_301
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 753cba09100526445a3d526262c22fc9
+      internalID: 1639600701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_302
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4d5775bb6c8cc24db24ba03036a51c3
+      internalID: 79168452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_303
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 104.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b9f9ad74ca7154fb5eaffe2be2b510
+      internalID: -1276999499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_304
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6807846b5d971b7479c7e8a7815e4797
+      internalID: -14181456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_305
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d2c8418290310240ab0af9f90b58ce3
+      internalID: -162518010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_306
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96621500fa3ad404b886fafa087aa2b2
+      internalID: 235736421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_307
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6df0ed416de4444499aa9b15e19cdff
+      internalID: 1044022508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_308
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52e6149f4abf9ff4cb544a812acc0fc5
+      internalID: 1691771451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_309
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d3f2be70dcb064cb59eb890d6d1e0a
+      internalID: 1872917279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_310
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c27e1ffb579bcd4996478c9bf650d84
+      internalID: -298470146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_311
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbb50cd732255114ca647b49b6a4fcac
+      internalID: -510383833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_312
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c706aed501ef56a47b2b371fa6f5ee12
+      internalID: 1581877429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_313
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5925e885302cf1841904e8130e399202
+      internalID: -1074840737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_314
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20ffd1dd1f6dc914bba74ceb06012663
+      internalID: -1458710876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_315
+      rect:
+        serializedVersion: 2
+        x: 1089
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94b33f1218dc94546ba365eb9fed6cbd
+      internalID: 1404582547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_316
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23bd20525a986ad44afe0444d2854fb6
+      internalID: 1984750646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_317
+      rect:
+        serializedVersion: 2
+        x: 1287
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96013da43daa0244d821c0bfe33dc158
+      internalID: -236358055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_318
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66583b86f889b524d9f0734794b41d1b
+      internalID: -491429319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wood floor 1_319
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 4.75
+        width: 99.375
+        height: 100.25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5ec93a47dba1574fb762de721791dc3
+      internalID: 1070540807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Wood floor 1_0: -971490959
+      Wood floor 1_1: 300271576
+      Wood floor 1_10: 1830786384
+      Wood floor 1_100: 1050116058
+      Wood floor 1_101: -26548438
+      Wood floor 1_102: 1033259337
+      Wood floor 1_103: 70922592
+      Wood floor 1_104: 1995909324
+      Wood floor 1_105: -1772909520
+      Wood floor 1_106: -1858182255
+      Wood floor 1_107: 1599814360
+      Wood floor 1_108: 775767761
+      Wood floor 1_109: 1527864993
+      Wood floor 1_11: 1027930323
+      Wood floor 1_110: 1656145971
+      Wood floor 1_111: 1817220962
+      Wood floor 1_112: 1163969683
+      Wood floor 1_113: -1057247836
+      Wood floor 1_114: 1596251659
+      Wood floor 1_115: 1046973869
+      Wood floor 1_116: 799955456
+      Wood floor 1_117: -1479465267
+      Wood floor 1_118: -784760561
+      Wood floor 1_119: -265913497
+      Wood floor 1_12: 1455618416
+      Wood floor 1_120: 908810678
+      Wood floor 1_121: 1030979247
+      Wood floor 1_122: 952606111
+      Wood floor 1_123: -599717352
+      Wood floor 1_124: 1156613420
+      Wood floor 1_125: 1607194610
+      Wood floor 1_126: -1631844651
+      Wood floor 1_127: -674467983
+      Wood floor 1_128: -209220404
+      Wood floor 1_129: -847253476
+      Wood floor 1_13: 1753461650
+      Wood floor 1_130: -1307969031
+      Wood floor 1_131: -2053712382
+      Wood floor 1_132: -1107688336
+      Wood floor 1_133: 740237951
+      Wood floor 1_134: -1669006080
+      Wood floor 1_135: -2069902748
+      Wood floor 1_136: -1012626607
+      Wood floor 1_137: 1841199423
+      Wood floor 1_138: 1980912030
+      Wood floor 1_139: 926493745
+      Wood floor 1_14: 693544433
+      Wood floor 1_140: 671066000
+      Wood floor 1_141: 506852484
+      Wood floor 1_142: 1882892750
+      Wood floor 1_143: -1810355751
+      Wood floor 1_144: -868240301
+      Wood floor 1_145: 132157895
+      Wood floor 1_146: 1305297792
+      Wood floor 1_147: 1750118511
+      Wood floor 1_148: 821131439
+      Wood floor 1_149: -295742447
+      Wood floor 1_15: 625543392
+      Wood floor 1_150: 2008273091
+      Wood floor 1_151: 1946468194
+      Wood floor 1_152: 1196602914
+      Wood floor 1_153: -860881574
+      Wood floor 1_154: 1606082858
+      Wood floor 1_155: -1417751747
+      Wood floor 1_156: -1813498980
+      Wood floor 1_157: 2083080166
+      Wood floor 1_158: 972985224
+      Wood floor 1_159: -1625082312
+      Wood floor 1_16: 1942497010
+      Wood floor 1_160: 809314008
+      Wood floor 1_161: -310150987
+      Wood floor 1_162: 934968074
+      Wood floor 1_163: -1726114299
+      Wood floor 1_164: 780594907
+      Wood floor 1_165: 291635784
+      Wood floor 1_166: -91263473
+      Wood floor 1_167: -1716595085
+      Wood floor 1_168: 1582038572
+      Wood floor 1_169: -749319486
+      Wood floor 1_17: -191697660
+      Wood floor 1_170: -1773156008
+      Wood floor 1_171: -1411981586
+      Wood floor 1_172: -735278024
+      Wood floor 1_173: -2137813856
+      Wood floor 1_174: 268277052
+      Wood floor 1_175: 1150978817
+      Wood floor 1_176: 299451815
+      Wood floor 1_177: -1733264684
+      Wood floor 1_178: 119355872
+      Wood floor 1_179: 1024843673
+      Wood floor 1_18: 1542961011
+      Wood floor 1_180: 128845300
+      Wood floor 1_181: -1523971899
+      Wood floor 1_182: 1152233917
+      Wood floor 1_183: 17312842
+      Wood floor 1_184: -1885285476
+      Wood floor 1_185: 1770154959
+      Wood floor 1_186: -204492660
+      Wood floor 1_187: 895578312
+      Wood floor 1_188: 1154403230
+      Wood floor 1_189: 1004026987
+      Wood floor 1_19: -499292780
+      Wood floor 1_190: 1649610490
+      Wood floor 1_191: 962063677
+      Wood floor 1_192: 227558109
+      Wood floor 1_193: -1000206806
+      Wood floor 1_194: 570121188
+      Wood floor 1_195: 1148094212
+      Wood floor 1_196: -300321064
+      Wood floor 1_197: -14242091
+      Wood floor 1_198: -513332399
+      Wood floor 1_199: -1979382034
+      Wood floor 1_2: -1372329287
+      Wood floor 1_20: -2028274031
+      Wood floor 1_200: 302622567
+      Wood floor 1_201: 2004071223
+      Wood floor 1_202: 85014876
+      Wood floor 1_203: -2011999908
+      Wood floor 1_204: -262451957
+      Wood floor 1_205: -504648457
+      Wood floor 1_206: -227444881
+      Wood floor 1_207: 1403497270
+      Wood floor 1_208: 108498503
+      Wood floor 1_209: -1019948639
+      Wood floor 1_21: -907051424
+      Wood floor 1_210: -1854299252
+      Wood floor 1_211: -2049675181
+      Wood floor 1_212: 1623590970
+      Wood floor 1_213: -1505968308
+      Wood floor 1_214: -170948802
+      Wood floor 1_215: -1992872051
+      Wood floor 1_216: 763638871
+      Wood floor 1_217: 779484759
+      Wood floor 1_218: -121015819
+      Wood floor 1_219: 665581831
+      Wood floor 1_22: -1180284907
+      Wood floor 1_220: -1505445070
+      Wood floor 1_221: -1356066870
+      Wood floor 1_222: -369242212
+      Wood floor 1_223: -530499752
+      Wood floor 1_224: -1654250758
+      Wood floor 1_225: -1679038840
+      Wood floor 1_226: -1583537198
+      Wood floor 1_227: 55708117
+      Wood floor 1_228: -826994106
+      Wood floor 1_229: -2093775983
+      Wood floor 1_23: 1891644939
+      Wood floor 1_230: -1440026065
+      Wood floor 1_231: 989652151
+      Wood floor 1_232: 98509751
+      Wood floor 1_233: 2003980219
+      Wood floor 1_234: 1020629039
+      Wood floor 1_235: -1908098869
+      Wood floor 1_236: -259150710
+      Wood floor 1_237: -1059678048
+      Wood floor 1_238: -718412035
+      Wood floor 1_239: -411613634
+      Wood floor 1_24: 1482208694
+      Wood floor 1_240: -427533336
+      Wood floor 1_241: -169091819
+      Wood floor 1_242: 1454461414
+      Wood floor 1_243: -566541399
+      Wood floor 1_244: 342449408
+      Wood floor 1_245: -487714396
+      Wood floor 1_246: -431783902
+      Wood floor 1_247: -914721084
+      Wood floor 1_248: -287311651
+      Wood floor 1_249: -1097738576
+      Wood floor 1_25: -34782014
+      Wood floor 1_250: -712710715
+      Wood floor 1_251: 1023145052
+      Wood floor 1_252: 958627848
+      Wood floor 1_253: 1907854802
+      Wood floor 1_254: -2145033218
+      Wood floor 1_255: 1148906111
+      Wood floor 1_256: 1976961977
+      Wood floor 1_257: -1313450334
+      Wood floor 1_258: 1135615664
+      Wood floor 1_259: 1385327291
+      Wood floor 1_26: 1423858754
+      Wood floor 1_260: 987167925
+      Wood floor 1_261: 1405739031
+      Wood floor 1_262: -864157371
+      Wood floor 1_263: -1159393370
+      Wood floor 1_264: 908400753
+      Wood floor 1_265: 858490970
+      Wood floor 1_266: 151243416
+      Wood floor 1_267: 507329855
+      Wood floor 1_268: -418616469
+      Wood floor 1_269: 1959897557
+      Wood floor 1_27: 1293704352
+      Wood floor 1_270: -1907257649
+      Wood floor 1_271: 1999144478
+      Wood floor 1_272: 909028452
+      Wood floor 1_273: -487579299
+      Wood floor 1_274: 1300072897
+      Wood floor 1_275: 1900141586
+      Wood floor 1_276: -641473806
+      Wood floor 1_277: -420492955
+      Wood floor 1_278: -503036845
+      Wood floor 1_279: -1772121086
+      Wood floor 1_28: -488868792
+      Wood floor 1_280: 256369651
+      Wood floor 1_281: 929845049
+      Wood floor 1_282: 1124195025
+      Wood floor 1_283: -44990325
+      Wood floor 1_284: 107556384
+      Wood floor 1_285: 419589027
+      Wood floor 1_286: -1978697642
+      Wood floor 1_287: 1999524928
+      Wood floor 1_288: -581142310
+      Wood floor 1_289: -1442481178
+      Wood floor 1_29: 406648087
+      Wood floor 1_290: -1062006098
+      Wood floor 1_291: 1865362077
+      Wood floor 1_292: -1954805788
+      Wood floor 1_293: 650016036
+      Wood floor 1_294: 482815360
+      Wood floor 1_295: -892598984
+      Wood floor 1_296: 1918370401
+      Wood floor 1_297: -1979966431
+      Wood floor 1_298: -1104623100
+      Wood floor 1_299: 1952350232
+      Wood floor 1_3: -1489381340
+      Wood floor 1_30: 1662099421
+      Wood floor 1_300: -1129049112
+      Wood floor 1_301: 1639600701
+      Wood floor 1_302: 79168452
+      Wood floor 1_303: -1276999499
+      Wood floor 1_304: -14181456
+      Wood floor 1_305: -162518010
+      Wood floor 1_306: 235736421
+      Wood floor 1_307: 1044022508
+      Wood floor 1_308: 1691771451
+      Wood floor 1_309: 1872917279
+      Wood floor 1_31: 2130578895
+      Wood floor 1_310: -298470146
+      Wood floor 1_311: -510383833
+      Wood floor 1_312: 1581877429
+      Wood floor 1_313: -1074840737
+      Wood floor 1_314: -1458710876
+      Wood floor 1_315: 1404582547
+      Wood floor 1_316: 1984750646
+      Wood floor 1_317: -236358055
+      Wood floor 1_318: -491429319
+      Wood floor 1_319: 1070540807
+      Wood floor 1_32: 1914086134
+      Wood floor 1_33: 1655119613
+      Wood floor 1_34: 409517417
+      Wood floor 1_35: -1313121117
+      Wood floor 1_36: 974996158
+      Wood floor 1_37: 770544370
+      Wood floor 1_38: -1127821861
+      Wood floor 1_39: 1282578470
+      Wood floor 1_4: -1540807495
+      Wood floor 1_40: -1436114123
+      Wood floor 1_41: 1402509025
+      Wood floor 1_42: 1539907109
+      Wood floor 1_43: 413797007
+      Wood floor 1_44: 914739922
+      Wood floor 1_45: 1063658235
+      Wood floor 1_46: 1087824935
+      Wood floor 1_47: -1128018125
+      Wood floor 1_48: 756614133
+      Wood floor 1_49: -1902826511
+      Wood floor 1_5: 1236686090
+      Wood floor 1_50: -490292048
+      Wood floor 1_51: -222211560
+      Wood floor 1_52: 1036356498
+      Wood floor 1_53: -18734160
+      Wood floor 1_54: -532090371
+      Wood floor 1_55: -1785701645
+      Wood floor 1_56: -927345650
+      Wood floor 1_57: 2124312648
+      Wood floor 1_58: -1931805086
+      Wood floor 1_59: 1002993728
+      Wood floor 1_6: 1773367233
+      Wood floor 1_60: 1974089273
+      Wood floor 1_61: -1132613922
+      Wood floor 1_62: 814428589
+      Wood floor 1_63: -814542290
+      Wood floor 1_64: 102053574
+      Wood floor 1_65: -1105403804
+      Wood floor 1_66: 970170056
+      Wood floor 1_67: -767805367
+      Wood floor 1_68: 1913916244
+      Wood floor 1_69: -1122592882
+      Wood floor 1_7: -1206911155
+      Wood floor 1_70: 1028380834
+      Wood floor 1_71: -1775903154
+      Wood floor 1_72: -1118845285
+      Wood floor 1_73: -2014859134
+      Wood floor 1_74: -1779672608
+      Wood floor 1_75: -868970852
+      Wood floor 1_76: -894245343
+      Wood floor 1_77: 1630980010
+      Wood floor 1_78: -375702879
+      Wood floor 1_79: 547507668
+      Wood floor 1_8: 547113424
+      Wood floor 1_80: -2078992118
+      Wood floor 1_81: 1889345280
+      Wood floor 1_82: -1358079257
+      Wood floor 1_83: -1938097037
+      Wood floor 1_84: -74419623
+      Wood floor 1_85: 586364094
+      Wood floor 1_86: -98989941
+      Wood floor 1_87: -358278161
+      Wood floor 1_88: 293464829
+      Wood floor 1_89: -2140001915
+      Wood floor 1_9: 1037528822
+      Wood floor 1_90: 1646610086
+      Wood floor 1_91: -1483199654
+      Wood floor 1_92: 96591041
+      Wood floor 1_93: -1316799506
+      Wood floor 1_94: -1760871176
+      Wood floor 1_95: 191753901
+      Wood floor 1_96: -58668264
+      Wood floor 1_97: -1111132687
+      Wood floor 1_98: -197346974
+      Wood floor 1_99: 1907119354
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
