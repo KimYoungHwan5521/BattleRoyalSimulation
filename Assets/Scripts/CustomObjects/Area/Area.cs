@@ -36,17 +36,31 @@ public class Area : CustomObject
     {
         base.Start();
 
+        //farmingSections = GetComponentsInChildren<FarmingSection>();
+        //foreach(FarmingSection farmingSection in farmingSections)
+        //{
+        //    farmingSection.ownerArea = this;
+        //    farmingSection.boxes = farmingSection.GetComponentsInChildren<Box>();
+        //    foreach(Box box in farmingSection.boxes)
+        //    {
+        //        box.ownerArea = this;
+        //    }
+        //}
+    }
+
+    public void Initiate()
+    {
         farmingSections = GetComponentsInChildren<FarmingSection>();
-        foreach(FarmingSection farmingSection in farmingSections)
+        foreach (FarmingSection farmingSection in farmingSections)
         {
             farmingSection.ownerArea = this;
             farmingSection.boxes = farmingSection.GetComponentsInChildren<Box>();
-            foreach(Box box in farmingSection.boxes)
+            foreach (Box box in farmingSection.boxes)
             {
                 box.ownerArea = this;
-                //box.SetObstructionRate(0.3f);
             }
         }
+
     }
 
     public void ResetProhibitArea()

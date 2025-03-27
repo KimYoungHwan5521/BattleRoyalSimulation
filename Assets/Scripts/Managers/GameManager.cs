@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using NavMeshPlus.Components;
 
 public delegate void CustomStart();
 public delegate void CustomUpdate();
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject count3;
     public GameObject description;
+    public NavMeshSurface NavMeshSurface => GetComponent<NavMeshSurface>();
 
     bool gameReady;
 

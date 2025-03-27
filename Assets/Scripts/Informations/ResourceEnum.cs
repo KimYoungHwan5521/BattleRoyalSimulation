@@ -7,6 +7,10 @@ namespace ResourceEnum
         Bullet,
         Blood,
 
+        // Map
+        Map_2x2_01,
+        Map_2x2_02,
+
         // UI
         Alert,
         SurvivorSchedule,
@@ -14,6 +18,12 @@ namespace ResourceEnum
         // In Game UI
         KillLog,
         Headshot,
+    }
+
+    public enum NavMeshData
+    {
+        Map_2x2_01,
+        Map_2x2_02,
     }
 
     public enum Sprite

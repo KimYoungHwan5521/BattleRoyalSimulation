@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ public class BattleRoyaleManager
     OutGameUIManager outGameUIManager => GameManager.Instance.OutGameUIManager;
     public Animator count3Animator;
 
+    GameObject map;
     Area[] areas;
     List<Item> farmingItems = new();
 
@@ -39,10 +41,10 @@ public class BattleRoyaleManager
     public IEnumerator Initiate()
     {
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
-        areas = GameObject.FindObjectsOfType<Area>();
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
 
+        LoadMap();
         ResetArea();
         ItemSetting();
         ItemPlacing();
@@ -63,6 +65,25 @@ public class BattleRoyaleManager
                 SetProhibitArea(1);
                 curAreaProhibitTime = 0;
             }
+        }
+    }
+
+    void LoadMap()
+    {
+        if(map != null) PoolManager.Despawn(map);
+        Calendar calendar = GameManager.Instance.GetComponent<Calendar>();
+        if (Enum.TryParse(calendar.LeagueReserveInfo[calendar.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
+        {
+            map = PoolManager.Spawn(calendar.LeagueReserveInfo[calendar.Today].map);
+            NavMeshData navMeshData = GameManager.Instance.NavMeshSurface.navMeshData = ResourceManager.Get(navMeshDataEnum);
+            NavMesh.RemoveAllNavMeshData();
+            NavMesh.AddNavMeshData(navMeshData);
+            areas = GameObject.FindObjectsOfType<Area>();
+            foreach (Area area in areas) area.Initiate();
+        }
+        else
+        {
+            Debug.LogError("Failed parse map to NavMeshData");
         }
     }
 
@@ -112,7 +133,7 @@ public class BattleRoyaleManager
         {
             foreach(FarmingSection section in area.farmingSections)
             {
-                foreach(Box box in  section.boxes)
+                foreach(Box box in section.boxes)
                 {
                     box.items.Clear();
                 }
@@ -137,7 +158,7 @@ public class BattleRoyaleManager
                 int sectionItemNum = areaItemNum / areas[i].farmingSections.Length + sectionRemainder;
                 for (int k = 0; k < sectionItemNum; k++)
                 {
-                    boxIndex = Random.Range(0, areas[i].farmingSections[j].boxes.Length);
+                    boxIndex = UnityEngine.Random.Range(0, areas[i].farmingSections[j].boxes.Length);
                     areas[i].farmingSections[j].boxes[boxIndex].items.Add(farmingItems[curruntIndex]);
                     curruntIndex++;
                     GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
@@ -166,8 +187,8 @@ public class BattleRoyaleManager
             for (int j = 0; j < areaSurvivorNum; j++)
             {
                 Vector2 spawnPosition = new(
-                    areas[i].transform.position.x + Random.Range(-areas[i].transform.localScale.x * 0.5f + 20, areas[i].transform.localScale.x * 0.5f - 20),
-                    areas[i].transform.position.y + Random.Range(-areas[i].transform.localScale.y * 0.5f + 20, areas[i].transform.localScale.y * 0.5f - 20)
+                    areas[i].transform.position.x + UnityEngine.Random.Range(-25 + 3, 25 - 3),
+                    areas[i].transform.position.y + UnityEngine.Random.Range(-25 + 3, 25 - 3)
                     );
                 Survivor survivor = PoolManager.Spawn(ResourceEnum.Prefab.Survivor, spawnPosition).GetComponent<Survivor>();
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
@@ -182,7 +203,7 @@ public class BattleRoyaleManager
                 }
                 else
                 {
-                    survivor.SetColor(new Vector3(Random.Range(0, 1), Random.Range(0, 1), Random.Range(0, 1)));
+                    survivor.SetColor(new Vector3(UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1), UnityEngine.Random.Range(0, 1)));
                 }
                 survivorIndex++;
                 survivors.Add(survivor);
@@ -215,7 +236,7 @@ public class BattleRoyaleManager
                 Debug.LogWarning("Infinite loop detected!");
                 return;
             }
-            Area candidate = areas[Random.Range(0, areas.Length)];
+            Area candidate = areas[UnityEngine.Random.Range(0, areas.Length)];
             if (candidate.IsProhibited || candidate.IsProhibited_Plan)
             {
                 i--;

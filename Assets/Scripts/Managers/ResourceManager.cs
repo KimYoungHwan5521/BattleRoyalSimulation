@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Audio;
 
 public class ResourceManager
 {
     static Dictionary<ResourceEnum.Prefab, GameObject> prefabDictionary;
+    static Dictionary<ResourceEnum.NavMeshData, NavMeshData> navMeshDataDictionary;
     static Dictionary<ResourceEnum.Sprite, Sprite> spriteDictionary;
     static Dictionary<ResourceEnum.Material, UnityEngine.Material> materialDictionary;
     static Dictionary<ResourceEnum.BGM, AudioClip> bgmDictionary;
@@ -23,6 +25,7 @@ public class ResourceManager
         if (materialDictionary != null) yield break;
 
         prefabDictionary = new();
+        navMeshDataDictionary = new();
         spriteDictionary = new();
         materialDictionary = new();
         bgmDictionary = new();
@@ -32,6 +35,7 @@ public class ResourceManager
         resourceLoadCompleted = 0;
 
         resourceAmount += ResourcesPath.PrefabPathArray.Length;
+        resourceAmount += ResourcesPath.NavMeshDataPathArray.Length;
         resourceAmount += ResourcesPath.SpritePathArray.Length;
         resourceAmount += ResourcesPath.MaterialPathArray.Length;
         resourceAmount += ResourcesPath.BGMPathArray.Length;
@@ -40,6 +44,7 @@ public class ResourceManager
         audioMixer = Load<AudioMixer>($"{ResourcesPath.AudioMixerPath}");
 
         yield return Load<ResourceEnum.Prefab, GameObject>(prefabDictionary, ResourcesPath.PrefabPathArray, "prefabs");
+        yield return Load<ResourceEnum.NavMeshData, NavMeshData>(navMeshDataDictionary, ResourcesPath.NavMeshDataPathArray, "navMeshDatas");
         yield return Load<ResourceEnum.Sprite, Sprite>(spriteDictionary, ResourcesPath.SpritePathArray, "sprites");
         yield return Load<ResourceEnum.Material, UnityEngine.Material>(materialDictionary, ResourcesPath.MaterialPathArray, "materials");
         yield return Load<ResourceEnum.BGM, AudioClip>(bgmDictionary, ResourcesPath.BGMPathArray, "BGMs");
@@ -112,6 +117,14 @@ public class ResourceManager
     public static GameObject Get(ResourceEnum.Prefab prefab)
     {
         if (prefabDictionary.TryGetValue(prefab, out GameObject result))
+        {
+            return result;
+        }
+        return null;
+    }
+    public static NavMeshData Get(ResourceEnum.NavMeshData navMeshData)
+    {
+        if (navMeshDataDictionary.TryGetValue(navMeshData, out NavMeshData result))
         {
             return result;
         }

@@ -7,6 +7,10 @@ public class ResourcesPath
         "Prefabs/Bullet",
         "Prefabs/Blood",
 
+        // Map
+        "Prefabs/Maps/2x2/Map_2x2_01",
+        "Prefabs/Maps/2x2/Map_2x2_02",
+
         // UI
         "Prefabs/UIs/Alert",
         "Prefabs/UIs/SurvivorSchedule",
@@ -14,6 +18,12 @@ public class ResourcesPath
         // In Game UI
         "Prefabs/UIs/KillLog",
         "Prefabs/UIs/Headshot",
+    };
+
+    public static string[] NavMeshDataPathArray =
+    {
+        "NavMeshDatas/Map_2x2_01",
+        "NavMeshDatas/Map_2x2_02",
     };
 
     public static string[] SpritePathArray =

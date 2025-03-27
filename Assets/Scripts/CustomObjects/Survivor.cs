@@ -870,19 +870,19 @@ public class Survivor : CustomObject
         float rand = UnityEngine.Random.Range(0, 1f);
         if(rand > 0.75f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise01,20", this);
+            targetFarmingBox.PlaySFX("farmingNoise01,5", this);
         }
         else if (rand > 0.5f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise02,20", this);
+            targetFarmingBox.PlaySFX("farmingNoise02,5", this);
         }
         else if (rand > 0.25f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise03,20", this);
+            targetFarmingBox.PlaySFX("farmingNoise03,5", this);
         }
         else
         {
-            targetFarmingBox.PlaySFX("farmingNoise04,20", this);
+            targetFarmingBox.PlaySFX("farmingNoise04,5", this);
         }
     }
 
@@ -1449,14 +1449,14 @@ public class Survivor : CustomObject
         float heardVolume = volume * hearingAbility / (distance * distance);
         //Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
 
-        if(heardVolume > 10f)
+        if(heardVolume > 1f)
         {
             // 어떤 소리인지 명확한 인지
             threateningSoundPosition = soundOrigin;
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
         }
-        else if( heardVolume > 1f)
+        else if( heardVolume > 0.1f)
         {
             // 불분명한 인지
             keepAnEyeOnPosition = soundOrigin;
