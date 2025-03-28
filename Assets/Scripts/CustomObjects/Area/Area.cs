@@ -9,6 +9,8 @@ using UnityEngine.AI;
 public class Area : CustomObject
 {
     public FarmingSection[] farmingSections;
+    public List<GameObject> garbageObjects = new();
+
     [SerializeField] bool isProhibited_Plan;
     public bool IsProhibited_Plan
     {
@@ -34,7 +36,8 @@ public class Area : CustomObject
             {
                 if(survivor.GetCurrentArea() == this)
                 {
-                    GameObject linkObject = new GameObject("DynamicNavMeshLink");
+                    GameObject linkObject = new("DynamicNavMeshLink");
+                    garbageObjects.Add(linkObject);
                     NavMeshLink navMeshLink = linkObject.AddComponent<NavMeshLink>();
 
                     // 두 NavMesh 영역을 연결

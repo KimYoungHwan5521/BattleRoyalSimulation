@@ -218,13 +218,13 @@ public class Calendar : CustomObject
             {
                 if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
                 {
-                    outGameUIManager.Alert("Championships cannot be reserved. If you win the Gold League, you will be automatically booked for the Season Championship, and if you win the Season Championship, you will be automatically booked for the World Championship.");
+                    outGameUIManager.Alert("Championships cannot register. If you win the Gold League, you will be registered for the Season Championship automatically, and if you win the Season Championship, you will be registered for the World Championship automatically.");
                 }
                 else
                 {
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
-                        reserveText.text = "Choose who want participate in battle royale.";
+                        reserveText.text = "Choose who want register for battle royale.";
                         SetBattleRoyaleReserveBox();
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                         reserveButton.SetActive(true);
@@ -232,7 +232,7 @@ public class Calendar : CustomObject
                     }
                     else
                     {
-                        reserveText.text = $"The Battle Royale for that date has been booked by \"{leagueReserveInfo[wantReserveDate].reserver.survivorName}\"";
+                        reserveText.text = $"The registered participant for that day is \"{leagueReserveInfo[wantReserveDate].reserver.survivorName}\"";
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
                         reserveButton.SetActive(false);
                         reserveCancelButton.SetActive(true);
@@ -265,8 +265,8 @@ public class Calendar : CustomObject
         }
         else if (wantReserver.isReserved)
         {
-            outGameUIManager.Alert($"\"{wantReserver.survivorName}\" already has other reservations.\n" +
-                $"Leagues other than the Championship can be reserved one at a time.");
+            outGameUIManager.Alert($"\"{wantReserver.survivorName}\" is already registered for another match.\n" +
+                $"Leagues other than the Championship can register one at a time.");
         }
         else if (wantReserver.injuries.Count > 0)
         {
@@ -287,11 +287,11 @@ public class Calendar : CustomObject
 
             if (!availiable)
             {
-                outGameUIManager.Alert("He can't reserve battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
+                outGameUIManager.Alert("He can't register battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
             }
             else if (injured)
             {
-                outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still apply for Battle Royale?", () =>
+                outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still register for Battle Royale?", () =>
                 {
                     Reserve();
                 });
@@ -306,7 +306,7 @@ public class Calendar : CustomObject
         leagueReserveInfo[wantReserveDate].reserver = wantReserver;
         wantReserver.isReserved = true;
         TurnPageCalendar(0);
-        outGameUIManager.Alert("Battle royale reserved.");
+        outGameUIManager.Alert("Battle royale has been registered.");
     }
 
     public Tier GetNeedTier(League league)

@@ -21,6 +21,8 @@ public enum CharacteristicType
     Avenger,
     Regenerator,
     UpsAndDowns,
+    LuckGuy,
+    TheCursed,
 }
 
 [Serializable]
@@ -65,6 +67,8 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Avenger, "Avenger", "Increase attack damage and attack speed when bleeding/ Decrease hemostasis rate", 0));
         characteristics.Add(new(CharacteristicType.Regenerator, "Regenerator", "Increase hemostasis rate/ Blood and HP regenerate", 0));
         characteristics.Add(new(CharacteristicType.UpsAndDowns, "Ups and downs", "Ability increases or decreases depending on the condition of the day", 0));
+        characteristics.Add(new(CharacteristicType.LuckGuy, "Luck Guy", "Luck + 20%", 0, CharacteristicType.TheCursed));
+        characteristics.Add(new(CharacteristicType.TheCursed, "The cursed", "Luck - 20%", 0, CharacteristicType.LuckGuy));
         yield return null;
     }
 

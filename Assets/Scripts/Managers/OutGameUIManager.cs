@@ -17,6 +17,7 @@ public class SurvivorData
     public float moveSpeed;
     public float farmingSpeed;
     public float shooting;
+    public float luck;
     public List<Characteristic> characteristics = new();
     public int price;
     public Tier tier;
@@ -49,21 +50,22 @@ public class SurvivorData
         this.moveSpeed = moveSpeed;
         this.farmingSpeed = farmingSpeed;
         this.shooting = shooting;
+        luck = 50;
         this.price = price;
         this.tier = tier;
     }
 
     public SurvivorData(SurvivorData survivorData)
     {
-        this.survivorName = survivorData.survivorName;
-        this.hp = survivorData.hp;
-        this.attackDamage = survivorData.attackDamage;
-        this.attackSpeed = survivorData.attackSpeed;
-        this.moveSpeed = survivorData.moveSpeed;
-        this.farmingSpeed = survivorData.farmingSpeed;
-        this.shooting = survivorData.shooting;
-        this.price = survivorData.price;
-        this.tier = survivorData.tier;
+        survivorName = survivorData.survivorName;
+        hp = survivorData.hp;
+        attackDamage = survivorData.attackDamage;
+        attackSpeed = survivorData.attackSpeed;
+        moveSpeed = survivorData.moveSpeed;
+        farmingSpeed = survivorData.farmingSpeed;
+        shooting = survivorData.shooting;
+        price = survivorData.price;
+        tier = survivorData.tier;
     }
 
     public void IncreaseStats(float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float shooting)
@@ -1037,13 +1039,13 @@ public class OutGameUIManager : MonoBehaviour
         int i = 0;
         while (i < 1)
         {
-            float rand0 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand1 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand2 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand3 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
+            float randHp = UnityEngine.Random.Range(0.5f, 2.0f);
+            float randAttackDamage = UnityEngine.Random.Range(0.5f, 2.0f);
+            float randAttackSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
+            float randMoveSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
+            float randFarmingSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
+            float randShooting = UnityEngine.Random.Range(0.5f, 2.0f);
+            float totalRand = randHp * randAttackDamage * randAttackSpeed * randMoveSpeed * randFarmingSpeed * randShooting;
             if ((totalRand < 0.7f || totalRand > 1.3f) && check < 100)
             {
                 check++;
@@ -1052,12 +1054,12 @@ public class OutGameUIManager : MonoBehaviour
             if (check >= 100) Debug.LogWarning("Infinite roof has detected");
             SurvivorData survivorData = new(
                 GetRandomName(),
-                value * 100 * rand0,
-                value * 10 * rand1,
-                value * 1 * rand2,
-                value * 3 * rand3,
-                value * 1 * rand4,
-                value * 1 * rand5,
+                value * 100 * randHp,
+                value * 10 * randAttackDamage,
+                value * 1 * randAttackSpeed,
+                value * 3 * randMoveSpeed,
+                value * 1 * randFarmingSpeed,
+                value * 1 * randShooting,
                 (int)(value * 100 * totalRand),
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );

@@ -142,6 +142,8 @@ public class Survivor : CustomObject
     public float Shooting => shooting;
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
+    float luck = 50;
+    public float Luck => luck;
 
     float meleeHitRate = 1;
     float meleeAvoidRate = 1;
@@ -1554,7 +1556,7 @@ public class Survivor : CustomObject
             float defendRate = 0.3f * meleeGuardRate;
             if (rightHandDisabled) defendRate -= defendRate * 0.5f;
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
-            float criticalRate = 0.1f * attacker.meleeCriticalRate;
+            float criticalRate = 0.1f * attacker.meleeCriticalRate * 0.02f * attacker.luck / luck;
 
             if (probability < avoidRate)
             {
@@ -1590,14 +1592,16 @@ public class Survivor : CustomObject
         float damage;
         float probability = UnityEngine.Random.Range(0, 1f);
         InjurySiteMajor damagePart;
+        float headShotProbability = 0.01f * 0.02f * bullet.Launcher.luck / luck;
+        float bodyShotProbability = 0.7f * 0.02f * bullet.Launcher.luck / luck;
         // Çìµå¼¦
-        if(probability > 0.99f)
+        if(probability < headShotProbability)
         {
             damage = bullet.Damage * 4;
             damagePart = InjurySiteMajor.Head;
         }
         // ¹Ùµð¼¦
-        else if(probability > 0.3f)
+        else if(probability < bodyShotProbability)
         {
             damage = bullet.Damage * 2;
             damagePart = InjurySiteMajor.Torso;
@@ -2401,6 +2405,7 @@ public class Survivor : CustomObject
     float characteristicCorrection_NatualHemostasis;
     float characteristicCorrection_BloodRegeneration;
     float characteristicCorrection_HpRegeneration;
+    float characteristicCorrection_Luck;
 
     public List<string> affectionList_AttackDamage = new();
     public List<string> affectionList_AttackSpeed = new();
@@ -2425,6 +2430,7 @@ public class Survivor : CustomObject
         characteristicCorrection_NatualHemostasis = 1;
         characteristicCorrection_BloodRegeneration = 1;
         characteristicCorrection_HpRegeneration = 1;
+        characteristicCorrection_Luck = 1;
 
         Calendar calender = GameManager.Instance.GetComponent<Calendar>();
 
@@ -2539,6 +2545,12 @@ public class Survivor : CustomObject
                     characteristicCorrection_FarmingSpeed *= condition;
                     characteristicCorrection_Shooting *= condition;
                     break;
+                case CharacteristicType.LuckGuy:
+                    characteristicCorrection_Luck *= 1.2f;
+                    break;
+                case CharacteristicType.TheCursed:
+                    characteristicCorrection_Luck *= 0.8f;
+                    break;
                 default:
                     Debug.LogWarning($"Unknown CharacteristicType : {characteristic.type}");
                     break;
@@ -2558,6 +2570,7 @@ public class Survivor : CustomObject
         farmingSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
         shooting = linkedSurvivorData.shooting * characteristicCorrection_Shooting;
         aimErrorRange = 7.5f / shooting;
+        luck = linkedSurvivorData.luck * characteristicCorrection_Luck;
         meleeHitRate = characteristicCorrection_MeleeHitRate;
         meleeAvoidRate = characteristicCorrection_MeleeAvoidRate;
         meleeGuardRate = characteristicCorrection_MeleeGuardRate;
@@ -2697,6 +2710,7 @@ public class Survivor : CustomObject
         moveSpeed = survivorInfo.moveSpeed;
         farmingSpeed = survivorInfo.farmingSpeed;
         shooting = survivorInfo.shooting;
+        luck = survivorInfo.luck;
         aimErrorRange = 7.5f / survivorInfo.shooting;
         charicteristics = survivorInfo.characteristics;
 

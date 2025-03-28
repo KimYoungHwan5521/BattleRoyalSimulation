@@ -70,6 +70,7 @@ public class BattleRoyaleManager
 
     void LoadMap()
     {
+        foreach (Area area in areas) foreach(GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
         if(map != null) PoolManager.Despawn(map);
         Calendar calendar = GameManager.Instance.GetComponent<Calendar>();
         if (Enum.TryParse(calendar.LeagueReserveInfo[calendar.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
