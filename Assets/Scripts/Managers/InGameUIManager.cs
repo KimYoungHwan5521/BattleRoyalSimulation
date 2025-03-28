@@ -227,6 +227,12 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetSelectedObjectInfoOnce(Survivor survivor)
     {
+        attackDamageText.GetComponent<Help>().SetDescription("");
+        attackSpeedText.GetComponent<Help>().SetDescription("");
+        moveSpeedText.GetComponent<Help>().SetDescription("");
+        farmingSpeedText.GetComponent<Help>().SetDescription("");
+        shootingText.GetComponent<Help>().SetDescription("");
+
         if(survivor != selectedObject) return;
         attackDamageText.text = $"{survivor.AttackDamage:0.##}";
         if (survivor.affectionList_AttackDamage.Count > 0)

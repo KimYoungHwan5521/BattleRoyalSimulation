@@ -697,7 +697,7 @@ public class Survivor : CustomObject
         targetFarmingSection = nearestFarmingSection;
     }
 
-    TKey FindNearest<TKey>(Dictionary<TKey, bool> candidates) where TKey : MonoBehaviour
+    public TKey FindNearest<TKey>(Dictionary<TKey, bool> candidates) where TKey : MonoBehaviour
     {
         TKey nearest = default;
         float minDistance = float.MaxValue;
@@ -2668,7 +2668,7 @@ public class Survivor : CustomObject
         SetColor(rgbVector.x, rgbVector.y, rgbVector.z);
     }
 
-    Area GetCurrentArea()
+    public Area GetCurrentArea()
     {
         foreach(var area in farmingAreas)
         {

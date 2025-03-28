@@ -175,7 +175,7 @@ public class Calendar : CustomObject
 
             if ((i - 1) % 7 == 5 && !leagueReserveInfo.ContainsKey(i - 1))
             {
-                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_2x2_02);
+                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_2x2_02 + 1);
                 leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map));
             }
         }
