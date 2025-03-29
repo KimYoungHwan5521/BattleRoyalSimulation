@@ -16,8 +16,9 @@ public class ProjectileGenerator : CustomObject
     {
         RangedWeapon weapon = owner.CurrentWeapon as RangedWeapon;
         weapon.Fire();
+        owner.InGameUIManager.UpdateSelectedObjectInventory(owner);
 
-        if(weapon.itemName == "ShotGun")
+        if (weapon.itemName == "ShotGun")
         {
             SpawnProjectile_ShotGun(weapon);
             return;

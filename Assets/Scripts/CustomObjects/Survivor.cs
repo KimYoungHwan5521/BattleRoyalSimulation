@@ -87,7 +87,7 @@ public class Survivor : CustomObject
     [SerializeField] GameObject nameTag;
     [SerializeField] GameObject prohibitTimer;
 
-    InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
+    public InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
     ProjectileGenerator projectileGenerator;
 
     [Header("Status")]
@@ -347,8 +347,8 @@ public class Survivor : CustomObject
     [SerializeField] Survivor targetFarmingCorpse;
     [SerializeField] float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
-    [SerializeField] float aimTime = 3f;
-    [SerializeField] float curAimTime;
+    [SerializeField] float aimDelay = 1.5f;
+    [SerializeField] float curAimDelay;
     [SerializeField] float curShotTime;
 
     [Header("Look")]
@@ -563,7 +563,7 @@ public class Survivor : CustomObject
         {
             animator.SetBool("Attack", false);
             animator.SetBool("Aim", false);
-            curAimTime = 0;
+            curAimDelay = 0;
             if(keepAnEyeOnPosition != Vector2.zero)
             {
                 agent.SetDestination(transform.position);
@@ -854,6 +854,7 @@ public class Survivor : CustomObject
                 foreach (Item item in targetFarmingBox.items)
                     AcqireItem(item);
                 targetFarmingBox.items.Clear();
+                InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
                 farmingBoxes[targetFarmingBox] = true;
                 targetFarmingBox = null;
                 lookRotation = Vector2.zero;
@@ -1031,6 +1032,7 @@ public class Survivor : CustomObject
         {
             inventory.Add(item);
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void ConsumptionItem(Item item, int amount)
@@ -1043,6 +1045,7 @@ public class Survivor : CustomObject
             {
                 inventory.Remove(item);
             }
+            InGameUIManager.UpdateSelectedObjectInventory(this);
         }
     }
 
@@ -1154,6 +1157,7 @@ public class Survivor : CustomObject
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
             if(currentWeapon is RangedWeapon) animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void UnequipWeapon()
@@ -1173,6 +1177,7 @@ public class Survivor : CustomObject
             }
             currentWeapon = null;
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void Equip(BulletproofHelmet wantBulletproofHelmet)
@@ -1199,6 +1204,7 @@ public class Survivor : CustomObject
             }
             currentHelmet = wantBulletproofHelmet;
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void UnequipBulletproofHelmet()
@@ -1217,6 +1223,7 @@ public class Survivor : CustomObject
             }
             currentHelmet = null;
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void Equip(BulletproofVest wantBulletproofVest)
@@ -1227,6 +1234,7 @@ public class Survivor : CustomObject
         {
             currentVest = wantBulletproofVest;
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void UnequipBulletproofVest()
@@ -1236,6 +1244,7 @@ public class Survivor : CustomObject
             inventory.Add(currentVest);
             currentVest = null;
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
     #endregion
 
@@ -1324,7 +1333,7 @@ public class Survivor : CustomObject
         }
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
-        curAimTime = 0;
+        curAimDelay = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
         if(Vector2.Distance(agent.destination, target.transform.position) > attackRange)
@@ -1342,7 +1351,7 @@ public class Survivor : CustomObject
     {
         agent.SetDestination(transform.position);
         animator.SetBool("Aim", false);
-        curAimTime = 0;
+        curAimDelay = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Attack", true);
@@ -1365,8 +1374,8 @@ public class Survivor : CustomObject
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Aim", true);
 
-        curAimTime += Time.deltaTime;
-        if(curAimTime > aimTime)
+        curAimDelay += Time.deltaTime;
+        if(curAimDelay > aimDelay)
         {
             curShotTime -= Time.deltaTime;
             if(curShotTime < CurrentWeaponAsRangedWeapon.ShotCoolTime)
@@ -1384,7 +1393,7 @@ public class Survivor : CustomObject
         animator.SetBool("StopBleeding", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
-        curAimTime = 0;
+        curAimDelay = 0;
     }
     #endregion
 
@@ -2253,6 +2262,7 @@ public class Survivor : CustomObject
     float injuryCorrection_AttackDamage = 1;
     void ApplyInjuryPenalty()
     {
+        InGameUIManager.UpdateSelectedObjectInjury(this);
         float ear1Penalty = 0;
         float ear2Penalty = 0;
         bool eyeInjured = false;
@@ -2575,11 +2585,11 @@ public class Survivor : CustomObject
         meleeAvoidRate = characteristicCorrection_MeleeAvoidRate;
         meleeGuardRate = characteristicCorrection_MeleeGuardRate;
         meleeCriticalRate = characteristicCorrection_MeleeCriticalRate;
-        aimTime = 3 * characteristicCorrection_AimTime;
+        aimDelay = 1.5f * characteristicCorrection_AimTime;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;
         hpRegeneration = characteristicCorrection_HpRegeneration;
-        InGameUIManager.SetSelectedObjectInfoOnce(this);
+        InGameUIManager.UpdateSelectedObjectStat(this);
     }
 
     #region Animation Events
@@ -2613,6 +2623,7 @@ public class Survivor : CustomObject
         else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void AE_Taping()
@@ -2622,6 +2633,7 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    float curSeeEnemy = 0;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
@@ -2631,9 +2643,14 @@ public class Survivor : CustomObject
             {
                 if (!inSightEnemies.Contains(survivor))
                 {
-                    inSightEnemies.Add(survivor);
-                    sightMeshRenderer.material = m_SightAlert;
-                    if(survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
+                    curSeeEnemy += Time.deltaTime;
+                    if(curSeeEnemy > 0.1f)
+                    {
+                        inSightEnemies.Add(survivor);
+                        sightMeshRenderer.material = m_SightAlert;
+                        if(survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
+                        curSeeEnemy = 0;
+                    }
                 }
             }
         }
@@ -2663,6 +2680,7 @@ public class Survivor : CustomObject
                     targetEnemiesLastPosition = survivor.transform.position;
                     lastTargetEnemy = survivor;
                     inSightEnemies.Remove(survivor);
+                    curSeeEnemy = 0;
                 }
             }
         }
