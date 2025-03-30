@@ -38,6 +38,7 @@ public class SurvivorData
     public int shceduledSurgeryCost;
     public InjurySite surgerySite;
     public SurgeryType surgeryType;
+    public CharacteristicType surgeryCharacteristic;
 
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
@@ -90,7 +91,7 @@ public enum Tier { Bronze, Silver, Gold }
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
-public enum SurgeryType { Transplant, Alteration }
+public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration }
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -158,6 +159,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] SurvivorInfo survivorInfoGetSurgery;
     [SerializeField] SurvivorData survivorWhoWantSurgery;
     [SerializeField] Toggle surgeryType_Transplantation;
+    [SerializeField] Toggle surgeryType_ChronicDisorderTreatment;
     [SerializeField] Toggle surgeryType_Alteration;
 
     [SerializeField] GameObject selectSurgery;
@@ -173,13 +175,15 @@ public class OutGameUIManager : MonoBehaviour
         public int surgeryCost;
         public InjurySite surgerySite;
         public SurgeryType surgeryType;
+        public CharacteristicType surgeryCharacteristic;
 
-        public SurgeryInfo(string surgeryName, int surgeryCost, InjurySite surgerySite, SurgeryType surgeryType)
+        public SurgeryInfo(string surgeryName, int surgeryCost, InjurySite surgerySite, SurgeryType surgeryType, CharacteristicType surgeryCharacteristic = CharacteristicType.BadEye)
         {
             this.surgeryName = surgeryName;
             this.surgeryCost = surgeryCost;
             this.surgerySite = surgerySite;
             this.surgeryType = surgeryType;
+            this.surgeryCharacteristic = surgeryCharacteristic;
         }
     }
     List<SurgeryInfo> surgeryList;
@@ -747,8 +751,28 @@ public class OutGameUIManager : MonoBehaviour
                             surgeryName = $"Artifical organ transplant";
                             cost = 3000;
                             break;
+                        default:
+                            Debug.LogWarning($"Can't transplant site : {injury.site}");
+                            break;
                     }
                     surgeryList.Add(new(surgeryName, cost, injury.site, SurgeryType.Transplant));
+                }
+            }
+        }
+        else if(surgeryType_ChronicDisorderTreatment.isOn)
+        {
+            foreach(var characteristic in survivorWhoWantSurgery.characteristics)
+            {
+                switch(characteristic.type)
+                {
+                    case CharacteristicType.BadEye:
+                        surgeryList.Add(new("Bad eye treatment", 2000, InjurySite.LeftEye, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadEye));
+                        break;
+                    case CharacteristicType.BadHearing:
+                        surgeryList.Add(new("Bad hearing treatment", 700, InjurySite.LeftEar, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadHearing));
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -791,6 +815,7 @@ public class OutGameUIManager : MonoBehaviour
         survivorWhoWantSurgery.shceduledSurgeryCost = surgeryList[index].surgeryCost;
         survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
         survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
+        survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
         OpenConfirmWindow($"Do you confirm surgery?\n{survivorWhoWantSurgery.survivorName} : {survivorWhoWantSurgery.scheduledSurgeryName}($ {survivorWhoWantSurgery.shceduledSurgeryCost})", ()=>
         {
             if(money < survivorWhoWantSurgery.shceduledSurgeryCost)
@@ -1000,6 +1025,22 @@ public class OutGameUIManager : MonoBehaviour
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
             surgeryInjury.type = InjuryType.ArtificalPartsTransplanted;
             surgeryInjury.degree = 0;
+            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.RecoveringFromSurgery, 0.5f));
+        }
+        else if (survivor.surgeryType == SurgeryType.ChronicDisorderTreatment)
+        {
+            switch(survivor.surgeryCharacteristic)
+            {
+                case CharacteristicType.BadEye:
+                    survivor.injuries.Add(new(InjurySite.LeftEye, InjuryType.RecoveringFromSurgery, 0.4f));
+                    survivor.injuries.Add(new(InjurySite.RightEye, InjuryType.RecoveringFromSurgery, 0.4f));
+                    break;
+                case CharacteristicType.BadHearing:
+                    survivor.injuries.Add(new(InjurySite.LeftEar, InjuryType.RecoveringFromSurgery, 0.4f));
+                    survivor.injuries.Add(new(InjurySite.RightEar, InjuryType.RecoveringFromSurgery, 0.4f));
+                    break;
+            }
+            survivor.characteristics.Remove(survivor.characteristics.Find(x => x.type == survivor.surgeryCharacteristic));
         }
 
         survivor.shceduledSurgeryCost = 0;
@@ -1063,6 +1104,7 @@ public class OutGameUIManager : MonoBehaviour
                 (int)(value * 100 * totalRand),
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );
+            CharacteristicManager.AddRandomCharacteristics(survivorData, UnityEngine.Random.Range(0, 4));
             return survivorData;
         }
         return new(GetRandomName(), 100, 10, 1, 3, 1, 1f, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));

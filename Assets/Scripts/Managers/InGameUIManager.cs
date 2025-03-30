@@ -31,6 +31,7 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI log;
 
     [Header("Selected Object Info")]
+    [SerializeField] GameObject autoFocus;
     [SerializeField] GameObject seletedImage;
 
     [SerializeField] CustomObject selectedObject;
@@ -181,6 +182,15 @@ public class InGameUIManager : MonoBehaviour
         moveSpeedText.GetComponent<Help>().SetDescription("");
         farmingSpeedText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
+    }
+
+    public void AutoFocus()
+    {
+        if (autoFocus.GetComponent<Toggle>().isOn && selectedObject != null)
+        {
+            cameraTarget = selectedObject.transform;
+        }
+        else cameraTarget = null;
     }
 
     void SelectObject()
@@ -449,6 +459,7 @@ public class InGameUIManager : MonoBehaviour
             if(selectedObject is Survivor)
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;
+                autoFocus.SetActive(true);
                 selectedSurvivorsHealthBar.SetActive(true);
                 selectedSurvivorBleedingBar.SetActive(true);
 
@@ -462,6 +473,9 @@ public class InGameUIManager : MonoBehaviour
             }
             else if(selectedObject is Box)
             {
+                autoFocus.SetActive(false);
+                selectedSurvivorsHealthBar.SetActive(false);
+                selectedSurvivorBleedingBar.SetActive(false);
             }
             else
             {
