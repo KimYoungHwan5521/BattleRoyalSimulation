@@ -6,89 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
 
-#region SurvivorData
-[Serializable]
-public class SurvivorData
-{
-    public string survivorName;
-    public float hp;
-    public float attackDamage;
-    public float attackSpeed;
-    public float moveSpeed;
-    public float farmingSpeed;
-    public float shooting;
-    public float luck;
-    public List<Characteristic> characteristics = new();
-    public int price;
-    public Tier tier;
-
-    public bool isReserved;
-    public Training assignedTraining;
-
-    public float increaseComparedToPrevious_hp;
-    public float increaseComparedToPrevious_attackDamage;
-    public float increaseComparedToPrevious_attackSpeed;
-    public float increaseComparedToPrevious_moveSpeed;
-    public float increaseComparedToPrevious_farmingSpeed;
-    public float increaseComparedToPrevious_shooting;
-
-    public List<Injury> injuries = new();
-    public bool surgeryScheduled;
-    public string scheduledSurgeryName;
-    public int shceduledSurgeryCost;
-    public InjurySite surgerySite;
-    public SurgeryType surgeryType;
-    public CharacteristicType surgeryCharacteristic;
-
-
-    public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
-        float farmingSpeed, float shooting, int price, Tier tier)
-    {
-        this.survivorName = survivorName;
-        this.hp = hp;
-        this.attackDamage = attackDamage;
-        this.attackSpeed = attackSpeed;
-        this.moveSpeed = moveSpeed;
-        this.farmingSpeed = farmingSpeed;
-        this.shooting = shooting;
-        luck = 50;
-        this.price = price;
-        this.tier = tier;
-    }
-
-    public SurvivorData(SurvivorData survivorData)
-    {
-        survivorName = survivorData.survivorName;
-        hp = survivorData.hp;
-        attackDamage = survivorData.attackDamage;
-        attackSpeed = survivorData.attackSpeed;
-        moveSpeed = survivorData.moveSpeed;
-        farmingSpeed = survivorData.farmingSpeed;
-        shooting = survivorData.shooting;
-        price = survivorData.price;
-        tier = survivorData.tier;
-    }
-
-    public void IncreaseStats(float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float shooting)
-    {
-        this.hp += hp;
-        this.attackDamage += attackDamage;
-        this.attackSpeed += attackSpeed;
-        this.moveSpeed += moveSpeed;
-        this.farmingSpeed += farmingSpeed;
-        this.shooting += shooting;
-
-        increaseComparedToPrevious_hp += hp;
-        increaseComparedToPrevious_attackDamage += attackDamage;
-        increaseComparedToPrevious_attackSpeed += attackSpeed;
-        increaseComparedToPrevious_moveSpeed += moveSpeed;
-        increaseComparedToPrevious_farmingSpeed += farmingSpeed;
-        increaseComparedToPrevious_shooting += shooting;
-    }
-}
-public enum Tier { Bronze, Silver, Gold }
-#endregion
-
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
 public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration }
@@ -169,6 +86,14 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] GameObject[] surgeries;
     [SerializeField] ToggleGroup surgeriesToggleGroup;
+
+    [Header("Strategy Room")]
+    [SerializeField] GameObject strategyRoom;
+    [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
+    [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
+    [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
+    [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
+
     struct SurgeryInfo
     {
         public string surgeryName;
@@ -199,6 +124,7 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorsData = new();
         SetHireMarketFirst();
         Money = 1000;
+        GameManager.Instance.ObjectStart += () => InitializeStrategyRoom();
     }
 
     #region Hire
@@ -851,6 +777,86 @@ public class OutGameUIManager : MonoBehaviour
     }
     #endregion
 
+    #region Strategy Room
+    void InitializeStrategyRoom()
+    {
+        weaponPriority1Dropdown.ClearOptions();
+        ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
+        for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Bullet_Revolver;  i++)
+        {
+            bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
+            TMP_Dropdown.OptionData optionData;
+            optionData = new(items[i].ToString());
+            weaponPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
+            if (spriteNotNull) weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(ResourceManager.Get(itemSpriteEnum));
+        }
+        GameManager.Instance.ObjectUpdate += () => 
+        { 
+            if(weaponPriority1Dropdown.IsExpanded)
+            {
+                var dropdownSprites = weaponPriority1Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                for(int i=0; i<weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                {
+                    Image image = dropdownSprites[i].GetComponent<Image>();
+                    image.sprite = weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
+                    image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                }
+            }
+        };
+        SetDefault();
+    }
+
+    public void SetDefault()
+    {
+        weaponPriority1Dropdown.value = (int)ItemManager.Items.SniperRifle - (int)ItemManager.Items.Knife;
+        Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.SniperRifle);
+        selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
+            = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+    }
+
+    public void OpenStrategyRoom()
+    {
+        SetStrategyRoom();
+        strategyRoom.SetActive(true);
+    }
+
+    void SetStrategyRoom()
+    {
+        selectSurvivorEstablishStrategyDropdown.ClearOptions();
+        selectSurvivorEstablishStrategyDropdown.AddOptions(survivorsDropdown.options);
+        SelectSurvivorToEstablishStrategy();
+    }
+
+    void SelectSurvivorToEstablishStrategy()
+    {
+        survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
+        survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.survivorName == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
+        weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
+    }
+
+    public void WeaponPriorityChanged()
+    {
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemSpriteEnum);
+        if(spriteNotNull)
+        {
+            Image image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+            image.sprite = ResourceManager.Get(itemSpriteEnum);
+            image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+        }
+    }
+
+    public void SaveStrategy()
+    {
+        OpenConfirmWindow("Save all changes?", () =>
+        {
+            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemEnum);
+            if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
+            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}");
+        });
+    }
+    #endregion
+
     public int MeasureTreatmentCost(Injury injury)
     {
         float cost = 0;
@@ -919,6 +925,7 @@ public class OutGameUIManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
 
+    #region End The Day
     public void EndTheDay()
     {
         string message = "Are you done for the day?";
@@ -1072,6 +1079,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         ResetSelectedSurvivorInfo();
     }
+    #endregion
 
     public SurvivorData CreateRandomSurvivorData()
     {
