@@ -94,6 +94,9 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
     [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
 
+    [SerializeField] TMP_Dropdown heardDistinguishableSoundDropdown;
+    [SerializeField] TMP_Dropdown heardIndistinguishableSoundDropdown;
+
     struct SurgeryInfo
     {
         public string surgeryName;
@@ -192,6 +195,9 @@ public class OutGameUIManager : MonoBehaviour
                         hireClose.SetActive(true);
                     }
                     survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.survivorName });
+                    survivorsDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
+                    selectSurvivorGetSurgeryDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
+                    selectSurvivorEstablishStrategyDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
                     survivorsInHireMarket[candidate].SoldOut = true;
 
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
@@ -803,6 +809,10 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
         };
+        heardDistinguishableSoundDropdown.ClearOptions();
+        heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        heardIndistinguishableSoundDropdown.ClearOptions();
+        heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
         SetDefault();
     }
 
@@ -813,6 +823,8 @@ public class OutGameUIManager : MonoBehaviour
         selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.SniperRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
             = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+        heardDistinguishableSoundDropdown.value = 0;
+        heardIndistinguishableSoundDropdown.value = 1;
     }
 
     public void OpenStrategyRoom()
@@ -853,6 +865,8 @@ public class OutGameUIManager : MonoBehaviour
             bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemEnum);
             if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
             else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}");
+            survivorWhoWantEstablishStrategy.actionWhenHeardDistinguishableSound = heardDistinguishableSoundDropdown.value;
+            survivorWhoWantEstablishStrategy.actionWhenHeardIndistinguishableSound = heardIndistinguishableSoundDropdown.value;
         });
     }
     #endregion

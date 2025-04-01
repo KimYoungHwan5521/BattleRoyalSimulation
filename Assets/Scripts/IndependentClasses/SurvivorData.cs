@@ -43,6 +43,8 @@ public class SurvivorData
 
     // Strategy
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
+    public int actionWhenHeardDistinguishableSound = 0;
+    public int actionWhenHeardIndistinguishableSound = 1;
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
