@@ -1416,16 +1416,16 @@ public class Survivor : CustomObject
         if(heardVolume > 1f)
         {
             // 어떤 소리인지 명확한 인지
-            if(linkedSurvivorData.actionWhenHeardDistinguishableSound == 0) threateningSoundPosition = soundOrigin;
-            else if(linkedSurvivorData.actionWhenHeardDistinguishableSound == 1) keepAnEyeOnPosition = soundOrigin;
+            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+            else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
         }
         else if( heardVolume > 0.1f)
         {
             // 불분명한 인지
-            if(linkedSurvivorData.actionWhenHeardIndistinguishableSound == 0) threateningSoundPosition = soundOrigin;
-            else if(linkedSurvivorData.actionWhenHeardIndistinguishableSound == 1) keepAnEyeOnPosition = soundOrigin;
+            if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+            else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
             sightMeshRenderer.material = m_SightSuspicious;
             emotionAnimator.SetTrigger("Suspicious");
         }

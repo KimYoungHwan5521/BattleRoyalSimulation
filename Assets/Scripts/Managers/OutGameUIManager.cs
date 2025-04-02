@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
@@ -92,10 +93,21 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
     [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
     [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
+
     [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
+    [SerializeField] Strategy[] strategies;
+    
+    [SerializeField] TMP_Dropdown sawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
+    [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
+
+    [SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
+    [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsInAttackRangeDropdown;
 
     [SerializeField] TMP_Dropdown heardDistinguishableSoundDropdown;
+    [SerializeField] TMP_Dropdown elseActionHeardDistinguishableSoundDropdown;
+
     [SerializeField] TMP_Dropdown heardIndistinguishableSoundDropdown;
+    [SerializeField] TMP_Dropdown elseActionHeardIndistinguishableSoundDropdown;
 
     struct SurgeryInfo
     {
@@ -809,10 +821,25 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
         };
+        sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
+        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Run away" }));
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Run away" }));
+        
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Trace", "Ignore", "Run away" }));
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Trace", "Ignore", "Run away" }));
+
         heardDistinguishableSoundDropdown.ClearOptions();
         heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        elseActionHeardDistinguishableSoundDropdown.ClearOptions();
+        elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        
         heardIndistinguishableSoundDropdown.ClearOptions();
         heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
+        elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
         SetDefault();
     }
 
@@ -823,6 +850,9 @@ public class OutGameUIManager : MonoBehaviour
         selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.SniperRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
             = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+        foreach(Strategy strategy in strategies) strategy.SetDefault();
+        sawAnEnemyAndItIsInAttackRangeDropdown.value = 0;
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = 0;
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
     }
@@ -840,11 +870,37 @@ public class OutGameUIManager : MonoBehaviour
         SelectSurvivorToEstablishStrategy();
     }
 
-    void SelectSurvivorToEstablishStrategy()
+    public void SelectSurvivorToEstablishStrategy()
     {
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
         survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.survivorName == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
         weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
+        foreach (Strategy strategy in strategies) strategy.SetDefault();
+        foreach (var strategyDictionary in survivorWhoWantEstablishStrategy.strategyDictionary)
+        {
+            Strategy strategy = strategies[0];
+            foreach(Strategy st in strategies)
+            {
+                if(st.strategyCase == strategyDictionary.Key)
+                {
+                    strategy = st;
+                    break;
+                }
+            }
+            for(int j = 0;j < 5; j++)
+            {
+                if (j < strategyDictionary.Value.conditionConut)
+                {
+                    strategy.AddCondition();
+                    strategy.andOrs[j].value = strategyDictionary.Value.conditions[j].andOr;
+                    strategy.variable1s[j].value = strategyDictionary.Value.conditions[j].variable1;
+                    strategy.operators[j].value = strategyDictionary.Value.conditions[j].operator_;
+                    strategy.variable2s[j].value = strategyDictionary.Value.conditions[j].variable2;
+                    strategy.inputFields[j].text = strategyDictionary.Value.conditions[j].inputInt.ToString();
+                }
+                else break;
+            }
+        }
     }
 
     public void WeaponPriorityChanged()
@@ -865,8 +921,19 @@ public class OutGameUIManager : MonoBehaviour
             bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemEnum);
             if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
             else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}");
-            survivorWhoWantEstablishStrategy.actionWhenHeardDistinguishableSound = heardDistinguishableSoundDropdown.value;
-            survivorWhoWantEstablishStrategy.actionWhenHeardIndistinguishableSound = heardIndistinguishableSoundDropdown.value;
+
+            foreach(Strategy strategy in strategies)
+            {
+                ConditionData[] conditionData = new ConditionData[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    if(!int.TryParse(strategy.inputFields[i].text, out int num)) num = 0;
+                    conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
+                }
+                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
+                    new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
+            }
+
         });
     }
     #endregion

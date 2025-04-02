@@ -4,6 +4,22 @@ using System.Collections.Generic;
 
 public enum Tier { Bronze, Silver, Gold }
 
+public class StrategyData
+{
+    public int action = 0;
+    public int elseAction = 0;
+    public int conditionConut = 0;
+    public ConditionData[] conditions = new ConditionData[5];
+
+    public StrategyData(int action, int elseAction, int conditionConut, ConditionData[] conditions = null)
+    {
+        this.action = action;
+        this.elseAction = elseAction;
+        this.conditionConut = conditionConut;
+        this.conditions = conditions;
+    }
+}
+
 [Serializable]
 public class SurvivorData
 {
@@ -43,8 +59,16 @@ public class SurvivorData
 
     // Strategy
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
-    public int actionWhenHeardDistinguishableSound = 0;
-    public int actionWhenHeardIndistinguishableSound = 1;
+
+    public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
+
+    void SetStrategyDictionary()
+    {
+        strategyDictionary.Add(StrategyCase.SawAnEnemyAndItIsInAttackRange, new(0, 0, 0));
+        strategyDictionary.Add(StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange, new(0, 0, 0));
+        strategyDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
+        strategyDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
+    }
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)
@@ -59,6 +83,7 @@ public class SurvivorData
         luck = 50;
         this.price = price;
         this.tier = tier;
+        SetStrategyDictionary();
     }
 
     public SurvivorData(SurvivorData survivorData)
@@ -70,8 +95,10 @@ public class SurvivorData
         moveSpeed = survivorData.moveSpeed;
         farmingSpeed = survivorData.farmingSpeed;
         shooting = survivorData.shooting;
+        luck = survivorData.luck;
         price = survivorData.price;
         tier = survivorData.tier;
+        SetStrategyDictionary();
     }
 
     public void IncreaseStats(float hp, float attackDamage, float attackSpeed, float moveSpeed, float farmingSpeed, float shooting)
