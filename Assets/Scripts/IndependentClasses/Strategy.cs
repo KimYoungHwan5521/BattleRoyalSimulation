@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public enum StrategyCase
 {
+    WeaponPriority,
     SawAnEnemyAndItIsInAttackRange,
     SawAnEnemyAndItIsOutsideOfAttackRange,
     HeardDistinguishableSound,
@@ -44,9 +45,12 @@ public class Strategy : MonoBehaviour
     [SerializeField]GameObject elseAction;
 
     public StrategyCase strategyCase;
+    [SerializeField] bool noCondition;
+    public string CaseName => transform.Find("Case Name").GetComponent<TextMeshProUGUI>().text;
 
     private void Start()
     {
+        if (noCondition) return;
         andOrs = new TMP_Dropdown[conditions.Length];
         notValids = new GameObject[conditions.Length];
         variable1s = new TMP_Dropdown[conditions.Length];
@@ -75,7 +79,7 @@ public class Strategy : MonoBehaviour
             andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
             notValids[i].SetActive(false);
             variable1s[i].ClearOptions();
-            variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "Enemy's weapon", "My HP" }));
+            variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "The enemy's weapon", "My HP", "The enemy" }));
             OnVariable1Changed(i);
 
             condition.SetActive(false);
@@ -85,6 +89,7 @@ public class Strategy : MonoBehaviour
 
     public void SetDefault()
     {
+        if (noCondition) return;
         DeleteCondition();
         DeleteCondition();
         DeleteCondition();
@@ -135,6 +140,12 @@ public class Strategy : MonoBehaviour
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { ">", "<" }));
                 variable2s[conditionNumber].gameObject.SetActive(false);
                 inputFieldsGameObject[conditionNumber].SetActive(true);
+                break;
+            case "Enemy":
+                operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "See me" }));
+                variable2s[conditionNumber].gameObject.SetActive(true);
+                inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
             default:
                 Debug.LogWarning($"Wrong condition case : {variable1s[conditionNumber].options[variable1s[conditionNumber].value].text}");

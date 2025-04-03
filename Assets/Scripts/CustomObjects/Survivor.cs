@@ -2787,6 +2787,7 @@ public class Survivor : CustomObject
                 {
                     switch(strategyDictionary.Value.conditions[i].variable1)
                     {
+                        // My Weapon
                         case 0:
                             switch(strategyDictionary.Value.conditions[i].operator_)
                             {
@@ -2820,6 +2821,7 @@ public class Survivor : CustomObject
                                     break;
                             }
                             break;
+                        // The enemy's weapon
                         case 1:
                             switch (strategyDictionary.Value.conditions[i].operator_)
                             {
@@ -2827,13 +2829,13 @@ public class Survivor : CustomObject
                                     switch (strategyDictionary.Value.conditions[i].variable2)
                                     {
                                         case 0:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is MeleeWeapon;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon is MeleeWeapon;
                                             break;
                                         case 1:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is RangedWeapon;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon is RangedWeapon;
                                             break;
                                         case 2:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon == null;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon == null;
                                             break;
                                     }
                                     break;
@@ -2841,18 +2843,19 @@ public class Survivor : CustomObject
                                     switch (strategyDictionary.Value.conditions[i].variable2)
                                     {
                                         case 0:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is not MeleeWeapon;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon is not MeleeWeapon;
                                             break;
                                         case 1:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is not RangedWeapon;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon is not RangedWeapon;
                                             break;
                                         case 2:
-                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon != null;
+                                            condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.currentWeapon != null;
                                             break;
                                     }
                                     break;
                             }
                             break;
+                        // My HP
                         case 2:
                             switch(strategyDictionary.Value.conditions[i].operator_)
                             {
@@ -2861,6 +2864,18 @@ public class Survivor : CustomObject
                                     break;
                                 case 1:
                                     condition.conditions[i] = () => CurHPPercent < strategyDictionary.Value.conditions[i].inputInt;
+                                    break;
+                            }
+                            break;
+                        // The enemy
+                        case 3:
+                            switch(strategyDictionary.Value.conditions[i].operator_)
+                            {
+                                case 0:
+                                    condition.conditions[i] = () => TargetEnemy != null && TargetEnemy.inSightEnemies.Contains(this);
+                                    break;
+                                case 1:
+                                    condition.conditions[i] = () => TargetEnemy != null && !TargetEnemy.inSightEnemies.Contains(this);
                                     break;
                             }
                             break;

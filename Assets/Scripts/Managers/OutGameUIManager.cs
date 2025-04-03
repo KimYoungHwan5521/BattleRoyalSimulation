@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
-using System.Linq;
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
@@ -93,6 +92,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
     [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
     [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
+
+    [SerializeField] TMP_InputField search;
 
     [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
     [SerializeField] Strategy[] strategies;
@@ -790,6 +791,7 @@ public class OutGameUIManager : MonoBehaviour
     #region Strategy Room
     void InitializeStrategyRoom()
     {
+        search.onValueChanged.AddListener((value) => Search(value));
         weaponPriority1Dropdown.ClearOptions();
         ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
         for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Bullet_Revolver;  i++)
@@ -892,6 +894,18 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 else break;
             }
+        }
+    }
+
+    void Search(string word)
+    {
+        if(string.IsNullOrEmpty(word))
+        {
+            foreach(Strategy strategy in strategies) strategy.gameObject.SetActive(true);
+        }
+        else
+        {
+            foreach (Strategy strategy in strategies) strategy.gameObject.SetActive(strategy.CaseName.ToUpper().Contains(word.ToUpper()));
         }
     }
 
