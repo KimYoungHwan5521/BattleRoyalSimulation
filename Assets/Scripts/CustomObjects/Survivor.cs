@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Survivor : CustomObject
 {
@@ -74,6 +76,7 @@ public class Survivor : CustomObject
     [SerializeField] float curHP;
     public float CurHP => curHP;
     [SerializeField] float attackDamage = 10f;
+    public float CurHPPercent => curHP / maxHP * 100;
     public float AttackDamage => attackDamage;
     [SerializeField] float attackSpeed = 1f;
     public float AttackSpeed => attackSpeed;
@@ -308,6 +311,15 @@ public class Survivor : CustomObject
     Vector2 keepAnEyeOnPosition;
     [SerializeField] float keepAnEyeOnTime = 3f;
     [SerializeField] float curKeepAnEyeOnTime;
+
+    //[Header("Strategy")]
+    delegate bool Condition();
+    struct Conditions
+    {
+        public Condition[] conditions;
+        public Condition TotalCondition;
+    }
+    Dictionary<StrategyCase, Conditions> strategyConditions = new();
 
     [Header("GameResult")]
     float survivedTime;
@@ -564,6 +576,7 @@ public class Survivor : CustomObject
         else
         {
             currentStatus = Status.InCombat;
+            // 보고 있던 대상이 죽어버릴 경우
             if (inSightEnemies[0].isDead)
             {
                 if (!farmingCorpses.ContainsKey(inSightEnemies[0]))
@@ -585,7 +598,86 @@ public class Survivor : CustomObject
             }
             else
             {
-                Combat(inSightEnemies[0]);
+                //Combat(inSightEnemies[0]);
+                lookRotation = TargetEnemy.transform.position - transform.position;
+                float distance = Vector2.Distance(transform.position, inSightEnemies[0].transform.position);
+                bool enemyInAttackRange = false;
+                if (IsValid(currentWeapon))
+                {
+                    if (CurrentWeaponAsRangedWeapon != null)
+                    {
+                        if (distance < CurrentWeaponAsRangedWeapon.AttackRange) enemyInAttackRange = true;
+                    }
+                    else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
+                }
+                else if (distance < attackRange) enemyInAttackRange = true;
+
+                if (enemyInAttackRange)
+                {
+                    if(strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
+                        {
+                            Combat(distance);
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
+                        {
+                            Farming();
+                        }
+                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
+                        {
+                            //RunAway()
+                        }
+                    }
+                    else
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 0)
+                        {
+                            Combat(distance);
+                        }
+                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
+                        {
+                            Farming();
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
+                        {
+                            //RunAway()
+                        }
+                    }
+                }
+                else
+                {
+                    if (strategyConditions[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].TotalCondition.Invoke())
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 0)
+                        {
+                            ApproachEnemy(TargetEnemy);
+                        }
+                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
+                        {
+                            Farming();
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
+                        {
+                            //RunAway()
+                        }
+                    }
+                    else
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 0)
+                        {
+                            ApproachEnemy(TargetEnemy);
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
+                        {
+                            Farming();
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
+                        {
+                            //RunAway()
+                        }
+                    }
+                }
             }
         }
     }
@@ -1230,69 +1322,37 @@ public class Survivor : CustomObject
         }
     }
 
-    void Combat(Survivor target)
+    void Combat(float distance)
     {
-        lookRotation = target.transform.position - transform.position;
-        float distance = Vector2.Distance(transform.position, inSightEnemies[0].transform.position);
-        if (IsValid(currentWeapon))
+        if (CurrentWeaponAsRangedWeapon != null)
         {
-            if(CurrentWeaponAsRangedWeapon != null)
+            if (distance < CurrentWeaponAsRangedWeapon.MinimumRange) Attack();
+            else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) Aim();
+            else if (ValidBullet != null) Reload();
+            else if (!currentWeaponisBestWeapon)
             {
-                if(distance < CurrentWeaponAsRangedWeapon.MinimumRange)
+                List<Item> candidates = inventory.FindAll(x => x is Weapon);
+                foreach (Item candidate in candidates)
                 {
-                    if(distance < attackRange)
-                    {
-                        Attack();
-                        return;
-                    }
+                    if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
                 }
-                else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
-                {
-                    if (distance < CurrentWeaponAsRangedWeapon.AttackRange)
-                    {
-                        Aim();
-                        return;
-                    }
-                }
-                else if(ValidBullet != null)
-                {
-                    Reload();
-                    return;
-                }
-                else if(!currentWeaponisBestWeapon)
-                {
-                    List<Item> candidates = inventory.FindAll(x => x is Weapon);
-                    foreach(Item candidate in candidates)
-                    {
-                        if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
-                    }
-                    currentWeaponisBestWeapon = true;
-                    return;
-                }
-            }
-            else
-            {
-                if (distance < currentWeapon.AttackRange)
-                {
-                    Attack();
-                    return;
-                }
+                currentWeaponisBestWeapon = true;
             }
         }
-        else if (distance < attackRange)
-        {
-            Attack();
-            return;
-        }
+        else Attack();
+    }
+
+    void ApproachEnemy(Survivor target)
+    {
         animator.SetBool("Attack", false);
         animator.SetBool("Aim", false);
         curAimDelay = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
-        if(Vector2.Distance(agent.destination, target.transform.position) > attackRange)
+        if (Vector2.Distance(agent.destination, target.transform.position) > attackRange)
         {
             curSetDestinationCool += Time.deltaTime;
-            if(curSetDestinationCool > 1)
+            if (curSetDestinationCool > 1)
             {
                 agent.SetDestination(target.transform.position);
                 curSetDestinationCool = 0;
@@ -1416,18 +1476,34 @@ public class Survivor : CustomObject
         if(heardVolume > 1f)
         {
             // 어떤 소리인지 명확한 인지
-            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-            else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
+            if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
+            {
+                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
+            }
+            else
+            {
+                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 1) keepAnEyeOnPosition = soundOrigin;
+            }
         }
         else if( heardVolume > 0.1f)
         {
             // 불분명한 인지
-            if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-            else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
             sightMeshRenderer.material = m_SightSuspicious;
             emotionAnimator.SetTrigger("Suspicious");
+            if (strategyConditions[StrategyCase.HeardIndistinguishableSound].TotalCondition.Invoke())
+            {
+                if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
+            }
+            else
+            {
+                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 1) keepAnEyeOnPosition = soundOrigin;
+            }
         }
     }
     #endregion
@@ -2694,6 +2770,167 @@ public class Survivor : CustomObject
         }
         ApplyCharacteristics();
         ApplyInjuryPenalty();
+        ApplyStrategies();
+    }
+
+    void ApplyStrategies()
+    {
+        foreach (var strategyDictionary in linkedSurvivorData.strategyDictionary)
+        {
+            Conditions condition = new()
+            {
+                conditions = new Condition[5]
+            };
+            for (int i = 0; i < 5; i++)
+            {
+                if (i < strategyDictionary.Value.conditionConut)
+                {
+                    switch(strategyDictionary.Value.conditions[i].variable1)
+                    {
+                        case 0:
+                            switch(strategyDictionary.Value.conditions[i].operator_)
+                            {
+                                case 0:
+                                    switch(strategyDictionary.Value.conditions[i].variable2)
+                                    {
+                                        case 0:
+                                            condition.conditions[i] = () => currentWeapon is MeleeWeapon;
+                                            break;
+                                        case 1:
+                                            condition.conditions[i] = () => currentWeapon is RangedWeapon;
+                                            break;
+                                        case 2:
+                                            condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null);
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (strategyDictionary.Value.conditions[i].variable2)
+                                    {
+                                        case 0:
+                                            condition.conditions[i] = () => currentWeapon is not MeleeWeapon;
+                                            break;
+                                        case 1:
+                                            condition.conditions[i] = () => currentWeapon is not RangedWeapon;
+                                            break;
+                                        case 2:
+                                            condition.conditions[i] = () => currentWeapon is MeleeWeapon || (currentWeapon is RangedWeapon && ValidBullet != null);
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 1:
+                            switch (strategyDictionary.Value.conditions[i].operator_)
+                            {
+                                case 0:
+                                    switch (strategyDictionary.Value.conditions[i].variable2)
+                                    {
+                                        case 0:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is MeleeWeapon;
+                                            break;
+                                        case 1:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is RangedWeapon;
+                                            break;
+                                        case 2:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon == null;
+                                            break;
+                                    }
+                                    break;
+                                case 1:
+                                    switch (strategyDictionary.Value.conditions[i].variable2)
+                                    {
+                                        case 0:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is not MeleeWeapon;
+                                            break;
+                                        case 1:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon is not RangedWeapon;
+                                            break;
+                                        case 2:
+                                            condition.conditions[i] = () => inSightEnemies.Count > 0 && inSightEnemies[0].currentWeapon != null;
+                                            break;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            switch(strategyDictionary.Value.conditions[i].operator_)
+                            {
+                                case 0:
+                                    condition.conditions[i] = () => CurHPPercent > strategyDictionary.Value.conditions[i].inputInt;
+                                    break;
+                                case 1:
+                                    condition.conditions[i] = () => CurHPPercent < strategyDictionary.Value.conditions[i].inputInt;
+                                    break;
+                            }
+                            break;
+                    }
+                }
+                else condition.conditions[i] = () => true;
+
+                if (strategyDictionary.Value.conditions[1].andOr == 0)
+                {
+                    if (strategyDictionary.Value.conditions[2].andOr == 0)
+                    {
+                        if (strategyDictionary.Value.conditions[3].andOr == 0)
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() && condition.conditions[2].Invoke() && condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() && condition.conditions[2].Invoke() && condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                        else
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() && condition.conditions[2].Invoke() || condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() && condition.conditions[2].Invoke() || condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                    }
+                    else
+                    {
+                        if (strategyDictionary.Value.conditions[3].andOr == 0)
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() || condition.conditions[2].Invoke() && condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() || condition.conditions[2].Invoke() && condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                        else
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() || condition.conditions[2].Invoke() || condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() && condition.conditions[1].Invoke() || condition.conditions[2].Invoke() || condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                    }
+                }
+                else
+                {
+                    if (strategyDictionary.Value.conditions[2].andOr == 0)
+                    {
+                        if (strategyDictionary.Value.conditions[3].andOr == 0)
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() && condition.conditions[2].Invoke() && condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() && condition.conditions[2].Invoke() && condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                        else
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() && condition.conditions[2].Invoke() || condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() && condition.conditions[2].Invoke() || condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                    }
+                    else
+                    {
+                        if (strategyDictionary.Value.conditions[3].andOr == 0)
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() || condition.conditions[2].Invoke() && condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() || condition.conditions[2].Invoke() && condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                        else
+                        {
+                            if (strategyDictionary.Value.conditions[4].andOr == 0) condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() || condition.conditions[2].Invoke() || condition.conditions[3].Invoke() && condition.conditions[4].Invoke();
+                            else condition.TotalCondition = () => condition.conditions[0].Invoke() || condition.conditions[1].Invoke() || condition.conditions[2].Invoke() || condition.conditions[3].Invoke() || condition.conditions[4].Invoke();
+                        }
+                    }
+                }
+            }
+
+            strategyConditions.Add(strategyDictionary.Key, condition);
+        }
+
     }
 
     private void OnDrawGizmos()

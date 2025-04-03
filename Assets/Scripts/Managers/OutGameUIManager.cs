@@ -97,11 +97,11 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
     [SerializeField] Strategy[] strategies;
     
-    [SerializeField] TMP_Dropdown sawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
-    [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
-
     [SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
     [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsInAttackRangeDropdown;
+
+    [SerializeField] TMP_Dropdown sawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
+    [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
 
     [SerializeField] TMP_Dropdown heardDistinguishableSoundDropdown;
     [SerializeField] TMP_Dropdown elseActionHeardDistinguishableSoundDropdown;
@@ -338,7 +338,7 @@ public class OutGameUIManager : MonoBehaviour
                 targetText.text += $"{survivor.survivorName}";
             }
         }
-        Invoke(nameof(RefreshUI), 0.1f);
+        GameManager.Instance.FixLayout(trainingRoom.GetComponent<RectTransform>());
     }
 
     public void CheckTrainable(SurvivorData survivor)
@@ -489,14 +489,6 @@ public class OutGameUIManager : MonoBehaviour
         }
         cause = null;
         return true;
-    }
-
-    void RefreshUI()
-    {
-        fightTrainingBookers.text += " ";
-        shootingTrainingBookers.text += " ";
-        agilityTrainingBookers.text += " ";
-        weightTrainingBookers.text += " ";
     }
 
     public void ToggleAutoAssign()
@@ -827,9 +819,9 @@ public class OutGameUIManager : MonoBehaviour
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Run away" }));
         
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Trace", "Ignore", "Run away" }));
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Run away" }));
         elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Trace", "Ignore", "Run away" }));
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Run away" }));
 
         heardDistinguishableSoundDropdown.ClearOptions();
         heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));

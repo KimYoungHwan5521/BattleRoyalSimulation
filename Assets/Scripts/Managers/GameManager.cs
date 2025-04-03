@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using NavMeshPlus.Components;
+using UnityEngine.UI;
 
 public delegate void CustomStart();
 public delegate void CustomUpdate();
@@ -122,5 +123,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("There is no GameManager or loadingCanvas");
         }
+    }
+
+    public void FixLayout(RectTransform rect)
+    {
+        StartCoroutine(FixLayoutNextFrame(rect));
+    }
+
+    IEnumerator FixLayoutNextFrame(RectTransform rect)
+    {
+        yield return new WaitForEndOfFrame();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 }

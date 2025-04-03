@@ -9,14 +9,19 @@ public class StrategyData
     public int action = 0;
     public int elseAction = 0;
     public int conditionConut = 0;
-    public ConditionData[] conditions = new ConditionData[5];
+    public ConditionData[] conditions;
 
     public StrategyData(int action, int elseAction, int conditionConut, ConditionData[] conditions = null)
     {
         this.action = action;
         this.elseAction = elseAction;
         this.conditionConut = conditionConut;
-        this.conditions = conditions;
+        if(conditions == null)
+        {
+            this.conditions = new ConditionData[5];
+            for (int i = 0; i < this.conditions.Length; i++) this.conditions[i] = new(0, 0, 0, 0, 0);
+        }
+        else this.conditions = conditions;
     }
 }
 

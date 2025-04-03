@@ -45,77 +45,6 @@ public class Strategy : MonoBehaviour
 
     public StrategyCase strategyCase;
 
-    bool condition1;
-    bool condition2;
-    bool condition3;
-    bool condition4;
-    bool condition5;
-
-    bool TotalCondition
-    {
-        get
-        {
-            if (andOrs[1].value == 0)
-            {
-                if(andOrs[2].value == 0)
-                {
-                    if (andOrs[3].value == 0)
-                    {
-                        if (andOrs[4].value == 0) return condition1 && condition2 && condition3 && condition4 && condition5;
-                        else return condition1 && condition2 && condition3 && condition4 || condition5;
-                    }
-                    else
-                    {
-                        if (andOrs[4].value == 0) return condition1 && condition2 && condition3 || condition4 && condition5;
-                        else return condition1 && condition2 && condition3 || condition4 || condition5;
-                    }
-                }
-                else
-                {
-                    if (andOrs[3].value == 0)
-                    {
-                        if (andOrs[4].value == 0) return condition1 && condition2 || condition3 && condition4 && condition5;
-                        else return condition1 && condition2 || condition3 && condition4 || condition5;
-                    }
-                    else
-                    {
-                        if (andOrs[4].value == 0) return condition1 && condition2 || condition3 || condition4 && condition5;
-                        else return condition1 && condition2 || condition3 || condition4 || condition5;
-                    }
-                }
-            }
-            else
-            {
-                if (andOrs[2].value == 0)
-                {
-                    if (andOrs[3].value == 0)
-                    {
-                        if (andOrs[4].value == 0) return condition1 || condition2 && condition3 && condition4 && condition5;
-                        else return condition1 || condition2 && condition3 && condition4 || condition5;
-                    }
-                    else
-                    {
-                        if (andOrs[4].value == 0) return condition1 || condition2 && condition3 || condition4 && condition5;
-                        else return condition1 || condition2 && condition3 || condition4 || condition5;
-                    }
-                }
-                else
-                {
-                    if (andOrs[3].value == 0)
-                    {
-                        if (andOrs[4].value == 0) return condition1 || condition2 || condition3 && condition4 && condition5;
-                        else return condition1 || condition2 || condition3 && condition4 || condition5;
-                    }
-                    else
-                    {
-                        if (andOrs[4].value == 0) return condition1 || condition2 || condition3 || condition4 && condition5;
-                        else return condition1 || condition2 || condition3 || condition4 || condition5;
-                    }
-                }
-            }
-        }
-    }
-
     private void Start()
     {
         andOrs = new TMP_Dropdown[conditions.Length];
@@ -143,7 +72,7 @@ public class Strategy : MonoBehaviour
             inputFields[index].onValueChanged.AddListener((value) => { ValidateInput(inputFields[index], value); });
 
             andOrs[i].ClearOptions();
-            andOrs[i].AddOptions(new List<string>(new string[] { "And", "Or" }));
+            andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
             notValids[i].SetActive(false);
             variable1s[i].ClearOptions();
             variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "Enemy's weapon", "My HP" }));
@@ -163,12 +92,6 @@ public class Strategy : MonoBehaviour
         DeleteCondition();
     }
 
-    IEnumerator FixLayoutNextFrame()
-    {
-        yield return new WaitForEndOfFrame();
-        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
-    }
-
     public void AddCondition()
     {
         if (activeConditionCount > 4) return;
@@ -177,7 +100,7 @@ public class Strategy : MonoBehaviour
         for(int i=0; i<activeConditionCount; i++) conditions[i].transform.Find("Delete Condition").gameObject.SetActive(false);
         elseAction.SetActive(true);
         activeConditionCount++;
-        GameManager.Instance.StartCoroutine(FixLayoutNextFrame());
+        GameManager.Instance.FixLayout(GetComponent<RectTransform>());
     }
 
     public void DeleteCondition()
@@ -187,7 +110,7 @@ public class Strategy : MonoBehaviour
         if(activeConditionCount > 0) conditions[activeConditionCount - 1].transform.Find("Delete Condition").gameObject.SetActive(true);
         if(activeConditionCount == 0) elseAction.SetActive(false);
         // active가 꺼진 후에 StartCoroutine을 하면 에러가 뜨기 때문에 게임매니저가 StartCoroutine 호출
-        GameManager.Instance.StartCoroutine(FixLayoutNextFrame());
+        GameManager.Instance.FixLayout(GetComponent<RectTransform>());
     }
 
     public void OnVariable1Changed(int conditionNumber)
@@ -197,9 +120,14 @@ public class Strategy : MonoBehaviour
         switch(variable1s[conditionNumber].options[variable1s[conditionNumber].value].text)
         {
             case "My weapon":
-            case "Enemy's weapon":
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
                 variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon", "None or Ranged with no bullet" }));
+                variable2s[conditionNumber].gameObject.SetActive(true);
+                inputFieldsGameObject[conditionNumber].SetActive(false);
+                break;
+            case "Enemy's weapon":
+                operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon", "None" }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
