@@ -857,6 +857,11 @@ public class OutGameUIManager : MonoBehaviour
         strategyRoom.SetActive(true);
     }
 
+    public void CloseStrategyRoom()
+    {
+        OpenConfirmWindow("Close the strategy room?\n(Unsaved content will be deleted)", () => { strategyRoom.SetActive(false); });
+    }
+
     void SetStrategyRoom()
     {
         selectSurvivorEstablishStrategyDropdown.ClearOptions();
@@ -930,17 +935,34 @@ public class OutGameUIManager : MonoBehaviour
 
             foreach(Strategy strategy in strategies)
             {
-                ConditionData[] conditionData = new ConditionData[5];
-                for (int i = 0; i < 5; i++)
+                if(strategy.NoCondition)
                 {
-                    if(!int.TryParse(strategy.inputFields[i].text, out int num)) num = 0;
-                    conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
+                    survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(sawAnEnemyAndItIsInAttackRangeDropdown.value, 0, 0);
                 }
-                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
-                    new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
+                else
+                {
+                    ConditionData[] conditionData = new ConditionData[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if(!int.TryParse(strategy.inputFields[i].text, out int num)) num = 0;
+                        conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
+                    }
+                    survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
+                        new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
+                }
             }
 
         });
+    }
+
+    public void CopyAllStrategies()
+    {
+        foreach(Strategy strategy in strategies) strategy.CopyStrategy();
+    }
+
+    public void PasteAllStrategies()
+    {
+        foreach (Strategy strategy in strategies) strategy.PasteStrategy();
     }
     #endregion
 

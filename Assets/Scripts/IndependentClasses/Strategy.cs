@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +31,26 @@ public class ConditionData
         this.inputInt = inputInt;
     }
 }
+public class StrategyData
+{
+    public int action = 0;
+    public int elseAction = 0;
+    public int conditionConut = 0;
+    public ConditionData[] conditions;
+
+    public StrategyData(int action, int elseAction, int conditionConut, ConditionData[] conditions = null)
+    {
+        this.action = action;
+        this.elseAction = elseAction;
+        this.conditionConut = conditionConut;
+        if (conditions == null)
+        {
+            this.conditions = new ConditionData[5];
+            for (int i = 0; i < this.conditions.Length; i++) this.conditions[i] = new(0, 0, 0, 0, 0);
+        }
+        else this.conditions = conditions;
+    }
+}
 
 public class Strategy : MonoBehaviour
 {
@@ -42,11 +63,15 @@ public class Strategy : MonoBehaviour
     [HideInInspector] public TMP_Dropdown[] variable2s;
     GameObject[] inputFieldsGameObject;
     [HideInInspector] public TMP_InputField[] inputFields;
-    [SerializeField]GameObject elseAction;
+    [SerializeField] GameObject action;
+    [SerializeField] GameObject elseAction;
 
     public StrategyCase strategyCase;
     [SerializeField] bool noCondition;
-    public string CaseName => transform.Find("Case Name").GetComponent<TextMeshProUGUI>().text;
+    public bool NoCondition => noCondition;
+    StrategyData copyStrategy;
+
+    public string CaseName => transform.Find("Case Name").GetComponentInChildren<TextMeshProUGUI>().text;
 
     private void Start()
     {
@@ -130,7 +155,7 @@ public class Strategy : MonoBehaviour
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
-            case "Enemy's weapon":
+            case "The enemy's weapon":
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
                 variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon", "None" }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
@@ -141,7 +166,7 @@ public class Strategy : MonoBehaviour
                 variable2s[conditionNumber].gameObject.SetActive(false);
                 inputFieldsGameObject[conditionNumber].SetActive(true);
                 break;
-            case "Enemy":
+            case "The enemy":
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
                 variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "See me" }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
@@ -170,6 +195,49 @@ public class Strategy : MonoBehaviour
         else
         {
             inputField.text = "0"; // 숫자가 아닐 경우 0으로 설정
+        }
+    }
+
+    public static void ResetStrategyDictionary(Dictionary<StrategyCase, StrategyData> wantDictionary)
+    {
+        wantDictionary.Clear();
+        wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsInAttackRange, new(0, 0, 0));
+        wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange, new(0, 0, 0));
+        wantDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
+        wantDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
+    }
+
+    public void CopyStrategy()
+    {
+        if (noCondition) copyStrategy = new(action.GetComponentInChildren<TMP_Dropdown>().value, 0, 0);
+        else
+        {
+            ConditionData[] conditions = new ConditionData[5];
+            for (int i = 0; i < conditions.Length; i++)
+            {
+                conditions[i] = new(andOrs[i].value, variable1s[i].value, operators[i].value, variable2s[i].value, int.Parse(inputFields[i].text));
+            }
+            copyStrategy = new(action.GetComponentInChildren<TMP_Dropdown>().value, elseAction.GetComponentInChildren<TMP_Dropdown>().value, activeConditionCount, conditions);
+        }
+    }
+
+    public void PasteStrategy()
+    {
+        if (copyStrategy == null) return;
+        action.GetComponentInChildren<TMP_Dropdown>().value = copyStrategy.action;
+        if(!noCondition)
+        {
+            SetDefault();
+            for (int i = 0; i < copyStrategy.conditionConut; i++)
+            {
+                AddCondition();
+                andOrs[i].value = copyStrategy.conditions[i].andOr;
+                variable1s[i].value = copyStrategy.conditions[i].variable1;
+                operators[i].value = copyStrategy.conditions[i].operator_;
+                variable2s[i].value = copyStrategy.conditions[i].variable2;
+                inputFields[i].text = copyStrategy.conditions[i].inputInt.ToString();
+            }
+            elseAction.GetComponentInChildren<TMP_Dropdown>().value = copyStrategy.elseAction;
         }
     }
 }
