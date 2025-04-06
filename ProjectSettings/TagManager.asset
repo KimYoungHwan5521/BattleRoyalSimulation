@@ -9,6 +9,7 @@ TagManager:
   - Farming Section
   - Box
   - Survivor
+  - Edge
   layers:
   - Default
   - TransparentFX

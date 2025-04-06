@@ -816,14 +816,14 @@ public class OutGameUIManager : MonoBehaviour
             }
         };
         sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Run away" }));
+        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Try run away" }));
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Run away" }));
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Try run away" }));
         
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Run away" }));
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Try run away" }));
         elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Run away" }));
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Try run away" }));
 
         heardDistinguishableSoundDropdown.ClearOptions();
         heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
@@ -859,7 +859,10 @@ public class OutGameUIManager : MonoBehaviour
 
     public void CloseStrategyRoom()
     {
-        OpenConfirmWindow("Close the strategy room?\n(Unsaved content will be deleted)", () => { strategyRoom.SetActive(false); });
+        bool hasChanged = false;
+        foreach(Strategy strategy in strategies) if(strategy.hasChanged) { hasChanged = true;  break; }
+        if(hasChanged) OpenConfirmWindow("Close the strategy room?\n(Unsaved content will be deleted)", () => { strategyRoom.SetActive(false); });
+        else strategyRoom.SetActive(false);
     }
 
     void SetStrategyRoom()
@@ -950,6 +953,7 @@ public class OutGameUIManager : MonoBehaviour
                     survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
                         new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
                 }
+                strategy.hasChanged = false;
             }
 
         });

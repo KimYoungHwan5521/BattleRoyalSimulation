@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,12 +63,15 @@ public class Strategy : MonoBehaviour
     GameObject[] inputFieldsGameObject;
     [HideInInspector] public TMP_InputField[] inputFields;
     [SerializeField] GameObject action;
+    TMP_Dropdown ActionDropdown => action.GetComponentInChildren<TMP_Dropdown>();
     [SerializeField] GameObject elseAction;
+    TMP_Dropdown ElseActionDropdown => elseAction.GetComponentInChildren<TMP_Dropdown>();
 
     public StrategyCase strategyCase;
     [SerializeField] bool noCondition;
     public bool NoCondition => noCondition;
     StrategyData copyStrategy;
+    public bool hasChanged;
 
     public string CaseName => transform.Find("Case Name").GetComponentInChildren<TextMeshProUGUI>().text;
 
@@ -107,8 +109,16 @@ public class Strategy : MonoBehaviour
             variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "The enemy's weapon", "My HP", "The enemy" }));
             OnVariable1Changed(i);
 
+            andOrs[i].onValueChanged.AddListener((value) => hasChanged = true);
+            variable1s[i].onValueChanged.AddListener((value) => hasChanged = true);
+            operators[i].onValueChanged.AddListener((value) => hasChanged = true);
+            variable2s[i].onValueChanged.AddListener((value) => hasChanged = true);
+            inputFields[i].onValueChanged.AddListener((value) => hasChanged = true);
+
             condition.SetActive(false);
         }
+        ActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
+        ElseActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         andOrs[0].gameObject.SetActive(false);
     }
 
@@ -209,7 +219,7 @@ public class Strategy : MonoBehaviour
 
     public void CopyStrategy()
     {
-        if (noCondition) copyStrategy = new(action.GetComponentInChildren<TMP_Dropdown>().value, 0, 0);
+        if (noCondition) copyStrategy = new(ActionDropdown.value, 0, 0);
         else
         {
             ConditionData[] conditions = new ConditionData[5];
@@ -217,14 +227,14 @@ public class Strategy : MonoBehaviour
             {
                 conditions[i] = new(andOrs[i].value, variable1s[i].value, operators[i].value, variable2s[i].value, int.Parse(inputFields[i].text));
             }
-            copyStrategy = new(action.GetComponentInChildren<TMP_Dropdown>().value, elseAction.GetComponentInChildren<TMP_Dropdown>().value, activeConditionCount, conditions);
+            copyStrategy = new(ActionDropdown.value, ElseActionDropdown.value, activeConditionCount, conditions);
         }
     }
 
     public void PasteStrategy()
     {
         if (copyStrategy == null) return;
-        action.GetComponentInChildren<TMP_Dropdown>().value = copyStrategy.action;
+        ActionDropdown.value = copyStrategy.action;
         if(!noCondition)
         {
             SetDefault();
@@ -237,7 +247,7 @@ public class Strategy : MonoBehaviour
                 variable2s[i].value = copyStrategy.conditions[i].variable2;
                 inputFields[i].text = copyStrategy.conditions[i].inputInt.ToString();
             }
-            elseAction.GetComponentInChildren<TMP_Dropdown>().value = copyStrategy.elseAction;
+            ElseActionDropdown.value = copyStrategy.elseAction;
         }
     }
 }

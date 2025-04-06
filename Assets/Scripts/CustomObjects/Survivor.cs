@@ -3,15 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain }
+    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway }
 
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -43,7 +41,7 @@ public class Survivor : CustomObject
     ProjectileGenerator projectileGenerator;
 
     [Header("Status")]
-    SurvivorData linkedSurvivorData;
+    [SerializeField] SurvivorData linkedSurvivorData;
     public SurvivorData LinkedSurvivorData => linkedSurvivorData;
     [SerializeField] bool isDead;
     public bool IsDead
@@ -274,6 +272,8 @@ public class Survivor : CustomObject
     [SerializeField] Vector2 targetEnemiesLastPosition;
     [SerializeField] Vector2 threateningSoundPosition;
     float curSetDestinationCool = 1f;
+    [SerializeField] Vector2 runAwayDestination;
+    [SerializeField] Survivor runAwayFrom;
 
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
@@ -308,7 +308,7 @@ public class Survivor : CustomObject
     [SerializeField] float lookAroundTime = 0.3f;
     [SerializeField] float curLookAroundTime;
     [SerializeField] int lookAroundCount;
-    Vector2 keepAnEyeOnPosition;
+    Vector2 keepEyesOnPosition;
     [SerializeField] float keepAnEyeOnTime = 3f;
     [SerializeField] float curKeepAnEyeOnTime;
 
@@ -414,13 +414,13 @@ public class Survivor : CustomObject
             }
         }
         
-        if(keepAnEyeOnPosition != Vector2.zero)
+        if(keepEyesOnPosition != Vector2.zero)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
-            Look(keepAnEyeOnPosition);
+            Look(keepEyesOnPosition);
             if(curKeepAnEyeOnTime > keepAnEyeOnTime)
             {
-                keepAnEyeOnPosition = Vector2.zero;
+                keepEyesOnPosition = Vector2.zero;
                 curKeepAnEyeOnTime = 0;
             }
         }
@@ -526,7 +526,19 @@ public class Survivor : CustomObject
             animator.SetBool("Attack", false);
             animator.SetBool("Aim", false);
             curAimDelay = 0;
-            if(keepAnEyeOnPosition != Vector2.zero)
+
+            if(runAwayDestination != Vector2.zero)
+            {
+                if (Vector2.Distance(transform.position, runAwayDestination) < 1f)
+                {
+                    runAwayDestination = Vector2.zero;
+                    runAwayFrom = null;
+                    sightMeshRenderer.material = m_SightNormal;
+                }
+                else return;
+            }
+
+            if(keepEyesOnPosition != Vector2.zero)
             {
                 agent.SetDestination(transform.position);
                 return;
@@ -616,17 +628,22 @@ public class Survivor : CustomObject
                 {
                     if(strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
                     {
-                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
+                        if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
+                        {
+                            if (TargetEnemy != runAwayFrom && CanRunAway(out runAwayDestination))
+                            {
+                                currentStatus = Status.RunAway;
+                                agent.SetDestination(runAwayDestination);
+                            }
+                            else Combat(distance);
+                        }
+                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
                         {
                             Combat(distance);
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
                         {
                             Farming();
-                        }
-                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
-                        {
-                            //RunAway()
                         }
                     }
                     else
@@ -641,7 +658,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
                         {
-                            //RunAway()
+                            TryRunAway(distance);
                         }
                     }
                 }
@@ -659,7 +676,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
                         {
-                            //RunAway()
+                            TryRunAway(distance);
                         }
                     }
                     else
@@ -674,7 +691,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
                         {
-                            //RunAway()
+                            TryRunAway(distance);
                         }
                     }
                 }
@@ -915,19 +932,19 @@ public class Survivor : CustomObject
         float rand = UnityEngine.Random.Range(0, 1f);
         if(rand > 0.75f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise01,5", this);
+            targetFarmingBox.PlaySFX("farmingNoise01,2", this);
         }
         else if (rand > 0.5f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise02,5", this);
+            targetFarmingBox.PlaySFX("farmingNoise02,2", this);
         }
         else if (rand > 0.25f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise03,5", this);
+            targetFarmingBox.PlaySFX("farmingNoise03,2", this);
         }
         else
         {
-            targetFarmingBox.PlaySFX("farmingNoise04,5", this);
+            targetFarmingBox.PlaySFX("farmingNoise04,2", this);
         }
     }
 
@@ -1410,6 +1427,57 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    void TryRunAway(float distance)
+    {
+        if(TargetEnemy != runAwayFrom) Combat(distance);
+        else if (CanRunAway(out runAwayDestination))
+        {
+            currentStatus = Status.RunAway;
+            agent.SetDestination(runAwayDestination);
+        }
+    }
+
+    bool CanRunAway(out Vector2 destination)
+    {
+        destination = Vector2.zero;
+        List<Vector2> enemyBlockeds = new();
+        List<Vector2> imNotBlockeds = new();
+        for(int j = 1; j<6; j++)
+        {
+            // 적의 360도 방향으로 Ray를 쏴서 상대로 부터 시야가 막힌 공간을 찾는다.
+            for (int i = 0; i < 24; i++)
+            {
+                float angle = i * 15;
+                Vector2 direction = DirFromAngle(angle);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(TargetEnemy.transform.position, direction, 10f * j, LayerMask.GetMask("Wall", "Edge"));
+                if (hits.Length > 0) enemyBlockeds.Add((Vector2)TargetEnemy.transform.position + direction);
+            }
+        }
+        // 그 공간들 중 내위치에서 Ray를 쏴서 내가 갈 수 있을 만한 길인지 판별한다.
+        foreach(Vector2 enemyBlocked in enemyBlockeds)
+        {
+            RaycastHit2D[] hits = Physics2D.LinecastAll(transform.position, enemyBlocked, LayerMask.GetMask("Wall", "Edge"));
+            if (hits.Length == 0) imNotBlockeds.Add(enemyBlocked);
+        }
+        // 그중 가장 가까운 곳을 반환
+        if (imNotBlockeds.Count > 0)
+        {
+            float minDistance = float.MaxValue;
+            foreach (Vector2 candidate in imNotBlockeds)
+            {
+                float distance = Vector2.Distance(transform.position, candidate);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    destination = candidate;
+                }
+            }
+            runAwayFrom = TargetEnemy;
+            return true;
+        }
+        else return false;
+    }
+
     #region Sight
     void DrawSightMesh()
     {
@@ -1481,12 +1549,12 @@ public class Survivor : CustomObject
             if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
             {
                 if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
+                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
             }
             else
             {
                 if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
-                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 1) keepAnEyeOnPosition = soundOrigin;
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
             }
         }
         else if( heardVolume > 0.1f)
@@ -1497,12 +1565,12 @@ public class Survivor : CustomObject
             if (strategyConditions[StrategyCase.HeardIndistinguishableSound].TotalCondition.Invoke())
             {
                 if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepAnEyeOnPosition = soundOrigin;
+                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
             }
             else
             {
                 if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
-                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 1) keepAnEyeOnPosition = soundOrigin;
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
             }
         }
     }
@@ -2732,18 +2800,20 @@ public class Survivor : CustomObject
 
     public Area GetCurrentArea()
     {
+        float distance;
+        float minDistance = float.MaxValue;
+        Area nearest = null;
         foreach(var area in farmingAreas)
         {
             Transform areaTransform = area.Key.transform;
-            if (transform.position.x > areaTransform.position.x - 25 
-                && transform.position.x < areaTransform.position.x + 25
-                && transform.position.y > areaTransform.position.y - 25
-                && transform.position.y < areaTransform.position.y + 25)
+            distance = Vector2.Distance(transform.position, areaTransform.position);
+            if (distance < minDistance)
             {
-                return area.Key;
+                minDistance = distance;
+                nearest = area.Key;
             }
         }
-        return null;
+        return nearest;
     }
 
     public void SetSurvivorInfo(SurvivorData survivorInfo)
