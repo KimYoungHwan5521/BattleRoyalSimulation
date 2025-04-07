@@ -110,6 +110,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown heardIndistinguishableSoundDropdown;
     [SerializeField] TMP_Dropdown elseActionHeardIndistinguishableSoundDropdown;
 
+    [SerializeField] TMP_Dropdown whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown;
+
     struct SurgeryInfo
     {
         public string surgeryName;
@@ -834,6 +836,9 @@ public class OutGameUIManager : MonoBehaviour
         heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
         elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
         elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { "Who first Seen.", "The closest one.", "Whose weapon's range is longest." }));
         SetDefault();
     }
 
@@ -849,6 +854,7 @@ public class OutGameUIManager : MonoBehaviour
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = 0;
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 0;
     }
 
     public void OpenStrategyRoom()

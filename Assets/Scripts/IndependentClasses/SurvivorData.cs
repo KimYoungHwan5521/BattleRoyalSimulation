@@ -43,7 +43,7 @@ public class SurvivorData
 
     // Strategy
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
-        public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
+    public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
 
     public SurvivorData(string survivorName, float hp, float attackDamage, float attackSpeed, float moveSpeed,
         float farmingSpeed, float shooting, int price, Tier tier)

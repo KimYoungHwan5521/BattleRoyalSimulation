@@ -10,7 +10,7 @@ public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway }
-
+    #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
     [SerializeField] GameObject leftHand;
@@ -36,10 +36,10 @@ public class Survivor : CustomObject
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject nameTag;
     [SerializeField] GameObject prohibitTimer;
-
     public InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
     ProjectileGenerator projectileGenerator;
-
+    #endregion
+    #region Status
     [Header("Status")]
     [SerializeField] SurvivorData linkedSurvivorData;
     public SurvivorData LinkedSurvivorData => linkedSurvivorData;
@@ -87,6 +87,19 @@ public class Survivor : CustomObject
     public LayerMask sightObstacleMask;
     [SerializeField] int sightEdgeCount = 24;
     [SerializeField] float hearingAbility = 10f;
+    [SerializeField] string heardSound;
+    class RememberSound
+    {
+        public string soundName;
+        public float soundTime;
+
+        public RememberSound(string soundName)
+        {
+            this.soundName = soundName;
+            soundTime = 0;
+        }
+    }
+    List<RememberSound> rememberSounds = new();
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
     float shooting = 1;
@@ -103,7 +116,9 @@ public class Survivor : CustomObject
 
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
-
+    #endregion
+    #region Characteristic / Injury
+    [Header("Characteristic / Injury")]
     [SerializeField] List<Characteristic> charicteristics;
     public List<Characteristic> Characteristics => charicteristics;
 
@@ -219,7 +234,8 @@ public class Survivor : CustomObject
     public float naturalHemostasis = 1f;
     float bleedingSprite;
     public List<GameObject> bloods = new();
-
+    #endregion
+    #region Item
     [Header("Item")]
     [SerializeField] Weapon currentWeapon = null;
     public Weapon CurrentWeapon => currentWeapon;
@@ -257,7 +273,8 @@ public class Survivor : CustomObject
         }
     }
     bool currentWeaponisBestWeapon;
-
+    #endregion
+    #region Enemies
     [Header("Enemies")]
     [SerializeField] List<Survivor> inSightEnemies = new();
     public Survivor TargetEnemy 
@@ -265,7 +282,16 @@ public class Survivor : CustomObject
         get
         {
             if (inSightEnemies.Count == 0) return null;
-            else return inSightEnemies[0];
+            else
+            {
+                if (linkedSurvivorData.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action == 0)
+                    return inSightEnemies[0];
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action == 1)
+                    return FindNearest(inSightEnemies);
+                else if (linkedSurvivorData.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action == 2)
+                    return FindWhoseWeaponRangeIsLongest(inSightEnemies);
+                else return inSightEnemies[0];
+            }
         }
     }
     Survivor lastTargetEnemy;
@@ -277,6 +303,8 @@ public class Survivor : CustomObject
 
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
+    #endregion
+    #region Farming
     [Header("Farming")]
     [SerializeField] Area currentFarmingArea;
     public Area CurrentFarmingArea
@@ -303,7 +331,8 @@ public class Survivor : CustomObject
     [SerializeField] float aimDelay = 1.5f;
     [SerializeField] float curAimDelay;
     [SerializeField] float curShotTime;
-
+    #endregion
+    #region Look
     [Header("Look")]
     [SerializeField] float lookAroundTime = 0.3f;
     [SerializeField] float curLookAroundTime;
@@ -320,8 +349,9 @@ public class Survivor : CustomObject
         public Condition TotalCondition;
     }
     Dictionary<StrategyCase, Conditions> strategyConditions = new();
-
-    [Header("GameResult")]
+    #endregion
+    #region Game Result
+    [Header("Game Result")]
     float survivedTime;
     public float SurvivedTime => survivedTime;
     int killCount;
@@ -329,7 +359,7 @@ public class Survivor : CustomObject
     float totalDamage;
     public float TotalDamage => totalDamage;
     #endregion
-
+    #endregion
     protected override void Start()
     {
         base.Start();
@@ -412,6 +442,17 @@ public class Survivor : CustomObject
                     return;
                 }
             }
+        }
+
+        List<RememberSound> reserveRemove = new();
+        foreach (var sound in rememberSounds)
+        {
+            sound.soundTime += Time.fixedDeltaTime;
+            if(sound.soundTime > 10) reserveRemove.Add(sound);
+        }
+        foreach (var sound in reserveRemove)
+        {
+            rememberSounds.Remove(sound);
         }
         
         if(keepEyesOnPosition != Vector2.zero)
@@ -610,9 +651,8 @@ public class Survivor : CustomObject
             }
             else
             {
-                //Combat(inSightEnemies[0]);
                 lookRotation = TargetEnemy.transform.position - transform.position;
-                float distance = Vector2.Distance(transform.position, inSightEnemies[0].transform.position);
+                float distance = Vector2.Distance(transform.position, TargetEnemy.transform.position);
                 bool enemyInAttackRange = false;
                 if (IsValid(currentWeapon))
                 {
@@ -812,6 +852,40 @@ public class Survivor : CustomObject
             }
         }
         return nearest;
+    }
+
+    Survivor FindNearest(List<Survivor> survivors)
+    {
+        float distance;
+        float minDistance = float.MaxValue;
+        Survivor nearest = null;
+        foreach(Survivor survivor in survivors)
+        {
+            distance = Vector2.Distance(transform.position, survivor.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = survivor;
+            }
+        }
+        return nearest;
+    }
+
+    Survivor FindWhoseWeaponRangeIsLongest(List<Survivor> survivors)
+    {
+        float weaponRange;
+        float longestRange = 0;
+        Survivor longest = null;
+        foreach (Survivor survivor in survivors)
+        {
+            weaponRange = survivor.CurrentWeapon != null ? survivor.CurrentWeapon.AttackRange : 1.5f;
+            if (longestRange < weaponRange)
+            {
+                longestRange = weaponRange;
+                longest = survivor;
+            }
+        }
+        return longest;
     }
 
     void CheckAreaClear()
@@ -1427,6 +1501,7 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    #region Run Away
     void TryRunAway(float distance)
     {
         if(TargetEnemy != runAwayFrom) Combat(distance);
@@ -1477,6 +1552,7 @@ public class Survivor : CustomObject
         }
         else return false;
     }
+    #endregion
 
     #region Sight
     void DrawSightMesh()
@@ -1544,35 +1620,60 @@ public class Survivor : CustomObject
         if(heardVolume > 1f)
         {
             // 어떤 소리인지 명확한 인지
-            sightMeshRenderer.material = m_SightAlert;
-            emotionAnimator.SetTrigger("Alert");
-            if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
-            {
-                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
-            }
-            else
-            {
-                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
-                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
-            }
+            HeardDistinguishableSound(soundOrigin);
         }
         else if( heardVolume > 0.1f)
         {
             // 불분명한 인지
-            sightMeshRenderer.material = m_SightSuspicious;
-            emotionAnimator.SetTrigger("Suspicious");
-            if (strategyConditions[StrategyCase.HeardIndistinguishableSound].TotalCondition.Invoke())
+            HeardIndistinguishableSound((noiseMaker as Survivor).survivorName, soundOrigin);
+        }
+    }
+
+    void HeardDistinguishableSound(Vector2 soundOrigin)
+    {
+        sightMeshRenderer.material = m_SightAlert;
+        emotionAnimator.SetTrigger("Alert");
+        if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
+        {
+            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+            else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
+        }
+        else
+        {
+            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
+            else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
+        }
+
+    }
+
+    void HeardIndistinguishableSound(string noiseMaker, Vector2 soundOrigin)
+    {
+        heardSound = noiseMaker;
+        RememberSound sound = rememberSounds.Find(x => x.soundName == noiseMaker);
+        if (sound != null)
+        {
+            if(sound.soundTime > 1)
             {
-                if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
-                else if(linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
-            }
-            else
-            {
-                if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
-                else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
+                sound.soundTime = 1;
+                HeardDistinguishableSound(soundOrigin);
+                return;
             }
         }
+        else rememberSounds.Add(new(heardSound));
+
+        sightMeshRenderer.material = m_SightSuspicious;
+        emotionAnimator.SetTrigger("Suspicious");
+        if (strategyConditions[StrategyCase.HeardIndistinguishableSound].TotalCondition.Invoke())
+        {
+            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
+            else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 1) keepEyesOnPosition = soundOrigin;
+        }
+        else
+        {
+            if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 0) threateningSoundPosition = soundOrigin;
+            else if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction == 1) keepEyesOnPosition = soundOrigin;
+        }
+
     }
     #endregion
 
@@ -2732,6 +2833,7 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    #region Trigger Events
     float curSeeEnemy = 0;
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -2784,6 +2886,7 @@ public class Survivor : CustomObject
             }
         }
     }
+    #endregion
 
     public void SetColor(float r, float g, float b, float a = 1.0f)
     {
@@ -2946,6 +3049,18 @@ public class Survivor : CustomObject
                                     break;
                                 case 1:
                                     condition.conditions[i] = () => TargetEnemy != null && !TargetEnemy.inSightEnemies.Contains(this);
+                                    break;
+                            }
+                            break;
+                        // Distance with the enemy
+                        case 4:
+                            switch(strategyDictionary.Value.conditions[i].operator_)
+                            {
+                                case 0:
+                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) > strategyDictionary.Value.conditions[i].inputInt;
+                                    break;
+                                case 1:
+                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) < Mathf.Min(strategyDictionary.Value.conditions[i].inputInt, 1.5f);
                                     break;
                             }
                             break;

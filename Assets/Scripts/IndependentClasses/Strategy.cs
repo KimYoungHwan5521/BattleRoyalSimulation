@@ -11,6 +11,7 @@ public enum StrategyCase
     SawAnEnemyAndItIsOutsideOfAttackRange,
     HeardDistinguishableSound,
     HeardIndistinguishableSound,
+    WhenThereAreMultipleEnemiesInSightWhoIsTheTarget,
 }
 
 public class ConditionData
@@ -106,7 +107,7 @@ public class Strategy : MonoBehaviour
             andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
             notValids[i].SetActive(false);
             variable1s[i].ClearOptions();
-            variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "The enemy's weapon", "My HP", "The enemy" }));
+            variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "The enemy's weapon", "My HP", "The enemy", "Distance with the enemy" }));
             OnVariable1Changed(i);
 
             andOrs[i].onValueChanged.AddListener((value) => hasChanged = true);
@@ -182,6 +183,11 @@ public class Strategy : MonoBehaviour
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
+            case "Distance with the enemy":
+                operators[conditionNumber].AddOptions(new List<string>(new string[] { ">", "<" }));
+                variable2s[conditionNumber].gameObject.SetActive(false);
+                inputFieldsGameObject[conditionNumber].SetActive(true);
+                break;
             default:
                 Debug.LogWarning($"Wrong condition case : {variable1s[conditionNumber].options[variable1s[conditionNumber].value].text}");
                 break;
@@ -215,6 +221,7 @@ public class Strategy : MonoBehaviour
         wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
+        wantDictionary.Add(StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget, new(0, 0, 0));
     }
 
     public void CopyStrategy()
