@@ -10,6 +10,9 @@ namespace ResourceEnum
         // Map
         Map_2x2_01,
         Map_2x2_02,
+        Map_2x2_03,
+        Map_2x2_04,
+        Map_3x3_01,
 
         // UI
         Alert,
@@ -24,6 +27,9 @@ namespace ResourceEnum
     {
         Map_2x2_01,
         Map_2x2_02,
+        Map_2x2_03,
+        Map_2x2_04,
+        Map_3x3_01,
     }
 
     public enum Sprite

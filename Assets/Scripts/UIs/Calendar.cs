@@ -138,23 +138,23 @@ public class Calendar : CustomObject
         {
             if (i % 336 == 335)
             {
-                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_2x2_01));
+                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_3x3_01));
             }
             
             if(i % 112 == 83)
             {
-                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_2x2_01));
+                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_3x3_01));
             }
             
             if(i % 28 == 27)
             {
                 if(!leagueReserveInfo.ContainsKey(i))
                 {
-                    leagueReserveInfo.Add(i, new(League.GoldLeague, ResourceEnum.Prefab.Map_2x2_01));
+                    leagueReserveInfo.Add(i, new(League.GoldLeague, ResourceEnum.Prefab.Map_3x3_01));
                 }
                 else if (leagueReserveInfo[i].league != League.SeasonChampionship)
                 {
-                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, ResourceEnum.Prefab.Map_2x2_01));
+                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, ResourceEnum.Prefab.Map_3x3_01));
                 }
             }
 
@@ -164,18 +164,18 @@ public class Calendar : CustomObject
                 {
                     if (!leagueReserveInfo.ContainsKey(i - 1))
                     {
-                        leagueReserveInfo.Add(i - 1, new(League.SilverLeague, ResourceEnum.Prefab.Map_2x2_01));
+                        leagueReserveInfo.Add(i - 1, new(League.SilverLeague, ResourceEnum.Prefab.Map_3x3_01));
                     }
                 }
                 else
                 {
-                    leagueReserveInfo.Add(i, new(League.SilverLeague, ResourceEnum.Prefab.Map_2x2_01));
+                    leagueReserveInfo.Add(i, new(League.SilverLeague, ResourceEnum.Prefab.Map_3x3_01));
                 }
             }
 
             if ((i - 1) % 7 == 5 && !leagueReserveInfo.ContainsKey(i - 1))
             {
-                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_2x2_02 + 1);
+                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_2x2_04 + 1);
                 leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map));
             }
         }

@@ -10,6 +10,9 @@ public class ResourcesPath
         // Map
         "Prefabs/Maps/2x2/Map_2x2_01",
         "Prefabs/Maps/2x2/Map_2x2_02",
+        "Prefabs/Maps/2x2/Map_2x2_03",
+        "Prefabs/Maps/2x2/Map_2x2_04",
+        "Prefabs/Maps/3x3/Map_3x3_01",
 
         // UI
         "Prefabs/UIs/Alert",
@@ -24,6 +27,9 @@ public class ResourcesPath
     {
         "NavMeshDatas/Map_2x2_01",
         "NavMeshDatas/Map_2x2_02",
+        "NavMeshDatas/Map_2x2_03",
+        "NavMeshDatas/Map_2x2_04",
+        "NavMeshDatas/Map_3x3_01",
     };
 
     public static string[] SpritePathArray =
