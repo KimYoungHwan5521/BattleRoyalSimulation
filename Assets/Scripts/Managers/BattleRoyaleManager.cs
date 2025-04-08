@@ -7,7 +7,8 @@ using UnityEngine.AI;
 
 public class BattleRoyaleManager
 {
-    OutGameUIManager outGameUIManager => GameManager.Instance.OutGameUIManager;
+    OutGameUIManager OutGameUIManager => GameManager.Instance.OutGameUIManager;
+    Calendar Calendar_ => GameManager.Instance.GetComponent<Calendar>();
     public Animator count3Animator;
 
     GameObject map;
@@ -44,14 +45,18 @@ public class BattleRoyaleManager
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
 
+        GameManager.ClaimLoadInfo("Loading a map...");
         LoadMap();
         ResetArea();
+        GameManager.ClaimLoadInfo("Loading items...");
         ItemSetting();
         ItemPlacing();
+        GameManager.ClaimLoadInfo("Spawn survivors...");
         SpawnPlayers();
 
         BattleRoyaleStart();
         yield return null;
+        GameManager.CloseLoadInfo();
     }
 
     void BattleRoyaleManagerUpdate()
@@ -72,10 +77,9 @@ public class BattleRoyaleManager
     {
         if(areas != null) foreach (Area area in areas) if(area.garbageObjects != null) foreach(GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
         if(map != null) PoolManager.Despawn(map);
-        Calendar calendar = GameManager.Instance.GetComponent<Calendar>();
-        if (Enum.TryParse(calendar.LeagueReserveInfo[calendar.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
+        if (Enum.TryParse(Calendar_.LeagueReserveInfo[Calendar_.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
         {
-            map = PoolManager.Spawn(calendar.LeagueReserveInfo[calendar.Today].map);
+            map = PoolManager.Spawn(Calendar_.LeagueReserveInfo[Calendar_.Today].map);
             NavMeshData navMeshData = GameManager.Instance.NavMeshSurface.navMeshData = ResourceManager.Get(navMeshDataEnum);
             NavMesh.RemoveAllNavMeshData();
             NavMesh.AddNavMeshData(navMeshData);
@@ -179,6 +183,22 @@ public class BattleRoyaleManager
 
         areas = areas.Shuffle();
 
+        switch (Calendar_.LeagueReserveInfo[Calendar_.Today].league)
+        {
+            case League.BronzeLeague:
+                survivorNumber = 4;
+                break;
+            case League.SilverLeague:
+                survivorNumber = 9;
+                break;
+            case League.GoldLeague:
+                survivorNumber = 16;
+                break;
+            case League.SeasonChampionship:
+            case League.WorldChampionship:
+                survivorNumber = 25;
+                break;
+        }
         int survivorIndex = 0;
         int survivorRemainder;
         for (int i = 0; i < areas.Length; i++)
@@ -195,8 +215,8 @@ public class BattleRoyaleManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorID = survivorIndex;
-                if (survivorIndex == 0) survivor.SetSurvivorInfo(outGameUIManager.MySurvivorDataInBattleRoyale);
-                else survivor.SetSurvivorInfo(outGameUIManager.CreateRandomSurvivorData());
+                if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
+                else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
 
                 if(survivorIndex < colorInfo.Length)
                 {

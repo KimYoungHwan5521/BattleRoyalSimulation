@@ -2971,7 +2971,7 @@ public class Survivor : CustomObject
                                             condition.conditions[i] = () => currentWeapon is MeleeWeapon;
                                             break;
                                         case 1:
-                                            condition.conditions[i] = () => currentWeapon is RangedWeapon;
+                                            condition.conditions[i] = () => currentWeapon is RangedWeapon && ValidBullet != null;
                                             break;
                                         case 2:
                                             condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null);

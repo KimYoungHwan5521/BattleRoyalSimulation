@@ -12,7 +12,11 @@ public class ResourcesPath
         "Prefabs/Maps/2x2/Map_2x2_02",
         "Prefabs/Maps/2x2/Map_2x2_03",
         "Prefabs/Maps/2x2/Map_2x2_04",
+        "Prefabs/Maps/2x2/Map_2x2_05",
+        "Prefabs/Maps/2x2/Map_2x2_06",
         "Prefabs/Maps/3x3/Map_3x3_01",
+        "Prefabs/Maps/3x3/Map_3x3_02",
+        "Prefabs/Maps/3x3/Map_4x4_01",
 
         // UI
         "Prefabs/UIs/Alert",
@@ -29,7 +33,11 @@ public class ResourcesPath
         "NavMeshDatas/Map_2x2_02",
         "NavMeshDatas/Map_2x2_03",
         "NavMeshDatas/Map_2x2_04",
+        "NavMeshDatas/Map_2x2_05",
+        "NavMeshDatas/Map_2x2_06",
         "NavMeshDatas/Map_3x3_01",
+        "NavMeshDatas/Map_3x3_02",
+        "NavMeshDatas/Map_4x4_01",
     };
 
     public static string[] SpritePathArray =

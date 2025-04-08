@@ -162,7 +162,7 @@ public class Strategy : MonoBehaviour
         {
             case "My weapon":
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon", "None or Ranged with no bullet" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon(and have bullet)", "None or Ranged with no bullet" }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
