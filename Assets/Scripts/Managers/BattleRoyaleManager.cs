@@ -20,6 +20,7 @@ public class BattleRoyaleManager
     public static float battleTime;
     float areaProhibitTime = 60;
     float curAreaProhibitTime;
+    int prohibitAtOnce = 1;
 
     static List<Survivor> survivors = new();
     public static List<Survivor> Survivors => survivors;
@@ -48,6 +49,7 @@ public class BattleRoyaleManager
         GameManager.ClaimLoadInfo("Loading a map...");
         LoadMap();
         ResetArea();
+        MapSetting();
         GameManager.ClaimLoadInfo("Loading items...");
         ItemSetting();
         ItemPlacing();
@@ -67,7 +69,7 @@ public class BattleRoyaleManager
             curAreaProhibitTime += Time.deltaTime;
             if(curAreaProhibitTime > areaProhibitTime)
             {
-                SetProhibitArea(1);
+                SetProhibitArea(prohibitAtOnce);
                 curAreaProhibitTime = 0;
             }
         }
@@ -89,6 +91,30 @@ public class BattleRoyaleManager
         else
         {
             Debug.LogError("Failed parse map to NavMeshData");
+        }
+    }
+
+    void MapSetting()
+    {
+        switch (Calendar_.LeagueReserveInfo[Calendar_.Today].league)
+        {
+            case League.BronzeLeague:
+                survivorNumber = 4;
+                prohibitAtOnce = 1;
+                break;
+            case League.SilverLeague:
+                survivorNumber = 9;
+                prohibitAtOnce = 2;
+                break;
+            case League.GoldLeague:
+                survivorNumber = 16;
+                prohibitAtOnce = 3;
+                break;
+            case League.SeasonChampionship:
+            case League.WorldChampionship:
+                survivorNumber = 25;
+                prohibitAtOnce = 4;
+                break;
         }
     }
 
@@ -183,22 +209,6 @@ public class BattleRoyaleManager
 
         areas = areas.Shuffle();
 
-        switch (Calendar_.LeagueReserveInfo[Calendar_.Today].league)
-        {
-            case League.BronzeLeague:
-                survivorNumber = 4;
-                break;
-            case League.SilverLeague:
-                survivorNumber = 9;
-                break;
-            case League.GoldLeague:
-                survivorNumber = 16;
-                break;
-            case League.SeasonChampionship:
-            case League.WorldChampionship:
-                survivorNumber = 25;
-                break;
-        }
         int survivorIndex = 0;
         int survivorRemainder;
         for (int i = 0; i < areas.Length; i++)
