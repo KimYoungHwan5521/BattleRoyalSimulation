@@ -14,9 +14,18 @@ namespace ResourceEnum
         Map_2x2_04,
         Map_2x2_05,
         Map_2x2_06,
+        Map_2x2_07,
+        Map_2x2_08,
+        Map_2x2_09,
+        Map_2x2_10,
         Map_3x3_01,
         Map_3x3_02,
+        Map_3x3_03,
+        Map_3x3_04,
+        Map_3x3_05,
         Map_4x4_01,
+        Map_4x4_02,
+        Map_5x5_01,
 
         // UI
         Alert,
@@ -35,9 +44,18 @@ namespace ResourceEnum
         Map_2x2_04,
         Map_2x2_05,
         Map_2x2_06,
+        Map_2x2_07,
+        Map_2x2_08,
+        Map_2x2_09,
+        Map_2x2_10,
         Map_3x3_01,
         Map_3x3_02,
+        Map_3x3_03,
+        Map_3x3_04,
+        Map_3x3_05,
         Map_4x4_01,
+        Map_4x4_02,
+        Map_5x5_01,
     }
 
     public enum Sprite

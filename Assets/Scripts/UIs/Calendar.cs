@@ -138,23 +138,25 @@ public class Calendar : CustomObject
         {
             if (i % 336 == 335)
             {
-                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_4x4_01));
+                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
             
             if(i % 112 == 83)
             {
-                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_4x4_01));
+                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
             
             if(i % 28 == 27)
             {
                 if(!leagueReserveInfo.ContainsKey(i))
                 {
-                    leagueReserveInfo.Add(i, new(League.GoldLeague, ResourceEnum.Prefab.Map_4x4_01));
+                    ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
+                    leagueReserveInfo.Add(i, new(League.GoldLeague, map));
                 }
                 else if (leagueReserveInfo[i].league != League.SeasonChampionship)
                 {
-                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, ResourceEnum.Prefab.Map_4x4_01));
+                    ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
+                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, map));
                 }
             }
 
