@@ -23,9 +23,9 @@ public class ResourcesPath
         "Prefabs/Maps/3x3/Map_3x3_03",
         "Prefabs/Maps/3x3/Map_3x3_04",
         "Prefabs/Maps/3x3/Map_3x3_05",
-        "Prefabs/Maps/3x3/Map_4x4_01",
-        "Prefabs/Maps/3x3/Map_4x4_02",
-        "Prefabs/Maps/3x3/Map_5x5_01",
+        "Prefabs/Maps/4x4/Map_4x4_01",
+        "Prefabs/Maps/4x4/Map_4x4_02",
+        "Prefabs/Maps/5x5/Map_5x5_01",
 
         // UI
         "Prefabs/UIs/Alert",

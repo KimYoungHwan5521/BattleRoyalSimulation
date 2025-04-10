@@ -136,6 +136,10 @@ public class OutGameUIManager : MonoBehaviour
     SurvivorData mySurvivorDataInBattleRoyale;
     public SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
+    [Header("Daily Result")]
+    [SerializeField] GameObject dailyResult;
+    [SerializeField] GameObject[] survivorTrainingResults;
+
     private void Start()
     {
         calendar = GetComponent<Calendar>();
@@ -192,7 +196,11 @@ public class OutGameUIManager : MonoBehaviour
     {
         OpenConfirmWindow($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
             () => {
-                if(money < survivorsInHireMarket[candidate].survivorData.price)
+                if(mySurvivorsData.Count > 9)
+                {
+                    Alert("The survivor retention limit has been reached.");
+                }
+                else if(money < survivorsInHireMarket[candidate].survivorData.price)
                 {
                     Alert("Not enough money.");
                 }
@@ -1077,9 +1085,30 @@ public class OutGameUIManager : MonoBehaviour
         {
             OpenConfirmWindow(message, () =>
             {
+                int index = 0;
+                foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
                 foreach (SurvivorData survivor in mySurvivorsData)
                 {
                     ApplyTraining(survivor, survivor.assignedTraining);
+                    if(survivor.assignedTraining != Training.None)
+                    {
+                        survivorTrainingResults[index].SetActive(true);
+                        TextMeshProUGUI[] resultTexts = survivorTrainingResults[index].GetComponentsInChildren<TextMeshProUGUI>();
+                        resultTexts[0].text = survivor.survivorName;
+                        resultTexts[1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp:0.##}";
+                        resultTexts[1].gameObject.SetActive(survivor.increaseComparedToPrevious_hp > 0);
+                        resultTexts[2].text = $"Attack damage + {survivor.increaseComparedToPrevious_attackDamage:0.##}";
+                        resultTexts[2].gameObject.SetActive(survivor.increaseComparedToPrevious_attackDamage > 0);
+                        resultTexts[3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed:0.###}";
+                        resultTexts[3].gameObject.SetActive(survivor.increaseComparedToPrevious_attackSpeed > 0);
+                        resultTexts[4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed:0.###}";
+                        resultTexts[4].gameObject.SetActive(survivor.increaseComparedToPrevious_moveSpeed > 0);
+                        resultTexts[5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed:0.###}";
+                        resultTexts[5].gameObject.SetActive(survivor.increaseComparedToPrevious_farmingSpeed > 0);
+                        resultTexts[6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting:0.##}";
+                        resultTexts[6].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
+                        index++;
+                    }
                     if(!autoAssign)
                     {
                         survivor.assignedTraining = Training.None;
@@ -1090,6 +1119,8 @@ public class OutGameUIManager : MonoBehaviour
                 selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
                 calendar.Today++;
                 calendar.TurnPageCalendar(0);
+
+                dailyResult.SetActive(true);
             });
         }
         else EndTheDayWeekend();
