@@ -215,7 +215,11 @@ public class Calendar : CustomObject
                 if (leagueReserveInfo[wantReserveDate].reserver != null)
                 {
                     outGameUIManager.OpenConfirmWindow("Go battle royale?", 
-                        () => { outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver); });
+                        () => {
+                            //outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver);
+                            outGameUIManager.OpenBettingRoom();
+                            outGameUIManager.calendarObject.SetActive(false);
+                        });
                 }
             }
             else

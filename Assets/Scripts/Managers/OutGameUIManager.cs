@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using System;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
@@ -12,6 +14,12 @@ public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration }
 
 public class OutGameUIManager : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] Canvas canvas;
+    [SerializeField] GraphicRaycaster outCanvasRaycaster;
+    EventSystem eventSystem;
+    bool isClicked;
+
     [Header("Confirm / Alert")]
     [SerializeField] GameObject confirmCanvas;
     [SerializeField] TextMeshProUGUI confirmText;
@@ -132,6 +140,7 @@ public class OutGameUIManager : MonoBehaviour
     List<SurgeryInfo> surgeryList;
 
     [Header("Schedule")]
+    public GameObject calendarObject;
     Calendar calendar;
     SurvivorData mySurvivorDataInBattleRoyale;
     public SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
@@ -139,6 +148,17 @@ public class OutGameUIManager : MonoBehaviour
     [Header("Daily Result")]
     [SerializeField] GameObject dailyResult;
     [SerializeField] GameObject[] survivorTrainingResults;
+    TextMeshProUGUI[][] resultTexts;
+
+    [Header("Betting")]
+    [SerializeField] GameObject bettingRoom;
+    [SerializeField] GameObject[] contestants;
+    [SerializeField] GameObject selectedContestant;
+    [SerializeField] SurvivorData selectedContestantData;
+    [SerializeField] GameObject[] predictRankings;
+    [SerializeField] GameObject[] predictRankingConstants;
+    public List<SurvivorData> contestantsData;
+    [SerializeField] GameObject draggingContestant;
 
     private void Start()
     {
@@ -146,7 +166,36 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorsData = new();
         SetHireMarketFirst();
         Money = 1000;
+
+        resultTexts = new TextMeshProUGUI[survivorTrainingResults.Length][];
+        for (int i = 0; i < survivorTrainingResults.Length; i++)
+        {
+            resultTexts[i] = survivorTrainingResults[i].GetComponentsInChildren<TextMeshProUGUI>(true);
+        }
+        eventSystem = FindAnyObjectByType<EventSystem>();
         GameManager.Instance.ObjectStart += () => InitializeStrategyRoom();
+    }
+
+    private void Update()
+    {
+        if(isClicked)
+        {
+            if(selectedContestantData != null)
+            {
+                Vector2 localPoint;
+                Vector2 mousePos = Input.mousePosition;
+
+                // 마우스 위치를 캔버스의 로컬 좌표로 변환
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    canvas.transform as RectTransform,
+                    mousePos,
+                    canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+                    out localPoint
+                );
+
+                draggingContestant.transform.localPosition = localPoint;
+            }
+        }
     }
 
     #region Hire
@@ -1052,6 +1101,68 @@ public class OutGameUIManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
 
+    public void OpenBettingRoom()
+    {
+        contestantsData = new();
+        int index = 0;
+        if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        {
+            contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
+            index++;
+        }
+        int needSurvivorNumber = 4;
+        int needPredictionNumber = 2;
+        switch (calendar.LeagueReserveInfo[calendar.Today].league)
+        {
+            case League.BronzeLeague:
+                needSurvivorNumber = 4;
+                needPredictionNumber = 2;
+                break;
+            case League.SilverLeague:
+                needSurvivorNumber = 9;
+                needPredictionNumber = 3;
+                break;
+            case League.GoldLeague:
+                needSurvivorNumber = 16;
+                needPredictionNumber = 4;
+                break;
+            case League.SeasonChampionship:
+            case League.WorldChampionship:
+                needSurvivorNumber = 25;
+                needPredictionNumber = 5;
+                break;
+        }
+        for (int i= index; i<needSurvivorNumber; i++)
+        {
+            contestantsData.Add(CreateRandomSurvivorData());
+        }
+
+        for(int i=0; i<contestants.Length; i++)
+        {
+            if(i < contestantsData.Count)
+            {
+                contestants[i].SetActive(true);
+                Vector3 colorVector = BattleRoyaleManager.colorInfo[i];
+                contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
+                contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].survivorName;
+            }
+            else contestants[i].SetActive(false);
+        }
+
+        for(int i=0; i<predictRankings.Length; i++)
+        {
+            if(i < needPredictionNumber)
+            {
+                predictRankings[i].SetActive(true);
+                predictRankingConstants[i].SetActive(false);
+            }
+            else predictRankings[i].SetActive(false);
+        }
+        selectedContestant.SetActive(false);
+
+        bettingRoom.SetActive(true);
+    }
+
     #region End The Day
     public void EndTheDay()
     {
@@ -1093,20 +1204,19 @@ public class OutGameUIManager : MonoBehaviour
                     if(survivor.assignedTraining != Training.None)
                     {
                         survivorTrainingResults[index].SetActive(true);
-                        TextMeshProUGUI[] resultTexts = survivorTrainingResults[index].GetComponentsInChildren<TextMeshProUGUI>();
-                        resultTexts[0].text = survivor.survivorName;
-                        resultTexts[1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp:0.##}";
-                        resultTexts[1].gameObject.SetActive(survivor.increaseComparedToPrevious_hp > 0);
-                        resultTexts[2].text = $"Attack damage + {survivor.increaseComparedToPrevious_attackDamage:0.##}";
-                        resultTexts[2].gameObject.SetActive(survivor.increaseComparedToPrevious_attackDamage > 0);
-                        resultTexts[3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed:0.###}";
-                        resultTexts[3].gameObject.SetActive(survivor.increaseComparedToPrevious_attackSpeed > 0);
-                        resultTexts[4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed:0.###}";
-                        resultTexts[4].gameObject.SetActive(survivor.increaseComparedToPrevious_moveSpeed > 0);
-                        resultTexts[5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed:0.###}";
-                        resultTexts[5].gameObject.SetActive(survivor.increaseComparedToPrevious_farmingSpeed > 0);
-                        resultTexts[6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting:0.##}";
-                        resultTexts[6].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
+                        resultTexts[index][0].text = survivor.survivorName;
+                        resultTexts[index][1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp:0.##}";
+                        resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_hp > 0);
+                        resultTexts[index][2].text = $"Attack damage + {survivor.increaseComparedToPrevious_attackDamage:0.##}";
+                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_attackDamage > 0);
+                        resultTexts[index][3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed:0.###}";
+                        resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_attackSpeed > 0);
+                        resultTexts[index][4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed:0.###}";
+                        resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_moveSpeed > 0);
+                        resultTexts[index][5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed:0.###}";
+                        resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_farmingSpeed > 0);
+                        resultTexts[index][6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting:0.##}";
+                        resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
                         index++;
                     }
                     if(!autoAssign)
@@ -1280,5 +1390,38 @@ public class OutGameUIManager : MonoBehaviour
     public void Alert(string message)
     {
         PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform).GetComponentInChildren<TextMeshProUGUI>().text = message;
+    }
+
+    void OnClick(InputValue value)
+    {
+        if(value.Get<float>() > 0)
+        {
+            isClicked = true;
+            PointerEventData pointerData = new(eventSystem)
+            {
+                position = Input.mousePosition
+            };
+
+            List<RaycastResult> results = new();
+            outCanvasRaycaster.Raycast(pointerData, results);
+
+            int index = results.FindIndex(x => x.gameObject.CompareTag("ContestantUI"));
+            if(index > -1)
+            {
+                for (int i = 0; i < contestants.Length; i++) if (results[index].gameObject == contestants[i]) selectedContestantData = contestantsData[i];
+                selectedContestant.GetComponentInChildren<SurvivorInfo>().SetInfo(selectedContestantData, false);
+                selectedContestant.SetActive(true);
+                draggingContestant.SetActive(true);
+                draggingContestant.GetComponentsInChildren<Image>()[1].color = results[index].gameObject.GetComponentsInChildren<Image>()[1].color;
+                draggingContestant.GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.survivorName;
+            }
+        }
+        else
+        {
+            isClicked = false;
+            selectedContestantData = null;
+            draggingContestant.SetActive(false);
+            // 뗏을 때 Prediction 위면 prediction 저장
+        }
     }
 }
