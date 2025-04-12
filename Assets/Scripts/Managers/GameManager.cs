@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     ItemManager itemManager;
     public ItemManager ItemManager => itemManager;
     BattleRoyaleManager battleRoyaleManager;
-    public BattleRoyaleManager BattleRoyalManager => battleRoyaleManager;
+    public BattleRoyaleManager BattleRoyaleManager => battleRoyaleManager;
 
     OutGameUIManager outGameUIManger;
     public OutGameUIManager OutGameUIManager => outGameUIManger;

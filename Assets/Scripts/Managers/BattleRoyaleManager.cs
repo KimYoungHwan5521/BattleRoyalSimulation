@@ -28,6 +28,7 @@ public class BattleRoyaleManager
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
     static Survivor battleWinner;
     public static Survivor BattleWinner => battleWinner;
+    public static string[] rankings = new string[25];
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -225,8 +226,9 @@ public class BattleRoyaleManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.survivorID = survivorIndex;
-                if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
-                else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
+                //if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
+                //else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
+                survivor.SetSurvivorInfo(OutGameUIManager.contestantsData[survivorIndex]);
 
                 if(survivorIndex < colorInfo.Length)
                 {
@@ -338,11 +340,12 @@ public class BattleRoyaleManager
         {
             aliveSurvivors.Remove(survivor);
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
-            //if (survivor.survivorID == 0) GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
+            rankings[aliveSurvivors.Count] = survivor.survivorName;
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
+                rankings[0] = aliveSurvivors[0].survivorName;
                 isBattleRoyaleStart = false;
             }
         }

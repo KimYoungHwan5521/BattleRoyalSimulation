@@ -1,16 +1,20 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public delegate void ReserveNotification();
 
 public class GameResult : MonoBehaviour
 {
-    OutGameUIManager outGameUIManager => GameManager.Instance.OutGameUIManager;
-    Calendar calendar => GetComponent<Calendar>();
+    OutGameUIManager outGameUIManager;
+    Calendar calendar;
 
     [SerializeField] GameObject gameResult;
     [SerializeField] TextMeshProUGUI gameResultText;
+    [SerializeField] GameObject mySurvivorResult;
+    [SerializeField] GameObject mySurvivorTreatmentCost;
+
     [SerializeField] TextMeshProUGUI survivedTimeText;
     [SerializeField] TextMeshProUGUI killsText;
     [SerializeField] TextMeshProUGUI totalDamageText;
@@ -22,12 +26,25 @@ public class GameResult : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalProfitText;
     [SerializeField] GameObject[] treatments;
 
+    [SerializeField] TextMeshProUGUI bettingRewardsText;
+    [SerializeField] GameObject bettingPrediction;
+    [SerializeField] GameObject[] predictionTable;
+    [SerializeField] Image[] predictionsBG;
+    [SerializeField] TextMeshProUGUI[] predictionsText;
+    [SerializeField] TextMeshProUGUI[] rankingsText;
+
     [SerializeField] bool resultClaimed;
     readonly float resultDelay = 2f;
     [SerializeField] float curResultDelay;
     int lastTimeScale;
 
     ReserveNotification notification;
+
+    private void Start()
+    {
+        outGameUIManager = GetComponent<OutGameUIManager>();
+        calendar = GetComponent<Calendar>();
+    }
 
     private void Update()
     {
@@ -49,83 +66,145 @@ public class GameResult : MonoBehaviour
         Time.timeScale = 0;
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
-        
-        Survivor playerSurvivor = BattleRoyaleManager.Survivors[0];
-        bool playerWin = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0;
-        gameResultText.text = playerWin ? $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Won!" : $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Lost";
-        survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
-        killsText.text = $"Kills : {playerSurvivor.KillCount}";
-        totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";
 
-        int winPrize = 0;
-        int killPrize = 0;
-        int totalTreatmentCost = 0;
-        switch(calendar.LeagueReserveInfo[calendar.Today].league)
+        bool didPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
+        mySurvivorResult.SetActive(didPlayerParticipate);
+        mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
+
+        int totalProfit = 0;
+        if( didPlayerParticipate )
         {
-            case League.BronzeLeague:
-                if(playerWin) winPrize = 1000;
-                killPrize = playerSurvivor.KillCount * 100;
-                break;
-            case League.SilverLeague:
-                if (playerWin) winPrize = 3000;
-                killPrize = playerSurvivor.KillCount * 200;
-                break;
-            case League.GoldLeague:
-                if (playerWin) winPrize = 10000;
-                killPrize = playerSurvivor.KillCount * 500;
-                break;
-            case League.SeasonChampionship:
-                if (playerWin) winPrize = 30000;
-                killPrize = playerSurvivor.KillCount * 1000;
-                break;
-            case League.WorldChampionship:
-                if (playerWin) winPrize = 100000;
-                killPrize = playerSurvivor.KillCount * 3000;
-                break;
-        }
-        winPrizeText.text = $"Win Prize : <color=green>$ {winPrize}</color>";
-        killPrizeText.text = $"Kill Prize : <color=green>$ {killPrize}</color>";
-        for(int i = 0; i<treatments.Length; i++)
-        {
-            if (i < playerSurvivor.injuries.Count + 1)
+            Survivor playerSurvivor = BattleRoyaleManager.Survivors[0];
+            bool playerWin = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0;
+            gameResultText.text = playerWin ? $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Won!" : $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Lost";
+            survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
+            killsText.text = $"Kills : {playerSurvivor.KillCount}";
+            totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";
+
+            int winPrize = 0;
+            int killPrize = 0;
+            int totalTreatmentCost = 0;
+            switch(calendar.LeagueReserveInfo[calendar.Today].league)
             {
-                if(i < playerSurvivor.injuries.Count)
+                case League.BronzeLeague:
+                    if(playerWin) winPrize = 1000;
+                    killPrize = playerSurvivor.KillCount * 100;
+                    break;
+                case League.SilverLeague:
+                    if (playerWin) winPrize = 3000;
+                    killPrize = playerSurvivor.KillCount * 200;
+                    break;
+                case League.GoldLeague:
+                    if (playerWin) winPrize = 10000;
+                    killPrize = playerSurvivor.KillCount * 500;
+                    break;
+                case League.SeasonChampionship:
+                    if (playerWin) winPrize = 30000;
+                    killPrize = playerSurvivor.KillCount * 1000;
+                    break;
+                case League.WorldChampionship:
+                    if (playerWin) winPrize = 100000;
+                    killPrize = playerSurvivor.KillCount * 3000;
+                    break;
+            }
+            winPrizeText.text = $"Win Prize : <color=green>$ {winPrize}</color>";
+            killPrizeText.text = $"Kill Prize : <color=green>$ {killPrize}</color>";
+            for(int i = 0; i<treatments.Length; i++)
+            {
+                if (i < playerSurvivor.injuries.Count + 1)
                 {
-                    if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
+                    if(i < playerSurvivor.injuries.Count)
                     {
-                        treatments[i].SetActive(false);
-                        continue;
-                    }
-                    treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
-                    int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
-                    treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                    treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
-                    totalTreatmentCost += cost;
-                    treatments[i].SetActive(true);
-                }
-                else 
-                {
-                    if(playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
-                    {
-                        // ¼öÇ÷ºñ
-                        int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
-                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"Blood transfusion fee";
-                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
-                        treatments[i].GetComponentInChildren<Help>().SetDescription("$1 per 10mL");
+                        if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
+                        {
+                            treatments[i].SetActive(false);
+                            continue;
+                        }
+                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
+                        int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
+                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
+                        treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
+                        totalTreatmentCost += cost;
                         treatments[i].SetActive(true);
                     }
-                    else treatments[i].SetActive(false);
+                    else 
+                    {
+                        if(playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
+                        {
+                            // ¼öÇ÷ºñ
+                            int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
+                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"Blood transfusion fee";
+                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
+                            treatments[i].GetComponentInChildren<Help>().SetDescription("$1 per 10mL");
+                            treatments[i].SetActive(true);
+                        }
+                        else treatments[i].SetActive(false);
+                    }
                 }
+                else treatments[i].SetActive(false);
             }
-            else treatments[i].SetActive(false);
+            totalTreatmentCostText.text = $"Total Treatment Cost : <color=red>- $ {totalTreatmentCost}</color>";
+            totalProfit = winPrize + killPrize - totalTreatmentCost;
+
+            if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
         }
-        totalTreatmentCostText.text = $"Total Treatment Cost : <color=red>- $ {totalTreatmentCost}</color>";
-        int totalProfit = winPrize + killPrize - totalTreatmentCost;
+        else
+        {
+            gameResultText.text = $"{BattleRoyaleManager.BattleWinner.survivorName} Has Won!";
+        }
+
+        // Betting Result
+        if(outGameUIManager.BettingAmount > 0)
+        {
+            bettingPrediction.SetActive(true);
+            for(int i = 0; i<predictionTable.Length; i++)
+            {
+                if(i < outGameUIManager.PredictionNumber)
+                {
+                    predictionTable[i].SetActive(true);
+                    predictionsText[i].text = outGameUIManager.Predictions[i];
+                    rankingsText[i].text = BattleRoyaleManager.rankings[i];
+                }
+                else predictionTable[i].SetActive(false);
+            }
+            int correctExactRanking = 0;
+            int correctOnlyRankedIn = 0;
+            for(int i = 0; i<outGameUIManager.PredictionNumber; i++)
+            {
+                for(int j = 0; j<outGameUIManager.PredictionNumber; j++)
+                {
+                    if (predictionsText[i].text == rankingsText[j].text)
+                    {
+                        if (i == j)
+                        {
+                            correctExactRanking++;
+                            predictionsBG[i].color = new Color(0.48f, 1f, 0.44f);
+                        }
+                        else
+                        {
+                            correctOnlyRankedIn++;
+                            predictionsBG[i].color = new Color(0.89f, 0.93f, 0.39f);
+                        }
+                        continue;
+                    }
+                }
+                predictionsBG[i].color = new Color(0.88f,0.43f, 0.43f);
+            }
+            float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
+            int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
+            bettingRewardsText.text = $"Betting rewards ; <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
+            totalProfit += bettingRewards;
+        }
+        else
+        {
+            bettingPrediction.SetActive(false);
+            bettingRewardsText.text = "Betting rewards ; $ 0";
+        }
+
         if (totalProfit >= 0) totalProfitText.text = $"Total Profit/Loss : <color=green>$ {totalProfit}</color>";
         else totalProfitText.text = $"Total Profit/Loss : <color=red>- $ {-totalProfit}</color>";
         outGameUIManager.Money += totalProfit;
-
-        if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
+        GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
     void Promote(SurvivorData survivor)
