@@ -212,15 +212,12 @@ public class Calendar : CustomObject
         {
             if(today == wantReserveDate)
             {
-                if (leagueReserveInfo[wantReserveDate].reserver != null)
-                {
-                    outGameUIManager.OpenConfirmWindow("Go battle royale?", 
-                        () => {
-                            //outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver);
-                            outGameUIManager.OpenBettingRoom();
-                            outGameUIManager.calendarObject.SetActive(false);
-                        });
-                }
+                outGameUIManager.OpenConfirmWindow("Go battle royale?", 
+                    () => {
+                        //outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver);
+                        outGameUIManager.OpenBettingRoom();
+                        outGameUIManager.calendarObject.SetActive(false);
+                    });
             }
             else
             {

@@ -7,7 +7,6 @@ using UnityEngine.Events;
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using Unity.VisualScripting;
 
 public enum Training { None, Fighting, Shooting, Agility, Weight }
 
@@ -52,6 +51,8 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] List<SurvivorData> mySurvivorsData;
     public List<SurvivorData> MySurvivorsData => mySurvivorsData;
+    int survivorHireLimit = 10;
+    [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
     [SerializeField] GameObject trainingRoom;
@@ -258,7 +259,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         OpenConfirmWindow($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
             () => {
-                if(mySurvivorsData.Count > 9)
+                if(mySurvivorsData.Count >= survivorHireLimit)
                 {
                     Alert("The survivor retention limit has been reached.");
                 }
@@ -272,6 +273,7 @@ public class OutGameUIManager : MonoBehaviour
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
                     mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
+                    survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
                     if(mySurvivorsData.Count == 1)
                     {
@@ -306,6 +308,35 @@ public class OutGameUIManager : MonoBehaviour
         for (int i = 0; i < mySurvivorsData.Count; i++)
             if (mySurvivorsData[i].survivorName == candidate) return GetRandomName(depth++);
         return candidate;
+    }
+
+    void ResetSurvivorsDropdown()
+    {
+        survivorsDropdown.ClearOptions();
+        for(int i = 0; i<mySurvivorsData.Count; i++)
+        {
+            survivorsDropdown.AddOptions(new List<string>(new string[] { mySurvivorsData[i].survivorName }));
+        }
+    }
+
+    public void DismissSurvivor()
+    {
+        if(mySurvivorsData.Count < 2)
+        {
+            Alert("There must be at least one survivor left.");
+        }
+        else
+        {
+            SurvivorData wantDismiss = mySurvivorsData[survivorsDropdown.value];
+            OpenConfirmWindow($"Are you sure to dismiss <i>{wantDismiss.survivorName}</i>?", () =>
+                {
+                    mySurvivorsData.Remove(wantDismiss);
+                    ResetSurvivorsDropdown();
+                    ResetSelectedSurvivorInfo();
+                    survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
+                    Alert("The survivor has dismissed");
+                });
+        }
     }
     #endregion
 
@@ -1175,7 +1206,13 @@ public class OutGameUIManager : MonoBehaviour
         bettingRoom.SetActive(true);
     }
 
-    void ValidateBettingAmount(string value)
+    public void EasyBet(int amount)
+    {
+        int curBet = int.Parse(bettingAmountInput.text);
+        bettingAmountInput.text = (curBet + amount).ToString();
+    }
+
+    public void ValidateBettingAmount(string value)
     {
         if (string.IsNullOrEmpty(value)) // 빈 문자열 체크
         {
@@ -1195,7 +1232,7 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    void Betting()
+    public void Betting()
     {
         int _bettingAmount = int.Parse(bettingAmountInput.text);
         if (!IsValidPrediction(out string reason)) Alert($"Not valid prediction : {reason}");
@@ -1211,7 +1248,7 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    void SkipBetting()
+    public void SkipBetting()
     {
         OpenConfirmWindow("Skip betting?", () => 
         {
@@ -1346,10 +1383,17 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
-            if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
             {
-                Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName}</i>");
-                return;
+                if(calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+                {
+                    Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName}</i>");
+                    return;
+                }
+                else
+                {
+                    message = "There's a Battle Royale match today. just skip it and end the day?";
+                }
             }
         }
 
@@ -1392,6 +1436,13 @@ public class OutGameUIManager : MonoBehaviour
                 calendar.TurnPageCalendar(0);
 
                 dailyResult.SetActive(true);
+            });
+        }
+        else if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        {
+            OpenConfirmWindow(message, () =>
+            {
+                EndTheDayWeekend();
             });
         }
         else EndTheDayWeekend();

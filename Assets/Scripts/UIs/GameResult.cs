@@ -171,6 +171,7 @@ public class GameResult : MonoBehaviour
             int correctOnlyRankedIn = 0;
             for(int i = 0; i<outGameUIManager.PredictionNumber; i++)
             {
+                bool doContinue = false;
                 for(int j = 0; j<outGameUIManager.PredictionNumber; j++)
                 {
                     if (predictionsText[i].text == rankingsText[j].text)
@@ -185,9 +186,11 @@ public class GameResult : MonoBehaviour
                             correctOnlyRankedIn++;
                             predictionsBG[i].color = new Color(0.89f, 0.93f, 0.39f);
                         }
+                        doContinue = true;
                         continue;
                     }
                 }
+                if (doContinue) continue;
                 predictionsBG[i].color = new Color(0.88f,0.43f, 0.43f);
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
