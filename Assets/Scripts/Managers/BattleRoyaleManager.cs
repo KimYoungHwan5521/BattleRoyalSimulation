@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class BattleRoyaleManager
 {
     OutGameUIManager OutGameUIManager => GameManager.Instance.OutGameUIManager;
+    InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
     Calendar Calendar_ => GameManager.Instance.GetComponent<Calendar>();
     public Animator count3Animator;
 
@@ -18,7 +19,7 @@ public class BattleRoyaleManager
     public int survivorNumber = 4;
     public static bool isBattleRoyaleStart;
     public static float battleTime;
-    float areaProhibitTime = 60;
+    float areaProhibitTime = 30;
     float curAreaProhibitTime;
     int prohibitAtOnce = 1;
 
@@ -28,7 +29,7 @@ public class BattleRoyaleManager
     public static List<Survivor> AliveSurvivors => aliveSurvivors;
     static Survivor battleWinner;
     public static Survivor BattleWinner => battleWinner;
-    public static string[] rankings = new string[25];
+    public static string[] rankings;
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -79,7 +80,7 @@ public class BattleRoyaleManager
     void LoadMap()
     {
         if(areas != null) foreach (Area area in areas) if(area.garbageObjects != null) foreach(GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
-        if(map != null) PoolManager.Despawn(map);
+        if(map != null) GameObject.Destroy(map);
         if (Enum.TryParse(Calendar_.LeagueReserveInfo[Calendar_.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
         {
             map = PoolManager.Spawn(Calendar_.LeagueReserveInfo[Calendar_.Today].map);
@@ -207,6 +208,7 @@ public class BattleRoyaleManager
         }
         survivors.Clear();
         aliveSurvivors.Clear();
+        rankings = new string[25];
 
         areas = areas.Shuffle();
 
@@ -334,18 +336,20 @@ public class BattleRoyaleManager
         return remember.Count < leftAreas.Count;
     }
 
-    public static void SurvivorDead(Survivor survivor)
+    public void SurvivorDead(Survivor survivor)
     {
         if(aliveSurvivors.Contains(survivor))
         {
             aliveSurvivors.Remove(survivor);
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
             rankings[aliveSurvivors.Count] = survivor.survivorName;
+            InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count], aliveSurvivors.Count);
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
                 rankings[0] = aliveSurvivors[0].survivorName;
+                InGameUIManager.SetSurvivorRank(rankings[0], 0);
                 isBattleRoyaleStart = false;
             }
         }
@@ -359,8 +363,9 @@ public class BattleRoyaleManager
         }
         Camera.main.transform.position = new(survivors[0].transform.position.x, survivors[0].transform.position.y, -10);
         Camera.main.orthographicSize = 10;
-        GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(0);
-        GameManager.Instance.GetComponent<InGameUIManager>().ClearLog();
+        InGameUIManager.SetTimeScale(0);
+        InGameUIManager.ClearLog();
+        InGameUIManager.SetPredictionUI();
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");

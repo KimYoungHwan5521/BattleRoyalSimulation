@@ -62,7 +62,7 @@ public class Survivor : CustomObject
                 prohibitTimer.SetActive(false);
 
                 currentFarmingArea = GetCurrentArea();
-                BattleRoyaleManager.SurvivorDead(this);
+                GameManager.Instance.BattleRoyaleManager.SurvivorDead(this);
             }
         }
     }
@@ -666,6 +666,7 @@ public class Survivor : CustomObject
 
                 if (enemyInAttackRange)
                 {
+                    Debug.Log($"{IsValid(currentWeapon)}, {distance}, {attackRange}");
                     if(strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
                     {
                         if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
@@ -1084,7 +1085,7 @@ public class Survivor : CustomObject
     #region Item
     public bool IsValid(Item item)
     {
-        if (item == null || item.itemName == null ||  item.itemName == "") return false;
+        if (item == null || string.IsNullOrEmpty(item.itemName) || item.itemType == ItemManager.Items.NotValid) return false;
         return true;
     }
 
@@ -1482,11 +1483,11 @@ public class Survivor : CustomObject
         if(curAimDelay > aimDelay)
         {
             curShotTime -= Time.deltaTime;
-            if(curShotTime < CurrentWeaponAsRangedWeapon.ShotCoolTime)
+            if(curShotTime < 0)
             {
                 animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
                 animator.SetTrigger("Fire");
-                curShotTime = 0;
+                curShotTime = CurrentWeaponAsRangedWeapon.ShotCoolTime;
             }
         }
     }
@@ -2847,6 +2848,8 @@ public class Survivor : CustomObject
                     curSeeEnemy += Time.deltaTime;
                     if(curSeeEnemy > 0.1f)
                     {
+                        threateningSoundPosition = Vector2.zero;
+                        keepEyesOnPosition = Vector2.zero;
                         inSightEnemies.Add(survivor);
                         sightMeshRenderer.material = m_SightAlert;
                         if(survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
@@ -2971,10 +2974,10 @@ public class Survivor : CustomObject
                                             condition.conditions[i] = () => currentWeapon is MeleeWeapon;
                                             break;
                                         case 1:
-                                            condition.conditions[i] = () => currentWeapon is RangedWeapon && ValidBullet != null;
+                                            condition.conditions[i] = () => currentWeapon is RangedWeapon && (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0);
                                             break;
                                         case 2:
-                                            condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null);
+                                            condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0);
                                             break;
                                     }
                                     break;
@@ -2988,7 +2991,7 @@ public class Survivor : CustomObject
                                             condition.conditions[i] = () => currentWeapon is not RangedWeapon;
                                             break;
                                         case 2:
-                                            condition.conditions[i] = () => currentWeapon is MeleeWeapon || (currentWeapon is RangedWeapon && ValidBullet != null);
+                                            condition.conditions[i] = () => currentWeapon is MeleeWeapon || (currentWeapon is RangedWeapon && (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0));
                                             break;
                                     }
                                     break;

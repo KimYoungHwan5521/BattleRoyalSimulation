@@ -162,7 +162,7 @@ public class OutGameUIManager : MonoBehaviour
     int needPredictionNumber = 2;
     public int PredictionNumber => needPredictionNumber;
     [SerializeField] GameObject[] predictRankings;
-    [SerializeField] GameObject[] predictRankingConstants;
+    [SerializeField] GameObject[] predictRankingContestants;
     public List<SurvivorData> contestantsData;
     [SerializeField] GameObject draggingContestant;
     string[] predictions;
@@ -307,6 +307,8 @@ public class OutGameUIManager : MonoBehaviour
             if (survivorsInHireMarket[0].survivorData.survivorName == candidate) return GetRandomName(depth++);
         for (int i = 0; i < mySurvivorsData.Count; i++)
             if (mySurvivorsData[i].survivorName == candidate) return GetRandomName(depth++);
+        for(int i = 0; i < contestantsData.Count; i++)
+            if(contestantsData[i].survivorName == candidate) return GetRandomName(depth++);
         return candidate;
     }
 
@@ -482,6 +484,7 @@ public class OutGameUIManager : MonoBehaviour
         foreach(Injury injury in survivor.injuries)
         {
             if (injury.type == InjuryType.ArtificalPartsTransplanted) continue;
+            if (injury.degree < 0.1f) continue;
             switch(training)
             {
                 case Training.Fighting:
@@ -1149,6 +1152,7 @@ public class OutGameUIManager : MonoBehaviour
     public void OpenBettingRoom()
     {
         contestantsData = new();
+        bettingAmountInput.text = "0";
         int index = 0;
         if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
         {
@@ -1197,7 +1201,7 @@ public class OutGameUIManager : MonoBehaviour
             if(i < needPredictionNumber)
             {
                 predictRankings[i].SetActive(true);
-                predictRankingConstants[i].SetActive(false);
+                predictRankingContestants[i].SetActive(false);
             }
             else predictRankings[i].SetActive(false);
         }
@@ -1242,8 +1246,9 @@ public class OutGameUIManager : MonoBehaviour
             OpenConfirmWindow("Confirm betting?", () =>
             {
                 bettingAmount = _bettingAmount;
-                for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingConstants[i].GetComponentInChildren<TextMeshProUGUI>().text;
+                for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
                 StartBattleRoyale();
+                bettingRoom.SetActive(false);
             });
         }
     }
@@ -1253,7 +1258,8 @@ public class OutGameUIManager : MonoBehaviour
         OpenConfirmWindow("Skip betting?", () => 
         {
             bettingAmount = 0;
-            StartBattleRoyale(); 
+            StartBattleRoyale();
+            bettingRoom.SetActive(false);
         });
     }
 
@@ -1261,14 +1267,14 @@ public class OutGameUIManager : MonoBehaviour
     {
         for(int i = 0; i < needPredictionNumber; i++)
         {
-            if (!predictRankingConstants[i].activeSelf)
+            if (!predictRankingContestants[i].activeSelf)
             {
                 reason = "Empty predictions exist.";
                 return false;
             }
             for(int j = 0; j < i; j++)
             {
-                if(predictRankingConstants[j].GetComponentInChildren<TextMeshProUGUI>().text == predictRankingConstants[i].GetComponentInChildren<TextMeshProUGUI>().text)
+                if(predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text)
                 {
                     reason = "Duplicate predictions exist.";
                     return false;
@@ -1281,7 +1287,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public float GetOdds(int correctExactRanking, int correctOnlyRankedIn)
     {
-        int totalCorrect = correctExactRanking * correctOnlyRankedIn;
+        int totalCorrect = correctExactRanking + correctOnlyRankedIn;
         float odds = 0;
         switch(needPredictionNumber)
         {
@@ -1348,6 +1354,7 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 break;
         }
+        Debug.Log(odds);
         odds *= Factorial(correctExactRanking);
         // 이론상 최대 배당 : x6375600
         return odds;
@@ -1557,8 +1564,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         float value = 1;
         int check = 0;
-        int i = 0;
-        while (i < 1)
+        while (check < 100)
         {
             float randHp = UnityEngine.Random.Range(0.5f, 2.0f);
             float randAttackDamage = UnityEngine.Random.Range(0.5f, 2.0f);
@@ -1641,9 +1647,26 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     if (results[index].gameObject == predictRankings[i])
                     {
-                        predictRankingConstants[i].SetActive(true);
-                        predictRankingConstants[i].GetComponentsInChildren<Image>()[1].color = draggingContestant.GetComponentsInChildren<Image>()[1].color;
-                        predictRankingConstants[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.survivorName;
+                        int alreadyPredicted = -1;
+                        // prediction 할 때 이미 할당된 녀석이면 위치 바꿔주기
+                        for(int j = 0; j < predictRankings.Length; j++)
+                        {
+                            if (predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == selectedContestantData.survivorName)
+                            {
+                                alreadyPredicted = j;
+                                if (predictRankingContestants[i].activeSelf)
+                                {
+                                    predictRankingContestants[j].SetActive(true);
+                                    predictRankingContestants[j].GetComponentsInChildren<Image>()[1].color = predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color;
+                                    predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
+                                }
+                                else predictRankingContestants[j].SetActive(false);
+                            }
+                        }
+
+                        predictRankingContestants[i].SetActive(true);
+                        predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color = draggingContestant.GetComponentsInChildren<Image>()[1].color;
+                        predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.survivorName;
                     }
                 }
             }

@@ -256,6 +256,7 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.OutGameUIManager.CheckTrainable(BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
         GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
         GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
+        GameManager.Instance.OutGameUIManager.contestantsData.Clear();
         notification?.Invoke();
         notification = null;
     }

@@ -18,10 +18,17 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] GraphicRaycaster[] raycasters;
     [SerializeField] EventSystem eventSystem;
 
-    [SerializeField] TextMeshProUGUI leftSurvivors;
     [SerializeField] RectTransform display;
-
     Transform cameraTarget;
+    OutGameUIManager outGameUIManager;
+
+    [Header("Left Top")]
+    [SerializeField] TextMeshProUGUI leftSurvivors;
+    [SerializeField] GameObject predictionResult;
+    [SerializeField] GameObject[] predictionResultRows;
+    [SerializeField] TextMeshProUGUI[] predictionResultPredictions;
+    [SerializeField] Image[] predictionResultBGs;
+    [SerializeField] TextMeshProUGUI[] predictionResultResults;
 
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
@@ -92,6 +99,7 @@ public class InGameUIManager : MonoBehaviour
     
     private void Start()
     {
+        outGameUIManager = GetComponent<OutGameUIManager>();
         selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentInChildren<Image>();
         selectedObjectsCurrentWeaponText = selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>();
         selectedObjectsCurrentHelmetImage = selectedObjectsCurrentHelmet.GetComponentInChildren<Image>();
@@ -163,6 +171,44 @@ public class InGameUIManager : MonoBehaviour
     public void SetLeftSurvivors(int survivorsCount)
     {
         leftSurvivors.text = $"Left Survivors : {survivorsCount}";
+    }
+
+    public void SetPredictionUI()
+    {
+        predictionResult.SetActive(outGameUIManager.BettingAmount > 0);
+        for(int i=0; i<predictionResultRows.Length; i++)
+        {
+            if (i < outGameUIManager.PredictionNumber)
+            {
+                predictionResultRows[i].SetActive(true);
+                predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
+                predictionResultBGs[i].color = Color.white;
+                predictionResultResults[i].text = "";
+            }
+            else predictionResultRows[i].SetActive(false);
+        }
+    }
+
+    public void SetSurvivorRank(string survivorName, int survivorRank)
+    {
+        Debug.Log($"{survivorName}, {survivorRank}");
+        for(int i=0; i<outGameUIManager.Predictions.Length; i++)
+        {
+            if (outGameUIManager.Predictions[i] == survivorName)
+            {
+                predictionResultResults[i].text = survivorRank switch
+                {
+                    0 => "1st",
+                    1 => "2nd",
+                    2 => "3rd",
+                    _ => $"{survivorRank + 1}th",
+                };
+                if (i == survivorRank) predictionResultBGs[i].color = new Color(0.48f, 1f, 0.44f);
+                else if(survivorRank < outGameUIManager.PredictionNumber) predictionResultBGs[i].color = new Color(0.89f, 0.93f, 0.39f);
+                else predictionResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
+                return;
+            }
+        }
     }
 
     public void ShowKillLog(string victim, string cause)
