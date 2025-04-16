@@ -9,8 +9,8 @@ public class Count3 : MonoBehaviour
         if (count == 0)
         {
             countText.text = "Battle!";
-            BattleRoyaleManager.isBattleRoyaleStart = true;
-            BattleRoyaleManager.battleTime = 0;
+            GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart = true;
+            GameManager.Instance.BattleRoyaleManager.battleTime = 0;
             GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(1);
         }
         else if(count == -1)

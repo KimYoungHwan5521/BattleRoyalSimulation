@@ -390,7 +390,7 @@ public class Survivor : CustomObject
 
     override public void MyUpdate()
     {
-        if(!BattleRoyaleManager.isBattleRoyaleStart || isDead)
+        if(!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead)
         {
             animator.SetBool("Attack", false);
             return;
@@ -419,7 +419,7 @@ public class Survivor : CustomObject
     #region FixedUpdate, Look
     private void FixedUpdate()
     {
-        if(!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
+        if(!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
 
         if(DizzyRate > 0)
         {
@@ -522,7 +522,6 @@ public class Survivor : CustomObject
                 prohibitTimer.GetComponent<TextMeshProUGUI>().text = timerSound.ToString();
                 SoundManager.Play(ResourceEnum.SFX.piep, transform.position);
                 timerSound--;
-                Debug.Log(survivorName);
             }
             if(prohibitedAreaTime < 0)
             {
@@ -648,6 +647,7 @@ public class Survivor : CustomObject
                 CurrentFarmingArea = FindNearest(farmingAreas);
                 targetFarmingSection = FindNearest(farmingSections);
                 targetFarmingBox = FindNearest(farmingBoxes);
+                targetFarmingCorpse = FindNearest(farmingCorpses);
             }
             else
             {
@@ -773,7 +773,7 @@ public class Survivor : CustomObject
         {
             if(!corpse.Value)
             {
-                if(corpse.Key.CurrentFarmingArea.IsProhibited || corpse.Key.CurrentFarmingArea.IsProhibited_Plan)
+                if(corpse.Key.GetCurrentArea().IsProhibited || corpse.Key.GetCurrentArea().IsProhibited_Plan)
                 {
                     farmingCorpses[corpse.Key] = true;
                     return false;
@@ -796,6 +796,7 @@ public class Survivor : CustomObject
                 farmingBoxes.Add(box, false);
             }
         }
+        else farmingAreas[currentFarmingArea] = true;
         targetFarmingSection = nearestFarmingSection;
     }
 
@@ -837,7 +838,6 @@ public class Survivor : CustomObject
                     }
                 }
                 distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
-                if (typeof(TKey) == typeof(Area)) Debug.Log($"{candidate}, distance : {distance}");
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -1232,7 +1232,7 @@ public class Survivor : CustomObject
                     // 둘 다 총알이 있는 경우
                     if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                     {
-                        if (newWeapon.AttackDamage > currentWeapon.AttackDamage) return true;
+                        if (newWeapon.AttackRange > currentWeapon.AttackRange) return true;
                         else return false;
                     }
                     else return true;
@@ -1243,7 +1243,7 @@ public class Survivor : CustomObject
                     else
                     {
                         // 둘 다 총알이 없는 경우
-                        if (newWeapon.AttackDamage > currentWeapon.AttackDamage) return true;
+                        if (newWeapon.AttackRange > currentWeapon.AttackRange) return true;
                         else return false;
                     }
                 }
@@ -1770,6 +1770,7 @@ public class Survivor : CustomObject
 
             if (probability < avoidRate)
             {
+                Debug.Log(avoidRate);
                 // 회피
                 damage = 0;
                 hitSound = "avoid, 5";
@@ -2775,11 +2776,11 @@ public class Survivor : CustomObject
         leftSightRange = 45 * characteristicCorrection_SightRange;
         rightSightRange = 45 * characteristicCorrection_SightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
-        attackDamage = linkedSurvivorData.attackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
-        attackSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);
-        moveSpeed = Mathf.Max(linkedSurvivorData.moveSpeed * injuryCorrection_MoveSpeed * characteristicCorrection_MoveSpeed, 0.1f);
-        farmingSpeed = Mathf.Max(linkedSurvivorData.attackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
-        shooting = linkedSurvivorData.shooting * characteristicCorrection_Shooting;
+        attackDamage = linkedSurvivorData.AttackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
+        attackSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);
+        moveSpeed = Mathf.Max(linkedSurvivorData.MoveSpeed * injuryCorrection_MoveSpeed * characteristicCorrection_MoveSpeed, 0.1f);
+        farmingSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
+        shooting = linkedSurvivorData.Shooting * characteristicCorrection_Shooting;
         aimErrorRange = 7.5f / shooting;
         luck = linkedSurvivorData.luck * characteristicCorrection_Luck;
         meleeHitRate = characteristicCorrection_MeleeHitRate;
@@ -2838,7 +2839,7 @@ public class Survivor : CustomObject
     float curSeeEnemy = 0;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
+        if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if (!collision.isTrigger)
         {
             if (collision.TryGetComponent(out Survivor survivor))
@@ -2930,13 +2931,13 @@ public class Survivor : CustomObject
         curHP = maxHP = survivorInfo.hp;
         curBlood = maxBlood = survivorInfo.hp * 80;
         bleedingSprite = curBlood - 100;
-        attackDamage = survivorInfo.attackDamage;
-        attackSpeed = survivorInfo.attackSpeed;
-        moveSpeed = survivorInfo.moveSpeed;
-        farmingSpeed = survivorInfo.farmingSpeed;
-        shooting = survivorInfo.shooting;
+        attackDamage = survivorInfo.AttackDamage;
+        attackSpeed = survivorInfo.AttackSpeed;
+        moveSpeed = survivorInfo.MoveSpeed;
+        farmingSpeed = survivorInfo.FarmingSpeed;
+        shooting = survivorInfo.Shooting;
         luck = survivorInfo.luck;
-        aimErrorRange = 7.5f / survivorInfo.shooting;
+        aimErrorRange = 7.5f / survivorInfo.Shooting;
         charicteristics = survivorInfo.characteristics;
 
         injuries = survivorInfo.injuries;

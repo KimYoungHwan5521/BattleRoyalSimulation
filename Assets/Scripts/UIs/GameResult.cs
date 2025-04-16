@@ -55,7 +55,7 @@ public class GameResult : MonoBehaviour
             {
                 curResultDelay = 0;
                 resultClaimed = false;
-                ShowGameResult(BattleRoyaleManager.BattleWinner != null);
+                ShowGameResult(GameManager.Instance.BattleRoyaleManager.BattleWinner != null);
             }
         }
     }
@@ -74,8 +74,8 @@ public class GameResult : MonoBehaviour
         int totalProfit = 0;
         if( didPlayerParticipate )
         {
-            Survivor playerSurvivor = BattleRoyaleManager.Survivors[0];
-            bool playerWin = BattleRoyaleManager.BattleWinner != null && BattleRoyaleManager.BattleWinner.survivorID == 0;
+            Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
+            bool playerWin = GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0;
             gameResultText.text = playerWin ? $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Won!" : $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Lost";
             survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
             killsText.text = $"Kills : {playerSurvivor.KillCount}";
@@ -150,7 +150,7 @@ public class GameResult : MonoBehaviour
         }
         else
         {
-            gameResultText.text = $"{BattleRoyaleManager.BattleWinner.survivorName} Has Won!";
+            gameResultText.text = $"{GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName} Has Won!";
         }
 
         // Betting Result
@@ -163,7 +163,7 @@ public class GameResult : MonoBehaviour
                 {
                     predictionTable[i].SetActive(true);
                     predictionsText[i].text = outGameUIManager.Predictions[i];
-                    rankingsText[i].text = BattleRoyaleManager.rankings[i];
+                    rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i];
                 }
                 else predictionTable[i].SetActive(false);
             }
@@ -196,7 +196,7 @@ public class GameResult : MonoBehaviour
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
             bettingRewardsText.text = $"Betting rewards ; <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
-            totalProfit += bettingRewards;
+            totalProfit += bettingRewards - outGameUIManager.BettingAmount;
         }
         else
         {
@@ -246,17 +246,18 @@ public class GameResult : MonoBehaviour
     public void ExitBattle()
     {
         gameResult.SetActive(false);
-        foreach(Survivor survivor in BattleRoyaleManager.Survivors)
+        foreach(Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
         }
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);
-        GameManager.Instance.OutGameUIManager.CheckTrainable(BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
         GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+        GameManager.Instance.OutGameUIManager.CheckTrainable(GameManager.Instance.BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
         GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
         GameManager.Instance.OutGameUIManager.contestantsData.Clear();
+        GameManager.Instance.BattleRoyaleManager.Destroy();
         notification?.Invoke();
         notification = null;
     }
@@ -269,7 +270,7 @@ public class GameResult : MonoBehaviour
 
     void OnCancel(InputValue value)
     {
-        if(value.Get<float>() > 0 && BattleRoyaleManager.BattleWinner == null)
+        if(value.Get<float>() > 0 && GameManager.Instance.BattleRoyaleManager.BattleWinner == null)
         {
             gameResult.SetActive(true);
         }

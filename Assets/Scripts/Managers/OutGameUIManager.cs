@@ -215,14 +215,14 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 110, 11, 1, 3, 1, 1f, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 10, 1.1f, 3.3f, 1.1f, 1f, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 10, 1, 3, 1, 1.1f, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 100, 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
     {
-        float value = 1;
+        float value = (fightTrainingLevel + shootingTrainingLevel + agilityTrainingLevel + weightTrainingLevel) / 4f;
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -243,13 +243,13 @@ public class OutGameUIManager : MonoBehaviour
             check = 0;
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
                 value * 100 * rand0,
-                value * 10 * rand1,
-                value * 1 * rand2,
-                value * 3 * rand3,
-                value * 1 * rand4,
-                value * 1 * rand5,
+                (int)(value * 20 * rand1),
+                (int)(value * 20 * rand2),
+                (int)(value * 20 * rand3),
+                (int)(value * 20 * rand4),
+                (int)(value * 20 * rand5),
                 UnityEngine.Random.Range(0, 4),
-                (int)(value * 100 * totalRand),
+                (int)(value * value * value * 100 * totalRand),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
@@ -1417,17 +1417,17 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorTrainingResults[index].SetActive(true);
                         resultTexts[index][0].text = survivor.survivorName;
-                        resultTexts[index][1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp:0.##}";
+                        resultTexts[index][1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp}";
                         resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_hp > 0);
-                        resultTexts[index][2].text = $"Attack damage + {survivor.increaseComparedToPrevious_attackDamage:0.##}";
-                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_attackDamage > 0);
-                        resultTexts[index][3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed:0.###}";
+                        resultTexts[index][2].text = $"Attack damage + {survivor.increaseComparedToPrevious_power}";
+                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_power > 0);
+                        resultTexts[index][3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed}";
                         resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_attackSpeed > 0);
-                        resultTexts[index][4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed:0.###}";
+                        resultTexts[index][4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed}";
                         resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_moveSpeed > 0);
-                        resultTexts[index][5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed:0.###}";
+                        resultTexts[index][5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed}";
                         resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_farmingSpeed > 0);
-                        resultTexts[index][6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting:0.##}";
+                        resultTexts[index][6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting}";
                         resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
                         index++;
                     }
@@ -1465,14 +1465,14 @@ public class OutGameUIManager : MonoBehaviour
     void ApplyTraining(SurvivorData survivor, Training training)
     {
         int survivorHpLv = (int)(Mathf.Max(survivor.hp - 100, 0) / 25);
-        int survivorAtkDmgLv = (int)(Mathf.Max(survivor.attackDamage - 10, 0) / 10);
-        int survivorAtkSpdLv = (int)(Mathf.Max(survivor.attackSpeed - 1, 0) / 0.3f);
-        int survivorShtLv = (int)(Mathf.Max(survivor.shooting - 1, 0));
-        int survivorMvSpdLv = (int)(Mathf.Max(survivor.moveSpeed - 3, 0) / 0.8f);
-        int survivorFrmSpdLv = (int)(Mathf.Max(survivor.farmingSpeed - 1, 0) / 0.3f);
+        int survivorPowerLv = survivor._power / 20;
+        int survivorAtkSpdLv = survivor._attackSpeed / 20;
+        int survivorShtLv = survivor._shooting / 20;
+        int survivorMvSpdLv = survivor._moveSpeed / 20;
+        int survivorFrmSpdLv = survivor._farmingSpeed / 20;
 
         survivor.increaseComparedToPrevious_hp = 0;
-        survivor.increaseComparedToPrevious_attackDamage = 0;
+        survivor.increaseComparedToPrevious_power = 0;
         survivor.increaseComparedToPrevious_attackSpeed = 0;
         survivor.increaseComparedToPrevious_moveSpeed = 0;
         survivor.increaseComparedToPrevious_farmingSpeed = 0;
@@ -1481,21 +1481,21 @@ public class OutGameUIManager : MonoBehaviour
         switch (training)
         {
             case Training.Fighting:
-                float increaseAtkDmg = Mathf.Max(UnityEngine.Random.Range(0.1f, 0.3f) * (fightTrainingLevel - survivorAtkDmgLv), 0.001f);
-                float increaseAtkSpeed = Mathf.Max(UnityEngine.Random.Range(0.03f, 0.09f) * (fightTrainingLevel - survivorAtkSpdLv), 0.0001f);
-                survivor.IncreaseStats(0, increaseAtkDmg, increaseAtkSpeed, 0, 0, 0);
+                int increasePower = Mathf.Max(fightTrainingLevel - survivorPowerLv, 0);
+                int increaseAtkSpeed = Mathf.Max(fightTrainingLevel - survivorAtkSpdLv, 0);
+                survivor.IncreaseStats(0, increasePower, increaseAtkSpeed, 0, 0, 0);
                 break;
             case Training.Shooting:
-                float increseShooting = Mathf.Max(UnityEngine.Random.Range(0.01f, 0.03f) * (shootingTrainingLevel - survivorShtLv), 0.001f);
+                int increseShooting = Mathf.Max(shootingTrainingLevel - survivorShtLv, 0);
                 survivor.IncreaseStats(0, 0, 0, 0, 0, increseShooting);
                 break;
             case Training.Agility:
-                float increseMoveSpeed = Mathf.Max(UnityEngine.Random.Range(0.008f, 0.024f) * (agilityTrainingLevel - survivorMvSpdLv), 0.0001f);
-                float increseFarmingSpeed = Mathf.Max(UnityEngine.Random.Range(0.03f, 0.09f) * (agilityTrainingLevel - survivorFrmSpdLv), 0.0001f);
+                int increseMoveSpeed = Mathf.Max(agilityTrainingLevel - survivorMvSpdLv, 0);
+                int increseFarmingSpeed = Mathf.Max(agilityTrainingLevel - survivorFrmSpdLv, 0);
                 survivor.IncreaseStats(0, 0, 0, increseMoveSpeed, increseFarmingSpeed, 0);
                 break;
             case Training.Weight:
-                float increseHp = Mathf.Max(UnityEngine.Random.Range(0.25f, 0.75f) * (weightTrainingLevel - survivorHpLv), 0.001f);
+                int increseHp = Mathf.Max(weightTrainingLevel - survivorHpLv, 0);
                 survivor.IncreaseStats(increseHp, 0, 0, 0, 0, 0);
                 break;
             default:
@@ -1562,17 +1562,25 @@ public class OutGameUIManager : MonoBehaviour
 
     public SurvivorData CreateRandomSurvivorData()
     {
-        float value = 1;
+        int value = calendar.LeagueReserveInfo[calendar.Today].league switch
+        {
+            League.BronzeLeague => 1,
+            League.SilverLeague => 1,
+            League.GoldLeague => 2,
+            League.SeasonChampionship => 3,
+            League.WorldChampionship => 4,
+            _ => 5
+        };
         int check = 0;
         while (check < 100)
         {
             float randHp = UnityEngine.Random.Range(0.5f, 2.0f);
-            float randAttackDamage = UnityEngine.Random.Range(0.5f, 2.0f);
+            float randPower = UnityEngine.Random.Range(0.5f, 2.0f);
             float randAttackSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
             float randMoveSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
             float randFarmingSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
             float randShooting = UnityEngine.Random.Range(0.5f, 2.0f);
-            float totalRand = randHp * randAttackDamage * randAttackSpeed * randMoveSpeed * randFarmingSpeed * randShooting;
+            float totalRand = randHp * randPower * randAttackSpeed * randMoveSpeed * randFarmingSpeed * randShooting;
             if ((totalRand < 0.7f || totalRand > 1.3f) && check < 100)
             {
                 check++;
@@ -1582,18 +1590,18 @@ public class OutGameUIManager : MonoBehaviour
             SurvivorData survivorData = new(
                 GetRandomName(),
                 value * 100 * randHp,
-                value * 10 * randAttackDamage,
-                value * 1 * randAttackSpeed,
-                value * 3 * randMoveSpeed,
-                value * 1 * randFarmingSpeed,
-                value * 1 * randShooting,
+                (int)(value * 20 * randPower),
+                (int)(value * 20 * randAttackSpeed),
+                (int)(value * 20 * randMoveSpeed),
+                (int)(value * 20 * randFarmingSpeed),
+                (int)(value * 20 * randShooting),
                 (int)(value * 100 * totalRand),
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );
             CharacteristicManager.AddRandomCharacteristics(survivorData, UnityEngine.Random.Range(0, 4));
             return survivorData;
         }
-        return new(GetRandomName(), 100, 10, 1, 3, 1, 1f, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
+        return new(GetRandomName(), 100, 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
     public void OpenConfirmWindow(string wantText, UnityAction wantAction)

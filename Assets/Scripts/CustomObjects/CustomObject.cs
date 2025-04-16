@@ -38,7 +38,7 @@ public class CustomObject : MonoBehaviour
             SoundManager.Play(result, transform.position);
             if (float.TryParse(wantSoundAndVolume.Split(",")[1], out float wantVolume))
             {
-                foreach (Survivor survivor in BattleRoyaleManager.AliveSurvivors)
+                foreach (Survivor survivor in GameManager.Instance.BattleRoyaleManager.AliveSurvivors)
                 {
                     if(noiseMaker != survivor) survivor.HearSound(wantVolume, transform.position, noiseMaker);
                 }

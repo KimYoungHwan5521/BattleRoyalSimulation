@@ -72,7 +72,7 @@ public class InGameUIManager : MonoBehaviour
 
     [Header("Stat / Status")]
     [SerializeField] GameObject statTab;
-    [SerializeField] TextMeshProUGUI attackDamageText;
+    [SerializeField] TextMeshProUGUI powerText;
     [SerializeField] TextMeshProUGUI attackSpeedText;
     [SerializeField] TextMeshProUGUI moveSpeedText;
     [SerializeField] TextMeshProUGUI farmingSpeedText;
@@ -137,7 +137,7 @@ public class InGameUIManager : MonoBehaviour
 
     void OnScrollWheel(InputValue value)
     {
-        if(!IsPointerOverUI())Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.01f, 1, 30);
+        if(!IsPointerOverUI())Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.02f, 1, 100);
     }
 
     void OnClick(InputValue value)
@@ -191,7 +191,6 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetSurvivorRank(string survivorName, int survivorRank)
     {
-        Debug.Log($"{survivorName}, {survivorRank}");
         for(int i=0; i<outGameUIManager.Predictions.Length; i++)
         {
             if (outGameUIManager.Predictions[i] == survivorName)
@@ -223,7 +222,7 @@ public class InGameUIManager : MonoBehaviour
     public void ClearLog()
     {
         log.text = ""; 
-        attackDamageText.GetComponent<Help>().SetDescription("");
+        powerText.GetComponent<Help>().SetDescription("");
         attackSpeedText.GetComponent<Help>().SetDescription("");
         moveSpeedText.GetComponent<Help>().SetDescription("");
         farmingSpeedText.GetComponent<Help>().SetDescription("");
@@ -320,26 +319,26 @@ public class InGameUIManager : MonoBehaviour
     public void UpdateSelectedObjectStat(Survivor survivor)
     {
         if (survivor != selectedObject) return;
-        attackDamageText.GetComponent<Help>().SetDescription("");
+        powerText.GetComponent<Help>().SetDescription("");
         attackSpeedText.GetComponent<Help>().SetDescription("");
         moveSpeedText.GetComponent<Help>().SetDescription("");
         farmingSpeedText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
 
-        attackDamageText.text = $"{survivor.AttackDamage:0.##}";
+        powerText.text = $"{survivor.LinkedSurvivorData._power}";
         if (survivor.affectionList_AttackDamage.Count > 0)
         {
-            if (survivor.AttackDamage > survivor.LinkedSurvivorData.attackDamage) attackDamageText.text += $"(<#009900>¡ã{survivor.AttackDamage - survivor.LinkedSurvivorData.attackDamage:0.##})</color>";
-            else attackDamageText.text += $"(<color=red>¡å{survivor.AttackDamage - survivor.LinkedSurvivorData.attackDamage:0.##})</color>";
+            if (survivor.AttackDamage > survivor.LinkedSurvivorData.AttackDamage) powerText.text += $"(<#009900>¡ã)</color>";
+            else powerText.text += $"(<color=red>¡å)</color>";
             string description = "Affected by : ";
             foreach (string affect in survivor.affectionList_AttackDamage) description += $"{affect}, ";
-            attackDamageText.GetComponent<Help>().SetDescription(description);
+            powerText.GetComponent<Help>().SetDescription(description);
         }
         attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
         if (survivor.affectionList_AttackSpeed.Count > 0)
         {
-            if (survivor.AttackSpeed > survivor.LinkedSurvivorData.attackSpeed) attackSpeedText.text += $"(<#009900>¡ã{survivor.AttackSpeed - survivor.LinkedSurvivorData.attackSpeed:0.##})</color>";
-            else attackSpeedText.text += $"(<color=red>¡å{survivor.AttackSpeed - survivor.LinkedSurvivorData.attackSpeed:0.##})</color>";
+            if (survivor.AttackSpeed > survivor.LinkedSurvivorData.AttackSpeed) attackSpeedText.text += $"(<#009900>¡ã)</color>";
+            else attackSpeedText.text += $"(<color=red>¡å)</color>";
             string description = "Affected by : ";
             foreach (string affect in survivor.affectionList_AttackSpeed) description += $"{affect}, ";
             attackSpeedText.GetComponent<Help>().SetDescription(description);
@@ -347,8 +346,8 @@ public class InGameUIManager : MonoBehaviour
         moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
         if (survivor.affectionList_MoveSpeed.Count > 0)
         {
-            if (survivor.MoveSpeed > survivor.LinkedSurvivorData.moveSpeed) moveSpeedText.text += $"(<#009900>¡ã{survivor.MoveSpeed - survivor.LinkedSurvivorData.moveSpeed:0.##})</color>";
-            else moveSpeedText.text += $"(<color=red>¡å{survivor.MoveSpeed - survivor.LinkedSurvivorData.moveSpeed:0.##})</color>";
+            if (survivor.MoveSpeed > survivor.LinkedSurvivorData.MoveSpeed) moveSpeedText.text += $"(<#009900>¡ã)</color>";
+            else moveSpeedText.text += $"(<color=red>¡å)</color>";
             string description = "Affected by : ";
             foreach (string affect in survivor.affectionList_MoveSpeed) description += $"{affect}, ";
             moveSpeedText.GetComponent<Help>().SetDescription(description);
@@ -356,8 +355,8 @@ public class InGameUIManager : MonoBehaviour
         farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
         if (survivor.affectionList_FarmingSpeed.Count > 0)
         {
-            if (survivor.FarmingSpeed > survivor.LinkedSurvivorData.farmingSpeed) farmingSpeedText.text += $"(<#009900>¡ã{survivor.FarmingSpeed - survivor.LinkedSurvivorData.farmingSpeed:0.##})</color>";
-            else farmingSpeedText.text += $"(<color=red>¡å{survivor.FarmingSpeed - survivor.LinkedSurvivorData.farmingSpeed:0.##})</color>";
+            if (survivor.FarmingSpeed > survivor.LinkedSurvivorData.FarmingSpeed) farmingSpeedText.text += $"(<#009900>¡ã)</color>";
+            else farmingSpeedText.text += $"(<color=red>¡å)</color>";
             string description = "Affected by : ";
             foreach (string affect in survivor.affectionList_FarmingSpeed) description += $"{affect}, ";
             farmingSpeedText.GetComponent<Help>().SetDescription(description);
@@ -365,8 +364,8 @@ public class InGameUIManager : MonoBehaviour
         shootingText.text = $"{survivor.Shooting:0.##}";
         if (survivor.affectionList_Shooting.Count > 0)
         {
-            if (survivor.Shooting > survivor.LinkedSurvivorData.shooting) shootingText.text += $"(<#009900>¡ã{survivor.Shooting - survivor.LinkedSurvivorData.shooting:0.##})</color>";
-            else shootingText.text += $"(<color=red>¡å{survivor.Shooting - survivor.LinkedSurvivorData.shooting:0.##})</color>";
+            if (survivor.Shooting > survivor.LinkedSurvivorData.Shooting) shootingText.text += $"(<#009900>¡ã)</color>";
+            else shootingText.text += $"(<color=red>¡å)</color>";
             string description = "Affected by : ";
             foreach (string affect in survivor.affectionList_Shooting) description += $"{affect}, ";
             shootingText.GetComponent<Help>().SetDescription(description);

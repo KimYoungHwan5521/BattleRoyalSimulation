@@ -32,13 +32,15 @@ public class Area : CustomObject
             IsProhibited_Plan = !value;
 
             markProhibitedArea.GetComponent<NavMeshObstacle>().carving = true;
-            foreach(Survivor survivor in BattleRoyaleManager.Survivors)
+            foreach(Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
             {
                 if(survivor.GetCurrentArea() == this)
                 {
                     GameObject linkObject = new("DynamicNavMeshLink");
                     garbageObjects.Add(linkObject);
                     NavMeshLink navMeshLink = linkObject.AddComponent<NavMeshLink>();
+                    // 2D용으로 XY 평면에 맞춰 회전
+                    linkObject.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
                     // 두 NavMesh 영역을 연결
                     navMeshLink.startPoint = survivor.transform.position;

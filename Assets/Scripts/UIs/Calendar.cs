@@ -230,7 +230,7 @@ public class Calendar : CustomObject
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
                         reserveText.text = "Choose who want register for battle royale.";
-                        SetBattleRoyaleReserveBox();
+                        SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                         reserveButton.SetActive(true);
                         reserveCancelButton.SetActive(false);
@@ -249,11 +249,23 @@ public class Calendar : CustomObject
         }
     }
 
-    public void SetBattleRoyaleReserveBox()
+    public void SetBattleRoyaleReserveBox(Tier tier)
     {
         survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
-        survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
-        wantReserver = outGameUIManager.MySurvivorsData.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+        //survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
+        List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
+        for(int i=0; i< allSurvivor.Count; i++)
+            if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].survivorName }));
+        if(survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
+        {
+            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { "[No qualified survivors]" }));
+            reserveButton.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            wantReserver = allSurvivor.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+            reserveButton.GetComponent<Button>().interactable = true;
+        }
     }
 
     public void OnSurvivorParticipatingInBattleRoyaleSelected()

@@ -43,11 +43,9 @@ public class ProjectileGenerator : CustomObject
 
     public void ResetMuzzleTF(Transform hand)
     {
-        Debug.Log("1. reset muzzle tf");
         if(hand.Find($"{owner.CurrentWeapon.itemName}")?.Find("Muzzle") != null)
         {
             muzzleTF = hand.Find($"{owner.CurrentWeapon.itemName}").Find("Muzzle");
-            Debug.Log("2. success");
         }
         else
         {

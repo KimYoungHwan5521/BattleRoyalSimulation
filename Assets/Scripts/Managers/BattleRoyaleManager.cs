@@ -17,19 +17,19 @@ public class BattleRoyaleManager
     List<Item> farmingItems = new();
 
     public int survivorNumber = 4;
-    public static bool isBattleRoyaleStart;
-    public static float battleTime;
+    public bool isBattleRoyaleStart;
+    public float battleTime;
     float areaProhibitTime = 30;
     float curAreaProhibitTime;
     int prohibitAtOnce = 1;
 
-    static List<Survivor> survivors = new();
-    public static List<Survivor> Survivors => survivors;
-    static List<Survivor> aliveSurvivors = new();
-    public static List<Survivor> AliveSurvivors => aliveSurvivors;
-    static Survivor battleWinner;
-    public static Survivor BattleWinner => battleWinner;
-    public static string[] rankings;
+    List<Survivor> survivors = new();
+    public List<Survivor> Survivors => survivors;
+    List<Survivor> aliveSurvivors = new();
+    public List<Survivor> AliveSurvivors => aliveSurvivors;
+    Survivor battleWinner;
+    public Survivor BattleWinner => battleWinner;
+    public string[] rankings;
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -50,7 +50,6 @@ public class BattleRoyaleManager
 
         GameManager.ClaimLoadInfo("Loading a map...");
         LoadMap();
-        ResetArea();
         MapSetting();
         GameManager.ClaimLoadInfo("Loading items...");
         ItemSetting();
@@ -79,11 +78,9 @@ public class BattleRoyaleManager
 
     void LoadMap()
     {
-        if(areas != null) foreach (Area area in areas) if(area.garbageObjects != null) foreach(GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
-        if(map != null) GameObject.Destroy(map);
         if (Enum.TryParse(Calendar_.LeagueReserveInfo[Calendar_.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
         {
-            map = PoolManager.Spawn(Calendar_.LeagueReserveInfo[Calendar_.Today].map);
+            map = GameObject.Instantiate(ResourceManager.Get(Calendar_.LeagueReserveInfo[Calendar_.Today].map));
             NavMeshData navMeshData = GameManager.Instance.NavMeshSurface.navMeshData = ResourceManager.Get(navMeshDataEnum);
             NavMesh.RemoveAllNavMeshData();
             NavMesh.AddNavMeshData(navMeshData);
@@ -103,19 +100,23 @@ public class BattleRoyaleManager
             case League.BronzeLeague:
                 survivorNumber = 4;
                 prohibitAtOnce = 1;
+                areaProhibitTime = 30;
                 break;
             case League.SilverLeague:
                 survivorNumber = 9;
                 prohibitAtOnce = 2;
+                areaProhibitTime = 40;
                 break;
             case League.GoldLeague:
                 survivorNumber = 16;
                 prohibitAtOnce = 3;
+                areaProhibitTime = 50;
                 break;
             case League.SeasonChampionship:
             case League.WorldChampionship:
                 survivorNumber = 25;
                 prohibitAtOnce = 4;
+                areaProhibitTime = 60;
                 break;
         }
     }
@@ -132,7 +133,6 @@ public class BattleRoyaleManager
     void ItemSetting()
     {
         GameManager.Instance.ItemManager.itemDictionary.Clear();
-        farmingItems.Clear();
         AddItems(ItemManager.Items.Knife, 1);
         AddItems(ItemManager.Items.Dagger, 1);
         AddItems(ItemManager.Items.Bat, 1);
@@ -162,17 +162,6 @@ public class BattleRoyaleManager
 
     void ItemPlacing()
     {
-        foreach(Area area in areas)
-        {
-            foreach(FarmingSection section in area.farmingSections)
-            {
-                foreach(Box box in section.boxes)
-                {
-                    box.items.Clear();
-                }
-            }
-        }
-
         farmingItems = farmingItems.Shuffle();
 
         int boxIndex;
@@ -202,12 +191,6 @@ public class BattleRoyaleManager
 
     void SpawnPlayers()
     {
-        foreach(Survivor survivor in survivors)
-        {
-            survivor.MyDestroy();
-        }
-        survivors.Clear();
-        aliveSurvivors.Clear();
         rankings = new string[25];
 
         areas = areas.Shuffle();
@@ -248,20 +231,12 @@ public class BattleRoyaleManager
         GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
     }
 
-    void ResetArea()
-    {
-        foreach(Area area in areas)
-        {
-            area.ResetProhibitArea();
-        }
-    }
-
     public void SetProhibitArea(int number)
     {
         int count = 0;
         foreach (Area area in areas) if (area.IsProhibited_Plan) area.IsProhibited = true;
         foreach (Area area in areas) if (!area.IsProhibited_Plan && !area.IsProhibited) count++;
-        if (number >= count) return;
+        if (number >= count) number = count;
         int esc = 0;
         for (int i = 0; i < number; i++)
         {
@@ -370,5 +345,14 @@ public class BattleRoyaleManager
         count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");
         GameManager.CloseLoadInfo();
+    }
+
+    public void Destroy()
+    {
+        foreach (Survivor survivor in survivors) survivor.MyDestroy();
+
+        foreach (Area area in areas) if (area.garbageObjects != null) foreach (GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
+        GameObject.Destroy(map);
+
     }
 }
