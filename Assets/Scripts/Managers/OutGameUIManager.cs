@@ -69,6 +69,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject shootingTrainingRoomUpgradeButtion;
     [SerializeField] GameObject agilityTrainingRoomUpgradeButtion;
     [SerializeField] GameObject weightTrainingRoomUpgradeButtion;
+    [SerializeField] ScrollRect[] bookedTodayScrollRects;
     [SerializeField] TextMeshProUGUI fightTrainingBookers;
     [SerializeField] TextMeshProUGUI shootingTrainingBookers;
     [SerializeField] TextMeshProUGUI agilityTrainingBookers;
@@ -78,6 +79,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Transform survivorsAssignedThis;
     [SerializeField] Transform survivorsWithoutSchedule; 
     [SerializeField] Transform survivorsWithOtherSchedule;
+    List<SurvivorSchedule> survivorSchedules;
     bool autoAssign = true;
     [SerializeField] GameObject autoAssignCheckBox;
 
@@ -215,9 +217,9 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 100, 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 100, 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 100, 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 120, 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 120, 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 120, 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
@@ -226,30 +228,30 @@ public class OutGameUIManager : MonoBehaviour
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
-            float rand0 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand1 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand2 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand3 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand4 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float rand5 = UnityEngine.Random.Range(0.5f, 2.0f);
-            float totalRand = rand0 * rand1 * rand2 * rand3 * rand4 * rand5;
-            if ((totalRand < 0.7f || totalRand > 1.3) && check < 100)
+            int rand0 = UnityEngine.Random.Range(0, 100);
+            int rand1 = UnityEngine.Random.Range(0, 100);
+            int rand2 = UnityEngine.Random.Range(0, 100);
+            int rand3 = UnityEngine.Random.Range(0, 100);
+            int rand4 = UnityEngine.Random.Range(0, 100);
+            int rand5 = UnityEngine.Random.Range(0, 100);
+            int totalRand = rand0 + rand1 + rand2 + rand3 + rand4 + rand5;
+            if ((totalRand < value * 84f || totalRand > value * 156f) && check < 1000)
             {
                 i--;
                 check++;
                 continue;
             }
-            if (check >= 100) Debug.LogWarning("Infinite loop detected");
+            if (check >= 1000) Debug.LogWarning("Infinite loop detected");
             check = 0;
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
-                value * 100 * rand0,
-                (int)(value * 20 * rand1),
-                (int)(value * 20 * rand2),
-                (int)(value * 20 * rand3),
-                (int)(value * 20 * rand4),
-                (int)(value * 20 * rand5),
+                100 + rand0,
+                rand1,
+                rand2,
+                rand3,
+                rand4,
+                rand5,
                 UnityEngine.Random.Range(0, 4),
-                (int)(value * value * value * 100 * totalRand),
+                (int)(value * value * value * 100 * totalRand / 120f),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
@@ -368,6 +370,8 @@ public class OutGameUIManager : MonoBehaviour
 
     public void OpenAssignTraining(int trainingIndex)
     {
+        Training training = (Training)trainingIndex;
+        survivorSchedules = new();
         assignTrainingNameText.text = $"{(Training)trainingIndex} Training";
         for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
         {
@@ -385,14 +389,20 @@ public class OutGameUIManager : MonoBehaviour
         foreach(SurvivorData survivor in mySurvivorsData)
         {
             Transform fitParent;
+            Transform targetParent;
             SurvivorSchedule survivorSchedule;
             string description = "";
             bool assignable = true;
-            if (survivor.assignedTraining == (Training)trainingIndex) fitParent = survivorsAssignedThis;
+            if (survivor.assignedTraining == training)
+            {
+                fitParent = survivorsAssignedThis;
+                targetParent = survivorsWithoutSchedule;
+            }
             else if (survivor.assignedTraining == Training.None)
             {
                 fitParent = survivorsWithoutSchedule;
-                if(!Trainable(survivor, (Training)trainingIndex, out string cause))
+                targetParent = survivorsAssignedThis;
+                if (!Trainable(survivor, training, out string cause))
                 {
                     assignable = false;
                     description = $"{survivor.survivorName} can't cannot be assigned to this training due to injury.\n<color=red><i>Cause : {cause}</i></color>";
@@ -401,17 +411,24 @@ public class OutGameUIManager : MonoBehaviour
             else
             {
                 fitParent = survivorsWithOtherSchedule;
+                targetParent = survivorsAssignedThis;
                 description = $"{survivor.survivorName} is assigned to {survivor.assignedTraining} training.";
             }
             survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
-            survivorSchedule.SetSurvivorData(survivor, trainingIndex, assignable);
+            survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
             survivorSchedule.GetComponent<Help>().SetDescription(description);
             survivorSchedule.GetComponent<Button>().enabled = assignable;
+            survivorSchedules.Add(survivorSchedule);
         }
     }
 
     public void ConfirmAssignTraining()
     {
+        foreach(var survivorSchedule in survivorSchedules)
+        {
+            survivorSchedule.survivor.assignedTraining = survivorSchedule.whereAmI;
+        }
+
         fightTrainingBookers.text = "";
         shootingTrainingBookers.text = "";
         agilityTrainingBookers.text = "";
@@ -444,7 +461,10 @@ public class OutGameUIManager : MonoBehaviour
                 targetText.text += $"{survivor.survivorName}";
             }
         }
-        GameManager.Instance.FixLayout(trainingRoom.GetComponent<RectTransform>());
+        foreach (var scrollRect in bookedTodayScrollRects)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.GetComponent<RectTransform>());
+        }
     }
 
     public void CheckTrainable(SurvivorData survivor)
@@ -1464,7 +1484,7 @@ public class OutGameUIManager : MonoBehaviour
 
     void ApplyTraining(SurvivorData survivor, Training training)
     {
-        int survivorHpLv = (int)(Mathf.Max(survivor.hp - 100, 0) / 25);
+        int survivorHpLv = (int)(survivor.hp - 100) / 20;
         int survivorPowerLv = survivor._power / 20;
         int survivorAtkSpdLv = survivor._attackSpeed / 20;
         int survivorShtLv = survivor._shooting / 20;
@@ -1572,16 +1592,16 @@ public class OutGameUIManager : MonoBehaviour
             _ => 5
         };
         int check = 0;
-        while (check < 100)
+        while (check < 1000)
         {
-            float randHp = UnityEngine.Random.Range(0.5f, 2.0f);
-            float randPower = UnityEngine.Random.Range(0.5f, 2.0f);
-            float randAttackSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
-            float randMoveSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
-            float randFarmingSpeed = UnityEngine.Random.Range(0.7f, 1.3f);
-            float randShooting = UnityEngine.Random.Range(0.5f, 2.0f);
-            float totalRand = randHp * randPower * randAttackSpeed * randMoveSpeed * randFarmingSpeed * randShooting;
-            if ((totalRand < 0.7f || totalRand > 1.3f) && check < 100)
+            int randHp = UnityEngine.Random.Range(0, 100);
+            int randPower = UnityEngine.Random.Range(0, 100);
+            int randAttackSpeed = UnityEngine.Random.Range(0, 100);
+            int randMoveSpeed = UnityEngine.Random.Range(0, 100);
+            int randFarmingSpeed = UnityEngine.Random.Range(0, 100);
+            int randShooting = UnityEngine.Random.Range(0, 100);
+            int totalRand = randHp + randPower + randAttackSpeed + randMoveSpeed + randFarmingSpeed + randShooting;
+            if ((totalRand < value * 84 || totalRand > value * 156) && check < 1000)
             {
                 check++;
                 continue;
@@ -1589,19 +1609,19 @@ public class OutGameUIManager : MonoBehaviour
             if (check >= 100) Debug.LogWarning("Infinite roof has detected");
             SurvivorData survivorData = new(
                 GetRandomName(),
-                value * 100 * randHp,
-                (int)(value * 20 * randPower),
-                (int)(value * 20 * randAttackSpeed),
-                (int)(value * 20 * randMoveSpeed),
-                (int)(value * 20 * randFarmingSpeed),
-                (int)(value * 20 * randShooting),
-                (int)(value * 100 * totalRand),
+                100 + randHp,
+                randPower,
+                randAttackSpeed,
+                randMoveSpeed,
+                randFarmingSpeed,
+                randShooting,
+                (int)(100 * totalRand / 120f),
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );
             CharacteristicManager.AddRandomCharacteristics(survivorData, UnityEngine.Random.Range(0, 4));
             return survivorData;
         }
-        return new(GetRandomName(), 100, 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
+        return new(GetRandomName(), 120, 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
     public void OpenConfirmWindow(string wantText, UnityAction wantAction)

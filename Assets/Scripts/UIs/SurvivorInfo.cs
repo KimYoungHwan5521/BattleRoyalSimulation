@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 public class SurvivorInfo : MonoBehaviour
 {
+    [SerializeField] Image tierImage;
     [SerializeField] TextMeshProUGUI survivorNameText;
     [SerializeField] TextMeshProUGUI hpText;
     [SerializeField] TextMeshProUGUI powerText;
@@ -43,6 +45,9 @@ public class SurvivorInfo : MonoBehaviour
     {
         survivorData = new(survivorName, hp, power, attackSpeed, moveSpeed, farmingSpeed, shooting, price, tier);
 
+        Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
+        tierImage.sprite = ResourceManager.Get(tierSprite);
+        
         survivorNameText.text = survivorName;
         hpText.text = $"{hp:0}";
         powerText.text = $"{power}";
@@ -53,7 +58,7 @@ public class SurvivorInfo : MonoBehaviour
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
 
-        hpBar.fillAmount = hp / 200f;
+        hpBar.fillAmount = (hp - 100) / 100f;
         powerBar.fillAmount = power / 100f;
         attackSpeedBar.fillAmount = attackSpeed / 100f;
         moveSpeedBar.fillAmount = moveSpeed / 100f;
@@ -65,6 +70,9 @@ public class SurvivorInfo : MonoBehaviour
 
     public void SetInfo(SurvivorData wantSurvivorData, bool showIncrease)
     {
+        Enum.TryParse(wantSurvivorData.tier.ToString(), out ResourceEnum.Sprite tierSprite);
+        tierImage.sprite = ResourceManager.Get(tierSprite);
+
         survivorData = wantSurvivorData;
         survivorNameText.text = wantSurvivorData.survivorName;
         hpText.text = $"{wantSurvivorData.hp:0}";
@@ -74,7 +82,7 @@ public class SurvivorInfo : MonoBehaviour
         farmingSpeedText.text = $"{wantSurvivorData._farmingSpeed}";
         shootingText.text = $"{wantSurvivorData._shooting}";
 
-        hpBar.fillAmount = wantSurvivorData.hp / 200f;
+        hpBar.fillAmount = (wantSurvivorData.hp - 100) / 100f;
         powerBar.fillAmount = wantSurvivorData._power / 100f;
         attackSpeedBar.fillAmount = wantSurvivorData._attackSpeed / 100f;
         moveSpeedBar.fillAmount = wantSurvivorData._moveSpeed / 100f;

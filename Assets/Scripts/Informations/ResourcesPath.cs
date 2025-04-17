@@ -93,6 +93,11 @@ public class ResourcesPath
         "Sprites/Leagues/GoldLeague",
         "Sprites/Leagues/SeasonChampionship",
         "Sprites/Leagues/WorldChampionship",
+
+        // Tiers
+        "Sprites/Leagues/Bronze",
+        "Sprites/Leagues/Silver",
+        "Sprites/Leagues/Gold",
     };
 
     public static string[] MaterialPathArray =

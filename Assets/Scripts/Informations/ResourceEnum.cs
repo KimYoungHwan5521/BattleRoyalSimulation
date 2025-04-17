@@ -99,6 +99,11 @@ namespace ResourceEnum
         GoldLeague,
         SeasonChampionship,
         WorldChampionship,
+
+        // Tiers
+        Bronze,
+        Silver,
+        Gold,
     }
 
     public enum Material

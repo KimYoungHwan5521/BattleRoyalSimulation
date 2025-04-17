@@ -62,11 +62,12 @@ public class Calendar : CustomObject
             }
 
             today = value;
-            todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}";
+            todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}, ({dateName[today % 7]})";
             if(value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();
                 outGameUIManager.ResetHireMarket();
+                if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
 
         }
@@ -77,6 +78,11 @@ public class Calendar : CustomObject
     readonly string[] monthName = { 
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
+    };
+
+    readonly string[] dateName =
+    {
+        "Mon", "Tue", "WED", "THU", "FRI", "<color=blue>SAT</color>", "<color=red>SUN</color>"
     };
 
     int calendarPage = 1;
@@ -133,22 +139,27 @@ public class Calendar : CustomObject
         datesGone = new GameObject[28];
         datesEvent = new Image[28];
         reserved = new GameObject[28];
+        AddLeagueReserveInfo(3);
+    }
 
-        for(int i=0; i<1008; i++)
+    int curMaxYear = 0;
+    void AddLeagueReserveInfo(int howManyYears)
+    {
+        for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3; i++)
         {
             if (i % 336 == 335)
             {
                 leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
-            
-            if(i % 112 == 83)
+
+            if (i % 112 == 83)
             {
                 leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
-            
-            if(i % 28 == 27)
+
+            if (i % 28 == 27)
             {
-                if(!leagueReserveInfo.ContainsKey(i))
+                if (!leagueReserveInfo.ContainsKey(i))
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
                     leagueReserveInfo.Add(i, new(League.GoldLeague, map));
@@ -183,6 +194,7 @@ public class Calendar : CustomObject
                 leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map));
             }
         }
+        curMaxYear += howManyYears;
     }
 
     public override void MyStart()

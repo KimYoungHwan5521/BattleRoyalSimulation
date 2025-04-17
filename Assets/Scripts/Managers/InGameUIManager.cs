@@ -27,6 +27,7 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] GameObject predictionResult;
     [SerializeField] GameObject[] predictionResultRows;
     [SerializeField] TextMeshProUGUI[] predictionResultPredictions;
+    [SerializeField] Image[] predictionResultPortraits;
     [SerializeField] Image[] predictionResultBGs;
     [SerializeField] TextMeshProUGUI[] predictionResultResults;
 
@@ -72,6 +73,11 @@ public class InGameUIManager : MonoBehaviour
 
     [Header("Stat / Status")]
     [SerializeField] GameObject statTab;
+    [SerializeField] Image powerBar;
+    [SerializeField] Image attackSpeedBar;
+    [SerializeField] Image moveSpeedBar;
+    [SerializeField] Image farmingSpeedBar;
+    [SerializeField] Image shootingBar;
     [SerializeField] TextMeshProUGUI powerText;
     [SerializeField] TextMeshProUGUI attackSpeedText;
     [SerializeField] TextMeshProUGUI moveSpeedText;
@@ -182,6 +188,7 @@ public class InGameUIManager : MonoBehaviour
             {
                 predictionResultRows[i].SetActive(true);
                 predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
+                predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.survivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
                 predictionResultBGs[i].color = Color.white;
                 predictionResultResults[i].text = "";
             }
@@ -290,6 +297,13 @@ public class InGameUIManager : MonoBehaviour
             Vector3 colorVector = BattleRoyaleManager.colorInfo[selectedSurvivor.survivorID];
             selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
             selectedObjectName.text = selectedSurvivor.survivorName;
+
+            powerBar.fillAmount = selectedSurvivor.LinkedSurvivorData._power / 100f;
+            attackSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._attackSpeed / 100f;
+            moveSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._moveSpeed / 100f;
+            farmingSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._farmingSpeed / 100f;
+            shootingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._shooting / 100f;
+
             UpdatableSelectedObjectInfo(selectedObject);
         }
         else if(selectedObject is Box)

@@ -3,32 +3,44 @@ using UnityEngine;
 
 public class SurvivorSchedule : MonoBehaviour
 {
-    SurvivorData survivor;
+    public SurvivorData survivor;
     [SerializeField] TextMeshProUGUI survivorName;
-    [SerializeField] GameObject checkBox;
-    int trainingIndex;
+    bool assignable;
+    [SerializeField] Transform origin;
+    [SerializeField] Transform target;
+    [SerializeField] Training curTraining;
+    public Training whereAmI;
+    bool amIOrigin = true;
 
-    public void SetSurvivorData(SurvivorData wantSurvivor, int wantTraining, bool trainable)
+    public void SetSurvivorData(SurvivorData wantSurvivor, Training curTraining, bool trainable, Transform origin, Transform target)
     {
         survivor = wantSurvivor;
-        trainingIndex = wantTraining;
         if (trainable) survivorName.text = survivor.survivorName;
         else survivorName.text = $"<color=red>{survivor.survivorName}</color>";
-
-        checkBox.SetActive(survivor.assignedTraining == (Training)wantTraining);
+        this.curTraining = curTraining;
+        assignable = trainable;
+        this.origin = origin;
+        this.target = target;
+        whereAmI = survivor.assignedTraining;
+        amIOrigin = true;
     }
 
-    public void Check()
+    public void Click()
     {
-        if(survivor.assignedTraining == Training.None)
+        if(assignable)
         {
-            survivor.assignedTraining = (Training)trainingIndex;
-            checkBox.SetActive(true);
-        }
-        else
-        {
-            survivor.assignedTraining = Training.None;
-            checkBox.SetActive(false);
+            if(amIOrigin)
+            {
+                transform.SetParent(target, false);
+            }
+            else
+            {
+                transform.SetParent(origin, false);
+            }
+            if (whereAmI == curTraining) whereAmI = Training.None;
+            else whereAmI = curTraining;
+            amIOrigin = !amIOrigin;
+            GameManager.Instance.FixLayout(GameManager.Instance.outCanvas.GetComponent<RectTransform>());
         }
     }
 }
