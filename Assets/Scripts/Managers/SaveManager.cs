@@ -104,34 +104,4 @@ public static class SaveManager
         return result;
     }
 
-    public static ETCData ToSaveData()
-    {
-        OutGameUIManager outGameUIManager = GameManager.Instance.OutGameUIManager;
-        Calendar calendar = GameManager.Instance.Calendar;
-        ETCData result = new(
-            outGameUIManager.Money, 
-            outGameUIManager.MySurvivorsId, 
-            outGameUIManager.SurvivorHireLimit,
-            outGameUIManager.FightTrainingLevel,
-            outGameUIManager.ShootingTrainingLevel,
-            outGameUIManager.AgilityTrainingLevel,
-            outGameUIManager.WeightTrainingLevel,
-            calendar.Today
-            );
-        return result;
-    }
-
-    public static void FromSaveData(ETCData data)
-    {
-        GameManager.Instance.OutGameUIManager.LoadData(
-        data.money,
-        data.mySurvivorsId,
-        data.survivorHireLimit,
-        data.fightTrainingLevel,
-        data.shootingTrainingLevel,
-        data.agilityTrainingLevel,
-        data.weightTrainingLevel
-            );
-        GameManager.Instance.Calendar.LoadToday(data.today);
-    }
 }
