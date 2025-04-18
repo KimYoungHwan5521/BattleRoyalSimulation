@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,7 @@ public enum StrategyCase
     WhenThereAreMultipleEnemiesInSightWhoIsTheTarget,
 }
 
+[Serializable]
 public class ConditionData
 {
     public int andOr;
@@ -31,6 +33,8 @@ public class ConditionData
         this.inputInt = inputInt;
     }
 }
+
+[Serializable]
 public class StrategyData
 {
     public int action = 0;

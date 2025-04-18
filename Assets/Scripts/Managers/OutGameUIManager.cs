@@ -42,6 +42,8 @@ public class OutGameUIManager : MonoBehaviour
     }
 
     [Header("Survivors / Hire Market")]
+    int mySurvivorsId = 0;
+    public int MySurvivorsId => mySurvivorsId;
     [SerializeField] GameObject hireSurvivor;
     [SerializeField] GameObject hireClose;
     [SerializeField] SurvivorInfo[] survivorsInHireMarket;
@@ -52,6 +54,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] List<SurvivorData> mySurvivorsData;
     public List<SurvivorData> MySurvivorsData => mySurvivorsData;
     int survivorHireLimit = 10;
+    public int SurvivorHireLimit => survivorHireLimit;
     [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
@@ -64,7 +67,12 @@ public class OutGameUIManager : MonoBehaviour
     int shootingTrainingLevel = 1;
     int agilityTrainingLevel = 1;
     int weightTrainingLevel = 1;
-    int[] facilityUpgradeCost = { 1000, 3000, 10000, 30000 };
+
+    public int FightTrainingLevel => fightTrainingLevel;
+    public int ShootingTrainingLevel => shootingTrainingLevel;
+    public int AgilityTrainingLevel => agilityTrainingLevel;
+    public int WeightTrainingLevel => weightTrainingLevel;
+    readonly int[] facilityUpgradeCost = { 1000, 3000, 10000, 30000 };
     [SerializeField] GameObject fightTrainingRoomUpgradeButtion;
     [SerializeField] GameObject shootingTrainingRoomUpgradeButtion;
     [SerializeField] GameObject agilityTrainingRoomUpgradeButtion;
@@ -273,6 +281,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Money -= survivorsInHireMarket[candidate].survivorData.price;
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
+                    mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
                     mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
@@ -314,13 +323,15 @@ public class OutGameUIManager : MonoBehaviour
         return candidate;
     }
 
-    void ResetSurvivorsDropdown()
+    public void ResetSurvivorsDropdown()
     {
         survivorsDropdown.ClearOptions();
         for(int i = 0; i<mySurvivorsData.Count; i++)
         {
             survivorsDropdown.AddOptions(new List<string>(new string[] { mySurvivorsData[i].survivorName }));
         }
+        ResetSelectedSurvivorInfo();
+        survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
     }
 
     public void DismissSurvivor()
@@ -336,7 +347,6 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     mySurvivorsData.Remove(wantDismiss);
                     ResetSurvivorsDropdown();
-                    ResetSelectedSurvivorInfo();
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
                     Alert("The survivor has dismissed");
                 });
@@ -1714,5 +1724,23 @@ public class OutGameUIManager : MonoBehaviour
         List<RaycastResult> results = new();
         outCanvasRaycaster.Raycast(pointerData, results);
         return results;
+    }
+
+    public void LoadMySurvivorData(List<SurvivorData> data)
+    {
+        mySurvivorsData.Clear();
+        mySurvivorsData = data;
+    }
+
+    public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel,
+        int agilityTrainingLevel, int weightTrainingLevel)
+    {
+        this.money = money;
+        this.mySurvivorsId = mySurvivorsId;
+        this.survivorHireLimit = survivorHireLimit;
+        this.fightTrainingLevel = fightTrainingLevel;
+        this.shootingTrainingLevel = shootingTrainingLevel;
+        this.agilityTrainingLevel = agilityTrainingLevel;
+        this.weightTrainingLevel = weightTrainingLevel;
     }
 }

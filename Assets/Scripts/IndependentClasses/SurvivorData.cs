@@ -7,6 +7,7 @@ public enum Tier { Bronze, Silver, Gold }
 [Serializable]
 public class SurvivorData
 {
+    public int id = -1;
     // Stats
     public string survivorName;
     public float hp;

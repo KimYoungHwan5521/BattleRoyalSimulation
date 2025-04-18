@@ -6,22 +6,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship  };
+public class LeagueReserveData
+{
+    public League league;
+    public ResourceEnum.Prefab map;
+    public SurvivorData reserver;
+
+    public LeagueReserveData(League league, ResourceEnum.Prefab map)
+    {
+        this.league = league;
+        this.map = map;
+    }
+}
 
 public class Calendar : CustomObject
 {
-    public class LeagueReserveData
-    {
-        public League league;
-        public ResourceEnum.Prefab map;
-        public SurvivorData reserver;
-
-        public LeagueReserveData(League league, ResourceEnum.Prefab map)
-        {
-            this.league = league;
-            this.map = map;
-        }
-    }
-
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
     public Dictionary<int, LeagueReserveData> LeagueReserveInfo => leagueReserveInfo;
 
@@ -358,5 +357,16 @@ public class Calendar : CustomObject
         leagueReserveInfo[wantReserveDate].reserver.isReserved = false;
         leagueReserveInfo[wantReserveDate].reserver = null;
         TurnPageCalendar(0);
+    }
+
+    public void LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
+    {
+        leagueReserveInfo.Clear();
+        leagueReserveInfo = data;
+    }
+
+    public void LoadToday(int data)
+    {
+        today = data;
     }
 }

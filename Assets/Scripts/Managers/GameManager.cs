@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using NavMeshPlus.Components;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 public delegate void CustomStart();
 public delegate void CustomUpdate();
@@ -33,12 +35,14 @@ public class GameManager : MonoBehaviour
 
     OutGameUIManager outGameUIManger;
     public OutGameUIManager OutGameUIManager => outGameUIManger;
-    
+    Calendar calendar;
+    public Calendar Calendar => calendar;
 
     public LoadingCanvas loadingCanvas;
     public GameObject inGameUICanvas;
     public GameObject outCanvas;
     public GameObject globalCanvas;
+    public GameObject optionCanvas;
 
     public GameObject count3;
     public GameObject description;
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
     }
+
     public IEnumerator Start()
     {
         resourceManager = new ResourceManager();
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour
         yield return itemManager.Initiate();
 
         outGameUIManger = GetComponent<OutGameUIManager>();
+        calendar = GetComponent<Calendar>();
 
         gameReady = true;
         CloseLoadInfo();
@@ -100,6 +106,90 @@ public class GameManager : MonoBehaviour
         ObjectDestroy = null;
     }
 
+    #region Save / Load
+    void SaveMySurvivorList(List<SurvivorData> mySurvivors)
+    {
+        var saveData = new MySurvivorListSaveData
+        {
+            survivorSaveDatas = mySurvivors.ConvertAll(SaveManager.ToSaveData)
+        };
+        string json = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString("MySurvivorList", json);
+        PlayerPrefs.Save();
+    }
+
+    List<SurvivorData> LoadMySurvivorList()
+    {
+        string json = PlayerPrefs.GetString("MySurvivorList", "{}");
+        var saveData = JsonUtility.FromJson<MySurvivorListSaveData>(json);
+        return saveData.survivorSaveDatas.ConvertAll(SaveManager.FromSaveData);
+    }
+
+    void SaveLeagueReserve(Dictionary<int, LeagueReserveData> data)
+    {
+        var saveData = SaveManager.ToSaveData(data);
+        string json = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString("LeagueReserveData", json);
+        PlayerPrefs.Save();
+    }
+
+    Dictionary<int, LeagueReserveData> LoadLeagueReserve()
+    {
+        string json = PlayerPrefs.GetString("LeagueReserveData", "{}");
+        var saveData = JsonUtility.FromJson<LeagueReserveDictionarySaveData>(json);
+        return SaveManager.FromSaveData(saveData);
+    }
+
+    void SaveETCData()
+    {
+        ETCData saveData = new(
+            OutGameUIManager.Money,
+            OutGameUIManager.MySurvivorsId,
+            OutGameUIManager.SurvivorHireLimit,
+            OutGameUIManager.FightTrainingLevel,
+            OutGameUIManager.ShootingTrainingLevel,
+            OutGameUIManager.AgilityTrainingLevel,
+            OutGameUIManager.WeightTrainingLevel,
+            calendar.Today
+            );
+        string json = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString("ETCData", json);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadETCData()
+    {
+        string json = PlayerPrefs.GetString("ETCData", "{}");
+        var saveData = JsonUtility.FromJson<ETCData>(json);
+        OutGameUIManager.LoadData(
+        saveData.money,
+        saveData.mySurvivorsId,
+        saveData.survivorHireLimit,
+        saveData.fightTrainingLevel,
+        saveData.shootingTrainingLevel,
+        saveData.agilityTrainingLevel,
+        saveData.weightTrainingLevel
+            );
+        calendar.LoadToday(saveData.today);
+    }
+
+    public void Save()
+    {
+        SaveMySurvivorList(outGameUIManger.MySurvivorsData);
+        SaveLeagueReserve(calendar.LeagueReserveInfo);
+        SaveETCData();
+    }
+
+    public void Load()
+    {
+        outGameUIManger.LoadMySurvivorData(LoadMySurvivorList());
+        calendar.LoadLeagueReserveInfo(LoadLeagueReserve());
+        LoadETCData();
+        outGameUIManger.ResetHireMarket();
+        outGameUIManger.ResetSurvivorsDropdown();
+    }
+    #endregion
+
     public static void ClaimLoadInfo(string info, int numerator = 0, int denominator = 1)
     {
         if (instance && instance.loadingCanvas)
@@ -134,5 +224,10 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+    }
+
+    void OnCancel(InputValue value)
+    {
+        optionCanvas.SetActive(!optionCanvas.activeSelf);
     }
 }
