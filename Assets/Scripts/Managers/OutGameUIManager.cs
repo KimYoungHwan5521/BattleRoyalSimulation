@@ -8,7 +8,7 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-public enum Training { None, Fighting, Shooting, Agility, Weight }
+public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
 public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration }
 
@@ -59,29 +59,34 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Training Room")]
     [SerializeField] GameObject trainingRoom;
+    [SerializeField] TextMeshProUGUI weightTrainingNameText;
+    [SerializeField] TextMeshProUGUI runningNameText;
     [SerializeField] TextMeshProUGUI fightTrainingNameText;
     [SerializeField] TextMeshProUGUI shootingTraningNameText;
-    [SerializeField] TextMeshProUGUI agilityTrainingNameText;
-    [SerializeField] TextMeshProUGUI weightTrainingNameText;
+    [SerializeField] TextMeshProUGUI studyingNameText;
     int fightTrainingLevel = 1;
     int shootingTrainingLevel = 1;
-    int agilityTrainingLevel = 1;
+    int runningLevel = 1;
     int weightTrainingLevel = 1;
+    int studyingLevel = 1;
 
     public int FightTrainingLevel => fightTrainingLevel;
     public int ShootingTrainingLevel => shootingTrainingLevel;
-    public int AgilityTrainingLevel => agilityTrainingLevel;
+    public int AgilityTrainingLevel => runningLevel;
     public int WeightTrainingLevel => weightTrainingLevel;
+    public int StudyLevel => studyingLevel;
     readonly int[] facilityUpgradeCost = { 1000, 3000, 10000, 30000 };
-    [SerializeField] GameObject fightTrainingRoomUpgradeButtion;
-    [SerializeField] GameObject shootingTrainingRoomUpgradeButtion;
-    [SerializeField] GameObject agilityTrainingRoomUpgradeButtion;
-    [SerializeField] GameObject weightTrainingRoomUpgradeButtion;
+    [SerializeField] GameObject fightTrainingUpgradeButtion;
+    [SerializeField] GameObject shootingTrainingUpgradeButtion;
+    [SerializeField] GameObject runningUpgradeButtion;
+    [SerializeField] GameObject weightTrainingUpgradeButtion;
+    [SerializeField] GameObject studyingUpgradeButtion;
     [SerializeField] ScrollRect[] bookedTodayScrollRects;
+    [SerializeField] TextMeshProUGUI weightTrainingBookers;
+    [SerializeField] TextMeshProUGUI runningBookers;
     [SerializeField] TextMeshProUGUI fightTrainingBookers;
     [SerializeField] TextMeshProUGUI shootingTrainingBookers;
-    [SerializeField] TextMeshProUGUI agilityTrainingBookers;
-    [SerializeField] TextMeshProUGUI weightTrainingBookers;
+    [SerializeField] TextMeshProUGUI studyingBookers;
 
     [SerializeField] TextMeshProUGUI assignTrainingNameText;
     [SerializeField] Transform survivorsAssignedThis;
@@ -225,25 +230,24 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 120, 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 120, 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 120, 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[0].SetInfo(GetRandomName(), 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[1].SetInfo(GetRandomName(), 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
+        survivorsInHireMarket[2].SetInfo(GetRandomName(), 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
     }
 
     public void ResetHireMarket()
     {
-        float value = (fightTrainingLevel + shootingTrainingLevel + agilityTrainingLevel + weightTrainingLevel) / 4f;
+        float value = (fightTrainingLevel + shootingTrainingLevel + runningLevel + weightTrainingLevel) / 4f;
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
-            int rand0 = UnityEngine.Random.Range(0, 100);
-            int rand1 = UnityEngine.Random.Range(0, 100);
-            int rand2 = UnityEngine.Random.Range(0, 100);
-            int rand3 = UnityEngine.Random.Range(0, 100);
-            int rand4 = UnityEngine.Random.Range(0, 100);
-            int rand5 = UnityEngine.Random.Range(0, 100);
-            int totalRand = rand0 + rand1 + rand2 + rand3 + rand4 + rand5;
-            if ((totalRand < value * 84f || totalRand > value * 156f) && check < 1000)
+            int randStrength = UnityEngine.Random.Range(0, 100);
+            int randAgility = UnityEngine.Random.Range(0, 100);
+            int randFighting = UnityEngine.Random.Range(0, 100);
+            int randShooting = UnityEngine.Random.Range(0, 100);
+            int randKnowledge = UnityEngine.Random.Range(0, 100);
+            int totalRand = randStrength + randAgility + randFighting + randShooting + randKnowledge;
+            if ((totalRand < value * 70f || totalRand > value * 130f) && check < 1000)
             {
                 i--;
                 check++;
@@ -252,12 +256,11 @@ public class OutGameUIManager : MonoBehaviour
             if (check >= 1000) Debug.LogWarning("Infinite loop detected");
             check = 0;
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
-                100 + rand0,
-                rand1,
-                rand2,
-                rand3,
-                rand4,
-                rand5,
+                100 + randStrength,
+                randAgility,
+                randFighting,
+                randShooting,
+                randKnowledge,
                 UnityEngine.Random.Range(0, 4),
                 (int)(value * value * value * 100 * totalRand / 120f),
                 Tier.Bronze);
@@ -382,7 +385,15 @@ public class OutGameUIManager : MonoBehaviour
     {
         Training training = (Training)trainingIndex;
         survivorSchedules = new();
-        assignTrainingNameText.text = $"{(Training)trainingIndex} Training";
+        assignTrainingNameText.text = trainingIndex switch
+        {
+            1 => "Weight Training",
+            2 => "Running",
+            3 => "Fight Training",
+            4 => "Shooting Training",
+            5 => "Studying",
+            _ => "?",
+        };
         for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
         {
             PoolManager.Despawn(survivorsAssignedThis.GetChild(i).gameObject);
@@ -439,10 +450,11 @@ public class OutGameUIManager : MonoBehaviour
             survivorSchedule.survivor.assignedTraining = survivorSchedule.whereAmI;
         }
 
+        weightTrainingBookers.text = "";
+        runningBookers.text = "";
         fightTrainingBookers.text = "";
         shootingTrainingBookers.text = "";
-        agilityTrainingBookers.text = "";
-        weightTrainingBookers.text = "";
+        studyingBookers.text = "";
         foreach(SurvivorData survivor in mySurvivorsData)
         {
             TextMeshProUGUI targetText;
@@ -454,11 +466,14 @@ public class OutGameUIManager : MonoBehaviour
                 case Training.Shooting:
                     targetText = shootingTrainingBookers;
                     break;
-                case Training.Agility:
-                    targetText = agilityTrainingBookers;
+                case Training.Running:
+                    targetText = runningBookers;
                     break;
                 case Training.Weight:
                     targetText = weightTrainingBookers;
+                    break;
+                case Training.Studying:
+                    targetText = studyingBookers;
                     break;
                 default:
                     targetText = null;
@@ -492,7 +507,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         if (Trainable(survivor, Training.Fighting)) return true;
         if (Trainable(survivor, Training.Shooting)) return true;
-        if (Trainable(survivor, Training.Agility)) return true;
+        if (Trainable(survivor, Training.Running)) return true;
         if (Trainable(survivor, Training.Weight)) return true;
         return false;
     }
@@ -570,7 +585,7 @@ public class OutGameUIManager : MonoBehaviour
                             break;
                     }
                     break;
-                case Training.Agility:
+                case Training.Running:
                     switch (injury.site)
                     {
                         case InjurySite.Brain:
@@ -639,58 +654,7 @@ public class OutGameUIManager : MonoBehaviour
         switch (trainingRoomIndex)
         {
             case 0:
-                OpenConfirmWindow("Are you sure to upgrade Fight Training Room?", ()=>
-                {
-                    if(money < facilityUpgradeCost[fightTrainingLevel - 1])
-                    {
-                        Alert("Not enough money");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[fightTrainingLevel - 1];
-                        fightTrainingLevel++;
-                        fightTrainingNameText.text = $"Fight Training (lv {fightTrainingLevel})";
-                        if (fightTrainingLevel > facilityUpgradeCost.Length) fightTrainingRoomUpgradeButtion.SetActive(false);
-                        else fightTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[fightTrainingLevel - 1]}";
-                    }
-                });
-                break;
-            case 1:
-                OpenConfirmWindow("Are you sure to upgrade Shooting Training Room?", () =>
-                {
-                    if (money < facilityUpgradeCost[shootingTrainingLevel - 1])
-                    {
-                        Alert("Not enough money");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
-                        shootingTrainingLevel++;
-                        fightTrainingNameText.text = $"Shooting Training (lv {shootingTrainingLevel})";
-                        if (shootingTrainingLevel > facilityUpgradeCost.Length) shootingTrainingRoomUpgradeButtion.SetActive(false);
-                        else shootingTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[shootingTrainingLevel - 1]}";
-                    }
-                });
-                break;
-            case 2:
-                OpenConfirmWindow("Are you sure to upgrade Agility Training Room?", () =>
-                {
-                    if (money < facilityUpgradeCost[agilityTrainingLevel - 1])
-                    {
-                        Alert("Not enough money");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[agilityTrainingLevel - 1];
-                        agilityTrainingLevel++;
-                        fightTrainingNameText.text = $"Agility Training (lv {agilityTrainingLevel})";
-                        if (agilityTrainingLevel > facilityUpgradeCost.Length) agilityTrainingRoomUpgradeButtion.SetActive(false);
-                        else agilityTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[agilityTrainingLevel - 1]}";
-                    }
-                });
-                break;
-            case 3:
-                OpenConfirmWindow("Are you sure to upgrade Weight Training Room?", () =>
+                OpenConfirmWindow("Are you sure to upgrade Weight Training Facilities", () =>
                 {
                     if (money < facilityUpgradeCost[weightTrainingLevel - 1])
                     {
@@ -701,8 +665,76 @@ public class OutGameUIManager : MonoBehaviour
                         Money -= facilityUpgradeCost[weightTrainingLevel - 1];
                         weightTrainingLevel++;
                         fightTrainingNameText.text = $"Weight Training (lv {weightTrainingLevel})";
-                        if (weightTrainingLevel > facilityUpgradeCost.Length) weightTrainingRoomUpgradeButtion.SetActive(false);
-                        else weightTrainingRoomUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Facility Upgrades\n$ {facilityUpgradeCost[weightTrainingLevel - 1]}";
+                        if (weightTrainingLevel > facilityUpgradeCost.Length) weightTrainingUpgradeButtion.SetActive(false);
+                        else weightTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[weightTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 1:
+                OpenConfirmWindow("Are you sure to upgrade Agility Training Facilities?", () =>
+                {
+                    if (money < facilityUpgradeCost[runningLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[runningLevel - 1];
+                        runningLevel++;
+                        fightTrainingNameText.text = $"Running (lv {runningLevel})";
+                        if (runningLevel > facilityUpgradeCost.Length) runningUpgradeButtion.SetActive(false);
+                        else runningUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[runningLevel - 1]}";
+                    }
+                });
+                break;
+            case 2:
+                OpenConfirmWindow("Are you sure to upgrade Fight Training Facilities?", ()=>
+                {
+                    if(money < facilityUpgradeCost[fightTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[fightTrainingLevel - 1];
+                        fightTrainingLevel++;
+                        fightTrainingNameText.text = $"Fight Training (lv {fightTrainingLevel})";
+                        if (fightTrainingLevel > facilityUpgradeCost.Length) fightTrainingUpgradeButtion.SetActive(false);
+                        else fightTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[fightTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 3:
+                OpenConfirmWindow("Are you sure to upgrade Shooting Training Facilities?", () =>
+                {
+                    if (money < facilityUpgradeCost[shootingTrainingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
+                        shootingTrainingLevel++;
+                        fightTrainingNameText.text = $"Shooting Training (lv {shootingTrainingLevel})";
+                        if (shootingTrainingLevel > facilityUpgradeCost.Length) shootingTrainingUpgradeButtion.SetActive(false);
+                        else shootingTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[shootingTrainingLevel - 1]}";
+                    }
+                });
+                break;
+            case 4:
+                OpenConfirmWindow("Are you sure to upgrade Studying Facilities?", () =>
+                {
+                    if (money < facilityUpgradeCost[studyingLevel - 1])
+                    {
+                        Alert("Not enough money");
+                    }
+                    else
+                    {
+                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
+                        shootingTrainingLevel++;
+                        studyingNameText.text = $"Studying (lv {studyingLevel})";
+                        if (studyingLevel > facilityUpgradeCost.Length) studyingUpgradeButtion.SetActive(false);
+                        else studyingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[studyingLevel - 1]}";
                     }
                 });
                 break;
@@ -1447,18 +1479,16 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorTrainingResults[index].SetActive(true);
                         resultTexts[index][0].text = survivor.survivorName;
-                        resultTexts[index][1].text = $"Max HP + {survivor.increaseComparedToPrevious_hp}";
-                        resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_hp > 0);
-                        resultTexts[index][2].text = $"Attack damage + {survivor.increaseComparedToPrevious_power}";
-                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_power > 0);
-                        resultTexts[index][3].text = $"Attack speed + {survivor.increaseComparedToPrevious_attackSpeed}";
-                        resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_attackSpeed > 0);
-                        resultTexts[index][4].text = $"Move speed + {survivor.increaseComparedToPrevious_moveSpeed}";
-                        resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_moveSpeed > 0);
-                        resultTexts[index][5].text = $"Farming speed + {survivor.increaseComparedToPrevious_farmingSpeed}";
-                        resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_farmingSpeed > 0);
-                        resultTexts[index][6].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting}";
-                        resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
+                        resultTexts[index][1].text = $"Strength + {survivor.increaseComparedToPrevious_strength}";
+                        resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > 0);
+                        resultTexts[index][2].text = $"Agility + {survivor.increaseComparedToPrevious_agility}";
+                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > 0);
+                        resultTexts[index][3].text = $"Fighting + {survivor.increaseComparedToPrevious_fighting}";
+                        resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > 0);
+                        resultTexts[index][4].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting}";
+                        resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
+                        resultTexts[index][5].text = $"Knowledge + {survivor.increaseComparedToPrevious_knowledge}";
+                        resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > 0);
                         index++;
                     }
                     if(!autoAssign)
@@ -1494,39 +1524,39 @@ public class OutGameUIManager : MonoBehaviour
 
     void ApplyTraining(SurvivorData survivor, Training training)
     {
-        int survivorHpLv = (int)(survivor.hp - 100) / 20;
-        int survivorPowerLv = survivor._power / 20;
-        int survivorAtkSpdLv = survivor._attackSpeed / 20;
+        int survivorStrengthLv = survivor._strength / 20;
+        int survivorAgilityLv = survivor._agility / 20;
+        int survivorFightingLv = survivor._fighting / 20;
         int survivorShtLv = survivor._shooting / 20;
-        int survivorMvSpdLv = survivor._moveSpeed / 20;
-        int survivorFrmSpdLv = survivor._farmingSpeed / 20;
+        int survivorKnowledgeLv = survivor._knowledge / 20;
 
-        survivor.increaseComparedToPrevious_hp = 0;
-        survivor.increaseComparedToPrevious_power = 0;
-        survivor.increaseComparedToPrevious_attackSpeed = 0;
-        survivor.increaseComparedToPrevious_moveSpeed = 0;
-        survivor.increaseComparedToPrevious_farmingSpeed = 0;
+        survivor.increaseComparedToPrevious_strength = 0;
+        survivor.increaseComparedToPrevious_agility = 0;
+        survivor.increaseComparedToPrevious_fighting = 0;
         survivor.increaseComparedToPrevious_shooting = 0;
+        survivor.increaseComparedToPrevious_knowledge = 0;
 
         switch (training)
         {
+            case Training.Weight:
+                int increaseStrength = Mathf.Max(fightTrainingLevel - survivorStrengthLv, 0);
+                survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0);
+                break;
+            case Training.Running:
+                int increseAgility = Mathf.Max(runningLevel - survivorAgilityLv, 0);
+                survivor.IncreaseStats(0, increseAgility, 0, 0, 0);
+                break;
             case Training.Fighting:
-                int increasePower = Mathf.Max(fightTrainingLevel - survivorPowerLv, 0);
-                int increaseAtkSpeed = Mathf.Max(fightTrainingLevel - survivorAtkSpdLv, 0);
-                survivor.IncreaseStats(0, increasePower, increaseAtkSpeed, 0, 0, 0);
+                int increseFighting = Mathf.Max(weightTrainingLevel - survivorFightingLv, 0);
+                survivor.IncreaseStats(0, 0, increseFighting, 0, 0);
                 break;
             case Training.Shooting:
                 int increseShooting = Mathf.Max(shootingTrainingLevel - survivorShtLv, 0);
-                survivor.IncreaseStats(0, 0, 0, 0, 0, increseShooting);
+                survivor.IncreaseStats(0, 0, 0, increseShooting, 0);
                 break;
-            case Training.Agility:
-                int increseMoveSpeed = Mathf.Max(agilityTrainingLevel - survivorMvSpdLv, 0);
-                int increseFarmingSpeed = Mathf.Max(agilityTrainingLevel - survivorFrmSpdLv, 0);
-                survivor.IncreaseStats(0, 0, 0, increseMoveSpeed, increseFarmingSpeed, 0);
-                break;
-            case Training.Weight:
-                int increseHp = Mathf.Max(weightTrainingLevel - survivorHpLv, 0);
-                survivor.IncreaseStats(increseHp, 0, 0, 0, 0, 0);
+            case Training.Studying:
+                int increseKnowledge = Mathf.Max( - survivorShtLv, 0);
+                survivor.IncreaseStats(0, 0, 0, 0, increseKnowledge);
                 break;
             default:
                 break;
@@ -1604,14 +1634,13 @@ public class OutGameUIManager : MonoBehaviour
         int check = 0;
         while (check < 1000)
         {
-            int randHp = UnityEngine.Random.Range(0, 100);
-            int randPower = UnityEngine.Random.Range(0, 100);
-            int randAttackSpeed = UnityEngine.Random.Range(0, 100);
-            int randMoveSpeed = UnityEngine.Random.Range(0, 100);
-            int randFarmingSpeed = UnityEngine.Random.Range(0, 100);
+            int randStrength = UnityEngine.Random.Range(0, 100);
+            int randAgility = UnityEngine.Random.Range(0, 100);
+            int randFighting = UnityEngine.Random.Range(0, 100);
             int randShooting = UnityEngine.Random.Range(0, 100);
-            int totalRand = randHp + randPower + randAttackSpeed + randMoveSpeed + randFarmingSpeed + randShooting;
-            if ((totalRand < value * 84 || totalRand > value * 156) && check < 1000)
+            int randKnowledge = UnityEngine.Random.Range(0, 100);
+            int totalRand = randStrength + randAgility + randShooting + randShooting + randKnowledge;
+            if ((totalRand < value * 70 || totalRand > value * 130) && check < 1000)
             {
                 check++;
                 continue;
@@ -1619,19 +1648,18 @@ public class OutGameUIManager : MonoBehaviour
             if (check >= 100) Debug.LogWarning("Infinite roof has detected");
             SurvivorData survivorData = new(
                 GetRandomName(),
-                100 + randHp,
-                randPower,
-                randAttackSpeed,
-                randMoveSpeed,
-                randFarmingSpeed,
+                randStrength,
+                randAgility,
+                randFighting,
                 randShooting,
-                (int)(100 * totalRand / 120f),
+                randKnowledge,
+                totalRand,
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );
             CharacteristicManager.AddRandomCharacteristics(survivorData, UnityEngine.Random.Range(0, 4));
             return survivorData;
         }
-        return new(GetRandomName(), 120, 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
+        return new(GetRandomName(), 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
     public void OpenConfirmWindow(string wantText, UnityAction wantAction)
@@ -1740,7 +1768,7 @@ public class OutGameUIManager : MonoBehaviour
         this.survivorHireLimit = survivorHireLimit;
         this.fightTrainingLevel = fightTrainingLevel;
         this.shootingTrainingLevel = shootingTrainingLevel;
-        this.agilityTrainingLevel = agilityTrainingLevel;
+        this.runningLevel = agilityTrainingLevel;
         this.weightTrainingLevel = weightTrainingLevel;
     }
 }

@@ -10,16 +10,17 @@ public class SurvivorData
     public int id = -1;
     // Stats
     public string survivorName;
-    public float hp;
-    public int _power;
-    public float AttackDamage => (60f + _power) / 8f;
-    public int _attackSpeed;
-    public float AttackSpeed => (60f + _attackSpeed) / 80f;
-    public int _moveSpeed;
-    public float MoveSpeed => (60f + _moveSpeed) * 3f / 80f;
-    public int _farmingSpeed;
-    public float FarmingSpeed => (60f + _farmingSpeed) / 80f;
+    public int _strength;
+    public int _agility;
+    public int _fighting;
     public int _shooting;
+    public int _knowledge;
+
+    public float MaxHp => _strength + 100;
+    public float AttackDamage => (120f + _strength + _fighting) / 16f;
+    public float AttackSpeed => (120f + _agility + _fighting) / 160f;
+    public float MoveSpeed => (60f + _agility) * 3f / 80f;
+    public float FarmingSpeed => (60f + _agility) / 80f;
     public float Shooting => _shooting / 20f;
     public float luck;
     public List<Characteristic> characteristics = new();
@@ -31,12 +32,11 @@ public class SurvivorData
     
     // Training
     public Training assignedTraining;
-    public float increaseComparedToPrevious_hp;
-    public int increaseComparedToPrevious_power;
-    public int increaseComparedToPrevious_attackSpeed;
-    public int increaseComparedToPrevious_moveSpeed;
-    public int increaseComparedToPrevious_farmingSpeed;
+    public float increaseComparedToPrevious_strength;
+    public int increaseComparedToPrevious_agility;
+    public int increaseComparedToPrevious_fighting;
     public int increaseComparedToPrevious_shooting;
+    public int increaseComparedToPrevious_knowledge;
 
     // Injury, Surgery
     public List<Injury> injuries = new();
@@ -51,16 +51,14 @@ public class SurvivorData
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
 
-    public SurvivorData(string survivorName, float hp, int power, int attackSpeed, int moveSpeed,
-        int farmingSpeed, int shooting, int price, Tier tier)
+    public SurvivorData(string survivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {
         this.survivorName = survivorName;
-        this.hp = hp;
-        _power = power;
-        _attackSpeed = attackSpeed;
-        _moveSpeed = moveSpeed;
-        _farmingSpeed = farmingSpeed;
+        _strength = strength;
+        _agility = agility;
+        _fighting = fighting;
         _shooting = shooting;
+        _knowledge = knowledge;
         luck = 50;
         this.price = price;
         this.tier = tier;
@@ -70,32 +68,29 @@ public class SurvivorData
     public SurvivorData(SurvivorData survivorData)
     {
         survivorName = survivorData.survivorName;
-        hp = survivorData.hp;
-        _power = survivorData._power;
-        _attackSpeed = survivorData._attackSpeed;
-        _moveSpeed = survivorData._moveSpeed;
-        _farmingSpeed = survivorData._farmingSpeed;
+        _strength = survivorData._strength;
+        _agility = survivorData._agility;
+        _fighting = survivorData._fighting;
         _shooting = survivorData._shooting;
+        _knowledge = survivorData._knowledge;
         luck = survivorData.luck;
         price = survivorData.price;
         tier = survivorData.tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
     }
 
-    public void IncreaseStats(float hp, int power, int attackSpeed, int moveSpeed, int farmingSpeed, int shooting)
+    public void IncreaseStats(int strength, int agility, int fighting, int shooting, int knowledge)
     {
-        this.hp += hp;
-        _power += power;
-        _attackSpeed += attackSpeed;
-        _moveSpeed += moveSpeed;
-        _farmingSpeed += farmingSpeed;
+        _strength += strength;
+        _agility += agility;
+        _fighting += fighting;
         _shooting += shooting;
+        _knowledge += knowledge;
 
-        increaseComparedToPrevious_hp += hp;
-        increaseComparedToPrevious_power += power;
-        increaseComparedToPrevious_attackSpeed += attackSpeed;
-        increaseComparedToPrevious_moveSpeed += moveSpeed;
-        increaseComparedToPrevious_farmingSpeed += farmingSpeed;
+        increaseComparedToPrevious_strength += strength;
+        increaseComparedToPrevious_agility += agility;
+        increaseComparedToPrevious_fighting += fighting;
         increaseComparedToPrevious_shooting += shooting;
+        increaseComparedToPrevious_knowledge += knowledge;
     }
 }

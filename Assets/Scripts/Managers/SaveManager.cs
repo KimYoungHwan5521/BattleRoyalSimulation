@@ -9,12 +9,11 @@ public static class SaveManager
         {
             id = data.id,
             survivorName = data.survivorName,
-            hp = data.hp,
-            power = data._power,
-            attackSpeed = data._attackSpeed,
-            moveSpeed = data._moveSpeed,
-            farmingSpeed = data._farmingSpeed,
+            strength = data._strength,
+            agility = data._agility,
+            fighting = data._fighting,
             shooting = data._shooting,
+            knowledge = data._knowledge,
             luck = data.luck,
             price = data.price,
             tier = data.tier,
@@ -40,21 +39,21 @@ public static class SaveManager
 
     public static SurvivorData FromSaveData(SurvivorSaveData saveData)
     {
-        var survivor = new SurvivorData(saveData.survivorName, saveData.hp, saveData.power,
-            saveData.attackSpeed, saveData.moveSpeed, saveData.farmingSpeed, saveData.shooting,
-            saveData.price, saveData.tier);
-
-        survivor.id = saveData.id;
-        survivor.luck = saveData.luck;
-        survivor.isReserved = saveData.isReserved;
-        survivor.injuries = saveData.injuries ?? new();
-        survivor.surgeryScheduled = saveData.surgeryScheduled;
-        survivor.scheduledSurgeryName = saveData.scheduledSurgeryName;
-        survivor.shceduledSurgeryCost = saveData.shceduledSurgeryCost;
-        survivor.surgerySite = saveData.surgerySite;
-        survivor.surgeryType = saveData.surgeryType;
-        survivor.surgeryCharacteristic = saveData.surgeryCharacteristic;
-        survivor.priority1Weapon = saveData.priority1Weapon;
+        SurvivorData survivor = new(saveData.survivorName, saveData.strength, saveData.agility,
+            saveData.fighting, saveData.shooting, saveData.knowledge, saveData.price, saveData.tier)
+        {
+            id = saveData.id,
+            luck = saveData.luck,
+            isReserved = saveData.isReserved,
+            injuries = saveData.injuries ?? new(),
+            surgeryScheduled = saveData.surgeryScheduled,
+            scheduledSurgeryName = saveData.scheduledSurgeryName,
+            shceduledSurgeryCost = saveData.shceduledSurgeryCost,
+            surgerySite = saveData.surgerySite,
+            surgeryType = saveData.surgeryType,
+            surgeryCharacteristic = saveData.surgeryCharacteristic,
+            priority1Weapon = saveData.priority1Weapon
+        };
 
         survivor.strategyDictionary.Clear();
         foreach (var entry in saveData.strategyDictionaryEntries)

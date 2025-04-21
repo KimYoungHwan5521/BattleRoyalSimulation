@@ -2489,31 +2489,24 @@ public class Survivor : CustomObject
                 case InjurySite.RightEye:
                     rightSightRange = 45 * (1 - injury.degree);
                     penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
-                    affectionList_FarmingSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     eyeInjured = true;
                     break;
                 case InjurySite.LeftEye:
                     leftSightRange = 45 * (1 - injury.degree);
                     penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
-                    affectionList_FarmingSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     eyeInjured = true;
                     break;
                 case InjurySite.Organ:
                     penaltiedFarmingSpeedByOrgan = 1 - injury.degree;
                     penaltiedAttackSpeedByOrgan = 1 - injury.degree;
                     penaltiedMoveSpeedByOrgan = 1 - injury.degree;
-                    affectionList_FarmingSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
-                    affectionList_AttackSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.RightArm:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightHand:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightThumb:
@@ -2522,16 +2515,13 @@ public class Survivor : CustomObject
                 case InjurySite.RightRingFinger:
                 case InjurySite.RightLittleFinger:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.1f);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.LeftArm:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftHand:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftThumb:
@@ -2540,39 +2530,30 @@ public class Survivor : CustomObject
                 case InjurySite.LeftRingFinger:
                 case InjurySite.LeftLittleFinger:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
-                    affectionList_AttackDamage.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.RightLeg:
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.RightKnee:
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.RightAncle:
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.RightBigToe:
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.1f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.LeftLeg:
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.LeftKnee:
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.LeftAncle:
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.LeftBigToe:
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.1f);
-                    affectionList_MoveSpeed.Add($"<color=red>{injury.site} {injury.type}</color>");
                     break;
                 case InjurySite.Brain:
                     dizzyRateByConcussion = injury.degree;
@@ -2619,12 +2600,6 @@ public class Survivor : CustomObject
     float characteristicCorrection_HpRegeneration;
     float characteristicCorrection_Luck;
 
-    public List<string> affectionList_AttackDamage = new();
-    public List<string> affectionList_AttackSpeed = new();
-    public List<string> affectionList_MoveSpeed = new();
-    public List<string> affectionList_FarmingSpeed = new();
-    public List<string> affectionList_Shooting = new();
-
     void ApplyCharacteristics()
     {
         characteristicCorrection_SightRange = 1;
@@ -2670,11 +2645,6 @@ public class Survivor : CustomObject
                         characteristicCorrection_MoveSpeed *= 1.1f;
                         characteristicCorrection_FarmingSpeed *= 1.1f;
                         characteristicCorrection_Shooting *= 1.1f;
-                        affectionList_AttackDamage.Add($"<#009900>{characteristic.characteristicName}</color>");
-                        affectionList_AttackSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
-                        affectionList_MoveSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
-                        affectionList_FarmingSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
-                        affectionList_Shooting.Add($"<#009900>{characteristic.characteristicName}</color>");
                     }
                     break;
                 case CharacteristicType.ChokingUnderPressure:
@@ -2685,11 +2655,6 @@ public class Survivor : CustomObject
                         characteristicCorrection_MoveSpeed *= 0.9f;
                         characteristicCorrection_FarmingSpeed *= 0.9f;
                         characteristicCorrection_Shooting *= 0.9f;
-                        affectionList_AttackDamage.Add($"<color=red>{characteristic.characteristicName}</color>");
-                        affectionList_AttackSpeed.Add($"<color=red>{characteristic.characteristicName}</color>");
-                        affectionList_MoveSpeed.Add($"<color=red>{characteristic.characteristicName}</color>");
-                        affectionList_FarmingSpeed.Add($"<color=red>{characteristic.characteristicName}</color>");
-                        affectionList_Shooting.Add($"<color=red>{characteristic.characteristicName}</color>");
                     }
                     break;
                 case CharacteristicType.Boxer:
@@ -2699,8 +2664,6 @@ public class Survivor : CustomObject
                     characteristicCorrection_MeleeAvoidRate *= 1.5f;
                     characteristicCorrection_MeleeGuardRate *= 1.5f;
                     characteristicCorrection_MeleeCriticalRate *= 1.5f;
-                    affectionList_AttackDamage.Add($"<#009900>{characteristic.characteristicName}</color>");
-                    affectionList_AttackSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
                     break;
                 case CharacteristicType.Giant:
                     maxHP *= 1.3f;
@@ -2712,9 +2675,6 @@ public class Survivor : CustomObject
                     characteristicCorrection_AttackDamage *= 1.3f;
                     characteristicCorrection_AttackSpeed *= 0.7f;
                     characteristicCorrection_MoveSpeed *= 0.7f;
-                    affectionList_AttackDamage.Add($"<#009900>{characteristic.characteristicName}</color>");
-                    affectionList_AttackSpeed.Add($"<color=red>{characteristic.characteristicName}</color>");
-                    affectionList_MoveSpeed.Add($"<color=red>{characteristic.characteristicName}</color>");
                     break;
                 case CharacteristicType.Dwarf:
                     maxHP *= 0.7f;
@@ -2726,14 +2686,10 @@ public class Survivor : CustomObject
                     characteristicCorrection_AttackDamage *= 0.7f;
                     characteristicCorrection_AttackSpeed *= 1.3f;
                     characteristicCorrection_MoveSpeed *= 1.3f;
-                    affectionList_AttackDamage.Add($"<color=red>{characteristic.characteristicName}</color>");
-                    affectionList_AttackSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
-                    affectionList_MoveSpeed.Add($"<#009900>{characteristic.characteristicName}</color>");
                     break;
                 case CharacteristicType.CarefulShooter:
                     characteristicCorrection_AimTime *= 2;
                     characteristicCorrection_Shooting *= 2;
-                    affectionList_Shooting.Add($"<#009900>{characteristic.characteristicName}</color>");
                     break;
                 case CharacteristicType.Fragile:
                     characteristicCorrection_NatualHemostasis *= 0.5f;
@@ -2928,8 +2884,8 @@ public class Survivor : CustomObject
         linkedSurvivorData = survivorInfo;
         survivorName = survivorInfo.survivorName;
         nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
-        curHP = maxHP = survivorInfo.hp;
-        curBlood = maxBlood = survivorInfo.hp * 80;
+        curHP = maxHP = survivorInfo.MaxHp;
+        curBlood = maxBlood = survivorInfo.MaxHp * 80;
         bleedingSprite = curBlood - 100;
         attackDamage = survivorInfo.AttackDamage;
         attackSpeed = survivorInfo.AttackSpeed;

@@ -73,16 +73,16 @@ public class InGameUIManager : MonoBehaviour
 
     [Header("Stat / Status")]
     [SerializeField] GameObject statTab;
-    [SerializeField] Image powerBar;
-    [SerializeField] Image attackSpeedBar;
-    [SerializeField] Image moveSpeedBar;
-    [SerializeField] Image farmingSpeedBar;
+    [SerializeField] Image strengthBar;
+    [SerializeField] Image agilityBar;
+    [SerializeField] Image fightingBar;
     [SerializeField] Image shootingBar;
-    [SerializeField] TextMeshProUGUI powerText;
-    [SerializeField] TextMeshProUGUI attackSpeedText;
-    [SerializeField] TextMeshProUGUI moveSpeedText;
-    [SerializeField] TextMeshProUGUI farmingSpeedText;
+    [SerializeField] Image knowledgeBar;
+    [SerializeField] TextMeshProUGUI strengthText;
+    [SerializeField] TextMeshProUGUI agilityText;
+    [SerializeField] TextMeshProUGUI fightingText;
     [SerializeField] TextMeshProUGUI shootingText;
+    [SerializeField] TextMeshProUGUI knowledgeText;
     [SerializeField] AutoNewLineLayoutGroup characteristics;
 
     [SerializeField] GameObject[] injuries;
@@ -229,10 +229,10 @@ public class InGameUIManager : MonoBehaviour
     public void ClearLog()
     {
         log.text = ""; 
-        powerText.GetComponent<Help>().SetDescription("");
-        attackSpeedText.GetComponent<Help>().SetDescription("");
-        moveSpeedText.GetComponent<Help>().SetDescription("");
-        farmingSpeedText.GetComponent<Help>().SetDescription("");
+        strengthText.GetComponent<Help>().SetDescription("");
+        agilityText.GetComponent<Help>().SetDescription("");
+        fightingText.GetComponent<Help>().SetDescription("");
+        knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
     }
 
@@ -298,11 +298,11 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
             selectedObjectName.text = selectedSurvivor.survivorName;
 
-            powerBar.fillAmount = selectedSurvivor.LinkedSurvivorData._power / 100f;
-            attackSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._attackSpeed / 100f;
-            moveSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._moveSpeed / 100f;
-            farmingSpeedBar.fillAmount = selectedSurvivor.LinkedSurvivorData._farmingSpeed / 100f;
+            strengthBar.fillAmount = selectedSurvivor.LinkedSurvivorData._strength / 100f;
+            agilityBar.fillAmount = selectedSurvivor.LinkedSurvivorData._agility / 100f;
+            fightingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._fighting / 100f;
             shootingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._shooting / 100f;
+            knowledgeBar.fillAmount = selectedSurvivor.LinkedSurvivorData._knowledge / 100f;
 
             UpdatableSelectedObjectInfo(selectedObject);
         }
@@ -324,7 +324,7 @@ public class InGameUIManager : MonoBehaviour
     {
         if(selectedObject is Survivor)
         {
-            UpdateSelectedObjectStat(selectedObject as Survivor);
+            //UpdateSelectedObjectStat(selectedObject as Survivor);
             UpdateSelectedObjectInjury(selectedObject as Survivor);
         }
         UpdateSelectedObjectInventory(selectedObject);
@@ -333,57 +333,12 @@ public class InGameUIManager : MonoBehaviour
     public void UpdateSelectedObjectStat(Survivor survivor)
     {
         if (survivor != selectedObject) return;
-        powerText.GetComponent<Help>().SetDescription("");
-        attackSpeedText.GetComponent<Help>().SetDescription("");
-        moveSpeedText.GetComponent<Help>().SetDescription("");
-        farmingSpeedText.GetComponent<Help>().SetDescription("");
+        strengthText.GetComponent<Help>().SetDescription("");
+        agilityText.GetComponent<Help>().SetDescription("");
+        fightingText.GetComponent<Help>().SetDescription("");
+        knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
 
-        powerText.text = $"{survivor.LinkedSurvivorData._power}";
-        if (survivor.affectionList_AttackDamage.Count > 0)
-        {
-            if (survivor.AttackDamage > survivor.LinkedSurvivorData.AttackDamage) powerText.text += $"(<#009900>¡ã)</color>";
-            else powerText.text += $"(<color=red>¡å)</color>";
-            string description = "Affected by : ";
-            foreach (string affect in survivor.affectionList_AttackDamage) description += $"{affect}, ";
-            powerText.GetComponent<Help>().SetDescription(description);
-        }
-        attackSpeedText.text = $"{survivor.AttackSpeed:0.##}";
-        if (survivor.affectionList_AttackSpeed.Count > 0)
-        {
-            if (survivor.AttackSpeed > survivor.LinkedSurvivorData.AttackSpeed) attackSpeedText.text += $"(<#009900>¡ã)</color>";
-            else attackSpeedText.text += $"(<color=red>¡å)</color>";
-            string description = "Affected by : ";
-            foreach (string affect in survivor.affectionList_AttackSpeed) description += $"{affect}, ";
-            attackSpeedText.GetComponent<Help>().SetDescription(description);
-        }
-        moveSpeedText.text = $"{survivor.MoveSpeed:0.##}";
-        if (survivor.affectionList_MoveSpeed.Count > 0)
-        {
-            if (survivor.MoveSpeed > survivor.LinkedSurvivorData.MoveSpeed) moveSpeedText.text += $"(<#009900>¡ã)</color>";
-            else moveSpeedText.text += $"(<color=red>¡å)</color>";
-            string description = "Affected by : ";
-            foreach (string affect in survivor.affectionList_MoveSpeed) description += $"{affect}, ";
-            moveSpeedText.GetComponent<Help>().SetDescription(description);
-        }
-        farmingSpeedText.text = $"{survivor.FarmingSpeed:0.##}";
-        if (survivor.affectionList_FarmingSpeed.Count > 0)
-        {
-            if (survivor.FarmingSpeed > survivor.LinkedSurvivorData.FarmingSpeed) farmingSpeedText.text += $"(<#009900>¡ã)</color>";
-            else farmingSpeedText.text += $"(<color=red>¡å)</color>";
-            string description = "Affected by : ";
-            foreach (string affect in survivor.affectionList_FarmingSpeed) description += $"{affect}, ";
-            farmingSpeedText.GetComponent<Help>().SetDescription(description);
-        }
-        shootingText.text = $"{survivor.Shooting:0.##}";
-        if (survivor.affectionList_Shooting.Count > 0)
-        {
-            if (survivor.Shooting > survivor.LinkedSurvivorData.Shooting) shootingText.text += $"(<#009900>¡ã)</color>";
-            else shootingText.text += $"(<color=red>¡å)</color>";
-            string description = "Affected by : ";
-            foreach (string affect in survivor.affectionList_Shooting) description += $"{affect}, ";
-            shootingText.GetComponent<Help>().SetDescription(description);
-        }
         characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
     }
 

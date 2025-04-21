@@ -21,12 +21,11 @@ public class SurvivorSaveData
 {
     public int id;
     public string survivorName;
-    public float hp;
-    public int power;
-    public int attackSpeed;
-    public int moveSpeed;
-    public int farmingSpeed;
+    public int strength;
+    public int agility;
+    public int fighting;
     public int shooting;
+    public int knowledge;
     public float luck;
     public int price;
     public Tier tier;

@@ -9,18 +9,16 @@ public class SurvivorInfo : MonoBehaviour
 {
     [SerializeField] Image tierImage;
     [SerializeField] TextMeshProUGUI survivorNameText;
-    [SerializeField] TextMeshProUGUI hpText;
-    [SerializeField] TextMeshProUGUI powerText;
-    [SerializeField] TextMeshProUGUI attackSpeedText;
-    [SerializeField] TextMeshProUGUI moveSpeedText;
-    [SerializeField] TextMeshProUGUI farmingSpeedText;
+    [SerializeField] TextMeshProUGUI strengthText;
+    [SerializeField] TextMeshProUGUI agilityText;
+    [SerializeField] TextMeshProUGUI fightingText;
     [SerializeField] TextMeshProUGUI shootingText;
-    [SerializeField] Image hpBar;
-    [SerializeField] Image powerBar;
-    [SerializeField] Image attackSpeedBar;
-    [SerializeField] Image moveSpeedBar;
-    [SerializeField] Image farmingSpeedBar;
+    [SerializeField] TextMeshProUGUI knowledgeText;
+    [SerializeField] Image strengthBar;
+    [SerializeField] Image agilityBar;
+    [SerializeField] Image fightingBar;
     [SerializeField] Image shootingBar;
+    [SerializeField] Image knowledgeBar;
     [SerializeField] AutoNewLineLayoutGroup characteristicsLayout;
     [SerializeField] TextMeshProUGUI priceText;
 
@@ -40,30 +38,28 @@ public class SurvivorInfo : MonoBehaviour
 
     public SurvivorData survivorData;
 
-    public void SetInfo(string survivorName, float hp, int power, int attackSpeed, int moveSpeed,
-        int farmingSpeed, int shooting, int characteristicsCount, int price, Tier tier)
+    public void SetInfo(string survivorName, int strength, int agility, int fighting, int shooting,
+        int knowledge, int characteristicsCount, int price, Tier tier)
     {
-        survivorData = new(survivorName, hp, power, attackSpeed, moveSpeed, farmingSpeed, shooting, price, tier);
+        survivorData = new(survivorName, strength, agility, fighting, shooting, knowledge, price, tier);
 
         Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
         tierImage.sprite = ResourceManager.Get(tierSprite);
         
         survivorNameText.text = survivorName;
-        hpText.text = $"{hp:0}";
-        powerText.text = $"{power}";
-        attackSpeedText.text = $"{attackSpeed}";
-        moveSpeedText.text = $"{moveSpeed}";
-        farmingSpeedText.text = $"{farmingSpeed}";
+        strengthText.text = $"{strength}";
+        agilityText.text = $"{agility}";
+        fightingText.text = $"{fighting}";
         shootingText.text = $"{shooting}";
+        knowledgeText.text = $"{knowledge}";
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
 
-        hpBar.fillAmount = (hp - 100) / 100f;
-        powerBar.fillAmount = power / 100f;
-        attackSpeedBar.fillAmount = attackSpeed / 100f;
-        moveSpeedBar.fillAmount = moveSpeed / 100f;
-        farmingSpeedBar.fillAmount = farmingSpeed / 100f;
+        strengthBar.fillAmount = strength / 100f;
+        agilityBar.fillAmount = agility / 100f;
+        fightingBar.fillAmount = fighting / 100f;
         shootingBar.fillAmount = shooting / 100f;
+        knowledgeBar.fillAmount = knowledge / 100f;
 
         SetCharacteristic();
     }
@@ -75,28 +71,25 @@ public class SurvivorInfo : MonoBehaviour
 
         survivorData = wantSurvivorData;
         survivorNameText.text = wantSurvivorData.survivorName;
-        hpText.text = $"{wantSurvivorData.hp:0}";
-        powerText.text = $"{wantSurvivorData._power}";
-        attackSpeedText.text = $"{wantSurvivorData._attackSpeed}";
-        moveSpeedText.text = $"{wantSurvivorData._moveSpeed}";
-        farmingSpeedText.text = $"{wantSurvivorData._farmingSpeed}";
+        strengthText.text = $"{wantSurvivorData._strength}";
+        agilityText.text = $"{wantSurvivorData._agility}";
+        fightingText.text = $"{wantSurvivorData._fighting}";
         shootingText.text = $"{wantSurvivorData._shooting}";
+        knowledgeText.text = $"{wantSurvivorData._knowledge}";
 
-        hpBar.fillAmount = (wantSurvivorData.hp - 100) / 100f;
-        powerBar.fillAmount = wantSurvivorData._power / 100f;
-        attackSpeedBar.fillAmount = wantSurvivorData._attackSpeed / 100f;
-        moveSpeedBar.fillAmount = wantSurvivorData._moveSpeed / 100f;
-        farmingSpeedBar.fillAmount = wantSurvivorData._farmingSpeed / 100f;
+        strengthBar.fillAmount = wantSurvivorData._strength / 100f;
+        agilityBar.fillAmount = wantSurvivorData._agility / 100f;
+        fightingBar.fillAmount = wantSurvivorData._fighting / 100f;
         shootingBar.fillAmount = wantSurvivorData._shooting / 100f;
+        knowledgeBar.fillAmount = wantSurvivorData._knowledge / 100f;
 
         if (showIncrease)
         {
-            if (wantSurvivorData.increaseComparedToPrevious_hp > 0) hpText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_hp:0.##})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_power > 0) powerText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_power:0.##})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_attackSpeed > 0) attackSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_attackSpeed:0.###})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_moveSpeed > 0) moveSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_moveSpeed:0.###})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_farmingSpeed > 0) farmingSpeedText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_farmingSpeed:0.###})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_shooting > 0) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting:0.##})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_strength > 0) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_agility > 0) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_fighting > 0) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_shooting > 0) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_knowledge > 0) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
         }
         
         for (int i = 0; i < injuries.Length; i++)
