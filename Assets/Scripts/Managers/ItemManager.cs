@@ -37,14 +37,23 @@ public class ItemManager
         HighLevelBulletproofVest,
         // Consumables
         BandageRoll,
+        HemostaticBandageRoll,
+        // Crafting Materials
+        Component,
+        AdvancedComponent,
+        Chemicals,
+        Gunpowder,
+        Oddment,
     }
-    public Dictionary<Items, Item[]> itemDictionary = new();
+
+    public static Dictionary<Items, Item[]> itemDictionary = new();
+
     public IEnumerator Initiate()
     {
         yield return null;
     }
 
-    public void AddItems(Items wantItem, int count)
+    public static void AddItems(Items wantItem, int count)
     {
         int start = 0;
         int end = count;
@@ -161,6 +170,31 @@ public class ItemManager
             case Items.BandageRoll:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new Consumable(wantItem, "BandageRoll", 0.027f);
+                break;
+            case Items.HemostaticBandageRoll:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "HemostaticBandageRoll", 0.127f);
+                break;
+            // Crafting Materials
+            case Items.Component:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Component", 1f);
+                break;
+            case Items.AdvancedComponent:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "AdvancedComponent", 3f);
+                break;
+            case Items.Chemicals:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Chemicals", 0.1f);
+                break;
+            case Items.Gunpowder:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Gunpowder", 0.066f);
+                break;
+            case Items.Oddment:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Oddment", 0.5f);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

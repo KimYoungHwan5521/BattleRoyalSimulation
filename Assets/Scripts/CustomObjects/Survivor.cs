@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -273,6 +274,9 @@ public class Survivor : CustomObject
         }
     }
     bool currentWeaponisBestWeapon;
+
+    List<ItemManager.Items> craftables = new();
+    ItemManager.Items currentCrafting;
     #endregion
     #region Enemies
     [Header("Enemies")]
@@ -588,7 +592,7 @@ public class Survivor : CustomObject
             {
                 if(BleedingAmount >= 10)
                 {
-                    int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll);
+                    int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll || x.itemType == ItemManager.Items.HemostaticBandageRoll);
                     if(bandageIndex != -1)
                     {
                         currentStatus = Status.Maintain;
@@ -622,6 +626,7 @@ public class Survivor : CustomObject
             }
             else
             {
+                if (Crafting()) return;
                 Farming();
             }
         }
@@ -684,6 +689,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
                         {
+                            if (Crafting()) return;
                             Farming();
                         }
                     }
@@ -695,6 +701,7 @@ public class Survivor : CustomObject
                         }
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
                         {
+                            if (Crafting()) return;
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
@@ -713,6 +720,7 @@ public class Survivor : CustomObject
                         }
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
                         {
+                            if (Crafting()) return;
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
@@ -728,6 +736,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
                         {
+                            if (Crafting()) return;
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
@@ -938,6 +947,7 @@ public class Survivor : CustomObject
                 targetFarmingCorpse.inventory.Clear();
                 farmingCorpses[targetFarmingCorpse] = true;
                 targetFarmingCorpse = null;
+                CheckCraftables();
                 CurrentFarmingArea = FindNearest(farmingAreas);
                 targetFarmingSection = FindNearest(farmingSections);
                 targetFarmingBox = FindNearest(farmingBoxes);
@@ -991,6 +1001,7 @@ public class Survivor : CustomObject
                 InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
                 farmingBoxes[targetFarmingBox] = true;
                 targetFarmingBox = null;
+                CheckCraftables();
                 lookRotation = Vector2.zero;
                 curFarmingTime = 0;
             }
@@ -1382,6 +1393,81 @@ public class Survivor : CustomObject
             currentVest = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
+    }
+    #endregion
+
+    #region Crafting
+    bool Crafting()
+    {
+        if(craftables != null)
+        {
+            Craft(craftables[0]);
+            return true;
+        }
+        return false;
+    }
+
+    void Craft(ItemManager.Items wantItem)
+    {
+        currentCrafting = wantItem;
+        // 애니메이션 실행
+        agent.SetDestination(transform.position);
+        int anim = wantItem switch
+        {
+            ItemManager.Items.HemostaticBandageRoll => 1,
+            _ => 0,
+        };
+        animator.SetFloat("CraftingAnimNumber", anim);
+        animator.SetBool("Crafting", true);
+    }
+
+    void CheckCraftables()
+    {
+        craftables.Clear();
+        Item item = inventory.Find(x => x.itemType == ItemManager.Items.Component);
+        int componentsCount = item != null ? item.amount : 0;
+        item = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent);
+        int advencedComponentsCount = item != null ? item.amount : 0;
+        item = inventory.Find(x => x.itemType == ItemManager.Items.Chemicals);
+        int chemicalsCount = item != null ? item.amount : 0;
+        item = inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder);
+        int gunpowderCount = item != null ? item.amount : 0;
+        item = inventory.Find(x => x.itemType == ItemManager.Items.Oddment);
+        int oddmentsCount = item != null ? item.amount : 0;
+
+        if (linkedSurvivorData._knowledge >= 30)
+        {
+            item = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
+            if (item != null && chemicalsCount >= 2) craftables.Add(ItemManager.Items.HemostaticBandageRoll);
+            
+            if(linkedSurvivorData._knowledge >= 40)
+            {
+                if(componentsCount >= 1 && gunpowderCount >= 1)
+                {
+                    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
+                    craftables.Add(ItemManager.Items.Bullet_Pistol);
+                    craftables.Add(ItemManager.Items.Bullet_Revolver);
+                    craftables.Add(ItemManager.Items.Bullet_ShotGun);
+                    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
+                    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
+                }
+
+                if(linkedSurvivorData._knowledge >= 55)
+                {
+                    if(componentsCount >= 2 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.Pistol);
+
+                    if(linkedSurvivorData._knowledge >= 75)
+                    {
+                        if(componentsCount >= 4 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.SubMachineGun);
+
+                        if(linkedSurvivorData._knowledge >= 95)
+                        {
+                            if(componentsCount >= 4 && advencedComponentsCount >= 2) craftables.Add(ItemManager.Items.AssaultRifle);
+                        }
+                    }
+                }
+            }
+        }
     }
     #endregion
 
@@ -2786,8 +2872,49 @@ public class Survivor : CustomObject
 
     void AE_Taping()
     {
-        ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll), 1);
-        BleedingAmount -= 100;
+        Item bandage;
+        int hemostaticAmount = 100;
+        if(bleedingAmount > 100)
+        {
+            bandage = inventory.Find(x => x.itemType == ItemManager.Items.HemostaticBandageRoll);
+            if (bandage == null)
+            {
+                bandage = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
+                hemostaticAmount = 100;
+            }
+            else hemostaticAmount = 300;
+        }
+        else
+        {
+            bandage = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
+            if (bandage == null)
+            {
+                bandage = inventory.Find(x => x.itemType == ItemManager.Items.HemostaticBandageRoll);
+                hemostaticAmount = 300;
+            }
+            else hemostaticAmount = 100;
+        }
+        ConsumptionItem(bandage, 1);
+        BleedingAmount -= hemostaticAmount;
+    }
+
+    void AE_Crafting()
+    {
+        switch (currentCrafting)
+        {
+            case ItemManager.Items.HemostaticBandageRoll:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll), 1);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), 2);
+                ItemManager.AddItems(currentCrafting, 1);
+                GetItem(ItemManager.itemDictionary[currentCrafting][ItemManager.itemDictionary[currentCrafting].Length - 1]);
+                break;
+            default:
+                Debug.LogError($"Failed to craft item : {currentCrafting}");
+                break;
+        }
+        currentCrafting = 0;
+        craftables.Clear();
+        CheckCraftables();
     }
     #endregion
 

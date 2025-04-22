@@ -123,16 +123,16 @@ public class BattleRoyaleManager
 
     void AddItems(ItemManager.Items wantItem, int count = 1)
     {
-        GameManager.Instance.ItemManager.AddItems(wantItem, count);
+        ItemManager.AddItems(wantItem, count);
         for (int i = 0; i < count; i++)
         {
-            farmingItems.Add(GameManager.Instance.ItemManager.itemDictionary[wantItem][i]);
+            farmingItems.Add(ItemManager.itemDictionary[wantItem][i]);
         }
     }
 
     void ItemSetting()
     {
-        GameManager.Instance.ItemManager.itemDictionary.Clear();
+        ItemManager.itemDictionary.Clear();
         AddItems(ItemManager.Items.Knife, 1);
         AddItems(ItemManager.Items.Dagger, 1);
         AddItems(ItemManager.Items.Bat, 1);
