@@ -275,7 +275,7 @@ public class Survivor : CustomObject
     }
     bool currentWeaponisBestWeapon;
 
-    List<ItemManager.Items> craftables = new();
+    [SerializeField]List<ItemManager.Items> craftables = new();
     ItemManager.Items currentCrafting;
     #endregion
     #region Enemies
@@ -1399,7 +1399,7 @@ public class Survivor : CustomObject
     #region Crafting
     bool Crafting()
     {
-        if(craftables != null)
+        if(craftables.Count > 0)
         {
             Craft(craftables[0]);
             return true;
@@ -1417,7 +1417,7 @@ public class Survivor : CustomObject
             ItemManager.Items.HemostaticBandageRoll => 1,
             _ => 0,
         };
-        animator.SetFloat("CraftingAnimNumber", anim);
+        animator.SetInteger("CraftingAnimNumber", anim);
         animator.SetBool("Crafting", true);
     }
 
@@ -2900,18 +2900,31 @@ public class Survivor : CustomObject
 
     void AE_Crafting()
     {
+        int amount = 1;
         switch (currentCrafting)
         {
             case ItemManager.Items.HemostaticBandageRoll:
                 ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll), 1);
                 ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), 2);
-                ItemManager.AddItems(currentCrafting, 1);
-                GetItem(ItemManager.itemDictionary[currentCrafting][ItemManager.itemDictionary[currentCrafting].Length - 1]);
+                break;
+            case ItemManager.Items.Pistol:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 2);
+                break;
+            case ItemManager.Items.SubMachineGun:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 4);
+                break;
+            case ItemManager.Items.AssaultRifle:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 2);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 4);
                 break;
             default:
                 Debug.LogError($"Failed to craft item : {currentCrafting}");
                 break;
         }
+        ItemManager.AddItems(currentCrafting, amount);
+        GetItem(ItemManager.itemDictionary[currentCrafting][^1]);
         currentCrafting = 0;
         craftables.Clear();
         CheckCraftables();

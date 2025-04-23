@@ -143,5 +143,7 @@ namespace ResourceEnum
         farmingNoise04,
         piep,
         taping,
+        hammering,
+        bubble,
     }
 }

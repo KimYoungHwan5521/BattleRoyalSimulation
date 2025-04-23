@@ -138,6 +138,8 @@ public class ResourcesPath
         "Sounds/SFXs/farmingNoise04",
         "Sounds/SFXs/piep",
         "Sounds/SFXs/taping",
+        "Sounds/SFXs/hammering",
+        "Sounds/SFXs/bubble",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

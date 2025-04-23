@@ -236,6 +236,7 @@ public class BattleRoyaleManager
         int count = 0;
         foreach (Area area in areas) if (area.IsProhibited_Plan) area.IsProhibited = true;
         foreach (Area area in areas) if (!area.IsProhibited_Plan && !area.IsProhibited) count++;
+        if (count == 0) return;
         if (number >= count) number = count;
         int esc = 0;
         for (int i = 0; i < number; i++)
@@ -254,7 +255,7 @@ public class BattleRoyaleManager
             }
             else
             {
-                if(!CheckPathBlock(candidate))
+                if(count == 1 || !CheckPathBlock(candidate))
                 {
                     candidate.IsProhibited_Plan = true;
                     foreach (Survivor survivor in survivors)

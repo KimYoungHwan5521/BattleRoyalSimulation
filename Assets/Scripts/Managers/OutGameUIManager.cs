@@ -75,7 +75,7 @@ public class OutGameUIManager : MonoBehaviour
     public int AgilityTrainingLevel => runningLevel;
     public int WeightTrainingLevel => weightTrainingLevel;
     public int StudyLevel => studyingLevel;
-    readonly int[] facilityUpgradeCost = { 1000, 3000, 10000, 30000 };
+    readonly int[] facilityUpgradeCost = { 3000, 10000, 30000 };
     [SerializeField] GameObject fightTrainingUpgradeButtion;
     [SerializeField] GameObject shootingTrainingUpgradeButtion;
     [SerializeField] GameObject runningUpgradeButtion;
@@ -237,7 +237,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void ResetHireMarket()
     {
-        float value = (fightTrainingLevel + shootingTrainingLevel + runningLevel + weightTrainingLevel) / 4f;
+        float value = (fightTrainingLevel + shootingTrainingLevel + runningLevel + weightTrainingLevel + studyingLevel) / 5f;
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -262,7 +262,7 @@ public class OutGameUIManager : MonoBehaviour
                 randShooting,
                 randKnowledge,
                 UnityEngine.Random.Range(0, 4),
-                (int)(value * value * value * 100 * totalRand / 120f),
+                (int)(value * value * value * totalRand),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
@@ -1470,6 +1470,9 @@ public class OutGameUIManager : MonoBehaviour
         {
             OpenConfirmWindow(message, () =>
             {
+                calendar.Today++;
+                calendar.TurnPageCalendar(0);
+
                 int index = 0;
                 foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
                 foreach (SurvivorData survivor in mySurvivorsData)
@@ -1499,8 +1502,6 @@ public class OutGameUIManager : MonoBehaviour
                     Surgery(survivor);
                 }
                 selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
-                calendar.Today++;
-                calendar.TurnPageCalendar(0);
 
                 dailyResult.SetActive(true);
             });
@@ -1539,23 +1540,23 @@ public class OutGameUIManager : MonoBehaviour
         switch (training)
         {
             case Training.Weight:
-                int increaseStrength = Mathf.Max(fightTrainingLevel - survivorStrengthLv, 0);
+                int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
                 survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0);
                 break;
             case Training.Running:
-                int increseAgility = Mathf.Max(runningLevel - survivorAgilityLv, 0);
+                int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
                 survivor.IncreaseStats(0, increseAgility, 0, 0, 0);
                 break;
             case Training.Fighting:
-                int increseFighting = Mathf.Max(weightTrainingLevel - survivorFightingLv, 0);
+                int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
                 survivor.IncreaseStats(0, 0, increseFighting, 0, 0);
                 break;
             case Training.Shooting:
-                int increseShooting = Mathf.Max(shootingTrainingLevel - survivorShtLv, 0);
+                int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
                 survivor.IncreaseStats(0, 0, 0, increseShooting, 0);
                 break;
             case Training.Studying:
-                int increseKnowledge = Mathf.Max( - survivorShtLv, 0);
+                int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
                 survivor.IncreaseStats(0, 0, 0, 0, increseKnowledge);
                 break;
             default:
@@ -1625,10 +1626,10 @@ public class OutGameUIManager : MonoBehaviour
         int value = calendar.LeagueReserveInfo[calendar.Today].league switch
         {
             League.BronzeLeague => 1,
-            League.SilverLeague => 1,
-            League.GoldLeague => 2,
-            League.SeasonChampionship => 3,
-            League.WorldChampionship => 4,
+            League.SilverLeague => 2,
+            League.GoldLeague => 3,
+            League.SeasonChampionship => 4,
+            League.WorldChampionship => 5,
             _ => 5
         };
         int check = 0;

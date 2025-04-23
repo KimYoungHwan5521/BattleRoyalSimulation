@@ -144,7 +144,7 @@ public class Calendar : CustomObject
     int curMaxYear = 0;
     void AddLeagueReserveInfo(int howManyYears)
     {
-        for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3; i++)
+        for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
         {
             if (i % 336 == 335)
             {
