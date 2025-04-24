@@ -181,19 +181,23 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetPredictionUI()
     {
-        predictionResult.SetActive(outGameUIManager.BettingAmount > 0);
-        for(int i=0; i<predictionResultRows.Length; i++)
+        if(outGameUIManager.BettingAmount > 0)
         {
-            if (i < outGameUIManager.PredictionNumber)
+            predictionResult.SetActive(true);
+            for(int i=0; i<predictionResultRows.Length; i++)
             {
-                predictionResultRows[i].SetActive(true);
-                predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
-                predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.survivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
-                predictionResultBGs[i].color = Color.white;
-                predictionResultResults[i].text = "";
+                if (i < outGameUIManager.PredictionNumber)
+                {
+                    predictionResultRows[i].SetActive(true);
+                    predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
+                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.survivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
+                    predictionResultBGs[i].color = Color.white;
+                    predictionResultResults[i].text = "";
+                }
+                else predictionResultRows[i].SetActive(false);
             }
-            else predictionResultRows[i].SetActive(false);
         }
+        else predictionResult.SetActive(false);
     }
 
     public void SetSurvivorRank(string survivorName, int survivorRank)
@@ -303,6 +307,12 @@ public class InGameUIManager : MonoBehaviour
             fightingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._fighting / 100f;
             shootingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._shooting / 100f;
             knowledgeBar.fillAmount = selectedSurvivor.LinkedSurvivorData._knowledge / 100f;
+
+            strengthText.text = selectedSurvivor.LinkedSurvivorData._strength.ToString();
+            agilityText.text = selectedSurvivor.LinkedSurvivorData._agility.ToString();
+            fightingText.text = selectedSurvivor.LinkedSurvivorData._fighting.ToString();
+            shootingText.text = selectedSurvivor.LinkedSurvivorData._shooting.ToString();
+            knowledgeText.text = selectedSurvivor.LinkedSurvivorData._knowledge.ToString();
 
             UpdatableSelectedObjectInfo(selectedObject);
         }

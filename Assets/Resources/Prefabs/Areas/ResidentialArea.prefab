@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   farmingSections: []
+  garbageObjects: []
   isProhibited_Plan: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
@@ -26027,6 +26028,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.6999993
+      objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.18
@@ -27255,6 +27260,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.6999993
+      objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.2
@@ -28381,6 +28390,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.6999993
+      objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.18
@@ -29466,6 +29479,10 @@ PrefabInstance:
     - target: {fileID: 754227169252962475, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.7
       objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x

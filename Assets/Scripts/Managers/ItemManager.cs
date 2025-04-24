@@ -44,6 +44,9 @@ public class ItemManager
         Chemicals,
         Gunpowder,
         Oddment,
+        // Traps
+        BearTrap,
+        LandMine,
     }
 
     public static Dictionary<Items, Item[]> itemDictionary = new();
@@ -195,6 +198,15 @@ public class ItemManager
             case Items.Oddment:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem][i] = new Consumable(wantItem, "Oddment", 0.5f);
+                break;
+            // Traps
+            case Items.BearTrap:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Buriable(wantItem, "BearTrap", 3f);
+                break;
+            case Items.LandMine:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem][i] = new Buriable(wantItem, "LandMine", 0.5f);
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

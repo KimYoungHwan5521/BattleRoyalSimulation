@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway }
+    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -278,6 +278,12 @@ public class Survivor : CustomObject
     [SerializeField]List<ItemManager.Items> craftables = new();
     ItemManager.Items currentCrafting;
     #endregion
+    #region Trap
+    public TrapPlace trapPlace;
+    [SerializeField] float trappingTime = 3f;
+    [SerializeField] float curTrappingTime;
+    Buriable curBurying;
+    #endregion
     #region Enemies
     [Header("Enemies")]
     [SerializeField] List<Survivor> inSightEnemies = new();
@@ -364,21 +370,26 @@ public class Survivor : CustomObject
     public float TotalDamage => totalDamage;
     #endregion
     #endregion
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        projectileGenerator = GetComponent<ProjectileGenerator>();
+        emotionAnimator = emotion.GetComponent<Animator>();
+        sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
+    }
+
     protected override void Start()
     {
         base.Start();
-        //animator = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        projectileGenerator = GetComponent<ProjectileGenerator>();
+
         emotion.transform.parent = null;
-        emotionAnimator = emotion.GetComponent<Animator>();
         canvas.transform.SetParent(null);
         prohibitTimer.SetActive(false);
+
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
-        sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
 
         sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
         sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
@@ -559,7 +570,7 @@ public class Survivor : CustomObject
 
     void Regenerate()
     {
-        curBlood += bloodRegeneration * Time.deltaTime;
+        curBlood = Mathf.Min(curBlood + bloodRegeneration * Time.deltaTime, maxBlood);
         curHP = Mathf.Min(curHP + 0.17f * hpRegeneration * Time.deltaTime, maxHP);
     }
 
@@ -627,6 +638,10 @@ public class Survivor : CustomObject
             else
             {
                 if (Crafting()) return;
+                if (trapPlace != null && trapPlace.BuriedTrap == null)
+                {
+                    if (BuryTrap()) return;
+                }
                 Farming();
             }
         }
@@ -671,7 +686,6 @@ public class Survivor : CustomObject
 
                 if (enemyInAttackRange)
                 {
-                    Debug.Log($"{IsValid(currentWeapon)}, {distance}, {attackRange}");
                     if(strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
                     {
                         if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
@@ -1442,15 +1456,15 @@ public class Survivor : CustomObject
             
             if(linkedSurvivorData._knowledge >= 40)
             {
-                if(componentsCount >= 1 && gunpowderCount >= 1)
-                {
-                    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
-                    craftables.Add(ItemManager.Items.Bullet_Pistol);
-                    craftables.Add(ItemManager.Items.Bullet_Revolver);
-                    craftables.Add(ItemManager.Items.Bullet_ShotGun);
-                    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
-                    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
-                }
+                //if(componentsCount >= 1 && gunpowderCount >= 1)
+                //{
+                //    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
+                //    craftables.Add(ItemManager.Items.Bullet_Pistol);
+                //    craftables.Add(ItemManager.Items.Bullet_Revolver);
+                //    craftables.Add(ItemManager.Items.Bullet_ShotGun);
+                //    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
+                //    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
+                //}
 
                 if(linkedSurvivorData._knowledge >= 55)
                 {
@@ -1470,6 +1484,43 @@ public class Survivor : CustomObject
         }
     }
     #endregion
+
+    bool BuryTrap()
+    {
+        if(curBurying == null)
+        {
+            Item item = inventory.Find(x => x is Buriable);
+            if (item != null)
+            {
+                curBurying = item as Buriable;
+                return true;
+            }
+            trapPlace = null;
+            return false;
+        }
+        else
+        {
+            curTrappingTime += Time.deltaTime;
+            currentStatus = Status.Trapping;
+            agent.SetDestination(transform.position);
+            lookRotation = trapPlace.transform.position - transform.position;
+
+            if(curTrappingTime > trappingTime)
+            {
+                curTrappingTime = 0;
+                if (Enum.TryParse(curBurying.itemName, out ResourceEnum.Prefab trap))
+                {
+                    Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
+                    settedTrap.setter = this;
+                    trapPlace.SetTrap(settedTrap);
+                }
+                else Debug.LogWarning($"Failed to spawn trap : {curBurying.itemName}");
+                trapPlace = null;
+                return false;
+            }
+            return true;
+        }
+    }
 
     #region Combat
     void InvestigateThreateningSound()
@@ -1937,6 +1988,18 @@ public class Survivor : CustomObject
 
         ApplyDamage(bullet.Launcher, damage, damagePart, DamageType.GunShot);
     }
+
+    public void TakeDamage(Trap trap)
+    {
+        TakeDamage(trap, trap.Damage);
+    }
+
+    public void TakeDamage(Trap trap, float damage)
+    {
+        InjurySiteMajor injurySite = InjurySiteMajor.Head;
+        if (trap.IsBuriedType) injurySite = InjurySiteMajor.Legs;
+        ApplyDamage(trap.setter, damage, injurySite, trap.DamageType);
+    }
     #endregion
 
     #region Injury
@@ -1989,14 +2052,22 @@ public class Survivor : CustomObject
                 break;
             case InjurySiteMajor.Legs:
                 rand = UnityEngine.Random.Range(0, 1f);
-                if (rand > 0.75f) injurySite = InjurySite.RightLeg;
-                else if (rand > 0.5f) injurySite = InjurySite.LeftLeg;
-                else if (rand > 0.4f) injurySite = InjurySite.RightKnee;
-                else if (rand > 0.3f) injurySite = InjurySite.LeftKnee;
-                else if (rand > 0.2f) injurySite = InjurySite.RightAncle;
-                else if (rand > 0.1f) injurySite = InjurySite.LeftAncle;
-                else if (rand > 0.5f) injurySite = InjurySite.RightBigToe;
-                else injurySite = InjurySite.LeftBigToe;
+                if(damageType == DamageType.GunShot)
+                {
+                    if (rand > 0.75f) injurySite = InjurySite.RightLeg;
+                    else if (rand > 0.5f) injurySite = InjurySite.LeftLeg;
+                    else if (rand > 0.4f) injurySite = InjurySite.RightKnee;
+                    else if (rand > 0.3f) injurySite = InjurySite.LeftKnee;
+                    else if (rand > 0.2f) injurySite = InjurySite.RightAncle;
+                    else if (rand > 0.1f) injurySite = InjurySite.LeftAncle;
+                    else if (rand > 0.5f) injurySite = InjurySite.RightBigToe;
+                    else injurySite = InjurySite.LeftBigToe;
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    if (rand > 0.5f) injurySite = InjurySite.RightAncle;
+                    else injurySite = InjurySite.LeftAncle;
+                }
                 break;
         }
 
@@ -2239,8 +2310,25 @@ public class Survivor : CustomObject
             case InjurySite.LeftKnee:
             case InjurySite.RightAncle:
             case InjurySite.LeftAncle:
-                injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
-                injuryType = InjuryType.GunshotWound;
+                if(damageType == DamageType.GunShot)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Cut)
+                {
+                    float rand = UnityEngine.Random.Range(0, 1f);
+                    if (rand > 0.7f)
+                    {
+                        injuryDegree = 1;
+                        injuryType = InjuryType.Amputation;
+                    }
+                    else
+                    {
+                        injuryDegree = rand / 0.7f;
+                        injuryType = InjuryType.Cutting;
+                    }
+                }
                 break;
             case InjurySite.RightBigToe:
             case InjurySite.LeftBigToe:
@@ -2821,6 +2909,7 @@ public class Survivor : CustomObject
         attackDamage = linkedSurvivorData.AttackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
         attackSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);
         moveSpeed = Mathf.Max(linkedSurvivorData.MoveSpeed * injuryCorrection_MoveSpeed * characteristicCorrection_MoveSpeed, 0.1f);
+        agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
         shooting = linkedSurvivorData.Shooting * characteristicCorrection_Shooting;
         aimErrorRange = 7.5f / shooting;

@@ -25798,6 +25798,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1053923129796362509, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053923129796362509, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.2
@@ -26272,6 +26288,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1053923129796362509, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1053923129796362509, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1970154036847493114, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_Name
       value: 10x10_House (3)
@@ -26691,6 +26723,10 @@ PrefabInstance:
     - target: {fileID: 754227169252962475, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1153073919240866761, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.3
       objectReference: {fileID: 0}
     - target: {fileID: 1278869826593730923, guid: 30bd38c9835e35b4a904d9487d96cc94, type: 3}
       propertyPath: m_LocalPosition.x

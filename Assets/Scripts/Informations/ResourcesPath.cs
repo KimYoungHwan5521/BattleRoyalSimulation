@@ -6,6 +6,8 @@ public class ResourcesPath
         "Prefabs/Survivor",
         "Prefabs/Bullet",
         "Prefabs/Blood",
+        "Prefabs/Traps/BearTrap",
+        "Prefabs/Traps/LandMine",
 
         // Map
         "Prefabs/Maps/2x2/Map_2x2_01",
@@ -86,6 +88,9 @@ public class ResourcesPath
         "Sprites/Icons/MiddleLevelBulletproofVest",
         "Sprites/Icons/HighLevelBulletproofVest",
         "Sprites/Icons/BandageRoll",
+        "Sprites/Icons/HemostaticBandageRoll",
+        "Sprites/Icons/BearTrap",
+        "Sprites/Icons/LandMine",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",
@@ -140,6 +145,9 @@ public class ResourcesPath
         "Sounds/SFXs/taping",
         "Sounds/SFXs/hammering",
         "Sounds/SFXs/bubble",
+        "Sounds/SFXs/bear_trap",
+        "Sounds/SFXs/explosion",
+        "Sounds/SFXs/short_gas_leak",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

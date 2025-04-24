@@ -6,6 +6,8 @@ namespace ResourceEnum
         Survivor,
         Bullet,
         Blood,
+        BearTrap,
+        LandMine,
 
         // Map
         Map_2x2_01,
@@ -92,6 +94,10 @@ namespace ResourceEnum
         HighLevelBulletproofVest,
         // Consumables
         BandageRoll,
+        HemostaticBandageRoll,
+        // Traps
+        BearTrap,
+        LandMine,
 
         // Leagues
         BronzeLeague,
@@ -145,5 +151,8 @@ namespace ResourceEnum
         taping,
         hammering,
         bubble,
+        bear_trap,
+        explosion,
+        short_gas_leak,
     }
 }
