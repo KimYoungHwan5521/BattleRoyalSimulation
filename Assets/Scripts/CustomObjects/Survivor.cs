@@ -638,6 +638,7 @@ public class Survivor : CustomObject
             else
             {
                 if (Crafting()) return;
+                animator.SetBool("Crafting", false);
                 if (trapPlace != null && trapPlace.BuriedTrap == null)
                 {
                     if (BuryTrap()) return;
@@ -704,6 +705,7 @@ public class Survivor : CustomObject
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
                         {
                             if (Crafting()) return;
+                            animator.SetBool("Crafting", false);
                             Farming();
                         }
                     }
@@ -716,6 +718,7 @@ public class Survivor : CustomObject
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
                         {
                             if (Crafting()) return;
+                            animator.SetBool("Crafting", false);
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
@@ -735,6 +738,7 @@ public class Survivor : CustomObject
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
                         {
                             if (Crafting()) return;
+                            animator.SetBool("Crafting", false);
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
@@ -751,6 +755,7 @@ public class Survivor : CustomObject
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
                         {
                             if (Crafting()) return;
+                            animator.SetBool("Crafting", false);
                             Farming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
@@ -893,6 +898,14 @@ public class Survivor : CustomObject
             }
         }
         return nearest;
+    }
+
+    public void FindNewNearestFarmingTarget()
+    {
+        currentFarmingArea = FindNearest(farmingAreas);
+        targetFarmingSection = FindNearest(farmingSections);
+        targetFarmingBox = FindNearest(farmingBoxes);
+        targetFarmingCorpse = FindNearest(farmingCorpses);
     }
 
     Survivor FindWhoseWeaponRangeIsLongest(List<Survivor> survivors)
@@ -1415,7 +1428,7 @@ public class Survivor : CustomObject
     {
         if(craftables.Count > 0)
         {
-            Craft(craftables[0]);
+            Craft(craftables[^1]);
             return true;
         }
         return false;
@@ -1449,34 +1462,40 @@ public class Survivor : CustomObject
         item = inventory.Find(x => x.itemType == ItemManager.Items.Oddment);
         int oddmentsCount = item != null ? item.amount : 0;
 
-        if (linkedSurvivorData._knowledge >= 30)
+        int knowledge = linkedSurvivorData._knowledge;
+        if(knowledge >= 25)
         {
-            item = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
-            if (item != null && chemicalsCount >= 2) craftables.Add(ItemManager.Items.HemostaticBandageRoll);
-            
-            if(linkedSurvivorData._knowledge >= 40)
+            if(componentsCount >= 2 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.Pistol);
+            if (knowledge >= 30)
             {
-                //if(componentsCount >= 1 && gunpowderCount >= 1)
-                //{
-                //    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
-                //    craftables.Add(ItemManager.Items.Bullet_Pistol);
-                //    craftables.Add(ItemManager.Items.Bullet_Revolver);
-                //    craftables.Add(ItemManager.Items.Bullet_ShotGun);
-                //    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
-                //    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
-                //}
-
-                if(linkedSurvivorData._knowledge >= 55)
+                item = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
+                if (item != null && chemicalsCount >= 2) craftables.Add(ItemManager.Items.HemostaticBandageRoll);
+            
+                if(knowledge >= 40)
                 {
-                    if(componentsCount >= 2 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.Pistol);
-
-                    if(linkedSurvivorData._knowledge >= 75)
+                    //if(componentsCount >= 1 && gunpowderCount >= 1)
+                    //{
+                    //    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
+                    //    craftables.Add(ItemManager.Items.Bullet_Pistol);
+                    //    craftables.Add(ItemManager.Items.Bullet_Revolver);
+                    //    craftables.Add(ItemManager.Items.Bullet_ShotGun);
+                    //    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
+                    //    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
+                    //}
+                    if(knowledge >= 45)
                     {
-                        if(componentsCount >= 4 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.SubMachineGun);
-
-                        if(linkedSurvivorData._knowledge >= 95)
+                        if (componentsCount >= 2 && oddmentsCount >= 1) craftables.Add(ItemManager.Items.BearTrap);
+                        if(knowledge >= 65)
                         {
-                            if(componentsCount >= 4 && advencedComponentsCount >= 2) craftables.Add(ItemManager.Items.AssaultRifle);
+                            if(componentsCount >= 4 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.SubMachineGun);
+                            if(knowledge >= 80)
+                            {
+                                if (advencedComponentsCount >= 1 && oddmentsCount >= 1 && gunpowderCount >= 2) craftables.Add(ItemManager.Items.LandMine);
+                                if(knowledge >= 95)
+                                {
+                                    if(componentsCount >= 4 && advencedComponentsCount >= 2) craftables.Add(ItemManager.Items.AssaultRifle);
+                                }
+                            }
                         }
                     }
                 }
@@ -1578,6 +1597,7 @@ public class Survivor : CustomObject
         curAimDelay = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
+        animator.SetBool("Crafting", false);
         if (Vector2.Distance(agent.destination, target.transform.position) > attackRange)
         {
             curSetDestinationCool += Time.deltaTime;
@@ -1596,6 +1616,7 @@ public class Survivor : CustomObject
         curAimDelay = 0;
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
+        animator.SetBool("Crafting", false);
         animator.SetBool("Attack", true);
         if(IsValid(currentWeapon))
         {
@@ -1614,6 +1635,7 @@ public class Survivor : CustomObject
         animator.SetBool("Attack", false);
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
+        animator.SetBool("Crafting", false);
         animator.SetBool("Aim", true);
 
         curAimDelay += Time.deltaTime;
@@ -1633,6 +1655,7 @@ public class Survivor : CustomObject
     {
         animator.SetBool("Attack", false);
         animator.SetBool("StopBleeding", false);
+        animator.SetBool("Crafting", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
         curAimDelay = 0;
@@ -1907,7 +1930,6 @@ public class Survivor : CustomObject
 
             if (probability < avoidRate)
             {
-                Debug.Log(avoidRate);
                 // È¸ÇÇ
                 damage = 0;
                 hitSound = "avoid, 5";
@@ -3008,12 +3030,23 @@ public class Survivor : CustomObject
                 ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 2);
                 ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 4);
                 break;
+            case ItemManager.Items.BearTrap:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 2);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Oddment), 1);
+                amount = 3;
+                break;
+            case ItemManager.Items.LandMine:
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Oddment), 1);
+                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), 2);
+                amount = 3;
+                break;
             default:
                 Debug.LogError($"Failed to craft item : {currentCrafting}");
-                break;
+                return;
         }
         ItemManager.AddItems(currentCrafting, amount);
-        GetItem(ItemManager.itemDictionary[currentCrafting][^1]);
+        for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting][^i]);
         currentCrafting = 0;
         craftables.Clear();
         CheckCraftables();

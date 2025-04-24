@@ -71,6 +71,7 @@ public class BattleRoyaleManager
             if(curAreaProhibitTime > areaProhibitTime)
             {
                 SetProhibitArea(prohibitAtOnce);
+                foreach (var survivor in aliveSurvivors) survivor.FindNewNearestFarmingTarget();
                 curAreaProhibitTime = 0;
             }
         }
@@ -133,8 +134,8 @@ public class BattleRoyaleManager
     void ItemSetting()
     {
         ItemManager.itemDictionary.Clear();
-        //AddItems(ItemManager.Items.BearTrap, 100);
-        AddItems(ItemManager.Items.LandMine, 100);
+        AddItems(ItemManager.Items.Component, 100);
+        AddItems(ItemManager.Items.Oddment, 100);
         //AddItems(ItemManager.Items.Knife, 1);
         //AddItems(ItemManager.Items.Dagger, 1);
         //AddItems(ItemManager.Items.Bat, 1);

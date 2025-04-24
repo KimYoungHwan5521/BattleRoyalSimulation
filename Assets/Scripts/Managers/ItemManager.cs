@@ -49,7 +49,7 @@ public class ItemManager
         LandMine,
     }
 
-    public static Dictionary<Items, Item[]> itemDictionary = new();
+    public static Dictionary<Items, List<Item>> itemDictionary = new();
 
     public IEnumerator Initiate()
     {
@@ -62,12 +62,13 @@ public class ItemManager
         int end = count;
         if(!itemDictionary.ContainsKey(wantItem))
         {
-            itemDictionary.Add(wantItem, new Item[count]);
+            itemDictionary.Add(wantItem, new List<Item>());
         }
         else
         {
-            start += itemDictionary[wantItem].Length;
-            end += itemDictionary[wantItem].Length;
+            itemDictionary[wantItem].AddRange(new Item[count]);
+            start += itemDictionary[wantItem].Count;
+            end += itemDictionary[wantItem].Count;
         }
 
         switch(wantItem)
@@ -75,138 +76,138 @@ public class ItemManager
             // Melee Weapons
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Cut, 30, 1.7f, 0);
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Cut, 30, 1.7f, 0));
                 break;
             case Items.Dagger:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Cut, 40, 2f, 1);
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Cut, 40, 2f, 1));
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 15, 2f, 1);
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 15, 2f, 1));
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Cut, 30, 2.4f, 1);
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Cut, 30, 2.4f, 1));
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 25, 2f, 1);
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 25, 2f, 1));
                 break;
             // Ranged Weapons
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
                 break;
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5);
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5));
                 break;
             // Bullets
             case Items.Bullet_Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(Revolver)", 0.008f, 7);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(Revolver)", 0.008f, 7));
                 break;
             case Items.Bullet_Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(Pistol)", 0.006f, 17);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(Pistol)", 0.006f, 17));
                 break;
             case Items.Bullet_AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(AssaultRifle)", 0.016f, 30);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(AssaultRifle)", 0.016f, 30));
                 break;
             case Items.Bullet_SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(SubMachineGun)", 0.006f, 30);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(SubMachineGun)", 0.006f, 30));
                 break;
             case Items.Bullet_ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(ShotGun)", 0.032f, 4);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(ShotGun)", 0.032f, 4));
                 break;
             case Items.Bullet_SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Item(wantItem, "Bullet(SniperRifle)", 0.012f, 5);
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(SniperRifle)", 0.012f, 5));
                 break;
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofVest(wantItem, "LowLevelBulletproofVest", 3f, 15);
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "LowLevelBulletproofVest", 3f, 15));
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofVest(wantItem, "MiddleLevelBulletproofVest", 7f, 25);
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "MiddleLevelBulletproofVest", 7f, 25));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofVest(wantItem, "HighLevelBulletproofVest", 10f, 40);
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "HighLevelBulletproofVest", 10f, 40));
                 break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHelmet(wantItem, "LowLevelBulletproofHelmet", 0.7f, 60);
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "LowLevelBulletproofHelmet", 0.7f, 60));
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHelmet(wantItem, "MiddleLevelBulletproofHelmet", 1.2f, 100);
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "MiddleLevelBulletproofHelmet", 1.2f, 100));
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new BulletproofHelmet(wantItem, "HighLevelBulletproofHelmet", 1.6f, 140);
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "HighLevelBulletproofHelmet", 1.6f, 140));
                 break;
             // Consumables
             case Items.BandageRoll:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "BandageRoll", 0.027f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "BandageRoll", 0.027f));
                 break;
             case Items.HemostaticBandageRoll:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "HemostaticBandageRoll", 0.127f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "HemostaticBandageRoll", 0.127f));
                 break;
             // Crafting Materials
             case Items.Component:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Component", 1f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Component", 1f));
                 break;
             case Items.AdvancedComponent:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "AdvancedComponent", 3f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "AdvancedComponent", 3f));
                 break;
             case Items.Chemicals:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Chemicals", 0.1f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Chemicals", 0.1f));
                 break;
             case Items.Gunpowder:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Gunpowder", 0.066f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Gunpowder", 0.066f));
                 break;
             case Items.Oddment:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Consumable(wantItem, "Oddment", 0.5f);
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Oddment", 0.5f));
                 break;
             // Traps
             case Items.BearTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Buriable(wantItem, "BearTrap", 3f);
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, "BearTrap", 3f));
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem][i] = new Buriable(wantItem, "LandMine", 0.5f);
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, "LandMine", 0.5f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");
