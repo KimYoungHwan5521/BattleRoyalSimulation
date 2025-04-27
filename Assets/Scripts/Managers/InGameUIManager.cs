@@ -165,6 +165,7 @@ public class InGameUIManager : MonoBehaviour
     public void SetTimeScale(int wantScale)
     {
         Time.timeScale = wantScale;
+        GameManager.Instance.SoundManager.PitchShift(wantScale);
         currentTimeScaleText.text = $"x {wantScale}";
     }
 

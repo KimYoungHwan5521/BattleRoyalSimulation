@@ -275,14 +275,16 @@ public class Survivor : CustomObject
     }
     bool currentWeaponisBestWeapon;
 
-    [SerializeField]List<ItemManager.Items> craftables = new();
-    ItemManager.Items currentCrafting;
+    [SerializeField]List<ItemManager.Craftable> craftables = new();
+    ItemManager.Craftable currentCrafting;
     #endregion
     #region Trap
     public TrapPlace trapPlace;
     [SerializeField] float trappingTime = 3f;
     [SerializeField] float curTrappingTime;
     Buriable curBurying;
+
+    public List<GameObject> burieds = new();
     #endregion
     #region Enemies
     [Header("Enemies")]
@@ -1434,24 +1436,19 @@ public class Survivor : CustomObject
         return false;
     }
 
-    void Craft(ItemManager.Items wantItem)
+    void Craft(ItemManager.Craftable wantItem)
     {
         currentCrafting = wantItem;
         // 애니메이션 실행
         agent.SetDestination(transform.position);
-        int anim = wantItem switch
-        {
-            ItemManager.Items.HemostaticBandageRoll => 1,
-            _ => 0,
-        };
-        animator.SetInteger("CraftingAnimNumber", anim);
+        animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
     }
 
     void CheckCraftables()
     {
         craftables.Clear();
-        Item item = inventory.Find(x => x.itemType == ItemManager.Items.Component);
+        Item item = inventory.Find(x => x.itemType == ItemManager.Items.Components);
         int componentsCount = item != null ? item.amount : 0;
         item = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent);
         int advencedComponentsCount = item != null ? item.amount : 0;
@@ -1459,46 +1456,26 @@ public class Survivor : CustomObject
         int chemicalsCount = item != null ? item.amount : 0;
         item = inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder);
         int gunpowderCount = item != null ? item.amount : 0;
-        item = inventory.Find(x => x.itemType == ItemManager.Items.Oddment);
-        int oddmentsCount = item != null ? item.amount : 0;
+        item = inventory.Find(x => x.itemType == ItemManager.Items.Salvages);
+        int salvagesCount = item != null ? item.amount : 0;
 
         int knowledge = linkedSurvivorData._knowledge;
-        if(knowledge >= 25)
+        foreach(var craftable in ItemManager.craftables)
         {
-            if(componentsCount >= 2 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.Pistol);
-            if (knowledge >= 30)
+            if(knowledge >= craftable.requiredKnowledge && advencedComponentsCount >= craftable.needAdvancedComponentCount && componentsCount >= craftable.needComponentsCount
+                && chemicalsCount >= craftable.needChemicalsCount && salvagesCount >= craftable.needSalvagesCount && gunpowderCount >= craftable.needGunpowderCount)
             {
-                item = inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll);
-                if (item != null && chemicalsCount >= 2) craftables.Add(ItemManager.Items.HemostaticBandageRoll);
-            
-                if(knowledge >= 40)
+                bool haveETCNeeds = true;
+                foreach(var etcNeed in craftable.etcNeedItems)
                 {
-                    //if(componentsCount >= 1 && gunpowderCount >= 1)
-                    //{
-                    //    craftables.Add(ItemManager.Items.Bullet_AssaultRifle);
-                    //    craftables.Add(ItemManager.Items.Bullet_Pistol);
-                    //    craftables.Add(ItemManager.Items.Bullet_Revolver);
-                    //    craftables.Add(ItemManager.Items.Bullet_ShotGun);
-                    //    craftables.Add(ItemManager.Items.Bullet_SniperRifle);
-                    //    craftables.Add(ItemManager.Items.Bullet_SubMachineGun);
-                    //}
-                    if(knowledge >= 45)
+                    Item _item = inventory.Find(x => x.itemType == etcNeed.Key);
+                    if(_item == null || _item.amount < etcNeed.Value)
                     {
-                        if (componentsCount >= 2 && oddmentsCount >= 1) craftables.Add(ItemManager.Items.BearTrap);
-                        if(knowledge >= 65)
-                        {
-                            if(componentsCount >= 4 && advencedComponentsCount >= 1) craftables.Add(ItemManager.Items.SubMachineGun);
-                            if(knowledge >= 80)
-                            {
-                                if (advencedComponentsCount >= 1 && oddmentsCount >= 1 && gunpowderCount >= 2) craftables.Add(ItemManager.Items.LandMine);
-                                if(knowledge >= 95)
-                                {
-                                    if(componentsCount >= 4 && advencedComponentsCount >= 2) craftables.Add(ItemManager.Items.AssaultRifle);
-                                }
-                            }
-                        }
+                        haveETCNeeds = false;
+                        break;
                     }
                 }
+                if(haveETCNeeds) craftables.Add(craftable);
             }
         }
     }
@@ -1532,6 +1509,7 @@ public class Survivor : CustomObject
                     Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
                     settedTrap.setter = this;
                     trapPlace.SetTrap(settedTrap);
+                    burieds.Add(settedTrap.gameObject);
                 }
                 else Debug.LogWarning($"Failed to spawn trap : {curBurying.itemName}");
                 trapPlace = null;
@@ -3011,43 +2989,22 @@ public class Survivor : CustomObject
 
     void AE_Crafting()
     {
-        int amount = 1;
-        switch (currentCrafting)
+        if(currentCrafting == null)
         {
-            case ItemManager.Items.HemostaticBandageRoll:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll), 1);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), 2);
-                break;
-            case ItemManager.Items.Pistol:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 2);
-                break;
-            case ItemManager.Items.SubMachineGun:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 4);
-                break;
-            case ItemManager.Items.AssaultRifle:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 2);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 4);
-                break;
-            case ItemManager.Items.BearTrap:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Component), 2);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Oddment), 1);
-                amount = 3;
-                break;
-            case ItemManager.Items.LandMine:
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), 1);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Oddment), 1);
-                ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), 2);
-                amount = 3;
-                break;
-            default:
-                Debug.LogError($"Failed to craft item : {currentCrafting}");
-                return;
+            Debug.LogWarning("There is no currentCrafting");
+            return;
         }
-        ItemManager.AddItems(currentCrafting, amount);
-        for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting][^i]);
-        currentCrafting = 0;
+        int amount = currentCrafting.outputAmount;
+        if (currentCrafting.needAdvancedComponentCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), currentCrafting.needAdvancedComponentCount);
+        if (currentCrafting.needComponentsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Components), currentCrafting.needComponentsCount);
+        if (currentCrafting.needChemicalsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), currentCrafting.needChemicalsCount);
+        if (currentCrafting.needSalvagesCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Salvages), currentCrafting.needSalvagesCount);
+        if (currentCrafting.needGunpowderCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), currentCrafting.needGunpowderCount);
+        foreach(var etcNeeds in currentCrafting.etcNeedItems) ConsumptionItem(inventory.Find(x => x.itemType == etcNeeds.Key), etcNeeds.Value);
+
+        ItemManager.AddItems(currentCrafting.itemType, amount);
+        for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting.itemType][^i]);
+        currentCrafting = null;
         craftables.Clear();
         CheckCraftables();
     }

@@ -134,8 +134,8 @@ public class BattleRoyaleManager
     void ItemSetting()
     {
         ItemManager.itemDictionary.Clear();
-        AddItems(ItemManager.Items.Component, 100);
-        AddItems(ItemManager.Items.Oddment, 100);
+        AddItems(ItemManager.Items.Components, 100);
+        AddItems(ItemManager.Items.Salvages, 100);
         //AddItems(ItemManager.Items.Knife, 1);
         //AddItems(ItemManager.Items.Dagger, 1);
         //AddItems(ItemManager.Items.Bat, 1);

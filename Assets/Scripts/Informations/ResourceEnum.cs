@@ -150,6 +150,7 @@ namespace ResourceEnum
         piep,
         taping,
         hammering,
+        hammering_once,
         bubble,
         bear_trap,
         explosion,

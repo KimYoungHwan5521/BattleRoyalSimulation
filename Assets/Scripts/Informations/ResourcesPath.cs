@@ -144,6 +144,7 @@ public class ResourcesPath
         "Sounds/SFXs/piep",
         "Sounds/SFXs/taping",
         "Sounds/SFXs/hammering",
+        "Sounds/SFXs/hammering_once",
         "Sounds/SFXs/bubble",
         "Sounds/SFXs/bear_trap",
         "Sounds/SFXs/explosion",

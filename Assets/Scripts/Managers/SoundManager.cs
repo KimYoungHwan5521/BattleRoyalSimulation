@@ -155,4 +155,10 @@ public class SoundManager
                 break;
         }
     }
+
+    public void PitchShift(float wantPitch)
+    {
+        foreach (var audioSource in GameManager.Instance.SoundManager.bgmArray) audioSource.pitch = wantPitch;
+        foreach (var audioSource in GameManager.Instance.SoundManager.sfxQueue) audioSource.pitch = wantPitch;
+    }
 }

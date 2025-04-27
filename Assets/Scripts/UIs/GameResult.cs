@@ -249,6 +249,7 @@ public class GameResult : MonoBehaviour
         foreach(Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
+            foreach (GameObject buried in survivor.burieds) PoolManager.Despawn(buried);
         }
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);

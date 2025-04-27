@@ -39,20 +39,64 @@ public class ItemManager
         BandageRoll,
         HemostaticBandageRoll,
         // Crafting Materials
-        Component,
+        Components,
         AdvancedComponent,
         Chemicals,
         Gunpowder,
-        Oddment,
+        Salvages,
         // Traps
         BearTrap,
         LandMine,
+        NoiseTrap,
+        ChemicalTrap,
+        ShrapnelTrap,
+        ExplosiveTrap,
     }
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
 
+    public class Craftable
+    {
+        public Items itemType;
+        public int requiredKnowledge;
+        public int needAdvancedComponentCount;
+        public int needComponentsCount;
+        public int needChemicalsCount;
+        public int needSalvagesCount;
+        public int needGunpowderCount;
+        public int outputAmount;
+        public int craftingAnimNumber;
+        public Dictionary<Items, int> etcNeedItems = new();
+
+        public Craftable(Items itemType, int requiredKnowledge, int needAdvancedComponentCount, int needComponentsCount, int needChemicalsCount, int needSalvagesCount, int needGunpowderCount, int outputAmount, int craftingAnimNumber, params KeyValuePair<Items, int>[] etcNeedItems)
+        {
+            this.itemType = itemType;
+            this.requiredKnowledge = requiredKnowledge;
+            this.needAdvancedComponentCount = needAdvancedComponentCount;
+            this.needComponentsCount = needComponentsCount;
+            this.needChemicalsCount = needChemicalsCount;
+            this.needSalvagesCount = needSalvagesCount;
+            this.needGunpowderCount = needGunpowderCount;
+            this.outputAmount = outputAmount;
+            this.craftingAnimNumber = craftingAnimNumber;
+            foreach(var needItem in  etcNeedItems) this.etcNeedItems.Add(needItem.Key, needItem.Value);
+        }
+    }
+
+    public static List<Craftable> craftables = new();
+
     public IEnumerator Initiate()
     {
+        craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
+        craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 3, 0, 3, 0, 3, 0));
+        craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0));
+        craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0));
+        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 0, 4, 2, 0, 1, 1));
+        craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));
+        craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0));
         yield return null;
     }
 
@@ -180,13 +224,13 @@ public class ItemManager
                     itemDictionary[wantItem].Add(new Consumable(wantItem, "HemostaticBandageRoll", 0.127f));
                 break;
             // Crafting Materials
-            case Items.Component:
+            case Items.Components:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Component", 1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Components", 1f));
                 break;
             case Items.AdvancedComponent:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "AdvancedComponent", 3f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "AdvancedComponent", 0.1f));
                 break;
             case Items.Chemicals:
                 for (int i = start; i < end; i++)
@@ -196,9 +240,9 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Consumable(wantItem, "Gunpowder", 0.066f));
                 break;
-            case Items.Oddment:
+            case Items.Salvages:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Oddment", 0.5f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Salvages", 0.5f));
                 break;
             // Traps
             case Items.BearTrap:
@@ -207,7 +251,23 @@ public class ItemManager
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, "LandMine", 0.5f));
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, "LandMine", 3f));
+                break;
+            case Items.NoiseTrap:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "NoiseTrap", 2f));
+                break;
+            case Items.ChemicalTrap:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ChemicalTrap", 3f));
+                break;
+            case Items.ShrapnelTrap:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ShrapnelTrap", 7f));
+                break;
+            case Items.ExplosiveTrap:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ExplosiveTrap", 5f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

@@ -35,7 +35,6 @@ public class CustomObject : MonoBehaviour
         string wantSound = wantSoundAndVolume.Split(",")[0];
         if (Enum.TryParse(wantSound, out ResourceEnum.SFX result))
         {
-            SoundManager.Play(result, transform.position);
             if (float.TryParse(wantSoundAndVolume.Split(",")[1], out float wantVolume))
             {
                 foreach (Survivor survivor in GameManager.Instance.BattleRoyaleManager.AliveSurvivors)
