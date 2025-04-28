@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -89,7 +90,9 @@ public class Survivor : CustomObject
     [SerializeField] int sightEdgeCount = 24;
     [SerializeField] float hearingAbility = 10f;
     [SerializeField] string heardSound;
-    class RememberSound
+
+    [Serializable]
+    public class RememberSound
     {
         public string soundName;
         public float soundTime;
@@ -100,7 +103,7 @@ public class Survivor : CustomObject
             soundTime = 0;
         }
     }
-    List<RememberSound> rememberSounds = new();
+    [SerializeField]List<RememberSound> rememberSounds = new();
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
     float shooting = 1;
@@ -235,6 +238,9 @@ public class Survivor : CustomObject
     public float naturalHemostasis = 1f;
     float bleedingSprite;
     public List<GameObject> bloods = new();
+
+    bool poisoned;
+    Survivor curPoisonOriginator;
     #endregion
     #region Item
     [Header("Item")]
@@ -283,6 +289,8 @@ public class Survivor : CustomObject
     [SerializeField] float trappingTime = 3f;
     [SerializeField] float curTrappingTime;
     Buriable curBurying;
+    Item curSettingBoobyTrap;
+    Box curSettingBoobyTrapBox;
 
     public List<GameObject> burieds = new();
     #endregion
@@ -573,7 +581,8 @@ public class Survivor : CustomObject
     void Regenerate()
     {
         curBlood = Mathf.Min(curBlood + bloodRegeneration * Time.deltaTime, maxBlood);
-        curHP = Mathf.Min(curHP + 0.17f * hpRegeneration * Time.deltaTime, maxHP);
+        if(poisoned) ApplyPoisonDamage(curPoisonOriginator);
+        else curHP = Mathf.Min(curHP + 0.17f * hpRegeneration * Time.deltaTime, maxHP);
     }
 
     void AI()
@@ -639,13 +648,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                if (Crafting()) return;
-                animator.SetBool("Crafting", false);
-                if (trapPlace != null && trapPlace.BuriedTrap == null)
-                {
-                    if (BuryTrap()) return;
-                }
-                Farming();
+                TryFarming();
             }
         }
         else
@@ -706,9 +709,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
                         {
-                            if (Crafting()) return;
-                            animator.SetBool("Crafting", false);
-                            Farming();
+                            TryFarming();
                         }
                     }
                     else
@@ -719,9 +720,7 @@ public class Survivor : CustomObject
                         }
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
                         {
-                            if (Crafting()) return;
-                            animator.SetBool("Crafting", false);
-                            Farming();
+                            TryFarming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
                         {
@@ -739,9 +738,7 @@ public class Survivor : CustomObject
                         }
                         else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
                         {
-                            if (Crafting()) return;
-                            animator.SetBool("Crafting", false);
-                            Farming();
+                            TryFarming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
                         {
@@ -756,9 +753,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
                         {
-                            if (Crafting()) return;
-                            animator.SetBool("Crafting", false);
-                            Farming();
+                            TryFarming();
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
                         {
@@ -771,6 +766,18 @@ public class Survivor : CustomObject
     }
 
     #region Farming
+    void TryFarming()
+    {
+        if (SetBoobyTrap()) return;
+        if (Crafting()) return;
+        animator.SetBool("Crafting", false);
+        if (trapPlace != null && trapPlace.BuriedTrap == null)
+        {
+            if (BuryTrap()) return;
+        }
+        Farming();
+    }
+
     void Farming()
     {
         lookRotation = Vector2.zero;
@@ -825,6 +832,10 @@ public class Survivor : CustomObject
             {
                 farmingBoxes.Add(box, false);
             }
+        }
+        else if(currentFarmingArea == null)
+        {
+            CurrentFarmingArea = FindNearest(farmingAreas);
         }
         else farmingAreas[currentFarmingArea] = true;
         targetFarmingSection = nearestFarmingSection;
@@ -904,7 +915,7 @@ public class Survivor : CustomObject
 
     public void FindNewNearestFarmingTarget()
     {
-        currentFarmingArea = FindNearest(farmingAreas);
+        CurrentFarmingArea = FindNearest(farmingAreas);
         targetFarmingSection = FindNearest(farmingSections);
         targetFarmingBox = FindNearest(farmingBoxes);
         targetFarmingCorpse = FindNearest(farmingCorpses);
@@ -1020,6 +1031,18 @@ public class Survivor : CustomObject
             farmingSFXPlayed = true;
             agent.SetDestination(transform.position);
 
+            // 상자에 설치된 부비트랩이 있으면 폭발
+            BoobyTrap setBoobyTrap = targetFarmingBox.items.Find(x => x is BoobyTrap) as BoobyTrap;
+            if (setBoobyTrap != null && setBoobyTrap.IsTriggered)
+            {
+                setBoobyTrap.Trigger(this);
+                targetFarmingBox.items.Remove(setBoobyTrap);
+                InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
+                farmingBoxes[targetFarmingBox] = true;
+                targetFarmingBox = null;
+                return;
+            }
+
             curFarmingTime += Time.deltaTime * farmingSpeed;
             if (curFarmingTime > farmingTime)
             {
@@ -1029,7 +1052,16 @@ public class Survivor : CustomObject
                 targetFarmingBox.items.Clear();
                 InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
                 farmingBoxes[targetFarmingBox] = true;
+
+                // 파밍 후에 부비트랩이 있으면 상자에 설치
+                var boobyTrapToSet = inventory.Find(x => x is BoobyTrap);
+                if(boobyTrapToSet != null)
+                {
+                    curSettingBoobyTrap = boobyTrapToSet;
+                    curSettingBoobyTrapBox = targetFarmingBox;
+                }
                 targetFarmingBox = null;
+
                 CheckCraftables();
                 lookRotation = Vector2.zero;
                 curFarmingTime = 0;
@@ -1519,10 +1551,32 @@ public class Survivor : CustomObject
         }
     }
 
+    bool SetBoobyTrap()
+    {
+        if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null) return false;
+        curTrappingTime += Time.deltaTime;
+        currentStatus = Status.Trapping;
+        agent.SetDestination(transform.position);
+        lookRotation = curSettingBoobyTrapBox.transform.position - transform.position;
+        
+        if (curTrappingTime > trappingTime)
+        {
+            curTrappingTime = 0;
+            (curSettingBoobyTrap as BoobyTrap).SetSetter(this, targetFarmingBox);
+            ItemManager.AddItems(curSettingBoobyTrap.itemType, 1);
+            curSettingBoobyTrapBox.items.Add(ItemManager.itemDictionary[curSettingBoobyTrap.itemType][^1]);
+            ConsumptionItem(curSettingBoobyTrap, 1);
+            curSettingBoobyTrap = null;
+            curSettingBoobyTrapBox = null;
+            return false;
+        }
+        return true;
+    }
     #region Combat
     void InvestigateThreateningSound()
     {
         currentStatus = Status.InvestigateThreateningSound;
+        animator.SetBool("Crafting", false);
         if (Vector2.Distance(transform.position, threateningSoundPosition) < 1f)
         {
             LookAround();
@@ -1787,6 +1841,7 @@ public class Survivor : CustomObject
 
     void HeardIndistinguishableSound(string noiseMaker, Vector2 soundOrigin)
     {
+        Debug.Log(noiseMaker);
         heardSound = noiseMaker;
         RememberSound sound = rememberSounds.Find(x => x.soundName == noiseMaker);
         if (sound != null)
@@ -1817,46 +1872,53 @@ public class Survivor : CustomObject
     #endregion
 
     #region Take Damage
+    void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, InjurySite specificDamagePart, DamageType damageType)
+    {
+        Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
+        bool damagedPartIsArtifical = false;
+        bool noPain = false;
+        if (alreadyHaveInjury != null)
+        {
+            if (alreadyHaveInjury.type == InjuryType.ArtificalPartsTransplanted)
+            {
+                damagedPartIsArtifical = true;
+                // 재밌는 switch 용법
+                noPain = alreadyHaveInjury.site switch
+                {
+                    InjurySite.Organ or InjurySite.RightEye or InjurySite.LeftEye or InjurySite.RightEar or InjurySite.LeftEar => false,
+                    _ => true,
+                };
+            }
+            if (!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
+        }
+        if (!(damagedPartIsArtifical && noPain)) curHP -= damage;
+        attacker.totalDamage += damage;
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            attacker.killCount++;
+            attacker.FindNewNearestFarmingTarget();
+            IsDead = true;
+            if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
+            {
+                GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
+                headshot.transform.SetParent(canvas.transform);
+            }
+            InGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
+        }
+
+        if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
+        else GetInjury(specificDamagePart, damageType, damage);
+
+    }
+
     void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, DamageType damageType)
     {
         if (isDead) return;
         if (damage > 0)
         {
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
-            Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
-            bool damagedPartIsArtifical = false;
-            bool noPain = false;
-            if (alreadyHaveInjury != null)
-            {
-                if(alreadyHaveInjury.type == InjuryType.ArtificalPartsTransplanted)
-                {
-                    damagedPartIsArtifical = true;
-                    // 재밌는 switch 용법
-                    noPain = alreadyHaveInjury.site switch
-                    {
-                        InjurySite.Organ or InjurySite.RightEye or InjurySite.LeftEye or InjurySite.RightEar or InjurySite.LeftEar => false,
-                        _ => true,
-                    };
-                }
-                if(!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
-            }
-            if(!(damagedPartIsArtifical && noPain))curHP -= damage;
-            attacker.totalDamage += damage;
-            if (curHP <= 0)
-            {
-                curHP = 0;
-                attacker.killCount++;
-                IsDead = true;
-                if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
-                {
-                    GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
-                    headshot.transform.SetParent(canvas.transform);
-                }
-                InGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
-            }
-
-            if(damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
-            else GetInjury(specificDamagePart, damageType, damage);
+            ApplyDamage(attacker, damage, damagePart, specificDamagePart, damageType);
         }
 
         if (inSightEnemies.Contains(attacker))
@@ -1873,7 +1935,61 @@ public class Survivor : CustomObject
             sightMeshRenderer.material = m_SightAlert;
             emotionAnimator.SetTrigger("Alert");
         }
+    }
 
+    void ApplyExplosionDamage(Survivor attacker, float damage, InjurySiteMajor injurySiteMajor)
+    {
+        switch(injurySiteMajor)
+        {
+            case InjurySiteMajor.Head:
+                int count = 1;
+                // head = 1
+                float randLEye = UnityEngine.Random.Range(0, 1f);
+                float randREye = UnityEngine.Random.Range(0, 1f);
+                float randLEar = UnityEngine.Random.Range(0, 1f);
+                float randREar = UnityEngine.Random.Range(0, 1f);
+                float randNose = UnityEngine.Random.Range(0, 1f);
+                if (randLEye < 0.3f) count++;
+                if (randREye < 0.3f) count++;
+                if (randLEar < 0.5f) count++;
+                if (randREar < 0.5f) count++;
+                if (randNose < 0.7f) count++;
+                float dividedDamage = damage / count;
+                ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Head, DamageType.Explosion);
+                if(randLEye < 0.3f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEye, DamageType.Explosion);
+                if(randREye < 0.3f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.RightEye, DamageType.Explosion);
+                if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
+                if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
+                if(randNose < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Nose, DamageType.Explosion);
+                break;
+            case InjurySiteMajor.Torso:
+                ApplyDamage(attacker, damage / 2, InjurySiteMajor.Torso, InjurySite.Chest, DamageType.Explosion);
+                ApplyDamage(attacker, damage / 2, InjurySiteMajor.Torso, InjurySite.Abdomen, DamageType.Explosion);
+                break;
+            case InjurySiteMajor.Arms:
+                ApplyDamage(attacker, damage, InjurySiteMajor.Arms, DamageType.Explosion);
+                break;
+            case InjurySiteMajor.Legs:
+                float rand = UnityEngine.Random.Range(0, 1f);
+                if(rand > 0.65f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightAncle, DamageType.Explosion);
+                else if(rand > 0.3f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftAncle, DamageType.Explosion);
+                else if(rand > 0.15f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftKnee, DamageType.Explosion);
+                else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightKnee, DamageType.Explosion);
+                break;
+        }
+    }
+
+    void ApplyPoisonDamage(Survivor poisonOriginator)
+    {
+        float damage = 5 * Time.deltaTime;
+        poisonOriginator.totalDamage += damage;
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            poisonOriginator.killCount++;
+            IsDead = true;
+            InGameUIManager.ShowKillLog(survivorName, poisonOriginator.survivorName);
+        }
     }
 
     public void TakeDamage(Survivor attacker, float damage)
@@ -1996,9 +2112,21 @@ public class Survivor : CustomObject
 
     public void TakeDamage(Trap trap, float damage)
     {
-        InjurySiteMajor injurySite = InjurySiteMajor.Head;
-        if (trap.IsBuriedType) injurySite = InjurySiteMajor.Legs;
-        ApplyDamage(trap.setter, damage, injurySite, trap.DamageType);
+        if (trap.DamageType == DamageType.Explosion) ApplyExplosionDamage(trap.setter, damage, InjurySiteMajor.Legs);
+        else ApplyDamage(trap.setter, damage, InjurySiteMajor.Legs, trap.DamageType);
+    }
+
+    public void TakeDamage(BoobyTrap boobyTrap, float damage)
+    {
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Head);
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Torso);
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.2f, InjurySiteMajor.Arms);
+    }
+
+    public void Poisoning(Survivor poisonOriginator)
+    {
+        curPoisonOriginator = poisonOriginator;
+        poisoned = true;
     }
     #endregion
 
@@ -2097,11 +2225,16 @@ public class Survivor : CustomObject
                     injuryType = InjuryType.Cutting;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injurySite = InjurySite.Skull;
                     injuryType = InjuryType.GunshotWound;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
+                    injuryDegree = damage / 100;
                 }
                 break;
             case InjurySite.RightEye:
@@ -2117,10 +2250,15 @@ public class Survivor : CustomObject
                     injuryType = InjuryType.Cutting;
                     AddInjury(injurySite, InjuryType.Loss, 1);
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injuryType = InjuryType.GunshotWound;
                     AddInjury(injurySite, InjuryType.Loss, 1);
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
+                    injuryDegree = Mathf.Clamp(damage / 20, 0, 1);
                 }
                 break;
             case InjurySite.RightEar:
@@ -2134,11 +2272,16 @@ public class Survivor : CustomObject
                     injuryType = InjuryType.Cutting;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injuryType = InjuryType.GunshotWound;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 1);
                     if(injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
+                    injuryDegree = damage / 20;
                 }
                 break;
             case InjurySite.Nose:
@@ -2151,9 +2294,14 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Cutting;
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
+                    injuryDegree = Mathf.Clamp(damage / 20, 0, 0.99f);
                 }
                 break;
             case InjurySite.Jaw:
@@ -2188,9 +2336,13 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Cutting;
                 }
-                else
+                else if (damageType == DamageType.GunShot)
                 {
                     injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
                 }
                 break;
             case InjurySite.Abdomen:
@@ -2223,7 +2375,7 @@ public class Survivor : CustomObject
                     }
                     else injuryType = InjuryType.Cutting;
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     if (injuryDegree > 0.3f)
                     {
@@ -2236,6 +2388,10 @@ public class Survivor : CustomObject
                         else injuryType = InjuryType.GunshotWound;
                     }
                     else injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
                 }
                 break;
             case InjurySite.RightArm:
@@ -2252,10 +2408,15 @@ public class Survivor : CustomObject
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
                 }
-                else
+                else if (damageType == DamageType.GunShot)
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Loss;
                 }
                 break;
             case InjurySite.RightHand:
@@ -2272,10 +2433,16 @@ public class Survivor : CustomObject
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
+                }
+                else if (damageType == DamageType.Explosion)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                    if (injuryDegree >= 1f) injuryType = InjuryType.Loss;
+                    else injuryType = InjuryType.Burn;
                 }
                 break;
             case InjurySite.RightThumb:
@@ -2299,9 +2466,13 @@ public class Survivor : CustomObject
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
                 }
-                else
+                else if(damageType == DamageType.GunShot)
                 {
                     injuryType = InjuryType.GunshotWound;
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
                 }
                 break;
             case InjurySite.RightLeg:
@@ -2328,6 +2499,11 @@ public class Survivor : CustomObject
                         injuryDegree = rand / 0.7f;
                         injuryType = InjuryType.Cutting;
                     }
+                }
+                else if(damageType == DamageType.Explosion)
+                {
+                    injuryDegree = 1;
+                    injuryType = InjuryType.Loss;
                 }
                 break;
             case InjurySite.RightBigToe:

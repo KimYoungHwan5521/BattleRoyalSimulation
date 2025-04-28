@@ -255,19 +255,19 @@ public class ItemManager
                 break;
             case Items.NoiseTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "NoiseTrap", 2f));
+                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, "NoiseTrap", 2f));
                 break;
             case Items.ChemicalTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ChemicalTrap", 3f));
+                    itemDictionary[wantItem].Add(new ChemicalTrap(wantItem, "ChemicalTrap", 3f));
                 break;
             case Items.ShrapnelTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ShrapnelTrap", 7f));
+                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, "ShrapnelTrap", 7f));
                 break;
             case Items.ExplosiveTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BoobyTrap(wantItem, "ExplosiveTrap", 5f));
+                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, "ExplosiveTrap", 5f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

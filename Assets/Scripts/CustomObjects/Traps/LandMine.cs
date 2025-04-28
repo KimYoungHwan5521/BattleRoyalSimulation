@@ -15,7 +15,7 @@ public class LandMine : Trap
             if(hit.rigidbody.TryGetComponent(out Survivor splashedSurvivor))
             {
                 if (splashedSurvivor == victim) continue;
-                float distance = Vector2.Distance(transform.position, hit.point);
+                float distance = Mathf.Max(Vector2.Distance(transform.position, hit.point), 1);
                 splashedSurvivor.TakeDamage(this, damage / (distance * distance));
             }
         }

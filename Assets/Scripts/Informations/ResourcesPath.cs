@@ -9,6 +9,9 @@ public class ResourcesPath
         "Prefabs/Traps/BearTrap",
         "Prefabs/Traps/LandMine",
 
+        "Prefabs/Effects/Explosion",
+        "Prefabs/Effects/GasLeak",
+
         // Map
         "Prefabs/Maps/2x2/Map_2x2_01",
         "Prefabs/Maps/2x2/Map_2x2_02",
@@ -91,6 +94,15 @@ public class ResourcesPath
         "Sprites/Icons/HemostaticBandageRoll",
         "Sprites/Icons/BearTrap",
         "Sprites/Icons/LandMine",
+        "Sprites/Icons/NoiseTrap",
+        "Sprites/Icons/ChemicalTrap",
+        "Sprites/Icons/ShrapnelTrap",
+        "Sprites/Icons/ExplosiveTrap",
+        "Sprites/Icons/AdvancedComponent",
+        "Sprites/Icons/Components",
+        "Sprites/Icons/Chemicals",
+        "Sprites/Icons/Salvages",
+        "Sprites/Icons/Gunpowder",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",
@@ -149,6 +161,7 @@ public class ResourcesPath
         "Sounds/SFXs/bear_trap",
         "Sounds/SFXs/explosion",
         "Sounds/SFXs/short_gas_leak",
+        "Sounds/SFXs/alarm_short",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

@@ -31,6 +31,7 @@ public enum InjuryType
     Rupture, // 파열
     Loss, // 손실
     Concussion, // 뇌진탕
+    Burn, // 화상
     RecoveringFromSurgery,
     ArtificalPartsTransplanted,
 }

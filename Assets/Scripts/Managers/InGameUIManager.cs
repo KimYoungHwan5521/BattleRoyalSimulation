@@ -270,9 +270,9 @@ public class InGameUIManager : MonoBehaviour
                         {
                             Survivor survivor = clickedObject as Survivor;
                             cameraTarget = selectedObject.transform;
-                            SetSelectedObjectInfoOnce();
                         }
                         else CurrentTab = 1;
+                        SetSelectedObjectInfoOnce();
                         selectedNotNull = true;
                         break;
                     }
@@ -315,11 +315,10 @@ public class InGameUIManager : MonoBehaviour
             shootingText.text = selectedSurvivor.LinkedSurvivorData._shooting.ToString();
             knowledgeText.text = selectedSurvivor.LinkedSurvivorData._knowledge.ToString();
 
-            UpdatableSelectedObjectInfo(selectedObject);
         }
         else if(selectedObject is Box)
         {
-            Box selectedBox = selectedObject as Box;
+            //Box selectedBox = selectedObject as Box;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
             selectedObjectImage.color = Color.white;
             selectedObjectName.text = "Box";
@@ -329,6 +328,7 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentHelmet.SetActive(false);
             selectedObjectsCurrentVest.SetActive(false);
         }
+        UpdatableSelectedObjectInfo(selectedObject);
     }
 
     void UpdatableSelectedObjectInfo(CustomObject selectedObject)
@@ -495,16 +495,6 @@ public class InGameUIManager : MonoBehaviour
 
                 bleedingAnim.SetBool("Bleeding", selectedSurvivor.BleedingAmount > 0);
                 
-            }
-            else if(selectedObject is Box)
-            {
-                autoFocus.SetActive(false);
-                selectedSurvivorsHealthBar.SetActive(false);
-                selectedSurvivorBleedingBar.SetActive(false);
-            }
-            else
-            {
-                selectedObjectInfo.SetActive(false);
             }
         }
     }

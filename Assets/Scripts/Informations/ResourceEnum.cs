@@ -9,6 +9,10 @@ namespace ResourceEnum
         BearTrap,
         LandMine,
 
+        // Effects
+        Explosion,
+        GasLeak,
+
         // Map
         Map_2x2_01,
         Map_2x2_02,
@@ -98,6 +102,16 @@ namespace ResourceEnum
         // Traps
         BearTrap,
         LandMine,
+        NoiseTrap,
+        ChemicalTrap,
+        ShrapnelTrap,
+        ExplosiveTrap,
+        // Crafting Materials
+        AdvancedComponent,
+        Components,
+        Chemicals,
+        Salvages,
+        Gunpowder,
 
         // Leagues
         BronzeLeague,
@@ -155,5 +169,6 @@ namespace ResourceEnum
         bear_trap,
         explosion,
         short_gas_leak,
+        alarm_short,
     }
 }
