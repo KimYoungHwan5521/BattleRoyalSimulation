@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Trap : CustomObject
@@ -16,13 +14,21 @@ public class Trap : CustomObject
     public DamageType DamageType => damageType;
     public bool IsBuriedType => isBuriedType;
 
+    bool isEnchanted;
+    public bool IsEnchanted => isEnchanted;
+
+    public void Enchant()
+    {
+        isEnchanted = true;
+    }
+
     override protected void Start()
     {
         base.Start();
         animator = GetComponent<Animator>();
     }
 
-    protected virtual void Trigger()
+    protected virtual void Trigger(bool rightLeg)
     {
         if(animator != null) animator.SetTrigger("Triggered");
         ownerPlace.SetTrap(null);
@@ -36,7 +42,11 @@ public class Trap : CustomObject
             if (victim != setter)
             {
                 this.victim = victim;
-                Trigger();
+                Vector2 foward = collision.transform.up;
+                Vector2 toContact = (Vector2)transform.position - (Vector2)collision.transform.position;
+                // 외적을 통해 왼발로 밟았는지 오른발로 밟았는지 판별
+                float cross = foward.x * toContact.y - foward.y * toContact.x;
+                Trigger(cross < 0);
             }
         }
     }

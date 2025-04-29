@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BearTrap : Trap
 {
-    protected override void Trigger()
+    protected override void Trigger(bool rightLeg)
     {
-        base.Trigger();
-        victim.TakeDamage(this);
+        base.Trigger(rightLeg);
+        victim.TakeDamage(this, rightLeg ? InjurySite.RightAncle : InjurySite.LeftAncle);
+        if (IsEnchanted) victim.Poisoning(setter);
     }
 }

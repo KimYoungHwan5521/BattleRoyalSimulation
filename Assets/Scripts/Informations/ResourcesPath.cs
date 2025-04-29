@@ -92,6 +92,9 @@ public class ResourcesPath
         "Sprites/Icons/HighLevelBulletproofVest",
         "Sprites/Icons/BandageRoll",
         "Sprites/Icons/HemostaticBandageRoll",
+        "Sprites/Icons/Poison",
+        "Sprites/Icons/Antidote",
+        "Sprites/Icons/Potion",
         "Sprites/Icons/BearTrap",
         "Sprites/Icons/LandMine",
         "Sprites/Icons/NoiseTrap",
@@ -162,6 +165,8 @@ public class ResourcesPath
         "Sounds/SFXs/explosion",
         "Sounds/SFXs/short_gas_leak",
         "Sounds/SFXs/alarm_short",
+        "Sounds/SFXs/water",
+        "Sounds/SFXs/drink",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

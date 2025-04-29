@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LandMine : Trap
 {
     [SerializeField] float explosionRange = 2;
-    protected override void Trigger()
+    protected override void Trigger(bool rightLeg)
     {
-        base.Trigger();
-        victim.TakeDamage(this);
+        base.Trigger(rightLeg);
+        victim.TakeDamage(this, rightLeg ? InjurySite.RightAncle : InjurySite.LeftAncle);
         var hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.up);
         foreach (var hit in hits)
         {
@@ -16,7 +14,7 @@ public class LandMine : Trap
             {
                 if (splashedSurvivor == victim) continue;
                 float distance = Mathf.Max(Vector2.Distance(transform.position, hit.point), 1);
-                splashedSurvivor.TakeDamage(this, damage / (distance * distance));
+                splashedSurvivor.TakeDamage(this, damage / (distance * distance), rightLeg ? 1 : 2);
             }
         }
     }

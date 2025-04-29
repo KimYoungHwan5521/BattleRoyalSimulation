@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -283,6 +281,8 @@ public class Survivor : CustomObject
 
     [SerializeField]List<ItemManager.Craftable> craftables = new();
     ItemManager.Craftable currentCrafting;
+    Item curEnchanting;
+    Item curDrinking;
     #endregion
     #region Trap
     public TrapPlace trapPlace;
@@ -612,30 +612,11 @@ public class Survivor : CustomObject
 
             if(!(rightHandDisabled && leftHandDisabled))
             {
-                if(BleedingAmount >= 10)
+                if(Maintain())
                 {
-                    int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll || x.itemType == ItemManager.Items.HemostaticBandageRoll);
-                    if(bandageIndex != -1)
-                    {
-                        currentStatus = Status.Maintain;
-                        StopBleeding();
-                        return;
-                    }
+                    currentStatus = Status.Maintain;
+                    return;
                 }
-                animator.SetBool("StopBleeding", false);
-
-                if (CurrentWeaponAsRangedWeapon != null)
-                {
-                    if(projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
-                    if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
-                    {
-                        currentStatus = Status.Maintain;
-                        sightMeshRenderer.material = m_SightNormal;
-                        Reload();
-                        return;
-                    }
-                }
-                animator.SetBool("Reload", false);
             }
 
             if(threateningSoundPosition != Vector2.zero)
@@ -765,11 +746,77 @@ public class Survivor : CustomObject
         }
     }
 
+    bool Maintain()
+    {
+        if (BleedingAmount >= 30 || (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2)
+        {
+            int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll || x.itemType == ItemManager.Items.HemostaticBandageRoll);
+            if (bandageIndex != -1)
+            {
+                StopBleeding();
+                return true;
+            }
+        }
+        animator.SetBool("StopBleeding", false);
+
+        if (poisoned)
+        {
+            if (curDrinking == null)
+            {
+                Item antidote = inventory.Find(x => x.itemType != ItemManager.Items.Antidote);
+                if (antidote != null)
+                {
+                    curDrinking = antidote;
+                    return true;
+                }
+            }
+            else
+            {
+                agent.destination = transform.position;
+                animator.SetBool("Drinking", true);
+                return true;
+            }
+        }
+        else if(maxHP - curHP > 50)
+        {
+            if (curDrinking == null)
+            {
+                Item potion = inventory.Find(x => x.itemType != ItemManager.Items.Potion);
+                if (potion != null)
+                {
+                    curDrinking = potion;
+                    return true;
+                }
+            }
+            else
+            {
+                agent.destination = transform.position;
+                animator.SetBool("Drinking", true);
+                return true;
+            }
+        }
+        animator.SetBool("Drinking", false);
+
+        if (CurrentWeaponAsRangedWeapon != null)
+        {
+            if (projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
+            if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
+            {
+                sightMeshRenderer.material = m_SightNormal;
+                Reload();
+                return true;
+            }
+        }
+        animator.SetBool("Reload", false);
+        return false;
+    }
+
     #region Farming
     void TryFarming()
     {
         if (SetBoobyTrap()) return;
         if (Crafting()) return;
+        if (Enchanting()) return;
         animator.SetBool("Crafting", false);
         if (trapPlace != null && trapPlace.BuriedTrap == null)
         {
@@ -1462,8 +1509,61 @@ public class Survivor : CustomObject
     {
         if(craftables.Count > 0)
         {
-            Craft(craftables[^1]);
-            return true;
+            // 중독 중이면 우선적으로 해독제부터
+            if(poisoned)
+            {
+                ItemManager.Craftable antidote = craftables.Find(x => x.itemType == ItemManager.Items.Antidote);
+                if (antidote != null)
+                {
+                    Craft(antidote);
+                    return true;
+                }
+            }
+            for(int i=1; i <=craftables.Count; i++)
+            {
+                switch(craftables[^i].itemType)
+                {
+                    case ItemManager.Items.Poison:
+                        continue;
+                    case ItemManager.Items.WalkingAid:
+                        int howManyNeed = HowManyWalkingAidNeed();
+                        Item walkingAid = inventory.Find(x => x.itemType == ItemManager.Items.WalkingAid);
+                        int currentHave = walkingAid != null ? walkingAid.amount : 0;
+                        if (currentHave < howManyNeed)
+                        {
+                            Craft(craftables[^i]);
+                            return true;
+                        }
+                        else continue;
+                    default: 
+                        Craft(craftables[^i]);
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    bool Enchanting()
+    {
+        Item poison = inventory.Find(x => x.itemType == ItemManager.Items.Poison);
+        if(poison != null)
+        {
+            if(currentWeapon is MeleeWeapon)
+            {
+                MeleeWeapon weapon = (MeleeWeapon)currentWeapon;
+                if(!weapon.IsEnchanted)
+                {
+                    Enchant(weapon);
+                    return true;
+                }
+            }
+            Item notEnchantedBearTrap = inventory.Find(x => x.itemType == ItemManager.Items.BearTrap && !((Buriable)x).IsEnchanted);
+            if(notEnchantedBearTrap != null)
+            {
+                Enchant(notEnchantedBearTrap);
+                return true;
+            }
         }
         return false;
     }
@@ -1474,6 +1574,14 @@ public class Survivor : CustomObject
         // 애니메이션 실행
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
+        animator.SetBool("Crafting", true);
+    }
+    
+    void Enchant(Item wantItem)
+    {
+        curEnchanting = wantItem;
+        agent.SetDestination(transform.position);
+        animator.SetInteger("CraftingAnimNumber", 2);
         animator.SetBool("Crafting", true);
     }
 
@@ -1539,6 +1647,7 @@ public class Survivor : CustomObject
                 if (Enum.TryParse(curBurying.itemName, out ResourceEnum.Prefab trap))
                 {
                     Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
+                    if (curBurying.IsEnchanted) settedTrap.Enchant();
                     settedTrap.setter = this;
                     trapPlace.SetTrap(settedTrap);
                     burieds.Add(settedTrap.gameObject);
@@ -1649,6 +1758,7 @@ public class Survivor : CustomObject
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Crafting", false);
+        animator.SetBool("Drinking", false);
         animator.SetBool("Attack", true);
         if(IsValid(currentWeapon))
         {
@@ -1668,6 +1778,7 @@ public class Survivor : CustomObject
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Crafting", false);
+        animator.SetBool("Drinking", false);
         animator.SetBool("Aim", true);
 
         curAimDelay += Time.deltaTime;
@@ -1815,7 +1926,7 @@ public class Survivor : CustomObject
             // 어떤 소리인지 명확한 인지
             HeardDistinguishableSound(soundOrigin);
         }
-        else if( heardVolume > 0.1f)
+        else if( heardVolume > 0.5f)
         {
             // 불분명한 인지
             HeardIndistinguishableSound((noiseMaker as Survivor).survivorName, soundOrigin);
@@ -1909,7 +2020,7 @@ public class Survivor : CustomObject
 
         if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
         else GetInjury(specificDamagePart, damageType, damage);
-
+        if (attacker.currentWeapon is MeleeWeapon weapon && weapon.IsEnchanted) Poisoning(attacker);
     }
 
     void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, DamageType damageType)
@@ -1937,7 +2048,8 @@ public class Survivor : CustomObject
         }
     }
 
-    void ApplyExplosionDamage(Survivor attacker, float damage, InjurySiteMajor injurySiteMajor)
+    //                                                                                side - 0: don't know / 1: right / 2: left
+    void ApplyExplosionDamage(Survivor attacker, float damage, InjurySiteMajor injurySiteMajor, int side = 0)
     {
         switch(injurySiteMajor)
         {
@@ -1971,10 +2083,18 @@ public class Survivor : CustomObject
                 break;
             case InjurySiteMajor.Legs:
                 float rand = UnityEngine.Random.Range(0, 1f);
-                if(rand > 0.65f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightAncle, DamageType.Explosion);
-                else if(rand > 0.3f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftAncle, DamageType.Explosion);
-                else if(rand > 0.15f)ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftKnee, DamageType.Explosion);
-                else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightKnee, DamageType.Explosion);
+                if(rand > 0.3f)
+                {
+                    if(side == 1) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightAncle, DamageType.Explosion);
+                    else if(side == 2) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftAncle, DamageType.Explosion);
+                    else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, rand > 0.65f ? InjurySite.RightAncle : InjurySite.LeftAncle, DamageType.Explosion);
+                }
+                else
+                {
+                    if(side == 1) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightKnee, DamageType.Explosion);
+                    else if(side == 2) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftKnee, DamageType.Explosion);
+                    else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, rand > 0.15f ? InjurySite.RightKnee : InjurySite.LeftKnee, DamageType.Explosion);
+                }
                 break;
         }
     }
@@ -2026,14 +2146,14 @@ public class Survivor : CustomObject
             {
                 // 회피
                 damage = 0;
-                hitSound = "avoid, 5";
+                hitSound = "avoid, 1";
             }
             else if (probability < avoidRate + defendRate)
             {
                 // 방어
                 damage *= 0.5f;
                 damagePart = InjurySiteMajor.Arms;
-                hitSound = "guard, 10";
+                hitSound = "guard, 2";
             }
             else if (probability > 1 - criticalRate)
             {
@@ -2041,9 +2161,9 @@ public class Survivor : CustomObject
                 damage *= 2;
                 if (damageType == DamageType.Strike) damagePart = InjurySiteMajor.Head;
                 else damagePart = InjurySiteMajor.Torso;
-                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
+                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
             }
-            else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,20" : "hit01,20";
+            else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
         }
 
         PlaySFX(hitSound, this);
@@ -2089,11 +2209,11 @@ public class Survivor : CustomObject
                 damage -= currentHelmet.Armor;
                 if (UnityEngine.Random.Range(0, 1f) < 0.5f)
                 {
-                    PlaySFX("ricochet,10", this);
+                    PlaySFX("ricochet,5", this);
                 }
                 else
                 {
-                    PlaySFX("ricochet2,10", this);
+                    PlaySFX("ricochet2,5", this);
                 }
             }
         }
@@ -2105,14 +2225,14 @@ public class Survivor : CustomObject
         ApplyDamage(bullet.Launcher, damage, damagePart, DamageType.GunShot);
     }
 
-    public void TakeDamage(Trap trap)
+    public void TakeDamage(Trap trap, InjurySite injurySite)
     {
-        TakeDamage(trap, trap.Damage);
+        ApplyDamage(trap.setter, trap.Damage, InjurySiteMajor.Legs, injurySite, trap.DamageType);
     }
 
-    public void TakeDamage(Trap trap, float damage)
+    public void TakeDamage(Trap trap, float damage, int side = 0)
     {
-        if (trap.DamageType == DamageType.Explosion) ApplyExplosionDamage(trap.setter, damage, InjurySiteMajor.Legs);
+        if (trap.DamageType == DamageType.Explosion) ApplyExplosionDamage(trap.setter, damage, InjurySiteMajor.Legs, side);
         else ApplyDamage(trap.setter, damage, InjurySiteMajor.Legs, trap.DamageType);
     }
 
@@ -2796,6 +2916,39 @@ public class Survivor : CustomObject
         return result;
     }
 
+    int HowManyWalkingAidNeed()
+    {
+        bool right = false;
+        bool left = false;
+        foreach(var injury in injuries)
+        {
+            switch(injury.site)
+            {
+                case InjurySite.RightLeg:
+                case InjurySite.RightKnee:
+                case InjurySite.RightAncle:
+                case InjurySite.RightBigToe:
+                    right = true;
+                    break;
+                case InjurySite.LeftLeg:
+                case InjurySite.LeftKnee:
+                case InjurySite.LeftAncle:
+                case InjurySite.LeftBigToe:
+                    left = true;
+                    break;
+                default:
+                    continue;
+            }
+        }
+        if (right)
+        {
+            if (left) return 2;
+            else return 1;
+        }
+        else if (left) return 1;
+        else return 0;
+    }
+
     bool UpperPartAlreadyLoss(InjurySite injurySite)
     {
         List<InjurySite> upperParts = GetUpperParts(injurySite);
@@ -2882,28 +3035,28 @@ public class Survivor : CustomObject
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
                     break;
                 case InjurySite.RightLeg:
-                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightKnee:
-                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightAncle:
-                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightBigToe:
-                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, injury.degree * 0.1f);
+                    penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.1f));
                     break;
                 case InjurySite.LeftLeg:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.LeftKnee:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.LeftAncle:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.5f);
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.LeftBigToe:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, injury.degree * 0.1f);
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.1f));
                     break;
                 case InjurySite.Brain:
                     dizzyRateByConcussion = injury.degree;
@@ -2924,7 +3077,18 @@ public class Survivor : CustomObject
         injuryCorrection_FarmingSpeed = penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan * penaltiedFarmingSpeedByHands;
 
         injuryCorrection_AttackSpeed = penaltiedAttackSpeedByOrgan;
-
+        
+        Item walkingAid = inventory.Find(x => x.itemType == ItemManager.Items.WalkingAid);
+        if (walkingAid != null)
+        {
+            if(walkingAid.amount >= 2)
+            {
+                penaltiedMoveSpeedByLeftLeg = 1 - (1 - penaltiedMoveSpeedByLeftLeg) * 0.5f;
+                penaltiedMoveSpeedByRightLeg = 1 - (1 - penaltiedMoveSpeedByRightLeg) * 0.5f;
+            }
+            else if(penaltiedMoveSpeedByLeftLeg > penaltiedMoveSpeedByRightLeg) penaltiedMoveSpeedByLeftLeg = 1 - (1 - penaltiedMoveSpeedByLeftLeg) * 0.5f;
+            else penaltiedMoveSpeedByRightLeg = 1 - (1 - penaltiedMoveSpeedByRightLeg) * 0.5f;
+        }
         injuryCorrection_MoveSpeed = penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg;
 
         injuryCorrection_AttackDamage = Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
@@ -3113,7 +3277,7 @@ public class Survivor : CustomObject
                 if (currentWeapon.NeedHand == NeedHand.OneOrTwoHand && (rightHandDisabled || leftHandDisabled)) damage *= 0.7f;
                 inSightEnemies[0].TakeDamage(this, damage);
             }
-            else PlaySFX("avoid, 5", this);
+            else PlaySFX("avoid, 1", this);
         }
         else
         {
@@ -3121,7 +3285,7 @@ public class Survivor : CustomObject
             {
                 inSightEnemies[0].TakeDamage(this, attackDamage);
             }
-            else PlaySFX("avoid, 5", this);
+            else PlaySFX("avoid, 1", this);
         }
     }
 
@@ -3167,10 +3331,9 @@ public class Survivor : CustomObject
     {
         if(currentCrafting == null)
         {
-            Debug.LogWarning("There is no currentCrafting");
+            Debug.LogWarning("There is no currentCrafting.");
             return;
         }
-        int amount = currentCrafting.outputAmount;
         if (currentCrafting.needAdvancedComponentCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), currentCrafting.needAdvancedComponentCount);
         if (currentCrafting.needComponentsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Components), currentCrafting.needComponentsCount);
         if (currentCrafting.needChemicalsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), currentCrafting.needChemicalsCount);
@@ -3178,11 +3341,44 @@ public class Survivor : CustomObject
         if (currentCrafting.needGunpowderCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), currentCrafting.needGunpowderCount);
         foreach(var etcNeeds in currentCrafting.etcNeedItems) ConsumptionItem(inventory.Find(x => x.itemType == etcNeeds.Key), etcNeeds.Value);
 
+        int amount = currentCrafting.outputAmount;
         ItemManager.AddItems(currentCrafting.itemType, amount);
         for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting.itemType][^i]);
         currentCrafting = null;
         craftables.Clear();
         CheckCraftables();
+    }
+
+    void AE_Enchanting()
+    {
+        if (curEnchanting == null)
+        {
+            Debug.LogWarning("There is no curEnchanting.");
+            return;
+        }
+        if (curEnchanting is MeleeWeapon weapon) weapon.Enchant();
+        else if(curEnchanting is Buriable buriable) buriable.Enchant();
+    }
+
+    void AE_Drinking()
+    {
+        if(curDrinking == null)
+        {
+            Debug.LogWarning("There is no curDrinking.");
+            return;
+        }
+        switch(curDrinking.itemType)
+        {
+            case ItemManager.Items.Antidote:
+                poisoned = false;
+                break;
+            case ItemManager.Items.Potion:
+                curHP = Mathf.Min(curHP + 100, maxHP);
+                break;
+            default:
+                Debug.LogWarning($"Try to drink wrong item : {curDrinking.itemType}.");
+                break;
+        }
     }
     #endregion
 

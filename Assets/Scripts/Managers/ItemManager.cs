@@ -38,6 +38,9 @@ public class ItemManager
         // Consumables
         BandageRoll,
         HemostaticBandageRoll,
+        Poison,
+        Antidote,
+        Potion,
         // Crafting Materials
         Components,
         AdvancedComponent,
@@ -51,6 +54,8 @@ public class ItemManager
         ChemicalTrap,
         ShrapnelTrap,
         ExplosiveTrap,
+        // ETC
+        WalkingAid,
     }
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
@@ -87,14 +92,18 @@ public class ItemManager
 
     public IEnumerator Initiate()
     {
+        craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0));
+        craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1));
         craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
         craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0));
-        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 3, 0, 3, 0, 3, 0));
+        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 2, 0, 3, 0, 3, 0));
+        craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 6, 1, 0, 1, 1));
         craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0));
         craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0));
         craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0));
-        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 0, 4, 2, 0, 1, 1));
+        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.Poison, 3)));
         craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));
         craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0));
         yield return null;
@@ -223,6 +232,18 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Consumable(wantItem, "HemostaticBandageRoll", 0.127f));
                 break;
+            case Items.Poison:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Poison", 0.167f));
+                break;
+            case Items.Antidote:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Antidote", 0.1f));
+                break;
+            case Items.Potion:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Potion", 0.7f));
+                break;
             // Crafting Materials
             case Items.Components:
                 for (int i = start; i < end; i++)
@@ -242,7 +263,7 @@ public class ItemManager
                 break;
             case Items.Salvages:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Salvages", 0.5f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Salvages", 0.1f));
                 break;
             // Traps
             case Items.BearTrap:
@@ -268,6 +289,11 @@ public class ItemManager
             case Items.ExplosiveTrap:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, "ExplosiveTrap", 5f));
+                break;
+            // ETC
+            case Items.WalkingAid:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, "WalkingAid", 0.3f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

@@ -6,11 +6,11 @@ Sprite:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chemicals
+  m_Name: Potion
   m_Rect:
     serializedVersion: 2
-    x: 32
-    y: 128
+    x: 224
+    y: 288
     width: 32
     height: 32
   m_Offset: {x: 0, y: 0}
@@ -22,7 +22,7 @@ Sprite:
   m_AtlasName: 
   m_PackingTag: 
   m_RenderDataKey:
-    7db7060725f04274392d9114c14ef85e: 720950767
+    7db7060725f04274392d9114c14ef85e: -1903750970
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
@@ -33,18 +33,18 @@ Sprite:
     m_SubMeshes:
     - serializedVersion: 2
       firstByte: 0
-      indexCount: 27
+      indexCount: 18
       topology: 0
       baseVertex: 0
       firstVertex: 0
-      vertexCount: 11
+      vertexCount: 8
       localAABB:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 0, y: 0, z: 0}
-    m_IndexBuffer: 0a0009000800070008000900050008000700060005000700040005000600030005000400000003000400010003000000020001000000
+    m_IndexBuffer: 070006000300050003000600040003000500000003000400010003000000020001000000
     m_VertexData:
       serializedVersion: 3
-      m_VertexCount: 11
+      m_VertexCount: 8
       m_Channels:
       - stream: 0
         offset: 0
@@ -102,19 +102,19 @@ Sprite:
         offset: 0
         format: 0
         dimension: 0
-      m_DataSize: 232
-      _typelessdata: 0000d03e0000d03e000000000000b03e0000c0be000000000000d03e000090be000000000000803e0000f0be000000000000403e0000003f000000000000403e000000bf00000000000040be0000003f000000000000a0be0000b03e000000000000b0be000000bf000000000000d0be0000403e000000000000d0be0000a0be000000000000000000000000000000000000743e3333fb3e00006c3e3333d33e0000743e0000d83e0000603e6666ce3e0000583e0000003f0000583ecdcccc3e0000283e0000003f0000183e0000f83e0000143ecdcccc3e00000c3e0000f03e00000c3e6666d63e
+      m_DataSize: 160
+      _typelessdata: 0000e03e000000bd000000000000c03e0000e0be000000000000e03e000090be000000000000003e0000e0be000000000000c0bd0000e03e000000000000c0be0000e03e000000000000e0be0000903e000000000000e0be000000000000000000007e3f6666723f00007c3f0000683f00007e3f00006c3f0000743f0000683f00006d3f66667e3f0000643f66667e3f0000623f66667a3f0000623f3333733f
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
-      x: 35.026752
-      y: 128
-      width: 25.946499
-      height: 31.97325
-    textureRectOffset: {x: 3.0267525, y: 0}
+      x: 226.07613
+      y: 290.0761
+      width: 27.84776
+      height: 27.84776
+    textureRectOffset: {x: 2.076126, y: 2.0761108}
     atlasRectOffset: {x: -1, y: -1}
     settingsRaw: 64
-    uvTransform: {x: 32, y: 48, z: 32, w: 144}
+    uvTransform: {x: 32, y: 240, z: 32, w: 304}
     downscaleMultiplier: 1
   m_AtlasRD:
     serializedVersion: 3
@@ -124,18 +124,18 @@ Sprite:
     m_SubMeshes:
     - serializedVersion: 2
       firstByte: 0
-      indexCount: 27
+      indexCount: 18
       topology: 0
       baseVertex: 0
       firstVertex: 0
-      vertexCount: 11
+      vertexCount: 8
       localAABB:
         m_Center: {x: 0, y: 0, z: 0}
         m_Extent: {x: 0, y: 0, z: 0}
-    m_IndexBuffer: 0a0009000800070008000900050008000700060005000700040005000600030005000400000003000400010003000000020001000000
+    m_IndexBuffer: 070006000300050003000600040003000500000003000400010003000000020001000000
     m_VertexData:
       serializedVersion: 3
-      m_VertexCount: 11
+      m_VertexCount: 8
       m_Channels:
       - stream: 0
         offset: 0
@@ -193,31 +193,28 @@ Sprite:
         offset: 0
         format: 0
         dimension: 0
-      m_DataSize: 232
-      _typelessdata: 0000d03e0000d03e000000000000b03e0000c0be000000000000d03e000090be000000000000803e0000f0be000000000000403e0000003f000000000000403e000000bf00000000000040be0000003f000000000000a0be0000b03e000000000000b0be000000bf000000000000d0be0000403e000000000000d0be0000a0be000000000000000000000000000000000000743e3333fb3e00006c3e3333d33e0000743e0000d83e0000603e6666ce3e0000583e0000003f0000583ecdcccc3e0000283e0000003f0000183e0000f83e0000143ecdcccc3e00000c3e0000f03e00000c3e6666d63e
+      m_DataSize: 160
+      _typelessdata: 0000e03e000000bd000000000000c03e0000e0be000000000000e03e000090be000000000000003e0000e0be000000000000c0bd0000e03e000000000000c0be0000e03e000000000000e0be0000903e000000000000e0be000000000000000000007e3f6666723f00007c3f0000683f00007e3f00006c3f0000743f0000683f00006d3f66667e3f0000643f66667e3f0000623f66667a3f0000623f3333733f
     m_Bindpose: []
     textureRect:
       serializedVersion: 2
-      x: 35.026752
-      y: 128
-      width: 25.946499
-      height: 31.97325
-    textureRectOffset: {x: 3.0267525, y: 0}
+      x: 226.07613
+      y: 290.0761
+      width: 27.84776
+      height: 27.84776
+    textureRectOffset: {x: 2.076126, y: 2.0761108}
     atlasRectOffset: {x: -1, y: -1}
     settingsRaw: 64
-    uvTransform: {x: 32, y: 48, z: 32, w: 144}
+    uvTransform: {x: 32, y: 240, z: 32, w: 304}
     downscaleMultiplier: 1
   m_PhysicsShape:
-  - - {x: 0.40625, y: 0.40625}
-    - {x: 0.1875, y: 0.5}
-    - {x: -0.1875, y: 0.5}
-    - {x: -0.3125, y: 0.34375}
-    - {x: -0.40625, y: 0.1875}
-    - {x: -0.40625, y: -0.3125}
-    - {x: -0.34375, y: -0.5}
-    - {x: 0.1875, y: -0.5}
-    - {x: 0.25, y: -0.46875}
-    - {x: 0.34375, y: -0.375}
-    - {x: 0.40625, y: -0.28125}
+  - - {x: -0.375, y: 0.4375}
+    - {x: -0.4375, y: 0.28125}
+    - {x: -0.4375, y: 0}
+    - {x: 0.125, y: -0.4375}
+    - {x: 0.375, y: -0.4375}
+    - {x: 0.4375, y: -0.28125}
+    - {x: 0.4375, y: -0.03125}
+    - {x: -0.09375, y: 0.4375}
   m_Bones: []
-  m_SpriteID: 3e2f03928d906d34cadecfcec187ece6
+  m_SpriteID: 1d7209cf6a021cd43bc199cca1de145b

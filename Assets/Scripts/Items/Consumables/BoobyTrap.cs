@@ -62,7 +62,8 @@ public class ShrapnelTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
-        for(int i=0; i < 48; i++)
+        SoundManager.Play(ResourceEnum.SFX.bang_04, ownnerBox.transform.position);
+        for (int i=0; i < 48; i++)
         {
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, ownnerBox.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();

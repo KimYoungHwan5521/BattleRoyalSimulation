@@ -147,11 +147,11 @@ public class Bullet : CustomObject
             {
                 if(Random.Range(0, 1f) < 0.5f)
                 {
-                    PlaySFX("ricochet,10", launcher);
+                    PlaySFX("ricochet,5", launcher);
                 }
                 else
                 {
-                    PlaySFX("ricochet2,10", launcher);
+                    PlaySFX("ricochet2,5", launcher);
                 }
             }
             DelayedDespawn();
@@ -163,11 +163,11 @@ public class Bullet : CustomObject
             {
                 if (Random.Range(0, 1f) < 0.5f)
                 {
-                    PlaySFX("ricochet,10", launcher);
+                    PlaySFX("ricochet,5", launcher);
                 }
                 else
                 {
-                    PlaySFX("ricochet2,10", launcher);
+                    PlaySFX("ricochet2,5", launcher);
                 }
             }
         }

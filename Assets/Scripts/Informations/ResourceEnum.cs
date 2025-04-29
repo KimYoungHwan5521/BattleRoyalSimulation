@@ -99,6 +99,9 @@ namespace ResourceEnum
         // Consumables
         BandageRoll,
         HemostaticBandageRoll,
+        Poison,
+        Antidote,
+        Potion,
         // Traps
         BearTrap,
         LandMine,
@@ -145,12 +148,12 @@ namespace ResourceEnum
         revolver_reload,
         Shotgun_singlebullet,
         Rack,
-        bang_01,
-        bang_02,
-        bang_03,
-        bang_04,
-        bang_05,
-        bang_06,
+        bang_01, // Revolver
+        bang_02, // Pistol
+        bang_03, // Submuchinegun
+        bang_04, // Shotgun
+        bang_05, // Sniper riple
+        bang_06, // Assult riple
         ricochet,
         ricochet2,
         hit01,
@@ -170,5 +173,7 @@ namespace ResourceEnum
         explosion,
         short_gas_leak,
         alarm_short,
+        water,
+        drink,
     }
 }
