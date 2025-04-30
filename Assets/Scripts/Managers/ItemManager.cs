@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,6 +61,7 @@ public class ItemManager
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
 
+    [Serializable]
     public class Craftable
     {
         public Items itemType;

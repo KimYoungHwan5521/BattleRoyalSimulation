@@ -1048,42 +1048,42 @@ AnimationClip:
   m_Events:
   - time: 1.2833333
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.1166666
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.9
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 3.7
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 4.516667
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 5.3166666
     functionName: PlaySFX
-    data: hammering_once,7
+    data: hammering_once,5
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

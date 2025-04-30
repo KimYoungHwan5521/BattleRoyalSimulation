@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum Tier { Bronze, Silver, Gold }
 
@@ -50,6 +51,8 @@ public class SurvivorData
     // Strategy
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
+    [SerializeField] public ItemManager.Craftable priority1Crafting = null;
+    public int priority1CraftingToInt = 0;
 
     public SurvivorData(string survivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {

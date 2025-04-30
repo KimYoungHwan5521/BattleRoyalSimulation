@@ -134,35 +134,35 @@ public class BattleRoyaleManager
     void ItemSetting()
     {
         ItemManager.itemDictionary.Clear();
-        AddItems(ItemManager.Items.AdvancedComponent, 100);
-        AddItems(ItemManager.Items.Components, 100);
-        AddItems(ItemManager.Items.Salvages, 100);
-        AddItems(ItemManager.Items.Chemicals, 100);
-        AddItems(ItemManager.Items.Gunpowder, 100);
-        //AddItems(ItemManager.Items.Knife, 1);
-        //AddItems(ItemManager.Items.Dagger, 1);
-        //AddItems(ItemManager.Items.Bat, 1);
-        //AddItems(ItemManager.Items.LongSword, 1);
-        //AddItems(ItemManager.Items.Shovel, 1);
-        //AddItems(ItemManager.Items.Revolver, 3);
-        //AddItems(ItemManager.Items.Bullet_Revolver, 30);
-        //AddItems(ItemManager.Items.Pistol, 3);
-        //AddItems(ItemManager.Items.Bullet_Pistol, 30);
-        //AddItems(ItemManager.Items.AssaultRifle, 1);
-        //AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
-        //AddItems(ItemManager.Items.SubMachineGun, 2);
-        //AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
-        //AddItems(ItemManager.Items.ShotGun, 1);
-        //AddItems(ItemManager.Items.Bullet_ShotGun, 20);
-        //AddItems(ItemManager.Items.SniperRifle, 1);
-        //AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
-        //AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
-        //AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
-        //AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
-        //AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
-        //AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
-        //AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
-        //AddItems(ItemManager.Items.BandageRoll, 10);
+        AddItems(ItemManager.Items.AdvancedComponent, 1);
+        AddItems(ItemManager.Items.Components, 10);
+        AddItems(ItemManager.Items.Salvages, 20);
+        AddItems(ItemManager.Items.Chemicals, 10);
+        AddItems(ItemManager.Items.Gunpowder, 10);
+        AddItems(ItemManager.Items.Knife, 1);
+        AddItems(ItemManager.Items.Dagger, 1);
+        AddItems(ItemManager.Items.Bat, 1);
+        AddItems(ItemManager.Items.LongSword, 1);
+        AddItems(ItemManager.Items.Shovel, 1);
+        AddItems(ItemManager.Items.Revolver, 3);
+        AddItems(ItemManager.Items.Bullet_Revolver, 30);
+        AddItems(ItemManager.Items.Pistol, 3);
+        AddItems(ItemManager.Items.Bullet_Pistol, 30);
+        AddItems(ItemManager.Items.AssaultRifle, 1);
+        AddItems(ItemManager.Items.Bullet_AssaultRifle, 10);
+        AddItems(ItemManager.Items.SubMachineGun, 2);
+        AddItems(ItemManager.Items.Bullet_SubMachineGun, 20);
+        AddItems(ItemManager.Items.ShotGun, 1);
+        AddItems(ItemManager.Items.Bullet_ShotGun, 20);
+        AddItems(ItemManager.Items.SniperRifle, 1);
+        AddItems(ItemManager.Items.Bullet_SniperRifle, 10);
+        AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 1);
+        AddItems(ItemManager.Items.LowLevelBulletproofVest, 4);
+        AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
+        AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
+        AddItems(ItemManager.Items.BandageRoll, 10);
 
     }
 

@@ -115,6 +115,8 @@ namespace ResourceEnum
         Chemicals,
         Salvages,
         Gunpowder,
+        // ETC
+        WalkingAid,
 
         // Leagues
         BronzeLeague,

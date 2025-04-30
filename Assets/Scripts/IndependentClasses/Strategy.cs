@@ -13,6 +13,8 @@ public enum StrategyCase
     HeardDistinguishableSound,
     HeardIndistinguishableSound,
     WhenThereAreMultipleEnemiesInSightWhoIsTheTarget,
+    CraftingPriority,
+    CraftingAllow,
 }
 
 [Serializable]

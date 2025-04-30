@@ -384,7 +384,7 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PlaySFX
-    data: explosion,1200
+    data: explosion,90
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

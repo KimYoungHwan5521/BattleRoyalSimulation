@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Progress;
 
 public class Survivor : CustomObject
 {
@@ -281,6 +282,48 @@ public class Survivor : CustomObject
 
     [SerializeField]List<ItemManager.Craftable> craftables = new();
     ItemManager.Craftable currentCrafting;
+    int AdvancedComponentCount
+    {
+        get
+        {
+            Item item = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent);
+            return item != null ? item.amount : 0;
+        }
+    }
+    int ComponentsCount
+    {
+        get
+        {
+            Item item = inventory.Find(x => x.itemType == ItemManager.Items.Components);
+            return item != null ? item.amount : 0;
+        }
+    }
+    int ChemicalsCount
+    {
+        get
+        {
+            Item item = inventory.Find(x => x.itemType == ItemManager.Items.Chemicals);
+            return item != null ? item.amount : 0;
+        }
+    }
+
+    int GunpowderCount
+    {
+        get
+        {
+            Item item = inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder);
+            return item != null ? item.amount : 0;
+        }
+    }
+
+    int SalvagesCount
+    {
+        get
+        {
+            Item item = inventory.Find(x => x.itemType == ItemManager.Items.Salvages);
+            return item != null ? item.amount : 0;
+        }
+    }
     Item curEnchanting;
     Item curDrinking;
     #endregion
@@ -468,6 +511,7 @@ public class Survivor : CustomObject
                 }
             }
         }
+        CalculateSightMesh();
 
         List<RememberSound> reserveRemove = new();
         foreach (var sound in rememberSounds)
@@ -592,6 +636,11 @@ public class Survivor : CustomObject
             animator.SetBool("Attack", false);
             animator.SetBool("Aim", false);
             curAimDelay = 0;
+
+            if(GetCurrentArea().IsProhibited_Plan || GetCurrentArea().IsProhibited)
+            {
+                agent.SetDestination(FindNearest(farmingAreas).transform.position);
+            }
 
             if(runAwayDestination != Vector2.zero)
             {
@@ -763,7 +812,7 @@ public class Survivor : CustomObject
         {
             if (curDrinking == null)
             {
-                Item antidote = inventory.Find(x => x.itemType != ItemManager.Items.Antidote);
+                Item antidote = inventory.Find(x => x.itemType == ItemManager.Items.Antidote);
                 if (antidote != null)
                 {
                     curDrinking = antidote;
@@ -781,7 +830,7 @@ public class Survivor : CustomObject
         {
             if (curDrinking == null)
             {
-                Item potion = inventory.Find(x => x.itemType != ItemManager.Items.Potion);
+                Item potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
                 if (potion != null)
                 {
                     curDrinking = potion;
@@ -1519,8 +1568,56 @@ public class Survivor : CustomObject
                     return true;
                 }
             }
-            for(int i=1; i <=craftables.Count; i++)
+
+            bool lockPriorityCraftingsMaterials = false;
+            // 그 다음으로 Crafting Priority 체크
+            if (linkedSurvivorData.priority1Crafting != null)
             {
+                if (inventory.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType) == null)
+                {
+                    var priority1 = craftables.Find(x => x == linkedSurvivorData.priority1Crafting);
+                    if (priority1 != null)
+                    {
+                        Craft(priority1);
+                        return true;
+                    }
+                    else lockPriorityCraftingsMaterials = true;
+                }
+                else lockPriorityCraftingsMaterials = false;
+            }
+            else lockPriorityCraftingsMaterials = false;
+
+            for(int i=1; i <= craftables.Count; i++)
+            {
+                if(lockPriorityCraftingsMaterials)
+                {
+                    // 만약에 이 craftable이 craftingPriority1의 재료가 아니면
+                    if (!linkedSurvivorData.priority1Crafting.etcNeedItems.ContainsKey(craftables[^i].itemType))
+                    {
+                        // 재료가 여분인지 체크
+                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                        if (ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
+                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                    }
+                    else
+                    {
+                        // 재료가 맞으면
+                        // 이미 재료가 충분히 만들어져 있는지 체크
+                        Item alreadyHave = inventory.Find(x => x.itemType == craftables[^i].itemType);
+                        if(alreadyHave != null && alreadyHave.amount >= linkedSurvivorData.priority1Crafting.etcNeedItems[craftables[^i].itemType])
+                        {
+                            // 재료가 충분하면 여분으로만 더 만들게
+                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if(ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
+                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                        }
+                        // 아니면(priority1의 재료면) 만듦
+                    }
+                }
                 switch(craftables[^i].itemType)
                 {
                     case ItemManager.Items.Poison:
@@ -1588,22 +1685,12 @@ public class Survivor : CustomObject
     void CheckCraftables()
     {
         craftables.Clear();
-        Item item = inventory.Find(x => x.itemType == ItemManager.Items.Components);
-        int componentsCount = item != null ? item.amount : 0;
-        item = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent);
-        int advencedComponentsCount = item != null ? item.amount : 0;
-        item = inventory.Find(x => x.itemType == ItemManager.Items.Chemicals);
-        int chemicalsCount = item != null ? item.amount : 0;
-        item = inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder);
-        int gunpowderCount = item != null ? item.amount : 0;
-        item = inventory.Find(x => x.itemType == ItemManager.Items.Salvages);
-        int salvagesCount = item != null ? item.amount : 0;
 
         int knowledge = linkedSurvivorData._knowledge;
         foreach(var craftable in ItemManager.craftables)
         {
-            if(knowledge >= craftable.requiredKnowledge && advencedComponentsCount >= craftable.needAdvancedComponentCount && componentsCount >= craftable.needComponentsCount
-                && chemicalsCount >= craftable.needChemicalsCount && salvagesCount >= craftable.needSalvagesCount && gunpowderCount >= craftable.needGunpowderCount)
+            if(knowledge >= craftable.requiredKnowledge && AdvancedComponentCount >= craftable.needAdvancedComponentCount && ComponentsCount >= craftable.needComponentsCount
+                && ChemicalsCount >= craftable.needChemicalsCount && SalvagesCount >= craftable.needSalvagesCount && GunpowderCount >= craftable.needGunpowderCount)
             {
                 bool haveETCNeeds = true;
                 foreach(var etcNeed in craftable.etcNeedItems)
@@ -1861,6 +1948,14 @@ public class Survivor : CustomObject
     #region Sight
     void DrawSightMesh()
     {
+        sightMesh.Clear();
+        sightMesh.vertices = sightVertices;
+        sightMesh.triangles = sightTriangles;
+        sightMesh.RecalculateNormals();  // 법선 벡터 계산
+    }
+
+    void CalculateSightMesh()
+    {
         sightVertices[0] = Vector3.zero;  // 시야의 중심
 
         for (int i = 0; i <= sightEdgeCount; i++)
@@ -1891,11 +1986,6 @@ public class Survivor : CustomObject
             sightTriangles[i * 3 + 1] = i + 1;  // 시작 점
             sightTriangles[i * 3 + 2] = i + 2;  // 끝 점
         }
-
-        sightMesh.Clear();
-        sightMesh.vertices = sightVertices;
-        sightMesh.triangles = sightTriangles;
-        sightMesh.RecalculateNormals();  // 법선 벡터 계산
 
         for (int i=0; i < sightVertices.Length; i++)
         {

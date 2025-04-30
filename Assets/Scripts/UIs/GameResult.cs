@@ -195,7 +195,7 @@ public class GameResult : MonoBehaviour
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
-            bettingRewardsText.text = $"Betting rewards ; <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
+            bettingRewardsText.text = $"Bet amount : $ <color=red>- {outGameUIManager.BettingAmount}</color>\nBetting rewards : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
             totalProfit += bettingRewards - outGameUIManager.BettingAmount;
         }
         else

@@ -207,6 +207,8 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 1066899485, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
+    - time: 0.6666667
+      value: {fileID: 1207886825, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
     - time: 1
       value: {fileID: 1091665005, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
     attribute: m_Sprite
@@ -277,6 +279,7 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 1066899485, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
+    - {fileID: 1207886825, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
     - {fileID: 1091665005, guid: 7db7060725f04274392d9114c14ef85e, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
@@ -747,6 +750,13 @@ AnimationClip:
   - time: 0.16666667
     functionName: PlaySFX
     data: water,1
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: Enchanting
+    data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

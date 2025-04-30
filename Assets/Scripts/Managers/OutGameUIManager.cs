@@ -138,6 +138,8 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] TMP_Dropdown whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown;
 
+    [SerializeField] TMP_Dropdown craftingPriority1Dropdwn;
+
     struct SurgeryInfo
     {
         public string surgeryName;
@@ -256,7 +258,7 @@ public class OutGameUIManager : MonoBehaviour
             if (check >= 1000) Debug.LogWarning("Infinite loop detected");
             check = 0;
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
-                100 + randStrength,
+                randStrength,
                 randAgility,
                 randFighting,
                 randShooting,
@@ -968,7 +970,8 @@ public class OutGameUIManager : MonoBehaviour
             TMP_Dropdown.OptionData optionData;
             optionData = new(items[i].ToString());
             weaponPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
-            if (spriteNotNull) weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(ResourceManager.Get(itemSpriteEnum));
+            Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
+            weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
         }
         GameManager.Instance.ObjectUpdate += () => 
         { 
@@ -979,7 +982,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Image image = dropdownSprites[i].GetComponent<Image>();
                     image.sprite = weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
-                    image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                    if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
                 }
             }
         };
@@ -1005,6 +1008,24 @@ public class OutGameUIManager : MonoBehaviour
         
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { "Who first Seen.", "The closest one.", "Whose weapon's range is longest." }));
+        
+        craftingPriority1Dropdwn.ClearOptions();
+        craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Clear();
+        craftingPriority1Dropdwn.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new("None") }));
+        craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Add(null);
+        GameManager.Instance.ObjectUpdate += () =>
+        {
+            if (craftingPriority1Dropdwn.IsExpanded)
+            {
+                var dropdownSprites = craftingPriority1Dropdwn.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                for (int i = 0; i < craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                {
+                    Image image = dropdownSprites[i].GetComponent<Image>();
+                    image.sprite = craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites[i];
+                    if(image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                }
+            }
+        };
         SetDefault();
     }
 
@@ -1021,6 +1042,7 @@ public class OutGameUIManager : MonoBehaviour
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 0;
+        craftingPriority1Dropdwn.value = 0;
     }
 
     public void OpenStrategyRoom()
@@ -1049,6 +1071,24 @@ public class OutGameUIManager : MonoBehaviour
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
         survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.survivorName == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
         weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
+        craftingPriority1Dropdwn.ClearOptions();
+        craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Clear();
+        craftingPriority1Dropdwn.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new("None") }));
+        craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Add(null);
+        foreach (var craftable in ItemManager.craftables)
+        {
+            if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy._knowledge)
+            {
+                bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
+                TMP_Dropdown.OptionData optionData;
+                optionData = new(craftable.itemType.ToString());
+                craftingPriority1Dropdwn.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
+                Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
+                craftingPriority1Dropdwn.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
+            }
+        }
+        craftingPriority1Dropdwn.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt;
+
         foreach (Strategy strategy in strategies) strategy.SetDefault();
         foreach (var strategyDictionary in survivorWhoWantEstablishStrategy.strategyDictionary)
         {
@@ -1100,6 +1140,17 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
+    public void CraftingPriorityChanged()
+    {
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority1Dropdwn.options[craftingPriority1Dropdwn.value].text}", out var itemSpriteEnum);
+        if (spriteNotNull)
+        {
+            Image image = craftingPriority1Dropdwn.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+            image.sprite = ResourceManager.Get(itemSpriteEnum);
+            image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+        }
+    }
+
     public void SaveStrategy()
     {
         OpenConfirmWindow("Save all changes?", () =>
@@ -1107,6 +1158,15 @@ public class OutGameUIManager : MonoBehaviour
             bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemEnum);
             if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
             else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}");
+
+            ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdwn.options[craftingPriority1Dropdwn.value].text}");
+            itemNotNull = craftable != null;
+            if (itemNotNull)
+            {
+                survivorWhoWantEstablishStrategy.priority1Crafting = craftable;
+                survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdwn.value;
+            }
+            else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdwn.options[craftingPriority1Dropdwn.value].text}");
 
             foreach(Strategy strategy in strategies)
             {

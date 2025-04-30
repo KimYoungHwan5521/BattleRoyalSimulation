@@ -106,6 +106,7 @@ public class ResourcesPath
         "Sprites/Icons/Chemicals",
         "Sprites/Icons/Salvages",
         "Sprites/Icons/Gunpowder",
+        "Sprites/Icons/WalkingAid",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",
