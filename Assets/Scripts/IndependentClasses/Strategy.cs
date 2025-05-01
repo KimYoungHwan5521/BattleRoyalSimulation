@@ -82,8 +82,11 @@ public class Strategy : MonoBehaviour
 
     public string CaseName => transform.Find("Case Name").GetComponentInChildren<TextMeshProUGUI>().text;
 
+    public bool[] craftableAllows;
+
     private void Start()
     {
+        if(strategyCase == StrategyCase.CraftingAllow) craftableAllows = new bool[ItemManager.craftables.Count];
         if (noCondition) return;
         andOrs = new TMP_Dropdown[conditions.Length];
         notValids = new GameObject[conditions.Length];
@@ -232,6 +235,15 @@ public class Strategy : MonoBehaviour
 
     public void CopyStrategy()
     {
+        if (strategyCase == StrategyCase.CraftingAllow)
+        {
+            for(int i=0; i<craftableAllows.Length;i++)
+            {
+                craftableAllows[i] = GameManager.Instance.OutGameUIManager.craftableAllows[i].GetComponentInChildren<Toggle>().isOn;
+            }
+            copyStrategy = new(0, 0, 0);
+            return;
+        }
         if (noCondition) copyStrategy = new(ActionDropdown.value, 0, 0);
         else
         {
@@ -247,6 +259,16 @@ public class Strategy : MonoBehaviour
     public void PasteStrategy()
     {
         if (copyStrategy == null) return;
+        if(strategyCase == StrategyCase.CraftingAllow)
+        {
+            for (int i = 0; i<craftableAllows.Length;i++)
+            {
+                // 0 : Allow, 1 : Not Allow
+                int allow = craftableAllows[i] ? 0 : 1;
+                GameManager.Instance.OutGameUIManager.craftableAllows[i].GetComponentsInChildren<Toggle>()[allow].isOn = true;
+            }
+            return;
+        }
         ActionDropdown.value = copyStrategy.action;
         if(!noCondition)
         {

@@ -36,6 +36,7 @@ namespace ResourceEnum
         // UI
         Alert,
         SurvivorSchedule,
+        CraftableAllow,
 
         // In Game UI
         KillLog,

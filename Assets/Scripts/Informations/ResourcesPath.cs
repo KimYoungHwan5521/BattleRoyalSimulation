@@ -35,6 +35,7 @@ public class ResourcesPath
         // UI
         "Prefabs/UIs/Alert",
         "Prefabs/UIs/SurvivorSchedule",
+        "Prefabs/UIs/CraftableAllow",
 
         // In Game UI
         "Prefabs/UIs/KillLog",

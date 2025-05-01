@@ -1558,8 +1558,9 @@ public class Survivor : CustomObject
     {
         if(craftables.Count > 0)
         {
+
             // 중독 중이면 우선적으로 해독제부터
-            if(poisoned)
+            if(poisoned && linkedSurvivorData.craftingAllows[ItemManager.craftables.FindIndex(x => x.itemType == ItemManager.Items.Antidote)])
             {
                 ItemManager.Craftable antidote = craftables.Find(x => x.itemType == ItemManager.Items.Antidote);
                 if (antidote != null)
@@ -1589,6 +1590,7 @@ public class Survivor : CustomObject
 
             for(int i=1; i <= craftables.Count; i++)
             {
+                if (!linkedSurvivorData.craftingAllows[ItemManager.craftables.FindIndex(x => x.itemType == craftables[^i].itemType)]) continue;
                 if(lockPriorityCraftingsMaterials)
                 {
                     // 만약에 이 craftable이 craftingPriority1의 재료가 아니면

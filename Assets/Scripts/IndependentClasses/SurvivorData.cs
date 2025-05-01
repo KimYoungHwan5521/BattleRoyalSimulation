@@ -52,7 +52,8 @@ public class SurvivorData
     public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
     [SerializeField] public ItemManager.Craftable priority1Crafting = null;
-    public int priority1CraftingToInt = 0;
+    public int priority1CraftingToInt = -1;
+    public bool[] craftingAllows;
 
     public SurvivorData(string survivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {
@@ -66,6 +67,8 @@ public class SurvivorData
         this.price = price;
         this.tier = tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
+        craftingAllows = new bool[ItemManager.craftables.Count];
+        for(int i = 0; i < craftingAllows.Length; i++) craftingAllows[i] = true;
     }
 
     public SurvivorData(SurvivorData survivorData)
@@ -80,6 +83,8 @@ public class SurvivorData
         price = survivorData.price;
         tier = survivorData.tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
+        craftingAllows = new bool[ItemManager.craftables.Count];
+        for (int i = 0; i < craftingAllows.Length; i++) craftingAllows[i] = true;
     }
 
     public void IncreaseStats(int strength, int agility, int fighting, int shooting, int knowledge)
