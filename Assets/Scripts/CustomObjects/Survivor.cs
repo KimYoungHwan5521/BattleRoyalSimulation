@@ -363,6 +363,7 @@ public class Survivor : CustomObject
     float curSetDestinationCool = 1f;
     [SerializeField] Vector2 runAwayDestination;
     [SerializeField] Survivor runAwayFrom;
+    [SerializeField] bool runawayable;
 
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
@@ -522,6 +523,11 @@ public class Survivor : CustomObject
         foreach (var sound in reserveRemove)
         {
             rememberSounds.Remove(sound);
+        }
+
+        if(runAwayFrom != null)
+        {
+            runawayable = CanRunAway(out runAwayDestination);
         }
         
         if(keepEyesOnPosition != Vector2.zero)
@@ -726,12 +732,8 @@ public class Survivor : CustomObject
                     {
                         if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
                         {
-                            if (TargetEnemy != runAwayFrom && CanRunAway(out runAwayDestination))
-                            {
-                                currentStatus = Status.RunAway;
-                                agent.SetDestination(runAwayDestination);
-                            }
-                            else Combat(distance);
+                            if (runAwayFrom != null && TargetEnemy != runAwayFrom) Combat(distance);
+                            else if (!TryRunAway(TargetEnemy)) Combat(distance);
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
                         {
@@ -754,7 +756,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
                         {
-                            TryRunAway(distance);
+                            if(!TryRunAway(TargetEnemy)) Combat(distance);
                         }
                     }
                 }
@@ -772,7 +774,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
                         {
-                            TryRunAway(distance);
+                            if (!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
                         }
                     }
                     else
@@ -787,7 +789,7 @@ public class Survivor : CustomObject
                         }
                         else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
                         {
-                            TryRunAway(distance);
+                            if(!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
                         }
                     }
                 }
@@ -1895,14 +1897,16 @@ public class Survivor : CustomObject
     #endregion
 
     #region Run Away
-    void TryRunAway(float distance)
+    bool TryRunAway(Survivor target)
     {
-        if(TargetEnemy != runAwayFrom) Combat(distance);
-        else if (CanRunAway(out runAwayDestination))
+        runAwayFrom = target;
+        if (runAwayDestination != Vector2.zero)
         {
             currentStatus = Status.RunAway;
             agent.SetDestination(runAwayDestination);
+            return true;
         }
+        return false;
     }
 
     bool CanRunAway(out Vector2 destination)

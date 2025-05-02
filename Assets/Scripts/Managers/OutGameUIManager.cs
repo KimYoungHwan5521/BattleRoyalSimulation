@@ -1035,6 +1035,7 @@ public class OutGameUIManager : MonoBehaviour
             GameObject craftableAllow = PoolManager.Spawn(ResourceEnum.Prefab.CraftableAllow, craftingAllow);
             craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.craftables[i].itemType.ToString();
             if (Enum.TryParse(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text, out ResourceEnum.Sprite sprite)) craftableAllow.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
+            int toggleIndex = i;
             craftableAllow.GetComponentInChildren<Toggle>().onValueChanged.AddListener((value) => { strategies.ToList().Find(x => x.strategyCase == StrategyCase.CraftingAllow).hasChanged = true; });
             craftableAllows.Add(craftableAllow);
         }
@@ -1059,8 +1060,8 @@ public class OutGameUIManager : MonoBehaviour
 
     public void OpenStrategyRoom()
     {
-        SetStrategyRoom();
         strategyRoom.SetActive(true);
+        SetStrategyRoom();
     }
 
     public void CloseStrategyRoom()
