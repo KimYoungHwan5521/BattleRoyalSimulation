@@ -21,6 +21,7 @@ public class ItemManager
         SubMachineGun,
         ShotGun,
         SniperRifle,
+        Bazooka,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,
@@ -28,6 +29,7 @@ public class ItemManager
         Bullet_SubMachineGun,
         Bullet_ShotGun,
         Bullet_SniperRifle,
+        Rocket_Bazooka,
         // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
@@ -108,6 +110,7 @@ public class ItemManager
         craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.Poison, 3)));
         craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));
         craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0));
+        craftables.Add(new Craftable(Items.Bazooka, 95, 0, 8, 0, 4, 0, 1, 0));
         yield return null;
     }
 
@@ -172,7 +175,11 @@ public class ItemManager
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 3f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
+                break;
+            case Items.Bazooka:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Bazooka", 7.9f, NeedHand.TwoHand, 200, 37.5f, 3f, 10f, 10f, 1, 3f, 2, 6));
                 break;
             // Bullets
             case Items.Bullet_Revolver:
@@ -199,31 +206,35 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(SniperRifle)", 0.012f, 5));
                 break;
+            case Items.Rocket_Bazooka:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Rocket(Bazooka)", 5f, 1));
+                break;
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "LowLevelBulletproofVest", 3f, 15));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 15));
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "MiddleLevelBulletproofVest", 7f, 25));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 25));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "HighLevelBulletproofVest", 10f, 40));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 40));
                 break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "LowLevelBulletproofHelmet", 0.7f, 60));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Low Level Bulletproof Helmet", 0.7f, 60));
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "MiddleLevelBulletproofHelmet", 1.2f, 100));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Middle Level Bulletproof Helmet", 1.2f, 100));
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "HighLevelBulletproofHelmet", 1.6f, 140));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "High Level Bulletproof Helmet", 1.6f, 140));
                 break;
             // Consumables
             case Items.BandageRoll:
@@ -232,7 +243,7 @@ public class ItemManager
                 break;
             case Items.HemostaticBandageRoll:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "HemostaticBandageRoll", 0.127f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Hemostatic BandageRoll", 0.127f));
                 break;
             case Items.Poison:
                 for (int i = start; i < end; i++)
@@ -253,7 +264,7 @@ public class ItemManager
                 break;
             case Items.AdvancedComponent:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "AdvancedComponent", 0.1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Advanced Component", 0.1f));
                 break;
             case Items.Chemicals:
                 for (int i = start; i < end; i++)
@@ -270,32 +281,32 @@ public class ItemManager
             // Traps
             case Items.BearTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, "BearTrap", 3f));
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, "Bear Trap", 3f));
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, "LandMine", 3f));
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, "Land Mine", 3f));
                 break;
             case Items.NoiseTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, "NoiseTrap", 2f));
+                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, "Noise Trap", 2f));
                 break;
             case Items.ChemicalTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ChemicalTrap(wantItem, "ChemicalTrap", 3f));
+                    itemDictionary[wantItem].Add(new ChemicalTrap(wantItem, "Chemical Trap", 3f));
                 break;
             case Items.ShrapnelTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, "ShrapnelTrap", 7f));
+                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, "Shrapnel Trap", 7f));
                 break;
             case Items.ExplosiveTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, "ExplosiveTrap", 5f));
+                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, "Explosive Trap", 5f));
                 break;
             // ETC
             case Items.WalkingAid:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "WalkingAid", 0.3f));
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Walking Aid", 0.3f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

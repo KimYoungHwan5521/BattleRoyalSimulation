@@ -247,11 +247,11 @@ public class OutGameUIManager : MonoBehaviour
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
-            int randStrength = UnityEngine.Random.Range(0, 100);
-            int randAgility = UnityEngine.Random.Range(0, 100);
-            int randFighting = UnityEngine.Random.Range(0, 100);
-            int randShooting = UnityEngine.Random.Range(0, 100);
-            int randKnowledge = UnityEngine.Random.Range(0, 100);
+            int randStrength = UnityEngine.Random.Range(0, 101);
+            int randAgility = UnityEngine.Random.Range(0, 101);
+            int randFighting = UnityEngine.Random.Range(0, 101);
+            int randShooting = UnityEngine.Random.Range(0, 101);
+            int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randKnowledge;
             if ((totalRand < value * 70f || totalRand > value * 130f) && check < 1000)
             {
@@ -1738,11 +1738,11 @@ public class OutGameUIManager : MonoBehaviour
         int check = 0;
         while (check < 1000)
         {
-            int randStrength = UnityEngine.Random.Range(0, 100);
-            int randAgility = UnityEngine.Random.Range(0, 100);
-            int randFighting = UnityEngine.Random.Range(0, 100);
-            int randShooting = UnityEngine.Random.Range(0, 100);
-            int randKnowledge = UnityEngine.Random.Range(0, 100);
+            int randStrength = UnityEngine.Random.Range(0, 101);
+            int randAgility = UnityEngine.Random.Range(0, 101);
+            int randFighting = UnityEngine.Random.Range(0, 101);
+            int randShooting = UnityEngine.Random.Range(0, 101);
+            int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randShooting + randShooting + randKnowledge;
             if ((totalRand < value * 70 || totalRand > value * 130) && check < 1000)
             {

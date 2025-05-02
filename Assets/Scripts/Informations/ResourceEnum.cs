@@ -5,6 +5,7 @@ namespace ResourceEnum
         Test,
         Survivor,
         Bullet,
+        Rocket,
         Blood,
         BearTrap,
         LandMine,
@@ -82,6 +83,7 @@ namespace ResourceEnum
         SubMachineGun,
         ShotGun,
         SniperRifle,
+        Bazooka,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,
@@ -89,6 +91,7 @@ namespace ResourceEnum
         Bullet_SubMachineGun,
         Bullet_ShotGun,
         Bullet_SniperRifle,
+        Rocket_Bazooka,
         // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
@@ -151,12 +154,14 @@ namespace ResourceEnum
         revolver_reload,
         Shotgun_singlebullet,
         Rack,
+        metal_hit,
         bang_01, // Revolver
         bang_02, // Pistol
         bang_03, // Submuchinegun
         bang_04, // Shotgun
         bang_05, // Sniper riple
         bang_06, // Assult riple
+        rocket_launch,
         ricochet,
         ricochet2,
         hit01,

@@ -18,12 +18,16 @@ public class ProjectileGenerator : CustomObject
         weapon.Fire();
         owner.InGameUIManager.UpdateSelectedObjectInventory(owner);
 
-        if (weapon.itemName == "ShotGun")
+        if (weapon.itemType == ItemManager.Items.ShotGun)
         {
             SpawnProjectile_ShotGun(weapon);
             return;
         }
-
+        else if(weapon.itemType == ItemManager.Items.Bazooka)
+        {
+            SpawnProjectile_Bazooka(weapon);
+            return;
+        }
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
         Bullet bullet = prefab.GetComponent<Bullet>();
         Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
@@ -39,6 +43,14 @@ public class ProjectileGenerator : CustomObject
             Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
             bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
         }
+    }
+
+    void SpawnProjectile_Bazooka(RangedWeapon weapon)
+    {
+        GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Rocket, muzzleTF.transform.position);
+        Rocket rocket = prefab.GetComponent<Rocket>();
+        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
+        rocket.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
 
     public void ResetMuzzleTF(Transform hand)

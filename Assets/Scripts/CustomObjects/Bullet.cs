@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class Bullet : CustomObject
 {
-    Survivor launcher;
+    protected Survivor launcher;
     public Survivor Launcher => launcher;
     SpriteRenderer spriteRenderer;
     Collider2D col;
     TrailRenderer trailRenderer;
-    float projectileSpeed;
-    float damage;
+    protected float projectileSpeed;
+    protected float damage;
     public float Damage => damage;
-    Vector2 direction;
-    Vector2 spawnedPosition;
-    Vector2 lastPosition;
-    float maxRange;
+    protected Vector2 direction;
+    protected Vector2 spawnedPosition;
+    protected Vector2 lastPosition;
+    protected float maxRange;
     public float MaxRange => maxRange;
     public float TraveledDistance { get { return Vector2.Distance(transform.position, spawnedPosition); } }
 
     float err;
 
-    bool initiated;
+    protected bool initiated;
 
     protected override void Start()
     {
@@ -41,9 +41,9 @@ public class Bullet : CustomObject
 
         direction = targetPosition - spawnedPosition;
         direction.Normalize();
-        err = launcher.CurrentWeapon.itemName == "ShotGun"?  7.5f : launcher.AimErrorRange;
+        err = launcher.CurrentWeapon.itemType == ItemManager.Items.ShotGun?  7.5f : launcher.AimErrorRange;
         float rand = Random.Range(-err, err);
-        if (launcher.CurrentWeapon.itemName == "SniperRifle") rand *= 0.67f;
+        if (launcher.CurrentWeapon.itemType == ItemManager.Items.SniperRifle) rand *= 0.67f;
         direction = direction.Rotate(rand);
 
         this.maxRange = maxRange;
@@ -64,7 +64,7 @@ public class Bullet : CustomObject
         initiated = true;
     }
 
-    void DelayedDespawn()
+    protected virtual void DelayedDespawn()
     {
         initiated = false;
         spriteRenderer.enabled = false;

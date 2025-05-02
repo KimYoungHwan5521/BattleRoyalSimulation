@@ -267,8 +267,10 @@ public class Survivor : CustomObject
     {
         get
         {
-            int index = inventory.FindIndex(x => x.itemName == $"Bullet({currentWeapon.itemName})");
-            if(index > -1)
+            int index;
+            if(CurrentWeapon.itemType != ItemManager.Items.Bazooka) index = inventory.FindIndex(x => x.itemName == $"Bullet({currentWeapon.itemName})");
+            else index = inventory.FindIndex(x => x.itemName == $"Rocket(Bazooka)");
+            if (index > -1)
             {
                 if (inventory[index].amount > 0)
                 {
@@ -643,9 +645,9 @@ public class Survivor : CustomObject
             animator.SetBool("Aim", false);
             curAimDelay = 0;
 
-            if(GetCurrentArea().IsProhibited_Plan || GetCurrentArea().IsProhibited)
+            if(CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited)
             {
-                agent.SetDestination(FindNearest(farmingAreas).transform.position);
+                CurrentFarmingArea = FindNearest(farmingAreas);
             }
 
             if(runAwayDestination != Vector2.zero)
@@ -1308,7 +1310,7 @@ public class Survivor : CustomObject
                 GetItem(item);
             }
         }
-        else if(item.itemName.Contains("Bullet"))
+        else if(item.itemName.Contains("Bullet") || item.itemName.Contains("Rocket"))
         {
             currentWeaponisBestWeapon = false;
             GetItem(item);
@@ -1372,7 +1374,7 @@ public class Survivor : CustomObject
                 if (newWeaponAsRangedWeapon.CurrentMagazine > 0) return true;
                 else
                 {
-                    Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
+                    Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})") : inventory.Find(x => x.itemName == $"Rocket(Bazooka)");
                     if (bullet != null) return true;
                     else return false;
                 }
@@ -1396,7 +1398,7 @@ public class Survivor : CustomObject
             {
                 // 원 vs 원
                 RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
-                Item bullet = inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})");
+                Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})") : inventory.Find(x => x.itemName == $"Rocket(Bazooka)");
                 if (newWeaponAsRangedWeapon.CurrentMagazine > 0 || bullet != null)
                 {
                     // 둘 다 총알이 있는 경우
@@ -1447,7 +1449,7 @@ public class Survivor : CustomObject
             // Active가 꺼져있는 오브젝트는 Find로 찾을 수 없다.
             foreach (Transform child in hand)
             {
-                if (child.name == $"{wantWeapon.itemName}")
+                if (child.name == $"{wantWeapon.itemType}")
                 {
                     weaponTF = child; // 이름이 일치하는 자식 반환
                 }
@@ -1458,7 +1460,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                Debug.LogWarning($"Can't find weapon : {wantWeapon.itemName}");
+                Debug.LogWarning($"Can't find weapon : {wantWeapon.itemType}");
             }
             currentWeapon = wantWeapon;
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
@@ -1472,7 +1474,7 @@ public class Survivor : CustomObject
         if (IsValid(currentWeapon))
         {
             GetItem(currentWeapon);
-            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemName}");
+            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemType}");
             if (curWeaponTF != null)
             {
                 curWeaponTF.gameObject.SetActive(false);
@@ -1480,7 +1482,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                Debug.LogWarning($"Can't find weapon : {currentWeapon.itemName}");
+                Debug.LogWarning($"Can't find weapon : {currentWeapon.itemType}");
             }
             currentWeapon = null;
         }
@@ -1496,7 +1498,7 @@ public class Survivor : CustomObject
             Transform weaponTF = null;
             foreach (Transform child in transform.Find("Head"))
             {
-                if (child.name == $"{wantBulletproofHelmet.itemName}")
+                if (child.name == $"{wantBulletproofHelmet.itemType}")
                 {
                     weaponTF = child;
                 }
@@ -1507,7 +1509,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                Debug.LogWarning($"Can't find helmet : {wantBulletproofHelmet.itemName}");
+                Debug.LogWarning($"Can't find helmet : {wantBulletproofHelmet.itemType}");
             }
             currentHelmet = wantBulletproofHelmet;
         }
@@ -1519,14 +1521,14 @@ public class Survivor : CustomObject
         if (IsValid(currentHelmet))
         {
             inventory.Add(currentHelmet);
-            Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemName}");
+            Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemType}");
             if (curWeaponTF != null)
             {
                 curWeaponTF.gameObject.SetActive(false);
             }
             else
             {
-                Debug.LogWarning($"Can't find helmet : {currentHelmet.itemName}");
+                Debug.LogWarning($"Can't find helmet : {currentHelmet.itemType}");
             }
             currentHelmet = null;
         }
@@ -1735,7 +1737,7 @@ public class Survivor : CustomObject
             if(curTrappingTime > trappingTime)
             {
                 curTrappingTime = 0;
-                if (Enum.TryParse(curBurying.itemName, out ResourceEnum.Prefab trap))
+                if (Enum.TryParse(curBurying.itemType.ToString(), out ResourceEnum.Prefab trap))
                 {
                     Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
                     if (curBurying.IsEnchanted) settedTrap.Enchant();
@@ -1743,7 +1745,7 @@ public class Survivor : CustomObject
                     trapPlace.SetTrap(settedTrap);
                     burieds.Add(settedTrap.gameObject);
                 }
-                else Debug.LogWarning($"Failed to spawn trap : {curBurying.itemName}");
+                else Debug.LogWarning($"Failed to spawn trap : {curBurying.itemType}");
                 trapPlace = null;
                 return false;
             }
@@ -2025,7 +2027,8 @@ public class Survivor : CustomObject
         else if( heardVolume > 0.5f)
         {
             // 불분명한 인지
-            HeardIndistinguishableSound((noiseMaker as Survivor).survivorName, soundOrigin);
+            if (noiseMaker != null && noiseMaker is Survivor) HeardIndistinguishableSound((noiseMaker as Survivor).survivorName, soundOrigin);
+            else Debug.LogWarning("There are no noiseMaker");
         }
     }
 
@@ -2337,6 +2340,50 @@ public class Survivor : CustomObject
         ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Head);
         ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Torso);
         ApplyExplosionDamage(boobyTrap.Setter, damage * 0.2f, InjurySiteMajor.Arms);
+    }
+
+    public void TakeDamage(Rocket rocket, float damage, bool critical)
+    {
+        int site;
+        if(critical)
+        {
+            site = UnityEngine.Random.Range(0, 4);
+            switch(site)
+            {
+                case 0:
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Head);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    break;
+                case 1:
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, InjurySiteMajor.Head);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.5f, InjurySiteMajor.Torso);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, InjurySiteMajor.Arms);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Legs);
+                    break;
+                case 2:
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Arms);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    break;
+                case 3:
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Legs);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    break;
+            }
+        }
+        else
+        {
+            site = UnityEngine.Random.Range(0, 2);
+            if(site == 0)
+            {
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, InjurySiteMajor.Arms);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Torso);
+            }
+            else
+            {
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, InjurySiteMajor.Arms);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Torso);
+            }
+        }
     }
 
     public void Poisoning(Survivor poisonOriginator)
@@ -3388,7 +3435,7 @@ public class Survivor : CustomObject
     void AE_Reload()
     {
         int amount;
-        if (currentWeapon.itemName == "ShotGun") amount = 1;
+        if (currentWeapon.itemType == ItemManager.Items.ShotGun) amount = 1;
         else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
