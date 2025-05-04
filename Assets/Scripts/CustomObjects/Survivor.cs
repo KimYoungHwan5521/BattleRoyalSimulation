@@ -645,7 +645,7 @@ public class Survivor : CustomObject
             animator.SetBool("Aim", false);
             curAimDelay = 0;
 
-            if(CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited)
+            if(CurrentFarmingArea != null && CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited)
             {
                 CurrentFarmingArea = FindNearest(farmingAreas);
             }
@@ -975,6 +975,16 @@ public class Survivor : CustomObject
                     if (farmingBox.ownerArea.IsProhibited || farmingBox.ownerArea.IsProhibited_Plan)
                     {
                         farmingBoxes[farmingBox] = true;
+                        return null;
+                    }
+                }
+                else if (typeof(TKey) == typeof(Survivor))
+                {
+                    Survivor corpse = candidate.Key as Survivor;
+                    Area corpseArea = corpse.GetCurrentArea();
+                    if (corpseArea.IsProhibited || corpseArea.IsProhibited_Plan)
+                    {
+                        farmingCorpses[corpse] = true;
                         return null;
                     }
                 }
@@ -1808,7 +1818,11 @@ public class Survivor : CustomObject
     {
         if (CurrentWeaponAsRangedWeapon != null)
         {
-            if (distance < CurrentWeaponAsRangedWeapon.MinimumRange) Attack();
+            if (distance < CurrentWeaponAsRangedWeapon.MinimumRange)
+            {
+                if (distance < attackRange) Attack();
+                else ApproachEnemy(TargetEnemy);
+            }
             else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) Aim();
             else if (ValidBullet != null) Reload();
             else if (!currentWeaponisBestWeapon)
@@ -2084,6 +2098,7 @@ public class Survivor : CustomObject
     #region Take Damage
     void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, InjurySite specificDamagePart, DamageType damageType)
     {
+        if (isDead) return;
         Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
         bool damagedPartIsArtifical = false;
         bool noPain = false;
@@ -3411,6 +3426,7 @@ public class Survivor : CustomObject
     #region Animation Events
     void AE_Attack()
     {
+        if(isDead) return;
         if (inSightEnemies.Count == 0) return;
         if(IsValid(currentWeapon) && currentWeapon is MeleeWeapon)
         {

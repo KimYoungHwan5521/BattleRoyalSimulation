@@ -102,22 +102,26 @@ public class BattleRoyaleManager
                 survivorNumber = 4;
                 prohibitAtOnce = 1;
                 areaProhibitTime = 30;
+                InGameUIManager.SetCameraLimit(75, 75);
                 break;
             case League.SilverLeague:
                 survivorNumber = 9;
                 prohibitAtOnce = 2;
                 areaProhibitTime = 40;
+                InGameUIManager.SetCameraLimit(125, 125);
                 break;
             case League.GoldLeague:
                 survivorNumber = 16;
                 prohibitAtOnce = 3;
                 areaProhibitTime = 50;
+                InGameUIManager.SetCameraLimit(175, 175);
                 break;
             case League.SeasonChampionship:
             case League.WorldChampionship:
                 survivorNumber = 25;
                 prohibitAtOnce = 4;
                 areaProhibitTime = 60;
+                InGameUIManager.SetCameraLimit(225, 225);
                 break;
         }
     }

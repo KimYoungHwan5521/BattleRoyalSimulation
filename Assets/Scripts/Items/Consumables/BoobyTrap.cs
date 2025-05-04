@@ -46,7 +46,7 @@ public class ChemicalTrap : BoobyTrap
         var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
         foreach (var hit in hits)
         {
-            if (hit.rigidbody.TryGetComponent(out Survivor splashedSurvivor))
+            if (!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
             {
                 splashedSurvivor.Poisoning(setter);
             }
@@ -85,7 +85,7 @@ public class ExplosiveTrap : BoobyTrap
         var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
         foreach (var hit in hits)
         {
-            if (hit.rigidbody.TryGetComponent(out Survivor splashedSurvivor))
+            if (!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
             {
                 if (splashedSurvivor == victim) continue;
                 float distance = Mathf.Max(Vector2.Distance(ownnerBox.transform.position, hit.point), 1);

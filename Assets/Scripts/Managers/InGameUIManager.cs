@@ -21,6 +21,10 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] RectTransform display;
     Transform cameraTarget;
     OutGameUIManager outGameUIManager;
+    float cameraLeftLimit = -25;
+    float cameraDownLimit = -25;
+    float cameraRightLimit = 75;
+    float cameraUpLimit = 75;
 
     [Header("Left Top")]
     [SerializeField] TextMeshProUGUI leftSurvivors;
@@ -128,12 +132,20 @@ public class InGameUIManager : MonoBehaviour
 
     void ManualCameraMove()
     {
-        Camera.main.transform.position += (Vector3)navVector * Camera.main.orthographicSize * 0.1f;
+        Vector3 cameraPos;
+        cameraPos = Camera.main.transform.position + (Vector3)navVector * Camera.main.orthographicSize * 0.1f;
         if (!IsPointerOverUI() && isClicked)
         {
-            Camera.main.transform.position = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
+            cameraPos = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
             cameraTarget = null;
         }
+        Camera.main.transform.position = new(Mathf.Clamp(cameraPos.x, cameraLeftLimit, cameraRightLimit), Mathf.Clamp(cameraPos.y, cameraDownLimit, cameraUpLimit), -10);
+    }
+
+    public void SetCameraLimit(float rightLimit, float upLimit)
+    {
+        cameraRightLimit = rightLimit;
+        cameraUpLimit = upLimit;
     }
 
     void OnNavigate(InputValue value)
@@ -315,6 +327,8 @@ public class InGameUIManager : MonoBehaviour
             shootingText.text = selectedSurvivor.LinkedSurvivorData._shooting.ToString();
             knowledgeText.text = selectedSurvivor.LinkedSurvivorData._knowledge.ToString();
 
+            characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
+
         }
         else if(selectedObject is Box)
         {
@@ -349,8 +363,6 @@ public class InGameUIManager : MonoBehaviour
         fightingText.GetComponent<Help>().SetDescription("");
         knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
-
-        characteristics.ArrangeCharacteristics(survivor.LinkedSurvivorData);
     }
 
     public void UpdateSelectedObjectInjury(Survivor survivor)

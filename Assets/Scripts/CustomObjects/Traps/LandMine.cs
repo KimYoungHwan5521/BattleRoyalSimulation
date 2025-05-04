@@ -10,7 +10,7 @@ public class LandMine : Trap
         var hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.up);
         foreach (var hit in hits)
         {
-            if(hit.rigidbody.TryGetComponent(out Survivor splashedSurvivor))
+            if(!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
             {
                 if (splashedSurvivor == victim) continue;
                 float distance = Mathf.Max(Vector2.Distance(transform.position, hit.point), 1);
