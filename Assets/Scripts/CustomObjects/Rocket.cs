@@ -6,7 +6,7 @@ public class Rocket : Bullet
 
     void Explosion()
     {
-        PoolManager.Spawn(ResourceEnum.Prefab.Explosion);
+        PoolManager.Spawn(ResourceEnum.Prefab.Explosion, transform.position);
         var hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.up);
         foreach (var hit in hits)
         {
@@ -36,7 +36,7 @@ public class Rocket : Bullet
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!initiated) return;
-        if (!collision.isTrigger && collision.CompareTag("Survivor") || collision.CompareTag("Wall"))
+        if (!collision.isTrigger && (collision.CompareTag("Survivor") || collision.CompareTag("Wall")))
         {
             Explosion();
         }

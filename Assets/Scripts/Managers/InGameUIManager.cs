@@ -127,7 +127,7 @@ public class InGameUIManager : MonoBehaviour
 
     void AutoCameraMove()
     {
-        if(cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
+        if(autoFocus.GetComponent<Toggle>().isOn && cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
     }
 
     void ManualCameraMove()
@@ -151,6 +151,7 @@ public class InGameUIManager : MonoBehaviour
     void OnNavigate(InputValue value)
     {
         navVector = value.Get<Vector2>();
+        cameraTarget = null;
     }
 
     void OnScrollWheel(InputValue value)
@@ -251,15 +252,6 @@ public class InGameUIManager : MonoBehaviour
         fightingText.GetComponent<Help>().SetDescription("");
         knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
-    }
-
-    public void AutoFocus()
-    {
-        if (autoFocus.GetComponent<Toggle>().isOn && selectedObject != null)
-        {
-            cameraTarget = selectedObject.transform;
-        }
-        else cameraTarget = null;
     }
 
     void SelectObject()
@@ -427,11 +419,12 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);
             selectedObjectsCurrentVest.SetActive(true);
+            List<Item> selectedSurvivorsInventory = selectedSurvivor.Inventory.GetAllItems();
             for (int i = 0; i < selectedObjectsItems.Length; i++)
             {
-                if (selectedSurvivor.Inventory.Count > i)
+                if (selectedSurvivorsInventory.Count > i)
                 {
-                    if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.Inventory[i].itemType}", out var spriteEnum))
+                    if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivorsInventory[i].itemType}", out var spriteEnum))
                     {
                         Image itemImage = selectedObjectsItems[i].GetComponentInChildren<Image>();
                         itemImage.sprite = ResourceManager.Get(spriteEnum);
@@ -442,7 +435,7 @@ public class InGameUIManager : MonoBehaviour
                     {
                         selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
                     }
-                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivor.Inventory[i].itemName} x {selectedSurvivor.Inventory[i].amount}";
+                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivorsInventory[i].itemName} x {selectedSurvivorsInventory[i].amount}";
                     selectedObjectsItems[i].SetActive(true);
                 }
                 else

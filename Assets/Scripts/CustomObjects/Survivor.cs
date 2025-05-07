@@ -261,21 +261,23 @@ public class Survivor : CustomObject
     [SerializeField] BulletproofVest currentVest;
     public BulletproofVest CurrentVest => currentVest;
 
-    [SerializeField] List<Item> inventory = new();
-    public List<Item> Inventory => inventory;
+    [SerializeField] Inventory inventory = new();
+    public Inventory Inventory => inventory;
     public Item ValidBullet
     {
         get
         {
-            int index;
-            if(CurrentWeapon.itemType != ItemManager.Items.Bazooka) index = inventory.FindIndex(x => x.itemName == $"Bullet({currentWeapon.itemName})");
-            else index = inventory.FindIndex(x => x.itemName == $"Rocket(Bazooka)");
-            if (index > -1)
+            string bulletName;
+            if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemName}";
+            else bulletName = "Rocket_Bazooka";
+            if (!Enum.TryParse(bulletName, out ItemManager.Items bullet))
             {
-                if (inventory[index].amount > 0)
-                {
-                    return inventory[index];
-                }
+                Debug.LogWarning($"Wrong bullet name : {bulletName}");
+                return null;
+            }
+            if (inventory.HasItem(bullet))
+            {
+                return inventory.GetItem(bullet);
             }
             return null;
         }
@@ -386,6 +388,7 @@ public class Survivor : CustomObject
             }
         }
     }
+    [SerializeField] Area lastFarmingArea;
     [SerializeField] Dictionary<FarmingSection, bool> farmingSections = new();
     [SerializeField] FarmingSection targetFarmingSection;
     [SerializeField] Dictionary<Box, bool> farmingBoxes = new();
@@ -645,7 +648,7 @@ public class Survivor : CustomObject
             animator.SetBool("Aim", false);
             curAimDelay = 0;
 
-            if(CurrentFarmingArea != null && CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited)
+            if(CurrentFarmingArea != null && (CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited))
             {
                 CurrentFarmingArea = FindNearest(farmingAreas);
             }
@@ -803,8 +806,7 @@ public class Survivor : CustomObject
     {
         if (BleedingAmount >= 30 || (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2)
         {
-            int bandageIndex = inventory.FindIndex(x => x.itemType == ItemManager.Items.BandageRoll || x.itemType == ItemManager.Items.HemostaticBandageRoll);
-            if (bandageIndex != -1)
+            if (inventory.HasItem(ItemManager.Items.BandageRoll) || inventory.HasItem(ItemManager.Items.HemostaticBandageRoll))
             {
                 StopBleeding();
                 return true;
@@ -1050,6 +1052,7 @@ public class Survivor : CustomObject
 
     void CheckAreaClear()
     {
+        if (currentFarmingArea == null) return;
         bool farmingSectionLeft = false;
         foreach (FarmingSection farminSection in currentFarmingArea.farmingSections)
         {
@@ -1077,7 +1080,7 @@ public class Survivor : CustomObject
             curFarmingTime += Time.deltaTime * farmingSpeed;
             if (curFarmingTime > farmingTime)
             {
-                foreach (Item item in targetFarmingCorpse.inventory)
+                foreach (Item item in targetFarmingCorpse.inventory.GetAllItems())
                     AcqireItem(item);
                 if(IsValid(targetFarmingCorpse.currentWeapon))
                 {
@@ -1213,14 +1216,14 @@ public class Survivor : CustomObject
         {
             if (!noMoreFarmingArea)
             {
-                foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
-                {
-                    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
-                    {
-                        CurrentFarmingArea = farmingArea;
-                        return;
-                    }
-                }
+                //foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
+                //{
+                //    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
+                //    {
+                //        CurrentFarmingArea = farmingArea;
+                //        return;
+                //    }
+                //}
 
                 Area area = FindNearest(farmingAreas);
                 if (area != null)
@@ -1231,15 +1234,15 @@ public class Survivor : CustomObject
                 else
                 {
                     noMoreFarmingArea = true;
-                    CurrentFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
+                    lastFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
                 }
             }
             else
             {
                 Vector2 wantPosition = transform.position;
                 wantPosition = new(
-                    currentFarmingArea.transform.position.x + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.x * 0.5f, currentFarmingArea.transform.localScale.x * 0.5f),
-                    currentFarmingArea.transform.position.y + UnityEngine.Random.Range(-currentFarmingArea.transform.localScale.y * 0.5f, currentFarmingArea.transform.localScale.y * 0.5f)
+                    lastFarmingArea.transform.position.x + UnityEngine.Random.Range(-lastFarmingArea.transform.localScale.x * 0.5f, lastFarmingArea.transform.localScale.x * 0.5f),
+                    lastFarmingArea.transform.position.y + UnityEngine.Random.Range(-lastFarmingArea.transform.localScale.y * 0.5f, lastFarmingArea.transform.localScale.y * 0.5f)
                     );
 
                 agent.SetDestination(wantPosition);
@@ -1346,21 +1349,16 @@ public class Survivor : CustomObject
         }
         else
         {
-            inventory.Add(item);
+            inventory.GetItem(item.itemType);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void ConsumptionItem(Item item, int amount)
     {
-        int index = inventory.IndexOf(item);
-        if(index > -1)
+        if(inventory.HasItem(item.itemType))
         {
-            inventory[index].amount -= amount;
-            if(inventory[index].amount == 0)
-            {
-                inventory.Remove(item);
-            }
+            inventory.RemoveItem(item.itemType, amount);
             InGameUIManager.UpdateSelectedObjectInventory(this);
         }
     }
@@ -1530,7 +1528,7 @@ public class Survivor : CustomObject
     {
         if (IsValid(currentHelmet))
         {
-            inventory.Add(currentHelmet);
+            inventory.GetItem(currentHelmet.itemType);
             Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemType}");
             if (curWeaponTF != null)
             {
@@ -1560,7 +1558,7 @@ public class Survivor : CustomObject
     {
         if (IsValid(currentVest))
         {
-            inventory.Add(currentVest);
+            inventory.GetItem(currentVest.itemType);
             currentVest = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);

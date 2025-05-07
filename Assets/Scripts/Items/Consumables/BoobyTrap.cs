@@ -42,7 +42,7 @@ public class ChemicalTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
-        PoolManager.Spawn(ResourceEnum.Prefab.GasLeak);
+        PoolManager.Spawn(ResourceEnum.Prefab.GasLeak, ownnerBox.transform.position);
         var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
         foreach (var hit in hits)
         {
@@ -80,7 +80,7 @@ public class ExplosiveTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
-        PoolManager.Spawn(ResourceEnum.Prefab.Explosion);
+        PoolManager.Spawn(ResourceEnum.Prefab.Explosion, ownnerBox.transform.position);
         victim.TakeDamage(this, 100);
         var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
         foreach (var hit in hits)
