@@ -50,8 +50,10 @@ public class InGameUIManager : MonoBehaviour
     public CustomObject SelectedObject;
     [SerializeField] GameObject selectedObjectInfo;
 
+    [SerializeField] TextMeshProUGUI selectedObjectKillCount;
     [SerializeField] Image selectedObjectImage;
     [SerializeField] TextMeshProUGUI selectedObjectName;
+    [SerializeField] TextMeshProUGUI selectedObjectCurrentStatus;
 
     [SerializeField] GameObject selectedSurvivorsHealthBar;
     [SerializeField] Image selectedSurvivorsHealthBarImage;
@@ -343,6 +345,8 @@ public class InGameUIManager : MonoBehaviour
         {
             //UpdateSelectedObjectStat(selectedObject as Survivor);
             UpdateSelectedObjectInjury(selectedObject as Survivor);
+            UpdateSelectedObjectKillCount(selectedObject as Survivor);
+            UpdateSelectedObjectStatus(selectedObject as Survivor);
         }
         UpdateSelectedObjectInventory(selectedObject);
     }
@@ -376,6 +380,28 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
+    public void UpdateSelectedObjectKillCount(Survivor survivor)
+    {
+        if (survivor != selectedObject) return;
+        selectedObjectKillCount.text = survivor.KillCount.ToString();
+    }
+
+    public void UpdateSelectedObjectStatus(Survivor survivor)
+    {
+        if (survivor != selectedObject) return;
+        selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
+        {
+            Survivor.Status.Farming => "Farming",
+            Survivor.Status.InCombat => "In combat",
+            Survivor.Status.InvestigateThreateningSound => "Investigating treatening sound",
+            Survivor.Status.Maintain => "Maintaining",
+            Survivor.Status.Trapping => "Trapping",
+            Survivor.Status.TraceEnemy => "Tracing enemy",
+            Survivor.Status.RunAway => "Running away",
+            _ => "?"
+        };
+    }
+
     public void UpdateSelectedObjectInventory(CustomObject selected)
     {
         if (selected != selectedObject) return;
@@ -395,6 +421,11 @@ public class InGameUIManager : MonoBehaviour
                 {
                     int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
                     selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {validBulletAmount})";
+                }
+                else if(selectedSurvivor.CurrentWeapon is MeleeWeapon meleeWeapon)
+                {
+                    if (meleeWeapon.IsEnchanted) selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName}(Poison enchanted)";
+                    else selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName;
                 }
                 else
                 {
@@ -419,7 +450,7 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);
             selectedObjectsCurrentVest.SetActive(true);
-            List<Item> selectedSurvivorsInventory = selectedSurvivor.Inventory.GetAllItems();
+            List<Item> selectedSurvivorsInventory = selectedSurvivor.Inventory;
             for (int i = 0; i < selectedObjectsItems.Length; i++)
             {
                 if (selectedSurvivorsInventory.Count > i)

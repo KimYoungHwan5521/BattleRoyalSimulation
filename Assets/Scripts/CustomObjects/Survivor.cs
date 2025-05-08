@@ -5,7 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Progress;
+using UnityEngine.UI;
 
 public class Survivor : CustomObject
 {
@@ -37,6 +37,7 @@ public class Survivor : CustomObject
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject nameTag;
     [SerializeField] GameObject prohibitTimer;
+    [SerializeField] Image progressBar;
     public InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
     ProjectileGenerator projectileGenerator;
     #endregion
@@ -61,6 +62,7 @@ public class Survivor : CustomObject
                 emotion.SetActive(false);
                 nameTag.SetActive(false);
                 prohibitTimer.SetActive(false);
+                progressBar.fillAmount = 0;
 
                 currentFarmingArea = GetCurrentArea();
                 GameManager.Instance.BattleRoyaleManager.SurvivorDead(this);
@@ -69,7 +71,17 @@ public class Survivor : CustomObject
     }
     public int survivorID;
     public string survivorName;
-    public Status currentStatus;
+    Status currentStatus;
+    public Status CurrentStatus
+    {
+        get => currentStatus;
+        set
+        {
+            currentStatus = value;
+            progressBar.fillAmount = 0;
+            InGameUIManager.UpdateSelectedObjectStatus(this);
+        }
+    }
     [SerializeField] float maxHP = 100;
     public float MaxHP => maxHP;
     [SerializeField] float curHP;
@@ -261,8 +273,8 @@ public class Survivor : CustomObject
     [SerializeField] BulletproofVest currentVest;
     public BulletproofVest CurrentVest => currentVest;
 
-    [SerializeField] Inventory inventory = new();
-    public Inventory Inventory => inventory;
+    [SerializeField] List<Item> inventory = new();
+    public List<Item> Inventory => inventory;
     public Item ValidBullet
     {
         get
@@ -275,11 +287,9 @@ public class Survivor : CustomObject
                 Debug.LogWarning($"Wrong bullet name : {bulletName}");
                 return null;
             }
-            if (inventory.HasItem(bullet))
-            {
-                return inventory.GetItem(bullet);
-            }
-            return null;
+
+            Item validBullet = inventory.Find(x => x.itemType == bullet);
+            return validBullet;
         }
     }
     bool currentWeaponisBestWeapon;
@@ -446,6 +456,7 @@ public class Survivor : CustomObject
         emotion.transform.parent = null;
         canvas.transform.SetParent(null);
         prohibitTimer.SetActive(false);
+        progressBar.fillAmount = 0;
 
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
@@ -674,7 +685,7 @@ public class Survivor : CustomObject
             {
                 if(Maintain())
                 {
-                    currentStatus = Status.Maintain;
+                    CurrentStatus = Status.Maintain;
                     return;
                 }
             }
@@ -694,7 +705,7 @@ public class Survivor : CustomObject
         }
         else
         {
-            currentStatus = Status.InCombat;
+            CurrentStatus = Status.InCombat;
             // 보고 있던 대상이 죽어버릴 경우
             if (inSightEnemies[0].isDead)
             {
@@ -804,9 +815,9 @@ public class Survivor : CustomObject
 
     bool Maintain()
     {
-        if (BleedingAmount >= 30 || (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2)
+        if (BleedingAmount >= 30 || (BleedingAmount > 0 && (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2))
         {
-            if (inventory.HasItem(ItemManager.Items.BandageRoll) || inventory.HasItem(ItemManager.Items.HemostaticBandageRoll))
+            if (inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll) != null || inventory.Find(x => x.itemType == ItemManager.Items.HemostaticBandageRoll) != null)
             {
                 StopBleeding();
                 return true;
@@ -883,7 +894,7 @@ public class Survivor : CustomObject
     void Farming()
     {
         lookRotation = Vector2.zero;
-        currentStatus = Status.Farming;
+        CurrentStatus = Status.Farming;
         sightMeshRenderer.material = m_SightNormal;
         if (targetFarmingCorpse != null)
         {
@@ -1054,15 +1065,21 @@ public class Survivor : CustomObject
     {
         if (currentFarmingArea == null) return;
         bool farmingSectionLeft = false;
-        foreach (FarmingSection farminSection in currentFarmingArea.farmingSections)
+        foreach (FarmingSection farmingSection in currentFarmingArea.farmingSections)
         {
-            if (!farmingSections[farminSection])
+            if (!farmingSections[farmingSection])
             {
                 farmingSectionLeft = true;
+                targetFarmingSection = farmingSection;
+                foreach (Box box in farmingSection.boxes) farmingBoxes.TryAdd(box, false);
                 return;
             }
         }
-        if (!farmingSectionLeft) farmingAreas[currentFarmingArea] = true;
+        if (!farmingSectionLeft)
+        {
+            farmingAreas[currentFarmingArea] = true;
+            CurrentFarmingArea = null;
+        }
     }
 
     void FarmingCorpse()
@@ -1078,9 +1095,10 @@ public class Survivor : CustomObject
             agent.SetDestination(transform.position);
 
             curFarmingTime += Time.deltaTime * farmingSpeed;
+            progressBar.fillAmount = curFarmingTime / farmingTime;
             if (curFarmingTime > farmingTime)
             {
-                foreach (Item item in targetFarmingCorpse.inventory.GetAllItems())
+                foreach (Item item in targetFarmingCorpse.inventory)
                     AcqireItem(item);
                 if(IsValid(targetFarmingCorpse.currentWeapon))
                 {
@@ -1106,6 +1124,7 @@ public class Survivor : CustomObject
                 targetFarmingBox = FindNearest(farmingBoxes);
                 lookRotation = Vector2.zero;
                 curFarmingTime = 0;
+                progressBar.fillAmount = 0;
             }
             else lookRotation = targetFarmingCorpse.transform.position - transform.position;
         }
@@ -1157,6 +1176,7 @@ public class Survivor : CustomObject
             }
 
             curFarmingTime += Time.deltaTime * farmingSpeed;
+            progressBar.fillAmount = curFarmingTime / farmingTime;
             if (curFarmingTime > farmingTime)
             {
                 farmingSFXPlayed = false;
@@ -1178,6 +1198,7 @@ public class Survivor : CustomObject
                 CheckCraftables();
                 lookRotation = Vector2.zero;
                 curFarmingTime = 0;
+                progressBar.fillAmount = 0;
             }
             else lookRotation = targetFarmingBox.transform.position - transform.position;
         }
@@ -1342,23 +1363,24 @@ public class Survivor : CustomObject
 
     void GetItem(Item item)
     {
-        Item sameItem = inventory.Find(x => x.itemName == item.itemName);
-        if (sameItem != null)
+        Item alreadyHave = inventory.Find(x => x.itemType == item.itemType);
+        if(alreadyHave != null)
         {
-            sameItem.amount += item.amount;
+            alreadyHave.amount += item.amount;
         }
         else
         {
-            inventory.GetItem(item.itemType);
+            inventory.Add(item);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     void ConsumptionItem(Item item, int amount)
     {
-        if(inventory.HasItem(item.itemType))
+        item.amount -= amount;
+        if(item.amount <= 0)
         {
-            inventory.RemoveItem(item.itemType, amount);
+            inventory.Remove(item);
             InGameUIManager.UpdateSelectedObjectInventory(this);
         }
     }
@@ -1528,7 +1550,7 @@ public class Survivor : CustomObject
     {
         if (IsValid(currentHelmet))
         {
-            inventory.GetItem(currentHelmet.itemType);
+            inventory.Add(currentHelmet);
             Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemType}");
             if (curWeaponTF != null)
             {
@@ -1558,7 +1580,7 @@ public class Survivor : CustomObject
     {
         if (IsValid(currentVest))
         {
-            inventory.GetItem(currentVest.itemType);
+            inventory.Add(currentVest);
             currentVest = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
@@ -1737,14 +1759,16 @@ public class Survivor : CustomObject
         }
         else
         {
-            curTrappingTime += Time.deltaTime;
-            currentStatus = Status.Trapping;
+            CurrentStatus = Status.Trapping;
             agent.SetDestination(transform.position);
             lookRotation = trapPlace.transform.position - transform.position;
 
+            curTrappingTime += Time.deltaTime;
+            progressBar.fillAmount = curTrappingTime / trappingTime;
             if(curTrappingTime > trappingTime)
             {
                 curTrappingTime = 0;
+                progressBar.fillAmount = 0;
                 if (Enum.TryParse(curBurying.itemType.ToString(), out ResourceEnum.Prefab trap))
                 {
                     Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
@@ -1764,14 +1788,16 @@ public class Survivor : CustomObject
     bool SetBoobyTrap()
     {
         if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null) return false;
-        curTrappingTime += Time.deltaTime;
-        currentStatus = Status.Trapping;
+        CurrentStatus = Status.Trapping;
         agent.SetDestination(transform.position);
         lookRotation = curSettingBoobyTrapBox.transform.position - transform.position;
         
+        curTrappingTime += Time.deltaTime;
+        progressBar.fillAmount = curTrappingTime / trappingTime;
         if (curTrappingTime > trappingTime)
         {
             curTrappingTime = 0;
+            progressBar.fillAmount = 0;
             (curSettingBoobyTrap as BoobyTrap).SetSetter(this, targetFarmingBox);
             ItemManager.AddItems(curSettingBoobyTrap.itemType, 1);
             curSettingBoobyTrapBox.items.Add(ItemManager.itemDictionary[curSettingBoobyTrap.itemType][^1]);
@@ -1785,7 +1811,7 @@ public class Survivor : CustomObject
     #region Combat
     void InvestigateThreateningSound()
     {
-        currentStatus = Status.InvestigateThreateningSound;
+        CurrentStatus = Status.InvestigateThreateningSound;
         animator.SetBool("Crafting", false);
         if (Vector2.Distance(transform.position, threateningSoundPosition) < 1f)
         {
@@ -1800,7 +1826,7 @@ public class Survivor : CustomObject
 
     void TraceEnemy()
     {
-        currentStatus = Status.TraceEnemy;
+        CurrentStatus = Status.TraceEnemy;
         if (Vector2.Distance(transform.position, targetEnemiesLastPosition) < 0.3f)
         {
             LookAround();
@@ -1887,8 +1913,10 @@ public class Survivor : CustomObject
         animator.SetBool("Aim", true);
 
         curAimDelay += Time.deltaTime;
+        progressBar.fillAmount = curAimDelay / aimDelay;
         if(curAimDelay > aimDelay)
         {
+            progressBar.fillAmount = 0;
             curShotTime -= Time.deltaTime;
             if(curShotTime < 0)
             {
@@ -1916,7 +1944,7 @@ public class Survivor : CustomObject
         runAwayFrom = target;
         if (runAwayDestination != Vector2.zero)
         {
-            currentStatus = Status.RunAway;
+            CurrentStatus = Status.RunAway;
             agent.SetDestination(runAwayDestination);
             return true;
         }
@@ -2120,6 +2148,7 @@ public class Survivor : CustomObject
         {
             curHP = 0;
             attacker.killCount++;
+            InGameUIManager.UpdateSelectedObjectKillCount(attacker);
             attacker.FindNewNearestFarmingTarget();
             IsDead = true;
             if (damagePart == InjurySiteMajor.Head && damageType == DamageType.GunShot)
@@ -2219,6 +2248,7 @@ public class Survivor : CustomObject
         {
             curHP = 0;
             poisonOriginator.killCount++;
+            InGameUIManager.UpdateSelectedObjectKillCount(poisonOriginator);
             IsDead = true;
             InGameUIManager.ShowKillLog(survivorName, poisonOriginator.survivorName);
         }

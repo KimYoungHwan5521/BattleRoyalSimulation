@@ -146,7 +146,7 @@ public class Calendar : CustomObject
     {
         for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
         {
-            if (i % 336 == 1)
+            if (i % 336 == 335)
             {
                 leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
