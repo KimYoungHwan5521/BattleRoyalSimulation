@@ -32,6 +32,7 @@ public enum InjuryType
     Loss, // ¼Õ½Ç
     Concussion, // ³úÁøÅÁ
     Burn, // È­»ó
+    PermanentVisualImpairment,
     RecoveringFromSurgery,
     ArtificalPartsTransplanted,
 }

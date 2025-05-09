@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping }
+    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -183,6 +183,7 @@ public class Survivor : CustomObject
             currentWeaponisBestWeapon = true;
         }
     }
+    bool isBlind;
     bool dizzy;
     bool Dizzy
     {
@@ -491,7 +492,7 @@ public class Survivor : CustomObject
 
         if (dizzy) return;
         AI();
-        DrawSightMesh();
+        if(!isBlind) DrawSightMesh();
     }
 
     public override void MyDestroy()
@@ -528,7 +529,6 @@ public class Survivor : CustomObject
                 }
             }
         }
-        CalculateSightMesh();
 
         List<RememberSound> reserveRemove = new();
         foreach (var sound in rememberSounds)
@@ -540,13 +540,8 @@ public class Survivor : CustomObject
         {
             rememberSounds.Remove(sound);
         }
-
-        if(runAwayFrom != null)
-        {
-            runawayable = CanRunAway(out runAwayDestination);
-        }
         
-        if(keepEyesOnPosition != Vector2.zero)
+        if(keepEyesOnPosition != Vector2.zero && !isBlind)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
             Look(keepEyesOnPosition);
@@ -563,6 +558,13 @@ public class Survivor : CustomObject
         else
         {
             Look((Vector2)agent.velocity);
+        }
+
+        if (isBlind) return;
+        CalculateSightMesh();
+        if(runAwayFrom != null)
+        {
+            runawayable = CanRunAway(out runAwayDestination);
         }
     }
 
@@ -653,7 +655,19 @@ public class Survivor : CustomObject
 
     void AI()
     {
-        if (inSightEnemies.Count == 0)
+        if(isBlind)
+        {
+            agent.SetDestination(transform.position);
+            if(CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
+            {
+                if (threateningSoundPosition != Vector2.zero) lookRotation = threateningSoundPosition;
+                else if (keepEyesOnPosition != Vector2.zero) lookRotation = keepEyesOnPosition;
+                else return;
+
+                Aim();
+            }
+        }
+        else if (inSightEnemies.Count == 0)
         {
             animator.SetBool("Attack", false);
             animator.SetBool("Aim", false);
@@ -1159,6 +1173,7 @@ public class Survivor : CustomObject
     {
         if(Vector2.Distance(bodyCollider.ClosestPoint(targetFarmingBox.transform.position), targetFarmingBox.Collider.ClosestPoint(transform.position)) < 1f)
         {
+            currentStatus = Status.FarmingBox;
             if (!farmingSFXPlayed) PlayFarmingNoise();
             farmingSFXPlayed = true;
             agent.SetDestination(transform.position);
@@ -1606,7 +1621,7 @@ public class Survivor : CustomObject
 
             bool lockPriorityCraftingsMaterials = false;
             // 그 다음으로 Crafting Priority 체크
-            if (linkedSurvivorData.priority1Crafting != null)
+            if (linkedSurvivorData.priority1Crafting != null && linkedSurvivorData.priority1Crafting.itemType != ItemManager.Items.NotValid)
             {
                 if (inventory.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType) == null)
                 {
@@ -2015,6 +2030,7 @@ public class Survivor : CustomObject
             if (i <= sightEdgeCount / 3) sightRange = leftSightRange;
             else if(i <= sightEdgeCount * 2 / 3) sightRange = Mathf.Max(rightSightRange, leftSightRange);
             else sightRange = rightSightRange;
+            if(currentStatus == Status.FarmingBox || currentStatus == Status.Trapping) sightRange = Mathf.Min(sightRange, 5);
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, sightRange, sightObstacleMask);
             if(hits.Length > 0)
             {
@@ -2142,8 +2158,17 @@ public class Survivor : CustomObject
             }
             if (!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
         }
-        if (!(damagedPartIsArtifical && noPain)) curHP -= damage;
-        attacker.totalDamage += damage;
+        float maxDamage = specificDamagePart switch
+        {
+            InjurySite.RightArm or InjurySite.LeftArm or InjurySite.RightLeg or InjurySite.LeftLeg => Mathf.Min(damage, 50),
+            InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Max(damage, 30),
+            InjurySite.RightHand or InjurySite.LeftHand or InjurySite.RightAncle or InjurySite.LeftAncle => Mathf.Min(damage, 20),
+            InjurySite.RightThumb or InjurySite.LeftThumb or InjurySite.RightIndexFinger or InjurySite.LeftIndexFinger or InjurySite.RightMiddleFinger or InjurySite.LeftMiddleFinger
+            or InjurySite.RightRingFinger or InjurySite.LeftRingFinger or InjurySite.RightLittleFinger or InjurySite.LeftLittleFinger or InjurySite.RightBigToe or InjurySite.LeftBigToe => Mathf.Min(damage, 10),
+            _ => damage
+        };
+        if (!(damagedPartIsArtifical && noPain)) curHP -= maxDamage;
+        attacker.totalDamage += maxDamage;
         if (curHP <= 0)
         {
             curHP = 0;
@@ -2550,11 +2575,13 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Contusion;
                     if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
+                    else if(injuryDegree > 0.9) AddInjury(injurySite, InjuryType.PermanentVisualImpairment, 1);
                 }
                 else if(damageType == DamageType.Cut)
                 {
                     injuryType = InjuryType.Cutting;
-                    AddInjury(injurySite, InjuryType.Loss, 1);
+                    if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
+                    else if (injuryDegree > 0.9) AddInjury(injurySite, InjuryType.PermanentVisualImpairment, 1);
                 }
                 else if(damageType == DamageType.GunShot)
                 {
@@ -2565,6 +2592,8 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Burn;
                     injuryDegree = Mathf.Clamp(damage / 20, 0, 1);
+                    if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
+                    else if (injuryDegree > 0.9) AddInjury(injurySite, InjuryType.PermanentVisualImpairment, 1);
                 }
                 break;
             case InjurySite.RightEar:
@@ -2894,7 +2923,7 @@ public class Survivor : CustomObject
             if (UpperPartAlreadyLoss(injurySite)) return;
 
             int index = injuries.FindIndex(x => x.site == injurySite);
-            if (index != -1)
+            if (index != -1 && injuries[index].type != InjuryType.PermanentVisualImpairment)
             {
                 injuries[index].degree += injuryDegree;
                 // dgree가 1이 되면 loss
@@ -3151,12 +3180,19 @@ public class Survivor : CustomObject
     float injuryCorrection_AttackSpeed = 1;
     float injuryCorrection_MoveSpeed = 1;
     float injuryCorrection_AttackDamage = 1;
+    bool isLeftEyeArtificial;
+    bool isLeftEyePermanentVisualImpairment;
+    bool isRightEyeArtificial;
+    bool isRightEyePermanentVisualImpairment;
+    float injuryCorrection_leftSightRange = 1;
+    float injuryCorrection_rightSightRange = 1;
     void ApplyInjuryPenalty()
     {
         InGameUIManager.UpdateSelectedObjectInjury(this);
         float ear1Penalty = 0;
         float ear2Penalty = 0;
         bool eyeInjured = false;
+        int blind = 0;
         float penaltiedFarmingSpeedByEyes = 0;
         float penaltiedFarmingSpeedByOrgan = 1;
         float penaltiedAttackSpeedByOrgan = 1;
@@ -3176,14 +3212,26 @@ public class Survivor : CustomObject
                     ear2Penalty = injury.degree;
                     break;
                 case InjurySite.RightEye:
-                    rightSightRange = 45 * (1 - injury.degree);
-                    penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
-                    eyeInjured = true;
+                    if (injury.type == InjuryType.ArtificalPartsTransplanted) isRightEyeArtificial = true;
+                    else if (injury.type == InjuryType.PermanentVisualImpairment) isRightEyePermanentVisualImpairment = true;
+                    else
+                    {
+                        injuryCorrection_rightSightRange = 1 - injury.degree;
+                        penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
+                        eyeInjured = true;
+                        if (injury.degree >= 1) blind++;
+                    }
                     break;
                 case InjurySite.LeftEye:
-                    leftSightRange = 45 * (1 - injury.degree);
-                    penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
-                    eyeInjured = true;
+                    if (injury.type == InjuryType.ArtificalPartsTransplanted) isLeftEyeArtificial = true;
+                    else if (injury.type == InjuryType.PermanentVisualImpairment) isLeftEyePermanentVisualImpairment = true;
+                    else
+                    {
+                        injuryCorrection_leftSightRange = 1 - injury.degree;
+                        penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
+                        eyeInjured = true;
+                        if (injury.degree >= 1) blind++;
+                    }
                     break;
                 case InjurySite.Organ:
                     penaltiedFarmingSpeedByOrgan = 1 - injury.degree;
@@ -3261,9 +3309,9 @@ public class Survivor : CustomObject
         if (rightHandDisabled && leftHandDisabled) penaltiedFarmingSpeedByHands = 0.1f;
         else if (rightHandDisabled || leftHandDisabled) penaltiedFarmingSpeedByHands = 0.7f;
         injuryCorrection_FarmingSpeed = penaltiedFarmingSpeedByEyes * penaltiedFarmingSpeedByOrgan * penaltiedFarmingSpeedByHands;
-
         injuryCorrection_AttackSpeed = penaltiedAttackSpeedByOrgan;
-        
+        isBlind = blind >= 2;
+
         Item walkingAid = inventory.Find(x => x.itemType == ItemManager.Items.WalkingAid);
         if (walkingAid != null)
         {
@@ -3429,8 +3477,12 @@ public class Survivor : CustomObject
 
     void ApplyCorrectionStats()
     {
-        leftSightRange = 45 * characteristicCorrection_SightRange;
-        rightSightRange = 45 * characteristicCorrection_SightRange;
+        if (isLeftEyeArtificial) leftSightRange = 30 * injuryCorrection_leftSightRange;
+        else if(isLeftEyePermanentVisualImpairment) leftSightRange = 15 * injuryCorrection_leftSightRange * characteristicCorrection_SightRange;
+        else leftSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_leftSightRange;
+        if (isRightEyeArtificial) rightSightRange = 30 * injuryCorrection_rightSightRange;
+        else if (isRightEyePermanentVisualImpairment) rightSightRange = 15 * injuryCorrection_rightSightRange * characteristicCorrection_SightRange;
+        else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_rightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
         attackDamage = linkedSurvivorData.AttackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
         attackSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);

@@ -391,7 +391,7 @@ public class InGameUIManager : MonoBehaviour
         if (survivor != selectedObject) return;
         selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
         {
-            Survivor.Status.Farming => "Farming",
+            Survivor.Status.Farming or Survivor.Status.FarmingBox => "Farming",
             Survivor.Status.InCombat => "In combat",
             Survivor.Status.InvestigateThreateningSound => "Investigating treatening sound",
             Survivor.Status.Maintain => "Maintaining",
