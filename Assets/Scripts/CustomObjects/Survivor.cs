@@ -1848,6 +1848,13 @@ public class Survivor : CustomObject
         }
         else
         {
+            // 추격하다가 destination이 금구가 되면 추격 중지
+            Area targetArea = GameManager.Instance.BattleRoyaleManager.GetArea(targetEnemiesLastPosition);
+            if (targetArea.IsProhibited_Plan || targetArea.IsProhibited)
+            {
+                targetEnemiesLastPosition = Vector2.zero;
+                return;
+            }
             agent.SetDestination(targetEnemiesLastPosition);
             lookRotation = Vector2.zero;
         }
@@ -1887,10 +1894,35 @@ public class Survivor : CustomObject
         animator.SetBool("Crafting", false);
         if (Vector2.Distance(agent.destination, target.transform.position) > attackRange)
         {
+            // 상대는 금구에 있고 난 아닌경우 :
+            // 내가 사거리가 더 길면 상대가 나올 곳에서 대기
+            // 내가 사거리가 더 짧으면 Approach
+            Area area = target.GetCurrentArea();
+            Vector2 destination;
+            float atkRange = CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine > 0 ? CurrentWeaponAsRangedWeapon.AttackRange : attackRange;
+            if ((area.IsProhibited_Plan || area.IsProhibited) && target.currentWeapon.AttackRange <= atkRange)
+            {
+                float x, y;
+                float myX = transform.position.x;
+                float myY = transform.position.y;
+                if(Mathf.Abs(myX - area.transform.position.x) > Mathf.Abs(myY - area.transform.position.y))
+                {
+                    x = myX > area.transform.position.x ? area.transform.position.x + 26 : area.transform.position.x - 26;
+                    y = myY;
+                }
+                else
+                {
+                    x = myX;
+                    y = myY > area.transform.position.y ? area.transform.position.y + 26 : area.transform.position.y - 26;
+                }
+                destination = new(x,y);
+            }
+            else destination = target.transform.position;
+
             curSetDestinationCool += Time.deltaTime;
             if (curSetDestinationCool > 1)
             {
-                agent.SetDestination(target.transform.position);
+                agent.SetDestination(destination);
                 curSetDestinationCool = 0;
             }
         }
@@ -3693,20 +3725,7 @@ public class Survivor : CustomObject
 
     public Area GetCurrentArea()
     {
-        float distance;
-        float minDistance = float.MaxValue;
-        Area nearest = null;
-        foreach(var area in farmingAreas)
-        {
-            Transform areaTransform = area.Key.transform;
-            distance = Vector2.Distance(transform.position, areaTransform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                nearest = area.Key;
-            }
-        }
-        return nearest;
+        return GameManager.Instance.BattleRoyaleManager.GetArea(transform.position);
     }
 
     public void SetSurvivorInfo(SurvivorData survivorInfo)

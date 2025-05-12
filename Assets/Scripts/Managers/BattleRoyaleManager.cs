@@ -368,4 +368,21 @@ public class BattleRoyaleManager
         GameObject.Destroy(map);
 
     }
+    public Area GetArea(Vector2 position)
+    {
+        float distance;
+        float minDistance = float.MaxValue;
+        Area nearest = null;
+        foreach (var area in areas)
+        {
+            Transform areaTransform = area.transform;
+            distance = Vector2.Distance(position, areaTransform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = area;
+            }
+        }
+        return nearest;
+    }
 }

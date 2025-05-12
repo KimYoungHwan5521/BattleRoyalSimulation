@@ -7,13 +7,14 @@ public class LandMine : Trap
     {
         base.Trigger(rightLeg);
         victim.TakeDamage(this, rightLeg ? InjurySite.RightAncle : InjurySite.LeftAncle);
-        var hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.up);
+        var hits = Physics2D.OverlapCircleAll(transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {
-            if(!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
+            if(!hit.isTrigger && hit.TryGetComponent(out Survivor splashedSurvivor))
             {
                 if (splashedSurvivor == victim) continue;
-                float distance = Mathf.Max(Vector2.Distance(transform.position, hit.point), 1);
+                Vector2 closestPoint = hit.ClosestPoint(transform.position);
+                float distance = Mathf.Max(Vector2.Distance(transform.position, closestPoint), 1);
                 splashedSurvivor.TakeDamage(this, damage / (distance * distance), rightLeg ? 1 : 2);
             }
         }

@@ -43,10 +43,10 @@ public class ChemicalTrap : BoobyTrap
     public override void Trigger(Survivor victim)
     {
         PoolManager.Spawn(ResourceEnum.Prefab.GasLeak, ownnerBox.transform.position);
-        var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
+        var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, 2f, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {
-            if (!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
+            if (!hit.isTrigger && hit.TryGetComponent(out Survivor splashedSurvivor))
             {
                 splashedSurvivor.Poisoning(setter);
             }
@@ -82,13 +82,14 @@ public class ExplosiveTrap : BoobyTrap
     {
         PoolManager.Spawn(ResourceEnum.Prefab.Explosion, ownnerBox.transform.position);
         victim.TakeDamage(this, 100);
-        var hits = Physics2D.CircleCastAll(ownnerBox.transform.position, 2f, Vector2.up);
+        var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, 2f, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {
-            if (!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
+            if (!hit.isTrigger && hit.TryGetComponent(out Survivor splashedSurvivor))
             {
                 if (splashedSurvivor == victim) continue;
-                float distance = Mathf.Max(Vector2.Distance(ownnerBox.transform.position, hit.point), 1);
+                Vector2 closestPoint = hit.ClosestPoint(ownnerBox.transform.position);
+                float distance = Mathf.Max(Vector2.Distance(ownnerBox.transform.position, closestPoint), 1);
                 splashedSurvivor.TakeDamage(this, 100 / (distance * distance));
             }
         }

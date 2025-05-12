@@ -7,12 +7,13 @@ public class Rocket : Bullet
     void Explosion()
     {
         PoolManager.Spawn(ResourceEnum.Prefab.Explosion, transform.position);
-        var hits = Physics2D.CircleCastAll(transform.position, explosionRange, Vector2.up);
+        var hits = Physics2D.OverlapCircleAll(transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {
-            if (!hit.collider.isTrigger && hit.collider.TryGetComponent(out Survivor splashedSurvivor))
+            if (!hit.isTrigger && hit.TryGetComponent(out Survivor splashedSurvivor))
             {
-                float distance = Vector2.Distance(transform.position, hit.point);
+                Vector2 closestPoint = hit.ClosestPoint(transform.position);
+                float distance = Vector2.Distance(transform.position, closestPoint);
                 bool critical = distance < 1f;
                 float damage = critical ? launcher.CurrentWeapon.AttackDamage : launcher.CurrentWeapon.AttackDamage / (distance * distance);
                 splashedSurvivor.TakeDamage(this, damage, critical);
