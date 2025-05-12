@@ -102,10 +102,17 @@ public class ItemManager
         craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
         craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0));
+        craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0));
+        craftables.Add(new Craftable(Items.Bullet_Revolver, 40, 0, 0, 0, 1, 1, 4, 0));
+        craftables.Add(new Craftable(Items.Bullet_AssaultRifle, 40, 0, 0, 0, 2, 2, 1, 0));
+        craftables.Add(new Craftable(Items.Bullet_SniperRifle, 40, 0, 0, 0, 1, 2, 1, 0));
+        craftables.Add(new Craftable(Items.Bullet_ShotGun, 40, 0, 0, 0, 3, 1, 1, 0));
         craftables.Add(new Craftable(Items.BearTrap, 45, 0, 2, 0, 3, 0, 3, 0));
         craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 6, 1, 0, 1, 1));
         craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0));
         craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.Rocket_Bazooka, 75, 0, 1, 0, 0, 3, 1, 0));
         craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0));
         craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.Poison, 3)));
         craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));

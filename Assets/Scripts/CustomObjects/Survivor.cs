@@ -1364,8 +1364,7 @@ public class Survivor : CustomObject
             currentWeaponisBestWeapon = false;
             GetItem(item);
             string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
-            RangedWeapon weapon = inventory.Find(x => x.itemName == wantWeapon) as RangedWeapon;
-            if(weapon != null && CompareWeaponValue(weapon))
+            if (inventory.Find(x => x.itemName == wantWeapon) is RangedWeapon weapon && CompareWeaponValue(weapon))
             {
                 Equip(weapon);
             }
@@ -1607,7 +1606,6 @@ public class Survivor : CustomObject
     {
         if(craftables.Count > 0)
         {
-
             // 중독 중이면 우선적으로 해독제부터
             if(poisoned && linkedSurvivorData.craftingAllows[ItemManager.craftables.FindIndex(x => x.itemType == ItemManager.Items.Antidote)])
             {
@@ -1669,7 +1667,37 @@ public class Survivor : CustomObject
                         // 아니면(priority1의 재료면) 만듦
                     }
                 }
-                switch(craftables[^i].itemType)
+                // 총알 필요성 검사
+                bool bulletNeeds = false;
+                Item bestWeapon = null;
+                if (linkedSurvivorData.priority1Weapon != ItemManager.Items.NotValid) bestWeapon = inventory.Find(x => x.itemType == linkedSurvivorData.priority1Weapon);
+                if (bestWeapon == null)
+                {
+                    float maxRange = 0;
+                    if (CurrentWeaponAsRangedWeapon != null)
+                    {
+                        bestWeapon = CurrentWeaponAsRangedWeapon;
+                        maxRange = CurrentWeaponAsRangedWeapon.AttackRange;
+                    }
+                    foreach (var item in inventory)
+                    {
+                        if (item is RangedWeapon rangedWeapon && rangedWeapon.AttackRange > maxRange)
+                        {
+                            bestWeapon = item;
+                            maxRange = rangedWeapon.AttackRange;
+                        }
+                    }
+                }
+                if(bestWeapon != null)
+                {
+                    if (CurrentWeaponAsRangedWeapon == bestWeapon)
+                    {
+                        if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) bulletNeeds = true;
+                    }
+                    else bulletNeeds = true;
+                }
+                // 아이템 제작 필요성 검사
+                switch (craftables[^i].itemType)
                 {
                     case ItemManager.Items.Poison:
                         continue;
@@ -1681,6 +1709,23 @@ public class Survivor : CustomObject
                         {
                             Craft(craftables[^i]);
                             return true;
+                        }
+                        else continue;
+                    case ItemManager.Items.Bullet_Revolver:
+                    case ItemManager.Items.Bullet_Pistol:
+                    case ItemManager.Items.Bullet_SubMachineGun:
+                    case ItemManager.Items.Bullet_ShotGun:
+                    case ItemManager.Items.Bullet_AssaultRifle:
+                    case ItemManager.Items.Bullet_SniperRifle:
+                    case ItemManager.Items.Rocket_Bazooka:
+                        if (bulletNeeds)
+                        {
+                            if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
+                            {
+                                Craft(craftables[^i]);
+                                return true;
+                            }
+                            else continue;
                         }
                         else continue;
                     default: 
