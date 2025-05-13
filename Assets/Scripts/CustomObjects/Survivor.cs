@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping }
+    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, TrapDisarming, Crafting }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -141,8 +141,8 @@ public class Survivor : CustomObject
     [SerializeField] List<Characteristic> charicteristics;
     public List<Characteristic> Characteristics => charicteristics;
 
-    [SerializeField] Vector2 lookRotation = Vector2.zero;
-    public Vector2 LookRotation => lookRotation;
+    [SerializeField] Vector2 lookPosition = Vector2.zero;
+    public Vector2 LookRotation => lookPosition;
 
     public List<Injury> injuries = new();
     public List<InjurySite> rememberAlreadyHaveInjury;
@@ -284,6 +284,7 @@ public class Survivor : CustomObject
     {
         get
         {
+            if (CurrentWeaponAsRangedWeapon == null) return null;
             string bulletName;
             if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemName}";
             else bulletName = "Rocket_Bazooka";
@@ -301,6 +302,7 @@ public class Survivor : CustomObject
 
     [SerializeField]List<ItemManager.Craftable> craftables = new();
     ItemManager.Craftable currentCrafting;
+    public ItemManager.Craftable CurrentCrafting => currentCrafting;
     int AdvancedComponentCount
     {
         get
@@ -345,6 +347,7 @@ public class Survivor : CustomObject
     }
     Item curEnchanting;
     Item curDrinking;
+    float curCraftingTime;
     #endregion
     #region Trap
     public TrapPlace trapPlace;
@@ -358,7 +361,6 @@ public class Survivor : CustomObject
     List<Trap> detectedTraps = new();
     List<Box> detectedTrapSetBoxes = new();
     Trap curDisarmTrap;
-    float disarmTime = 10;
     float curDisarmTime;
     #endregion
     #region Enemies
@@ -387,7 +389,6 @@ public class Survivor : CustomObject
     float curSetDestinationCool = 1f;
     [SerializeField] Vector2 runAwayDestination;
     [SerializeField] Survivor runAwayFrom;
-    [SerializeField] bool runawayable;
 
     // value : Had finished farming?
     public Dictionary<Area, bool> farmingAreas = new();
@@ -482,7 +483,6 @@ public class Survivor : CustomObject
         agent.speed = moveSpeed;
     }
 
-
     override public void MyUpdate()
     {
         if(!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead)
@@ -560,9 +560,9 @@ public class Survivor : CustomObject
                 curKeepAnEyeOnTime = 0;
             }
         }
-        else if (lookRotation != Vector2.zero)
+        else if (lookPosition != Vector2.zero)
         {
-            Look(lookRotation);
+            Look(lookPosition);
         }
         else
         {
@@ -573,7 +573,7 @@ public class Survivor : CustomObject
         CalculateSightMesh();
         if(runAwayFrom != null)
         {
-            runawayable = CanRunAway(out runAwayDestination);
+            CanRunAway(out runAwayDestination);
         }
     }
 
@@ -608,7 +608,7 @@ public class Survivor : CustomObject
                 targetFarmingCorpse = null;
                 return;
             }
-            lookRotation = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
+            lookPosition = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
             lookAroundCount++;
         }
     }
@@ -669,8 +669,8 @@ public class Survivor : CustomObject
             agent.SetDestination(transform.position);
             if(CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
             {
-                if (threateningSoundPosition != Vector2.zero) lookRotation = threateningSoundPosition;
-                else if (keepEyesOnPosition != Vector2.zero) lookRotation = keepEyesOnPosition;
+                if (threateningSoundPosition != Vector2.zero) lookPosition = threateningSoundPosition;
+                else if (keepEyesOnPosition != Vector2.zero) lookPosition = keepEyesOnPosition;
                 else return;
 
                 Aim();
@@ -756,7 +756,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                lookRotation = TargetEnemy.transform.position - transform.position;
+                lookPosition = TargetEnemy.transform.position - transform.position;
                 float distance = Vector2.Distance(transform.position, TargetEnemy.transform.position);
                 bool enemyInAttackRange = false;
                 if (IsValid(currentWeapon))
@@ -908,7 +908,16 @@ public class Survivor : CustomObject
     void TryFarming()
     {
         if (SetBoobyTrap()) return;
-        if (Crafting()) return;
+        if (currentCrafting != null)
+        {
+            Craft();
+            return;
+        }
+        else if (Crafting())
+        {
+            curCraftingTime = 0;
+            return;
+        }
         if (Enchanting()) return;
         animator.SetBool("Crafting", false);
         if (trapPlace != null && trapPlace.BuriedTrap == null)
@@ -920,7 +929,7 @@ public class Survivor : CustomObject
 
     void Farming()
     {
-        lookRotation = Vector2.zero;
+        lookPosition = Vector2.zero;
         CurrentStatus = Status.Farming;
         sightMeshRenderer.material = m_SightNormal;
         if (targetFarmingCorpse != null)
@@ -1149,11 +1158,11 @@ public class Survivor : CustomObject
                 CurrentFarmingArea = FindNearest(farmingAreas);
                 targetFarmingSection = FindNearest(farmingSections);
                 targetFarmingBox = FindNearest(farmingBoxes);
-                lookRotation = Vector2.zero;
+                lookPosition = Vector2.zero;
                 curFarmingTime = 0;
                 progressBar.fillAmount = 0;
             }
-            else lookRotation = targetFarmingCorpse.transform.position - transform.position;
+            else lookPosition = targetFarmingCorpse.transform.position - transform.position;
         }
         else
         {
@@ -1224,11 +1233,11 @@ public class Survivor : CustomObject
                 targetFarmingBox = null;
 
                 CheckCraftables();
-                lookRotation = Vector2.zero;
+                lookPosition = Vector2.zero;
                 curFarmingTime = 0;
                 progressBar.fillAmount = 0;
             }
-            else lookRotation = targetFarmingBox.transform.position - transform.position;
+            else lookPosition = targetFarmingBox.transform.position - transform.position;
         }
         else
         {
@@ -1627,7 +1636,7 @@ public class Survivor : CustomObject
                 ItemManager.Craftable antidote = craftables.Find(x => x.itemType == ItemManager.Items.Antidote);
                 if (antidote != null)
                 {
-                    Craft(antidote);
+                    currentCrafting = antidote;
                     return true;
                 }
             }
@@ -1641,7 +1650,7 @@ public class Survivor : CustomObject
                     var priority1 = craftables.Find(x => x == linkedSurvivorData.priority1Crafting);
                     if (priority1 != null)
                     {
-                        Craft(priority1);
+                        currentCrafting = priority1;
                         return true;
                     }
                     else lockPriorityCraftingsMaterials = true;
@@ -1682,7 +1691,7 @@ public class Survivor : CustomObject
                         // 아니면(priority1의 재료면) 만듦
                         else
                         {
-                            Craft(craftables[^i]);
+                            currentCrafting = craftables[^i];
                             return true;
                         }
                     }
@@ -1729,7 +1738,7 @@ public class Survivor : CustomObject
                         int currentHave = walkingAid != null ? walkingAid.amount : 0;
                         if (currentHave < howManyNeed)
                         {
-                            Craft(craftables[^i]);
+                            currentCrafting = craftables[^i];
                             return true;
                         }
                         else continue;
@@ -1744,14 +1753,14 @@ public class Survivor : CustomObject
                         {
                             if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
                             {
-                                Craft(craftables[^i]);
+                                currentCrafting = craftables[^i];
                                 return true;
                             }
                             else continue;
                         }
                         else continue;
-                    default: 
-                        Craft(craftables[^i]);
+                    default:
+                        currentCrafting = craftables[^i];
                         return true;
                 }
             }
@@ -1783,15 +1792,35 @@ public class Survivor : CustomObject
         return false;
     }
 
-    void Craft(ItemManager.Craftable wantItem)
+    void Craft()
     {
-        currentCrafting = wantItem;
-        // 애니메이션 실행
+        currentStatus = Status.Crafting;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
+
+        curCraftingTime += Time.deltaTime;
+        progressBar.fillAmount = curCraftingTime / currentCrafting.craftingTime;
+        if(curCraftingTime > currentCrafting.craftingTime)
+        {
+            curCraftingTime = 0;
+            animator.SetBool("Crafting", false);
+            if (currentCrafting.needAdvancedComponentCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), currentCrafting.needAdvancedComponentCount);
+            if (currentCrafting.needComponentsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Components), currentCrafting.needComponentsCount);
+            if (currentCrafting.needChemicalsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), currentCrafting.needChemicalsCount);
+            if (currentCrafting.needSalvagesCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Salvages), currentCrafting.needSalvagesCount);
+            if (currentCrafting.needGunpowderCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), currentCrafting.needGunpowderCount);
+            foreach (var etcNeeds in currentCrafting.etcNeedItems) ConsumptionItem(inventory.Find(x => x.itemType == etcNeeds.Key), etcNeeds.Value);
+
+            int amount = currentCrafting.outputAmount;
+            ItemManager.AddItems(currentCrafting.itemType, amount);
+            for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting.itemType][^i]);
+            currentCrafting = null;
+            craftables.Clear();
+            CheckCraftables();
+        }
     }
-    
+
     void Enchant(Item wantItem)
     {
         curEnchanting = wantItem;
@@ -1844,7 +1873,7 @@ public class Survivor : CustomObject
         {
             CurrentStatus = Status.Trapping;
             agent.SetDestination(transform.position);
-            lookRotation = trapPlace.transform.position - transform.position;
+            lookPosition = trapPlace.transform.position - transform.position;
 
             curTrappingTime += Time.deltaTime;
             progressBar.fillAmount = curTrappingTime / trappingTime;
@@ -1873,7 +1902,7 @@ public class Survivor : CustomObject
         if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null) return false;
         CurrentStatus = Status.Trapping;
         agent.SetDestination(transform.position);
-        lookRotation = curSettingBoobyTrapBox.transform.position - transform.position;
+        lookPosition = curSettingBoobyTrapBox.transform.position - transform.position;
         
         curTrappingTime += Time.deltaTime;
         progressBar.fillAmount = curTrappingTime / trappingTime;
@@ -1924,10 +1953,18 @@ public class Survivor : CustomObject
             }
             curDisarmTrap = nearestTrap;
         }
+        else if(Vector2.Distance(transform.position, curDisarmTrap.transform.position) > 1.5f)
+        {
+            agent.SetDestination(curDisarmTrap.transform.position);
+        }
         else
         {
+            currentStatus = Status.TrapDisarming;
+            agent.SetDestination(transform.position);
+            lookPosition = curDisarmTrap.transform.position;
             curDisarmTime += Time.deltaTime;
-            if(curDisarmTime > disarmTime)
+            progressBar.fillAmount = curDisarmTime / curDisarmTrap.DisarmTime;
+            if(curDisarmTime > curDisarmTrap.DisarmTime)
             {
                 ItemManager.AddItems(curDisarmTrap.ItemType, 1);
                 GetItem(ItemManager.itemDictionary[curDisarmTrap.ItemType][^1]);
@@ -1968,7 +2005,7 @@ public class Survivor : CustomObject
         else
         {
             agent.SetDestination(threateningSoundPosition);
-            lookRotation = Vector2.zero;
+            lookPosition = Vector2.zero;
         }
     }
 
@@ -1989,7 +2026,7 @@ public class Survivor : CustomObject
                 return;
             }
             agent.SetDestination(targetEnemiesLastPosition);
-            lookRotation = Vector2.zero;
+            lookPosition = Vector2.zero;
         }
     }
 
@@ -3729,28 +3766,6 @@ public class Survivor : CustomObject
         }
         ConsumptionItem(bandage, 1);
         BleedingAmount -= hemostaticAmount;
-    }
-
-    void AE_Crafting()
-    {
-        if(currentCrafting == null)
-        {
-            Debug.LogWarning("There is no currentCrafting.");
-            return;
-        }
-        if (currentCrafting.needAdvancedComponentCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.AdvancedComponent), currentCrafting.needAdvancedComponentCount);
-        if (currentCrafting.needComponentsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Components), currentCrafting.needComponentsCount);
-        if (currentCrafting.needChemicalsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), currentCrafting.needChemicalsCount);
-        if (currentCrafting.needSalvagesCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Salvages), currentCrafting.needSalvagesCount);
-        if (currentCrafting.needGunpowderCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), currentCrafting.needGunpowderCount);
-        foreach(var etcNeeds in currentCrafting.etcNeedItems) ConsumptionItem(inventory.Find(x => x.itemType == etcNeeds.Key), etcNeeds.Value);
-
-        int amount = currentCrafting.outputAmount;
-        ItemManager.AddItems(currentCrafting.itemType, amount);
-        for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting.itemType][^i]);
-        currentCrafting = null;
-        craftables.Clear();
-        CheckCraftables();
     }
 
     void AE_Enchanting()

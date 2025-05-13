@@ -7,12 +7,12 @@ public class BiometricRader : MonoBehaviour
     [SerializeField] Survivor owner;
     [SerializeField] List<Survivor> detecteds;
 
-    int cool = 60;
+    [SerializeField] int cool = 60;
     int count = 0;
     void Update()
     {
         count++;
-        if(count > 60)
+        if(count > cool)
         {
             count = 0;
             Vector2[] vector2s = new Vector2[detecteds.Count];

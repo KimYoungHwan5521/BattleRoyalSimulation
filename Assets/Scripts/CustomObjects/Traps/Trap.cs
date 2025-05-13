@@ -7,10 +7,12 @@ public class Trap : CustomObject
     protected Survivor victim;
     public TrapPlace ownerPlace;
     [SerializeField] ItemManager.Items itemType;
-    public ItemManager.Items ItemType;
+    public ItemManager.Items ItemType => itemType;
     [SerializeField] protected float damage;
     [SerializeField] protected DamageType damageType;
     [SerializeField] protected bool isBuriedType;
+    [SerializeField] float disarmTime;
+    public float DisarmTime => disarmTime;
 
     public float Damage => damage;
     public DamageType DamageType => damageType;

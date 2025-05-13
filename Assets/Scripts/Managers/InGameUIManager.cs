@@ -398,7 +398,9 @@ public class InGameUIManager : MonoBehaviour
             Survivor.Status.Trapping => "Trapping",
             Survivor.Status.TraceEnemy => "Tracing enemy",
             Survivor.Status.RunAway => "Running away",
-            _ => "?"
+            Survivor.Status.TrapDisarming => "Trap Disarming",
+            Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting}",
+            _ => survivor.CurrentStatus.ToString()
         };
     }
 

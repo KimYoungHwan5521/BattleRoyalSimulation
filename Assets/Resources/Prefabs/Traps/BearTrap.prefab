@@ -126,6 +126,7 @@ MonoBehaviour:
   damage: 40
   damageType: 1
   isBuriedType: 1
+  disarmTime: 7
 --- !u!58 &4422880641072551371
 CircleCollider2D:
   m_ObjectHideFlags: 0

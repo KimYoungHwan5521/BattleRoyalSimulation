@@ -78,8 +78,9 @@ public class ItemManager
         public int outputAmount;
         public int craftingAnimNumber;
         public Dictionary<Items, int> etcNeedItems = new();
+        public float craftingTime;
 
-        public Craftable(Items itemType, int requiredKnowledge, int needAdvancedComponentCount, int needComponentsCount, int needChemicalsCount, int needSalvagesCount, int needGunpowderCount, int outputAmount, int craftingAnimNumber, params KeyValuePair<Items, int>[] etcNeedItems)
+        public Craftable(Items itemType, int requiredKnowledge, int needAdvancedComponentCount, int needComponentsCount, int needChemicalsCount, int needSalvagesCount, int needGunpowderCount, int outputAmount, int craftingAnimNumber, float craftingTime, params KeyValuePair<Items, int>[] etcNeedItems)
         {
             this.itemType = itemType;
             this.requiredKnowledge = requiredKnowledge;
@@ -90,6 +91,7 @@ public class ItemManager
             this.needGunpowderCount = needGunpowderCount;
             this.outputAmount = outputAmount;
             this.craftingAnimNumber = craftingAnimNumber;
+            this.craftingTime = craftingTime;
             foreach(var needItem in  etcNeedItems) this.etcNeedItems.Add(needItem.Key, needItem.Value);
         }
     }
@@ -98,30 +100,30 @@ public class ItemManager
 
     public IEnumerator Initiate()
     {
-        craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0));
-        craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1));
-        craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0));
-        craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1));
-        craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
-        craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0));
-        craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0));
-        craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0));
-        craftables.Add(new Craftable(Items.Bullet_Revolver, 40, 0, 0, 0, 1, 1, 4, 0));
-        craftables.Add(new Craftable(Items.Bullet_AssaultRifle, 40, 0, 0, 0, 2, 2, 1, 0));
-        craftables.Add(new Craftable(Items.Bullet_SniperRifle, 40, 0, 0, 0, 1, 2, 1, 0));
-        craftables.Add(new Craftable(Items.Bullet_ShotGun, 40, 0, 0, 0, 3, 1, 1, 0));
-        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 2, 0, 3, 0, 3, 0));
-        craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 6, 1, 0, 1, 1));
-        craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0));
-        craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0));
-        craftables.Add(new Craftable(Items.Rocket_Bazooka, 75, 0, 1, 0, 0, 3, 1, 0));
-        craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0));
-        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, new KeyValuePair<Items, int>(Items.Poison, 3)));
-        craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));
-        craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0));
-        craftables.Add(new Craftable(Items.Bazooka, 95, 0, 8, 0, 4, 0, 1, 0));
-        craftables.Add(new Craftable(Items.TrapDetectionDevice, 99, 2, 2, 1, 0, 0, 1, 0));
-        craftables.Add(new Craftable(Items.BiometricRader, 100, 3, 2, 1, 0, 0, 1, 0));
+        craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1, 3.5f));
+        craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
+        craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
+        craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0, 7f));
+        craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Bullet_Revolver, 40, 0, 0, 0, 1, 1, 4, 0, 7f));
+        craftables.Add(new Craftable(Items.Bullet_AssaultRifle, 40, 0, 0, 0, 2, 2, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Bullet_SniperRifle, 40, 0, 0, 0, 1, 2, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Bullet_ShotGun, 40, 0, 0, 0, 3, 1, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 2, 0, 3, 0, 3, 0, 10f));
+        craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 6, 1, 0, 1, 1, 3.5f));
+        craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0, 18f));
+        craftables.Add(new Craftable(Items.Rocket_Bazooka, 75, 0, 1, 0, 0, 3, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0, 10f));
+        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, 7, new KeyValuePair<Items, int>(Items.Poison, 3)));
+        craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.Bazooka, 95, 0, 8, 0, 4, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.TrapDetectionDevice, 99, 2, 2, 1, 0, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.BiometricRader, 100, 3, 2, 1, 0, 0, 1, 0, 21f));
         yield return null;
     }
 

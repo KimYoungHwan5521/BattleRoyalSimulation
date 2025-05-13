@@ -121,7 +121,7 @@ namespace ResourceEnum
         Gunpowder,
         // ETC
         WalkingAid,
-        TrapDtectionDevice,
+        TrapDetectionDevice,
         BiometricRader,
 
         // Leagues
