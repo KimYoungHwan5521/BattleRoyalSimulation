@@ -18,6 +18,8 @@ public class Survivor : CustomObject
     [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
+    [SerializeField] CircleCollider2D trapDetectionDeviceCollider;
+    [SerializeField] CircleCollider2D biometricRaderCollider;
     Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
 
@@ -58,6 +60,8 @@ public class Survivor : CustomObject
                 animator.SetTrigger("Dead");
                 sightCollider.enabled = false;
                 bodyCollider.isTrigger = true;
+                trapDetectionDeviceCollider.enabled = false;
+                biometricRaderCollider.enabled = false;
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
                 nameTag.SetActive(false);
@@ -351,6 +355,11 @@ public class Survivor : CustomObject
     Box curSettingBoobyTrapBox;
 
     public List<GameObject> burieds = new();
+    List<Trap> detectedTraps = new();
+    List<Box> detectedTrapSetBoxes = new();
+    Trap curDisarmTrap;
+    float disarmTime = 10;
+    float curDisarmTime;
     #endregion
     #region Enemies
     [Header("Enemies")]
@@ -704,7 +713,11 @@ public class Survivor : CustomObject
                 }
             }
 
-            if(threateningSoundPosition != Vector2.zero)
+            if(detectedTraps.Count > 0)
+            {
+                DisarmTrap();
+            }
+            else if(threateningSoundPosition != Vector2.zero)
             {
                 InvestigateThreateningSound();
             }
@@ -1286,19 +1299,19 @@ public class Survivor : CustomObject
         }
     }
 
-    public void LeaveCurrentArea()
+    public void RemoveProhibitArea(Area area)
     {
-        farmingAreas[currentFarmingArea] = true;
-        foreach (FarmingSection farmingSection in currentFarmingArea.farmingSections)
-        {
-            if (farmingSections.ContainsKey(farmingSection)) farmingSections[farmingSection] = true;
-            foreach (Box box in farmingSection.boxes)
-            {
-                if(farmingBoxes.ContainsKey(box)) farmingBoxes[box] = true;
-            }
-        }
+        farmingAreas[area] = true;
         targetFarmingBox = null;
         targetFarmingSection = null;
+        foreach (FarmingSection farmingSection in area.farmingSections)
+        {
+            foreach (Box box in farmingSection.boxes)
+            {
+                if(farmingBoxes.ContainsKey(box)) farmingBoxes.Remove(box);
+            }
+            if (farmingSections.ContainsKey(farmingSection)) farmingSections.Remove(farmingSection);
+        }
         CurrentFarmingArea = FindNearest(farmingAreas);
     }
     #endregion
@@ -1385,6 +1398,8 @@ public class Survivor : CustomObject
         else
         {
             inventory.Add(item);
+            if(item.itemType == ItemManager.Items.TrapDetectionDevice) trapDetectionDeviceCollider.enabled = true;
+            else if(item.itemType == ItemManager.Items.BiometricRader) biometricRaderCollider.enabled = true;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -1665,8 +1680,15 @@ public class Survivor : CustomObject
                             if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
                         }
                         // 아니면(priority1의 재료면) 만듦
+                        else
+                        {
+                            Craft(craftables[^i]);
+                            return true;
+                        }
                     }
                 }
+                // 이미 보유 중인 아이템은 만들지 않음
+                if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null) continue;
                 // 총알 필요성 검사
                 bool bulletNeeds = false;
                 Item bestWeapon = null;
@@ -1804,6 +1826,7 @@ public class Survivor : CustomObject
     }
     #endregion
 
+    #region Traps
     bool BuryTrap()
     {
         if(curBurying == null)
@@ -1868,6 +1891,71 @@ public class Survivor : CustomObject
         }
         return true;
     }
+
+    public void DetectTrap(Box box)
+    {
+        if(!detectedTrapSetBoxes.Contains(box))
+        {
+            detectedTrapSetBoxes.Add(box);
+            if(farmingBoxes.ContainsKey(box)) farmingBoxes[box] = true;
+        }
+    }
+
+    public void DetectTrap(Trap trap)
+    {
+        if (!detectedTraps.Contains(trap)) detectedTraps.Add(trap);
+    }
+
+    void DisarmTrap()
+    {
+        if(curDisarmTrap == null)
+        {
+            Trap nearestTrap = null;
+            float minDistance = float.MaxValue;
+            float distance;
+            foreach(Trap trap in detectedTraps)
+            {
+                distance = Vector2.Distance(transform.position, trap.gameObject.transform.position);
+                if(minDistance > distance)
+                {
+                    nearestTrap = trap;
+                    minDistance = distance;
+                }
+            }
+            curDisarmTrap = nearestTrap;
+        }
+        else
+        {
+            curDisarmTime += Time.deltaTime;
+            if(curDisarmTime > disarmTime)
+            {
+                ItemManager.AddItems(curDisarmTrap.ItemType, 1);
+                GetItem(ItemManager.itemDictionary[curDisarmTrap.ItemType][^1]);
+                PoolManager.Despawn(curDisarmTrap.gameObject);
+                detectedTraps.Remove(curDisarmTrap);
+                curDisarmTrap = null;
+            }
+        }
+    }
+    #endregion
+
+    public void DetectSurvivor(Vector2[] positions)
+    {
+        float minDistance = float.MaxValue;
+        float distance;
+        Vector2 nearest = Vector2.zero;
+        foreach(Vector2 position in positions)
+        {
+            distance = Vector2.Distance(transform.position, position);
+            if(distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = position;
+            }
+        }
+        targetEnemiesLastPosition = nearest;
+    }
+
     #region Combat
     void InvestigateThreateningSound()
     {

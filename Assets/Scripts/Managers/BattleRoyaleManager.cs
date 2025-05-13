@@ -272,7 +272,7 @@ public class BattleRoyaleManager
                     candidate.IsProhibited_Plan = true;
                     foreach (Survivor survivor in survivors)
                     {
-                        if (survivor.CurrentFarmingArea == candidate) survivor.LeaveCurrentArea();
+                        survivor.RemoveProhibitArea(candidate);
                     }
                 }
                 else

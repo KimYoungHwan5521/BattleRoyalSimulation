@@ -5,7 +5,9 @@ public class Trap : CustomObject
     Animator animator;
     public Survivor setter;
     protected Survivor victim;
-    [SerializeField] public TrapPlace ownerPlace;
+    public TrapPlace ownerPlace;
+    [SerializeField] ItemManager.Items itemType;
+    public ItemManager.Items ItemType;
     [SerializeField] protected float damage;
     [SerializeField] protected DamageType damageType;
     [SerializeField] protected bool isBuriedType;

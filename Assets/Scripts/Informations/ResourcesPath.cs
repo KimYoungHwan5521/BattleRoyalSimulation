@@ -111,6 +111,8 @@ public class ResourcesPath
         "Sprites/Icons/Salvages",
         "Sprites/Icons/Gunpowder",
         "Sprites/Icons/WalkingAid",
+        "Sprites/Icons/TrapDetectionDevice",
+        "Sprites/Icons/BiometricRader",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",

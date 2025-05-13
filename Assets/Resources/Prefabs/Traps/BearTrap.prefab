@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   setter: {fileID: 0}
   ownerPlace: {fileID: 0}
+  itemType: 36
   damage: 40
   damageType: 1
   isBuriedType: 1

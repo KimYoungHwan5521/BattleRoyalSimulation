@@ -59,6 +59,8 @@ public class ItemManager
         ExplosiveTrap,
         // ETC
         WalkingAid,
+        TrapDetectionDevice,
+        BiometricRader,
     }
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
@@ -118,6 +120,8 @@ public class ItemManager
         craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0));
         craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0));
         craftables.Add(new Craftable(Items.Bazooka, 95, 0, 8, 0, 4, 0, 1, 0));
+        craftables.Add(new Craftable(Items.TrapDetectionDevice, 99, 2, 2, 1, 0, 0, 1, 0));
+        craftables.Add(new Craftable(Items.BiometricRader, 100, 3, 2, 1, 0, 0, 1, 0));
         yield return null;
     }
 
@@ -314,6 +318,14 @@ public class ItemManager
             case Items.WalkingAid:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Item(wantItem, "Walking Aid", 0.3f));
+                break;
+            case Items.TrapDetectionDevice:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Trap Detection Device", 2.3f));
+                break;
+            case Items.BiometricRader:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Biometric Rader", 2.4f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");
