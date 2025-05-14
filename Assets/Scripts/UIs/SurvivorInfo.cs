@@ -47,19 +47,19 @@ public class SurvivorInfo : MonoBehaviour
         tierImage.sprite = ResourceManager.Get(tierSprite);
         
         survivorNameText.text = survivorName;
-        strengthText.text = $"{strength}";
-        agilityText.text = $"{agility}";
-        fightingText.text = $"{fighting}";
-        shootingText.text = $"{shooting}";
-        knowledgeText.text = $"{knowledge}";
+        strengthText.text = $"{survivorData.Strength}";
+        agilityText.text = $"{survivorData.Agility}";
+        fightingText.text = $"{survivorData.Fighting}";
+        shootingText.text = $"{survivorData.Shooting}";
+        knowledgeText.text = $"{survivorData.Knowledge}";
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
 
-        strengthBar.fillAmount = strength / 100f;
-        agilityBar.fillAmount = agility / 100f;
-        fightingBar.fillAmount = fighting / 100f;
-        shootingBar.fillAmount = shooting / 100f;
-        knowledgeBar.fillAmount = knowledge / 100f;
+        strengthBar.fillAmount = survivorData.Strength / 100f;
+        agilityBar.fillAmount = survivorData.Agility / 100f;
+        fightingBar.fillAmount = survivorData.Fighting / 100f;
+        shootingBar.fillAmount = survivorData.Shooting / 100f;
+        knowledgeBar.fillAmount = survivorData.Knowledge / 100f;
 
         SetCharacteristic();
     }
@@ -71,17 +71,17 @@ public class SurvivorInfo : MonoBehaviour
 
         survivorData = wantSurvivorData;
         survivorNameText.text = wantSurvivorData.survivorName;
-        strengthText.text = $"{wantSurvivorData._strength}";
-        agilityText.text = $"{wantSurvivorData._agility}";
-        fightingText.text = $"{wantSurvivorData._fighting}";
-        shootingText.text = $"{wantSurvivorData._shooting}";
-        knowledgeText.text = $"{wantSurvivorData._knowledge}";
+        strengthText.text = $"{wantSurvivorData.Strength}";
+        agilityText.text = $"{wantSurvivorData.Agility}";
+        fightingText.text = $"{wantSurvivorData.Fighting}";
+        shootingText.text = $"{wantSurvivorData.Shooting}";
+        knowledgeText.text = $"{wantSurvivorData.Knowledge}";
 
-        strengthBar.fillAmount = wantSurvivorData._strength / 100f;
-        agilityBar.fillAmount = wantSurvivorData._agility / 100f;
-        fightingBar.fillAmount = wantSurvivorData._fighting / 100f;
-        shootingBar.fillAmount = wantSurvivorData._shooting / 100f;
-        knowledgeBar.fillAmount = wantSurvivorData._knowledge / 100f;
+        strengthBar.fillAmount = wantSurvivorData.Strength / 100f;
+        agilityBar.fillAmount = wantSurvivorData.Agility / 100f;
+        fightingBar.fillAmount = wantSurvivorData.Fighting / 100f;
+        shootingBar.fillAmount = wantSurvivorData.Shooting / 100f;
+        knowledgeBar.fillAmount = wantSurvivorData.Knowledge / 100f;
 
         if (showIncrease)
         {

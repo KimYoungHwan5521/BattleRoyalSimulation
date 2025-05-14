@@ -16,16 +16,128 @@ public class SurvivorData
     public int _fighting;
     public int _shooting;
     public int _knowledge;
+    public int _luck;
 
-    public float MaxHp => _strength + 100;
-    public float AttackDamage => (120f + _strength + _fighting) / 16f;
-    public float AttackSpeed => (120f + _agility + _fighting) / 160f;
-    public float MoveSpeed => (60f + _agility) * 3f / 80f;
-    public float FarmingSpeed => (60f + _agility) / 80f;
-    public float Shooting => _shooting / 20f;
-    public float luck;
+    public int Strength
+    {
+        get
+        {
+            int result = _strength;
+            if (HaveCharacteristic(CharacteristicType.MuscleDeficiency)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Strongman)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Powerhouse)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Giant)) result = (int)(result * 1.3f);
+            else if (HaveCharacteristic(CharacteristicType.Dwarf)) result = (int)(result * 0.7f);
+            if (ClutchThePerformance) result += 10;
+            else if(ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0);
+        }
+    }
+    public int Agility
+    {
+        get
+        {
+            int result = _agility;
+            if (HaveCharacteristic(CharacteristicType.Heavyfooted)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Lightfooted)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Assassin)) result += 10;
+            if (ClutchThePerformance) result += 10;
+            else if (ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0);
+        }
+    }
+    public int Fighting
+    {
+        get
+        {
+            int result = _fighting;
+            if (HaveCharacteristic(CharacteristicType.ClumsyFighter)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Brawler)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Fighter)) result += 20;
+            if (ClutchThePerformance) result += 10;
+            else if (ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0);
+
+        }
+    }
+    public int Shooting
+    {
+        get
+        {
+            int result = _shooting;
+            if (HaveCharacteristic(CharacteristicType.PoorAim)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Sniper)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Sharpshooter)) result += 20;
+            if (ClutchThePerformance) result += 10;
+            else if (ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0);
+        }
+    }
+    public int Knowledge
+    {
+        get
+        {
+            int result = _knowledge;
+            if (HaveCharacteristic(CharacteristicType.Dunce)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Smart)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
+            if (ClutchThePerformance) result += 10;
+            else if (ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0);
+        }
+    }
+
+    public float Luck
+    {
+        get
+        {
+            int result = _luck;
+            if(HaveCharacteristic(CharacteristicType.LuckGuy)) result += 25;
+            else if(HaveCharacteristic(CharacteristicType.TheCursed)) result -= 25;
+            return result;
+        }
+    }
     public List<Characteristic> characteristics = new();
     public int price;
+
+    bool HaveCharacteristic(CharacteristicType characteristic)
+    {
+        return characteristics.FindIndex(x => x.type == characteristic) > -1;
+    }
+
+    bool ClutchThePerformance
+    {
+        get
+        {
+            if(HaveCharacteristic(CharacteristicType.ClutchPerformance))
+            {
+                Calendar calendar = GameManager.Instance.Calendar;
+                if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+                {
+                    League league = calendar.LeagueReserveInfo[calendar.Today].league;
+                    if (league == League.SeasonChampionship || league == League.WorldChampionship) return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    bool ChockingUnderPressure
+    {
+        get
+        {
+            if (HaveCharacteristic(CharacteristicType.ChokingUnderPressure))
+            {
+                Calendar calendar = GameManager.Instance.Calendar;
+                if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+                {
+                    League league = calendar.LeagueReserveInfo[calendar.Today].league;
+                    if (league == League.SeasonChampionship || league == League.WorldChampionship) return true;
+                }
+            }
+            return false;
+        }
+    }
     
     // League
     public Tier tier;
@@ -63,7 +175,7 @@ public class SurvivorData
         _fighting = fighting;
         _shooting = shooting;
         _knowledge = knowledge;
-        luck = 50;
+        _luck = 50;
         this.price = price;
         this.tier = tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
@@ -79,7 +191,7 @@ public class SurvivorData
         _fighting = survivorData._fighting;
         _shooting = survivorData._shooting;
         _knowledge = survivorData._knowledge;
-        luck = survivorData.luck;
+        _luck = survivorData._luck;
         price = survivorData.price;
         tier = survivorData.tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);

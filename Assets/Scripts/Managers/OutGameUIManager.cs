@@ -261,13 +261,21 @@ public class OutGameUIManager : MonoBehaviour
             }
             if (check >= 1000) Debug.LogWarning("Infinite loop detected");
             check = 0;
+
+            int characteristicCount;
+            float randCharCount = UnityEngine.Random.Range(0, 1f);
+            if (randCharCount < 0.33f) characteristicCount = 0;
+            else if (randCharCount < 0.66f) characteristicCount = 1;
+            else if (randCharCount < 0.9f) characteristicCount = 2;
+            else characteristicCount = 3;
+            
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
                 randStrength,
                 randAgility,
                 randFighting,
                 randShooting,
                 randKnowledge,
-                UnityEngine.Random.Range(0, 4),
+                characteristicCount,
                 (int)(value * value * value * totalRand),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
@@ -1091,7 +1099,7 @@ public class OutGameUIManager : MonoBehaviour
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         foreach (var craftable in ItemManager.craftables)
         {
-            if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy._knowledge)
+            if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge)
             {
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
                 TMP_Dropdown.OptionData optionData;
@@ -1106,7 +1114,7 @@ public class OutGameUIManager : MonoBehaviour
 
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
-            craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy._knowledge);
+            craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge);
             if (survivorWhoWantEstablishStrategy.craftingAllows[i]) craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn = true;
             else craftableAllows[i].GetComponentsInChildren<Toggle>()[1].isOn = true;
         }
@@ -1760,7 +1768,13 @@ public class OutGameUIManager : MonoBehaviour
                 totalRand,
                 calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
                 );
-            CharacteristicManager.AddRandomCharacteristics(survivorData, UnityEngine.Random.Range(0, 4));
+            int characteristicCount;
+            float randCharCount = UnityEngine.Random.Range(0, 1f);
+            if (randCharCount < 0.33f) characteristicCount = 0;
+            else if (randCharCount < 0.66f) characteristicCount = 1;
+            else if (randCharCount < 0.9f) characteristicCount = 2;
+            else characteristicCount = 3;
+            CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicCount);
             return survivorData;
         }
         return new(GetRandomName(), 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));

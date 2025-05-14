@@ -26,7 +26,7 @@ public class SurvivorSaveData
     public int fighting;
     public int shooting;
     public int knowledge;
-    public float luck;
+    public int luck;
     public int price;
     public Tier tier;
     public bool isReserved;

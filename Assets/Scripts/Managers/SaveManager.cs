@@ -14,7 +14,7 @@ public static class SaveManager
             fighting = data._fighting,
             shooting = data._shooting,
             knowledge = data._knowledge,
-            luck = data.luck,
+            luck = data._luck,
             price = data.price,
             tier = data.tier,
             isReserved = data.isReserved,
@@ -43,7 +43,7 @@ public static class SaveManager
             saveData.fighting, saveData.shooting, saveData.knowledge, saveData.price, saveData.tier)
         {
             id = saveData.id,
-            luck = saveData.luck,
+            _luck = saveData.luck,
             isReserved = saveData.isReserved,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,

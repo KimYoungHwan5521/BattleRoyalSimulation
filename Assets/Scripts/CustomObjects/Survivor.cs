@@ -121,17 +121,10 @@ public class Survivor : CustomObject
     [SerializeField]List<RememberSound> rememberSounds = new();
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
-    float shooting = 1;
-    public float Shooting => shooting;
     [SerializeField] float aimErrorRange = 7.5f;
     public float AimErrorRange => aimErrorRange;
     float luck = 50;
     public float Luck => luck;
-
-    float meleeHitRate = 1;
-    float meleeAvoidRate = 1;
-    float meleeGuardRate = 1;
-    float meleeCriticalRate = 1;
 
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
@@ -348,6 +341,7 @@ public class Survivor : CustomObject
     Item curEnchanting;
     Item curDrinking;
     float curCraftingTime;
+    float craftingSpeed = 1f;
     #endregion
     #region Trap
     public TrapPlace trapPlace;
@@ -711,13 +705,14 @@ public class Survivor : CustomObject
                     CurrentStatus = Status.Maintain;
                     return;
                 }
+
+                if(detectedTraps.Count > 0)
+                {
+                    DisarmTrap();
+                }
             }
 
-            if(detectedTraps.Count > 0)
-            {
-                DisarmTrap();
-            }
-            else if(threateningSoundPosition != Vector2.zero)
+            if(threateningSoundPosition != Vector2.zero)
             {
                 InvestigateThreateningSound();
             }
@@ -907,22 +902,26 @@ public class Survivor : CustomObject
     #region Farming
     void TryFarming()
     {
-        if (SetBoobyTrap()) return;
-        if (currentCrafting != null)
+        if(!GetCurrentArea().IsProhibited_Plan && !GetCurrentArea().IsProhibited && !(RightHandDisabled && LeftHandDisabled))
         {
-            Craft();
-            return;
-        }
-        else if (Crafting())
-        {
-            curCraftingTime = 0;
-            return;
-        }
-        if (Enchanting()) return;
-        animator.SetBool("Crafting", false);
-        if (trapPlace != null && trapPlace.BuriedTrap == null)
-        {
-            if (BuryTrap()) return;
+            if (SetBoobyTrap()) return;
+            if (currentCrafting != null)
+            {
+                Craft();
+                return;
+            }
+            else if (Crafting())
+            {
+                curCraftingTime = 0;
+                InGameUIManager.UpdateSelectedObjectStatus(this);
+                return;
+            }
+            if (Enchanting()) return;
+            animator.SetBool("Crafting", false);
+            if (trapPlace != null && trapPlace.BuriedTrap == null)
+            {
+                if (BuryTrap()) return;
+            }
         }
         Farming();
     }
@@ -932,19 +931,23 @@ public class Survivor : CustomObject
         lookPosition = Vector2.zero;
         CurrentStatus = Status.Farming;
         sightMeshRenderer.material = m_SightNormal;
-        if (targetFarmingCorpse != null)
+        if (!(RightHandDisabled && leftHandDisabled))
         {
-            FarmingCorpse();
+            if (targetFarmingCorpse != null)
+            {
+                FarmingCorpse();
+            }
+            else if (targetFarmingSection != null)
+            {
+                FarmingSection();
+            }
+            else
+            {
+                CheckFarmingTarget();
+                Explore();
+            }
         }
-        else if (targetFarmingSection != null)
-        {
-            FarmingSection();
-        }
-        else
-        {
-            CheckFarmingTarget();
-            Explore();
-        }
+        else ExploreWithNoHand();
 
     }
 
@@ -1299,12 +1302,28 @@ public class Survivor : CustomObject
             {
                 Vector2 wantPosition = transform.position;
                 wantPosition = new(
-                    lastFarmingArea.transform.position.x + UnityEngine.Random.Range(-lastFarmingArea.transform.localScale.x * 0.5f, lastFarmingArea.transform.localScale.x * 0.5f),
-                    lastFarmingArea.transform.position.y + UnityEngine.Random.Range(-lastFarmingArea.transform.localScale.y * 0.5f, lastFarmingArea.transform.localScale.y * 0.5f)
+                    lastFarmingArea.transform.position.x + UnityEngine.Random.Range(-25f, 25f),
+                    lastFarmingArea.transform.position.y + UnityEngine.Random.Range(-25f, 25f)
                     );
 
                 agent.SetDestination(wantPosition);
             }
+        }
+    }
+
+    void ExploreWithNoHand()
+    {
+        if (Vector2.Distance(agent.destination, transform.position) < 1f)
+        {
+            Area area = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
+
+            Vector2 wantPosition = transform.position;
+            wantPosition = new(
+                area.transform.position.x + UnityEngine.Random.Range(-25f, 25f),
+                area.transform.position.y + UnityEngine.Random.Range(-25f, 25f)
+                );
+
+            agent.SetDestination(wantPosition);
         }
     }
 
@@ -1799,7 +1818,7 @@ public class Survivor : CustomObject
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
 
-        curCraftingTime += Time.deltaTime;
+        curCraftingTime += Time.deltaTime * craftingSpeed;
         progressBar.fillAmount = curCraftingTime / currentCrafting.craftingTime;
         if(curCraftingTime > currentCrafting.craftingTime)
         {
@@ -1814,9 +1833,17 @@ public class Survivor : CustomObject
 
             int amount = currentCrafting.outputAmount;
             ItemManager.AddItems(currentCrafting.itemType, amount);
-            for (int i = 1; i <= amount; i++) GetItem(ItemManager.itemDictionary[currentCrafting.itemType][^i]);
+            bool isWeapon = false;
+            Item item = null;
+            for (int i = 1; i <= amount; i++)
+            {
+                item = ItemManager.itemDictionary[currentCrafting.itemType][^i];
+                isWeapon = item is Weapon;
+                GetItem(item);
+            }
             currentCrafting = null;
             craftables.Clear();
+            if (isWeapon) Equip((Weapon)item);
             CheckCraftables();
         }
     }
@@ -1833,7 +1860,7 @@ public class Survivor : CustomObject
     {
         craftables.Clear();
 
-        int knowledge = linkedSurvivorData._knowledge;
+        int knowledge = linkedSurvivorData.Knowledge;
         foreach(var craftable in ItemManager.craftables)
         {
             if(knowledge >= craftable.requiredKnowledge && AdvancedComponentCount >= craftable.needAdvancedComponentCount && ComponentsCount >= craftable.needComponentsCount
@@ -2505,11 +2532,12 @@ public class Survivor : CustomObject
         else
         {
             float probability = UnityEngine.Random.Range(0, 1f);
-            float avoidRate = 0.2f * (moveSpeed / 3 + attackSpeed) / (attacker.moveSpeed / 3 + attacker.moveSpeed) * (meleeAvoidRate / attacker.meleeHitRate);
-            float defendRate = 0.3f * meleeGuardRate;
+            float coefficient = (linkedSurvivorData.Fighting / attacker.linkedSurvivorData.Fighting) * (moveSpeed / attacker.moveSpeed);
+            float avoidRate = 0.2f * coefficient;
+            float defendRate = 0.3f * coefficient;
             if (rightHandDisabled) defendRate -= defendRate * 0.5f;
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
-            float criticalRate = 0.1f * attacker.meleeCriticalRate * 0.02f * attacker.luck / luck;
+            float criticalRate = 0.1f * coefficient * attacker.luck / luck;
 
             if (probability < avoidRate)
             {
@@ -3386,8 +3414,9 @@ public class Survivor : CustomObject
     bool isLeftEyePermanentVisualImpairment;
     bool isRightEyeArtificial;
     bool isRightEyePermanentVisualImpairment;
-    float injuryCorrection_leftSightRange = 1;
-    float injuryCorrection_rightSightRange = 1;
+    float injuryCorrection_LeftSightRange = 1;
+    float injuryCorrection_RightSightRange = 1;
+    float injuryCorrection_CraftingSpeed = 1;
     void ApplyInjuryPenalty()
     {
         InGameUIManager.UpdateSelectedObjectInjury(this);
@@ -3403,7 +3432,9 @@ public class Survivor : CustomObject
         float penaltiedAttackDamageByLeftArm = 1;
         float penaltiedMoveSpeedByRightLeg = 1;
         float penaltiedMoveSpeedByLeftLeg = 1;
-        foreach(Injury injury in injuries)
+        float penaltiedCraftingSpeedByRightArm = 1;
+        float penaltiedCraftingSpeedByLeftArm = 1;
+        foreach (Injury injury in injuries)
         {
             switch(injury.site)
             {
@@ -3418,7 +3449,7 @@ public class Survivor : CustomObject
                     else if (injury.type == InjuryType.PermanentVisualImpairment) isRightEyePermanentVisualImpairment = true;
                     else
                     {
-                        injuryCorrection_rightSightRange = 1 - injury.degree;
+                        injuryCorrection_RightSightRange = 1 - injury.degree;
                         penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
                         eyeInjured = true;
                         if (injury.degree >= 1) blind++;
@@ -3429,7 +3460,7 @@ public class Survivor : CustomObject
                     else if (injury.type == InjuryType.PermanentVisualImpairment) isLeftEyePermanentVisualImpairment = true;
                     else
                     {
-                        injuryCorrection_leftSightRange = 1 - injury.degree;
+                        injuryCorrection_LeftSightRange = 1 - injury.degree;
                         penaltiedFarmingSpeedByEyes = Mathf.Max(penaltiedFarmingSpeedByEyes, 1 - injury.degree);
                         eyeInjured = true;
                         if (injury.degree >= 1) blind++;
@@ -3442,10 +3473,12 @@ public class Survivor : CustomObject
                     break;
                 case InjurySite.RightArm:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightHand:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightThumb:
@@ -3454,13 +3487,16 @@ public class Survivor : CustomObject
                 case InjurySite.RightRingFinger:
                 case InjurySite.RightLittleFinger:
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.1f);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.LeftArm:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftHand:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftThumb:
@@ -3469,6 +3505,7 @@ public class Survivor : CustomObject
                 case InjurySite.LeftRingFinger:
                 case InjurySite.LeftLittleFinger:
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
+                    penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.RightLeg:
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
@@ -3528,54 +3565,46 @@ public class Survivor : CustomObject
         injuryCorrection_MoveSpeed = penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg;
 
         injuryCorrection_AttackDamage = Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
+        if (RightHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByLeftArm;
+        else if (LeftHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByRightArm;
+        else injuryCorrection_CraftingSpeed = penaltiedCraftingSpeedByRightArm * penaltiedCraftingSpeedByLeftArm;
         ApplyCorrectionStats();
     }
     #endregion
 
     #region Characteristic
-    float characteristicCorrection_SightRange;
-    float characteristicCorrection_HearingAbility;
-    float characteristicCorrection_AttackDamage;
-    float characteristicCorrection_AttackSpeed;
-    float characteristicCorrection_MoveSpeed;
-    float characteristicCorrection_FarmingSpeed;
-    float characteristicCorrection_Shooting;
-    float characteristicCorrection_MeleeHitRate;
-    float characteristicCorrection_MeleeAvoidRate;
-    float characteristicCorrection_MeleeGuardRate;
-    float characteristicCorrection_MeleeCriticalRate;
-    float characteristicCorrection_AimTime;
-    float characteristicCorrection_NatualHemostasis;
-    float characteristicCorrection_BloodRegeneration;
-    float characteristicCorrection_HpRegeneration;
-    float characteristicCorrection_Luck;
+    float characteristicCorrection_SightRange = 1;
+    float characteristicCorrection_HearingAbility = 1;
+    int characteristicCorrection_Strength = 0;
+    int characteristicCorrection_Agility = 0;
+    int characteristicCorrection_Fighting = 0;
+    int characteristicCorrection_Shooting = 0;
+    int characteristicCorrection_Knowledge = 0;
+    float characteristicCorrection_AimTime = 0;
+    int characteristicCorrection_AimErrorRange = 0;
+    float characteristicCorrection_NatualHemostasis = 1;
+    float characteristicCorrection_BloodRegeneration = 1;
+    float characteristicCorrection_HpRegeneration = 1;
+    float characteristicCorrection_CraftingSpeed = 1;
+
+    int correctedStrength = 0;
+    int correctedAgility = 0;
+    int correctedFighting = 0;
+    int correctedShooting = 0;
+    int correctedKnowledge = 0;
+    public int CorrectedStrength => correctedStrength;
+    public int CorrectedAgility => correctedAgility;
+    public int CorrectedFighting => correctedFighting;
+    public int CorrectedShooting => correctedShooting;
+    public int CorrectedKnowledge => correctedKnowledge;
 
     void ApplyCharacteristics()
     {
-        characteristicCorrection_SightRange = 1;
-        characteristicCorrection_HearingAbility = 1;
-        characteristicCorrection_AttackDamage = 1;
-        characteristicCorrection_AttackSpeed = 1;
-        characteristicCorrection_MoveSpeed = 1;
-        characteristicCorrection_FarmingSpeed = 1;
-        characteristicCorrection_Shooting = 1;
-        characteristicCorrection_MeleeHitRate = 1;
-        characteristicCorrection_MeleeAvoidRate = 1;
-        characteristicCorrection_MeleeGuardRate = 1;
-        characteristicCorrection_MeleeCriticalRate = 1;
-        characteristicCorrection_AimTime = 1;
-        characteristicCorrection_NatualHemostasis = 1;
-        characteristicCorrection_BloodRegeneration = 1;
-        characteristicCorrection_HpRegeneration = 1;
-        characteristicCorrection_Luck = 1;
-
-        Calendar calender = GameManager.Instance.GetComponent<Calendar>();
-
         foreach (var characteristic in Characteristics)
         {
             switch(characteristic.type)
             {
-                case CharacteristicType.EagleEye:
+                case CharacteristicType.HawkEye:
                     characteristicCorrection_SightRange *= 1.3f;
                     break;
                 case CharacteristicType.BadEye:
@@ -3587,59 +3616,21 @@ public class Survivor : CustomObject
                 case CharacteristicType.BadHearing:
                     characteristicCorrection_HearingAbility *= 0.7f;
                     break;
-                case CharacteristicType.ClutchPerformance:
-                    if (calender.LeagueReserveInfo[calender.Today].league == League.SeasonChampionship || calender.LeagueReserveInfo[calender.Today].league == League.WorldChampionship)
-                    {
-                        characteristicCorrection_AttackDamage *= 1.1f;
-                        characteristicCorrection_AttackSpeed *= 1.1f;
-                        characteristicCorrection_MoveSpeed *= 1.1f;
-                        characteristicCorrection_FarmingSpeed *= 1.1f;
-                        characteristicCorrection_Shooting *= 1.1f;
-                    }
-                    break;
-                case CharacteristicType.ChokingUnderPressure:
-                    if (calender.LeagueReserveInfo[calender.Today].league == League.SeasonChampionship || calender.LeagueReserveInfo[calender.Today].league == League.WorldChampionship)
-                    {
-                        characteristicCorrection_AttackDamage *= 0.9f;
-                        characteristicCorrection_AttackSpeed *= 0.9f;
-                        characteristicCorrection_MoveSpeed *= 0.9f;
-                        characteristicCorrection_FarmingSpeed *= 0.9f;
-                        characteristicCorrection_Shooting *= 0.9f;
-                    }
-                    break;
-                case CharacteristicType.Boxer:
-                    characteristicCorrection_AttackDamage *= 1.2f;
-                    characteristicCorrection_AttackSpeed *= 1.2f;
-                    characteristicCorrection_MeleeHitRate *= 1.5f;
-                    characteristicCorrection_MeleeAvoidRate *= 1.5f;
-                    characteristicCorrection_MeleeGuardRate *= 1.5f;
-                    characteristicCorrection_MeleeCriticalRate *= 1.5f;
-                    break;
                 case CharacteristicType.Giant:
-                    maxHP *= 1.3f;
-                    curHP = maxHP;
                     transform.localScale = new(1.3f, 1.3f);
                     foreach(Transform child in rightHand.transform) child.localScale = new(0.77f, 0.77f);
                     foreach(Transform child in leftHand.transform) child.localScale = new(0.77f, 0.77f);
                     foreach(Transform child in transform.Find("Head")) child.localScale = new(0.77f, 0.77f);
-                    characteristicCorrection_AttackDamage *= 1.3f;
-                    characteristicCorrection_AttackSpeed *= 0.7f;
-                    characteristicCorrection_MoveSpeed *= 0.7f;
                     break;
                 case CharacteristicType.Dwarf:
-                    maxHP *= 0.7f;
-                    curHP = maxHP;
                     transform.localScale = new(0.7f, 0.7f);
                     foreach (Transform child in rightHand.transform) child.localScale = new(1.43f, 1.43f);
                     foreach (Transform child in leftHand.transform) child.localScale = new(1.43f, 1.43f);
                     foreach (Transform child in transform.Find("Head")) child.localScale = new(1.43f, 1.43f);
-                    characteristicCorrection_AttackDamage *= 0.7f;
-                    characteristicCorrection_AttackSpeed *= 1.3f;
-                    characteristicCorrection_MoveSpeed *= 1.3f;
                     break;
                 case CharacteristicType.CarefulShooter:
                     characteristicCorrection_AimTime *= 2;
-                    characteristicCorrection_Shooting *= 2;
+                    characteristicCorrection_AimErrorRange += 20;
                     break;
                 case CharacteristicType.Fragile:
                     characteristicCorrection_NatualHemostasis *= 0.5f;
@@ -3656,52 +3647,56 @@ public class Survivor : CustomObject
                     characteristicCorrection_HpRegeneration *= 5f;
                     break;
                 case CharacteristicType.UpsAndDowns:
-                    float condition = UnityEngine.Random.Range(0.7f, 1.3f);
-                    characteristicCorrection_AttackDamage *= condition;
-                    characteristicCorrection_AttackSpeed *= condition;
-                    characteristicCorrection_MoveSpeed *= condition;
-                    characteristicCorrection_FarmingSpeed *= condition;
-                    characteristicCorrection_Shooting *= condition;
+                    int condition = UnityEngine.Random.Range(-10, 11);
+                    characteristicCorrection_Strength += condition;
+                    characteristicCorrection_Agility += condition;
+                    characteristicCorrection_Fighting += condition;
+                    characteristicCorrection_Shooting += condition;
+                    characteristicCorrection_Knowledge += condition;
                     break;
-                case CharacteristicType.LuckGuy:
-                    characteristicCorrection_Luck *= 1.2f;
+                case CharacteristicType.ClumsyHand:
+                    characteristicCorrection_CraftingSpeed *= 0.7f;
                     break;
-                case CharacteristicType.TheCursed:
-                    characteristicCorrection_Luck *= 0.8f;
+                case CharacteristicType.Dexterous:
+                    characteristicCorrection_CraftingSpeed *= 1.3f;
+                    break;
+                case CharacteristicType.Engineer:
+                    characteristicCorrection_CraftingSpeed *= 1.6f;
                     break;
                 default:
-                    Debug.LogWarning($"Unknown CharacteristicType : {characteristic.type}");
                     break;
             }
         }
+        correctedStrength = Mathf.Max(linkedSurvivorData.Strength + characteristicCorrection_Strength, 0);
+        correctedAgility = Mathf.Max(linkedSurvivorData.Agility + characteristicCorrection_Agility, 0);
+        correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
+        correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
+        correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
+        aimErrorRange = 30f / Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedShooting + characteristicCorrection_AimErrorRange, 1), 20));
+        aimDelay = 1.5f * characteristicCorrection_AimTime;
+        naturalHemostasis = characteristicCorrection_NatualHemostasis;
+        bloodRegeneration = characteristicCorrection_BloodRegeneration;
+        hpRegeneration = characteristicCorrection_HpRegeneration;
     }
     #endregion
 
     void ApplyCorrectionStats()
     {
-        if (isLeftEyeArtificial) leftSightRange = 30 * injuryCorrection_leftSightRange;
-        else if(isLeftEyePermanentVisualImpairment) leftSightRange = 15 * injuryCorrection_leftSightRange * characteristicCorrection_SightRange;
-        else leftSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_leftSightRange;
-        if (isRightEyeArtificial) rightSightRange = 30 * injuryCorrection_rightSightRange;
-        else if (isRightEyePermanentVisualImpairment) rightSightRange = 15 * injuryCorrection_rightSightRange * characteristicCorrection_SightRange;
-        else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_rightSightRange;
+        if (isLeftEyeArtificial) leftSightRange = 30 * injuryCorrection_LeftSightRange;
+        else if(isLeftEyePermanentVisualImpairment) leftSightRange = 15 * injuryCorrection_LeftSightRange * characteristicCorrection_SightRange;
+        else leftSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_LeftSightRange;
+        if (isRightEyeArtificial) rightSightRange = 30 * injuryCorrection_RightSightRange;
+        else if (isRightEyePermanentVisualImpairment) rightSightRange = 15 * injuryCorrection_RightSightRange * characteristicCorrection_SightRange;
+        else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
-        attackDamage = linkedSurvivorData.AttackDamage * injuryCorrection_AttackDamage * characteristicCorrection_AttackDamage;
-        attackSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_AttackSpeed * characteristicCorrection_AttackSpeed, 0.1f);
-        moveSpeed = Mathf.Max(linkedSurvivorData.MoveSpeed * injuryCorrection_MoveSpeed * characteristicCorrection_MoveSpeed, 0.1f);
+
+        attackDamage = (120f + correctedStrength + correctedFighting) / 16f * injuryCorrection_AttackDamage;
+        attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
+        moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
-        farmingSpeed = Mathf.Max(linkedSurvivorData.AttackSpeed * injuryCorrection_FarmingSpeed * characteristicCorrection_FarmingSpeed, 0.1f);
-        shooting = linkedSurvivorData.Shooting * characteristicCorrection_Shooting;
-        aimErrorRange = 7.5f / shooting;
-        luck = linkedSurvivorData.luck * characteristicCorrection_Luck;
-        meleeHitRate = characteristicCorrection_MeleeHitRate;
-        meleeAvoidRate = characteristicCorrection_MeleeAvoidRate;
-        meleeGuardRate = characteristicCorrection_MeleeGuardRate;
-        meleeCriticalRate = characteristicCorrection_MeleeCriticalRate;
-        aimDelay = 1.5f * characteristicCorrection_AimTime;
-        naturalHemostasis = characteristicCorrection_NatualHemostasis;
-        bloodRegeneration = characteristicCorrection_BloodRegeneration;
-        hpRegeneration = characteristicCorrection_HpRegeneration;
+        farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
+        craftingSpeed = injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed;
+        animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
     }
 
@@ -3881,16 +3876,10 @@ public class Survivor : CustomObject
         linkedSurvivorData = survivorInfo;
         survivorName = survivorInfo.survivorName;
         nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
-        curHP = maxHP = survivorInfo.MaxHp;
-        curBlood = maxBlood = survivorInfo.MaxHp * 80;
+        curHP = maxHP = survivorInfo.Strength + 100;
+        curBlood = maxBlood = maxHP * 80;
         bleedingSprite = curBlood - 100;
-        attackDamage = survivorInfo.AttackDamage;
-        attackSpeed = survivorInfo.AttackSpeed;
-        moveSpeed = survivorInfo.MoveSpeed;
-        farmingSpeed = survivorInfo.FarmingSpeed;
-        shooting = survivorInfo.Shooting;
-        luck = survivorInfo.luck;
-        aimErrorRange = 7.5f / survivorInfo.Shooting;
+        luck = linkedSurvivorData.Luck;
         charicteristics = survivorInfo.characteristics;
 
         injuries = survivorInfo.injuries;

@@ -309,17 +309,17 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
             selectedObjectName.text = selectedSurvivor.survivorName;
 
-            strengthBar.fillAmount = selectedSurvivor.LinkedSurvivorData._strength / 100f;
-            agilityBar.fillAmount = selectedSurvivor.LinkedSurvivorData._agility / 100f;
-            fightingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._fighting / 100f;
-            shootingBar.fillAmount = selectedSurvivor.LinkedSurvivorData._shooting / 100f;
-            knowledgeBar.fillAmount = selectedSurvivor.LinkedSurvivorData._knowledge / 100f;
+            strengthBar.fillAmount = selectedSurvivor.CorrectedStrength / 100f;
+            agilityBar.fillAmount = selectedSurvivor.CorrectedAgility / 100f;
+            fightingBar.fillAmount = selectedSurvivor.CorrectedFighting / 100f;
+            shootingBar.fillAmount = selectedSurvivor.CorrectedShooting / 100f;
+            knowledgeBar.fillAmount = selectedSurvivor.CorrectedKnowledge / 100f;
 
-            strengthText.text = selectedSurvivor.LinkedSurvivorData._strength.ToString();
-            agilityText.text = selectedSurvivor.LinkedSurvivorData._agility.ToString();
-            fightingText.text = selectedSurvivor.LinkedSurvivorData._fighting.ToString();
-            shootingText.text = selectedSurvivor.LinkedSurvivorData._shooting.ToString();
-            knowledgeText.text = selectedSurvivor.LinkedSurvivorData._knowledge.ToString();
+            strengthText.text = selectedSurvivor.CorrectedStrength.ToString();
+            agilityText.text = selectedSurvivor.CorrectedAgility.ToString();
+            fightingText.text = selectedSurvivor.CorrectedFighting.ToString();
+            shootingText.text = selectedSurvivor.CorrectedShooting.ToString();
+            knowledgeText.text = selectedSurvivor.CorrectedKnowledge.ToString();
 
             characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
 
@@ -399,7 +399,7 @@ public class InGameUIManager : MonoBehaviour
             Survivor.Status.TraceEnemy => "Tracing enemy",
             Survivor.Status.RunAway => "Running away",
             Survivor.Status.TrapDisarming => "Trap Disarming",
-            Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting}",
+            Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting.itemType}",
             _ => survivor.CurrentStatus.ToString()
         };
     }
