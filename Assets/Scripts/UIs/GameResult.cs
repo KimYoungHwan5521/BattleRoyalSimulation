@@ -246,7 +246,12 @@ public class GameResult : MonoBehaviour
     public void ExitBattle()
     {
         gameResult.SetActive(false);
-        foreach(Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
+        AudioSource bgsfx = GameManager.Instance.BattleRoyaleManager.bgsfx;
+        SoundManager.StopSFX(bgsfx);
+        bgsfx.minDistance = 1;
+        bgsfx.maxDistance = 500;
+        SoundManager.Play(ResourceEnum.BGM.the_birth_of_hip_hop);
+        foreach (Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
             foreach (GameObject buried in survivor.burieds) PoolManager.Despawn(buried);
@@ -269,6 +274,7 @@ public class GameResult : MonoBehaviour
         Time.timeScale = lastTimeScale;
     }
 
+    // ESC
     void OnCancel(InputValue value)
     {
         if(value.Get<float>() > 0 && GameManager.Instance.BattleRoyaleManager.BattleWinner == null)

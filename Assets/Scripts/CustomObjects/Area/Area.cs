@@ -21,7 +21,7 @@ public class Area : CustomObject
             markProhibitedArea_Plan.SetActive(value);
         }
     }
-    bool isProhibited;
+    [SerializeField] bool isProhibited;
     public bool IsProhibited
     {
         get => isProhibited;

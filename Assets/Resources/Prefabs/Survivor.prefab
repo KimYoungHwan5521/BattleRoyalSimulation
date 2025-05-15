@@ -1121,8 +1121,8 @@ MonoBehaviour:
   - {fileID: 3169370286366825634}
   - {fileID: 7688618513969254823}
   - {fileID: 8909700529792602954}
-  trapDetectionDeviceCollider: {fileID: 5894763507240972586}
-  biometricRaderCollider: {fileID: 3731612808616158059}
+  trapDetectionDevice: {fileID: 8775404668328128638}
+  biometricRader: {fileID: 6205633144775336150}
   sightMeshFilter: {fileID: 3036747485122323761}
   emotion: {fileID: 8710398529662247968}
   canvas: {fileID: 8709537773240361068}
@@ -1137,7 +1137,7 @@ MonoBehaviour:
     _fighting: 0
     _shooting: 0
     _knowledge: 0
-    luck: 0
+    _luck: 0
     characteristics: []
     price: 0
     tier: 0
@@ -1166,6 +1166,7 @@ MonoBehaviour:
       needGunpowderCount: 0
       outputAmount: 0
       craftingAnimNumber: 0
+      craftingTime: 0
     priority1CraftingToInt: 0
     craftingAllows: 
   isDead: 0
@@ -1189,7 +1190,7 @@ MonoBehaviour:
   farmingSpeed: 1
   aimErrorRange: 7.5
   charicteristics: []
-  lookRotation: {x: 0, y: 0}
+  lookPosition: {x: 0, y: 0}
   injuries: []
   rememberAlreadyHaveInjury: 
   rightHandDisabled: 0
@@ -1231,7 +1232,6 @@ MonoBehaviour:
   threateningSoundPosition: {x: 0, y: 0}
   runAwayDestination: {x: 0, y: 0}
   runAwayFrom: {fileID: 0}
-  runawayable: 0
   currentFarmingArea: {fileID: 0}
   lastFarmingArea: {fileID: 0}
   targetFarmingSection: {fileID: 0}
@@ -3284,7 +3284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4797710106139859829
 Transform:
   m_ObjectHideFlags: 0
@@ -3307,7 +3307,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6205633144775336150}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -3349,6 +3349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 8798026008440729154}
   detecteds: []
+  cool: 60
 --- !u!1 &6283163606019042741
 GameObject:
   m_ObjectHideFlags: 0
@@ -4850,7 +4851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4080060592604009807
 Transform:
   m_ObjectHideFlags: 0
@@ -4873,7 +4874,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8775404668328128638}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

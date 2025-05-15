@@ -30,7 +30,7 @@ public class ProjectileGenerator : CustomObject
         }
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
         Bullet bullet = prefab.GetComponent<Bullet>();
-        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
+        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
         bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
     
@@ -40,7 +40,7 @@ public class ProjectileGenerator : CustomObject
         {
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, muzzleTF.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
-            Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
+            Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
             bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
         }
     }
@@ -49,7 +49,7 @@ public class ProjectileGenerator : CustomObject
     {
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Rocket, muzzleTF.transform.position);
         Rocket rocket = prefab.GetComponent<Rocket>();
-        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.LookRotation;
+        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
         rocket.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
 

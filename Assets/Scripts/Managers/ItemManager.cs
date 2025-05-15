@@ -147,11 +147,11 @@ public class ItemManager
             // Melee Weapons
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Cut, 30, 1.7f, 0));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Slash, 30, 1.7f, 0));
                 break;
             case Items.Dagger:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Cut, 40, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Slash, 40, 2f, 1));
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
@@ -159,7 +159,7 @@ public class ItemManager
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Cut, 30, 2.4f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 30, 2.4f, 1));
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)

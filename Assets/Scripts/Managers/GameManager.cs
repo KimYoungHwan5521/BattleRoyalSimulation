@@ -73,6 +73,7 @@ public class GameManager : MonoBehaviour
 
         gameReady = true;
         CloseLoadInfo();
+        SoundManager.Play(ResourceEnum.BGM.the_birth_of_hip_hop);
     }
 
     public IEnumerator BattleRoyaleStart()

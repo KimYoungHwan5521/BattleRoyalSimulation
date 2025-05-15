@@ -11,6 +11,7 @@ public class BattleRoyaleManager
     InGameUIManager InGameUIManager => GameManager.Instance.GetComponent<InGameUIManager>();
     Calendar Calendar_ => GameManager.Instance.GetComponent<Calendar>();
     public Animator count3Animator;
+    public AudioSource bgsfx;
 
     GameObject map;
     Area[] areas;
@@ -44,6 +45,10 @@ public class BattleRoyaleManager
 
     public IEnumerator Initiate()
     {
+        SoundManager.StopBGM();
+        SoundManager.Play(ResourceEnum.SFX.forest, Vector3.zero, true, out bgsfx);
+        bgsfx.maxDistance = float.MaxValue;
+        bgsfx.minDistance = float.MaxValue;
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;

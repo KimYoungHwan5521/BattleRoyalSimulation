@@ -146,7 +146,7 @@ namespace ResourceEnum
 
     public enum BGM
     {
-
+        the_birth_of_hip_hop,
     }
 
     public enum SFX
@@ -168,6 +168,7 @@ namespace ResourceEnum
         ricochet2,
         hit01,
         hit02,
+        hit_flesh,
         guard,
         avoid,
         farmingNoise01,
@@ -185,5 +186,10 @@ namespace ResourceEnum
         alarm_short,
         water,
         drink,
+        footstep_concrete1,
+        footstep_concrete2,
+        footstep_grass1,
+        footstep_grass2,
+        forest,
     }
 }

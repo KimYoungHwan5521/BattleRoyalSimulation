@@ -66,8 +66,8 @@ public class SoundManager
 
     public void UpdateBGMMixer()
     {
-        bgmArray[0].volume = Mathf.SmoothStep(bgmArray[0].volume, 1, Time.deltaTime * 5);
-        bgmArray[1].volume = Mathf.SmoothStep(bgmArray[1].volume, 0, Time.deltaTime * 5);
+        bgmArray[0].volume = Mathf.SmoothStep(bgmArray[0].volume, 1, Time.unscaledTime * 5);
+        bgmArray[1].volume = Mathf.SmoothStep(bgmArray[1].volume, 0, Time.unscaledTime * 5);
         if (bgmArray[0].volume > 0.99)
         {
             AudioEffectUpdate -= UpdateBGMMixer;

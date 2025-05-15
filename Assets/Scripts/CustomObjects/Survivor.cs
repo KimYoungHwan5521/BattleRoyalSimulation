@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class Survivor : CustomObject
@@ -18,8 +19,8 @@ public class Survivor : CustomObject
     [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
-    [SerializeField] CircleCollider2D trapDetectionDeviceCollider;
-    [SerializeField] CircleCollider2D biometricRaderCollider;
+    [SerializeField] GameObject trapDetectionDevice;
+    [SerializeField] GameObject biometricRader;
     Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
 
@@ -60,8 +61,8 @@ public class Survivor : CustomObject
                 animator.SetTrigger("Dead");
                 sightCollider.enabled = false;
                 bodyCollider.isTrigger = true;
-                trapDetectionDeviceCollider.enabled = false;
-                biometricRaderCollider.enabled = false;
+                trapDetectionDevice.SetActive(false);
+                biometricRader.SetActive(false);
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
                 nameTag.SetActive(false);
@@ -129,14 +130,14 @@ public class Survivor : CustomObject
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
     #endregion
-    #region Characteristic / Injury
-    [Header("Characteristic / Injury")]
+    #region Characteristic
+    [Header("Characteristic")]
     [SerializeField] List<Characteristic> charicteristics;
     public List<Characteristic> Characteristics => charicteristics;
-
-    [SerializeField] Vector2 lookPosition = Vector2.zero;
-    public Vector2 LookRotation => lookPosition;
-
+    bool isAssassin;
+    #endregion
+    #region Injury
+    [Header("Injury")]
     public List<Injury> injuries = new();
     public List<InjurySite> rememberAlreadyHaveInjury;
 
@@ -399,7 +400,11 @@ public class Survivor : CustomObject
             if (value == null) return;
             foreach(FarmingSection farmingSection in value.farmingSections)
             {
-                if(!farmingSections.ContainsKey(farmingSection)) farmingSections.Add(farmingSection, false);
+                if(!farmingSections.ContainsKey(farmingSection))
+                {
+                    farmingSections.Add(farmingSection, false);
+                    foreach(var box in farmingSection.boxes) if(!farmingBoxes.ContainsKey(box)) farmingBoxes.Add(box, false);
+                }
             }
         }
     }
@@ -418,6 +423,7 @@ public class Survivor : CustomObject
     #endregion
     #region Look
     [Header("Look")]
+    [SerializeField] Vector2 lookPosition = Vector2.zero;
     [SerializeField] float lookAroundTime = 0.3f;
     [SerializeField] float curLookAroundTime;
     [SerializeField] int lookAroundCount;
@@ -433,6 +439,12 @@ public class Survivor : CustomObject
         public Condition TotalCondition;
     }
     Dictionary<StrategyCase, Conditions> strategyConditions = new();
+    #endregion
+    #region Footstep
+    [Header("Footstep")]
+    float footstepDistance = 1f;
+    float curMoveDistance = 0;
+    Vector2 lastPosition;
     #endregion
     #region Game Result
     [Header("Game Result")]
@@ -472,9 +484,6 @@ public class Survivor : CustomObject
         m_SightNormal = ResourceManager.Get(ResourceEnum.Material.Sight_Normal);
         m_SightSuspicious = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
         m_SightAlert = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
-
-        curHP = maxHP;
-        agent.speed = moveSpeed;
     }
 
     override public void MyUpdate()
@@ -494,6 +503,7 @@ public class Survivor : CustomObject
         Regenerate();
 
         if (dizzy) return;
+        PlayFootstepNoise();
         AI();
         if(!isBlind) DrawSightMesh();
     }
@@ -728,19 +738,19 @@ public class Survivor : CustomObject
         else
         {
             CurrentStatus = Status.InCombat;
-            // 보고 있던 대상이 죽어버릴 경우
-            if (inSightEnemies[0].isDead)
+            // 대상이 죽어버릴 경우
+            if (TargetEnemy.isDead)
             {
-                if (!farmingCorpses.ContainsKey(inSightEnemies[0]))
+                if (!farmingCorpses.ContainsKey(TargetEnemy))
                 {
-                    farmingCorpses.Add(inSightEnemies[0], false);
-                    targetFarmingCorpse = inSightEnemies[0];
+                    farmingCorpses.Add(TargetEnemy, false);
+                    targetFarmingCorpse = TargetEnemy;
                 }
-                else if (!farmingCorpses[inSightEnemies[0]])
+                else if (!farmingCorpses[TargetEnemy])
                 {
-                    targetFarmingCorpse = inSightEnemies[0];
+                    targetFarmingCorpse = TargetEnemy;
                 }
-                inSightEnemies.Remove(inSightEnemies[0]);
+                inSightEnemies.Remove(TargetEnemy);
                 targetEnemiesLastPosition = Vector2.zero;
                 lastTargetEnemy = null;
 
@@ -923,6 +933,7 @@ public class Survivor : CustomObject
                 if (BuryTrap()) return;
             }
         }
+        animator.SetBool("Crafting", false);
         Farming();
     }
 
@@ -989,8 +1000,43 @@ public class Survivor : CustomObject
         {
             CurrentFarmingArea = FindNearest(farmingAreas);
         }
-        else farmingAreas[currentFarmingArea] = true;
+        else
+        {
+            farmingAreas[currentFarmingArea] = true;
+            CurrentFarmingArea = FindNearest(farmingAreas);
+            return;
+        }
         targetFarmingSection = nearestFarmingSection;
+    }
+
+    public Area FindNearest(Dictionary<Area, bool> candidates)
+    {
+        Area nearest = null;
+        float minDistance = float.MaxValue;
+        float distance;
+        List<Area> reserveRemoves = new();
+        foreach (KeyValuePair<Area, bool> candidate in candidates)
+        {
+            Area area = candidate.Key;
+            if (area.IsProhibited || area.IsProhibited_Plan)
+            {
+                reserveRemoves.Add(area);
+                continue;
+            }
+            distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = candidate.Key;
+            }
+        }
+        foreach (Area reserveRemove in reserveRemoves)
+        {
+            farmingAreas[reserveRemove] = true;
+        }
+        Debug.Log($"{survivorName} : {nearest}");
+        if (nearest == null) return farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
+        return nearest;
     }
 
     public TKey FindNearest<TKey>(Dictionary<TKey, bool> candidates) where TKey : MonoBehaviour
@@ -998,18 +1044,8 @@ public class Survivor : CustomObject
         TKey nearest = default;
         float minDistance = float.MaxValue;
         float distance;
-        List<Area> reserveRemoves = new();
         foreach (KeyValuePair<TKey, bool> candidate in candidates)
         {
-            if (typeof(TKey) == typeof(Area))
-            {
-                Area area = candidate.Key as Area;
-                if (area.IsProhibited || area.IsProhibited_Plan)
-                {
-                    reserveRemoves.Add(area);
-                    continue;
-                }
-            }
             if (!candidate.Value)
             {
                 if(typeof(TKey) == typeof(FarmingSection))
@@ -1046,13 +1082,6 @@ public class Survivor : CustomObject
                     minDistance = distance;
                     nearest = candidate.Key;
                 }
-            }
-        }
-        if(typeof(TKey) == typeof(Area))
-        {
-            foreach (Area reserveRemove in reserveRemoves)
-            {
-                farmingAreas[reserveRemove] = true;
             }
         }
         return nearest;
@@ -1251,22 +1280,38 @@ public class Survivor : CustomObject
     void PlayFarmingNoise()
     {
         float rand = UnityEngine.Random.Range(0, 1f);
+        float volume = isAssassin ? 2 : 3;
         if(rand > 0.75f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise01,2", this);
+            targetFarmingBox.PlaySFX($"farmingNoise01,{volume}", this);
         }
         else if (rand > 0.5f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise02,2", this);
+            targetFarmingBox.PlaySFX($"farmingNoise02,{volume}", this);
         }
         else if (rand > 0.25f)
         {
-            targetFarmingBox.PlaySFX("farmingNoise03,2", this);
+            targetFarmingBox.PlaySFX($"farmingNoise03,{volume}", this);
         }
         else
         {
-            targetFarmingBox.PlaySFX("farmingNoise04,2", this);
+            targetFarmingBox.PlaySFX($"farmingNoise04,{volume}", this);
         }
+    }
+
+    bool leftFoot;
+    void PlayFootstepNoise()
+    {
+        curMoveDistance += Vector2.Distance(lastPosition, transform.position);
+        if(curMoveDistance > footstepDistance)
+        {
+            curMoveDistance = 0;
+            string sfxName = leftFoot ? "footstep_concrete1" : "footstep_concrete2";
+            string volume = isAssassin ? "2" : "0.5";
+            PlaySFX(sfxName + "," + volume);
+            leftFoot = !leftFoot;
+        }
+        lastPosition = transform.position;
     }
 
     bool noMoreFarmingArea;
@@ -1426,8 +1471,8 @@ public class Survivor : CustomObject
         else
         {
             inventory.Add(item);
-            if(item.itemType == ItemManager.Items.TrapDetectionDevice) trapDetectionDeviceCollider.enabled = true;
-            else if(item.itemType == ItemManager.Items.BiometricRader) biometricRaderCollider.enabled = true;
+            if (item.itemType == ItemManager.Items.TrapDetectionDevice) trapDetectionDevice.SetActive(true);
+            else if (item.itemType == ItemManager.Items.BiometricRader) biometricRader.SetActive(true);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -2259,7 +2304,7 @@ public class Survivor : CustomObject
             if (i <= sightEdgeCount / 3) sightRange = leftSightRange;
             else if(i <= sightEdgeCount * 2 / 3) sightRange = Mathf.Max(rightSightRange, leftSightRange);
             else sightRange = rightSightRange;
-            if(currentStatus == Status.FarmingBox || currentStatus == Status.Trapping) sightRange = Mathf.Min(sightRange, 5);
+            if(currentStatus == Status.FarmingBox || currentStatus == Status.Trapping || currentStatus == Status.Crafting) sightRange = Mathf.Min(sightRange, 5);
             RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, sightRange, sightObstacleMask);
             if(hits.Length > 0)
             {
@@ -2527,7 +2572,17 @@ public class Survivor : CustomObject
             // 시야 밖에서 맞으면 무조건 치명타
             damage *= 2;
             damagePart = InjurySiteMajor.Head;
-            hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
+            if (attacker.currentWeapon is RangedWeapon attackerWeaponRange)
+            {
+                hitSound = attackerWeaponRange.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
+            }
+            else if (attacker.currentWeapon is MeleeWeapon attackerWeaponMelee)
+            {
+                if (attackerWeaponMelee.DamageType == DamageType.Slash) hitSound = "hit_flesh,5";
+                else if (attackerWeaponMelee.DamageType == DamageType.Strike) hitSound = "hit01,20";
+                else hitSound = "hit01,10";
+            }
+            else hitSound = "hit01,10";
         }
         else
         {
@@ -2752,7 +2807,7 @@ public class Survivor : CustomObject
                     else if (rand > 0.5f) injurySite = InjurySite.RightBigToe;
                     else injurySite = InjurySite.LeftBigToe;
                 }
-                else if(damageType == DamageType.Cut)
+                else if(damageType == DamageType.Slash)
                 {
                     if (rand > 0.5f) injurySite = InjurySite.RightAncle;
                     else injurySite = InjurySite.LeftAncle;
@@ -2781,7 +2836,7 @@ public class Survivor : CustomObject
                         AddInjury(InjurySite.Brain, InjuryType.Concussion, Mathf.Clamp((injuryDegree - 0.7f) / 0.3f, 0, 0.99f));
                     }
                 }
-                else if(damageType == DamageType.Cut)
+                else if(damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
@@ -2807,7 +2862,7 @@ public class Survivor : CustomObject
                     if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
                     else if(injuryDegree > 0.9) AddInjury(injurySite, InjuryType.PermanentVisualImpairment, 1);
                 }
-                else if(damageType == DamageType.Cut)
+                else if(damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                     if (injuryDegree >= 1) AddInjury(injurySite, InjuryType.Loss, 1);
@@ -2832,7 +2887,7 @@ public class Survivor : CustomObject
                 {
                     injuryDegree = 0;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
@@ -2855,7 +2910,7 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Fracture;
                 }
-                else if(damageType == DamageType.Cut)
+                else if(damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                 }
@@ -2875,7 +2930,7 @@ public class Survivor : CustomObject
                     injuryType = InjuryType.Fracture;
                     injuryDegree = Mathf.Clamp((damage - 20) / 80, 0, 0.99f);
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
@@ -2897,7 +2952,7 @@ public class Survivor : CustomObject
                     }
                     else injuryType = InjuryType.Contusion;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     injuryType = InjuryType.Cutting;
                 }
@@ -2926,7 +2981,7 @@ public class Survivor : CustomObject
                     }
                     else injuryType = InjuryType.Contusion;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     if (injuryDegree > 0.3f)
                     {
@@ -2967,7 +3022,7 @@ public class Survivor : CustomObject
                     if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
                     else injuryType = InjuryType.Contusion;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
@@ -2992,7 +3047,7 @@ public class Survivor : CustomObject
                     if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
                     else injuryType = InjuryType.Contusion;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
@@ -3026,7 +3081,7 @@ public class Survivor : CustomObject
                 {
                     injuryType = InjuryType.Fracture;
                 }
-                else if (damageType == DamageType.Cut)
+                else if (damageType == DamageType.Slash)
                 {
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
@@ -3051,7 +3106,7 @@ public class Survivor : CustomObject
                     injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
                 }
-                else if(damageType == DamageType.Cut)
+                else if(damageType == DamageType.Slash)
                 {
                     float rand = UnityEngine.Random.Range(0, 1f);
                     if (rand > 0.7f)
@@ -3663,6 +3718,9 @@ public class Survivor : CustomObject
                 case CharacteristicType.Engineer:
                     characteristicCorrection_CraftingSpeed *= 1.6f;
                     break;
+                case CharacteristicType.Assassin:
+                    isAssassin = true;
+                    break;
                 default:
                     break;
             }
@@ -3703,23 +3761,22 @@ public class Survivor : CustomObject
     #region Animation Events
     void AE_Attack()
     {
-        if(isDead) return;
-        if (inSightEnemies.Count == 0) return;
+        if(isDead || TargetEnemy == null) return;
         if(IsValid(currentWeapon) && currentWeapon is MeleeWeapon)
         {
-            if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < currentWeapon.AttackRange)
+            if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < currentWeapon.AttackRange)
             {
                 float damage = currentWeapon.AttackDamage + attackDamage;
                 if (currentWeapon.NeedHand == NeedHand.OneOrTwoHand && (rightHandDisabled || leftHandDisabled)) damage *= 0.7f;
-                inSightEnemies[0].TakeDamage(this, damage);
+                TargetEnemy.TakeDamage(this, damage);
             }
             else PlaySFX("avoid, 1", this);
         }
         else
         {
-            if (Vector2.Distance(transform.position, inSightEnemies[0].transform.position) < attackRange)
+            if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < attackRange)
             {
-                inSightEnemies[0].TakeDamage(this, attackDamage);
+                TargetEnemy.TakeDamage(this, attackDamage);
             }
             else PlaySFX("avoid, 1", this);
         }
@@ -3887,6 +3944,8 @@ public class Survivor : CustomObject
         {
             if (injury.type == InjuryType.ArtificalPartsTransplanted || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
         }
+
+        lastPosition = transform.position;
         ApplyCharacteristics();
         ApplyInjuryPenalty();
         ApplyStrategies();

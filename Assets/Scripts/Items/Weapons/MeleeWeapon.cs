@@ -1,6 +1,6 @@
 using System;
 
-public enum DamageType { Strike, Cut, GunShot, Explosion, Chemical }
+public enum DamageType { Strike, Slash, GunShot, Explosion, Chemical }
 
 [Serializable]
 public class MeleeWeapon : Weapon

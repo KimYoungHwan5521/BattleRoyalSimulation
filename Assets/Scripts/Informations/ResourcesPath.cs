@@ -137,6 +137,7 @@ public class ResourcesPath
 
     public static string[] BGMPathArray =
     {
+        "Sounds/BGMs/the_birth_of_hip_hop",
 
     };
 
@@ -176,6 +177,11 @@ public class ResourcesPath
         "Sounds/SFXs/alarm_short",
         "Sounds/SFXs/water",
         "Sounds/SFXs/drink",
+        "Sounds/SFXs/footstep_concrete1",
+        "Sounds/SFXs/footstep_concrete2",
+        "Sounds/SFXs/footstep_grass1",
+        "Sounds/SFXs/footstep_grass2",
+        "Sounds/SFXs/forest",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";
