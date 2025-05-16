@@ -272,12 +272,13 @@ public class BattleRoyaleManager
             }
             else
             {
-                if(count == 1 || !CheckPathBlock(candidate))
+                if(!CheckPathBlock(candidate))
                 {
                     candidate.IsProhibited_Plan = true;
                     foreach (Survivor survivor in survivors)
                     {
                         survivor.RemoveProhibitArea(candidate);
+                        if (count - number == 1) survivor.LastArea();
                     }
                 }
                 else

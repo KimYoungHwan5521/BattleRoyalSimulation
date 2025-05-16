@@ -76,7 +76,7 @@ public class Survivor : CustomObject
     }
     public int survivorID;
     public string survivorName;
-    Status currentStatus;
+    [SerializeField] Status currentStatus;
     public Status CurrentStatus
     {
         get => currentStatus;
@@ -455,6 +455,7 @@ public class Survivor : CustomObject
     float totalDamage;
     public float TotalDamage => totalDamage;
     #endregion
+    bool lastArea;
     #endregion
     private void Awake()
     {
@@ -769,10 +770,17 @@ public class Survivor : CustomObject
                 bool enemyInAttackRange = false;
                 if (IsValid(currentWeapon))
                 {
-                    if (CurrentWeaponAsRangedWeapon != null)
+                    if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0)
                     {
-                        if (distance < CurrentWeaponAsRangedWeapon.AttackRange) enemyInAttackRange = true;
+                        if (ValidBullet != null)
+                        {
+                            Reload();
+                            return;
+                        }
+                        // 원거린데 총알 없으면 attackRange
+                        if (distance < attackRange) enemyInAttackRange = true;
                     }
+                    // 근거리거나 원거리+총알 있으면 weapon.AttackRange
                     else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
                 }
                 else if (distance < attackRange) enemyInAttackRange = true;
@@ -947,19 +955,26 @@ public class Survivor : CustomObject
         sightMeshRenderer.material = m_SightNormal;
         if (!(RightHandDisabled && leftHandDisabled))
         {
-            if (targetFarmingCorpse != null)
+            // 파밍을 하는 경우:
+            // 1. 막금구가 아님
+            // 2. 막금구인 경우 : 무기가 priority1 무기가 아님 || 총알이 없음
+            if (!lastArea || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null))
             {
-                FarmingCorpse();
+                if (targetFarmingCorpse != null)
+                {
+                    FarmingCorpse();
+                }
+                else if (targetFarmingSection != null)
+                {
+                    FarmingSection();
+                }
+                else
+                {
+                    CheckFarmingTarget();
+                    Explore();
+                }
             }
-            else if (targetFarmingSection != null)
-            {
-                FarmingSection();
-            }
-            else
-            {
-                CheckFarmingTarget();
-                Explore();
-            }
+            else ExploreLastFarmingArea();
         }
         else ExploreWithNoHand();
 
@@ -1037,7 +1052,6 @@ public class Survivor : CustomObject
         {
             farmingAreas[reserveRemove] = true;
         }
-        Debug.Log($"{survivorName} : {nearest}");
         if (nearest == null) return farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
         return nearest;
     }
@@ -1328,45 +1342,39 @@ public class Survivor : CustomObject
         lastPosition = transform.position;
     }
 
-    bool noMoreFarmingArea;
     void Explore()
     {
         if (currentFarmingArea != null && !farmingAreas[currentFarmingArea]) return;
-        if (Vector2.Distance(agent.destination, transform.position) < 1f)
+        if (lastFarmingArea == null)
         {
-            if (!noMoreFarmingArea)
+            Area area = FindNearest(farmingAreas);
+            if (area != null)
             {
-                //foreach (Area farmingArea in currentFarmingArea.adjacentAreas)
-                //{
-                //    if (!farmingArea.IsProhibited && !farmingArea.IsProhibited_Plan && !farmingAreas[farmingArea])
-                //    {
-                //        CurrentFarmingArea = farmingArea;
-                //        return;
-                //    }
-                //}
-
-                Area area = FindNearest(farmingAreas);
-                if (area != null)
-                {
-                    CurrentFarmingArea = area;
-                    return;
-                }
-                else
-                {
-                    noMoreFarmingArea = true;
-                    lastFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
-                }
+                CurrentFarmingArea = area;
+                return;
             }
             else
             {
-                Vector2 wantPosition = transform.position;
-                wantPosition = new(
-                    lastFarmingArea.transform.position.x + UnityEngine.Random.Range(-25f, 25f),
-                    lastFarmingArea.transform.position.y + UnityEngine.Random.Range(-25f, 25f)
-                    );
-
-                agent.SetDestination(wantPosition);
+                lastFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
             }
+        }
+        else
+        {
+            ExploreLastFarmingArea();
+        }
+    }
+
+    void ExploreLastFarmingArea()
+    {
+        if (Vector2.Distance(agent.destination, transform.position) < 1f)
+        {
+            Vector2 wantPosition = transform.position;
+            wantPosition = new(
+                lastFarmingArea.transform.position.x + UnityEngine.Random.Range(-25f, 25f),
+                lastFarmingArea.transform.position.y + UnityEngine.Random.Range(-25f, 25f)
+                );
+
+            agent.SetDestination(wantPosition);
         }
     }
 
@@ -1704,8 +1712,12 @@ public class Survivor : CustomObject
     #endregion
 
     #region Crafting
+    float craftingCool;
     bool Crafting()
     {
+        craftingCool += Time.deltaTime;
+        if (craftingCool < 1f) return false;
+        craftingCool = 0;
         if(craftables.Count > 0)
         {
             // 중독 중이면 우선적으로 해독제부터
@@ -4008,6 +4020,12 @@ public class Survivor : CustomObject
         ApplyCharacteristics();
         ApplyInjuryPenalty();
         ApplyStrategies();
+    }
+
+    public void LastArea()
+    {
+        lastArea = true;
+        lastFarmingArea = farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
     }
 
     void ApplyStrategies()

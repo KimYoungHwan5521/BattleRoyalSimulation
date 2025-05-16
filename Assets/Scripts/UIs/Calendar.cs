@@ -170,7 +170,7 @@ public class Calendar : CustomObject
                 }
             }
 
-            if (i % 14 == 13)
+            if (i % 14 == 0)
             {
                 if (leagueReserveInfo.ContainsKey(i))
                 {

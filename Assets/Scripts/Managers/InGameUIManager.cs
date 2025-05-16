@@ -402,6 +402,7 @@ public class InGameUIManager : MonoBehaviour
             Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting.itemType}",
             _ => survivor.CurrentStatus.ToString()
         };
+        GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());
     }
 
     public void UpdateSelectedObjectInventory(CustomObject selected)
