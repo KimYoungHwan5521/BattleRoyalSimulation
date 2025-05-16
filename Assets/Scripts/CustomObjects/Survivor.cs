@@ -280,7 +280,7 @@ public class Survivor : CustomObject
         {
             if (CurrentWeaponAsRangedWeapon == null) return null;
             string bulletName;
-            if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemName}";
+            if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemType}";
             else bulletName = "Rocket_Bazooka";
             if (!Enum.TryParse(bulletName, out ItemManager.Items bullet))
             {
@@ -554,7 +554,7 @@ public class Survivor : CustomObject
             rememberSounds.Remove(sound);
         }
         
-        if(keepEyesOnPosition != Vector2.zero && !isBlind)
+        if(keepEyesOnPosition != Vector2.zero)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
             Look(keepEyesOnPosition);
@@ -570,7 +570,7 @@ public class Survivor : CustomObject
         }
         else
         {
-            Look((Vector2)agent.velocity);
+            Look((Vector2)(transform.position + agent.velocity));
         }
 
         if (isBlind) return;
@@ -581,10 +581,12 @@ public class Survivor : CustomObject
         }
     }
 
-    void Look(Vector2 preferDirection)
+    void Look(Vector2 targetPosition)
     {
-        Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
-        if(Vector2.Angle(currentLookVector, preferDirection) > 3)
+        // Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
+        Vector2 currentLookVector = transform.up;
+        Vector2 preferDirection = targetPosition - (Vector2)transform.position;
+        if(Vector2.Angle(currentLookVector, preferDirection) > 3f)
         {
             float direction = Vector2.SignedAngle(currentLookVector, preferDirection) > 0 ? 1 : -1;
             transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 300 * Time.fixedDeltaTime);
@@ -612,7 +614,8 @@ public class Survivor : CustomObject
                 targetFarmingCorpse = null;
                 return;
             }
-            lookPosition = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
+            //lookPosition = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
+            lookPosition = Vector2.up.Rotate(120);
             lookAroundCount++;
         }
     }
@@ -761,7 +764,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                lookPosition = TargetEnemy.transform.position - transform.position;
+                lookPosition = TargetEnemy.transform.position;
                 float distance = Vector2.Distance(transform.position, TargetEnemy.transform.position);
                 bool enemyInAttackRange = false;
                 if (IsValid(currentWeapon))
@@ -1194,7 +1197,7 @@ public class Survivor : CustomObject
                 curFarmingTime = 0;
                 progressBar.fillAmount = 0;
             }
-            else lookPosition = targetFarmingCorpse.transform.position - transform.position;
+            else lookPosition = targetFarmingCorpse.transform.position;
         }
         else
         {
@@ -1269,7 +1272,7 @@ public class Survivor : CustomObject
                 curFarmingTime = 0;
                 progressBar.fillAmount = 0;
             }
-            else lookPosition = targetFarmingBox.transform.position - transform.position;
+            else lookPosition = targetFarmingBox.transform.position;
         }
         else
         {
@@ -1306,9 +1309,20 @@ public class Survivor : CustomObject
         if(curMoveDistance > footstepDistance)
         {
             curMoveDistance = 0;
-            string sfxName = leftFoot ? "footstep_concrete1" : "footstep_concrete2";
-            string volume = isAssassin ? "2" : "0.5";
-            PlaySFX(sfxName + "," + volume);
+            Collider2D[] cols = Physics2D.OverlapPointAll(transform.position);
+            string sfxName = "";
+            foreach(var col in cols)
+            {
+                if(col.TryGetComponent(out Tilemap tile))
+                {
+                    sfxName = "footstep_concrete";
+                    break;
+                }
+            }
+            if (string.IsNullOrEmpty(sfxName)) sfxName = "footstep_grass";
+            sfxName += leftFoot ? "1" : "2";
+            sfxName += isAssassin ? ",2" : ",0.5";
+            PlaySFX(sfxName);
             leftFoot = !leftFoot;
         }
         lastPosition = transform.position;
@@ -1762,6 +1776,51 @@ public class Survivor : CustomObject
                 }
                 // 이미 보유 중인 아이템은 만들지 않음
                 if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null) continue;
+                // 총 필요성 검사
+                bool gunNeeds = false;
+                if(currentWeapon is not RangedWeapon)
+                {
+                    // 총이 없으면 무조건 만들고
+                    gunNeeds = true;
+                }
+                else
+                {
+                    bool needCompare = false;
+                    // 총이 있는데 총알이 없으면 총기 티어비교
+                    if(CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
+                    else
+                    {
+                        // 총알이 있으면, 내가 만드려는 무기의 총알이 있을 때만 총기 티어 비교
+                        string bulletName;
+                        if (craftables[^i].itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{craftables[^i].itemType}";
+                        else bulletName = "Rocket_Bazooka";
+                        if(Enum.TryParse(bulletName, out ItemManager.Items bullet))
+                        {
+                            Item validBullet = inventory.Find(x => x.itemType == bullet);
+                            if (validBullet != null) needCompare = true;
+                        }
+                    }
+                    if (needCompare)
+                    {
+                        int curWeaponTier = currentWeapon.itemType switch
+                        {
+                            ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
+                            ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
+                            ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
+                            ItemManager.Items.Bazooka => 4,
+                            _ => 5
+                        };
+                        int candidateTier = craftables[^i].itemType switch
+                        {
+                            ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
+                            ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
+                            ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
+                            ItemManager.Items.Bazooka => 4,
+                            _ => 5
+                        };
+                        gunNeeds = candidateTier > curWeaponTier;
+                    }
+                }
                 // 총알 필요성 검사
                 bool bulletNeeds = false;
                 Item bestWeapon = null;
@@ -1945,7 +2004,7 @@ public class Survivor : CustomObject
         {
             CurrentStatus = Status.Trapping;
             agent.SetDestination(transform.position);
-            lookPosition = trapPlace.transform.position - transform.position;
+            lookPosition = trapPlace.transform.position;
 
             curTrappingTime += Time.deltaTime;
             progressBar.fillAmount = curTrappingTime / trappingTime;
@@ -1974,7 +2033,7 @@ public class Survivor : CustomObject
         if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null) return false;
         CurrentStatus = Status.Trapping;
         agent.SetDestination(transform.position);
-        lookPosition = curSettingBoobyTrapBox.transform.position - transform.position;
+        lookPosition = curSettingBoobyTrapBox.transform.position;
         
         curTrappingTime += Time.deltaTime;
         progressBar.fillAmount = curTrappingTime / trappingTime;

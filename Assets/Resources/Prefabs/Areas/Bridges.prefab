@@ -758,6 +758,7 @@ MonoBehaviour:
   farmingSections: []
   garbageObjects: []
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
@@ -30019,6 +30020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &1211227625867132587
 GameObject:
   m_ObjectHideFlags: 0
@@ -30272,6 +30274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &1568309232425165296
 GameObject:
   m_ObjectHideFlags: 0
@@ -31377,6 +31380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &6291604708988967670
 GameObject:
   m_ObjectHideFlags: 0
@@ -31467,6 +31471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &6489965654866770054
 GameObject:
   m_ObjectHideFlags: 0
@@ -31720,6 +31725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &6618503308447262226
 GameObject:
   m_ObjectHideFlags: 0
@@ -41274,6 +41280,7 @@ GameObject:
   - component: {fileID: 6635814896461135485}
   - component: {fileID: 7271678525907304477}
   - component: {fileID: 730522216372760676}
+  - component: {fileID: 5394920030447231896}
   m_Layer: 0
   m_Name: Bridge
   m_TagString: Untagged
@@ -45993,6 +46000,42 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!19719996 &5394920030447231896
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403516868028149015}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &7529575845749980878
 GameObject:
   m_ObjectHideFlags: 0
@@ -46083,6 +46126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &7549340743500760507
 GameObject:
   m_ObjectHideFlags: 0
@@ -46173,6 +46217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &8127208494417964837
 GameObject:
   m_ObjectHideFlags: 0
@@ -46589,6 +46634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1001 &365410557609729165
 PrefabInstance:
   m_ObjectHideFlags: 0

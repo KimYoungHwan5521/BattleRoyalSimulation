@@ -646,6 +646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &2437568741302101850
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,6 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &2869734683985592706
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &3087884350280696234
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,6 +1082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &3837093850000024717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,6 +1499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &6176190667382480042
 GameObject:
   m_ObjectHideFlags: 0
@@ -3512,6 +3517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &6920338385946993825
 GameObject:
   m_ObjectHideFlags: 0
@@ -4058,6 +4064,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
+  - component: {fileID: 2559660137470379270}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -11531,6 +11538,42 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!19719996 &2559660137470379270
+TilemapCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8409283748075145055}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_MaximumTileChangeCount: 1000
+  m_ExtrusionFactor: 0
+  m_UseDelaunayMesh: 0
 --- !u!1 &8562406199164290997
 GameObject:
   m_ObjectHideFlags: 0
