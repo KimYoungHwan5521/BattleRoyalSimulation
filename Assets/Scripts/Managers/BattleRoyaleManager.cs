@@ -53,17 +53,13 @@ public class BattleRoyaleManager
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
 
-        GameManager.ClaimLoadInfo("Loading a map...");
-        LoadMap();
         MapSetting();
-        GameManager.ClaimLoadInfo("Loading items...");
-        ItemSetting();
-        ItemPlacing();
-        GameManager.ClaimLoadInfo("Spawn survivors...");
-        SpawnPlayers();
+        yield return LoadMap();
+        yield return ItemSetting();
+        yield return ItemPlacing();
+        yield return SpawnPlayers();
 
-        BattleRoyaleStart();
-        yield return null;
+        yield return BattleRoyaleStart();
         GameManager.CloseLoadInfo();
     }
 
@@ -82,8 +78,9 @@ public class BattleRoyaleManager
         }
     }
 
-    void LoadMap()
+    IEnumerator LoadMap()
     {
+        GameManager.ClaimLoadInfo("Loading a map...");
         if (Enum.TryParse(Calendar_.LeagueReserveInfo[Calendar_.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
         {
             map = GameObject.Instantiate(ResourceManager.Get(Calendar_.LeagueReserveInfo[Calendar_.Today].map));
@@ -96,6 +93,7 @@ public class BattleRoyaleManager
         else
         {
             Debug.LogError("Failed parse map to NavMeshData");
+            yield return null;
         }
     }
 
@@ -140,7 +138,7 @@ public class BattleRoyaleManager
         }
     }
 
-    void ItemSetting()
+    IEnumerator ItemSetting()
     {
         ItemManager.itemDictionary.Clear();
         //AddItems(ItemManager.Items.Bazooka, 1);
@@ -174,10 +172,10 @@ public class BattleRoyaleManager
         //AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 2);
         //AddItems(ItemManager.Items.HighLevelBulletproofVest, 1);
         //AddItems(ItemManager.Items.BandageRoll, 10);
-
+        yield return null;
     }
 
-    void ItemPlacing()
+    IEnumerator ItemPlacing()
     {
         farmingItems = farmingItems.Shuffle();
 
@@ -203,23 +201,25 @@ public class BattleRoyaleManager
                     GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
                 }
             }
+            yield return null;
         }
     }
 
-    void SpawnPlayers()
+    IEnumerator SpawnPlayers()
     {
         rankings = new string[25];
 
         areas = areas.Shuffle();
 
         int survivorIndex = 0;
-        int survivorRemainder;
+        int survivorRemainder; 
         for (int i = 0; i < areas.Length; i++)
         {
             survivorRemainder = i < survivorNumber % areas.Length ? 1 : 0;
             int areaSurvivorNum = survivorNumber / areas.Length + survivorRemainder;
             for (int j = 0; j < areaSurvivorNum; j++)
             {
+                GameManager.ClaimLoadInfo("Spawn survivors...", survivorIndex, survivorNumber);
                 Vector2 spawnPosition = new(
                     areas[i].transform.position.x + UnityEngine.Random.Range(-25 + 3, 25 - 3),
                     areas[i].transform.position.y + UnityEngine.Random.Range(-25 + 3, 25 - 3)
@@ -243,6 +243,7 @@ public class BattleRoyaleManager
                 survivorIndex++;
                 survivors.Add(survivor);
                 aliveSurvivors.Add(survivor);
+                yield return null;
             }
         }
         GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
@@ -349,7 +350,7 @@ public class BattleRoyaleManager
         }
     }
 
-    void BattleRoyaleStart()
+    IEnumerator BattleRoyaleStart()
     {
         foreach (Survivor survivor in survivors)
         {
@@ -363,6 +364,7 @@ public class BattleRoyaleManager
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
         count3Animator.SetTrigger("Count");
+        yield return null;
         GameManager.CloseLoadInfo();
     }
 

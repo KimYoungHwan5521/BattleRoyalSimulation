@@ -63,7 +63,7 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image selectedSurvivorBleedingBarImage;
     [SerializeField] Animator bleedingAnim;
 
-    [SerializeField] GameObject seletedObjectTab;
+    [SerializeField] GameObject selectedObjectTab;
 
     int currentTab = 1;
     public int CurrentTab
@@ -268,20 +268,24 @@ public class InGameUIManager : MonoBehaviour
             {
                 if(hit.TryGetComponent(out CustomObject clickedObject))
                 {
+                    selectedObject = clickedObject;
                     if(clickedObject is Survivor || clickedObject is Box)
                     {
-                        selectedObject = clickedObject;
-                        seletedObjectTab.SetActive(clickedObject is Survivor);
+                        selectedObjectTab.SetActive(clickedObject is Survivor);
                         if (clickedObject is Survivor)
                         {
                             Survivor survivor = clickedObject as Survivor;
                             cameraTarget = selectedObject.transform;
                         }
                         else CurrentTab = 1;
-                        SetSelectedObjectInfoOnce();
-                        selectedNotNull = true;
-                        break;
                     }
+                    else
+                    {
+                        selectedObjectTab.SetActive(false);
+                    }
+                    SetSelectedObjectInfoOnce();
+                    selectedNotNull = true;
+                    break;
                 }
             }
             else
@@ -330,6 +334,18 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
             selectedObjectImage.color = Color.white;
             selectedObjectName.text = "Box";
+            selectedSurvivorsHealthBar.SetActive(false);
+            selectedSurvivorBleedingBar.SetActive(false);
+            selectedObjectsCurrentWeapon.SetActive(false);
+            selectedObjectsCurrentHelmet.SetActive(false);
+            selectedObjectsCurrentVest.SetActive(false);
+        }
+        else
+        {
+            string name = selectedObject.name;
+            if(Enum.TryParse(name, out ResourceEnum.Sprite sprite)) selectedObjectImage.sprite = ResourceManager.Get(sprite);
+            selectedObjectImage.color = Color.white;
+            selectedObjectName.text = name;
             selectedSurvivorsHealthBar.SetActive(false);
             selectedSurvivorBleedingBar.SetActive(false);
             selectedObjectsCurrentWeapon.SetActive(false);

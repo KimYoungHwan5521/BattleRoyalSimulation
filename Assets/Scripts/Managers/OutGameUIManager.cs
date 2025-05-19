@@ -1420,8 +1420,8 @@ public class OutGameUIManager : MonoBehaviour
             {
                 bettingAmount = _bettingAmount;
                 for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
-                StartBattleRoyale();
                 bettingRoom.SetActive(false);
+                StartBattleRoyale();
             });
         }
     }
@@ -1431,8 +1431,8 @@ public class OutGameUIManager : MonoBehaviour
         OpenConfirmWindow("Skip betting?", () => 
         {
             bettingAmount = 0;
-            StartBattleRoyale();
             bettingRoom.SetActive(false);
+            StartBattleRoyale();
         });
     }
 

@@ -61,6 +61,7 @@ public class Survivor : CustomObject
                 animator.SetTrigger("Dead");
                 sightCollider.enabled = false;
                 bodyCollider.isTrigger = true;
+
                 trapDetectionDevice.SetActive(false);
                 biometricRader.SetActive(false);
                 sightMeshFilter.gameObject.SetActive(false);
@@ -108,18 +109,18 @@ public class Survivor : CustomObject
     [SerializeField] string heardSound;
 
     [Serializable]
-    public class RememberSound
+    public class SoundsMemory
     {
         public string soundName;
         public float soundTime;
 
-        public RememberSound(string soundName)
+        public SoundsMemory(string soundName)
         {
             this.soundName = soundName;
             soundTime = 0;
         }
     }
-    [SerializeField]List<RememberSound> rememberSounds = new();
+    [SerializeField]List<SoundsMemory> soundsMemories = new();
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
     [SerializeField] float aimErrorRange = 7.5f;
@@ -503,9 +504,13 @@ public class Survivor : CustomObject
         if(isDead) return;
         Regenerate();
 
-        if (dizzy) return;
+        if (FeelDizzy()) return;
         PlayFootstepNoise();
+
+        RememberSound();
         AI();
+
+        Look();
         if(!isBlind) DrawSightMesh();
     }
 
@@ -516,50 +521,32 @@ public class Survivor : CustomObject
         base.MyDestroy();
     }
 
-    #region FixedUpdate, Look
+    float curFixedUpdateCool;
     private void FixedUpdate()
     {
         if(!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
+        if (isBlind) return;
 
-        if(DizzyRate > 0)
+        curFixedUpdateCool += Time.fixedDeltaTime;
+        if(curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.02f)
         {
-            if(dizzy)
-            {
-                curDizzyDuration += Time.fixedDeltaTime;
-                if (curDizzyDuration > dizzyDuration)
-                {
-                    Dizzy = false;
-                }
-                else return;
-            }
-            else
-            {
-                curDizzyCool += Time.fixedDeltaTime;
-                if(curDizzyCool > dizzyCoolTime)
-                {
-                    if(UnityEngine.Random.Range(0, 1f) < dizzyRateByConcussion) Dizzy = true;
-                    curDizzyCool = 0;
-                    return;
-                }
-            }
+            curFixedUpdateCool = 0;
+            CalculateSightMesh();
         }
+        if(runAwayFrom != null)
+        {
+            CanRunAway(out runAwayDestination);
+        }
+    }
 
-        List<RememberSound> reserveRemove = new();
-        foreach (var sound in rememberSounds)
-        {
-            sound.soundTime += Time.fixedDeltaTime;
-            if(sound.soundTime > 10) reserveRemove.Add(sound);
-        }
-        foreach (var sound in reserveRemove)
-        {
-            rememberSounds.Remove(sound);
-        }
-        
-        if(keepEyesOnPosition != Vector2.zero)
+    #region Look
+    void Look()
+    {
+        if (keepEyesOnPosition != Vector2.zero)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
             Look(keepEyesOnPosition);
-            if(curKeepAnEyeOnTime > keepAnEyeOnTime)
+            if (curKeepAnEyeOnTime > keepAnEyeOnTime)
             {
                 keepEyesOnPosition = Vector2.zero;
                 curKeepAnEyeOnTime = 0;
@@ -571,14 +558,7 @@ public class Survivor : CustomObject
         }
         else
         {
-            Look((Vector2)(transform.position + agent.velocity));
-        }
-
-        if (isBlind) return;
-        CalculateSightMesh();
-        if(runAwayFrom != null)
-        {
-            CanRunAway(out runAwayDestination);
+            if(agent.velocity.magnitude > 0) Look((Vector2)(transform.position + agent.velocity));
         }
     }
 
@@ -587,16 +567,16 @@ public class Survivor : CustomObject
         // Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
         Vector2 currentLookVector = transform.up;
         Vector2 preferDirection = targetPosition - (Vector2)transform.position;
-        if(Vector2.Angle(currentLookVector, preferDirection) > 3f)
+        if(Vector2.Angle(currentLookVector, preferDirection) > 5f)
         {
             float direction = Vector2.SignedAngle(currentLookVector, preferDirection) > 0 ? 1 : -1;
-            transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 300 * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 200 * Time.deltaTime * aiCool);
         }
     }
 
     void LookAround()
     {
-        curLookAroundTime += Time.deltaTime;
+        curLookAroundTime += Time.deltaTime * aiCool;
         sightMeshRenderer.material = m_SightSuspicious;
         emotionAnimator.SetTrigger("Suspicious");
         if (curLookAroundTime > lookAroundTime)
@@ -616,7 +596,7 @@ public class Survivor : CustomObject
                 return;
             }
             //lookPosition = new Vector2(Mathf.Cos(transform.eulerAngles.z), Mathf.Sin(transform.eulerAngles.z)).Rotate(120);
-            lookPosition = Vector2.up.Rotate(120);
+            lookPosition = Vector2.up.Rotate(120) + (Vector2)transform.position;
             lookAroundCount++;
         }
     }
@@ -670,8 +650,55 @@ public class Survivor : CustomObject
         else curHP = Mathf.Min(curHP + 0.17f * hpRegeneration * Time.deltaTime, maxHP);
     }
 
+    bool FeelDizzy()
+    {
+        if (DizzyRate > 0)
+        {
+            if (dizzy)
+            {
+                curDizzyDuration += Time.deltaTime;
+                if (curDizzyDuration > dizzyDuration)
+                {
+                    Dizzy = false;
+                }
+                else return true;
+            }
+            else
+            {
+                curDizzyCool += Time.deltaTime;
+                if (curDizzyCool > dizzyCoolTime)
+                {
+                    if (UnityEngine.Random.Range(0, 1f) < dizzyRateByConcussion) Dizzy = true;
+                    curDizzyCool = 0;
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
+    void RememberSound()
+    {
+        List<SoundsMemory> reserveRemove = new();
+        foreach (var sound in soundsMemories)
+        {
+            sound.soundTime += Time.fixedDeltaTime;
+            if (sound.soundTime > 10) reserveRemove.Add(sound);
+        }
+        foreach (var sound in reserveRemove)
+        {
+            soundsMemories.Remove(sound);
+        }
+    }
+
+    int curAICool;
+    int aiCool = 1;
     void AI()
     {
+        //if (curAICool++ < GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) return;
+        //aiCool = GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count;
+        //curAICool = 0;
         if(isBlind)
         {
             agent.SetDestination(transform.position);
@@ -934,7 +961,6 @@ public class Survivor : CustomObject
             else if (Crafting())
             {
                 curCraftingTime = 0;
-                InGameUIManager.UpdateSelectedObjectStatus(this);
                 return;
             }
             if (Enchanting()) return;
@@ -1179,7 +1205,7 @@ public class Survivor : CustomObject
         {
             agent.SetDestination(transform.position);
 
-            curFarmingTime += Time.deltaTime * farmingSpeed;
+            curFarmingTime += Time.deltaTime * aiCool * farmingSpeed;
             progressBar.fillAmount = curFarmingTime / farmingTime;
             if (curFarmingTime > farmingTime)
             {
@@ -1244,7 +1270,7 @@ public class Survivor : CustomObject
     {
         if(Vector2.Distance(bodyCollider.ClosestPoint(targetFarmingBox.transform.position), targetFarmingBox.Collider.ClosestPoint(transform.position)) < 1f)
         {
-            currentStatus = Status.FarmingBox;
+            CurrentStatus = Status.FarmingBox;
             if (!farmingSFXPlayed) PlayFarmingNoise();
             farmingSFXPlayed = true;
             agent.SetDestination(transform.position);
@@ -1261,7 +1287,7 @@ public class Survivor : CustomObject
                 return;
             }
 
-            curFarmingTime += Time.deltaTime * farmingSpeed;
+            curFarmingTime += Time.deltaTime * aiCool * farmingSpeed;
             progressBar.fillAmount = curFarmingTime / farmingTime;
             if (curFarmingTime > farmingTime)
             {
@@ -1715,7 +1741,7 @@ public class Survivor : CustomObject
     float craftingCool;
     bool Crafting()
     {
-        craftingCool += Time.deltaTime;
+        craftingCool += Time.deltaTime * aiCool;
         if (craftingCool < 1f) return false;
         craftingCool = 0;
         if(craftables.Count > 0)
@@ -1929,12 +1955,12 @@ public class Survivor : CustomObject
 
     void Craft()
     {
-        currentStatus = Status.Crafting;
+        CurrentStatus = Status.Crafting;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
 
-        curCraftingTime += Time.deltaTime * craftingSpeed;
+        curCraftingTime += Time.deltaTime * aiCool * craftingSpeed;
         progressBar.fillAmount = curCraftingTime / currentCrafting.craftingTime;
         if(curCraftingTime > currentCrafting.craftingTime)
         {
@@ -2018,7 +2044,7 @@ public class Survivor : CustomObject
             agent.SetDestination(transform.position);
             lookPosition = trapPlace.transform.position;
 
-            curTrappingTime += Time.deltaTime;
+            curTrappingTime += Time.deltaTime * aiCool;
             progressBar.fillAmount = curTrappingTime / trappingTime;
             if(curTrappingTime > trappingTime)
             {
@@ -2047,7 +2073,7 @@ public class Survivor : CustomObject
         agent.SetDestination(transform.position);
         lookPosition = curSettingBoobyTrapBox.transform.position;
         
-        curTrappingTime += Time.deltaTime;
+        curTrappingTime += Time.deltaTime * aiCool;
         progressBar.fillAmount = curTrappingTime / trappingTime;
         if (curTrappingTime > trappingTime)
         {
@@ -2102,10 +2128,10 @@ public class Survivor : CustomObject
         }
         else
         {
-            currentStatus = Status.TrapDisarming;
+            CurrentStatus = Status.TrapDisarming;
             agent.SetDestination(transform.position);
             lookPosition = curDisarmTrap.transform.position;
-            curDisarmTime += Time.deltaTime;
+            curDisarmTime += Time.deltaTime * aiCool;
             progressBar.fillAmount = curDisarmTime / curDisarmTrap.DisarmTime;
             if(curDisarmTime > curDisarmTrap.DisarmTime)
             {
@@ -2232,7 +2258,7 @@ public class Survivor : CustomObject
             }
             else destination = target.transform.position;
 
-            curSetDestinationCool += Time.deltaTime;
+            curSetDestinationCool += Time.deltaTime * aiCool;
             if (curSetDestinationCool > 1)
             {
                 agent.SetDestination(destination);
@@ -2272,12 +2298,12 @@ public class Survivor : CustomObject
         animator.SetBool("Drinking", false);
         animator.SetBool("Aim", true);
 
-        curAimDelay += Time.deltaTime;
+        curAimDelay += Time.deltaTime * aiCool;
         progressBar.fillAmount = curAimDelay / aimDelay;
         if(curAimDelay > aimDelay)
         {
             progressBar.fillAmount = 0;
-            curShotTime -= Time.deltaTime;
+            curShotTime -= Time.deltaTime * aiCool;
             if(curShotTime < 0)
             {
                 animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
@@ -2454,7 +2480,7 @@ public class Survivor : CustomObject
     {
         Debug.Log(noiseMaker);
         heardSound = noiseMaker;
-        RememberSound sound = rememberSounds.Find(x => x.soundName == noiseMaker);
+        SoundsMemory sound = soundsMemories.Find(x => x.soundName == noiseMaker);
         if (sound != null)
         {
             if(sound.soundTime > 1)
@@ -2464,7 +2490,7 @@ public class Survivor : CustomObject
                 return;
             }
         }
-        else rememberSounds.Add(new(heardSound));
+        else soundsMemories.Add(new(heardSound));
 
         sightMeshRenderer.material = m_SightSuspicious;
         emotionAnimator.SetTrigger("Suspicious");
@@ -3924,58 +3950,67 @@ public class Survivor : CustomObject
     }
     #endregion
 
-    #region Trigger Events
-    float curSeeEnemy = 0;
-    private void OnTriggerStay2D(Collider2D collision)
+    #region SightIn SightOut
+    public void SightIn(Survivor survivor, bool corpse)
     {
-        if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
-        if (!collision.isTrigger)
+        if(!corpse)
         {
-            if (collision.TryGetComponent(out Survivor survivor))
+            if (!inSightEnemies.Contains(survivor))
             {
-                if (!inSightEnemies.Contains(survivor))
-                {
-                    curSeeEnemy += Time.deltaTime;
-                    if(curSeeEnemy > 0.1f)
-                    {
-                        threateningSoundPosition = Vector2.zero;
-                        keepEyesOnPosition = Vector2.zero;
-                        inSightEnemies.Add(survivor);
-                        sightMeshRenderer.material = m_SightAlert;
-                        if(survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
-                        curSeeEnemy = 0;
-                    }
-                }
+                threateningSoundPosition = Vector2.zero;
+                keepEyesOnPosition = Vector2.zero;
+                inSightEnemies.Add(survivor);
+                sightMeshRenderer.material = m_SightAlert;
+                if (survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
             }
         }
         else
         {
-            if (collision.TryGetComponent(out Survivor survivor))
+            if (!farmingCorpses.ContainsKey(survivor))
             {
-                if (survivor.isDead)
-                {
-                    if (!farmingCorpses.ContainsKey(survivor))
-                    {
-                        farmingCorpses.Add(survivor, false);
-                    }
-                }
+                farmingCorpses.Add(survivor, false);
+            }
+        }
+    }
+
+    public void SightOut(Survivor survivor)
+    {
+        if (survivor == TargetEnemy && survivor != isDead)
+        {
+            targetEnemiesLastPosition = survivor.transform.position;
+            lastTargetEnemy = survivor;
+        }
+        if(inSightEnemies.Contains(survivor)) inSightEnemies.Remove(survivor);
+    }
+
+    float curSeeEnemy = 0;
+    float curTriggerStayCool;
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
+        //if (curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.02f)
+        //{
+
+        //}
+        if (collision.TryGetComponent(out Survivor survivor) && (!collision.isTrigger || survivor.IsDead))
+        {
+            curSeeEnemy += Time.fixedDeltaTime;
+            if (curSeeEnemy > 0.1f)
+            {
+                curSeeEnemy = 0;
+                SightIn(survivor, survivor.IsDead);
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out Survivor survivor))
+        if (collision.TryGetComponent(out Survivor survivor))
         {
             if (!collision.isTrigger)
             {
-                if(survivor == TargetEnemy && survivor != isDead)
-                {
-                    targetEnemiesLastPosition = survivor.transform.position;
-                    lastTargetEnemy = survivor;
-                    inSightEnemies.Remove(survivor);
-                    curSeeEnemy = 0;
-                }
+                curSeeEnemy = 0;
+                SightOut(survivor);
             }
         }
     }

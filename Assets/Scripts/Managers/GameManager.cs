@@ -78,10 +78,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator BattleRoyaleStart()
     {
+        ClaimLoadInfo("Loading battle royale");
+        yield return null;
         outCanvas.SetActive(false);
         globalCanvas.SetActive(false);
         inGameUICanvas.SetActive(true);
-        battleRoyaleManager = new BattleRoyaleManager();
+        yield return battleRoyaleManager = new BattleRoyaleManager();
         yield return battleRoyaleManager.Initiate();
     }
 

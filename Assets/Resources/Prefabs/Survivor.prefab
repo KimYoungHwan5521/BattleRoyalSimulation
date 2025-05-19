@@ -1110,6 +1110,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aba76f257f47e74688ab804f3a4593e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftEye: {fileID: 0}
+  rightEye: {fileID: 0}
   rightHand: {fileID: 8156411755479026267}
   leftHand: {fileID: 118997756523179621}
   sightCollider: {fileID: 1884086056549199540}
@@ -1172,6 +1174,7 @@ MonoBehaviour:
   isDead: 0
   survivorID: 0
   survivorName: 
+  currentStatus: 0
   maxHP: 100
   curHP: 0
   attackDamage: 10
@@ -1186,11 +1189,10 @@ MonoBehaviour:
   sightEdgeCount: 24
   hearingAbility: 10
   heardSound: 
-  rememberSounds: []
+  soundsMemories: []
   farmingSpeed: 1
   aimErrorRange: 7.5
   charicteristics: []
-  lookPosition: {x: 0, y: 0}
   injuries: []
   rememberAlreadyHaveInjury: 
   rightHandDisabled: 0
@@ -1242,6 +1244,7 @@ MonoBehaviour:
   aimDelay: 1.5
   curAimDelay: 0
   curShotTime: 0
+  lookPosition: {x: 0, y: 0}
   lookAroundTime: 0.3
   curLookAroundTime: 0
   lookAroundCount: 0
