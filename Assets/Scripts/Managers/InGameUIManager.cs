@@ -15,6 +15,8 @@ public class InGameUIManager : MonoBehaviour
 
     Vector2 navVector;
 
+    int lastTimeScale = 1;
+
     [SerializeField] GraphicRaycaster[] raycasters;
     [SerializeField] EventSystem eventSystem;
 
@@ -150,6 +152,11 @@ public class InGameUIManager : MonoBehaviour
         cameraUpLimit = upLimit;
     }
 
+    void OnSpace(InputValue value)
+    {
+        Pause();
+    }
+
     void OnNavigate(InputValue value)
     {
         navVector = value.Get<Vector2>();
@@ -188,6 +195,20 @@ public class InGameUIManager : MonoBehaviour
     {
         Time.timeScale = Mathf.Clamp(Time.timeScale + 1, Time.timeScale, 5);
         currentTimeScaleText.text = $"x {(int)Time.timeScale}";
+    }
+
+    public void Pause()
+    {
+        if(Time.timeScale > 0)
+        {
+            lastTimeScale = (int)Time.timeScale;
+            SetTimeScale(0);
+        }
+        else
+        {
+            SetTimeScale(lastTimeScale);
+            lastTimeScale = 0;
+        }
     }
 
     public void SetLeftSurvivors(int survivorsCount)

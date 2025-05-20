@@ -159,7 +159,7 @@ public class Bullet : CustomObject
         else if(collision.TryGetComponent(out Obstacle obstacle))
         {
             float rand = Random.Range(0, 1f);
-            if(rand < obstacle.OpstructionRate)
+            if(rand < obstacle.ObstructionRate)
             {
                 if (Random.Range(0, 1f) < 0.5f)
                 {

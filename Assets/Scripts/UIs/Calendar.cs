@@ -156,7 +156,7 @@ public class Calendar : CustomObject
                 leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01));
             }
 
-            if (i % 28 == 27)
+            if (i % 28 == 0)
             {
                 if (!leagueReserveInfo.ContainsKey(i))
                 {

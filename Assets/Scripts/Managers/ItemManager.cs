@@ -22,6 +22,7 @@ public class ItemManager
         ShotGun,
         SniperRifle,
         Bazooka,
+        LASER,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,
@@ -44,6 +45,7 @@ public class ItemManager
         Poison,
         Antidote,
         Potion,
+        AdvancedPotion,
         // Crafting Materials
         Components,
         AdvancedComponent,
@@ -61,6 +63,7 @@ public class ItemManager
         WalkingAid,
         TrapDetectionDevice,
         BiometricRader,
+        EnergyBarrier,
     }
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
@@ -100,30 +103,38 @@ public class ItemManager
 
     public IEnumerator Initiate()
     {
+        // Crafting anim number - 0 : Crafting, 1 : Chemicals, 2 : Enchant
         craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1, 3.5f));
         craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
+        craftables.Add(new Craftable(Items.Revolver, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.ShotGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
-        craftables.Add(new Craftable(Items.SubMachineGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_Revolver, 40, 0, 0, 0, 1, 1, 4, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_AssaultRifle, 40, 0, 0, 0, 2, 2, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_SniperRifle, 40, 0, 0, 0, 1, 2, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_ShotGun, 40, 0, 0, 0, 3, 1, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.BearTrap, 45, 0, 2, 0, 3, 0, 3, 0, 10f));
-        craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 6, 1, 0, 1, 1, 3.5f));
-        craftables.Add(new Craftable(Items.NoiseTrap, 55, 1, 0, 0, 3, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.SubMachineGun, 45, 0, 4, 0, 4, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 3, 1, 0, 1, 1, 3.5f));
+        craftables.Add(new Craftable(Items.BearTrap, 55, 0, 2, 0, 3, 0, 3, 0, 10f));
         craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0, 18f));
+        craftables.Add(new Craftable(Items.NoiseTrap, 65, 1, 0, 0, 3, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.SniperRifle, 70, 0, 6, 0, 4, 0, 1, 0, 18f));
         craftables.Add(new Craftable(Items.Rocket_Bazooka, 75, 0, 1, 0, 0, 3, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.LandMine, 80, 1, 1, 0, 1, 2, 3, 0, 10f));
-        craftables.Add(new Craftable(Items.ChemicalTrap, 83, 0, 1, 0, 0, 0, 1, 1, 7, new KeyValuePair<Items, int>(Items.Poison, 3)));
+        craftables.Add(new Craftable(Items.LandMine, 78, 1, 1, 0, 1, 2, 3, 0, 10f));
+        craftables.Add(new Craftable(Items.ChemicalTrap, 82, 0, 1, 0, 0, 0, 1, 1, 7, new KeyValuePair<Items, int>(Items.Poison, 3)));
         craftables.Add(new Craftable(Items.ShrapnelTrap, 86, 0, 1, 0, 6, 1, 1, 0, 7f));
         craftables.Add(new Craftable(Items.ExplosiveTrap, 90, 1, 0, 1, 0, 3, 1, 0, 14f));
         craftables.Add(new Craftable(Items.Bazooka, 95, 0, 8, 0, 4, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.TrapDetectionDevice, 99, 2, 2, 1, 0, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.BiometricRader, 100, 3, 2, 1, 0, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.AdvancedPotion, 105, 0, 0, 3, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.Potion, 1)));
+        craftables.Add(new Craftable(Items.AdvancedComponent, 110, 0, 4, 0, 2, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.EnergyBarrier, 115, 4, 2, 0, 2, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.LASER, 120, 4, 2, 2, 4, 0, 1, 0, 21f));
         yield return null;
     }
 
@@ -166,33 +177,41 @@ public class ItemManager
                     itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 25, 2f, 1));
                 break;
             // Ranged Weapons
-            case Items.Revolver:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
-                break;
             case Items.Pistol:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
                 break;
-            case Items.AssaultRifle:
+            case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
-                break;
-            case Items.SubMachineGun:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
                 break;
+            case Items.SubMachineGun:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                break;
+            case Items.AssaultRifle:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 100, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 200, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Bazooka", 7.9f, NeedHand.TwoHand, 200, 37.5f, 3f, 10f, 10f, 1, 3f, 2, 6));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Bazooka", 7.9f, NeedHand.TwoHand, 200, 40f, 3f, 10f, 10f, 1, 10f, 2, 6));
+                break;
+            case Items.LASER:
+                for (int i = start; i < end; i++)
+                {
+                    RangedWeapon laser = new(wantItem, "LASER", 3.6f, NeedHand.OneHand, 100, 45f, 3f, 10f, 0.5f, 100, 3f, 0, 7);
+                    laser.Reload(100);
+                    itemDictionary[wantItem].Add(laser);
+                }
                 break;
             // Bullets
             case Items.Bullet_Revolver:
@@ -226,15 +245,15 @@ public class ItemManager
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 15));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 10));
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 25));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 35));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 40));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 50));
                 break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
@@ -269,6 +288,10 @@ public class ItemManager
             case Items.Potion:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Consumable(wantItem, "Potion", 0.7f));
+                break;
+            case Items.AdvancedPotion:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Advanced Potion", 1.3f));
                 break;
             // Crafting Materials
             case Items.Components:
@@ -328,6 +351,10 @@ public class ItemManager
             case Items.BiometricRader:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Item(wantItem, "Biometric Rader", 2.4f));
+                break;
+            case Items.EnergyBarrier:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, "Energy Barrier", 3.4f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");

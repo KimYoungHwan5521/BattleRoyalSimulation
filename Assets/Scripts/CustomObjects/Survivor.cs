@@ -21,6 +21,7 @@ public class Survivor : CustomObject
     [SerializeField] SpriteRenderer[] bodySprites;
     [SerializeField] GameObject trapDetectionDevice;
     [SerializeField] GameObject biometricRader;
+    [SerializeField] GameObject energyBarrier;
     Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
 
@@ -64,6 +65,7 @@ public class Survivor : CustomObject
 
                 trapDetectionDevice.SetActive(false);
                 biometricRader.SetActive(false);
+                energyBarrier.SetActive(false);
                 sightMeshFilter.gameObject.SetActive(false);
                 emotion.SetActive(false);
                 nameTag.SetActive(false);
@@ -280,6 +282,7 @@ public class Survivor : CustomObject
         get
         {
             if (CurrentWeaponAsRangedWeapon == null) return null;
+            if (CurrentWeapon.itemType == ItemManager.Items.LASER) return null;
             string bulletName;
             if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemType}";
             else bulletName = "Rocket_Bazooka";
@@ -1521,6 +1524,7 @@ public class Survivor : CustomObject
             inventory.Add(item);
             if (item.itemType == ItemManager.Items.TrapDetectionDevice) trapDetectionDevice.SetActive(true);
             else if (item.itemType == ItemManager.Items.BiometricRader) biometricRader.SetActive(true);
+            else if (item.itemType == ItemManager.Items.EnergyBarrier) energyBarrier.SetActive(true);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -1816,23 +1820,33 @@ public class Survivor : CustomObject
                 if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null) continue;
                 // 총 필요성 검사
                 bool gunNeeds = false;
-                if(currentWeapon is not RangedWeapon)
+                if(currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+                {
+                    // 지금 무기가 priority1이면 패스
+                    gunNeeds = false;
+                }
+                else if(currentWeapon is not RangedWeapon)
                 {
                     // 총이 없으면 무조건 만들고
+                    gunNeeds = true;
+                }
+                else if(craftables[^i].itemType == linkedSurvivorData.priority1Weapon)
+                {
+                    // priority1 무기면 만들고
                     gunNeeds = true;
                 }
                 else
                 {
                     bool needCompare = false;
                     // 총이 있는데 총알이 없으면 총기 티어비교
-                    if(CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
+                    if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
                     else
                     {
                         // 총알이 있으면, 내가 만드려는 무기의 총알이 있을 때만 총기 티어 비교
                         string bulletName;
                         if (craftables[^i].itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{craftables[^i].itemType}";
                         else bulletName = "Rocket_Bazooka";
-                        if(Enum.TryParse(bulletName, out ItemManager.Items bullet))
+                        if (Enum.TryParse(bulletName, out ItemManager.Items bullet))
                         {
                             Item validBullet = inventory.Find(x => x.itemType == bullet);
                             if (validBullet != null) needCompare = true;
@@ -2684,7 +2698,7 @@ public class Survivor : CustomObject
         else
         {
             float probability = UnityEngine.Random.Range(0, 1f);
-            float coefficient = (linkedSurvivorData.Fighting / attacker.linkedSurvivorData.Fighting) * (moveSpeed / attacker.moveSpeed);
+            float coefficient = (linkedSurvivorData.Fighting / Mathf.Max(attacker.linkedSurvivorData.Fighting, 1)) * (moveSpeed / attacker.moveSpeed);
             float avoidRate = 0.2f * coefficient;
             float defendRate = 0.3f * coefficient;
             if (rightHandDisabled) defendRate -= defendRate * 0.5f;
@@ -2722,36 +2736,40 @@ public class Survivor : CustomObject
     public void TakeDamage(Bullet bullet)
     {
         if (isDead) return;
-        float damage;
+        float damage = bullet.Damage;
+        // 실효 사거리 밖
+        if (bullet.TraveledDistance > bullet.MaxRange * 0.5f)
+        {
+            damage *= (bullet.MaxRange * 1.5f - bullet.TraveledDistance) / bullet.MaxRange;
+        }
+        TakeGunshotDamamge(bullet.Launcher, damage);
+    }
+
+    public void TakeGunshotDamamge(Survivor launcher, float damage)
+    {
         float probability = UnityEngine.Random.Range(0, 1f);
         InjurySiteMajor damagePart;
-        float headShotProbability = 0.01f * 0.02f * bullet.Launcher.luck / luck;
-        float bodyShotProbability = 0.7f * 0.02f * bullet.Launcher.luck / luck;
+        float headShotProbability = 0.01f * 0.02f * launcher.luck / luck;
+        float bodyShotProbability = 0.7f * 0.02f * launcher.luck / luck;
         // 헤드샷
-        if(probability < headShotProbability)
+        if (probability < headShotProbability)
         {
-            damage = bullet.Damage * 4;
+            damage *= 4;
             damagePart = InjurySiteMajor.Head;
         }
         // 바디샷
-        else if(probability < bodyShotProbability)
+        else if (probability < bodyShotProbability)
         {
-            damage = bullet.Damage * 2;
+            damage *= 2;
             damagePart = InjurySiteMajor.Torso;
         }
         else
         {
-            damage = bullet.Damage;
-            if(UnityEngine.Random.Range(0, 1f) < 0.5f) damagePart = InjurySiteMajor.Arms;
+            if (UnityEngine.Random.Range(0, 1f) < 0.5f) damagePart = InjurySiteMajor.Arms;
             else damagePart = InjurySiteMajor.Legs;
         }
-        // 실효 사거리 밖
-        if(bullet.TraveledDistance > bullet.MaxRange * 0.5f)
-        {
-            damage *= (bullet.MaxRange * 1.5f - bullet.TraveledDistance) / bullet.MaxRange;
-        }
 
-        if(damagePart == InjurySiteMajor.Head)
+        if (damagePart == InjurySiteMajor.Head)
         {
             if (currentHelmet != null)
             {
@@ -2766,12 +2784,12 @@ public class Survivor : CustomObject
                 }
             }
         }
-        else if(damagePart == InjurySiteMajor.Torso)
+        else if (damagePart == InjurySiteMajor.Torso)
         {
-            if(currentVest != null) damage -= currentVest.Armor;
+            if (currentVest != null) damage -= currentVest.Armor;
         }
 
-        ApplyDamage(bullet.Launcher, damage, damagePart, DamageType.GunShot);
+        ApplyDamage(launcher, damage, damagePart, DamageType.GunShot);
     }
 
     public void TakeDamage(Trap trap, InjurySite injurySite)
@@ -3941,6 +3959,9 @@ public class Survivor : CustomObject
                 poisoned = false;
                 break;
             case ItemManager.Items.Potion:
+                curHP = Mathf.Min(curHP + 50, maxHP);
+                break;
+            case ItemManager.Items.AdvancedPotion:
                 curHP = Mathf.Min(curHP + 100, maxHP);
                 break;
             default:

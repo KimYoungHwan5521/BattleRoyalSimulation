@@ -6,6 +6,7 @@ namespace ResourceEnum
         Survivor,
         Bullet,
         Rocket,
+        Beam,
         Blood,
         BearTrap,
         LandMine,
@@ -84,6 +85,7 @@ namespace ResourceEnum
         ShotGun,
         SniperRifle,
         Bazooka,
+        LASER,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,
@@ -123,6 +125,7 @@ namespace ResourceEnum
         WalkingAid,
         TrapDetectionDevice,
         BiometricRader,
+        EnergyBarrier,
 
         // Leagues
         BronzeLeague,
@@ -164,6 +167,7 @@ namespace ResourceEnum
         bang_05, // Sniper riple
         bang_06, // Assult riple
         rocket_launch,
+        laser,
         ricochet,
         ricochet2,
         hit01,

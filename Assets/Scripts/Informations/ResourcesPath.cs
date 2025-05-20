@@ -6,6 +6,7 @@ public class ResourcesPath
         "Prefabs/Survivor",
         "Prefabs/Bullet",
         "Prefabs/Rocket",
+        "Prefabs/Beam",
         "Prefabs/Blood",
         "Prefabs/Traps/BearTrap",
         "Prefabs/Traps/LandMine",
@@ -81,6 +82,7 @@ public class ResourcesPath
         "Sprites/Icons/ShotGun",
         "Sprites/Icons/SniperRifle",
         "Sprites/Icons/Bazooka",
+        "Sprites/Icons/LASER",
         "Sprites/Icons/Bullet_Revolver",
         "Sprites/Icons/Bullet_Pistol",
         "Sprites/Icons/Bullet_AssaultRifle",
@@ -113,6 +115,7 @@ public class ResourcesPath
         "Sprites/Icons/WalkingAid",
         "Sprites/Icons/TrapDetectionDevice",
         "Sprites/Icons/BiometricRader",
+        "Sprites/Icons/EnergyBarrier",
         
         // Leagues
         "Sprites/Leagues/BronzeLeague",
@@ -156,6 +159,7 @@ public class ResourcesPath
         "Sounds/SFXs/Guns/bang_05",
         "Sounds/SFXs/Guns/bang_06",
         "Sounds/SFXs/Guns/rocket_launch",
+        "Sounds/SFXs/Guns/laser",
         "Sounds/SFXs/Guns/ricochet",
         "Sounds/SFXs/Guns/ricochet2",
         "Sounds/SFXs/hit01",

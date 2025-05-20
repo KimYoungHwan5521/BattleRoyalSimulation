@@ -53,6 +53,57 @@ public class ProjectileGenerator : CustomObject
         rocket.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
 
+    public void DrawBeam()
+    {
+        PlaySFX("laser,2", owner, muzzleTF.position);
+        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
+
+        float err = owner.AimErrorRange;
+        float rand = Random.Range(-err, err);
+        
+        Vector2 direction = ((destination - (Vector2)muzzleTF.position).normalized).Rotate(rand);
+
+        RaycastHit2D[] hits = new RaycastHit2D[20];
+        Physics2D.RaycastNonAlloc(muzzleTF.position, direction * owner.CurrentWeaponAsRangedWeapon.AttackRange, hits);
+        Vector2 arrive = Vector2.zero;
+        foreach(var hit in hits)
+        {
+            if (hit.collider == null || hit.collider.isTrigger) continue;
+            if (hit.collider.CompareTag("Wall"))
+            {
+                arrive = hit.point;
+                break;
+            }
+            if(hit.collider.CompareTag("Survivor"))
+            {
+                if (hit.collider.TryGetComponent(out Survivor survivor)) survivor.TakeGunshotDamamge(owner, owner.CurrentWeaponAsRangedWeapon.AttackDamage);
+                arrive = hit.point;
+                break;
+            }
+            if(hit.collider.TryGetComponent(out Obstacle obstacle))
+            {
+                float randObs = Random.Range(0, 1f);
+                if(randObs < obstacle.ObstructionRate)
+                {
+                    arrive = hit.point;
+                    break;
+                }
+            }
+        }
+        if (arrive == Vector2.zero) arrive = (Vector2)muzzleTF.position + direction * owner.CurrentWeaponAsRangedWeapon.AttackRange;
+
+        beam = PoolManager.Spawn(ResourceEnum.Prefab.Beam);
+        beam.GetComponent<LineRenderer>().SetPositions(new Vector3[] { muzzleTF.position, arrive });
+        Invoke(nameof(DespawnBeam), 0.3f);
+    }
+
+    GameObject beam;
+    void DespawnBeam()
+    {
+        if (beam == null) Debug.LogWarning("There are no beam");
+        else PoolManager.Despawn(beam);
+    }
+
     public void ResetMuzzleTF(Transform hand)
     {
         if(hand.Find($"{owner.CurrentWeapon.itemName}")?.Find("Muzzle") != null)
