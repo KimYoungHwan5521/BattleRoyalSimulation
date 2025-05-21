@@ -54,13 +54,15 @@ public class LeagueReserveEntrySaveData
     public int key; // Dictionary¿« ≈∞
     public int leagueId;
     public string mapName;
+    public int itemPool;
     public int reserverId;
 
-    public LeagueReserveEntrySaveData(int key, int leagueId, string mapName, int reserverId)
+    public LeagueReserveEntrySaveData(int key, int leagueId, string mapName, int itemPool, int reserverId)
     {
         this.key = key;
         this.leagueId = leagueId;
         this.mapName = mapName;
+        this.itemPool = itemPool;
         this.reserverId = reserverId;
     }
 }

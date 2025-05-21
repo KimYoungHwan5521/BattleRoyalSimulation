@@ -363,7 +363,7 @@ public class InGameUIManager : MonoBehaviour
         }
         else
         {
-            string name = selectedObject.name;
+            string name = selectedObject.name.Split('(')[0];
             if(Enum.TryParse(name, out ResourceEnum.Sprite sprite)) selectedObjectImage.sprite = ResourceManager.Get(sprite);
             selectedObjectImage.color = Color.white;
             selectedObjectName.text = name;

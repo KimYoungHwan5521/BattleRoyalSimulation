@@ -77,6 +77,7 @@ public static class SaveManager
                 key,
                 (int)value.league,
                 value.map.ToString(),
+                value.itemPool,
                 value.reserver?.id ?? -1
             ));
         }
@@ -92,9 +93,10 @@ public static class SaveManager
         {
             var league = (League)entry.leagueId;
             var map = (ResourceEnum.Prefab)Enum.Parse(typeof(ResourceEnum.Prefab), entry.mapName);
+            int itemPool = entry.itemPool;
             SurvivorData reserver = GameManager.Instance.OutGameUIManager.MySurvivorsData.Find(x => x.id == entry.reserverId);
 
-            var reserveData = new LeagueReserveData(league, map);
+            var reserveData = new LeagueReserveData(league, map, itemPool);
             reserveData.reserver = reserver;
 
             result[entry.key] = reserveData;

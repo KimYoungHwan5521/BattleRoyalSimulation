@@ -10,12 +10,14 @@ public class LeagueReserveData
 {
     public League league;
     public ResourceEnum.Prefab map;
+    public int itemPool;
     public SurvivorData reserver;
 
-    public LeagueReserveData(League league, ResourceEnum.Prefab map)
+    public LeagueReserveData(League league, ResourceEnum.Prefab map, int itemPool)
     {
         this.league = league;
         this.map = map;
+        this.itemPool = itemPool;
     }
 }
 
@@ -146,27 +148,27 @@ public class Calendar : CustomObject
     {
         for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
         {
-            if (i % 336 == 335)
+            if (i % 336 == 0)
             {
-                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01));
+                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4));
             }
 
             if (i % 112 == 83)
             {
-                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01));
+                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01, 3));
             }
 
-            if (i % 28 == 0)
+            if (i % 28 == 27)
             {
                 if (!leagueReserveInfo.ContainsKey(i))
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-                    leagueReserveInfo.Add(i, new(League.GoldLeague, map));
+                    leagueReserveInfo.Add(i, new(League.GoldLeague, map, 2));
                 }
                 else if (leagueReserveInfo[i].league != League.SeasonChampionship)
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, map));
+                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, map, 2));
                 }
             }
 
@@ -177,20 +179,20 @@ public class Calendar : CustomObject
                     if (!leagueReserveInfo.ContainsKey(i - 1))
                     {
                         ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-                        leagueReserveInfo.Add(i - 1, new(League.SilverLeague, map));
+                        leagueReserveInfo.Add(i - 1, new(League.SilverLeague, map, 1));
                     }
                 }
                 else
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-                    leagueReserveInfo.Add(i, new(League.SilverLeague, map));
+                    leagueReserveInfo.Add(i, new(League.SilverLeague, map, 1));
                 }
             }
 
             if ((i - 1) % 7 == 5 && !leagueReserveInfo.ContainsKey(i - 1))
             {
                 ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
-                leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map));
+                leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map, 0));
             }
         }
         curMaxYear += howManyYears;

@@ -531,7 +531,7 @@ public class Survivor : CustomObject
         if (isBlind) return;
 
         curFixedUpdateCool += Time.fixedDeltaTime;
-        if(curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.02f)
+        if(curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.04f)
         {
             curFixedUpdateCool = 0;
             CalculateSightMesh();
@@ -570,11 +570,12 @@ public class Survivor : CustomObject
         // Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
         Vector2 currentLookVector = transform.up;
         Vector2 preferDirection = targetPosition - (Vector2)transform.position;
-        if(Vector2.Angle(currentLookVector, preferDirection) > 5f)
+        if (Vector2.Angle(currentLookVector, preferDirection) > 5f)
         {
             float direction = Vector2.SignedAngle(currentLookVector, preferDirection) > 0 ? 1 : -1;
             transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 200 * Time.deltaTime * aiCool);
         }
+        else transform.up = preferDirection;
     }
 
     void LookAround()
@@ -898,9 +899,9 @@ public class Survivor : CustomObject
         }
         animator.SetBool("StopBleeding", false);
 
-        if (poisoned)
+        if (curDrinking == null)
         {
-            if (curDrinking == null)
+            if (poisoned)
             {
                 Item antidote = inventory.Find(x => x.itemType == ItemManager.Items.Antidote);
                 if (antidote != null)
@@ -911,28 +912,49 @@ public class Survivor : CustomObject
             }
             else
             {
-                agent.destination = transform.position;
-                animator.SetBool("Drinking", true);
-                return true;
-            }
-        }
-        else if(maxHP - curHP > 50)
-        {
-            if (curDrinking == null)
-            {
-                Item potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
-                if (potion != null)
+                if (maxHP - curHP > 100)
                 {
-                    curDrinking = potion;
-                    return true;
+                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
+                    if (potion != null)
+                    {
+                        curDrinking = potion;
+                        return true;
+                    }
+                    else
+                    {
+                        potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion); 
+                        if (potion != null)
+                        {
+                            curDrinking = potion;
+                            return true;
+                        }
+                    }
+                }
+                else if (maxHP - curHP > 50)
+                {
+                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
+                    if (potion != null)
+                    {
+                        curDrinking = potion;
+                        return true;
+                    }
+                    else
+                    {
+                        potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
+                        if (potion != null)
+                        {
+                            curDrinking = potion;
+                            return true;
+                        }
+                    }
                 }
             }
-            else
-            {
-                agent.destination = transform.position;
-                animator.SetBool("Drinking", true);
-                return true;
-            }
+        }
+        else
+        {
+            agent.destination = transform.position;
+            animator.SetBool("Drinking", true);
+            return true;
         }
         animator.SetBool("Drinking", false);
 
@@ -1065,6 +1087,7 @@ public class Survivor : CustomObject
         foreach (KeyValuePair<Area, bool> candidate in candidates)
         {
             Area area = candidate.Key;
+            if (farmingAreas[area]) continue;
             if (area.IsProhibited || area.IsProhibited_Plan)
             {
                 reserveRemoves.Add(area);
