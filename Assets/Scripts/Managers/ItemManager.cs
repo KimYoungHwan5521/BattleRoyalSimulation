@@ -118,23 +118,29 @@ public class ItemManager
         craftables.Add(new Craftable(Items.Bullet_SniperRifle, 40, 0, 0, 0, 1, 2, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_ShotGun, 40, 0, 0, 0, 3, 1, 1, 0, 7f));
         craftables.Add(new Craftable(Items.SubMachineGun, 45, 0, 4, 0, 4, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.LowLevelBulletproofHelmet, 48, 0, 0, 0, 7, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Potion, 50, 0, 0, 3, 1, 0, 1, 1, 3.5f));
+        craftables.Add(new Craftable(Items.LowLevelBulletproofVest, 52, 0, 0, 0, 10, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.BearTrap, 53, 0, 2, 0, 3, 0, 3, 0, 10f));
         craftables.Add(new Craftable(Items.Rocket_Bazooka, 55, 0, 1, 0, 0, 3, 1, 0, 7f));
         craftables.Add(new Craftable(Items.AssaultRifle, 60, 0, 6, 0, 4, 0, 1, 0, 18f));
         craftables.Add(new Craftable(Items.NoiseTrap, 65, 1, 0, 0, 3, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.MiddleLevelBulletproofHelmet, 68, 0, 3, 0, 8, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.SniperRifle, 70, 0, 6, 0, 4, 0, 1, 0, 18f));
+        craftables.Add(new Craftable(Items.MiddleLevelBulletproofVest, 68, 0, 3, 0, 11, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.LandMine, 73, 1, 1, 0, 1, 2, 3, 0, 10f));
         craftables.Add(new Craftable(Items.ChemicalTrap, 77, 0, 1, 0, 0, 0, 1, 1, 7, new KeyValuePair<Items, int>(Items.Poison, 3)));
         craftables.Add(new Craftable(Items.Bazooka, 80, 0, 8, 0, 4, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.ShrapnelTrap, 81, 0, 1, 0, 6, 1, 1, 0, 7f));
         craftables.Add(new Craftable(Items.ExplosiveTrap, 85, 1, 0, 1, 0, 3, 1, 0, 14f));
-        craftables.Add(new Craftable(Items.BiometricRader, 96, 3, 2, 1, 0, 0, 1, 0, 14f));
-        craftables.Add(new Craftable(Items.TrapDetectionDevice, 100, 3, 2, 1, 0, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.HighLevelBulletproofHelmet, 88, 0, 6, 0, 9, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.HighLevelBulletproofVest, 92, 0, 6, 0, 12, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.BiometricRader, 96, 2, 8, 0, 2, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.TrapDetectionDevice, 100, 3, 5, 0, 2, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.AdvancedPotion, 105, 0, 0, 3, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.Potion, 1)));
-        craftables.Add(new Craftable(Items.AdvancedComponent, 110, 0, 4, 0, 2, 0, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.EnergyBarrier, 115, 4, 2, 0, 2, 0, 1, 0, 21f));
-        craftables.Add(new Craftable(Items.LASER, 120, 4, 2, 2, 4, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.AdvancedComponent, 110, 0, 4, 0, 0, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.EnergyBarrier, 115, 4, 8, 0, 4, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.LASER, 120, 4, 8, 2, 8, 0, 1, 0, 21f));
         yield return null;
     }
 

@@ -106,7 +106,7 @@ public class Survivor : CustomObject
     [SerializeField] float rightSightRange = 45f;
     float sightAngle = 120;
     public LayerMask sightObstacleMask;
-    [SerializeField] int sightEdgeCount = 24;
+    [SerializeField] int sightEdgeCount = 12;
     [SerializeField] float hearingAbility = 10f;
     [SerializeField] string heardSound;
 
@@ -132,6 +132,7 @@ public class Survivor : CustomObject
 
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
+    Vector3 lastVelocity;
     #endregion
     #region Characteristic
     [Header("Characteristic")]
@@ -483,9 +484,6 @@ public class Survivor : CustomObject
         sightMesh = new();
         sightMeshFilter.mesh = sightMesh;
 
-        sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
-        sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
-        sightColliderPoints = new Vector2[sightVertices.Length];
         m_SightNormal = ResourceManager.Get(ResourceEnum.Material.Sight_Normal);
         m_SightSuspicious = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
         m_SightAlert = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
@@ -531,7 +529,8 @@ public class Survivor : CustomObject
         if (isBlind) return;
 
         curFixedUpdateCool += Time.fixedDeltaTime;
-        if(curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.04f)
+        float fUpdateCool = 0.1f * Time.timeScale;
+        if (curFixedUpdateCool > fUpdateCool)
         {
             curFixedUpdateCool = 0;
             CalculateSightMesh();
@@ -561,7 +560,13 @@ public class Survivor : CustomObject
         }
         else
         {
-            if(agent.velocity.magnitude > 0) Look((Vector2)(transform.position + agent.velocity));
+            //Look((Vector2)(transform.position + agent.velocity));
+            if (agent.velocity.magnitude > 0)
+            {
+                Look((Vector2)(transform.position + agent.velocity));
+                lastVelocity = agent.velocity;
+            }
+            else Look((Vector2)(transform.position + lastVelocity));
         }
     }
 
@@ -570,7 +575,7 @@ public class Survivor : CustomObject
         // Vector2 currentLookVector = new(Mathf.Cos((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad), Mathf.Sin((transform.localEulerAngles.z + 90) * Mathf.Deg2Rad));
         Vector2 currentLookVector = transform.up;
         Vector2 preferDirection = targetPosition - (Vector2)transform.position;
-        if (Vector2.Angle(currentLookVector, preferDirection) > 5f)
+        if (Vector2.Angle(currentLookVector, preferDirection) > 5f * Time.timeScale)
         {
             float direction = Vector2.SignedAngle(currentLookVector, preferDirection) > 0 ? 1 : -1;
             transform.rotation = Quaternion.Euler(0, 0, transform.localEulerAngles.z + direction * 200 * Time.deltaTime * aiCool);
@@ -2204,6 +2209,12 @@ public class Survivor : CustomObject
     {
         CurrentStatus = Status.InvestigateThreateningSound;
         animator.SetBool("Crafting", false);
+        Area soundArea = GameManager.Instance.BattleRoyaleManager.GetArea(threateningSoundPosition);
+        if (soundArea.IsProhibited || soundArea.IsProhibited_Plan)
+        {
+            keepEyesOnPosition = threateningSoundPosition;
+            threateningSoundPosition = Vector2.zero;
+        }
         if (Vector2.Distance(transform.position, threateningSoundPosition) < 1f)
         {
             LookAround();
@@ -2427,8 +2438,11 @@ public class Survivor : CustomObject
 
     void CalculateSightMesh()
     {
+        sightEdgeCount = (int)((35 - GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) * 0.8f);
+        sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
+        sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
+        sightColliderPoints = new Vector2[sightVertices.Length];
         sightVertices[0] = Vector3.zero;  // 시야의 중심
-
         for (int i = 0; i <= sightEdgeCount; i++)
         {
             float angle = -sightAngle / 2 + i * (sightAngle / sightEdgeCount);  // 시작 각도부터 각도 간격만큼 더해가기
@@ -4028,14 +4042,9 @@ public class Survivor : CustomObject
     }
 
     float curSeeEnemy = 0;
-    float curTriggerStayCool;
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
-        //if (curFixedUpdateCool > GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count * 0.02f)
-        //{
-
-        //}
         if (collision.TryGetComponent(out Survivor survivor) && (!collision.isTrigger || survivor.IsDead))
         {
             curSeeEnemy += Time.fixedDeltaTime;

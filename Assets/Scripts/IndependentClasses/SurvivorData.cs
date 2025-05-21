@@ -93,7 +93,8 @@ public class SurvivorData
         {
             int result = _luck;
             if(HaveCharacteristic(CharacteristicType.LuckGuy)) result += 25;
-            else if(HaveCharacteristic(CharacteristicType.TheCursed)) result -= 25;
+            else if(HaveCharacteristic(CharacteristicType.Cursed)) result -= 25;
+            else if(HaveCharacteristic(CharacteristicType.Blessed)) result += 50;
             return result;
         }
     }

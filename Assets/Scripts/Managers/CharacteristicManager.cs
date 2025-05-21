@@ -36,7 +36,8 @@ public enum CharacteristicType
     Regenerator,
     UpsAndDowns,
     LuckGuy,
-    TheCursed,
+    Cursed,
+    Blessed,
     ClumsyHand,
     Dexterous,
     Engineer,
@@ -102,8 +103,9 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Avenger, "Avenger", CharacteristicRarity.Uncommon, "Increase fighting when bleeding/ Decrease hemostasis rate", 0));
         characteristics.Add(new(CharacteristicType.Regenerator, "Regenerator", CharacteristicRarity.Uncommon, "Increase hemostasis rate/ Blood and HP regenerate", 0));
         characteristics.Add(new(CharacteristicType.UpsAndDowns, "Ups and downs", CharacteristicRarity.Common, "Abilities increase or decrease depending on the condition of the day. (It will be determined when the battle royale starts)", 0));
-        characteristics.Add(new(CharacteristicType.LuckGuy, "Luck Guy", CharacteristicRarity.Uncommon, "Luck + 25", 0, CharacteristicType.TheCursed));
-        characteristics.Add(new(CharacteristicType.TheCursed, "The cursed", CharacteristicRarity.Uncommon, "Luck - 25", 0, CharacteristicType.LuckGuy));
+        characteristics.Add(new(CharacteristicType.LuckGuy, "Luck Guy", CharacteristicRarity.Uncommon, "Luck + 50%", 0, CharacteristicType.Cursed, CharacteristicType.Blessed));
+        characteristics.Add(new(CharacteristicType.Cursed, "Cursed", CharacteristicRarity.Uncommon, "Luck - 50%", 0, CharacteristicType.LuckGuy, CharacteristicType.Blessed));
+        characteristics.Add(new(CharacteristicType.Blessed, "Blessed", CharacteristicRarity.Rare, "Luck + 100%", 0, CharacteristicType.LuckGuy, CharacteristicType.Cursed));
         characteristics.Add(new(CharacteristicType.ClumsyHand, "Clumsy hand", CharacteristicRarity.Common, "Crafting speed - 30%", 0, CharacteristicType.Dexterous, CharacteristicType.Engineer));
         characteristics.Add(new(CharacteristicType.Dexterous, "Dexterous", CharacteristicRarity.Common, "Crafting speed + 30%", 0, CharacteristicType.ClumsyHand, CharacteristicType.Engineer));
         characteristics.Add(new(CharacteristicType.Engineer, "Engineer", CharacteristicRarity.Uncommon, "Crafting speed + 60%", 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous));

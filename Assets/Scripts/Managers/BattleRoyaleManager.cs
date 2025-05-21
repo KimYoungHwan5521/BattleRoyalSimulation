@@ -144,6 +144,7 @@ public class BattleRoyaleManager
         switch(itemPool)
         {
             case 4:
+                // World championship
                 AddItems(ItemManager.Items.AdvancedComponent, 36);
                 AddItems(ItemManager.Items.Components, 100);
                 AddItems(ItemManager.Items.Salvages, 200);
@@ -183,6 +184,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 12);
                 break;
             case 3:
+                // Season championship
                 AddItems(ItemManager.Items.AdvancedComponent, 25);
                 AddItems(ItemManager.Items.Components, 80);
                 AddItems(ItemManager.Items.Salvages, 160);
@@ -222,6 +224,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 6);
                 break;
             case 2:
+                // Gold league
                 AddItems(ItemManager.Items.AdvancedComponent, 16);
                 AddItems(ItemManager.Items.Components, 60);
                 AddItems(ItemManager.Items.Salvages, 120);
@@ -261,6 +264,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 1);
                 break;
             case 1:
+                // Silver league
                 AddItems(ItemManager.Items.Components, 40);
                 AddItems(ItemManager.Items.Salvages, 80);
                 AddItems(ItemManager.Items.Chemicals, 20);
@@ -293,6 +297,7 @@ public class BattleRoyaleManager
                 break;
             case 0:
             default:
+                // Bronze league
                 AddItems(ItemManager.Items.Components, 20);
                 AddItems(ItemManager.Items.Salvages, 40);
                 AddItems(ItemManager.Items.Chemicals, 10);
