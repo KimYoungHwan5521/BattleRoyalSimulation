@@ -123,6 +123,9 @@ public class ResourcesPath
         "Sprites/Leagues/GoldLeague",
         "Sprites/Leagues/SeasonChampionship",
         "Sprites/Leagues/WorldChampionship",
+        "Sprites/Leagues/MeleeLeague",
+        "Sprites/Leagues/RangeLeague",
+        "Sprites/Leagues/CraftingLeague",
 
         // Tiers
         "Sprites/Leagues/Bronze",

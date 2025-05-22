@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship  };
+public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship, MeleeLeague, RangeLeague, CraftingLeague  };
 public class LeagueReserveData
 {
     public League league;
@@ -105,8 +105,14 @@ public class Calendar : CustomObject
                         datesEvent[i].sprite = ResourceManager.Get(result);
                     }
                     else Debug.LogWarning($"Can't find sprite : {leagueReserveInfo[i + 28 * (calendarPage - 1)].league}");
-                    reserved[i].SetActive(leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null);
+                    if(leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
+                    {
+                        reserved[i].SetActive(true);
+                        reserved[i].GetComponent<Help>().SetDescription($"Reserver : {leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.survivorName}");
+                    }
+                    else reserved[i].SetActive(false);
                 }
+                else datesEvent[i].sprite = null;
             }
         }
     }
@@ -148,9 +154,21 @@ public class Calendar : CustomObject
     {
         for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
         {
-            if (i % 336 == 0)
+            if (i % 336 == 335)
             {
                 leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4));
+            }
+            else if(i % 336 == 48)
+            {
+                leagueReserveInfo.Add(i, new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01, 5));
+            }
+            else if(i % 336 == 160)
+            {
+                leagueReserveInfo.Add(i, new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01, 6));
+            }
+            else if(i % 336 == 272)
+            {
+                leagueReserveInfo.Add(i, new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01, 7));
             }
 
             if (i % 112 == 83)

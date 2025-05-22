@@ -133,6 +133,9 @@ namespace ResourceEnum
         GoldLeague,
         SeasonChampionship,
         WorldChampionship,
+        MeleeLeague,
+        RangeLeague,
+        CraftingLeague,
 
         // Tiers
         Bronze,

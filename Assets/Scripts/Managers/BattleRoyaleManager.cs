@@ -143,8 +143,50 @@ public class BattleRoyaleManager
     {
         switch(itemPool)
         {
+            case 7:
+                // Crafting League
+                AddItems(ItemManager.Items.AdvancedComponent, 50);
+                AddItems(ItemManager.Items.Components, 200);
+                AddItems(ItemManager.Items.Salvages, 400);
+                AddItems(ItemManager.Items.Chemicals, 100);
+                AddItems(ItemManager.Items.Gunpowder, 400);
+                AddItems(ItemManager.Items.BandageRoll, 100);
+                break;
+            case 6:
+                // Range League
+                AddItems(ItemManager.Items.Revolver, 25);
+                AddItems(ItemManager.Items.Pistol, 25);
+                AddItems(ItemManager.Items.SubMachineGun, 15);
+                AddItems(ItemManager.Items.ShotGun, 15);
+                AddItems(ItemManager.Items.SniperRifle, 5);
+                AddItems(ItemManager.Items.AssaultRifle, 5);
+                AddItems(ItemManager.Items.Bazooka, 5);
+                AddItems(ItemManager.Items.Bullet_Revolver, 25);
+                AddItems(ItemManager.Items.Bullet_Pistol, 25);
+                AddItems(ItemManager.Items.Bullet_SubMachineGun, 25);
+                AddItems(ItemManager.Items.Bullet_ShotGun, 25);
+                AddItems(ItemManager.Items.Bullet_AssaultRifle, 12);
+                AddItems(ItemManager.Items.Bullet_SniperRifle, 12);
+                AddItems(ItemManager.Items.Rocket_Bazooka, 25);
+                AddItems(ItemManager.Items.LowLevelBulletproofHelmet, 25);
+                AddItems(ItemManager.Items.MiddleLevelBulletproofHelmet, 15);
+                AddItems(ItemManager.Items.HighLevelBulletproofHelmet, 5);
+                AddItems(ItemManager.Items.LowLevelBulletproofVest, 25);
+                AddItems(ItemManager.Items.MiddleLevelBulletproofVest, 15);
+                AddItems(ItemManager.Items.HighLevelBulletproofVest, 5);
+                AddItems(ItemManager.Items.BandageRoll, 100);
+                break;
+            case 5:
+                // Melee League
+                AddItems(ItemManager.Items.Knife, 10);
+                AddItems(ItemManager.Items.Dagger, 10);
+                AddItems(ItemManager.Items.Bat, 10);
+                AddItems(ItemManager.Items.LongSword, 10);
+                AddItems(ItemManager.Items.Shovel, 10);
+                AddItems(ItemManager.Items.BandageRoll, 100);
+                break;
             case 4:
-                // World championship
+                // World Championship
                 AddItems(ItemManager.Items.AdvancedComponent, 36);
                 AddItems(ItemManager.Items.Components, 100);
                 AddItems(ItemManager.Items.Salvages, 200);
@@ -184,7 +226,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 12);
                 break;
             case 3:
-                // Season championship
+                // Season Championship
                 AddItems(ItemManager.Items.AdvancedComponent, 25);
                 AddItems(ItemManager.Items.Components, 80);
                 AddItems(ItemManager.Items.Salvages, 160);
@@ -224,7 +266,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 6);
                 break;
             case 2:
-                // Gold league
+                // Gold League
                 AddItems(ItemManager.Items.AdvancedComponent, 16);
                 AddItems(ItemManager.Items.Components, 60);
                 AddItems(ItemManager.Items.Salvages, 120);
@@ -264,7 +306,7 @@ public class BattleRoyaleManager
                 AddItems(ItemManager.Items.ExplosiveTrap, 1);
                 break;
             case 1:
-                // Silver league
+                // Silver League
                 AddItems(ItemManager.Items.Components, 40);
                 AddItems(ItemManager.Items.Salvages, 80);
                 AddItems(ItemManager.Items.Chemicals, 20);
@@ -297,7 +339,7 @@ public class BattleRoyaleManager
                 break;
             case 0:
             default:
-                // Bronze league
+                // Bronze League
                 AddItems(ItemManager.Items.Components, 20);
                 AddItems(ItemManager.Items.Salvages, 40);
                 AddItems(ItemManager.Items.Chemicals, 10);

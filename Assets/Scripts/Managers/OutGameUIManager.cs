@@ -1734,14 +1734,15 @@ public class OutGameUIManager : MonoBehaviour
 
     public SurvivorData CreateRandomSurvivorData()
     {
-        int value = calendar.LeagueReserveInfo[calendar.Today].league switch
+        League league = calendar.LeagueReserveInfo[calendar.Today].league;
+        int value = league switch
         {
             League.BronzeLeague => 1,
             League.SilverLeague => 2,
             League.GoldLeague => 3,
             League.SeasonChampionship => 4,
             League.WorldChampionship => 5,
-            _ => 5
+            _ => 4
         };
         int check = 0;
         while (check < 1000)
