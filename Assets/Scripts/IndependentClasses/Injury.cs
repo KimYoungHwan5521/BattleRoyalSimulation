@@ -8,7 +8,7 @@ public enum InjurySite
 {
     None,
     // Head
-    Head, RightEye, LeftEye, RightEar, LeftEar, Nose, Jaw, Skull, Brain,
+    Head, RightEye, LeftEye, RightEar, LeftEar, Cheek, Nose, Jaw, Skull, Brain,
 
     // Torso
     Chest, Libs, Abdomen, Organ,

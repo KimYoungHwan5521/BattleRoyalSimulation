@@ -316,36 +316,15 @@ public class Calendar : CustomObject
             outGameUIManager.Alert($"\"{wantReserver.survivorName}\" is already registered for another match.\n" +
                 $"Leagues other than the Championship can register one at a time.");
         }
-        else if (wantReserver.injuries.Count > 0)
+        else if (NeareastSeasonChampionship.reserver == wantReserver || NeareastWorldChampionship.reserver == wantReserver)
         {
-            bool availiable = true;
-            bool injured = false;
-            foreach (Injury injury in wantReserver.injuries)
+            outGameUIManager.OpenConfirmWindow("He's headed to the championship. Would you like to book him?", () =>
             {
-                if(injury.site == InjurySite.Organ && injury.degree >= 1)
-                {
-                    availiable = false;
-                    break;
-                }
-                if (injury.degree > 0)
-                {
-                    injured = true;
-                }
-            }
-
-            if (!availiable)
-            {
-                outGameUIManager.Alert("He can't register battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
-            }
-            else if (injured)
-            {
-                outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still register for Battle Royale?", () =>
-                {
-                    Reserve();
-                });
-            }
-            else Reserve();
+                if (wantReserver.injuries.Count > 0) AskAboutInjury();
+                else Reserve();
+            });
         }
+        else if (wantReserver.injuries.Count > 0) AskAboutInjury();
         else Reserve();
     }
 
@@ -355,6 +334,37 @@ public class Calendar : CustomObject
         wantReserver.isReserved = true;
         TurnPageCalendar(0);
         outGameUIManager.Alert("Battle royale has been registered.");
+    }
+
+    void AskAboutInjury()
+    {
+        bool availiable = true;
+        bool injured = false;
+        foreach (Injury injury in wantReserver.injuries)
+        {
+            if (injury.site == InjurySite.Organ && injury.degree >= 1)
+            {
+                availiable = false;
+                break;
+            }
+            if (injury.degree > 0)
+            {
+                injured = true;
+            }
+        }
+
+        if (!availiable)
+        {
+            outGameUIManager.Alert("He can't register battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
+        }
+        else if (injured)
+        {
+            outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still register for Battle Royale?", () =>
+            {
+                Reserve();
+            });
+        }
+        else Reserve();
     }
 
     public Tier GetNeedTier(League league)

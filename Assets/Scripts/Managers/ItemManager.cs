@@ -35,10 +35,12 @@ public class ItemManager
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
         HighLevelBulletproofHelmet,
+        LegendaryBulletproofHelmet,
         // BulletproofVests
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
         HighLevelBulletproofVest,
+        LegendaryBulletproofVest,
         // Consumables
         BandageRoll,
         HemostaticBandageRoll,
@@ -137,9 +139,11 @@ public class ItemManager
         craftables.Add(new Craftable(Items.HighLevelBulletproofVest, 92, 0, 6, 0, 12, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.BiometricRader, 96, 2, 8, 0, 2, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.TrapDetectionDevice, 100, 3, 5, 0, 2, 0, 1, 0, 21f));
-        craftables.Add(new Craftable(Items.AdvancedPotion, 105, 0, 0, 3, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.Potion, 1)));
+        craftables.Add(new Craftable(Items.AdvancedPotion, 104, 0, 0, 3, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.Potion, 1)));
+        craftables.Add(new Craftable(Items.LegendaryBulletproofHelmet, 108, 0, 6, 0, 0, 0, 1, 0, 35f, new KeyValuePair<Items, int>(Items.HighLevelBulletproofHelmet, 1), new KeyValuePair<Items, int>(Items.MiddleLevelBulletproofHelmet, 2), new KeyValuePair<Items, int>(Items.LowLevelBulletproofHelmet, 4)));
         craftables.Add(new Craftable(Items.AdvancedComponent, 110, 0, 4, 0, 0, 0, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.EnergyBarrier, 115, 4, 8, 0, 4, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.LegendaryBulletproofVest, 112, 0, 6, 0, 0, 0, 1, 0, 35f, new KeyValuePair<Items, int>(Items.HighLevelBulletproofVest, 1), new KeyValuePair<Items, int>(Items.MiddleLevelBulletproofVest, 2), new KeyValuePair<Items, int>(Items.LowLevelBulletproofVest, 4)));
+        craftables.Add(new Craftable(Items.EnergyBarrier, 116, 4, 8, 0, 4, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.LASER, 120, 4, 8, 2, 8, 0, 1, 0, 21f));
         yield return null;
     }
@@ -172,40 +176,40 @@ public class ItemManager
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 15, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 20, 2f, 1));
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 30, 2.4f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 50, 2.4f, 1));
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 25, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 30, 2f, 1));
                 break;
             // Ranged Weapons
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 30, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 40, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
                 break;
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 50, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 80, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 20, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 30, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 70, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 200, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 400, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
@@ -255,24 +259,32 @@ public class ItemManager
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 35));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 30));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 50));
                 break;
+            case Items.LegendaryBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Legendary Bulletproof Vest", 36f, 70));
+                break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Low Level Bulletproof Helmet", 0.7f, 60));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Low Level Bulletproof Helmet", 0.7f, 20));
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Middle Level Bulletproof Helmet", 1.2f, 100));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Middle Level Bulletproof Helmet", 1.2f, 40));
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "High Level Bulletproof Helmet", 1.6f, 140));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "High Level Bulletproof Helmet", 1.6f, 60));
+                break;
+            case Items.LegendaryBulletproofHelmet:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Legendary Bulletproof Helmet", 7f, 200));
                 break;
             // Consumables
             case Items.BandageRoll:

@@ -162,7 +162,7 @@ public class SurvivorData
     public CharacteristicType surgeryCharacteristic;
 
     // Strategy
-    public ItemManager.Items priority1Weapon = ItemManager.Items.SniperRifle;
+    public ItemManager.Items priority1Weapon = ItemManager.Items.AssaultRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
     [SerializeField] public ItemManager.Craftable priority1Crafting = null;
     public int priority1CraftingToInt = -1;

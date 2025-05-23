@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.WSA;
 
 public class Survivor : CustomObject
 {
@@ -2582,9 +2583,9 @@ public class Survivor : CustomObject
         }
         float maxDamage = specificDamagePart switch
         {
-            InjurySite.RightArm or InjurySite.LeftArm or InjurySite.RightLeg or InjurySite.LeftLeg => Mathf.Min(damage, 50),
-            InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Max(damage, 30),
-            InjurySite.RightHand or InjurySite.LeftHand or InjurySite.RightAncle or InjurySite.LeftAncle => Mathf.Min(damage, 20),
+            InjurySite.RightArm or InjurySite.LeftArm or InjurySite.RightLeg or InjurySite.LeftLeg => Mathf.Min(damage, 80),
+            InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Max(damage, 50),
+            InjurySite.RightHand or InjurySite.LeftHand or InjurySite.RightAncle or InjurySite.LeftAncle => Mathf.Min(damage, 30),
             InjurySite.RightThumb or InjurySite.LeftThumb or InjurySite.RightIndexFinger or InjurySite.LeftIndexFinger or InjurySite.RightMiddleFinger or InjurySite.LeftMiddleFinger
             or InjurySite.RightRingFinger or InjurySite.LeftRingFinger or InjurySite.RightLittleFinger or InjurySite.LeftLittleFinger or InjurySite.RightBigToe or InjurySite.LeftBigToe => Mathf.Min(damage, 10),
             _ => damage
@@ -2617,6 +2618,21 @@ public class Survivor : CustomObject
         if (damage > 0)
         {
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
+            if (specificDamagePart == InjurySite.Head)
+            {
+                if (currentHelmet != null)
+                {
+                    damage -= currentHelmet.Armor;
+                    if (UnityEngine.Random.Range(0, 1f) < 0.5f)
+                    {
+                        PlaySFX("ricochet,5", this);
+                    }
+                    else
+                    {
+                        PlaySFX("ricochet2,5", this);
+                    }
+                }
+            }
             ApplyDamage(attacker, damage, damagePart, specificDamagePart, damageType);
         }
 
@@ -2649,11 +2665,13 @@ public class Survivor : CustomObject
                 float randLEar = UnityEngine.Random.Range(0, 1f);
                 float randREar = UnityEngine.Random.Range(0, 1f);
                 float randNose = UnityEngine.Random.Range(0, 1f);
+                float randCheek = UnityEngine.Random.Range(0, 1f);
                 if (randLEye < 0.3f) count++;
                 if (randREye < 0.3f) count++;
                 if (randLEar < 0.5f) count++;
                 if (randREar < 0.5f) count++;
                 if (randNose < 0.7f) count++;
+                if (randCheek < 0.7f) count++;
                 float dividedDamage = damage / count;
                 ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Head, DamageType.Explosion);
                 if(randLEye < 0.3f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEye, DamageType.Explosion);
@@ -2661,6 +2679,7 @@ public class Survivor : CustomObject
                 if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
                 if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
                 if(randNose < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Nose, DamageType.Explosion);
+                if(randCheek < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Cheek, DamageType.Explosion);
                 break;
             case InjurySiteMajor.Torso:
                 ApplyDamage(attacker, damage / 2, InjurySiteMajor.Torso, InjurySite.Chest, DamageType.Explosion);
@@ -2786,18 +2805,17 @@ public class Survivor : CustomObject
     {
         float probability = UnityEngine.Random.Range(0, 1f);
         InjurySiteMajor damagePart;
-        float headShotProbability = 0.01f * 0.02f * launcher.luck / luck;
-        float bodyShotProbability = 0.7f * 0.02f * launcher.luck / luck;
+        float correctionProbability = Mathf.Pow(2, Mathf.Log(Mathf.Max(launcher.correctedShooting, 1), 20));
+        float headShotProbability = 0.01f * launcher.luck / luck * correctionProbability;
+        float bodyShotProbability = 1 - 0.01f * (64 / correctionProbability * luck / launcher.luck);
         // Çìµå¼¦
         if (probability < headShotProbability)
         {
-            damage *= 4;
             damagePart = InjurySiteMajor.Head;
         }
         // ¹Ùµð¼¦
         else if (probability < bodyShotProbability)
         {
-            damage *= 2;
             damagePart = InjurySiteMajor.Torso;
         }
         else
@@ -2806,22 +2824,9 @@ public class Survivor : CustomObject
             else damagePart = InjurySiteMajor.Legs;
         }
 
-        if (damagePart == InjurySiteMajor.Head)
-        {
-            if (currentHelmet != null)
-            {
-                damage -= currentHelmet.Armor;
-                if (UnityEngine.Random.Range(0, 1f) < 0.5f)
-                {
-                    PlaySFX("ricochet,5", this);
-                }
-                else
-                {
-                    PlaySFX("ricochet2,5", this);
-                }
-            }
-        }
-        else if (damagePart == InjurySiteMajor.Torso)
+        // ¹æÅºÁ¶³¢
+        // ¹æÅº ¸ðÀÚ´Â ApplyDamage¿¡¼­ Ã³¸®
+        if (damagePart == InjurySiteMajor.Torso)
         {
             if (currentVest != null) damage -= currentVest.Armor;
         }
@@ -2908,19 +2913,23 @@ public class Survivor : CustomObject
             case InjurySiteMajor.Head:
                 if (damageType == DamageType.Strike)
                 {
-                    if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) rand = UnityEngine.Random.Range(0, 2f);
-                    else if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) rand = UnityEngine.Random.Range(0, 0.75f);
-                    rand = UnityEngine.Random.Range(0, 1f);
+                    if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) rand = UnityEngine.Random.Range(0, 4f);
+                    else if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) rand = UnityEngine.Random.Range(0, 1f);
+                    else rand = UnityEngine.Random.Range(0, 2f);
                 }
-                else rand = UnityEngine.Random.Range(0, 0.5f);
+                else rand = UnityEngine.Random.Range(0, 1f);
 
-                if (rand < 0.5f && rand > 0.45f) injurySite = InjurySite.RightEye;
-                else if (rand > 0.4f) injurySite = InjurySite.LeftEye;
-                else if (rand > 0.3f) injurySite = InjurySite.Head;
-                else if (rand > 0.25f) injurySite = InjurySite.RightEar;
-                else if (rand > 0.2f) injurySite = InjurySite.LeftEar;
-                else if (rand > 0.1f) injurySite = InjurySite.Nose;
-                else if (rand < 0.1f) injurySite = InjurySite.Jaw;
+                if (rand < 1f)
+                {
+                    if(rand > 0.75f) injurySite = InjurySite.Head;
+                    else if (rand > 0.35f) injurySite = InjurySite.Cheek;
+                    else if (rand > 0.3f) injurySite = InjurySite.LeftEye;
+                    else if (rand > 0.25f) injurySite = InjurySite.RightEye;
+                    else if (rand > 0.2f) injurySite = InjurySite.RightEar;
+                    else if (rand > 0.15f) injurySite = InjurySite.LeftEar;
+                    else if (rand > 0.1f) injurySite = InjurySite.Nose;
+                    else if (rand < 0.1f) injurySite = InjurySite.Jaw;
+                }
                 break;
             case InjurySiteMajor.Torso:
                 if (damageType == DamageType.Strike) rand = UnityEngine.Random.Range(0, 1f);
@@ -3056,6 +3065,26 @@ public class Survivor : CustomObject
                     injuryDegree = damage / 20;
                 }
                 break;
+            case InjurySite.Cheek:
+                injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                if (damageType == DamageType.Strike)
+                {
+                    injuryType = InjuryType.Fracture;
+                }
+                else if (damageType == DamageType.Slash)
+                {
+                    injuryType = InjuryType.Cutting;
+                }
+                else if (damageType == DamageType.GunShot)
+                {
+                    injuryType = InjuryType.GunshotWound;
+                }
+                else if (damageType == DamageType.Explosion)
+                {
+                    injuryType = InjuryType.Burn;
+                    injuryDegree = Mathf.Clamp(damage / 50, 0, 0.99f);
+                }
+                break;
             case InjurySite.Nose:
                 injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
                 if(damageType == DamageType.Strike)
@@ -3170,24 +3199,24 @@ public class Survivor : CustomObject
             case InjurySite.LeftArm:
                 if (damageType == DamageType.Strike)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryDegree = Mathf.Clamp(damage / 80, 0, 0.99f);
                     if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
                     else injuryType = InjuryType.Contusion;
                 }
                 else if (damageType == DamageType.Slash)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    injuryDegree = Mathf.Clamp(damage / 80, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
                 }
                 else if (damageType == DamageType.GunShot)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryDegree = Mathf.Clamp(damage / 80, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
                 }
                 else if(damageType == DamageType.Explosion)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    injuryDegree = Mathf.Clamp(damage / 80, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Loss;
                 }
                 break;
@@ -3195,24 +3224,24 @@ public class Survivor : CustomObject
             case InjurySite.LeftHand:
                 if (damageType == DamageType.Strike)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryDegree = Mathf.Clamp(damage / 30, 0, 0.99f);
                     if (injuryDegree > 0.3f) injuryType = InjuryType.Fracture;
                     else injuryType = InjuryType.Contusion;
                 }
                 else if (damageType == DamageType.Slash)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 1f);
+                    injuryDegree = Mathf.Clamp(damage / 30, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Amputation;
                     else injuryType = InjuryType.Cutting;
                 }
                 else if(damageType == DamageType.GunShot)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryDegree = Mathf.Clamp(damage / 30, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
                 }
                 else if (damageType == DamageType.Explosion)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                    injuryDegree = Mathf.Clamp(damage / 30, 0, 1f);
                     if (injuryDegree >= 1f) injuryType = InjuryType.Loss;
                     else injuryType = InjuryType.Burn;
                 }
@@ -3227,7 +3256,7 @@ public class Survivor : CustomObject
             case InjurySite.LeftRingFinger:
             case InjurySite.RightLittleFinger:
             case InjurySite.LeftLittleFinger:
-                injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                injuryDegree = Mathf.Clamp(damage / 10, 0, 1f);
                 if (injuryDegree >= 1f) AddInjury(injurySite, InjuryType.Loss, 1);
                 else if (damageType == DamageType.Strike)
                 {
@@ -3249,13 +3278,63 @@ public class Survivor : CustomObject
                 break;
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
+                if (damageType == DamageType.GunShot)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 80, 0, 0.99f);
+                    injuryType = InjuryType.GunshotWound;
+                }
+                else if (damageType == DamageType.Slash)
+                {
+                    float rand = UnityEngine.Random.Range(0, 1f);
+                    if (rand > 0.7f)
+                    {
+                        injuryDegree = 1;
+                        injuryType = InjuryType.Amputation;
+                    }
+                    else
+                    {
+                        injuryDegree = rand / 0.7f;
+                        injuryType = InjuryType.Cutting;
+                    }
+                }
+                else if (damageType == DamageType.Explosion)
+                {
+                    injuryDegree = 1;
+                    injuryType = InjuryType.Loss;
+                }
+                break;
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
+                if (damageType == DamageType.GunShot)
+                {
+                    injuryDegree = Mathf.Clamp(damage / 50, 0, 0.99f);
+                    injuryType = InjuryType.GunshotWound;
+                }
+                else if (damageType == DamageType.Slash)
+                {
+                    float rand = UnityEngine.Random.Range(0, 1f);
+                    if (rand > 0.7f)
+                    {
+                        injuryDegree = 1;
+                        injuryType = InjuryType.Amputation;
+                    }
+                    else
+                    {
+                        injuryDegree = rand / 0.7f;
+                        injuryType = InjuryType.Cutting;
+                    }
+                }
+                else if (damageType == DamageType.Explosion)
+                {
+                    injuryDegree = 1;
+                    injuryType = InjuryType.Loss;
+                }
+                break;
             case InjurySite.RightAncle:
             case InjurySite.LeftAncle:
                 if(damageType == DamageType.GunShot)
                 {
-                    injuryDegree = Mathf.Clamp(damage / 100, 0, 0.99f);
+                    injuryDegree = Mathf.Clamp(damage / 30, 0, 0.99f);
                     injuryType = InjuryType.GunshotWound;
                 }
                 else if(damageType == DamageType.Slash)
@@ -3280,7 +3359,7 @@ public class Survivor : CustomObject
                 break;
             case InjurySite.RightBigToe:
             case InjurySite.LeftBigToe:
-                injuryDegree = Mathf.Clamp(damage / 40, 0, 1f);
+                injuryDegree = Mathf.Clamp(damage / 10, 0, 1f);
                 if (injuryDegree >= 1) injuryType = InjuryType.Loss;
                 else injuryType = InjuryType.GunshotWound;
                 break;
@@ -3882,7 +3961,7 @@ public class Survivor : CustomObject
         correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
         correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
         correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
-        aimErrorRange = 30f / Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedShooting + characteristicCorrection_AimErrorRange, 1), 20));
+        aimErrorRange = 20f / Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedShooting + characteristicCorrection_AimErrorRange, 1), 20));
         aimDelay = 1.5f * characteristicCorrection_AimTime;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;
@@ -3900,7 +3979,7 @@ public class Survivor : CustomObject
         else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
 
-        attackDamage = (120f + correctedStrength + correctedFighting) / 16f * injuryCorrection_AttackDamage;
+        attackDamage = 5 * Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedStrength + correctedFighting, 1), 40)) * injuryCorrection_AttackDamage;
         attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;

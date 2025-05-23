@@ -1052,7 +1052,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SetDefault()
     {
-        weaponPriority1Dropdown.value = (int)ItemManager.Items.SniperRifle - (int)ItemManager.Items.Knife;
+        weaponPriority1Dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
         Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
         selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.SniperRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
