@@ -209,7 +209,7 @@ public class ItemManager
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 400, 75f, 3f, 78f, 2.0f, 5, 4f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)

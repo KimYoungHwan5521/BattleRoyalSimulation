@@ -98,16 +98,19 @@ namespace ResourceEnum
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
         HighLevelBulletproofHelmet,
+        LegendaryBulletproofHelmet,
         // BulletproofVests
         LowLevelBulletproofVest,
         MiddleLevelBulletproofVest,
         HighLevelBulletproofVest,
+        LegendaryBulletproofVest,
         // Consumables
         BandageRoll,
         HemostaticBandageRoll,
         Poison,
         Antidote,
         Potion,
+        AdvancedPotion,
         // Traps
         BearTrap,
         LandMine,
