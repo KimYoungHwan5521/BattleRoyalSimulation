@@ -134,6 +134,26 @@ public class ResourcesPath
         "Sprites/Leagues/Bronze",
         "Sprites/Leagues/Silver",
         "Sprites/Leagues/Gold",
+
+        // Minimaps
+        "Sprites/Minimaps/Minimap_2x2_01",
+        "Sprites/Minimaps/Minimap_2x2_02",
+        "Sprites/Minimaps/Minimap_2x2_03",
+        "Sprites/Minimaps/Minimap_2x2_04",
+        "Sprites/Minimaps/Minimap_2x2_05",
+        "Sprites/Minimaps/Minimap_2x2_06",
+        "Sprites/Minimaps/Minimap_2x2_07",
+        "Sprites/Minimaps/Minimap_2x2_08",
+        "Sprites/Minimaps/Minimap_2x2_09",
+        "Sprites/Minimaps/Minimap_2x2_10",
+        "Sprites/Minimaps/Minimap_3x3_01",
+        "Sprites/Minimaps/Minimap_3x3_02",
+        "Sprites/Minimaps/Minimap_3x3_03",
+        "Sprites/Minimaps/Minimap_3x3_04",
+        "Sprites/Minimaps/Minimap_3x3_05",
+        "Sprites/Minimaps/Minimap_4x4_01",
+        "Sprites/Minimaps/Minimap_4x4_02",
+        "Sprites/Minimaps/Minimap_5x5_01",
     };
 
     public static string[] MaterialPathArray =

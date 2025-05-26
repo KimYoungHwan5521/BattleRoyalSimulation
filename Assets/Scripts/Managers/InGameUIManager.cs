@@ -264,6 +264,7 @@ public class InGameUIManager : MonoBehaviour
         string message = $"<color=red>{victim}</color> has defeated by <color=yellow>{cause}</color>";
         killLog.text = message;
         log.text += "\n" + message;
+        GameManager.Instance.FixLayout(log.GetComponent<RectTransform>());
         logScrollView.verticalNormalizedPosition = 0;
     }
 

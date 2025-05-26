@@ -914,6 +914,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void ScheduleSurgery()
     {
+        if (surgeryList.Count == 0) return;
         int index = 0;
         for(int i=0; i< surgeries.Length; i++)
         {

@@ -144,6 +144,27 @@ namespace ResourceEnum
         Bronze,
         Silver,
         Gold,
+
+        // Minimaps
+        Minimap_2x2_01,
+        Minimap_2x2_02,
+        Minimap_2x2_03,
+        Minimap_2x2_04,
+        Minimap_2x2_05,
+        Minimap_2x2_06,
+        Minimap_2x2_07,
+        Minimap_2x2_08,
+        Minimap_2x2_09,
+        Minimap_2x2_10,
+        Minimap_3x3_01,
+        Minimap_3x3_02,
+        Minimap_3x3_03,
+        Minimap_3x3_04,
+        Minimap_3x3_05,
+        Minimap_4x4_01,
+        Minimap_4x4_02,
+        Minimap_5x5_01,
+
     }
 
     public enum Material

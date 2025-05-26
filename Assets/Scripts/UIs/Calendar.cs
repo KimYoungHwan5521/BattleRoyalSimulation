@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship, MeleeLeague, RangeLeague, CraftingLeague  };
+public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship, MeleeLeague, RangeLeague, CraftingLeague };
 public class LeagueReserveData
 {
     public League league;
@@ -30,9 +30,9 @@ public class Calendar : CustomObject
     {
         get
         {
-            for(int i = Today; i <1008; i++)
+            for (int i = Today; i < 1008; i++)
             {
-                if(i % 112 == 83) return leagueReserveInfo[i];
+                if (i % 112 == 83) return leagueReserveInfo[i];
             }
             return null;
         }
@@ -64,7 +64,7 @@ public class Calendar : CustomObject
 
             today = value;
             todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}, ({dateName[today % 7]})";
-            if(value > 0)
+            if (value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();
                 outGameUIManager.ResetHireMarket();
@@ -76,7 +76,7 @@ public class Calendar : CustomObject
     public int Month { get { return 1 + today / 28; } }
     public int Year { get { return 2101 + (Month - 1) / 12; } }
 
-    readonly string[] monthName = { 
+    readonly string[] monthName = {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     };
@@ -105,7 +105,7 @@ public class Calendar : CustomObject
                         datesEvent[i].sprite = ResourceManager.Get(result);
                     }
                     else Debug.LogWarning($"Can't find sprite : {leagueReserveInfo[i + 28 * (calendarPage - 1)].league}");
-                    if(leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
+                    if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
                     {
                         reserved[i].SetActive(true);
                         reserved[i].GetComponent<Help>().SetDescription($"Reserver : {leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.survivorName}");
@@ -138,7 +138,12 @@ public class Calendar : CustomObject
     [SerializeField] GameObject reserveCancelButton;
     int wantReserveDate;
     SurvivorData wantReserver;
-    
+    [SerializeField] Image minimapImage;
+    [SerializeField] ScrollRect farmableItemsScrollRect;
+    [SerializeField] TextMeshProUGUI farmableItemsText;
+    //         itemPool,          itemType,      count
+    public Dictionary<int, Dictionary<ItemManager.Items, int>> itemPool = new();
+
     protected override void Start()
     {
         base.Start();
@@ -147,6 +152,7 @@ public class Calendar : CustomObject
         datesEvent = new Image[28];
         reserved = new GameObject[28];
         AddLeagueReserveInfo(3);
+        LoadItemPool();
     }
 
     int curMaxYear = 0;
@@ -158,15 +164,15 @@ public class Calendar : CustomObject
             {
                 leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4));
             }
-            else if(i % 336 == 48)
+            else if (i % 336 == 48)
             {
                 leagueReserveInfo.Add(i, new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01, 5));
             }
-            else if(i % 336 == 160)
+            else if (i % 336 == 160)
             {
                 leagueReserveInfo.Add(i, new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01, 6));
             }
-            else if(i % 336 == 272)
+            else if (i % 336 == 272)
             {
                 leagueReserveInfo.Add(i, new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01, 7));
             }
@@ -216,6 +222,244 @@ public class Calendar : CustomObject
         curMaxYear += howManyYears;
     }
 
+    void LoadItemPool()
+    {
+        // Bronze League
+        Dictionary<ItemManager.Items, int> items = new()
+        {
+            { ItemManager.Items.Components, 20 },
+            { ItemManager.Items.Salvages, 40 },
+            { ItemManager.Items.Chemicals, 10 },
+            { ItemManager.Items.Gunpowder, 20 },
+            { ItemManager.Items.Knife, 3 },
+            { ItemManager.Items.Bat, 3 },
+            { ItemManager.Items.Revolver, 4 },
+            { ItemManager.Items.Pistol, 4 },
+            { ItemManager.Items.SubMachineGun, 2 },
+            { ItemManager.Items.ShotGun, 2 },
+            { ItemManager.Items.AssaultRifle, 1 },
+            { ItemManager.Items.SniperRifle, 1 },
+            { ItemManager.Items.Bullet_Revolver, 20 },
+            { ItemManager.Items.Bullet_Pistol, 20 },
+            { ItemManager.Items.Bullet_SubMachineGun, 20 },
+            { ItemManager.Items.Bullet_ShotGun, 20 },
+            { ItemManager.Items.Bullet_AssaultRifle, 10 },
+            { ItemManager.Items.Bullet_SniperRifle, 10 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 4 },
+            { ItemManager.Items.LowLevelBulletproofVest, 4 },
+            { ItemManager.Items.BandageRoll, 10 },
+        };
+        itemPool.Add(0, items);
+        // Silver League
+        items = new()
+        {
+            { ItemManager.Items.Components, 40 },
+            { ItemManager.Items.Salvages, 80 },
+            { ItemManager.Items.Chemicals, 20 },
+            { ItemManager.Items.Gunpowder, 40 },
+            { ItemManager.Items.Knife, 3 },
+            { ItemManager.Items.Dagger, 3 },
+            { ItemManager.Items.Bat, 3 },
+            { ItemManager.Items.LongSword, 3 },
+            { ItemManager.Items.Shovel, 3 },
+            { ItemManager.Items.Revolver, 8 },
+            { ItemManager.Items.Pistol, 8 },
+            { ItemManager.Items.SubMachineGun, 4 },
+            { ItemManager.Items.ShotGun, 4 },
+            { ItemManager.Items.AssaultRifle, 2 },
+            { ItemManager.Items.SniperRifle, 2 },
+            { ItemManager.Items.Bazooka, 2 },
+            { ItemManager.Items.Bullet_Revolver, 40 },
+            { ItemManager.Items.Bullet_Pistol, 40 },
+            { ItemManager.Items.Bullet_SubMachineGun, 40 },
+            { ItemManager.Items.Bullet_ShotGun, 40 },
+            { ItemManager.Items.Bullet_AssaultRifle, 20 },
+            { ItemManager.Items.Bullet_SniperRifle, 20 },
+            { ItemManager.Items.Rocket_Bazooka, 20 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 8 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 4 },
+            { ItemManager.Items.LowLevelBulletproofVest, 8 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 4 },
+            { ItemManager.Items.BandageRoll, 30 },
+            { ItemManager.Items.BearTrap, 9 },
+        };
+        itemPool.Add(1, items);
+        // Gold League
+        items = new()
+        {
+            { ItemManager.Items.AdvancedComponent, 16 },
+            { ItemManager.Items.Components, 60 },
+            { ItemManager.Items.Salvages, 120 },
+            { ItemManager.Items.Chemicals, 30 },
+            { ItemManager.Items.Gunpowder, 60 },
+            { ItemManager.Items.Knife, 5 },
+            { ItemManager.Items.Dagger, 5 },
+            { ItemManager.Items.Bat, 5 },
+            { ItemManager.Items.LongSword, 5 },
+            { ItemManager.Items.Shovel, 5 },
+            { ItemManager.Items.Revolver, 12 },
+            { ItemManager.Items.Pistol, 12 },
+            { ItemManager.Items.SubMachineGun, 8 },
+            { ItemManager.Items.ShotGun, 8 },
+            { ItemManager.Items.SniperRifle, 4 },
+            { ItemManager.Items.AssaultRifle, 4 },
+            { ItemManager.Items.Bazooka, 4 },
+            { ItemManager.Items.Bullet_Revolver, 60 },
+            { ItemManager.Items.Bullet_Pistol, 60 },
+            { ItemManager.Items.Bullet_SubMachineGun, 60 },
+            { ItemManager.Items.Bullet_ShotGun, 60 },
+            { ItemManager.Items.Bullet_AssaultRifle, 30 },
+            { ItemManager.Items.Bullet_SniperRifle, 30 },
+            { ItemManager.Items.Rocket_Bazooka, 30 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 12 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 4 },
+            { ItemManager.Items.HighLevelBulletproofHelmet, 1 },
+            { ItemManager.Items.LowLevelBulletproofVest, 12 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 4 },
+            { ItemManager.Items.HighLevelBulletproofVest, 1 },
+            { ItemManager.Items.BandageRoll, 60 },
+            { ItemManager.Items.BearTrap, 16 },
+            { ItemManager.Items.LandMine, 8 },
+            { ItemManager.Items.NoiseTrap, 4 },
+            { ItemManager.Items.ChemicalTrap, 4 },
+            { ItemManager.Items.ShrapnelTrap, 1 },
+            { ItemManager.Items.ExplosiveTrap, 1 },
+        };
+        itemPool.Add(2, items);
+        // Season Championship
+        items = new()
+        {
+            { ItemManager.Items.AdvancedComponent, 25 },
+            { ItemManager.Items.Components, 80 },
+            { ItemManager.Items.Salvages, 160 },
+            { ItemManager.Items.Chemicals, 40 },
+            { ItemManager.Items.Gunpowder, 80 },
+            { ItemManager.Items.Knife, 10 },
+            { ItemManager.Items.Dagger, 10 },
+            { ItemManager.Items.Bat, 10 },
+            { ItemManager.Items.LongSword, 10 },
+            { ItemManager.Items.Shovel, 10 },
+            { ItemManager.Items.Revolver, 25 },
+            { ItemManager.Items.Pistol, 25 },
+            { ItemManager.Items.SubMachineGun, 12 },
+            { ItemManager.Items.ShotGun, 12 },
+            { ItemManager.Items.SniperRifle, 6 },
+            { ItemManager.Items.AssaultRifle, 6 },
+            { ItemManager.Items.Bazooka, 6 },
+            { ItemManager.Items.Bullet_Revolver, 50 },
+            { ItemManager.Items.Bullet_Pistol, 50 },
+            { ItemManager.Items.Bullet_SubMachineGun, 50 },
+            { ItemManager.Items.Bullet_ShotGun, 50 },
+            { ItemManager.Items.Bullet_AssaultRifle, 25 },
+            { ItemManager.Items.Bullet_SniperRifle, 25 },
+            { ItemManager.Items.Rocket_Bazooka, 25 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 12 },
+            { ItemManager.Items.HighLevelBulletproofHelmet, 6 },
+            { ItemManager.Items.LowLevelBulletproofVest, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 12 },
+            { ItemManager.Items.HighLevelBulletproofVest, 6 },
+            { ItemManager.Items.BandageRoll, 100 },
+            { ItemManager.Items.BearTrap, 25 },
+            { ItemManager.Items.LandMine, 12 },
+            { ItemManager.Items.NoiseTrap, 12 },
+            { ItemManager.Items.ChemicalTrap, 12 },
+            { ItemManager.Items.ShrapnelTrap, 6 },
+            { ItemManager.Items.ExplosiveTrap, 6 },
+        };
+        itemPool.Add(3, items);
+        // World Championship
+        items = new()
+        {
+            { ItemManager.Items.AdvancedComponent, 36 },
+            { ItemManager.Items.Components, 100 },
+            { ItemManager.Items.Salvages, 200 },
+            { ItemManager.Items.Chemicals, 50 },
+            { ItemManager.Items.Gunpowder, 100 },
+            { ItemManager.Items.Knife, 10 },
+            { ItemManager.Items.Dagger, 10 },
+            { ItemManager.Items.Bat, 10 },
+            { ItemManager.Items.LongSword, 10 },
+            { ItemManager.Items.Shovel, 10 },
+            { ItemManager.Items.Revolver, 25 },
+            { ItemManager.Items.Pistol, 25 },
+            { ItemManager.Items.SubMachineGun, 15 },
+            { ItemManager.Items.ShotGun, 15 },
+            { ItemManager.Items.SniperRifle, 5 },
+            { ItemManager.Items.AssaultRifle, 5 },
+            { ItemManager.Items.Bazooka, 5 },
+            { ItemManager.Items.Bullet_Revolver, 25 },
+            { ItemManager.Items.Bullet_Pistol, 25 },
+            { ItemManager.Items.Bullet_SubMachineGun, 25 },
+            { ItemManager.Items.Bullet_ShotGun, 25 },
+            { ItemManager.Items.Bullet_AssaultRifle, 12 },
+            { ItemManager.Items.Bullet_SniperRifle, 12 },
+            { ItemManager.Items.Rocket_Bazooka, 25 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 15 },
+            { ItemManager.Items.HighLevelBulletproofHelmet, 5 },
+            { ItemManager.Items.LowLevelBulletproofVest, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 15 },
+            { ItemManager.Items.HighLevelBulletproofVest, 5 },
+            { ItemManager.Items.BandageRoll, 100 },
+            { ItemManager.Items.BearTrap, 50 },
+            { ItemManager.Items.LandMine, 25 },
+            { ItemManager.Items.NoiseTrap, 12 },
+            { ItemManager.Items.ChemicalTrap, 25 },
+            { ItemManager.Items.ShrapnelTrap, 12 },
+            { ItemManager.Items.ExplosiveTrap, 12 },
+        };
+        itemPool.Add(4, items);
+        // Melee League
+        items = new()
+        {
+            { ItemManager.Items.Knife, 10 },
+            { ItemManager.Items.Dagger, 10 },
+            { ItemManager.Items.Bat, 10 },
+            { ItemManager.Items.LongSword, 10 },
+            { ItemManager.Items.Shovel, 10 },
+            { ItemManager.Items.BandageRoll, 100 },
+        };
+        itemPool.Add(5, items);
+        // Range League
+        items = new()
+        {
+            { ItemManager.Items.Revolver, 25 },
+            { ItemManager.Items.Pistol, 25 },
+            { ItemManager.Items.SubMachineGun, 15 },
+            { ItemManager.Items.ShotGun, 15 },
+            { ItemManager.Items.SniperRifle, 5 },
+            { ItemManager.Items.AssaultRifle, 5 },
+            { ItemManager.Items.Bazooka, 5 },
+            { ItemManager.Items.Bullet_Revolver, 25 },
+            { ItemManager.Items.Bullet_Pistol, 25 },
+            { ItemManager.Items.Bullet_SubMachineGun, 25 },
+            { ItemManager.Items.Bullet_ShotGun, 25 },
+            { ItemManager.Items.Bullet_AssaultRifle, 12 },
+            { ItemManager.Items.Bullet_SniperRifle, 12 },
+            { ItemManager.Items.Rocket_Bazooka, 25 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 15 },
+            { ItemManager.Items.HighLevelBulletproofHelmet, 5 },
+            { ItemManager.Items.LowLevelBulletproofVest, 25 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 15 },
+            { ItemManager.Items.HighLevelBulletproofVest, 5 },
+            { ItemManager.Items.BandageRoll, 100 },
+        };
+        itemPool.Add(6, items);
+        // Crafting League
+        items = new()
+        {
+            { ItemManager.Items.AdvancedComponent, 50 },
+            { ItemManager.Items.Components, 200 },
+            { ItemManager.Items.Salvages, 400 },
+            { ItemManager.Items.Chemicals, 100 },
+            { ItemManager.Items.Gunpowder, 400 },
+            { ItemManager.Items.BandageRoll, 100 },
+        };
+        itemPool.Add(7, items);
+    }
+
     public override void MyStart()
     {
         for (int i = 0; i < dates.Length; i++)
@@ -241,10 +485,11 @@ public class Calendar : CustomObject
         wantReserveDate = date + 28 * (calendarPage - 1);
         if (leagueReserveInfo.ContainsKey(wantReserveDate))
         {
-            if(today == wantReserveDate)
+            if (today == wantReserveDate)
             {
-                outGameUIManager.OpenConfirmWindow("Go battle royale?", 
-                    () => {
+                outGameUIManager.OpenConfirmWindow("Go battle royale?",
+                    () =>
+                    {
                         //outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver);
                         outGameUIManager.OpenBettingRoom();
                         outGameUIManager.calendarObject.SetActive(false);
@@ -258,9 +503,11 @@ public class Calendar : CustomObject
                 }
                 else
                 {
+                    reserveForm.SetActive(true);
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
                         reserveText.text = "Choose who want register for battle royale.";
+                        SetLeagueInfo(wantReserveDate);
                         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                         reserveButton.SetActive(true);
@@ -273,11 +520,28 @@ public class Calendar : CustomObject
                         reserveButton.SetActive(false);
                         reserveCancelButton.SetActive(true);
                     }
-                    reserveForm.SetActive(true);
                 }
 
             }
         }
+    }
+
+    void SetLeagueInfo(int wantReserveDate)
+    {
+        string minimapName = $"Minimap{leagueReserveInfo[wantReserveDate].map.ToString()[3..]}";
+        if (Enum.TryParse(minimapName, out ResourceEnum.Sprite sprite))
+        {
+            minimapImage.sprite = ResourceManager.Get(sprite);
+        }
+        else Debug.LogWarning($"Minimap not found : {minimapName}");
+
+        farmableItemsText.text = string.Empty;
+        foreach(var item in itemPool[leagueReserveInfo[wantReserveDate].itemPool])
+        {
+            farmableItemsText.text += $"{item.Key} x {item.Value},\n";
+        }
+        GameManager.Instance.FixLayout(farmableItemsText.GetComponent<RectTransform>());
+        farmableItemsScrollRect.verticalNormalizedPosition = 1;
     }
 
     public void SetBattleRoyaleReserveBox(Tier tier)
@@ -285,9 +549,9 @@ public class Calendar : CustomObject
         survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
         //survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
         List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
-        for(int i=0; i< allSurvivor.Count; i++)
+        for (int i = 0; i < allSurvivor.Count; i++)
             if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].survivorName }));
-        if(survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
+        if (survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
         {
             survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { "[No qualified survivors]" }));
             reserveButton.GetComponent<Button>().interactable = false;
@@ -369,7 +633,7 @@ public class Calendar : CustomObject
 
     public Tier GetNeedTier(League league)
     {
-        switch(league)
+        switch (league)
         {
             case League.BronzeLeague:
                 return Tier.Bronze;
