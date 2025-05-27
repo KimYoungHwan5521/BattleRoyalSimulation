@@ -6,7 +6,7 @@ public class LandMine : Trap
     protected override void Trigger(bool rightLeg)
     {
         base.Trigger(rightLeg);
-        victim.TakeDamage(this, rightLeg ? InjurySite.RightAncle : InjurySite.LeftAncle);
+        victim.TakeDamage(this, rightLeg ? InjurySite.RightFoot : InjurySite.LeftFoot);
         var hits = Physics2D.OverlapCircleAll(transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {

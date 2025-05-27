@@ -11,6 +11,8 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
+    public static string gameVirsion = "1.0";
+
     public CustomStart ManagerStart;
     public CustomUpdate ManagerUpdate;
 

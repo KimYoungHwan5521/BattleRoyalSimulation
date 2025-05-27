@@ -542,7 +542,7 @@ public class OutGameUIManager : MonoBehaviour
         int eyeInjury = 0;
         foreach(Injury injury in survivor.injuries)
         {
-            if (injury.type == InjuryType.ArtificalPartsTransplanted) continue;
+            if (injury.type == InjuryType.ArtificialPartsTransplanted) continue;
             if (injury.degree < 0.1f) continue;
             switch(training)
             {
@@ -558,8 +558,8 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftLeg:
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
-                        case InjurySite.RightAncle:
-                        case InjurySite.LeftAncle:
+                        case InjurySite.RightFoot:
+                        case InjurySite.LeftFoot:
                             cause = $"{injury.site} {injury.type}";
                             return false;
                         default:
@@ -604,7 +604,7 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         case InjurySite.Brain:
                         case InjurySite.Chest:
-                        case InjurySite.Libs:
+                        case InjurySite.Ribs:
                         case InjurySite.Abdomen:
                         case InjurySite.Organ:
                         case InjurySite.RightArm:
@@ -615,10 +615,18 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftLeg:
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
-                        case InjurySite.RightAncle:
-                        case InjurySite.LeftAncle:
+                        case InjurySite.RightFoot:
+                        case InjurySite.LeftFoot:
                         case InjurySite.RightBigToe:
                         case InjurySite.LeftBigToe:
+                        case InjurySite.RightIndexToe:
+                        case InjurySite.LeftIndexToe:
+                        case InjurySite.RightMiddleToe:
+                        case InjurySite.LeftMiddleToe:
+                        case InjurySite.RightRingToe:
+                        case InjurySite.LeftRingToe:
+                        case InjurySite.RightLittleToe:
+                        case InjurySite.LeftLittleToe:
                             cause = $"{injury.site} {injury.type}";
                             return false;
                         case InjurySite.RightEye:
@@ -637,7 +645,7 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         case InjurySite.Brain:
                         case InjurySite.Chest:
-                        case InjurySite.Libs:
+                        case InjurySite.Ribs:
                         case InjurySite.Abdomen:
                         case InjurySite.Organ:
                         case InjurySite.RightArm:
@@ -811,11 +819,19 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(injury.degree >= 1)
                 {
-                    surgeryName = $"Artifical {injury.site} transplant";
+                    surgeryName = $"Artificial {injury.site} transplant";
                     switch(injury.site)
                     {
                         case InjurySite.RightBigToe:
                         case InjurySite.LeftBigToe:
+                        case InjurySite.RightIndexToe:
+                        case InjurySite.LeftIndexToe:
+                        case InjurySite.RightMiddleToe:
+                        case InjurySite.LeftMiddleToe:
+                        case InjurySite.RightRingToe:
+                        case InjurySite.LeftRingToe:
+                        case InjurySite.RightLittleToe:
+                        case InjurySite.LeftLittleToe:
                         case InjurySite.RightThumb:
                         case InjurySite.LeftThumb:
                         case InjurySite.RightIndexFinger:
@@ -836,38 +852,38 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftArm:
                             cost = 1000;
                             break;
-                        case InjurySite.RightAncle:
-                        case InjurySite.LeftAncle:
-                            string side = injury.site == InjurySite.RightAncle ? "right" : "left";
-                            surgeryName = $"Artifical foot({side}) transplant";
+                        case InjurySite.RightFoot:
+                        case InjurySite.LeftFoot:
+                            string side = injury.site == InjurySite.RightFoot ? "right" : "left";
+                            surgeryName = $"Artificial foot({side}) transplant";
                             cost = 500;
                             break;
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
                             side = injury.site == InjurySite.RightKnee ? "right" : "left";
-                            surgeryName = $"Artifical leg({side}, under knee) transplant";
+                            surgeryName = $"Artificial leg({side}, under knee) transplant";
                             cost = 1000;
                             break;
                         case InjurySite.RightLeg:
                         case InjurySite.LeftLeg:
                             side = injury.site == InjurySite.RightLeg ? "right" : "left";
-                            surgeryName = $"Artifical leg({side}) transplant";
+                            surgeryName = $"Artificial leg({side}) transplant";
                             cost = 2000;
                             break;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
                             side = injury.site == InjurySite.RightEye ? "right" : "left";
-                            surgeryName = $"Artifical eye({side}) transplant";
+                            surgeryName = $"Artificial eye({side}) transplant";
                             cost = 3000;
                             break;
                         case InjurySite.RightEar:
                         case InjurySite.LeftEar:
                             side = injury.site == InjurySite.RightEar ? "right" : "left";
-                            surgeryName = $"Artifical ear({side}) transplant";
+                            surgeryName = $"Artificial ear({side}) transplant";
                             cost = 1000;
                             break;
                         case InjurySite.Organ:
-                            surgeryName = $"Artifical organ transplant";
+                            surgeryName = $"Artificial organ transplant";
                             cost = 3000;
                             break;
                         default:
@@ -1274,7 +1290,7 @@ public class OutGameUIManager : MonoBehaviour
                 cost = injury.degree * 50;
                 break;
             case InjurySite.Chest:
-            case InjurySite.Libs:
+            case InjurySite.Ribs:
             case InjurySite.Abdomen:
                 cost = injury.degree * 100;
                 break;
@@ -1293,8 +1309,8 @@ public class OutGameUIManager : MonoBehaviour
                 break;
             case InjurySite.RightHand:
             case InjurySite.LeftHand:
-            case InjurySite.RightAncle:
-            case InjurySite.LeftAncle:
+            case InjurySite.RightFoot:
+            case InjurySite.LeftFoot:
                 cost = injury.degree * 25;
                 break;
             case InjurySite.RightThumb:
@@ -1682,7 +1698,7 @@ public class OutGameUIManager : MonoBehaviour
         if(survivor.surgeryType == SurgeryType.Transplant)
         {
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
-            surgeryInjury.type = InjuryType.ArtificalPartsTransplanted;
+            surgeryInjury.type = InjuryType.ArtificialPartsTransplanted;
             surgeryInjury.degree = 0;
             survivor.injuries.Add(new(survivor.surgerySite, InjuryType.RecoveringFromSurgery, 0.5f));
         }
@@ -1713,7 +1729,7 @@ public class OutGameUIManager : MonoBehaviour
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {
-                if(injury.degree < 1 && injury.type != InjuryType.ArtificalPartsTransplanted)
+                if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted)
                 {
                     float recoveryRate = 1;
                     if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;

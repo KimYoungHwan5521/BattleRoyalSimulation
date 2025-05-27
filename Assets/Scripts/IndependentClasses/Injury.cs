@@ -8,17 +8,18 @@ public enum InjurySite
 {
     None,
     // Head
-    Head, RightEye, LeftEye, RightEar, LeftEar, Cheek, Nose, Jaw, Skull, Brain,
+    Head, RightEye, LeftEye, RightEar, LeftEar, Cheek, Nose, Jaw, Skull, Brain, Neck,
 
     // Torso
-    Chest, Libs, Abdomen, Organ,
+    Chest, Ribs, Abdomen, Organ,
 
     // Arms
     RightArm, LeftArm, RightHand, LeftHand, RightThumb, RightIndexFinger, RightMiddleFinger, RightRingFinger,
     RightLittleFinger, LeftThumb, LeftIndexFinger, LeftMiddleFinger, LeftRingFinger, LeftLittleFinger,
 
     // Legs
-    RightLeg, LeftLeg, RightKnee, LeftKnee, RightAncle, LeftAncle, RightBigToe, LeftBigToe,
+    RightLeg, LeftLeg, RightKnee, LeftKnee, RightFoot, LeftFoot, RightBigToe, LeftBigToe, RightIndexToe, LeftIndexToe,
+    RightMiddleToe, LeftMiddleToe, RightRingToe, LeftRingToe, RightLittleToe, LeftLittleToe,
 }
 public enum InjuryType
 {
@@ -34,7 +35,7 @@ public enum InjuryType
     Burn, // È­»ó
     PermanentVisualImpairment,
     RecoveringFromSurgery,
-    ArtificalPartsTransplanted,
+    ArtificialPartsTransplanted,
 }
 
 [Serializable]
