@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class Survivor : CustomObject
 {
@@ -17,6 +16,8 @@ public class Survivor : CustomObject
     [Header("Components")]
     [SerializeField] GameObject rightHand;
     [SerializeField] GameObject leftHand;
+    public Transform rightHandTF;
+    public Transform leftHandTF;
     [SerializeField] PolygonCollider2D sightCollider;
     [SerializeField] CircleCollider2D bodyCollider;
     [SerializeField] SpriteRenderer[] bodySprites;
@@ -147,10 +148,10 @@ public class Survivor : CustomObject
     public List<InjurySite> rememberAlreadyHaveInjury;
 
     [SerializeField] bool rightHandDisabled;
-    bool RightHandDisabled
+    public bool RightHandDisabled
     {
         get { return rightHandDisabled; }
-        set 
+        private set 
         { 
             rightHandDisabled = value;
             animator.SetBool("RightHandDisabled", value);
@@ -167,10 +168,10 @@ public class Survivor : CustomObject
         }
     }
     [SerializeField] bool leftHandDisabled;
-    bool LeftHandDisabled
+    public bool LeftHandDisabled
     {
         get { return leftHandDisabled; }
-        set
+        private set
         {
             leftHandDisabled = value;
             animator.SetBool("LeftHandDisabled", value);
@@ -488,6 +489,9 @@ public class Survivor : CustomObject
         m_SightNormal = ResourceManager.Get(ResourceEnum.Material.Sight_Normal);
         m_SightSuspicious = ResourceManager.Get(ResourceEnum.Material.Sight_Suspicious);
         m_SightAlert = ResourceManager.Get(ResourceEnum.Material.Sight_Alert);
+
+        rightHandTF = rightHand.transform;
+        leftHandTF = leftHand.transform;
     }
 
     override public void MyUpdate()
@@ -966,7 +970,6 @@ public class Survivor : CustomObject
 
         if (CurrentWeaponAsRangedWeapon != null)
         {
-            if (projectileGenerator.muzzleTF == null) projectileGenerator.ResetMuzzleTF(rightHandDisabled ? leftHand.transform : rightHand.transform);
             if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
             {
                 sightMeshRenderer.material = m_SightNormal;
@@ -2530,7 +2533,7 @@ public class Survivor : CustomObject
 
     void HeardIndistinguishableSound(string noiseMaker, Vector2 soundOrigin)
     {
-        Debug.Log(noiseMaker);
+        //Debug.Log(noiseMaker);
         heardSound = noiseMaker;
         SoundsMemory sound = soundsMemories.Find(x => x.soundName == noiseMaker);
         if (sound != null)
@@ -3472,7 +3475,7 @@ public class Survivor : CustomObject
             }
             // ÆÈÀÌ Àý´Ü µÆÀ¸¸é ¼Õ, ¼Õ°¡¶ô ºÎ»ó ´Ù »©Áà¾ßÇÔ
             // ÃâÇ÷µµ »©Áà¾ßÇÔ? º¸·ù
-            List<InjurySite> subparts = GetSubparts(injurySite);
+            List<InjurySite> subparts = Injury.GetSubparts(injurySite);
             List<Injury> toRemove = new();
             foreach(var injury in injuries)
             {
@@ -3607,128 +3610,6 @@ public class Survivor : CustomObject
         BleedingAmount += amount;
     }
 
-    List<InjurySite> GetSubparts(InjurySite upperPart)
-    {
-        List<InjurySite> result = new();
-        if(upperPart == InjurySite.RightArm || upperPart == InjurySite.RightHand)
-        {
-            result.Add(InjurySite.RightThumb);
-            result.Add(InjurySite.RightIndexFinger);
-            result.Add(InjurySite.RightMiddleFinger);
-            result.Add(InjurySite.RightRingFinger);
-            result.Add(InjurySite.RightLittleFinger);
-            if(upperPart == InjurySite.RightArm)
-            {
-                result.Add(InjurySite.RightHand);
-            }
-        }
-        else if (upperPart == InjurySite.LeftArm || upperPart == InjurySite.LeftHand)
-        {
-            result.Add(InjurySite.LeftThumb);
-            result.Add(InjurySite.LeftIndexFinger);
-            result.Add(InjurySite.LeftMiddleFinger);
-            result.Add(InjurySite.LeftRingFinger);
-            result.Add(InjurySite.LeftLittleFinger);
-            if (upperPart == InjurySite.LeftArm)
-            {
-                result.Add(InjurySite.LeftHand);
-            }
-        }
-        else if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee || upperPart == InjurySite.RightFoot)
-        {
-            result.Add(InjurySite.RightBigToe);
-            result.Add(InjurySite.RightIndexToe);
-            result.Add(InjurySite.RightMiddleToe);
-            result.Add(InjurySite.RightRingToe);
-            result.Add(InjurySite.LeftRingToe);
-                if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee)
-            {
-                result.Add(InjurySite.RightFoot);
-                if (upperPart == InjurySite.RightLeg) result.Add(InjurySite.RightKnee);
-            }
-        }
-        else if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee || upperPart == InjurySite.LeftFoot)
-        {
-            result.Add(InjurySite.LeftBigToe);
-            result.Add(InjurySite.LeftIndexToe);
-            result.Add(InjurySite.LeftMiddleToe);
-            result.Add(InjurySite.RightLittleToe);
-            result.Add(InjurySite.LeftLittleToe);
-            if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee)
-            {
-                result.Add(InjurySite.LeftFoot);
-                if (upperPart == InjurySite.LeftLeg) result.Add(InjurySite.LeftKnee);
-            }
-        }
-
-        return result;
-    }
-
-    List<InjurySite> GetUpperParts(InjurySite subpart)
-    {
-        List<InjurySite> result = new();
-        switch(subpart)
-        {
-            case InjurySite.RightThumb:
-            case InjurySite.RightIndexFinger:
-            case InjurySite.RightMiddleFinger:
-            case InjurySite.RightRingFinger:
-            case InjurySite.RightLittleFinger:
-                result.Add(InjurySite.RightHand);
-                result.Add(InjurySite.RightArm);
-                break;
-            case InjurySite.LeftThumb:
-            case InjurySite.LeftIndexFinger:
-            case InjurySite.LeftMiddleFinger:
-            case InjurySite.LeftRingFinger:
-            case InjurySite.LeftLittleFinger:
-                result.Add(InjurySite.LeftHand);
-                result.Add(InjurySite.LeftArm);
-                break;
-            case InjurySite.RightHand:
-                result.Add(InjurySite.RightArm);
-                break;
-            case InjurySite.LeftHand:
-                result.Add(InjurySite.LeftArm);
-                break;
-            case InjurySite.RightBigToe:
-            case InjurySite.RightIndexToe:
-            case InjurySite.RightMiddleToe:
-            case InjurySite.RightRingToe:
-            case InjurySite.RightLittleToe:
-                result.Add(InjurySite.RightFoot);
-                result.Add(InjurySite.RightKnee);
-                result.Add(InjurySite.RightLeg);
-                break;
-            case InjurySite.LeftBigToe:
-            case InjurySite.LeftIndexToe:
-            case InjurySite.LeftMiddleToe:
-            case InjurySite.LeftRingToe:
-            case InjurySite.LeftLittleToe:
-                result.Add(InjurySite.LeftFoot);
-                result.Add(InjurySite.LeftKnee);
-                result.Add(InjurySite.LeftLeg);
-                break;
-            case InjurySite.RightFoot:
-                result.Add(InjurySite.RightKnee);
-                result.Add(InjurySite.RightLeg);
-                break;
-            case InjurySite.LeftFoot:
-                result.Add(InjurySite.LeftKnee);
-                result.Add(InjurySite.LeftLeg);
-                break;
-            case InjurySite.RightKnee:
-                result.Add(InjurySite.RightLeg);
-                break;
-            case InjurySite.LeftKnee:
-                result.Add(InjurySite.LeftLeg);
-                break;
-            default:
-                break;
-        }
-        return result;
-    }
-
     int HowManyWalkingAidNeed()
     {
         bool right = false;
@@ -3762,13 +3643,12 @@ public class Survivor : CustomObject
 
     bool UpperPartAlreadyLoss(InjurySite injurySite)
     {
-        List<InjurySite> upperParts = GetUpperParts(injurySite);
+        List<InjurySite> upperParts = Injury.GetUpperParts(injurySite);
         foreach (var injury in injuries)
         {
             if (upperParts.Contains(injury.site) && injury.degree >= 1) return true;
         }
         return false;
-
     }
 
     float injuryCorrection_HearingAbility = 1;

@@ -76,6 +76,7 @@ public class InGameUIManager : MonoBehaviour
             currentTab = value;
             statTab.SetActive(value == 0);
             inventoryTab.SetActive(value == 1);
+            injuriesTab.SetActive(value == 2);
         }
     }
 
@@ -93,8 +94,6 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI knowledgeText;
     [SerializeField] AutoNewLineLayoutGroup characteristics;
 
-    [SerializeField] GameObject[] injuries;
-
     [Header("Inventory")]
     [SerializeField] GameObject inventoryTab;
     [SerializeField] GameObject selectedObjectsCurrentWeapon;
@@ -110,7 +109,58 @@ public class InGameUIManager : MonoBehaviour
     TextMeshProUGUI selectedObjectsCurrentVestText;
 
     [SerializeField] GameObject[] selectedObjectsItems;
-    
+
+    [Header("Injuries")]
+    [SerializeField] GameObject injuriesTab;
+    [SerializeField] GameObject[] injuries;
+    [Header("Head")]
+    [SerializeField] Image head;
+    [SerializeField] Image rightEye;
+    [SerializeField] Image leftEye;
+    [SerializeField] Image rightEar;
+    [SerializeField] Image leftEar;
+    [SerializeField] Image cheek;
+    [SerializeField] Image nose;
+    [SerializeField] Image jaw;
+    [SerializeField] Image neck;
+    [Header("Torso")]
+    [SerializeField] Image chest;
+    [SerializeField] Image ribs;
+    [SerializeField] Image abdomen;
+    [SerializeField] Image organs;
+    [Header("Arm")]
+    [SerializeField] Image rightArm;
+    [SerializeField] Image leftArm;
+    [SerializeField] Image rightHand;
+    [SerializeField] Image leftHand;
+    [SerializeField] Image rightThumb;
+    [SerializeField] Image leftThumb;
+    [SerializeField] Image rightIndexFinger;
+    [SerializeField] Image leftIndexFinger;
+    [SerializeField] Image rightMiddleFinger;
+    [SerializeField] Image leftMiddleFinger;
+    [SerializeField] Image rightRingFinger;
+    [SerializeField] Image leftRingFinger;
+    [SerializeField] Image rightLittleFinger;
+    [SerializeField] Image leftLittleFinger;
+    [Header("Leg")]
+    [SerializeField] Image rightLeg;
+    [SerializeField] Image leftLeg;
+    [SerializeField] Image rightKnee;
+    [SerializeField] Image leftKnee;
+    [SerializeField] Image rightFoot;
+    [SerializeField] Image leftFoot;
+    [SerializeField] Image rightBigToe;
+    [SerializeField] Image leftBigToe;
+    [SerializeField] Image rightIndexToe;
+    [SerializeField] Image leftIndexToe;
+    [SerializeField] Image rightMiddleToe;
+    [SerializeField] Image leftMiddleToe;
+    [SerializeField] Image rightRingToe;
+    [SerializeField] Image leftRingToe;
+    [SerializeField] Image rightLittleToe;
+    [SerializeField] Image leftLittleToe;
+
     private void Start()
     {
         outGameUIManager = GetComponent<OutGameUIManager>();
@@ -193,7 +243,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void TimeScaleUp()
     {
-        Time.timeScale = Mathf.Clamp(Time.timeScale + 1, Time.timeScale, 5);
+        Time.timeScale = Mathf.Min(Time.timeScale + 1, Time.timeScale, 3);
         currentTimeScaleText.text = $"x {(int)Time.timeScale}";
     }
 
@@ -399,23 +449,200 @@ public class InGameUIManager : MonoBehaviour
         shootingText.GetComponent<Help>().SetDescription("");
     }
 
+    Image GetTargetImage(InjurySite site)
+    {
+        Image targetPart = null;
+        targetPart = site switch
+        {
+            InjurySite.None => throw new NotImplementedException(),
+            InjurySite.Head => head,
+            InjurySite.RightEye => rightEye,
+            InjurySite.LeftEye => leftEye,
+            InjurySite.RightEar => rightEar,
+            InjurySite.LeftEar => leftEar,
+            InjurySite.Cheek => cheek,
+            InjurySite.Nose => nose,
+            InjurySite.Jaw => jaw,
+            InjurySite.Skull => head,
+            InjurySite.Brain => head,
+            InjurySite.Neck => neck,
+            InjurySite.Chest => chest,
+            InjurySite.Ribs => ribs,
+            InjurySite.Abdomen => abdomen,
+            InjurySite.Organ => organs,
+            InjurySite.RightArm => rightArm,
+            InjurySite.LeftArm => leftArm,
+            InjurySite.RightHand => rightHand,
+            InjurySite.LeftHand => leftHand,
+            InjurySite.RightThumb => rightThumb,
+            InjurySite.RightIndexFinger => leftThumb,
+            InjurySite.RightMiddleFinger => rightMiddleFinger,
+            InjurySite.RightRingFinger => rightRingFinger,
+            InjurySite.RightLittleFinger => rightLittleFinger,
+            InjurySite.LeftThumb => leftThumb,
+            InjurySite.LeftIndexFinger => leftIndexFinger,
+            InjurySite.LeftMiddleFinger => leftMiddleFinger,
+            InjurySite.LeftRingFinger => leftRingFinger,
+            InjurySite.LeftLittleFinger => leftLittleFinger,
+            InjurySite.RightLeg => rightLeg,
+            InjurySite.LeftLeg => leftLeg,
+            InjurySite.RightKnee => rightKnee,
+            InjurySite.LeftKnee => leftKnee,
+            InjurySite.RightFoot => rightFoot,
+            InjurySite.LeftFoot => leftFoot,
+            InjurySite.RightBigToe => rightBigToe,
+            InjurySite.LeftBigToe => leftBigToe,
+            InjurySite.RightIndexToe => rightIndexToe,
+            InjurySite.LeftIndexToe => leftIndexToe,
+            InjurySite.RightMiddleToe => rightMiddleToe,
+            InjurySite.LeftMiddleToe => leftMiddleToe,
+            InjurySite.RightRingToe => rightRingToe,
+            InjurySite.LeftRingToe => leftRingToe,
+            InjurySite.RightLittleToe => rightLittleToe,
+            InjurySite.LeftLittleToe => leftLittleToe,
+            _ => throw new NotImplementedException()
+        };
+        return targetPart;
+    }
+
     public void UpdateSelectedObjectInjury(Survivor survivor)
     {
         if (survivor != selectedObject) return;
-        for (int i = 0; i < injuries.Length; i++)
+        //for (int i = 0; i < injuries.Length; i++)
+        //{
+        //    if (survivor.injuries.Count > i)
+        //    {
+        //        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{survivor.injuries[i].site} {survivor.injuries[i].type}";
+        //        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivor.injuries[i].degree:0.##}";
+        //        injuries[i].GetComponentInChildren<Help>().SetDescription(survivor.injuries[i].site);
+        //        injuries[i].SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        injuries[i].SetActive(false);
+        //    }
+        //}
+        ResetInjuryInfo();
+        foreach (var injury in survivor.injuries)
         {
-            if (survivor.injuries.Count > i)
+            Image targetPart = GetTargetImage(injury.site);
+            if (injury.type == InjuryType.ArtificialPartsTransplanted)
             {
-                injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{survivor.injuries[i].site} {survivor.injuries[i].type}";
-                injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivor.injuries[i].degree:0.##}";
-                injuries[i].GetComponentInChildren<Help>().SetDescription(survivor.injuries[i].site);
-                injuries[i].SetActive(true);
+                targetPart.color = new Color(0.5f, 0.5f, 0.5f);
+                List<InjurySite> subparts = Injury.GetSubparts(injury.site);
+                foreach (var subpart in subparts)
+                {
+                    Image subpartImage = GetTargetImage(subpart);
+                    subpartImage.color = new Color(0.5f, 0.5f, 0.5f);
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                }
+            }
+            else if (injury.degree == 1)
+            {
+                targetPart.color = new Color(0.5f, 0, 0);
+                List<InjurySite> subparts = Injury.GetSubparts(injury.site);
+                foreach (var subpart in subparts)
+                {
+                    Image subpartImage = GetTargetImage(subpart);
+                    subpartImage.color = new Color(0.5f, 0, 0);
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                }
             }
             else
             {
-                injuries[i].SetActive(false);
+                targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
             }
+            targetPart.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
         }
+    }
+
+    void ResetInjuryInfo()
+    {
+        head.color = Color.white;
+        rightEye.color = Color.white;
+        leftEye.color = Color.white;
+        rightEar.color = Color.white;
+        leftEar.color = Color.white;
+        cheek.color = Color.white;
+        nose.color = Color.white;
+        jaw.color = Color.white;
+        chest.color = Color.white;
+        ribs.color = Color.white;
+        abdomen.color = Color.white;
+        organs.color = Color.white;
+        rightArm.color = Color.white;
+        leftArm.color = Color.white;
+        rightHand.color = Color.white;
+        leftHand.color = Color.white;
+        rightThumb.color = Color.white;
+        leftThumb.color = Color.white;
+        rightIndexFinger.color = Color.white;
+        leftIndexFinger.color = Color.white;
+        rightMiddleFinger.color = Color.white;
+        leftMiddleFinger.color = Color.white;
+        rightRingFinger.color = Color.white;
+        leftRingFinger.color = Color.white;
+        rightLittleFinger.color = Color.white;
+        leftLittleFinger.color = Color.white;
+        rightLeg.color = Color.white;
+        leftLeg.color = Color.white;
+        rightKnee.color = Color.white;
+        leftKnee.color = Color.white;
+        rightFoot.color = Color.white;
+        leftFoot.color = Color.white;
+        rightBigToe.color = Color.white;
+        leftBigToe.color = Color.white;
+        rightIndexToe.color = Color.white;
+        leftIndexToe.color = Color.white;
+        rightMiddleToe.color = Color.white;
+        leftMiddleToe.color = Color.white;
+        rightRingToe.color = Color.white;
+        leftRingToe.color = Color.white;
+        rightLittleToe.color = Color.white;
+        leftLittleToe.color = Color.white;
+
+        head.GetComponentInChildren<Help>().SetDescription("");
+        rightEye.GetComponentInChildren<Help>().SetDescription("");
+        leftEye.GetComponentInChildren<Help>().SetDescription("");
+        rightEar.GetComponentInChildren<Help>().SetDescription("");
+        leftEar.GetComponentInChildren<Help>().SetDescription("");
+        cheek.GetComponentInChildren<Help>().SetDescription("");
+        nose.GetComponentInChildren<Help>().SetDescription("");
+        jaw.GetComponentInChildren<Help>().SetDescription("");
+        chest.GetComponentInChildren<Help>().SetDescription("");
+        ribs.GetComponentInChildren<Help>().SetDescription("");
+        abdomen.GetComponentInChildren<Help>().SetDescription("");
+        organs.GetComponentInChildren<Help>().SetDescription("");
+        rightArm.GetComponentInChildren<Help>().SetDescription("");
+        leftArm.GetComponentInChildren<Help>().SetDescription("");
+        rightHand.GetComponentInChildren<Help>().SetDescription("");
+        leftHand.GetComponentInChildren<Help>().SetDescription("");
+        rightThumb.GetComponentInChildren<Help>().SetDescription("");
+        leftThumb.GetComponentInChildren<Help>().SetDescription("");
+        rightIndexFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftIndexFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightMiddleFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftMiddleFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightRingFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftRingFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightLittleFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftLittleFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightLeg.GetComponentInChildren<Help>().SetDescription("");
+        leftLeg.GetComponentInChildren<Help>().SetDescription("");
+        rightKnee.GetComponentInChildren<Help>().SetDescription("");
+        leftKnee.GetComponentInChildren<Help>().SetDescription("");
+        rightFoot.GetComponentInChildren<Help>().SetDescription("");
+        leftFoot.GetComponentInChildren<Help>().SetDescription("");
+        rightBigToe.GetComponentInChildren<Help>().SetDescription("");
+        leftBigToe.GetComponentInChildren<Help>().SetDescription("");
+        rightIndexToe.GetComponentInChildren<Help>().SetDescription("");
+        leftIndexToe.GetComponentInChildren<Help>().SetDescription("");
+        rightMiddleToe.GetComponentInChildren<Help>().SetDescription("");
+        leftMiddleToe.GetComponentInChildren<Help>().SetDescription("");
+        rightRingToe.GetComponentInChildren<Help>().SetDescription("");
+        leftRingToe.GetComponentInChildren<Help>().SetDescription("");
+        rightLittleToe.GetComponentInChildren<Help>().SetDescription("");
+        leftLittleToe.GetComponentInChildren<Help>().SetDescription("");
     }
 
     public void UpdateSelectedObjectKillCount(Survivor survivor)

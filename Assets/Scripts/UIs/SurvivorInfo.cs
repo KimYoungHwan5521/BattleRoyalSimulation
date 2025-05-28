@@ -142,64 +142,96 @@ public class SurvivorInfo : MonoBehaviour
         SetCharacteristic();
     }
 
+    Image GetTargetImage(InjurySite site)
+    {
+        Image targetPart = null;
+        targetPart = site switch
+        {
+            InjurySite.None => throw new NotImplementedException(),
+            InjurySite.Head => head,
+            InjurySite.RightEye => rightEye,
+            InjurySite.LeftEye => leftEye,
+            InjurySite.RightEar => rightEar,
+            InjurySite.LeftEar => leftEar,
+            InjurySite.Cheek => cheek,
+            InjurySite.Nose => nose,
+            InjurySite.Jaw => jaw,
+            InjurySite.Skull => head,
+            InjurySite.Brain => head,
+            InjurySite.Neck => neck,
+            InjurySite.Chest => chest,
+            InjurySite.Ribs => ribs,
+            InjurySite.Abdomen => abdomen,
+            InjurySite.Organ => organs,
+            InjurySite.RightArm => rightArm,
+            InjurySite.LeftArm => leftArm,
+            InjurySite.RightHand => rightHand,
+            InjurySite.LeftHand => leftHand,
+            InjurySite.RightThumb => rightThumb,
+            InjurySite.RightIndexFinger => leftThumb,
+            InjurySite.RightMiddleFinger => rightMiddleFinger,
+            InjurySite.RightRingFinger => rightRingFinger,
+            InjurySite.RightLittleFinger => rightLittleFinger,
+            InjurySite.LeftThumb => leftThumb,
+            InjurySite.LeftIndexFinger => leftIndexFinger,
+            InjurySite.LeftMiddleFinger => leftMiddleFinger,
+            InjurySite.LeftRingFinger => leftRingFinger,
+            InjurySite.LeftLittleFinger => leftLittleFinger,
+            InjurySite.RightLeg => rightLeg,
+            InjurySite.LeftLeg => leftLeg,
+            InjurySite.RightKnee => rightKnee,
+            InjurySite.LeftKnee => leftKnee,
+            InjurySite.RightFoot => rightFoot,
+            InjurySite.LeftFoot => leftFoot,
+            InjurySite.RightBigToe => rightBigToe,
+            InjurySite.LeftBigToe => leftBigToe,
+            InjurySite.RightIndexToe => rightIndexToe,
+            InjurySite.LeftIndexToe => leftIndexToe,
+            InjurySite.RightMiddleToe => rightMiddleToe,
+            InjurySite.LeftMiddleToe => leftMiddleToe,
+            InjurySite.RightRingToe => rightRingToe,
+            InjurySite.LeftRingToe => leftRingToe,
+            InjurySite.RightLittleToe => rightLittleToe,
+            InjurySite.LeftLittleToe => leftLittleToe,
+            _ => throw new NotImplementedException()
+        };
+        return targetPart;
+    }
+
     void SetInjury(List<Injury> injuries)
     {
+        if (head == null) return;
         ResetInjuryInfo();
         foreach(var injury in injuries)
         {
-            Image targetPart = null;
-            targetPart = injury.site switch
+            Image targetPart = GetTargetImage(injury.site);
+            if (injury.type == InjuryType.ArtificialPartsTransplanted)
             {
-                InjurySite.None => throw new NotImplementedException(),
-                InjurySite.Head => head,
-                InjurySite.RightEye => rightEye,
-                InjurySite.LeftEye => leftEye,
-                InjurySite.RightEar => rightEar,
-                InjurySite.LeftEar => leftEar,
-                InjurySite.Cheek => cheek,
-                InjurySite.Nose => nose,
-                InjurySite.Jaw => jaw,
-                InjurySite.Skull => head,
-                InjurySite.Brain => head,
-                InjurySite.Neck => neck,
-                InjurySite.Chest => chest,
-                InjurySite.Ribs => ribs,
-                InjurySite.Abdomen => abdomen,
-                InjurySite.Organ => organs,
-                InjurySite.RightArm => rightArm,
-                InjurySite.LeftArm => leftArm,
-                InjurySite.RightHand => rightHand,
-                InjurySite.LeftHand => leftHand,
-                InjurySite.RightThumb => rightThumb,
-                InjurySite.RightIndexFinger => leftThumb,
-                InjurySite.RightMiddleFinger => rightMiddleFinger,
-                InjurySite.RightRingFinger => rightRingFinger,
-                InjurySite.RightLittleFinger => rightLittleFinger,
-                InjurySite.LeftThumb => leftThumb,
-                InjurySite.LeftIndexFinger => leftIndexFinger,
-                InjurySite.LeftMiddleFinger => leftMiddleFinger,
-                InjurySite.LeftRingFinger => leftRingFinger,
-                InjurySite.LeftLittleFinger => leftLittleFinger,
-                InjurySite.RightLeg => rightLeg,
-                InjurySite.LeftLeg => leftLeg,
-                InjurySite.RightKnee => rightKnee,
-                InjurySite.LeftKnee => leftKnee,
-                InjurySite.RightFoot => rightFoot,
-                InjurySite.LeftFoot => leftFoot,
-                InjurySite.RightBigToe => rightBigToe,
-                InjurySite.LeftBigToe => leftBigToe,
-                InjurySite.RightIndexToe => rightIndexToe,
-                InjurySite.LeftIndexToe => leftIndexToe,
-                InjurySite.RightMiddleToe => rightMiddleToe,
-                InjurySite.LeftMiddleToe => leftMiddleToe,
-                InjurySite.RightRingToe => rightRingToe,
-                InjurySite.LeftRingToe => leftRingToe,
-                InjurySite.RightLittleToe => rightLittleToe,
-                InjurySite.LeftLittleToe => leftLittleToe,
-                _ => throw new NotImplementedException()
-            };
-            targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
-            targetPart.GetComponent<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree}");
+                targetPart.color = new Color(0.5f, 0.5f, 0.5f);
+                List<InjurySite> subparts = Injury.GetSubparts(injury.site);
+                foreach (var subpart in subparts)
+                {
+                    Image subpartImage = GetTargetImage(subpart);
+                    subpartImage.color = new Color(0.5f, 0.5f, 0.5f);
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                }
+            }
+            else if(injury.degree == 1)
+            {
+                targetPart.color = new Color(0.5f, 0, 0);
+                List<InjurySite> subparts = Injury.GetSubparts(injury.site);
+                foreach(var subpart in subparts)
+                {
+                    Image subpartImage = GetTargetImage(subpart);
+                    subpartImage.color = new Color(0.5f, 0, 0);
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                }
+            }
+            else
+            {
+                targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
+            }
+            targetPart.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
         }
 
     }
@@ -249,48 +281,48 @@ public class SurvivorInfo : MonoBehaviour
         rightLittleToe.color = Color.white;
         leftLittleToe.color = Color.white;
 
-        head.GetComponent<Help>().SetDescription("");
-        rightEye.GetComponent<Help>().SetDescription("");
-        leftEye.GetComponent<Help>().SetDescription("");
-        rightEar.GetComponent<Help>().SetDescription("");
-        leftEar.GetComponent<Help>().SetDescription("");
-        cheek.GetComponent<Help>().SetDescription("");
-        nose.GetComponent<Help>().SetDescription("");
-        jaw.GetComponent<Help>().SetDescription("");
-        chest.GetComponent<Help>().SetDescription("");
-        ribs.GetComponent<Help>().SetDescription("");
-        abdomen.GetComponent<Help>().SetDescription("");
-        organs.GetComponent<Help>().SetDescription("");
-        rightArm.GetComponent<Help>().SetDescription("");
-        leftArm.GetComponent<Help>().SetDescription("");
-        rightHand.GetComponent<Help>().SetDescription("");
-        leftHand.GetComponent<Help>().SetDescription("");
-        rightThumb.GetComponent<Help>().SetDescription("");
-        leftThumb.GetComponent<Help>().SetDescription("");
-        rightIndexFinger.GetComponent<Help>().SetDescription("");
-        leftIndexFinger.GetComponent<Help>().SetDescription("");
-        rightMiddleFinger.GetComponent<Help>().SetDescription("");
-        leftMiddleFinger.GetComponent<Help>().SetDescription("");
-        rightRingFinger.GetComponent<Help>().SetDescription("");
-        leftRingFinger.GetComponent<Help>().SetDescription("");
-        rightLittleFinger.GetComponent<Help>().SetDescription("");
-        leftLittleFinger.GetComponent<Help>().SetDescription("");
-        rightLeg.GetComponent<Help>().SetDescription("");
-        leftLeg.GetComponent<Help>().SetDescription("");
-        rightKnee.GetComponent<Help>().SetDescription("");
-        leftKnee.GetComponent<Help>().SetDescription("");
-        rightFoot.GetComponent<Help>().SetDescription("");
-        leftFoot.GetComponent<Help>().SetDescription("");
-        rightBigToe.GetComponent<Help>().SetDescription("");
-        leftBigToe.GetComponent<Help>().SetDescription("");
-        rightIndexToe.GetComponent<Help>().SetDescription("");
-        leftIndexToe.GetComponent<Help>().SetDescription("");
-        rightMiddleToe.GetComponent<Help>().SetDescription("");
-        leftMiddleToe.GetComponent<Help>().SetDescription("");
-        rightRingToe.GetComponent<Help>().SetDescription("");
-        leftRingToe.GetComponent<Help>().SetDescription("");
-        rightLittleToe.GetComponent<Help>().SetDescription("");
-        leftLittleToe.GetComponent<Help>().SetDescription("");
+        head.GetComponentInChildren<Help>().SetDescription("");
+        rightEye.GetComponentInChildren<Help>().SetDescription("");
+        leftEye.GetComponentInChildren<Help>().SetDescription("");
+        rightEar.GetComponentInChildren<Help>().SetDescription("");
+        leftEar.GetComponentInChildren<Help>().SetDescription("");
+        cheek.GetComponentInChildren<Help>().SetDescription("");
+        nose.GetComponentInChildren<Help>().SetDescription("");
+        jaw.GetComponentInChildren<Help>().SetDescription("");
+        chest.GetComponentInChildren<Help>().SetDescription("");
+        ribs.GetComponentInChildren<Help>().SetDescription("");
+        abdomen.GetComponentInChildren<Help>().SetDescription("");
+        organs.GetComponentInChildren<Help>().SetDescription("");
+        rightArm.GetComponentInChildren<Help>().SetDescription("");
+        leftArm.GetComponentInChildren<Help>().SetDescription("");
+        rightHand.GetComponentInChildren<Help>().SetDescription("");
+        leftHand.GetComponentInChildren<Help>().SetDescription("");
+        rightThumb.GetComponentInChildren<Help>().SetDescription("");
+        leftThumb.GetComponentInChildren<Help>().SetDescription("");
+        rightIndexFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftIndexFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightMiddleFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftMiddleFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightRingFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftRingFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightLittleFinger.GetComponentInChildren<Help>().SetDescription("");
+        leftLittleFinger.GetComponentInChildren<Help>().SetDescription("");
+        rightLeg.GetComponentInChildren<Help>().SetDescription("");
+        leftLeg.GetComponentInChildren<Help>().SetDescription("");
+        rightKnee.GetComponentInChildren<Help>().SetDescription("");
+        leftKnee.GetComponentInChildren<Help>().SetDescription("");
+        rightFoot.GetComponentInChildren<Help>().SetDescription("");
+        leftFoot.GetComponentInChildren<Help>().SetDescription("");
+        rightBigToe.GetComponentInChildren<Help>().SetDescription("");
+        leftBigToe.GetComponentInChildren<Help>().SetDescription("");
+        rightIndexToe.GetComponentInChildren<Help>().SetDescription("");
+        leftIndexToe.GetComponentInChildren<Help>().SetDescription("");
+        rightMiddleToe.GetComponentInChildren<Help>().SetDescription("");
+        leftMiddleToe.GetComponentInChildren<Help>().SetDescription("");
+        rightRingToe.GetComponentInChildren<Help>().SetDescription("");
+        leftRingToe.GetComponentInChildren<Help>().SetDescription("");
+        rightLittleToe.GetComponentInChildren<Help>().SetDescription("");
+        leftLittleToe.GetComponentInChildren<Help>().SetDescription("");
     }
 
     public void SetCharacteristic()

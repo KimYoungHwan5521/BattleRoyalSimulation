@@ -52,4 +52,126 @@ public class Injury
         this.type = type;
         this.degree = degree;
     }
+
+    public static List<InjurySite> GetUpperParts(InjurySite subpart)
+    {
+        List<InjurySite> result = new();
+        switch (subpart)
+        {
+            case InjurySite.RightThumb:
+            case InjurySite.RightIndexFinger:
+            case InjurySite.RightMiddleFinger:
+            case InjurySite.RightRingFinger:
+            case InjurySite.RightLittleFinger:
+                result.Add(InjurySite.RightHand);
+                result.Add(InjurySite.RightArm);
+                break;
+            case InjurySite.LeftThumb:
+            case InjurySite.LeftIndexFinger:
+            case InjurySite.LeftMiddleFinger:
+            case InjurySite.LeftRingFinger:
+            case InjurySite.LeftLittleFinger:
+                result.Add(InjurySite.LeftHand);
+                result.Add(InjurySite.LeftArm);
+                break;
+            case InjurySite.RightHand:
+                result.Add(InjurySite.RightArm);
+                break;
+            case InjurySite.LeftHand:
+                result.Add(InjurySite.LeftArm);
+                break;
+            case InjurySite.RightBigToe:
+            case InjurySite.RightIndexToe:
+            case InjurySite.RightMiddleToe:
+            case InjurySite.RightRingToe:
+            case InjurySite.RightLittleToe:
+                result.Add(InjurySite.RightFoot);
+                result.Add(InjurySite.RightKnee);
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftBigToe:
+            case InjurySite.LeftIndexToe:
+            case InjurySite.LeftMiddleToe:
+            case InjurySite.LeftRingToe:
+            case InjurySite.LeftLittleToe:
+                result.Add(InjurySite.LeftFoot);
+                result.Add(InjurySite.LeftKnee);
+                result.Add(InjurySite.LeftLeg);
+                break;
+            case InjurySite.RightFoot:
+                result.Add(InjurySite.RightKnee);
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftFoot:
+                result.Add(InjurySite.LeftKnee);
+                result.Add(InjurySite.LeftLeg);
+                break;
+            case InjurySite.RightKnee:
+                result.Add(InjurySite.RightLeg);
+                break;
+            case InjurySite.LeftKnee:
+                result.Add(InjurySite.LeftLeg);
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+    public static List<InjurySite> GetSubparts(InjurySite upperPart)
+    {
+        List<InjurySite> result = new();
+        if (upperPart == InjurySite.RightArm || upperPart == InjurySite.RightHand)
+        {
+            result.Add(InjurySite.RightThumb);
+            result.Add(InjurySite.RightIndexFinger);
+            result.Add(InjurySite.RightMiddleFinger);
+            result.Add(InjurySite.RightRingFinger);
+            result.Add(InjurySite.RightLittleFinger);
+            if (upperPart == InjurySite.RightArm)
+            {
+                result.Add(InjurySite.RightHand);
+            }
+        }
+        else if (upperPart == InjurySite.LeftArm || upperPart == InjurySite.LeftHand)
+        {
+            result.Add(InjurySite.LeftThumb);
+            result.Add(InjurySite.LeftIndexFinger);
+            result.Add(InjurySite.LeftMiddleFinger);
+            result.Add(InjurySite.LeftRingFinger);
+            result.Add(InjurySite.LeftLittleFinger);
+            if (upperPart == InjurySite.LeftArm)
+            {
+                result.Add(InjurySite.LeftHand);
+            }
+        }
+        else if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee || upperPart == InjurySite.RightFoot)
+        {
+            result.Add(InjurySite.RightBigToe);
+            result.Add(InjurySite.RightIndexToe);
+            result.Add(InjurySite.RightMiddleToe);
+            result.Add(InjurySite.RightRingToe);
+            result.Add(InjurySite.LeftRingToe);
+            if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee)
+            {
+                result.Add(InjurySite.RightFoot);
+                if (upperPart == InjurySite.RightLeg) result.Add(InjurySite.RightKnee);
+            }
+        }
+        else if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee || upperPart == InjurySite.LeftFoot)
+        {
+            result.Add(InjurySite.LeftBigToe);
+            result.Add(InjurySite.LeftIndexToe);
+            result.Add(InjurySite.LeftMiddleToe);
+            result.Add(InjurySite.RightLittleToe);
+            result.Add(InjurySite.LeftLittleToe);
+            if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee)
+            {
+                result.Add(InjurySite.LeftFoot);
+                if (upperPart == InjurySite.LeftLeg) result.Add(InjurySite.LeftKnee);
+            }
+        }
+
+        return result;
+    }
+
 }
