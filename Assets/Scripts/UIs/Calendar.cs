@@ -653,10 +653,12 @@ public class Calendar : CustomObject
         TurnPageCalendar(0);
     }
 
-    public void LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
+    public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
     {
+        GameManager.ClaimLoadInfo("Loading calendar...", 1, 3);
         leagueReserveInfo.Clear();
         leagueReserveInfo = data;
+        yield return null;
     }
 
     public void LoadToday(int data)

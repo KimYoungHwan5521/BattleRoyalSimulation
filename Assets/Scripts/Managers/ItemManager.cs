@@ -14,6 +14,9 @@ public class ItemManager
         Bat,
         LongSword,
         Shovel,
+        Knife_Enchanted,
+        Dagger_Enchanted,
+        LongSword_Enchanted,
         // Ranged Weapons
         Revolver,
         Pistol,
@@ -56,6 +59,7 @@ public class ItemManager
         Salvages,
         // Traps
         BearTrap,
+        BearTrap_Enchanted,
         LandMine,
         NoiseTrap,
         ChemicalTrap,
@@ -176,7 +180,7 @@ public class ItemManager
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 20, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 35, 2f, 1));
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
@@ -184,7 +188,7 @@ public class ItemManager
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 30, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 45, 2f, 1));
                 break;
             // Ranged Weapons
             case Items.Pistol:
@@ -336,6 +340,14 @@ public class ItemManager
             case Items.BearTrap:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Buriable(wantItem, "Bear Trap", 3f));
+                break;
+            case Items.BearTrap_Enchanted:
+                for (int i = start; i < end; i++)
+                {
+                    Buriable buriable = new(wantItem, "Bear Trap(Enchanted)", 3f);
+                    buriable.Enchant();
+                    itemDictionary[wantItem].Add(buriable);
+                }
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)

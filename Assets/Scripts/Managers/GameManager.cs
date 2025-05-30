@@ -162,8 +162,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadETCData()
+    public IEnumerator LoadETCData()
     {
+        GameManager.ClaimLoadInfo("Loading ETC data...", 2, 3);
         string json = PlayerPrefs.GetString("ETCData", "{}");
         var saveData = JsonUtility.FromJson<ETCData>(json);
         OutGameUIManager.LoadData(
@@ -176,6 +177,7 @@ public class GameManager : MonoBehaviour
         saveData.weightTrainingLevel
             );
         calendar.LoadToday(saveData.today);
+        yield return null;
     }
 
     public void Save()
@@ -183,15 +185,19 @@ public class GameManager : MonoBehaviour
         SaveMySurvivorList(outGameUIManger.MySurvivorsData);
         SaveLeagueReserve(calendar.LeagueReserveInfo);
         SaveETCData();
+        PlayerPrefs.SetInt("HaveSaveData", 1);
     }
 
-    public void Load()
+    public IEnumerator Load()
     {
-        outGameUIManger.LoadMySurvivorData(LoadMySurvivorList());
-        calendar.LoadLeagueReserveInfo(LoadLeagueReserve());
-        LoadETCData();
+        ClaimLoadInfo("Loading save data...");
+        yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList());
+        yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve());
+        yield return LoadETCData();
         outGameUIManger.ResetHireMarket();
         outGameUIManger.ResetSurvivorsDropdown();
+        ClaimLoadInfo("Setting markets...", 3, 3);
+        CloseLoadInfo();
     }
     #endregion
 
@@ -212,6 +218,7 @@ public class GameManager : MonoBehaviour
     {
         if (instance && instance.loadingCanvas)
         {
+            instance.loadingCanvas.CloseLoadInfo();
             instance.loadingCanvas.gameObject.SetActive(false);
         }
         else
@@ -219,6 +226,7 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("There is no GameManager or loadingCanvas");
         }
     }
+
 
     public void FixLayout(RectTransform rect)
     {
@@ -234,5 +242,9 @@ public class GameManager : MonoBehaviour
     void OnCancel(InputValue value)
     {
         optionCanvas.SetActive(!optionCanvas.activeSelf);
+        if(BattleRoyaleManager != null && BattleRoyaleManager.isBattleRoyaleStart)
+        {
+            GetComponent<InGameUIManager>().SetTimeScale(0);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 public enum DamageType { Strike, Slash, GunShot, Explosion, Chemical }
 
@@ -12,6 +13,12 @@ public class MeleeWeapon : Weapon
 
     public void Enchant()
     {
+        itemName = $"{itemType}(Enchanted)";
+        if (Enum.TryParse(itemType.ToString() + "_Enchanted", out ItemManager.Items result))
+        {
+            itemType = result;
+        }
+        else UnityEngine.Debug.LogWarning($"Item type not found : {itemType.ToString() + "_Enchanted"}");
         isEnchanted = true;
     }
 

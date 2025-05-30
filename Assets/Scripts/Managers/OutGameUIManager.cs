@@ -1890,10 +1890,12 @@ public class OutGameUIManager : MonoBehaviour
         return results;
     }
 
-    public void LoadMySurvivorData(List<SurvivorData> data)
+    public IEnumerator LoadMySurvivorData(List<SurvivorData> data)
     {
+        GameManager.ClaimLoadInfo("Loading survivors...", 0, 3);
         mySurvivorsData.Clear();
         mySurvivorsData = data;
+        yield return null;
     }
 
     public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel,

@@ -275,11 +275,11 @@ public class GameResult : MonoBehaviour
     }
 
     // ESC
-    void OnCancel(InputValue value)
-    {
-        if(value.Get<float>() > 0 && GameManager.Instance.BattleRoyaleManager.BattleWinner == null)
-        {
-            gameResult.SetActive(true);
-        }
-    }
+    //void OnCancel(InputValue value)
+    //{
+    //    if(value.Get<float>() > 0 && GameManager.Instance.BattleRoyaleManager.BattleWinner == null)
+    //    {
+    //        gameResult.SetActive(true);
+    //    }
+    //}
 }

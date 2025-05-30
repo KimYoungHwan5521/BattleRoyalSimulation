@@ -665,6 +665,7 @@ public class InGameUIManager : MonoBehaviour
             Survivor.Status.RunAway => "Running away",
             Survivor.Status.TrapDisarming => "Trap Disarming",
             Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting.itemType}",
+            Survivor.Status.Enchanting => $"Enchanting",
             _ => survivor.CurrentStatus.ToString()
         };
         GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());

@@ -142,16 +142,18 @@ public class SoundManager
     }
     public void ToggleAudioMixerGroup(AudioMixerGroupType type, bool toggle, float value)
     {
+        // 슬라이더 0~1 → dB
+        float dB = Mathf.Log10(Mathf.Max(value, 0.001f)) * 20f;
         switch (type)
         {
             case AudioMixerGroupType.Master:
-                AMGmaster.audioMixer.SetFloat("Master", toggle ? value : -80);
+                AMGmaster.audioMixer.SetFloat("Master", toggle ? dB : -80);
                 break;
             case AudioMixerGroupType.BGM:
-                AMGmaster.audioMixer.SetFloat("BGM", toggle ? value : -80);
+                AMGmaster.audioMixer.SetFloat("BGM", toggle ? dB : -80);
                 break;
             case AudioMixerGroupType.SFX:
-                AMGmaster.audioMixer.SetFloat("SFX", toggle ? value : -80);
+                AMGmaster.audioMixer.SetFloat("SFX", toggle ? dB : -80);
                 break;
         }
     }

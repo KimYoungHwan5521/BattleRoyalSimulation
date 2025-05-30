@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, TrapDisarming, Crafting }
+    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, TrapDisarming, Crafting, Enchanting }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -304,6 +304,7 @@ public class Survivor : CustomObject
     [SerializeField]List<ItemManager.Craftable> craftables = new();
     ItemManager.Craftable currentCrafting;
     public ItemManager.Craftable CurrentCrafting => currentCrafting;
+    Item currentEnchanting;
     int AdvancedComponentCount
     {
         get
@@ -350,6 +351,8 @@ public class Survivor : CustomObject
     Item curDrinking;
     float curCraftingTime;
     float craftingSpeed = 1f;
+    float enchantingTime = 1f;
+    float curEnchantingTime;
     #endregion
     #region Trap
     public TrapPlace trapPlace;
@@ -987,6 +990,7 @@ public class Survivor : CustomObject
         if(!GetCurrentArea().IsProhibited_Plan && !GetCurrentArea().IsProhibited && !(RightHandDisabled && LeftHandDisabled))
         {
             if (SetBoobyTrap()) return;
+
             if (currentCrafting != null)
             {
                 Craft();
@@ -997,8 +1001,19 @@ public class Survivor : CustomObject
                 curCraftingTime = 0;
                 return;
             }
-            if (Enchanting()) return;
+
+            if(currentEnchanting != null)
+            {
+                Enchant();
+                return;
+            }
+            else if (Enchanting())
+            {
+                curEnchantingTime = 0;
+                return;
+            }
             animator.SetBool("Crafting", false);
+
             if (trapPlace != null && trapPlace.BuriedTrap == null)
             {
                 if (BuryTrap()) return;
@@ -1980,19 +1995,18 @@ public class Survivor : CustomObject
         Item poison = inventory.Find(x => x.itemType == ItemManager.Items.Poison);
         if(poison != null)
         {
-            if(currentWeapon is MeleeWeapon)
+            if (currentWeapon is MeleeWeapon weapon && weapon.DamageType == DamageType.Slash)
             {
-                MeleeWeapon weapon = (MeleeWeapon)currentWeapon;
-                if(!weapon.IsEnchanted)
+                if (!weapon.IsEnchanted)
                 {
-                    Enchant(weapon);
+                    currentEnchanting = weapon;
                     return true;
                 }
             }
             Item notEnchantedBearTrap = inventory.Find(x => x.itemType == ItemManager.Items.BearTrap && !((Buriable)x).IsEnchanted);
             if(notEnchantedBearTrap != null)
             {
-                Enchant(notEnchantedBearTrap);
+                currentEnchanting = notEnchantedBearTrap;
                 return true;
             }
         }
@@ -2036,12 +2050,25 @@ public class Survivor : CustomObject
         }
     }
 
-    void Enchant(Item wantItem)
+    void Enchant()
     {
-        curEnchanting = wantItem;
+        CurrentStatus = Status.Crafting;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", 2);
         animator.SetBool("Crafting", true);
+
+        curEnchantingTime += Time.deltaTime * aiCool;
+        progressBar.fillAmount = curEnchantingTime / enchantingTime;
+        if(curEnchantingTime > enchantingTime)
+        {
+            if (curEnchanting is MeleeWeapon weapon) weapon.Enchant();
+            else if (curEnchanting is Buriable buriable)
+            {
+                inventory.Remove(buriable);
+                ItemManager.AddItems(ItemManager.Items.BearTrap_Enchanted, 1);
+                GetItem(ItemManager.itemDictionary[ItemManager.Items.BearTrap_Enchanted][^1]);
+            }
+        }
     }
 
     void CheckCraftables()
@@ -2792,6 +2819,8 @@ public class Survivor : CustomObject
             }
             else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
         }
+
+        if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Armor;
 
         PlaySFX(hitSound, this);
         ApplyDamage(attacker, damage, damagePart, damageType);
@@ -4021,17 +4050,6 @@ public class Survivor : CustomObject
         }
         ConsumptionItem(bandage, 1);
         BleedingAmount -= hemostaticAmount;
-    }
-
-    void AE_Enchanting()
-    {
-        if (curEnchanting == null)
-        {
-            Debug.LogWarning("There is no curEnchanting.");
-            return;
-        }
-        if (curEnchanting is MeleeWeapon weapon) weapon.Enchant();
-        else if(curEnchanting is Buriable buriable) buriable.Enchant();
     }
 
     void AE_Drinking()
