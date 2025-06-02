@@ -38,6 +38,7 @@ public class ResourcesPath
         "Prefabs/UIs/Alert",
         "Prefabs/UIs/SurvivorSchedule",
         "Prefabs/UIs/CraftableAllow",
+        "Prefabs/UIs/ImageBox",
 
         // In Game UI
         "Prefabs/UIs/KillLog",

@@ -120,6 +120,7 @@ public class Calendar : CustomObject
     OutGameUIManager outGameUIManager;
 
     [Header("Calendar UI")]
+    [SerializeField] GameObject calendarObject;
     [SerializeField] TextMeshProUGUI monthText;
     [SerializeField] TextMeshProUGUI yearText;
     [SerializeField] GameObject[] dates;
@@ -475,6 +476,12 @@ public class Calendar : CustomObject
         TurnPageCalendar(0);
     }
 
+    public void OpenCalendar()
+    {
+        calendarObject.SetActive(true);
+        GameManager.Instance.openedWindows.Push(calendarObject);
+    }
+
     public void TurnPageCalendar(int value)
     {
         CalendarPage = Mathf.Clamp(calendarPage + value, 1, 36);
@@ -504,6 +511,7 @@ public class Calendar : CustomObject
                 else
                 {
                     reserveForm.SetActive(true);
+                    GameManager.Instance.openedWindows.Push(reserveForm);
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
                         reserveText.text = "Choose who want register for battle royale.";

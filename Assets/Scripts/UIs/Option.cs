@@ -1,10 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Option : MonoBehaviour
 {
+    [Header("Sound")]
     [SerializeField] Image bgmImage;
     [SerializeField] Image sfxImage;
     [SerializeField] Sprite on;
@@ -13,6 +17,73 @@ public class Option : MonoBehaviour
     [SerializeField] Slider sfxSlider;
     bool bgmOn = true;
     bool sfxOn = true;
+
+    [Header("Encyclopedia")]
+    [SerializeField] GameObject encyclopedia;
+    [SerializeField] GameObject itemTable;
+    [SerializeField] TMP_Dropdown sortBy;
+
+    class ItemDataForSort : MonoBehaviour
+    {
+        public ItemManager.Items itemType;
+        public int knowledgeRequiredForCrafting;
+
+        public void Set(ItemManager.Items itemType, int knowledgeRequiredForCrafting)
+        {
+            this.itemType = itemType;
+            this.knowledgeRequiredForCrafting = knowledgeRequiredForCrafting;
+        }
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.ObjectStart += OptionSetting;
+    }
+
+    void OptionSetting()
+    {
+        for(int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
+        {
+            string itemName = ((ItemManager.Items)i).ToString();
+            if (itemName.Contains("Enchanted")) continue;
+            GameObject itemImageBox = PoolManager.Spawn(ResourceEnum.Prefab.ImageBox, itemTable.transform);
+            if (Enum.TryParse(itemName, out ResourceEnum.Sprite sprite))
+            {
+                Sprite sprt = ResourceManager.Get(sprite);
+                itemImageBox.GetComponentsInChildren<Image>()[1].sprite = sprt;
+                //itemImageBox.GetComponent<Help>().SetDescription((ItemManager.Items)i);
+                itemImageBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = sprt.textureRect.width / sprt.textureRect.height;
+                ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType == (ItemManager.Items)i);
+                int knowledgeRequired = craftable != null ? craftable.requiredKnowledge : -1;
+                itemImageBox.AddComponent<ItemDataForSort>().Set((ItemManager.Items)i, knowledgeRequired);
+            }
+        }
+    }
+
+    void Sorting(int sortBy)
+    {
+        var children = itemTable.transform.Cast<Transform>().ToList();
+        List<Transform> sorted = null;
+        // sort by - 0 : Item type, 1 : Knowledge required for crafting
+        switch (sortBy)
+        {
+            case 0:
+                sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().itemType).ToList();
+                break;
+            case 1:
+                sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().knowledgeRequiredForCrafting).ToList();
+                break;
+        }
+        for (int i = 0; i < sorted.Count; i++)
+        {
+            sorted[i].SetSiblingIndex(i);
+        }
+    }
+
+    public void Sort()
+    {
+        Sorting(sortBy.value);
+    }
 
     public void ToggleBGM()
     {
@@ -38,5 +109,11 @@ public class Option : MonoBehaviour
     public void SlideSFX()
     {
         GameManager.Instance.SoundManager.ToggleAudioMixerGroup(SoundManager.AudioMixerGroupType.SFX, true, sfxSlider.value);
+    }
+
+    public void OpenEncyclopedia()
+    {
+        encyclopedia.SetActive(true);
+        GameManager.Instance.openedWindows.Push(encyclopedia);
     }
 }

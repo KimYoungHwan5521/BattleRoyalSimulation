@@ -112,9 +112,9 @@ public class ItemManager
         // Crafting anim number - 0 : Crafting, 1 : Chemicals, 2 : Enchant
         craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1, 3.5f));
-        craftables.Add(new Craftable(Items.Pistol, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Revolver, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
-        craftables.Add(new Craftable(Items.Revolver, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Pistol, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.ShotGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
         craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0, 7f));

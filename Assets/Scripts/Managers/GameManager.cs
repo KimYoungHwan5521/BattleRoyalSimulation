@@ -239,12 +239,21 @@ public class GameManager : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
     }
 
+    public Stack<GameObject> openedWindows = new();
     void OnCancel(InputValue value)
     {
-        optionCanvas.SetActive(!optionCanvas.activeSelf);
-        if(BattleRoyaleManager != null && BattleRoyaleManager.isBattleRoyaleStart)
+        if(openedWindows.Count > 0)
         {
-            GetComponent<InGameUIManager>().SetTimeScale(0);
+            openedWindows.Pop().SetActive(false);
+        }
+        else
+        {
+            optionCanvas.SetActive(true);
+            openedWindows.Push(optionCanvas);
+            if(BattleRoyaleManager != null && BattleRoyaleManager.isBattleRoyaleStart)
+            {
+                GetComponent<InGameUIManager>().SetTimeScale(0);
+            }
         }
     }
 }

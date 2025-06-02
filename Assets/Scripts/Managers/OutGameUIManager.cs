@@ -60,6 +60,7 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Training Room")]
     [SerializeField] GameObject trainingRoom;
+    [SerializeField] GameObject trainingAssignForm;
     [SerializeField] TextMeshProUGUI weightTrainingNameText;
     [SerializeField] TextMeshProUGUI runningNameText;
     [SerializeField] TextMeshProUGUI fightTrainingNameText;
@@ -239,6 +240,7 @@ public class OutGameUIManager : MonoBehaviour
         survivorsInHireMarket[0].SetInfo(GetRandomName(), 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
         survivorsInHireMarket[1].SetInfo(GetRandomName(), 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
         survivorsInHireMarket[2].SetInfo(GetRandomName(), 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
+        hireClose.SetActive(false);
     }
 
     public void ResetHireMarket()
@@ -280,6 +282,12 @@ public class OutGameUIManager : MonoBehaviour
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
+    }
+
+    public void OpenHireSurvivorMarket()
+    {
+        hireSurvivor.SetActive(true);
+        GameManager.Instance.openedWindows.Push(hireSurvivor);
     }
 
     public void HireSurvivor(int candidate)
@@ -392,11 +400,14 @@ public class OutGameUIManager : MonoBehaviour
         else
         {
             trainingRoom.SetActive(true);
+            GameManager.Instance.openedWindows.Push(trainingRoom);
         }
     }
 
     public void OpenAssignTraining(int trainingIndex)
     {
+        trainingAssignForm.SetActive(true);
+        GameManager.Instance.openedWindows.Push(trainingAssignForm);
         Training training = (Training)trainingIndex;
         survivorSchedules = new();
         assignTrainingNameText.text = trainingIndex switch
@@ -775,6 +786,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             SetOperatingRoom();
             operatingRoom.SetActive(true);
+            GameManager.Instance.openedWindows.Push(operatingRoom);
         }
     }
 
@@ -1087,6 +1099,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         strategyRoom.SetActive(true);
         SetStrategyRoom();
+        GameManager.Instance.openedWindows.Push(strategyRoom);
     }
 
     public void CloseStrategyRoom()
@@ -1632,6 +1645,7 @@ public class OutGameUIManager : MonoBehaviour
                 selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 
                 dailyResult.SetActive(true);
+                GameManager.Instance.openedWindows.Push(dailyResult);
             });
         }
         else if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
@@ -1805,11 +1819,14 @@ public class OutGameUIManager : MonoBehaviour
         confirmButton.onClick.AddListener(wantAction);
         confirmButton.onClick.AddListener(()=>confirmCanvas.SetActive(false));
         confirmCanvas.SetActive(true);
+        GameManager.Instance.openedWindows.Push(confirmCanvas);
     }
 
     public void Alert(string message)
     {
-        PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform).GetComponentInChildren<TextMeshProUGUI>().text = message;
+        GameObject alertWindow = PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform);
+        alertWindow.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        GameManager.Instance.openedWindows.Push(alertWindow);
     }
 
     void OnClick(InputValue value)
