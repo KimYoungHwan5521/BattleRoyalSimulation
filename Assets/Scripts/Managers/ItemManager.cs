@@ -184,7 +184,7 @@ public class ItemManager
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "LongSword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 50, 2.4f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Long Sword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 50, 2.4f, 1));
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
@@ -201,19 +201,19 @@ public class ItemManager
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "ShotGun", 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Shotgun", 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SubMachineGun", 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Sub Machine Gun", 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "AssaultRifle", 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Assault Rifle", 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "SniperRifle", 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Sniper Rifle", 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
@@ -256,23 +256,6 @@ public class ItemManager
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Item(wantItem, "Rocket(Bazooka)", 5f, 1));
                 break;
-            // Vests
-            case Items.LowLevelBulletproofVest:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 10));
-                break;
-            case Items.MiddleLevelBulletproofVest:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 30));
-                break;
-            case Items.HighLevelBulletproofVest:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 50));
-                break;
-            case Items.LegendaryBulletproofVest:
-                for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Legendary Bulletproof Vest", 36f, 70));
-                break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
@@ -289,6 +272,23 @@ public class ItemManager
             case Items.LegendaryBulletproofHelmet:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Legendary Bulletproof Helmet", 7f, 200));
+                break;
+            // Vests
+            case Items.LowLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 10));
+                break;
+            case Items.MiddleLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 30));
+                break;
+            case Items.HighLevelBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 50));
+                break;
+            case Items.LegendaryBulletproofVest:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Legendary Bulletproof Vest", 36f, 70));
                 break;
             // Consumables
             case Items.BandageRoll:

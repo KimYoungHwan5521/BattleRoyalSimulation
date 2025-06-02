@@ -51,10 +51,10 @@ public class Option : MonoBehaviour
             {
                 Sprite sprt = ResourceManager.Get(sprite);
                 itemImageBox.GetComponentsInChildren<Image>()[1].sprite = sprt;
-                //itemImageBox.GetComponent<Help>().SetDescription((ItemManager.Items)i);
+                itemImageBox.GetComponent<Help>().SetDescription((ItemManager.Items)i);
                 itemImageBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = sprt.textureRect.width / sprt.textureRect.height;
                 ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType == (ItemManager.Items)i);
-                int knowledgeRequired = craftable != null ? craftable.requiredKnowledge : -1;
+                int knowledgeRequired = craftable != null ? craftable.requiredKnowledge : 255;
                 itemImageBox.AddComponent<ItemDataForSort>().Set((ItemManager.Items)i, knowledgeRequired);
             }
         }

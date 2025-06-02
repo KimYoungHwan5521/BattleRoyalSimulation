@@ -57,7 +57,7 @@ public class Bullet : CustomObject
         launcher = setter;
         projectileSpeed = 20f;
         maxRange = 5f;
-        damage = 10f;
+        damage = 20f;
         lastPosition = transform.position;
         this.direction = direction;
         direction.Normalize();
