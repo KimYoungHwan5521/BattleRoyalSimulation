@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Option : MonoBehaviour
 {
+    float lastSaveTime;
     [Header("Sound")]
     [SerializeField] Image bgmImage;
     [SerializeField] Image sfxImage;
@@ -22,6 +23,16 @@ public class Option : MonoBehaviour
     [SerializeField] GameObject encyclopedia;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
+
+    [Header("Buttons")]
+    [SerializeField] GameObject resume;
+    [SerializeField] Button saveButton;
+    [SerializeField] GameObject goTitle;
+
+    [Header("Save")]
+    [SerializeField] TextMeshProUGUI saveOrLoadText;
+    [SerializeField] GameObject saveSlotsObject;
+    [SerializeField] SaveSlot[] saveSlots;
 
     class ItemDataForSort : MonoBehaviour
     {
@@ -38,10 +49,20 @@ public class Option : MonoBehaviour
     private void Start()
     {
         GameManager.Instance.ObjectStart += OptionSetting;
+        GameManager.Instance.ObjectStart += ReloadSavedata;
+
+    }
+
+    private void Update()
+    {
+        lastSaveTime += Time.unscaledDeltaTime;
     }
 
     void OptionSetting()
     {
+        resume.SetActive(false);
+        saveButton.gameObject.SetActive(false);
+        goTitle.SetActive(false);
         for(int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
         {
             string itemName = ((ItemManager.Items)i).ToString();
@@ -111,9 +132,116 @@ public class Option : MonoBehaviour
         GameManager.Instance.SoundManager.ToggleAudioMixerGroup(SoundManager.AudioMixerGroupType.SFX, true, sfxSlider.value);
     }
 
+    public void Resume()
+    {
+        GameManager.Instance.openedWindows.Pop().SetActive(false);
+        if(GameManager.Instance.openedWindows.Count == 0) Time.timeScale = 1;
+    }
+
     public void OpenEncyclopedia()
     {
         encyclopedia.SetActive(true);
         GameManager.Instance.openedWindows.Push(encyclopedia);
+    }
+
+    public void OpenSaveSlot(bool save)
+    {
+        saveOrLoadText.text = save ? "Save" : "Load";
+        for(int i=1; i<saveSlots.Length; i++)
+        {
+            saveSlots[i].saveButton.SetActive(save);
+            saveSlots[i].GetComponent<Button>().enabled = !save;
+        }
+        saveSlotsObject.SetActive(true);
+        GameManager.Instance.openedWindows.Push(saveSlotsObject);
+    }
+
+    public void ReloadSavedata()
+    {
+        for (int i = 0; i < saveSlots.Length; i++)
+        {
+            string json = PlayerPrefs.GetString($"SaveDataInfo{i}", "{}");
+            if (json != "{}")
+            {
+                var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+                string info = $"{saveData.ingameDate}\n<i>Saved at{saveData.savedTime}</i>";
+                if (i == 0) info += "<i>Auto-saved</i>";
+                saveSlots[i].SetInfo(info);
+                if(i != 0) saveSlots[i].deleteButton.SetActive(true);
+                saveSlots[i].isEmpty = false;
+            }
+            else
+            {
+                saveSlots[i].SetInfo("<i>Empty slot</i>");
+                if (i != 0) saveSlots[i].deleteButton.SetActive(false);
+                saveSlots[i].isEmpty = true;
+            }
+        }
+    }
+
+    public void Save(int slot)
+    {
+        if(!saveSlots[slot].isEmpty)
+        {
+            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("This slot already contains data. Do you want to overwrite it?", () =>
+            {
+                GameManager.Instance.Save(slot);
+            });
+        }
+        else
+        {
+            GameManager.Instance.Save(slot);
+        }
+    }
+
+    public void Load(int slot)
+    {
+        StartCoroutine(GameManager.Instance.Load(slot));
+    }
+
+    public void DeleteSaveData(int slot)
+    {
+        GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Are you sure you want to delete this save data?", () =>
+        {
+            PlayerPrefs.DeleteKey($"SaveDataInfo{slot}");
+            PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
+            PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
+            PlayerPrefs.DeleteKey($"ETCData{slot}");
+            ReloadSavedata();
+        });
+    }
+
+    public void SetSaveButtonInteractable(bool interactable)
+    {
+        if(interactable)
+        {
+            resume.SetActive(true);
+            saveButton.gameObject.SetActive(true);
+            goTitle.SetActive(true);
+        }
+        saveButton.interactable = interactable;
+    }
+
+    public void GoTitle()
+    {
+        if(lastSaveTime > 10)
+        {
+            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Go title?\n<i>(Any unsaved content will be deleted.)</i>", () =>
+            {
+                resume.SetActive(false);
+                saveButton.gameObject.SetActive(false);
+                goTitle.SetActive(false);
+                GameManager.Instance.optionCanvas.SetActive(false);
+                GameManager.Instance.Title.title.SetActive(true);
+            });
+        }
+        else
+        {
+            resume.SetActive(false);
+            saveButton.gameObject.SetActive(false);
+            goTitle.SetActive(false);
+            GameManager.Instance.optionCanvas.SetActive(false);
+            GameManager.Instance.Title.title.SetActive(true);
+        }
     }
 }

@@ -1,24 +1,19 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
-    [SerializeField] GameObject title;
-    [SerializeField] Button continueButton;
-    private void Start()
-    {
-        continueButton.interactable = PlayerPrefs.GetInt("HaveSaveData") != 0;
-    }
+    public GameObject title;
 
     public void NewGame()
     {
+        GameManager.Instance.ResetData();
         title.SetActive(false);
+        GameManager.Instance.Option.SetSaveButtonInteractable(true);
     }
 
     public void Continue()
     {
-        StartCoroutine(GameManager.Instance.Load());
-        title.SetActive(false);
+        GameManager.Instance.Option.OpenSaveSlot(false);
     }
 
     public void Quit()

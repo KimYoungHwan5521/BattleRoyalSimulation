@@ -156,7 +156,16 @@ public class Calendar : CustomObject
         LoadItemPool();
     }
 
+    public void ResetData()
+    {
+        Today = 0;
+        curMaxYear = 0;
+        leagueReserveInfo.Clear();
+        AddLeagueReserveInfo(3);
+    }
+
     int curMaxYear = 0;
+    public int CurMaxYear => curMaxYear;
     void AddLeagueReserveInfo(int howManyYears)
     {
         for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
@@ -497,7 +506,7 @@ public class Calendar : CustomObject
                 outGameUIManager.OpenConfirmWindow("Go battle royale?",
                     () =>
                     {
-                        //outGameUIManager.StartBattleRoyale(leagueReserveInfo[wantReserveDate].reserver);
+                        GameManager.Instance.Option.SetSaveButtonInteractable(false);
                         outGameUIManager.OpenBettingRoom();
                         outGameUIManager.calendarObject.SetActive(false);
                     });
@@ -669,8 +678,9 @@ public class Calendar : CustomObject
         yield return null;
     }
 
-    public void LoadToday(int data)
+    public void LoadToday(int today, int curMaxYear)
     {
-        today = data;
+        this.today = today;
+        this.curMaxYear = curMaxYear;
     }
 }

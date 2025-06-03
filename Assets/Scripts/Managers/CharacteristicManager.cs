@@ -52,7 +52,7 @@ public struct Characteristic
     public string characteristicName;
     public CharacteristicRarity rarity;
     public string description;
-    public CharacteristicType[] notPossbleTogether;
+    public CharacteristicType[] notPossibleTogether;
     public int value;
 
     public Characteristic(CharacteristicType type, string characteristicName, CharacteristicRarity rarity, string description, int value, params CharacteristicType[] notPossibleTogether)
@@ -62,7 +62,7 @@ public struct Characteristic
         this.rarity = rarity;
         this.description = description;
         this.value = value;
-        this.notPossbleTogether = notPossibleTogether;
+        this.notPossibleTogether = notPossibleTogether;
     }
 }
 
@@ -118,7 +118,7 @@ public class CharacteristicManager
         if(hasAleady > -1) return false;
         foreach(Characteristic survivorChar in survivor.characteristics)
         {
-            if(survivorChar.notPossbleTogether.ToList().Contains(wantCharacteristic))
+            if(survivorChar.notPossibleTogether.ToList().Contains(wantCharacteristic))
             {
                 return false;
             }

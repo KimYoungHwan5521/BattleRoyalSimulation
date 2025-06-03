@@ -146,7 +146,7 @@ public class SurvivorData
     
     // Training
     public Training assignedTraining;
-    public float increaseComparedToPrevious_strength;
+    public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
     public int increaseComparedToPrevious_fighting;
     public int increaseComparedToPrevious_shooting;

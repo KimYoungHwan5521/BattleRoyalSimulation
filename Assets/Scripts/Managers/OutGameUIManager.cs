@@ -212,6 +212,19 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.Instance.ObjectStart += () => InitializeStrategyRoom();
     }
 
+    public void ResetData()
+    {
+        mySurvivorsData = new();
+        SetHireMarketFirst();
+        Money = 1000;
+        survivorHireLimit = 10;
+        fightTrainingLevel = 1;
+        shootingTrainingLevel = 1;
+        runningLevel = 1;
+        weightTrainingLevel = 1;
+        studyingLevel = 1;
+    }
+
     private void Update()
     {
         if(isClicked)
@@ -1916,14 +1929,15 @@ public class OutGameUIManager : MonoBehaviour
     }
 
     public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel,
-        int agilityTrainingLevel, int weightTrainingLevel)
+        int runningLevel, int weightTrainingLevel, int studyingLevel)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.survivorHireLimit = survivorHireLimit;
         this.fightTrainingLevel = fightTrainingLevel;
         this.shootingTrainingLevel = shootingTrainingLevel;
-        this.runningLevel = agilityTrainingLevel;
+        this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
+        this.studyingLevel = studyingLevel;
     }
 }

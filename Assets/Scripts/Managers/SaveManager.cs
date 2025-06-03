@@ -15,9 +15,16 @@ public static class SaveManager
             shooting = data._shooting,
             knowledge = data._knowledge,
             luck = data._luck,
+            characteristics = data.characteristics,
             price = data.price,
             tier = data.tier,
             isReserved = data.isReserved,
+            assignedTraining = data.assignedTraining,
+            increaseComparedToPrevious_strength = data.increaseComparedToPrevious_strength,
+            increaseComparedToPrevious_agility = data.increaseComparedToPrevious_agility,
+            increaseComparedToPrevious_fighting = data.increaseComparedToPrevious_fighting,
+            increaseComparedToPrevious_shooting = data.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_knowledge = data.increaseComparedToPrevious_knowledge,
             injuries = data.injuries,
             surgeryScheduled = data.surgeryScheduled,
             scheduledSurgeryName = data.scheduledSurgeryName,
@@ -26,6 +33,9 @@ public static class SaveManager
             surgeryType = data.surgeryType,
             surgeryCharacteristic = data.surgeryCharacteristic,
             priority1Weapon = data.priority1Weapon,
+            priority1Crafting = data.priority1Crafting,
+            priority1CraftingToInt = data.priority1CraftingToInt,
+            craftingAllows = data.craftingAllows,
             strategyDictionaryEntries = new()
         };
 
@@ -44,7 +54,14 @@ public static class SaveManager
         {
             id = saveData.id,
             _luck = saveData.luck,
+            characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,
+            assignedTraining = saveData.assignedTraining,
+            increaseComparedToPrevious_strength = saveData.increaseComparedToPrevious_strength,
+            increaseComparedToPrevious_agility = saveData.increaseComparedToPrevious_agility,
+            increaseComparedToPrevious_fighting = saveData.increaseComparedToPrevious_fighting,
+            increaseComparedToPrevious_shooting = saveData.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_knowledge = saveData.increaseComparedToPrevious_knowledge,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,
             scheduledSurgeryName = saveData.scheduledSurgeryName,
@@ -52,7 +69,10 @@ public static class SaveManager
             surgerySite = saveData.surgerySite,
             surgeryType = saveData.surgeryType,
             surgeryCharacteristic = saveData.surgeryCharacteristic,
-            priority1Weapon = saveData.priority1Weapon
+            priority1Weapon = saveData.priority1Weapon,
+            priority1Crafting = saveData.priority1Crafting,
+            priority1CraftingToInt = saveData.priority1CraftingToInt,
+            craftingAllows = saveData.craftingAllows,
         };
 
         survivor.strategyDictionary.Clear();

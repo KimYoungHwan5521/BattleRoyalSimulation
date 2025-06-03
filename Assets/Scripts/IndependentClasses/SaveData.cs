@@ -4,6 +4,21 @@ using System.Collections.Generic;
 
 #region Survivors
 [Serializable]
+public class SaveDataInfo
+{
+    public string gameVersion;
+    public string savedTime;
+    public string ingameDate;
+
+    public SaveDataInfo(string gameVersion, string savedTime, string ingameDate)
+    {
+        this.gameVersion = gameVersion;
+        this.savedTime = savedTime;
+        this.ingameDate = ingameDate;
+    }
+}
+
+[Serializable]
 public class StrategyDictionaryEntry
 {
     public StrategyCase key;
@@ -27,9 +42,16 @@ public class SurvivorSaveData
     public int shooting;
     public int knowledge;
     public int luck;
+    public List<Characteristic> characteristics;
     public int price;
     public Tier tier;
     public bool isReserved;
+    public Training assignedTraining;
+    public int increaseComparedToPrevious_strength;
+    public int increaseComparedToPrevious_agility;
+    public int increaseComparedToPrevious_fighting;
+    public int increaseComparedToPrevious_shooting;
+    public int increaseComparedToPrevious_knowledge;
     public List<Injury> injuries;
     public bool surgeryScheduled;
     public string scheduledSurgeryName;
@@ -39,6 +61,9 @@ public class SurvivorSaveData
     public CharacteristicType surgeryCharacteristic;
     public ItemManager.Items priority1Weapon;
     public List<StrategyDictionaryEntry> strategyDictionaryEntries;
+    public ItemManager.Craftable priority1Crafting;
+    public int priority1CraftingToInt;
+    public bool[] craftingAllows;
 }
 
 [Serializable]
@@ -82,20 +107,24 @@ public class ETCData
     public int survivorHireLimit;
     public int fightTrainingLevel;
     public int shootingTrainingLevel;
-    public int agilityTrainingLevel;
+    public int runningLevel;
     public int weightTrainingLevel;
+    public int studyingLevel;
     // calendar
     public int today;
+    public int curMaxYear;
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int agilityTrainingLevel, int weightTrainingLevel, int today)
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, int today, int curMaxYear)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.survivorHireLimit = survivorHireLimit;
         this.fightTrainingLevel = fightTrainingLevel;
         this.shootingTrainingLevel = shootingTrainingLevel;
-        this.agilityTrainingLevel = agilityTrainingLevel;
+        this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
+        this.studyingLevel = studyingLevel;
         this.today = today;
+        this.curMaxYear = curMaxYear;
     }
 }

@@ -266,6 +266,9 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.BattleRoyaleManager.Destroy();
         notification?.Invoke();
         notification = null;
+        // Auto save
+        GameManager.Instance.Save(0);
+        GameManager.Instance.Option.SetSaveButtonInteractable(true);
     }
 
     public void KeepWatching()

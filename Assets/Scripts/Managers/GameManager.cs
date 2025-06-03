@@ -1,9 +1,10 @@
-using System.Collections;
-using UnityEngine;
 using NavMeshPlus.Components;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public delegate void CustomStart();
 public delegate void CustomUpdate();
@@ -39,6 +40,10 @@ public class GameManager : MonoBehaviour
     public OutGameUIManager OutGameUIManager => outGameUIManger;
     Calendar calendar;
     public Calendar Calendar => calendar;
+    [SerializeField] Option option;
+    public Option Option => option;
+    [SerializeField] Title title;
+    public Title Title => title;
 
     public LoadingCanvas loadingCanvas;
     public GameObject inGameUICanvas;
@@ -78,6 +83,12 @@ public class GameManager : MonoBehaviour
         SoundManager.Play(ResourceEnum.BGM.the_birth_of_hip_hop);
     }
 
+    public void ResetData()
+    {
+        OutGameUIManager.ResetData();
+        calendar.ResetData();
+    }
+
     public IEnumerator BattleRoyaleStart()
     {
         ClaimLoadInfo("Loading battle royale");
@@ -112,40 +123,63 @@ public class GameManager : MonoBehaviour
     }
 
     #region Save / Load
-    void SaveMySurvivorList(List<SurvivorData> mySurvivors)
+    void SaveSaveDataInfo(int slot)
+    {
+        string saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        string ingameDate = $"{calendar.Today % 28 + 1} {calendar.Month}, {calendar.Year}";
+        var saveData = new SaveDataInfo(gameVirsion, saveTime, ingameDate);
+        string json = JsonUtility.ToJson(saveData);
+        PlayerPrefs.SetString($"SaveDataInfo{slot}", json);
+        PlayerPrefs.Save();
+    }
+
+    IEnumerator LoadSaveDataInfo(int slot)
+    {
+        string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+        var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+        string loadedDataGameVersion = saveData.gameVersion;
+        if( loadedDataGameVersion != gameVirsion )
+        {
+            ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
+        }
+        yield return null;
+
+    }
+
+    void SaveMySurvivorList(List<SurvivorData> mySurvivors, int slot)
     {
         var saveData = new MySurvivorListSaveData
         {
             survivorSaveDatas = mySurvivors.ConvertAll(SaveManager.ToSaveData)
         };
         string json = JsonUtility.ToJson(saveData);
-        PlayerPrefs.SetString("MySurvivorList", json);
+        PlayerPrefs.SetString($"MySurvivorList{slot}", json);
         PlayerPrefs.Save();
     }
 
-    List<SurvivorData> LoadMySurvivorList()
+    List<SurvivorData> LoadMySurvivorList(int slot)
     {
-        string json = PlayerPrefs.GetString("MySurvivorList", "{}");
+        string json = PlayerPrefs.GetString($"MySurvivorList{slot}", "{}");
         var saveData = JsonUtility.FromJson<MySurvivorListSaveData>(json);
         return saveData.survivorSaveDatas.ConvertAll(SaveManager.FromSaveData);
     }
 
-    void SaveLeagueReserve(Dictionary<int, LeagueReserveData> data)
+    void SaveLeagueReserve(Dictionary<int, LeagueReserveData> data, int slot)
     {
         var saveData = SaveManager.ToSaveData(data);
         string json = JsonUtility.ToJson(saveData);
-        PlayerPrefs.SetString("LeagueReserveData", json);
+        PlayerPrefs.SetString($"LeagueReserveData{slot}", json);
         PlayerPrefs.Save();
     }
 
-    Dictionary<int, LeagueReserveData> LoadLeagueReserve()
+    Dictionary<int, LeagueReserveData> LoadLeagueReserve(int slot)
     {
-        string json = PlayerPrefs.GetString("LeagueReserveData", "{}");
+        string json = PlayerPrefs.GetString($"LeagueReserveData{slot}", "{}");
         var saveData = JsonUtility.FromJson<LeagueReserveDictionarySaveData>(json);
         return SaveManager.FromSaveData(saveData);
     }
 
-    void SaveETCData()
+    void SaveETCData(int slot)
     {
         ETCData saveData = new(
             OutGameUIManager.Money,
@@ -155,17 +189,19 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.ShootingTrainingLevel,
             OutGameUIManager.AgilityTrainingLevel,
             OutGameUIManager.WeightTrainingLevel,
-            calendar.Today
+            OutGameUIManager.StudyLevel,
+            calendar.Today,
+            calendar.CurMaxYear
             );
         string json = JsonUtility.ToJson(saveData);
-        PlayerPrefs.SetString("ETCData", json);
+        PlayerPrefs.SetString($"ETCData{slot}", json);
         PlayerPrefs.Save();
     }
 
-    public IEnumerator LoadETCData()
+    public IEnumerator LoadETCData(int slot)
     {
         GameManager.ClaimLoadInfo("Loading ETC data...", 2, 3);
-        string json = PlayerPrefs.GetString("ETCData", "{}");
+        string json = PlayerPrefs.GetString($"ETCData{slot}", "{}");
         var saveData = JsonUtility.FromJson<ETCData>(json);
         OutGameUIManager.LoadData(
         saveData.money,
@@ -173,31 +209,46 @@ public class GameManager : MonoBehaviour
         saveData.survivorHireLimit,
         saveData.fightTrainingLevel,
         saveData.shootingTrainingLevel,
-        saveData.agilityTrainingLevel,
-        saveData.weightTrainingLevel
+        saveData.runningLevel,
+        saveData.weightTrainingLevel,
+        saveData.studyingLevel
             );
-        calendar.LoadToday(saveData.today);
+        calendar.LoadToday(saveData.today, saveData.curMaxYear);
         yield return null;
     }
 
-    public void Save()
+    public void Save(int slot)
     {
-        SaveMySurvivorList(outGameUIManger.MySurvivorsData);
-        SaveLeagueReserve(calendar.LeagueReserveInfo);
-        SaveETCData();
-        PlayerPrefs.SetInt("HaveSaveData", 1);
+        SaveSaveDataInfo(slot);
+        SaveMySurvivorList(outGameUIManger.MySurvivorsData, slot);
+        SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
+        SaveETCData(slot);
+        Option.ReloadSavedata();
+        string message = slot == 0 ? "The game has been auto-saved." : "The game has been saved.";
+        OutGameUIManager.Alert(message);
     }
 
-    public IEnumerator Load()
+    public IEnumerator Load(int slot)
     {
+        if (PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}") == "{}")
+        {
+            yield break;
+        }
+
+        gameReady = false;
         ClaimLoadInfo("Loading save data...");
-        yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList());
-        yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve());
-        yield return LoadETCData();
+        yield return LoadSaveDataInfo(slot);
+        yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));
+        yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve(slot));
+        yield return LoadETCData(slot);
         outGameUIManger.ResetHireMarket();
         outGameUIManger.ResetSurvivorsDropdown();
         ClaimLoadInfo("Setting markets...", 3, 3);
         CloseLoadInfo();
+        gameReady = true;
+        title.title.SetActive(false);
+        option.SetSaveButtonInteractable(true);
+        OutGameUIManager.Alert("Loaded successfully");
     }
     #endregion
 
@@ -244,7 +295,9 @@ public class GameManager : MonoBehaviour
     {
         if(openedWindows.Count > 0)
         {
-            openedWindows.Pop().SetActive(false);
+            GameObject top = openedWindows.Pop();
+            if (top.activeSelf) top.SetActive(false);
+            else OnCancel(value);
         }
         else
         {
