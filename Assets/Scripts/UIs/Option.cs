@@ -164,7 +164,7 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"{saveData.ingameDate}\n<i>Saved at{saveData.savedTime}</i>";
+                string info = $"{saveData.ingameDate}\n<i>Saved at {saveData.savedTime}</i>";
                 if (i == 0) info += "<i>Auto-saved</i>";
                 saveSlots[i].SetInfo(info);
                 if(i != 0) saveSlots[i].deleteButton.SetActive(true);

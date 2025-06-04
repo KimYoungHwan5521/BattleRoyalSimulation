@@ -23,6 +23,9 @@ public class LeagueReserveData
 
 public class Calendar : CustomObject
 {
+    [SerializeField] GameObject scheduleByEachSurvivor;
+    [SerializeField] GameObject[] schedules;
+
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
     public Dictionary<int, LeagueReserveData> LeagueReserveInfo => leagueReserveInfo;
 
@@ -38,6 +41,18 @@ public class Calendar : CustomObject
         }
     }
 
+    public int NeareastSeasonChampionshipDate
+    {
+        get
+        {
+            for (int i = Today; i < 1008; i++)
+            {
+                if (i % 112 == 83) return i;
+            }
+            return -1;
+        }
+    }
+
     public LeagueReserveData NeareastWorldChampionship
     {
         get
@@ -50,6 +65,18 @@ public class Calendar : CustomObject
         }
     }
 
+    public int NeareastWorldChampionshipDate
+    {
+        get
+        {
+            for (int i = Today; i < 1008; i++)
+            {
+                if (i % 336 == 335) return i;
+            }
+            return -1;
+        }
+    }
+
     int today = 0;
     public int Today
     {
@@ -59,6 +86,7 @@ public class Calendar : CustomObject
             if (leagueReserveInfo.ContainsKey(today) && leagueReserveInfo[today].reserver != null)
             {
                 leagueReserveInfo[today].reserver.isReserved = false;
+                leagueReserveInfo[today].reserver.reservedDate = -1;
                 leagueReserveInfo[today].reserver = null;
             }
 
@@ -76,7 +104,7 @@ public class Calendar : CustomObject
     public int Month { get { return 1 + today / 28; } }
     public int Year { get { return 2101 + (Month - 1) / 12; } }
 
-    readonly string[] monthName = {
+    public readonly string[] monthName = {
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     };
@@ -613,6 +641,7 @@ public class Calendar : CustomObject
     {
         leagueReserveInfo[wantReserveDate].reserver = wantReserver;
         wantReserver.isReserved = true;
+        wantReserver.reservedDate = wantReserveDate;
         TurnPageCalendar(0);
         outGameUIManager.Alert("Battle royale has been registered.");
     }
@@ -650,17 +679,13 @@ public class Calendar : CustomObject
 
     public Tier GetNeedTier(League league)
     {
-        switch (league)
+        return league switch
         {
-            case League.BronzeLeague:
-                return Tier.Bronze;
-            case League.SilverLeague:
-                return Tier.Silver;
-            case League.GoldLeague:
-                return Tier.Gold;
-            default:
-                return Tier.Gold;
-        }
+            League.BronzeLeague => Tier.Bronze,
+            League.SilverLeague => Tier.Silver,
+            League.GoldLeague => Tier.Gold,
+            _ => Tier.Bronze,
+        };
     }
 
     public void CancelReservation()
@@ -668,6 +693,45 @@ public class Calendar : CustomObject
         leagueReserveInfo[wantReserveDate].reserver.isReserved = false;
         leagueReserveInfo[wantReserveDate].reserver = null;
         TurnPageCalendar(0);
+    }
+
+    public void OpenScheduleByEachSurvivor()
+    {
+        for (int i = 0; i < schedules.Length; i++)
+        {
+            if (i < outGameUIManager.MySurvivorsData.Count)
+            {
+                SurvivorData survivor = outGameUIManager.MySurvivorsData[i];
+                var scheduleTexts = schedules[i].GetComponentsInChildren<TextMeshProUGUI>();
+                scheduleTexts[0].text = survivor.survivorName;
+                scheduleTexts[1].text = survivor.tier.ToString();
+                if (survivor.isReserved)
+                {
+                    int date = survivor.reservedDate;
+                    scheduleTexts[2].text = $"{date % 28 + 1} {monthName[date / 28]}, {2101 + (date / 28) / 12}\n({leagueReserveInfo[date].league})";
+                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{NeareastSeasonChampionshipDate % 28 + 1} {monthName[NeareastSeasonChampionshipDate / 28]}, {2101 + (NeareastSeasonChampionshipDate / 28) / 12}\n(Season Championship)";
+                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{NeareastWorldChampionshipDate % 28 + 1} {monthName[NeareastWorldChampionshipDate / 28]}, {2101 + (NeareastWorldChampionshipDate / 28) / 12}\n(World Championship)";
+                }
+                else
+                {
+                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text = $"{NeareastSeasonChampionshipDate % 28 + 1} {monthName[NeareastSeasonChampionshipDate / 28]}, {2101 + (NeareastSeasonChampionshipDate / 28) / 12}\n(Season Championship)";
+                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text = $"{NeareastWorldChampionshipDate % 28 + 1} {monthName[NeareastWorldChampionshipDate / 28]}, {2101 + (NeareastWorldChampionshipDate / 28) / 12}\n(World Championship)";
+                    else scheduleTexts[2].text = "-";
+                }
+
+                schedules[i].SetActive(true);
+            }
+            else schedules[i].SetActive(false);
+        }
+        scheduleByEachSurvivor.SetActive(true);
+        GameManager.Instance.openedWindows.Push(scheduleByEachSurvivor);
+    }
+
+    public void CloseAll()
+    {
+        scheduleByEachSurvivor.SetActive(false);
+        calendarObject.SetActive(false);
+        reserveForm.SetActive(false);
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)

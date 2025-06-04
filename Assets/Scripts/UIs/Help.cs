@@ -17,14 +17,12 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (!string.IsNullOrWhiteSpace(description))
         {
             RectTransform descriptionRT = GameManager.Instance.description.GetComponent<RectTransform>();
-            TextMeshProUGUI descriptionText = descriptionRT.GetComponentInChildren<TextMeshProUGUI>();
-            descriptionText.text = description;
-            descriptionRT.sizeDelta = new(descriptionText.rectTransform.rect.width, descriptionText.rectTransform.rect.height);
-            GameManager.Instance.FixLayout(descriptionRT);
-            descriptionRT.position = 
-                new(Mathf.Clamp(rect.position.x + 25, 0, Screen.width - descriptionRT.rect.width),
-                Mathf.Clamp(rect.position.y - 40, descriptionRT.rect.height, Screen.height));
+            GameManager.Instance.description.GetComponent<Description>().SetText(description);
+            descriptionRT.position =
+                new(Mathf.Clamp(Input.mousePosition.x + 25, 0, Screen.width - descriptionRT.rect.width - 5),
+                Mathf.Clamp(Input.mousePosition.y - 25, descriptionRT.rect.height + 5, Screen.height));
             descriptionRT.gameObject.SetActive(true);
+            GameManager.Instance.FixLayout(descriptionRT);
         }
     }
 

@@ -143,6 +143,7 @@ public class SurvivorData
     // League
     public Tier tier;
     public bool isReserved;
+    public int reservedDate = -1;
     
     // Training
     public Training assignedTraining;

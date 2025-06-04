@@ -46,6 +46,7 @@ public class SurvivorSaveData
     public int price;
     public Tier tier;
     public bool isReserved;
+    public int reservedDate;
     public Training assignedTraining;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
@@ -110,6 +111,8 @@ public class ETCData
     public int runningLevel;
     public int weightTrainingLevel;
     public int studyingLevel;
+    public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
+    public bool[] soldOut = new bool[3];
     // calendar
     public int today;
     public int curMaxYear;

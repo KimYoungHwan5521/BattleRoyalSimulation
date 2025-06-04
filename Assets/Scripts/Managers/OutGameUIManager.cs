@@ -47,7 +47,7 @@ public class OutGameUIManager : MonoBehaviour
     public int MySurvivorsId => mySurvivorsId;
     [SerializeField] GameObject hireSurvivor;
     [SerializeField] GameObject hireClose;
-    [SerializeField] SurvivorInfo[] survivorsInHireMarket;
+    public SurvivorInfo[] survivorsInHireMarket;
     [SerializeField] TMP_Dropdown survivorsDropdown;
     public TMP_Dropdown SurvivorsDropdown => survivorsDropdown;
     [SerializeField] SurvivorInfo selectedSurvivor;
@@ -250,6 +250,7 @@ public class OutGameUIManager : MonoBehaviour
     #region Hire
     public void SetHireMarketFirst()
     {
+        foreach(var hireMarket in survivorsInHireMarket) hireMarket.SoldOut = false;
         survivorsInHireMarket[0].SetInfo(GetRandomName(), 25, 25, 20, 20, 20, 0, 100, Tier.Bronze);
         survivorsInHireMarket[1].SetInfo(GetRandomName(), 20, 20, 25, 25, 20, 0, 100, Tier.Bronze);
         survivorsInHireMarket[2].SetInfo(GetRandomName(), 20, 20, 20, 20, 30, 0, 100, Tier.Bronze);
@@ -301,6 +302,15 @@ public class OutGameUIManager : MonoBehaviour
     {
         hireSurvivor.SetActive(true);
         GameManager.Instance.openedWindows.Push(hireSurvivor);
+    }
+
+    public void CloseAll()
+    {
+        hireSurvivor.SetActive(false);
+        trainingRoom.SetActive(false);
+        operatingRoom.SetActive(false);
+        strategyRoom.SetActive(false);
+        bettingRoom.SetActive(false);
     }
 
     public void HireSurvivor(int candidate)

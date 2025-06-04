@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
     void SaveSaveDataInfo(int slot)
     {
         string saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string ingameDate = $"{calendar.Today % 28 + 1} {calendar.Month}, {calendar.Year}";
+        string ingameDate = $"{calendar.Today % 28 + 1} {calendar.monthName[calendar.Month - 1]}, {calendar.Year}";
         var saveData = new SaveDataInfo(gameVirsion, saveTime, ingameDate);
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"SaveDataInfo{slot}", json);
@@ -192,7 +192,21 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.StudyLevel,
             calendar.Today,
             calendar.CurMaxYear
-            );
+            )
+        {
+            hireMarketSurvivorData =
+            new SurvivorData[]{
+                outGameUIManger.survivorsInHireMarket[0].survivorData,
+                outGameUIManger.survivorsInHireMarket[1].survivorData,
+                outGameUIManger.survivorsInHireMarket[2].survivorData,
+            },
+            soldOut = new bool[]
+            {
+                outGameUIManger.survivorsInHireMarket[0].SoldOut,
+                outGameUIManger.survivorsInHireMarket[1].SoldOut,
+                outGameUIManger.survivorsInHireMarket[2].SoldOut,
+            }
+        };
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"ETCData{slot}", json);
         PlayerPrefs.Save();
@@ -213,6 +227,12 @@ public class GameManager : MonoBehaviour
         saveData.weightTrainingLevel,
         saveData.studyingLevel
             );
+        outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
+        outGameUIManger.survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);
+        outGameUIManger.survivorsInHireMarket[2].SetInfo(saveData.hireMarketSurvivorData[2], false);
+        outGameUIManger.survivorsInHireMarket[0].SoldOut = saveData.soldOut[0];
+        outGameUIManger.survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
+        outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
         calendar.LoadToday(saveData.today, saveData.curMaxYear);
         yield return null;
     }
@@ -241,7 +261,8 @@ public class GameManager : MonoBehaviour
         yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));
         yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve(slot));
         yield return LoadETCData(slot);
-        outGameUIManger.ResetHireMarket();
+        outGameUIManger.CloseAll();
+        calendar.CloseAll();
         outGameUIManger.ResetSurvivorsDropdown();
         ClaimLoadInfo("Setting markets...", 3, 3);
         CloseLoadInfo();
