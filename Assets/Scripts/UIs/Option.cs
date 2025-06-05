@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Tables;
 using UnityEngine.UI;
 
 public class Option : MonoBehaviour
@@ -146,7 +148,9 @@ public class Option : MonoBehaviour
 
     public void OpenSaveSlot(bool save)
     {
-        saveOrLoadText.text = save ? "Save" : "Load";
+        //saveOrLoadText.text = save ? "Save" : "Load";
+        saveOrLoadText.GetComponent<LocalizeStringEvent>().StringReference 
+            = save ? new("Table", "Save") : new("Table", "Load");
         for(int i=1; i<saveSlots.Length; i++)
         {
             saveSlots[i].saveButton.SetActive(save);

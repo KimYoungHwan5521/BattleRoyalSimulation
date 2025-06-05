@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Table_es-ES
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-ES
+  m_SharedData: {fileID: 11400000, guid: bb29ff58396a29e45949a9146d3df52d, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 7835753295874359332
+  m_TableData:
+  - m_Id: 221632851968
+    m_Localized: Nuevo juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5832965681152
+    m_Localized: Cargar partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5856420229120
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6583620268032
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6588460494848
+    m_Localized: Cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6592856125440
+    m_Localized: Guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6594592567296
+    m_Localized: Enciclopedia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6741300932608
+    m_Localized: "Al t\xEDtulo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12507453911040
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71164493361152
+    m_Localized: Sala de entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71167060275200
+    m_Localized: "Sala de cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71168792522752
+    m_Localized: Sala de estrategia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71171598512128
+    m_Localized: Cronograma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72283097460736
+    m_Localized: Contrata a un superviviente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72287484702720
+    m_Localized: "La tienda de contrataci\xF3n se reinicia cada d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72947416494080
+    m_Localized: Fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72949572366336
+    m_Localized: Agilidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72951577243648
+    m_Localized: Combate cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72953187856384
+    m_Localized: Disparo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72955045933056
+    m_Localized: Conocimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74870907531264
+    m_Localized: Entrenamiento de fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74872807550976
+    m_Localized: Correr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74876133634048
+    m_Localized: Entrenamiento cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74877828132864
+    m_Localized: Entrenamiento de tiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74879803650048
+    m_Localized: Estudiar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76230210154496
+    m_Localized: 'Reservado :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231183233024
+    m_Localized: Reservado para este entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231959179264
+    m_Localized: Supervivientes no asignados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76232462495744
+    m_Localized: Supervivientes asignados a otro entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78460103487488
+    m_Localized: "Asignaci\xF3n autom\xE1tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461097537536
+    m_Localized: "Al finalizar el d\xEDa, se asignar\xE1 autom\xE1ticamente el mismo
+      entrenamiento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461974147072
+    m_Localized: Mejora de instalaciones\n{cost}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 78462544572416
+    m_Localized: "Los supervivientes pueden entrenar en mejores condiciones y mejorar
+      sus estad\xEDsticas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89402442838016
+    m_Localized: '{trainingType} (lv {level})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  references:
+    version: 2
+    RefIds:
+    - rid: 7835753295874359332
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00f0d8a04f51000000f0185a5c470000

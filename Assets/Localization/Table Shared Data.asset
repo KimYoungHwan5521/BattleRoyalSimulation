@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Table Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Table
+  m_TableCollectionNameGuidString: bb29ff58396a29e45949a9146d3df52d
+  m_Entries:
+  - m_Id: 221632851968
+    m_Key: New Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5832965681152
+    m_Key: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5856420229120
+    m_Key: Quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6583620268032
+    m_Key: Confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6588460494848
+    m_Key: Cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6592856125440
+    m_Key: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6594592567296
+    m_Key: Encyclopedia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6741300932608
+    m_Key: Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12507453911040
+    m_Key: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71164493361152
+    m_Key: Training Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71167060275200
+    m_Key: Surgery Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71168792522752
+    m_Key: Strategy Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71171598512128
+    m_Key: Schedule
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72283097460736
+    m_Key: Hire a survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72287484702720
+    m_Key: Help:Hire Market
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72947416494080
+    m_Key: Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72949572366336
+    m_Key: Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72951577243648
+    m_Key: Fighting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72953187856384
+    m_Key: Shooting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72955045933056
+    m_Key: Knowledge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74870907531264
+    m_Key: Strength Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74872807550976
+    m_Key: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74876133634048
+    m_Key: Melee Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74877828132864
+    m_Key: Shooting Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74879803650048
+    m_Key: Study
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76230210154496
+    m_Key: Reserved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231183233024
+    m_Key: Reserved for this training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231959179264
+    m_Key: Unassigned survivors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76232462495744
+    m_Key: Survivors assigned to other training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78460103487488
+    m_Key: Auto-assign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461097537536
+    m_Key: Help:Auto-assign
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461974147072
+    m_Key: Facility Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78462544572416
+    m_Key: Help:Facility Upgrade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89402442838016
+    m_Key: Training(lv)
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7835753295874359320
+  references:
+    version: 2
+    RefIds:
+    - rid: 7835753295874359320
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1749103872408

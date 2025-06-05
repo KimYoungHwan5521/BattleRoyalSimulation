@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
     void SaveSaveDataInfo(int slot)
     {
         string saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        string ingameDate = $"{calendar.Today % 28 + 1} {calendar.monthName[calendar.Month - 1]}, {calendar.Year}";
+        string ingameDate = $"{calendar.monthName[calendar.Month - 1]} {calendar.Today % 28 + 1}, {calendar.Year}";
         var saveData = new SaveDataInfo(gameVirsion, saveTime, ingameDate);
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"SaveDataInfo{slot}", json);

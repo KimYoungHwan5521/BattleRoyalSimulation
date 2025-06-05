@@ -17,6 +17,7 @@ public class LoadingCanvas : MonoBehaviour
     {
         "The expected value of a bet is greater than 1.",
         "The maximum value of an ability is 100 by default, but some survivors with certain characteristics can exceed 100.",
+        "만약 훈련으로 능력치가 오르지 않는다면 시설을 업그레이드 하십시오.",
     };
 
     private void Start()
@@ -29,7 +30,11 @@ public class LoadingCanvas : MonoBehaviour
         if (loading)
         {
             curTooltipCool += Time.unscaledDeltaTime;
-            if (curTooltipCool > tooltipCool) ResetTooltip();
+            if (curTooltipCool > tooltipCool)
+            {
+                curTooltipCool = 0;
+                ResetTooltip();
+            }
         }
     }
 

@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using System.Linq;
+using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.UI;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
@@ -201,6 +203,8 @@ public class OutGameUIManager : MonoBehaviour
         SetHireMarketFirst();
         Money = 1000;
 
+        SetFacilityUpgradeButton();
+
         resultTexts = new TextMeshProUGUI[survivorTrainingResults.Length][];
         for (int i = 0; i < survivorTrainingResults.Length; i++)
         {
@@ -223,6 +227,43 @@ public class OutGameUIManager : MonoBehaviour
         runningLevel = 1;
         weightTrainingLevel = 1;
         studyingLevel = 1;
+        SetFacilityUpgradeButton();
+    }
+
+    void SetFacilityUpgradeButton()
+    {
+        var trainingType = new LocalizedString("Table", "Strength Training");
+        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments 
+            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
+        trainingType = new LocalizedString("Table", "Running");
+        runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
+        trainingType = new LocalizedString("Table", "Melee Training");
+        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
+        trainingType = new LocalizedString("Table", "Shooting Training");
+        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
+        trainingType = new LocalizedString("Table", "Study");
+        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
+
+        weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
+        runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
+        fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
+        shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
+        studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
+
+        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+        studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
     }
 
     private void Update()
@@ -433,14 +474,14 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.Instance.openedWindows.Push(trainingAssignForm);
         Training training = (Training)trainingIndex;
         survivorSchedules = new();
-        assignTrainingNameText.text = trainingIndex switch
+        assignTrainingNameText.GetComponent<LocalizeStringEvent>().StringReference = trainingIndex switch
         {
-            1 => "Weight Training",
-            2 => "Running",
-            3 => "Fight Training",
-            4 => "Shooting Training",
-            5 => "Studying",
-            _ => "?",
+            1 => new("Table", "Strength Training"),
+            2 => new("Table", "Running"),
+            3 => new("Table", "Melee Training"),
+            4 => new("Table", "Shooting Training"),
+            5 => new("Table", "Study"),
+            _ => new("Table", "Strength Training")
         };
         for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
         {
@@ -720,14 +761,23 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         Money -= facilityUpgradeCost[weightTrainingLevel - 1];
                         weightTrainingLevel++;
-                        fightTrainingNameText.text = $"Weight Training (lv {weightTrainingLevel})";
+
+                        var trainingType = new LocalizedString("Table", "Strength Training");
+                        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
+                        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
                         if (weightTrainingLevel > facilityUpgradeCost.Length) weightTrainingUpgradeButtion.SetActive(false);
-                        else weightTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[weightTrainingLevel - 1]}";
+                        else
+                        {
+                            weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
+                            weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+                        }
                     }
                 });
                 break;
             case 1:
-                OpenConfirmWindow("Are you sure to upgrade Agility Training Facilities?", () =>
+                OpenConfirmWindow("Are you sure to upgrade Running Facilities?", () =>
                 {
                     if (money < facilityUpgradeCost[runningLevel - 1])
                     {
@@ -737,9 +787,18 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         Money -= facilityUpgradeCost[runningLevel - 1];
                         runningLevel++;
-                        fightTrainingNameText.text = $"Running (lv {runningLevel})";
+
+                        var trainingType = new LocalizedString("Table", "Running");
+                        runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
+                        runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
                         if (runningLevel > facilityUpgradeCost.Length) runningUpgradeButtion.SetActive(false);
-                        else runningUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[runningLevel - 1]}";
+                        else
+                        {
+                            runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
+                            runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+                        }
                     }
                 });
                 break;
@@ -754,9 +813,18 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         Money -= facilityUpgradeCost[fightTrainingLevel - 1];
                         fightTrainingLevel++;
-                        fightTrainingNameText.text = $"Fight Training (lv {fightTrainingLevel})";
+
+                        var trainingType = new LocalizedString("Table", "Melee Training");
+                        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
+                        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
                         if (fightTrainingLevel > facilityUpgradeCost.Length) fightTrainingUpgradeButtion.SetActive(false);
-                        else fightTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[fightTrainingLevel - 1]}";
+                        else
+                        {
+                            fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
+                            fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+                        }
                     }
                 });
                 break;
@@ -771,9 +839,18 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
                         shootingTrainingLevel++;
-                        fightTrainingNameText.text = $"Shooting Training (lv {shootingTrainingLevel})";
+
+                        var trainingType = new LocalizedString("Table", "Shooting Training");
+                        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
+                        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
                         if (shootingTrainingLevel > facilityUpgradeCost.Length) shootingTrainingUpgradeButtion.SetActive(false);
-                        else shootingTrainingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[shootingTrainingLevel - 1]}";
+                        else
+                        {
+                            shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
+                            shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+                        }
                     }
                 });
                 break;
@@ -786,11 +863,20 @@ public class OutGameUIManager : MonoBehaviour
                     }
                     else
                     {
-                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
-                        shootingTrainingLevel++;
-                        studyingNameText.text = $"Studying (lv {studyingLevel})";
+                        Money -= facilityUpgradeCost[studyingLevel - 1];
+                        studyingLevel++;
+
+                        var trainingType = new LocalizedString("Table", "Study");
+                        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
+                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
+                        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
                         if (studyingLevel > facilityUpgradeCost.Length) studyingUpgradeButtion.SetActive(false);
-                        else studyingUpgradeButtion.GetComponentInChildren<TextMeshProUGUI>().text = $"Upgrade Facilities\n$ {facilityUpgradeCost[studyingLevel - 1]}";
+                        else
+                        {
+                            studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
+                            studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+                        }
                     }
                 });
                 break;
@@ -1949,5 +2035,6 @@ public class OutGameUIManager : MonoBehaviour
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
+        SetFacilityUpgradeButton();
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class Description : MonoBehaviour
@@ -23,6 +24,6 @@ public class Description : MonoBehaviour
 
     public void SetText(string text)
     {
-        descriptionText.text = text;
+        descriptionText.GetComponent<LocalizeStringEvent>().StringReference = new("Table", text);
     }
 }
