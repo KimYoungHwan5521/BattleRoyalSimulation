@@ -203,7 +203,7 @@ public class OutGameUIManager : MonoBehaviour
         SetHireMarketFirst();
         Money = 1000;
 
-        SetFacilityUpgradeButton();
+        ResetTrainingRoom();
 
         resultTexts = new TextMeshProUGUI[survivorTrainingResults.Length][];
         for (int i = 0; i < survivorTrainingResults.Length; i++)
@@ -227,10 +227,10 @@ public class OutGameUIManager : MonoBehaviour
         runningLevel = 1;
         weightTrainingLevel = 1;
         studyingLevel = 1;
-        SetFacilityUpgradeButton();
+        ResetTrainingRoom();
     }
 
-    void SetFacilityUpgradeButton()
+    void ResetTrainingRoom()
     {
         var trainingType = new LocalizedString("Table", "Strength Training");
         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments 
@@ -463,6 +463,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
+            ResetTrainingRoom();
             trainingRoom.SetActive(true);
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
@@ -1114,7 +1115,7 @@ public class OutGameUIManager : MonoBehaviour
         search.onValueChanged.AddListener((value) => Search(value));
         weaponPriority1Dropdown.ClearOptions();
         ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
-        for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Bullet_Revolver;  i++)
+        for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Knife_Enchanted;  i++)
         {
             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
             TMP_Dropdown.OptionData optionData;
@@ -1192,7 +1193,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         weaponPriority1Dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
         Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
-        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.SniperRifle);
+        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
             = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
         foreach(Strategy strategy in strategies) strategy.SetDefault();
@@ -1202,6 +1203,7 @@ public class OutGameUIManager : MonoBehaviour
         heardIndistinguishableSoundDropdown.value = 1;
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 0;
         craftingPriority1Dropdown.value = 0;
+        foreach(var craftableAllow in craftableAllows) craftableAllow.GetComponentsInChildren<Toggle>()[0].isOn = true;
     }
 
     public void OpenStrategyRoom()
@@ -2035,6 +2037,6 @@ public class OutGameUIManager : MonoBehaviour
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
-        SetFacilityUpgradeButton();
+        ResetTrainingRoom();
     }
 }

@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "Am\xE9lioration des installations\\n{cost}"
+    m_Localized: "Am\xE9lioration des installations\\n$ {cost}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
@@ -159,6 +159,202 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 1470839012257792
+    m_Localized: Embaucher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Localized: "Lib\xE9rer le survivant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Localized: Embaucher un survivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Localized: "S\xE9lectionnez un survivant \xE0 embaucher."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470842845851648
+    m_Localized: "Terminer la journ\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Localized: Chirurgie de greffe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Localized: Traiter une maladie chronique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Localized: "Am\xE9lioration (non impl\xE9ment\xE9e)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Localized: "Nom de l\u2019op\xE9ration"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Localized: "Co\xFBt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Localized: "Chirurgie planifi\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Localized: Planifier une chirurgie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Localized: Annuler la chirurgie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Localized: "R\xE9initialiser"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Localized: "Copier strat\xE9gie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Localized: "Coller strat\xE9gie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Localized: "Copier toutes les strat\xE9gies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Localized: "Coller toutes les strat\xE9gies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Localized: Rechercher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Localized: "Priorit\xE9 d\u2019arme"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Localized: "Lorsque l\u2019ennemi est visible et dans la port\xE9e d\u2019attaque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Localized: "Lorsque l\u2019ennemi est visible mais hors de port\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Localized: "Lorsqu\u2019un bruit fort est entendu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Localized: "Lorsqu\u2019un bruit faible est entendu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Localized: "priorit\xE9 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Localized: "Lorsqu\u2019il y a plusieurs ennemis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Localized: "Priorit\xE9 d\u2019artisanat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Localized: "Autoriser l\u2019artisanat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Localized: "Sauvegarder strat\xE9gie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Localized: "L'op\xE9rateur AND est \xE9valu\xE9 avant l'op\xE9rateur OR. Exemple
+      :A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
+      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Localized: "Si un objet a une priorit\xE9 de fabrication, ses mat\xE9riaux
+      ne seront pas consomm\xE9s avant sa fabrication."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Localized: Objet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Localized: Autoriser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Localized: Interdire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Localized: Voir le planning par survivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Localized: Nom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Localized: Niveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Localized: "Battle Royale programm\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Localized: Ajouter une condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Localized: "R\xE9sultats quotidiens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Localized: "R\xE9sultats d'entra\xEEnement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Localized: "Faites glisser pour pr\xE9dire le classement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Localized: "Votre pr\xE9diction"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Localized: Liste des participants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Localized: "Vous pouvez recevoir une r\xE9compense en pr\xE9disant un survivant
+      bien class\xE9. Une pr\xE9diction exacte rapporte une r\xE9compense plus importante."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Localized: 'Montant du pari :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Parier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Localized: Passer le pari
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

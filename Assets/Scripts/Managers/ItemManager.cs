@@ -14,9 +14,6 @@ public class ItemManager
         Bat,
         LongSword,
         Shovel,
-        Knife_Enchanted,
-        Dagger_Enchanted,
-        LongSword_Enchanted,
         // Ranged Weapons
         Revolver,
         Pistol,
@@ -26,6 +23,10 @@ public class ItemManager
         SniperRifle,
         Bazooka,
         LASER,
+        // Enchanted Weapons
+        Knife_Enchanted,
+        Dagger_Enchanted,
+        LongSword_Enchanted,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,

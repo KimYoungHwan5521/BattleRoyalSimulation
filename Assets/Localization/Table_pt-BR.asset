@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n{cost}"
+    m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n$ {cost}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
@@ -158,6 +158,202 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
+  - m_Id: 1470839012257792
+    m_Localized: Contratar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Localized: Liberar sobrevivente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Localized: Contratar sobrevivente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Localized: Selecione um sobrevivente para contratar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470842845851648
+    m_Localized: Terminar o dia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Localized: Cirurgia de transplante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Localized: "Tratar doen\xE7a cr\xF3nica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Localized: "Modifica\xE7\xE3o (n\xE3o implementada)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Localized: Nome da cirurgia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Localized: Costo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Localized: Cirurgia agendada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Localized: Agendar cirurgia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Localized: Cancelar cirurgia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Localized: Redefinir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Localized: "Copiar estrat\xE9gia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Localized: "Colar estrat\xE9gia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Localized: "Copiar todas as estrat\xE9gias"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Localized: "Colar todas as estrat\xE9gias"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Localized: Pesquisar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Localized: Prioridade de arma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Localized: Quando o inimigo for visto e estiver ao alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Localized: Quando o inimigo for visto, mas estiver fora do alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Localized: Quando se ouve um som alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Localized: Quando se ouve um som baixo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Localized: "\rprioridade 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Localized: "Quando h\xE1 v\xE1rios inimigos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Localized: "Prioridade de fabrica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Localized: "Permitir fabrica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Localized: "Salvar estrat\xE9gia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Localized: "O operador AND \xE9 avaliado antes do operador OR. Exemplo: A <#FF6A89>OR</color>
+      B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color> (B <#FF6A89>AND</color>
+      C) <#FF6A89>OR</color> D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Localized: "Se um item tiver prioridade de fabrica\xE7\xE3o, os materiais n\xE3o
+      ser\xE3o consumidos at\xE9 ser fabricado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Localized: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Localized: Permitir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Localized: "N\xE3o permitir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Localized: Ver cronograma por sobrevivente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Localized: Nome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Localized: "N\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Localized: Battle Royale agendado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Localized: "Adicionar condi\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Localized: "Resultados di\xE1rios"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Localized: Resultados de treino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Localized: "Arraste para prever a classifica\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Localized: "Sua previs\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Localized: Lista de participantes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Apostar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Localized: "Voc\xEA pode receber uma recompensa ao prever um sobrevivente que
+      entre no ranking. Prever a posi\xE7\xE3o exata concede uma recompensa maior."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Localized: 'Quantia da aposta :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Localized: Pular aposta
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

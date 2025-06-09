@@ -151,6 +151,199 @@ MonoBehaviour:
     m_Key: Training(lv)
     m_Metadata:
       m_Items: []
+  - m_Id: 1470839012257792
+    m_Key: Hire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Key: Release Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Key: Hire Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Key: Select a survivor to hire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470842845851648
+    m_Key: End Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Key: Transplant Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Key: Treat Chronic Illness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Key: Augmentation (Not Implemented)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Key: Surgery Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Key: Cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Key: 'Scheduled Surgery :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Key: Schedule Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Key: Cancel Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Key: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Key: Copy Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Key: Paste Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Key: Copy All Strategies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Key: Paste All Strategies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Key: Search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Key: Weapon Priority
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Key: When the enemy is seen and within attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Key: When the enemy is seen but outside attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Key: When a loud noise is heard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Key: When a small noise is heard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Key: Priority 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Key: When there are multiple enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Key: Crafting Priority
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Key: Allow Crafting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Key: Save Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Key: Help:Add Condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Key: Help:Crafting Priority
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Key: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Key: Allow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Key: Disallow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Key: View Schedule by Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Key: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Key: Tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Key: Scheduled Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Key: Add Condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Key: Daily Results
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Key: Training Results
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Key: Drag to predict the ranking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Key: Your Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Key: Participant List
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Key: You can receive a reward for predicting a survivor who ranks. Predicting
+      the exact rank gives a bigger reward.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Key: 'Bet Amount :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Key: Bet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Key: Skip Betting
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

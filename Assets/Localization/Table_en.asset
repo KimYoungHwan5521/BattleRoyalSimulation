@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Facility Upgrade\n{cost}
+    m_Localized: Facility Upgrade\n$ {cost}
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -158,6 +158,202 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 1470842845851648
+    m_Localized: End Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Localized: Select a survivor to hire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Localized: Hire Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Localized: Release Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839012257792
+    m_Localized: Hire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Localized: Transplant Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Localized: Treat Chronic Illness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Localized: Augmentation (Not Implemented)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Localized: Surgery Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Localized: Cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Localized: 'Scheduled Surgery :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Localized: Schedule Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Localized: Cancel Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Localized: Reset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Localized: Copy Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Localized: Paste Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Localized: Copy All Strategies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Localized: Paste All Strategies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Localized: Search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Localized: Weapon Priority
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Localized: When the enemy is seen and within attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Localized: When the enemy is seen but outside attack range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Localized: When a loud noise is heard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Localized: When a small noise is heard.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Localized: Priority 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Localized: When there are multiple enemies.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Localized: Crafting Priority
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Localized: Allow Crafting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Localized: Save Strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Localized: 'The AND operator is evaluated before the OR operator. Example:
+      A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
+      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Localized: If an item has a crafting priority, its materials won't be consumed
+      until it's crafted.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Localized: Item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Localized: Allow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Localized: Disallow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Localized: View Schedule by Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Localized: Tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Localized: Scheduled Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Localized: Add Condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Localized: Daily Results
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Localized: Training Results
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Localized: Drag to predict the ranking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Localized: Your Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Localized: Participant List
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Localized: You can receive a reward for predicting a survivor who ranks. Predicting
+      the exact rank gives a bigger reward.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Localized: 'Bet Amount :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Bet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Localized: Skip Betting
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

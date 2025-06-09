@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Anlagen-Upgrade\n{cost}
+    m_Localized: Anlagen-Upgrade\n$ {cost}
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -158,6 +158,203 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 1470839012257792
+    m_Localized: Anheuern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Localized: "\xDCberlebenden entlassen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Localized: "\xDCberlebenden anheuern"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Localized: "W\xE4hlen Sie einen \xDCberlebenden zum Anheuern."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470842845851648
+    m_Localized: Tag beenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Localized: Transplantationschirurgie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Localized: Chronische Krankheit behandeln
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Localized: Modifikation (nicht implementiert)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Localized: Operationsname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Localized: Kosten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Localized: Geplante Operation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Localized: Operation planen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Localized: Operation abbrechen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Localized: "Zur\xFCcksetzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Localized: Strategie kopieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Localized: "Strategie einf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Localized: Alle Strategien kopieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Localized: "Alle Strategien einf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Localized: Suchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Localized: "Waffenpriorit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Localized: Wenn der Feind gesehen wird und sich im Angriffsbereich befindet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Localized: "Wenn der Feind gesehen wird, aber au\xDFerhalb der Reichweite ist"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Localized: "Wenn ein lautes Ger\xE4usch geh\xF6rt wird"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Localized: "Wenn ein leises Ger\xE4usch geh\xF6rt wird"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Localized: "\rPriorit\xE4t 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Localized: Wenn mehrere Feinde da sind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Localized: "Handwerkspriorit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Localized: Herstellung erlauben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Localized: Strategie speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Localized: 'Der UND-Operator wird vor dem ODER-Operator ausgewertet. Beispiel:
+      A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
+      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Localized: "Wenn ein Gegenstand eine Herstellungspriorit\xE4t hat, werden seine
+      Materialien erst beim Herstellen verbraucht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Localized: Gegenstand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Localized: Erlauben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Localized: Nicht erlauben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Localized: "Zeitplan pro \xDCberlebendem anzeigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Localized: Stufe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Localized: Geplanter Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Localized: "Bedingung hinzuf\xFCgen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Localized: "T\xE4gliche Ergebnisse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Localized: Trainingsergebnisse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Localized: Ziehen, um die Platzierung vorherzusagen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Localized: Ihre Vorhersage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Localized: Teilnehmerliste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Localized: "Wenn Sie einen \xDCberlebenden richtig vorhersagen, der es ins
+      Ranking schafft, erhalten Sie eine Belohnung. Eine genaue Vorhersage bringt
+      eine gr\xF6\xDFere Belohnung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Localized: 'Einsatzbetrag :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Wetten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Localized: "Wette \xFCberspringen"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
