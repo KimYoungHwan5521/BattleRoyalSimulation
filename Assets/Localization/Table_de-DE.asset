@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: Transplantationschirurgie
+    m_Localized: Prothesenimplantat
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
@@ -355,10 +355,97 @@ MonoBehaviour:
     m_Localized: "Wette \xFCberspringen"
     m_Metadata:
       m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: "{param0} f\xFCr ${param1} kaufen?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1779581587091456
+    m_Localized: '{param0} freigeben?'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1779577963212800
+    m_Localized: "\xDCberlebendenlimit erreicht."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: Nicht genug Geld.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: "Sie m\xFCssen mindestens einen \xDCberlebenden haben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779582107185152
+    m_Localized: "\xDCberlebender wurde freigegeben."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: '{param0} kann diesem Training nicht zugewiesen werden. (<color=red>Grund:
+      {param1}</color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1780920513785856
+    m_Localized: '{param0}-Einrichtung upgraden?'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1780919674925056
+    m_Localized: 'Die Trainingszuweisung von {param0} wurde wegen einer Verletzung
+      storniert. (<color=red>Grund: {param1}</color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1780918479548416
+    m_Localized: '{param0} ist {param1} zugewiesen.'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1780917154148352
+    m_Localized: Der Trainingsraum ist am Wochenende geschlossen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Localized: "M\xF6chten Sie die Operation planen? {param0} : {param1} ( $ {param2}
+      )"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1875853614575616
+    m_Localized: Das Training von {param0} wurde abgesagt.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 1875847331508224
+    m_Localized: Operation geplant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: Der Operationssaal ist am Wochenende geschlossen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875855443292160
+    m_Localized: Die Operation wurde geplant.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: "M\xF6chten Sie die Operation absagen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: Die Operation wurde abgesagt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: beide Augenverletzungen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359338
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c470000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600

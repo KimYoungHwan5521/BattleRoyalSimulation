@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: Cirurgia de transplante
+    m_Localized: "Implante de pr\xF3tese"
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
@@ -354,10 +354,96 @@ MonoBehaviour:
     m_Localized: Pular aposta
     m_Metadata:
       m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: Comprar {param0} por ${param1}?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1779581587091456
+    m_Localized: Libertar {param0}?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1779577963212800
+    m_Localized: Limite de sobreviventes atingido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: Dinheiro insuficiente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: Deve ter pelo menos um sobrevivente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779582107185152
+    m_Localized: O sobrevivente foi libertado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: "{param0} n\xE3o pode ser atribu\xEDdo a este treino. (<color=red>Causa:
+      {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1780920513785856
+    m_Localized: "Melhorar a instala\xE7\xE3o de {param0}?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1780919674925056
+    m_Localized: "A atribui\xE7\xE3o de treino de {param0} foi cancelada devido a
+      les\xE3o. (<color=red>Causa: {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1780918479548416
+    m_Localized: "{param0} est\xE1 atribu\xEDdo a {param1}."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1780917154148352
+    m_Localized: "A sala de treino est\xE1 fechada nos fins de semana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Localized: 'Deseja agendar a cirurgia? {param0} : {param1} ( $ {param2} )'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1875853614575616
+    m_Localized: O treino de {param0} foi cancelado.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 1875847331508224
+    m_Localized: Cirurgia agendada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: "A sala de opera\xE7\xF5es est\xE1 encerrada aos fins de semana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875855443292160
+    m_Localized: A cirurgia foi agendada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: Deseja cancelar a cirurgia?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: A cirurgia foi cancelada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: "Ambas as les\xF5es oculares"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359334
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c470000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600

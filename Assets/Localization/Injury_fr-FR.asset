@@ -1,0 +1,271 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Injury_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: e7211a34fcf2f6245bcdbb87189f3d69, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 15357210849280
+    m_Localized: "T\xEAte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15361187049472
+    m_Localized: Torse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15364118867968
+    m_Localized: Bras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15366899691520
+    m_Localized: Jambe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15369449828352
+    m_Localized: "\u0152il droit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17068923088896
+    m_Localized: "\u0152il gauche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17071355785216
+    m_Localized: Oreille droite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17078418993152
+    m_Localized: Oreille gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18219605225472
+    m_Localized: Joue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18220364394496
+    m_Localized: Nez
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18221215838208
+    m_Localized: "M\xE2choire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18222042116096
+    m_Localized: "Cr\xE2ne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18224135073792
+    m_Localized: Cerveau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18226018316288
+    m_Localized: Cou
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20443156770816
+    m_Localized: Poitrine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20444167598080
+    m_Localized: "C\xF4te"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20445400723456
+    m_Localized: Abdomen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20446336053248
+    m_Localized: Organe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21345976512512
+    m_Localized: Bras droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21347025088512
+    m_Localized: Bras gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21348207882240
+    m_Localized: Main droite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349139017728
+    m_Localized: Main gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22831091478528
+    m_Localized: Pouce droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22832072945664
+    m_Localized: Index droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22832903417856
+    m_Localized: Majeur droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22833566117888
+    m_Localized: Annulaire droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22834681802752
+    m_Localized: Auriculaire droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23587685199872
+    m_Localized: Pouce gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23588385648640
+    m_Localized: Index gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23589333561344
+    m_Localized: Majeur gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23590096924672
+    m_Localized: Annulaire gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23592219242496
+    m_Localized: Auriculaire gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25209643528192
+    m_Localized: Jambe gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25210566275072
+    m_Localized: Genou droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25208922107904
+    m_Localized: Jambe droite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25211287695360
+    m_Localized: Genou gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25213347098624
+    m_Localized: Pied droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25214047547392
+    m_Localized: Pied gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27378719453184
+    m_Localized: Gros orteil droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27380405563392
+    m_Localized: "Deuxi\xE8me orteil droit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27380535586816
+    m_Localized: "Troisi\xE8me orteil droit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27381047291904
+    m_Localized: "Quatri\xE8me orteil droit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27381856792576
+    m_Localized: Petit orteil droit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28141642379264
+    m_Localized: Gros orteil gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28143081025536
+    m_Localized: "Deuxi\xE8me orteil gauche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28144758747136
+    m_Localized: "Troisi\xE8me orteil gauche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28146205782016
+    m_Localized: "Quatri\xE8me orteil gauche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28147623456768
+    m_Localized: Petit orteil gauche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30178312515584
+    m_Localized: Contusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30179512086528
+    m_Localized: Fracture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30589362696192
+    m_Localized: Coupure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30593217261568
+    m_Localized: Amputation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30595838701568
+    m_Localized: Blessure par balle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30598388838400
+    m_Localized: Dommage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30602675417088
+    m_Localized: Rupture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36585816518656
+    m_Localized: Perte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36589348122624
+    m_Localized: "Commotion c\xE9r\xE9brale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36590761603072
+    m_Localized: "Br\xFBlure"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36591931813888
+    m_Localized: Perte de vision permanente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36593282379776
+    m_Localized: "En convalescence post\u2011op\xE9ratoire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36595203371008
+    m_Localized: "Proth\xE8se implant\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69975156518912
+    m_Localized: "Degr\xE9"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

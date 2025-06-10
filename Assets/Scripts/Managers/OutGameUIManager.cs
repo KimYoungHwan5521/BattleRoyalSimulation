@@ -232,19 +232,19 @@ public class OutGameUIManager : MonoBehaviour
 
     void ResetTrainingRoom()
     {
-        var trainingType = new LocalizedString("Table", "Strength Training");
+        var trainingType = new LocalizedString("Table", "Training:Weight");
         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments 
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
-        trainingType = new LocalizedString("Table", "Running");
+        trainingType = new LocalizedString("Table", "Training:Running");
         runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
-        trainingType = new LocalizedString("Table", "Melee Training");
+        trainingType = new LocalizedString("Table", "Training:Fighting");
         fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
-        trainingType = new LocalizedString("Table", "Shooting Training");
+        trainingType = new LocalizedString("Table", "Training:Shooting");
         shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
-        trainingType = new LocalizedString("Table", "Study");
+        trainingType = new LocalizedString("Table", "Training:Study");
         studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
 
@@ -356,15 +356,15 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HireSurvivor(int candidate)
     {
-        OpenConfirmWindow($"Are you sure to hire \"{survivorsInHireMarket[candidate].survivorData.survivorName}\" for $ {survivorsInHireMarket[candidate].survivorData.price} ?",
+        OpenConfirmWindow($"Confirm:Purchase",
             () => {
                 if(mySurvivorsData.Count >= survivorHireLimit)
                 {
-                    Alert("The survivor retention limit has been reached.");
+                    Alert("Alert:Survivor limit reached.");
                 }
                 else if(money < survivorsInHireMarket[candidate].survivorData.price)
                 {
-                    Alert("Not enough money.");
+                    Alert("Alert:Not enough money.");
                 }
                 else
                 {
@@ -390,7 +390,7 @@ public class OutGameUIManager : MonoBehaviour
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
                     hireSurvivor.SetActive(false);
                 }
-            });
+            },  $"{survivorsInHireMarket[candidate].survivorData.survivorName}", $"{survivorsInHireMarket[candidate].survivorData.price}");
         
     }
 
@@ -427,18 +427,18 @@ public class OutGameUIManager : MonoBehaviour
     {
         if(mySurvivorsData.Count < 2)
         {
-            Alert("There must be at least one survivor left.");
+            Alert("Alert:You must have at least one survivor.");
         }
         else
         {
             SurvivorData wantDismiss = mySurvivorsData[survivorsDropdown.value];
-            OpenConfirmWindow($"Are you sure to dismiss <i>{wantDismiss.survivorName}</i>?", () =>
+            OpenConfirmWindow("Confirm:Release", () =>
                 {
                     mySurvivorsData.Remove(wantDismiss);
                     ResetSurvivorsDropdown();
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
-                    Alert("The survivor has dismissed");
-                });
+                    Alert("Alert:Survivor has been released.");
+                }, $"{wantDismiss.survivorName}");
         }
     }
     #endregion
@@ -459,7 +459,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         if(calendar.Today % 7 > 4)
         {
-            Alert("The training room is closed on weekendns");
+            Alert("Alert:Training room is closed on weekends.");
         }
         else
         {
@@ -475,15 +475,8 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.Instance.openedWindows.Push(trainingAssignForm);
         Training training = (Training)trainingIndex;
         survivorSchedules = new();
-        assignTrainingNameText.GetComponent<LocalizeStringEvent>().StringReference = trainingIndex switch
-        {
-            1 => new("Table", "Strength Training"),
-            2 => new("Table", "Running"),
-            3 => new("Table", "Melee Training"),
-            4 => new("Table", "Shooting Training"),
-            5 => new("Table", "Study"),
-            _ => new("Table", "Strength Training")
-        };
+        assignTrainingNameText.GetComponent<LocalizeStringEvent>().StringReference = new("Table", $"Training:{training}");
+        
         for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
         {
             PoolManager.Despawn(survivorsAssignedThis.GetChild(i).gameObject);
@@ -503,7 +496,11 @@ public class OutGameUIManager : MonoBehaviour
             Transform targetParent;
             SurvivorSchedule survivorSchedule;
             string description = "";
+            string cause = "";
+            LocalizedString targetTraining = new();
+            
             bool assignable = true;
+            bool alreadyAssigned = false;
             if (survivor.assignedTraining == training)
             {
                 fitParent = survivorsAssignedThis;
@@ -513,21 +510,24 @@ public class OutGameUIManager : MonoBehaviour
             {
                 fitParent = survivorsWithoutSchedule;
                 targetParent = survivorsAssignedThis;
-                if (!Trainable(survivor, training, out string cause))
+                if (!Trainable(survivor, training, out cause))
                 {
                     assignable = false;
-                    description = $"{survivor.survivorName} can't cannot be assigned to this training due to injury.\n<color=red><i>Cause : {cause}</i></color>";
+                    description = "Help:Cannot Assign Training";
                 }
             }
             else
             {
+                alreadyAssigned = true;
                 fitParent = survivorsWithOtherSchedule;
                 targetParent = survivorsAssignedThis;
-                description = $"{survivor.survivorName} is assigned to {survivor.assignedTraining} training.";
+                description = "Help:Training Already Assigned";
+                targetTraining = new("Table", survivor.assignedTraining.ToString());
             }
             survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
             survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
-            survivorSchedule.GetComponent<Help>().SetDescription(description);
+            if(!assignable) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.survivorName, cause);
+            else if(alreadyAssigned) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.survivorName, targetTraining.GetLocalizedString());
             survivorSchedule.GetComponent<Button>().enabled = assignable;
             survivorSchedules.Add(survivorSchedule);
         }
@@ -589,7 +589,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             survivor.assignedTraining = Training.None;
             ConfirmAssignTraining();
-            Alert($"{survivor.survivorName} was released from training assignment due to injury.\n<color=red><i>Cause : {cause}</i></color>");
+            Alert("Alert:Training Assignment Cancelled", survivor.survivorName, cause);
         }
     }
 
@@ -611,7 +611,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         if(survivor.surgeryScheduled)
         {
-            cause = "Surgery scheduled";
+            cause = new LocalizedString("Table", "Surgery scheduled").GetLocalizedString();
             return false;
         }
 
@@ -636,12 +636,12 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftKnee:
                         case InjurySite.RightFoot:
                         case InjurySite.LeftFoot:
-                            cause = $"{injury.site} {injury.type}";
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                             return false;
                         default:
                             if (injury.degree < 1)
                             {
-                                cause = $"{injury.site} {injury.type}";
+                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                                 return false;
                             }
                             break;
@@ -655,12 +655,12 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftArm:
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
-                            cause = $"{injury.site} {injury.type}";
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                             return false;
                         case InjurySite.Organ:
                             if(injury.degree >= 1)
                             {
-                                cause = $"{injury.site} {injury.type}";
+                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                                 return false;
                             }
                             break;
@@ -669,7 +669,7 @@ public class OutGameUIManager : MonoBehaviour
                             eyeInjury++;
                             if (eyeInjury >= 2)
                             {
-                                cause = $"Both eyes injured";
+                                cause = new LocalizedString("Table", "Both eye injuries").GetLocalizedString();
                                 return false;
                             }
                             break;
@@ -703,14 +703,14 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftRingToe:
                         case InjurySite.RightLittleToe:
                         case InjurySite.LeftLittleToe:
-                            cause = $"{injury.site} {injury.type}";
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                             return false;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
                             eyeInjury++;
                             if (eyeInjury >= 2)
                             {
-                                cause = $"Both eyes injured";
+                                cause = new LocalizedString("Table", "Both eye injuries").GetLocalizedString();
                                 return false;
                             }
                             break;
@@ -728,7 +728,7 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftArm:
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
-                            cause = $"{injury.site} {injury.type}";
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
                             return false;
                     }
                     break;
@@ -752,18 +752,18 @@ public class OutGameUIManager : MonoBehaviour
         switch (trainingRoomIndex)
         {
             case 0:
-                OpenConfirmWindow("Are you sure to upgrade Weight Training Facilities", () =>
+                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
                 {
                     if (money < facilityUpgradeCost[weightTrainingLevel - 1])
                     {
-                        Alert("Not enough money");
+                        Alert("Alert:Not enough money.");
                     }
                     else
                     {
                         Money -= facilityUpgradeCost[weightTrainingLevel - 1];
                         weightTrainingLevel++;
 
-                        var trainingType = new LocalizedString("Table", "Strength Training");
+                        var trainingType = new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}");
                         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
                             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
                         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -775,21 +775,21 @@ public class OutGameUIManager : MonoBehaviour
                             weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                });
+                }, $"{(Training)(trainingRoomIndex + 1)}");
                 break;
             case 1:
-                OpenConfirmWindow("Are you sure to upgrade Running Facilities?", () =>
+                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
                 {
                     if (money < facilityUpgradeCost[runningLevel - 1])
                     {
-                        Alert("Not enough money");
+                        Alert("Alert:Not enough money.");
                     }
                     else
                     {
                         Money -= facilityUpgradeCost[runningLevel - 1];
                         runningLevel++;
 
-                        var trainingType = new LocalizedString("Table", "Running");
+                        var trainingType = new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}");
                         runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
                             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
                         runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -801,21 +801,21 @@ public class OutGameUIManager : MonoBehaviour
                             runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                });
+                }, $"{(Training)(trainingRoomIndex + 1)}");
                 break;
             case 2:
-                OpenConfirmWindow("Are you sure to upgrade Fight Training Facilities?", ()=>
+                OpenConfirmWindow("Confirm:Upgrade Facility", ()=>
                 {
                     if(money < facilityUpgradeCost[fightTrainingLevel - 1])
                     {
-                        Alert("Not enough money");
+                        Alert("Alert:Not enough money.");
                     }
                     else
                     {
                         Money -= facilityUpgradeCost[fightTrainingLevel - 1];
                         fightTrainingLevel++;
 
-                        var trainingType = new LocalizedString("Table", "Melee Training");
+                        var trainingType = new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}");
                         fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
                             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
                         fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -827,21 +827,21 @@ public class OutGameUIManager : MonoBehaviour
                             fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                });
+                }, $"{(Training)(trainingRoomIndex + 1)}");
                 break;
             case 3:
-                OpenConfirmWindow("Are you sure to upgrade Shooting Training Facilities?", () =>
+                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
                 {
                     if (money < facilityUpgradeCost[shootingTrainingLevel - 1])
                     {
-                        Alert("Not enough money");
+                        Alert("Alert:Not enough money.");
                     }
                     else
                     {
                         Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
                         shootingTrainingLevel++;
 
-                        var trainingType = new LocalizedString("Table", "Shooting Training");
+                        var trainingType = new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}");
                         shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
                             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
                         shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -853,21 +853,21 @@ public class OutGameUIManager : MonoBehaviour
                             shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                });
+                }, $"{(Training)(trainingRoomIndex + 1)}");
                 break;
             case 4:
-                OpenConfirmWindow("Are you sure to upgrade Studying Facilities?", () =>
+                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
                 {
                     if (money < facilityUpgradeCost[studyingLevel - 1])
                     {
-                        Alert("Not enough money");
+                        Alert("Alert:Not enough money.");
                     }
                     else
                     {
                         Money -= facilityUpgradeCost[studyingLevel - 1];
                         studyingLevel++;
 
-                        var trainingType = new LocalizedString("Table", "Study");
+                        var trainingType = new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}");
                         studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
                             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
                         studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -879,7 +879,7 @@ public class OutGameUIManager : MonoBehaviour
                             studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                });
+                }, $"{(Training)(trainingRoomIndex + 1)}");
                 break;
         }
     }
@@ -890,7 +890,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         if (calendar.Today % 7 > 4)
         {
-            Alert("The operating room is closed on weekendns");
+            Alert("Alert:The operating room is closed on weekends.");
         }
         else
         {
@@ -1074,37 +1074,37 @@ public class OutGameUIManager : MonoBehaviour
         survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
         survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
         survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
-        OpenConfirmWindow($"Do you confirm surgery?\n{survivorWhoWantSurgery.survivorName} : {survivorWhoWantSurgery.scheduledSurgeryName}($ {survivorWhoWantSurgery.shceduledSurgeryCost})", ()=>
+        OpenConfirmWindow("Confirm:Schedule Surgery", ()=>
         {
             if(money < survivorWhoWantSurgery.shceduledSurgeryCost)
             {
-                Alert("Not enough money.");
+                Alert("Alert:Not enough money.");
             }
             else
             {
                 if (survivorWhoWantSurgery.assignedTraining != Training.None)
                 {
                     ConfirmAssignTraining();
-                    Alert($"{survivorWhoWantSurgery.survivorName}'s training has canceled");
+                    Alert("Alert:Training  Canceled", $"{ survivorWhoWantSurgery.survivorName }");
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
                 Money -= survivorWhoWantSurgery.shceduledSurgeryCost;
                 SelectSurvivorToSurgery();
-                Alert("Surgery scheduled.");
+                Alert("Alert:Surgery has been scheduled.");
             }
-        });
+        }, $"{ survivorWhoWantSurgery.survivorName }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.shceduledSurgeryCost }");
     }
 
     public void CancelSurgery()
     {
-        OpenConfirmWindow("Are you sure to cancel his surgery?", () =>
+        OpenConfirmWindow("Confirm:Cancel Surgery", () =>
         {
             survivorWhoWantSurgery.surgeryScheduled = false;
             Money += survivorWhoWantSurgery.shceduledSurgeryCost;
             survivorWhoWantSurgery.shceduledSurgeryCost = 0;
             SelectSurvivorToSurgery();
-            Alert("Surgery canceled.");
+            Alert("Alert:Surgery has been canceled.");
         });
     }
     #endregion
@@ -1923,20 +1923,65 @@ public class OutGameUIManager : MonoBehaviour
         return new(GetRandomName(), 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
     }
 
-    public void OpenConfirmWindow(string wantText, UnityAction wantAction)
+    public void OpenConfirmWindow(string key, UnityAction wantAction, params string[] vars)
     {
         confirmButton.onClick.RemoveAllListeners();
-        confirmText.text = wantText;
         confirmButton.onClick.AddListener(wantAction);
         confirmButton.onClick.AddListener(()=>confirmCanvas.SetActive(false));
+
+        var localizedString = new LocalizedString("Table", key);
+        LocalizeStringEvent localizeStringEvent = confirmText.GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
+        switch (vars.Length)
+        {
+            case 0:
+                break;
+            case 1:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0] } };
+                break;
+            case 2:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0], param1 = vars[1] } };
+                break;
+            case 3:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0], param1 = vars[1], param2 = vars[2] } };
+                break;
+            default:
+                Debug.Log("To many params");
+                break;
+        }
+        localizeStringEvent.RefreshString();
+        //confirmText.text = wantText;
         confirmCanvas.SetActive(true);
         GameManager.Instance.openedWindows.Push(confirmCanvas);
     }
 
-    public void Alert(string message)
+    public void Alert(string key, params string[] vars)
     {
         GameObject alertWindow = PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform);
-        alertWindow.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        //alertWindow.GetComponentInChildren<TextMeshProUGUI>().text = message;
+        var localizedString = new LocalizedString("Table", key);
+        LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
+        switch (vars.Length)
+        {
+            case 0:
+                break;
+            case 1:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0] } };
+                break;
+            case 2:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0], param1 = vars[1] } };
+                break;
+            default:
+                Debug.Log("To many params");
+                break;
+        }
+        localizeStringEvent.RefreshString();
         GameManager.Instance.openedWindows.Push(alertWindow);
     }
 

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5be51871efa6c3e4eae1703925c8f5ac, type: 3}
+  m_Name: Injury
+  m_EditorClassIdentifier: 
+  m_SharedTableData: {fileID: 11400000, guid: e7211a34fcf2f6245bcdbb87189f3d69, type: 2}
+  m_Tables:
+  - {fileID: 11400000, guid: bbf2869b5f5221f448fee8a5b4a01a8b, type: 2}
+  - {fileID: 11400000, guid: a619aa9a50594244fa3f71e997708d2a, type: 2}
+  - {fileID: 11400000, guid: 166d32871af6b1248a1bb8f664cee72d, type: 2}
+  - {fileID: 11400000, guid: 07915cfab117be342bca7e2c5a5d9e51, type: 2}
+  - {fileID: 11400000, guid: e1b78884e5c2f744ba161d454e78f632, type: 2}
+  - {fileID: 11400000, guid: 827765644af417248843cc32c72a38c0, type: 2}
+  - {fileID: 11400000, guid: 519d2b1b14354ec448346817a0d52e29, type: 2}
+  - {fileID: 11400000, guid: c9207606246286544886e3a0b7627773, type: 2}
+  - {fileID: 11400000, guid: 029501263e70954449dbc14d69f06865, type: 2}
+  - {fileID: 11400000, guid: 0b5c8c54783b10c459c4e68f9c758561, type: 2}
+  - {fileID: 11400000, guid: 0ff4333b5aa5e0447b22ff246197ed22, type: 2}
+  m_Extensions: []
+  m_Group: String Table
+  references:
+    version: 2
+    RefIds: []

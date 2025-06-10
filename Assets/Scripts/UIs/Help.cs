@@ -1,11 +1,14 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     RectTransform rect;
     [SerializeField, TextArea] string description;
+    bool raw;
 
     private void Start()
     {
@@ -17,10 +20,11 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (!string.IsNullOrWhiteSpace(description))
         {
             RectTransform descriptionRT = GameManager.Instance.description.GetComponent<RectTransform>();
-            GameManager.Instance.description.GetComponent<Description>().SetText(description);
+            if(raw) GameManager.Instance.description.GetComponent<Description>().SetRawText(description);
+            else GameManager.Instance.description.GetComponent<Description>().SetText(description);
             descriptionRT.position =
-                new(Mathf.Clamp(Input.mousePosition.x + 25, 0, Screen.width - descriptionRT.rect.width - 5),
-                Mathf.Clamp(Input.mousePosition.y - 25, descriptionRT.rect.height + 5, Screen.height));
+                    new(Mathf.Clamp(Input.mousePosition.x + 25, 0, Screen.width - descriptionRT.rect.width - 5),
+                    Mathf.Clamp(Input.mousePosition.y - 25, descriptionRT.rect.height + 5, Screen.height));
             descriptionRT.gameObject.SetActive(true);
             GameManager.Instance.FixLayout(descriptionRT);
         }
@@ -33,7 +37,33 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void SetDescription(string description)
     {
+        raw = true;
         this.description = description;
+    }
+
+    public void SetDescriptionWithKey(string key, params string[] vars)
+    {
+        raw = false;
+        var localizedString = new LocalizedString("Table", key);
+        LocalizeStringEvent localizeStringEvent = GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
+        switch (vars.Length)
+        {
+            case 0:
+                break;
+            case 1:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0] } };
+                break;
+            case 2:
+                localizeStringEvent.StringReference.Arguments
+                    = new[] { new { param0 = vars[0], param1 = vars[1] } };
+                break;
+            default:
+                Debug.Log("To many params");
+                break;
+        }
+        localizeStringEvent.RefreshString();
     }
 
     public void SetDescription(InjurySite injurySite)

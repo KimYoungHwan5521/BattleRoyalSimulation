@@ -96,23 +96,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 74870907531264
-    m_Key: Strength Training
+    m_Key: Training:Weight
     m_Metadata:
       m_Items: []
   - m_Id: 74872807550976
-    m_Key: Running
+    m_Key: Training:Running
     m_Metadata:
       m_Items: []
   - m_Id: 74876133634048
-    m_Key: Melee Training
+    m_Key: Training:Fighting
     m_Metadata:
       m_Items: []
   - m_Id: 74877828132864
-    m_Key: Shooting Training
+    m_Key: Training:Shooting
     m_Metadata:
       m_Items: []
   - m_Id: 74879803650048
-    m_Key: Study
+    m_Key: Training:Study
     m_Metadata:
       m_Items: []
   - m_Id: 76230210154496
@@ -342,6 +342,82 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1527738642526208
     m_Key: Skip Betting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779577510227968
+    m_Key: Confirm:Purchase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779577963212800
+    m_Key: Alert:Survivor limit reached.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Key: Alert:Not enough money.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Key: Alert:You must have at least one survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779581587091456
+    m_Key: Confirm:Release
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779582107185152
+    m_Key: Alert:Survivor has been released.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Key: Alert:Training room is closed on weekends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Key: Help:Cannot Assign Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780918479548416
+    m_Key: Help:Training Already Assigned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780919674925056
+    m_Key: Alert:Training Assignment Cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780920513785856
+    m_Key: Confirm:Upgrade Facility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875847331508224
+    m_Key: Surgery scheduled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Key: Alert:The operating room is closed on weekends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Key: Confirm:Schedule Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875853614575616
+    m_Key: Alert:Training  Canceled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875855443292160
+    m_Key: Alert:Surgery has been scheduled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Key: Confirm:Cancel Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Key: Alert:Surgery has been canceled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Key: Both eye injuries
     m_Metadata:
       m_Items: []
   m_Metadata:

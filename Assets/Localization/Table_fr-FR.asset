@@ -180,7 +180,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: Chirurgie de greffe
+    m_Localized: "Implant de proth\xE8se"
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
@@ -355,10 +355,97 @@ MonoBehaviour:
     m_Localized: Passer le pari
     m_Metadata:
       m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: Acheter {param0} pour ${param1} ?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1779581587091456
+    m_Localized: "Lib\xE9rer {param0} ?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1779577963212800
+    m_Localized: Limite de survivants atteint.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: Pas assez d'argent.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: Vous devez avoir au moins un survivant.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779582107185152
+    m_Localized: "Le survivant a \xE9t\xE9 lib\xE9r\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Localized: "La salle d'entra\xEEnement est ferm\xE9e le week-end."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: "{param0} ne peut pas \xEAtre affect\xE9 \xE0 cet entra\xEEnement.
+      (<color=red>Cause : {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1780918479548416
+    m_Localized: "{param0} est affect\xE9 \xE0 {param1}."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1780919674925056
+    m_Localized: "L'affectation de {param0} a \xE9t\xE9 annul\xE9e en raison d'une
+      blessure. (<color=red>Cause : {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1780920513785856
+    m_Localized: "Am\xE9liorer l'installation de {param0} ?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1875851668418560
+    m_Localized: 'Voulez-vous programmer une chirurgie ? {param0} : {param1} ( $
+      {param2} )'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1875853614575616
+    m_Localized: "L'entra\xEEnement de {param0} a \xE9t\xE9 annul\xE9."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 1875847331508224
+    m_Localized: "Chirurgie programm\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: "La salle d\u2019op\xE9ration est ferm\xE9e le week-end."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875855443292160
+    m_Localized: "La chirurgie a \xE9t\xE9 programm\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: Voulez-vous annuler la chirurgie ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: "La chirurgie a \xE9t\xE9 annul\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: les deux blessures aux yeux
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359339
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c470000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa0600

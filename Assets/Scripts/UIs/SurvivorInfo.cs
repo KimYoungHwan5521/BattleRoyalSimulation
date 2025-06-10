@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class SurvivorInfo : MonoBehaviour
@@ -213,7 +214,8 @@ public class SurvivorInfo : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0.5f, 0.5f);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>()
+                        .SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else if(injury.degree == 1)
@@ -224,14 +226,14 @@ public class SurvivorInfo : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0, 0);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else
             {
                 targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
             }
-            targetPart.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+            targetPart.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
         }
 
     }

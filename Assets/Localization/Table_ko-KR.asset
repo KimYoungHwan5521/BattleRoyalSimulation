@@ -181,7 +181,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: "\uC774\uC2DD\uC218\uC220"
+    m_Localized: "\uBCF4\uD615\uBB3C \uC774\uC2DD"
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
@@ -363,10 +363,100 @@ MonoBehaviour:
     m_Localized: "\uBCA0\uD305 \uAC74\uB108\uB6F0\uAE30"
     m_Metadata:
       m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: "{param0}\uC744 $ {param1} \uC5D0 \uAD6C\uB9E4 \uD569\uB2C8\uAE4C?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1779577963212800
+    m_Localized: "\uC0DD\uC874\uC790 \uBCF4\uC720 \uD55C\uB3C4\uC5D0 \uB3C4\uB2EC\uD588\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: "\uB3C8\uC774 \uBD80\uC871\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: "\uC801\uC5B4\uB3C4 \uD55C \uBA85\uC758 \uC0DD\uC874\uC790\uB294
+      \uBCF4\uC720\uD558\uC5EC\uC57C \uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779581587091456
+    m_Localized: "{param0}\uC744 \uBC29\uCD9C\uD569\uB2C8\uAE4C?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1779582107185152
+    m_Localized: "\uC0DD\uC874\uC790\uAC00 \uBC29\uCD9C\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Localized: "\uD6C8\uB828\uC2E4\uC740 \uC8FC\uB9D0\uC5D0\uB294 \uC5F4\uC9C0
+      \uC54A\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: "{param0}\uC740 \uD574\uB2F9 \uD6C8\uB828\uC5D0 \uD560\uB2F9\uD560
+      \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. (<color=red>Cause : {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1780918479548416
+    m_Localized: "{param0}\uC740 {param1}\uC5D0 \uD560\uB2F9\uB418\uC5B4 \uC788\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1780919674925056
+    m_Localized: "{param0}\uC740 \uBD80\uC0C1 \uB54C\uBB38\uC5D0 \uD6C8\uB828 \uD560\uB2F9\uC774
+      \uCDE8\uC18C\uB418\uC5C8\uC2B5\uB2C8\uB2E4. (<color=red>Cause : {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1780920513785856
+    m_Localized: "{param0} \uC2DC\uC124\uC744 \uC5C5\uADF8\uB808\uC774\uB4DC \uD569\uB2C8\uAE4C?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1875847331508224
+    m_Localized: "\uC218\uC220 \uC608\uC57D\uB428"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: "\uC218\uC220\uC2E4\uC740 \uC8FC\uB9D0\uC5D0\uB294 \uC5F4\uC9C0
+      \uC54A\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Localized: "\uC218\uC220\uC744 \uC608\uC57D\uD569\uB2C8\uAE4C?{param0} : {param1}($
+      {param2})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1875853614575616
+    m_Localized: "{param0}\uC758 \uD6C8\uB828\uC774 \uCDE8\uC18C\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 1875855443292160
+    m_Localized: "\uC218\uC220\uC774 \uC608\uC57D\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: "\uC218\uC220\uC744 \uCDE8\uC18C\uD569\uB2C8\uAE4C?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: "\uC218\uC220\uC774 \uCDE8\uC18C\uB418\uC5C8\uC2B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: "\uC591\uCABD \uB208 \uBD80\uC0C1"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359336
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c470000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600

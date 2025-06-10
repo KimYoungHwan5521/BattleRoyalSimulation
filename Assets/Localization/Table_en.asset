@@ -179,7 +179,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: Transplant Surgery
+    m_Localized: Prosthesis implant
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
@@ -354,10 +354,96 @@ MonoBehaviour:
     m_Localized: Skip Betting
     m_Metadata:
       m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: Purchase {param0} for ${param1}?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1779577963212800
+    m_Localized: Survivor limit reached.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: Not enough money.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: You must have at least one survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779581587091456
+    m_Localized: Release {param0}?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1779582107185152
+    m_Localized: Survivor has been released.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Localized: Training room is closed on weekends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: '{param0} cannot be assigned to this training. (<color=red>Cause:
+      {param1}</color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1780918479548416
+    m_Localized: '{param0} is assigned to {param1}.'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1780919674925056
+    m_Localized: '{param0}''s training assignment was cancelled due to injury. (<color=red>Cause:
+      {param1}</color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1780920513785856
+    m_Localized: Upgrade the {param0} facility?
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1875847331508224
+    m_Localized: Surgery scheduled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: The operating room is closed on weekends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Localized: 'Do you want to schedule surgery? {param0} : {param1} ($ {param2})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1875853614575616
+    m_Localized: Training for {param0} has been canceled.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 1875855443292160
+    m_Localized: Surgery has been scheduled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: Do you want to cancel the surgery?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: Surgery has been canceled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: Both eye injuries
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359340
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c470000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600
