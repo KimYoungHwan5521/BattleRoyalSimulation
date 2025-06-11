@@ -440,10 +440,153 @@ MonoBehaviour:
     m_Localized: "Ambas as les\xF5es oculares"
     m_Metadata:
       m_Items: []
+  - m_Id: 2205515783925760
+    m_Localized: Ataca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Localized: Ignora.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Localized: Foge.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Localized: Aproxima-se.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Localized: "Vai at\xE9 onde ouviu o som."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Localized: "Olha na dire\xE7\xE3o do som."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Localized: Ignora o som.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Localized: Primeira pessoa vista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Localized: "Pessoa mais pr\xF3xima"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Localized: Pessoa com maior alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Localized: Nenhum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Localized: "Fechar a sala estrat\xE9gica?\\n(Informa\xE7\xF5es n\xE3o salvas
+      ser\xE3o perdidas.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Localized: "Salvar todas as altera\xE7\xF5es?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Localized: "A prioridade de fabrica\xE7\xE3o 1 est\xE1 desativada. Verifique
+      a op\xE7\xE3o \"Permitir fabrica\xE7\xE3o\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Localized: Minha arma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Localized: Arma do inimigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Localized: "Minha sa\xFAde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Localized: Esse inimigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Localized: "Dist\xE2ncia at\xE9 o inimigo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Localized: Arma corpo a corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Localized: "Arma de longo alcance (com muni\xE7\xE3o)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Localized: "Nenhuma ou arma de longo alcance (sem muni\xE7\xE3o)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Localized: Me viu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Localized: "Previs\xE3o inv\xE1lida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Localized: "A aposta m\xEDnima \xE9 $100."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: Confirmar aposta?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: Pular aposta?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: "Existem campos de previs\xE3o vazios."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: 'Sobrevivente agendado para o battle royale hoje: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 2220595640594432
+    m_Localized: Encerrar o dia?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Localized: "H\xE1 sobreviventes n\xE3o atribu\xEDdos:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220600589873152
+    m_Localized: "Hoje \xE9 dia de battle royale. Pular?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: Um dia se passou.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: Arma de longo alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Localized: "Predicci\xF3n no v\xE1lida"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359335
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa0600
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe30700

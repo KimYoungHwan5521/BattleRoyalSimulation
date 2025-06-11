@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public enum StrategyCase
@@ -68,6 +69,7 @@ public class Strategy : MonoBehaviour
     [HideInInspector] public TMP_Dropdown[] operators;
     [HideInInspector] public TMP_Dropdown[] variable2s;
     GameObject[] inputFieldsGameObject;
+    GameObject[] inputFieldsPercents;
     [HideInInspector] public TMP_InputField[] inputFields;
     [SerializeField] GameObject action;
     TMP_Dropdown ActionDropdown => action.GetComponentInChildren<TMP_Dropdown>();
@@ -86,6 +88,7 @@ public class Strategy : MonoBehaviour
 
     private void Start()
     {
+        GameManager.Instance.OutGameUIManager.OpenStrategyRoom();
         if(strategyCase == StrategyCase.CraftingAllow) craftableAllows = new bool[ItemManager.craftables.Count];
         if (noCondition) return;
         andOrs = new TMP_Dropdown[conditions.Length];
@@ -95,6 +98,7 @@ public class Strategy : MonoBehaviour
         variable2s = new TMP_Dropdown[conditions.Length];
         inputFieldsGameObject = new GameObject[conditions.Length];
         inputFields = new TMP_InputField[conditions.Length];
+        inputFieldsPercents = new GameObject[conditions.Length];
         for (int i=0; i<conditions.Length; i++)
         {
             GameObject condition = conditions[i];
@@ -106,6 +110,7 @@ public class Strategy : MonoBehaviour
             variable2s[i] = dropdowns[3];
             inputFieldsGameObject[i] = condition.transform.Find("Input Field").gameObject;
             inputFields[i] = inputFieldsGameObject[i].GetComponentInChildren<TMP_InputField>();
+            inputFieldsPercents[i] = inputFieldsGameObject[i].transform.Find("Percent").gameObject;
             inputFields[i].pointSize = 29;
             inputFields[i].characterLimit = 2;
             inputFields[i].text = "0";
@@ -116,7 +121,7 @@ public class Strategy : MonoBehaviour
             andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
             notValids[i].SetActive(false);
             variable1s[i].ClearOptions();
-            variable1s[i].AddOptions(new List<string>(new string[] { "My weapon", "The enemy's weapon", "My HP", "The enemy", "Distance with the enemy" }));
+            variable1s[i].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "My weapon").GetLocalizedString(), new LocalizedString("Table", "Enemy's weapon").GetLocalizedString(), new LocalizedString("Table", "My health").GetLocalizedString(), new LocalizedString("Table", "That enemy").GetLocalizedString(), new LocalizedString("Table", "Distance to enemy").GetLocalizedString() }));
             OnVariable1Changed(i);
 
             andOrs[i].onValueChanged.AddListener((value) => hasChanged = true);
@@ -130,6 +135,7 @@ public class Strategy : MonoBehaviour
         ActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         ElseActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         andOrs[0].gameObject.SetActive(false);
+        GameManager.Instance.OutGameUIManager.CloseStrategyRoom();
     }
 
     public void SetDefault()
@@ -167,34 +173,36 @@ public class Strategy : MonoBehaviour
     {
         operators[conditionNumber].ClearOptions();
         variable2s[conditionNumber].ClearOptions();
-        switch(variable1s[conditionNumber].options[variable1s[conditionNumber].value].text)
+        switch(variable1s[conditionNumber].value)
         {
-            case "My weapon":
+            case 0: // My weapon
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon(and have bullet)", "None or Ranged with no bullet" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Melee weapon").GetLocalizedString(), new LocalizedString("Table", "Ranged weapon (with bullets)").GetLocalizedString(), new LocalizedString("Table", "None or ranged weapon (without bullets)").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
-            case "The enemy's weapon":
+            case 1: // The enemy's weapon
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "Melee weapon", "Ranged weapon", "None" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Melee weapon").GetLocalizedString(), new LocalizedString("Table", "Ranged weapon").GetLocalizedString(), new LocalizedString("Table", "None").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
-            case "My HP":
+            case 2: // My HP
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { ">", "<" }));
                 variable2s[conditionNumber].gameObject.SetActive(false);
+                inputFieldsPercents[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(true);
                 break;
-            case "The enemy":
+            case 3: // The enemy
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { "See me" }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Saw me.").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
-            case "Distance with the enemy":
+            case 4: // Distance with the enemy
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { ">", "<" }));
                 variable2s[conditionNumber].gameObject.SetActive(false);
+                inputFieldsPercents[conditionNumber].gameObject.SetActive(false);
                 inputFieldsGameObject[conditionNumber].SetActive(true);
                 break;
             default:

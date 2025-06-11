@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Item_pt-PT
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-PT
+  m_SharedData: {fileID: 11400000, guid: 07068eb8a0742384bbdddccd8fcbbbbe, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 15263879196672
+    m_Localized: Faca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Localized: Adaga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Localized: Taco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Localized: Espada longa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Localized: "P\xE1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Localized: "Rev\xF3lver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Localized: Pistola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Localized: Fuzil de assalto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Localized: Submetralhadora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Localized: Espingarda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Localized: LASER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Localized: "Fuzil de precis\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Localized: Bazuca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Localized: Foguete(Bazuca)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Localized: "Bala(Rev\xF3lver)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Localized: Bala(Pistola)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Localized: Bala(Fuzil de assalto)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Localized: Bala(Submetralhadora)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Localized: Bala(Espingarda)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Localized: "Bala(Fuzil de precis\xE3o)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Localized: "Capacete \xE0 prova de balas n\xEDvel baixo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Localized: "Capacete \xE0 prova de balas n\xEDvel m\xE9dio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Localized: "Capacete \xE0 prova de balas n\xEDvel alto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Localized: "Capacete \xE0 prova de balas lend\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Localized: "Colete \xE0 prova de balas n\xEDvel baixo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Localized: "Colete \xE0 prova de balas n\xEDvel m\xE9dio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Localized: "Colete \xE0 prova de balas n\xEDvel alto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Localized: "Colete \xE0 prova de balas lend\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Localized: "Rolo de bandagem hemost\xE1tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Localized: Veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Localized: Rolo de bandagem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Localized: "Ant\xEDdoto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Localized: "Po\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Localized: "Po\xE7\xE3o avan\xE7ada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Localized: Componentes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Localized: "Componente avan\xE7ado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Localized: "Produtos qu\xEDmicos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Localized: "P\xF3 de canh\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Localized: "Pe\xE7as de reposi\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Localized: Armadilha para urso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Localized: Mina terrestre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Localized: "Armadilha de ru\xEDdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Localized: "Armadilha qu\xEDmica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Localized: "Armadilha de estilha\xE7os"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Localized: Armadilha explosiva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Localized: Andador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Localized: "Dispositivo de dete\xE7\xE3o de armadilhas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Localized: "Radar biom\xE9trico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Localized: Barreira de energia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Localized: Faca(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Localized: Adaga(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Localized: Espada longa(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Localized: Armadilha para urso(Encantado)
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

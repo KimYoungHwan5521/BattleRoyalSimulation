@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Item_de-DE
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de-DE
+  m_SharedData: {fileID: 11400000, guid: 07068eb8a0742384bbdddccd8fcbbbbe, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 15263879196672
+    m_Localized: Messer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Localized: Dolch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Localized: "Schl\xE4ger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Localized: Langschwert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Localized: Schaufel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Localized: Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Localized: Pistole
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Localized: Sturmgewehr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Localized: Maschinenpistole
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Localized: Schrotflinte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Localized: Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Localized: "Scharfsch\xFCtzengewehr"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Localized: LASER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Localized: Rakete(Bazooka)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Localized: Kugel(Revolver)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Localized: Kugel(Pistole)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Localized: Kugel(Sturmgewehr)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Localized: Kugel(Maschinenpistole)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Localized: Kugel(Schrotflinte)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Localized: "Kugel(Scharfsch\xFCtzengewehr)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Localized: Niedrigstufiger kugelsicherer Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Localized: Mittlerer kugelsicherer Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Localized: Hochstufiger kugelsicherer Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Localized: "Legend\xE4rer kugelsicherer Helm"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Localized: Niedrigstufige kugelsichere Weste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Localized: Mittlere kugelsichere Weste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Localized: Hochstufige kugelsichere Weste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Localized: "Legend\xE4re kugelsichere Weste"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Localized: Verbandrolle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Localized: "H\xE4mostatische Verbandrolle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Localized: Gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Localized: Gegengift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Localized: Trank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Localized: Hochwertiger Trank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Localized: Hochwertiger Trank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Localized: Komponenten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Localized: Hochwertige Komponente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Localized: Chemikalien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Localized: "Schie\xDFpulver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Localized: "B\xE4renfalle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Localized: Landmine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Localized: "L\xE4rm falle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Localized: Chemiefalle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Localized: Splitterfalle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Localized: Explosionsfalle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Localized: Gehhilfe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Localized: "Fallen\u2011Detektor"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Localized: Biometrischer Radar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Localized: Energiesperre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Localized: Messer(Verzaubert)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Localized: Dolch(Verzaubert)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Localized: Langschwert(Verzaubert)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Localized: "B\xE4renfalle(Verzaubert)"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

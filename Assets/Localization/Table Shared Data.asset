@@ -420,6 +420,146 @@ MonoBehaviour:
     m_Key: Both eye injuries
     m_Metadata:
       m_Items: []
+  - m_Id: 2205515783925760
+    m_Key: Attacks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Key: Ignores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Key: Runs away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Key: Approaches.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Key: Goes to the source of the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Key: Looks in the direction of the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Key: Ignores the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Key: First seen person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Key: Nearest person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Key: Person with the longest range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Key: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Key: Confirm:Close Strategy Room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Key: Confirm:Save all changes?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Key: Alert:Crafting Priority Not Valid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Key: My weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Key: Enemy's weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Key: My health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Key: That enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Key: Distance to enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Key: Melee weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Key: Ranged weapon (with bullets)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Key: None or ranged weapon (without bullets)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Key: Saw me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Key: Invalid Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Key: Alert:Minimum Bet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Key: Confirm:Bet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Key: Confirm:Skip Bet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Key: Empty Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Key: Duplicated Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220595640594432
+    m_Key: End The Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Key: 'There are unassigned survivors:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Key: Alert:Scheduled Battle Royale Today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220600589873152
+    m_Key: Today is a battle royale day. Skip it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Key: Alert:A day has passed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Key: Ranged weapon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -440,10 +440,152 @@ MonoBehaviour:
     m_Localized: Both eye injuries
     m_Metadata:
       m_Items: []
+  - m_Id: 2205515783925760
+    m_Localized: Attacks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Localized: Ignores.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Localized: Runs away.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Localized: Approaches.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Localized: Looks in the direction of the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Localized: Goes to the source of the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Localized: Ignores the sound.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Localized: First seen person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Localized: Nearest person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Localized: Person with the longest range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Localized: None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Localized: Close the strategy room?\n(Unsaved data will be lost.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Localized: Save all changes?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Localized: Crafting Priority 1 is set to Disallowed. Please check the "Allow
+      Crafting" setting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Localized: My weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Localized: Enemy's weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Localized: My health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Localized: That enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Localized: Distance to enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Localized: Melee weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Localized: Ranged weapon (with bullets)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Localized: None or ranged weapon (without bullets)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Localized: Saw me.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Localized: Invalid prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Localized: Minimum bet is $100.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Localized: Confirm your bet?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: Skip betting?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: There are empty prediction slots.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: One person is predicted in more than one rank.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220595640594432
+    m_Localized: End the day?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Localized: 'There are unassigned survivors:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: 'Survivor scheduled for battle royale today: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 2220600589873152
+    m_Localized: Today is a battle royale day. Skip it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: A day has passed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: Ranged weapon
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359340
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe30700

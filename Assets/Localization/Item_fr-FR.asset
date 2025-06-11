@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Item_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: 07068eb8a0742384bbdddccd8fcbbbbe, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 15263879196672
+    m_Localized: Couteau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Localized: Dague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Localized: Batte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Localized: "\xC9p\xE9e longue"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Localized: Pelle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Localized: Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Localized: Pistolet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Localized: "Fusil d\u2019assaut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Localized: Mitraillette
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Localized: "Fusil \xE0 pompe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Localized: "Fusil de pr\xE9cision"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Localized: Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Localized: LASER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Localized: "Fus\xE9e(Bazooka)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Localized: Balle(Revolver)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Localized: Balle(Pistolet)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Localized: "Balle(Fusil d\u2019assaut)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Localized: Balle(Mitraillette)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Localized: "Balle(Fusil \xE0 pompe)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Localized: "Balle(Fusil de pr\xE9cision)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Localized: "Casque pare\u2011balles basique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Localized: "Casque pare\u2011balles moyen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Localized: "Casque pare\u2011balles avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Localized: "Casque pare\u2011balles l\xE9gendaire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Localized: "Gilet pare\u2011balles basique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Localized: "Gilet pare\u2011balles moyen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Localized: "Gilet pare\u2011balles avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Localized: "Gilet pare\u2011balles l\xE9gendaire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Localized: "Rouleau de bandage h\xE9mostatique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Localized: Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Localized: Antidote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Localized: Rouleau de bandage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Localized: Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Localized: "Potion avanc\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Localized: Composants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Localized: "Composant avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Localized: Produits chimiques
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Localized: "Poudre \xE0 canon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Localized: Rechanges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Localized: "Pi\xE8ge \xE0 ours"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Localized: Mine terrestre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Localized: "Pi\xE8ge sonore"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Localized: "Pi\xE8ge chimique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Localized: "Pi\xE8ge \xE0 \xE9clats"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Localized: "Pi\xE8ge explosif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Localized: "Aide \xE0 la marche"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Localized: "D\xE9tecteur de pi\xE8ges"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Localized: "Radar biom\xE9trique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Localized: "Barri\xE8re \xE9nerg\xE9tique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Localized: "Couteau(Enchant\xE9)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Localized: "Dague(Enchant\xE9)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Localized: "\xC9p\xE9e longue(Enchant\xE9)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Localized: "Pi\xE8ge \xE0 ours(Enchant\xE9)"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

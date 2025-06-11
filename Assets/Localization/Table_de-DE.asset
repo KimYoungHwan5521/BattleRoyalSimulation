@@ -442,10 +442,152 @@ MonoBehaviour:
     m_Localized: beide Augenverletzungen
     m_Metadata:
       m_Items: []
+  - m_Id: 2205515783925760
+    m_Localized: Greift an.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Localized: Ignoriert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Localized: "L\xE4uft weg."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Localized: "N\xE4hert sich."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Localized: "Geht zur Ger\xE4uschquelle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Localized: "Blickt in Richtung des Ger\xE4uschs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Localized: "Ignoriert das Ger\xE4usch."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Localized: Als erstes gesehene Person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Localized: "N\xE4chste Person"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Localized: "Person mit der gr\xF6\xDFten Reichweite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Localized: Keine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Localized: "Strategieraum schlie\xDFen?\\n(Nicht gespeicherte Daten gehen verloren.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Localized: "Alle \xC4nderungen speichern?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Localized: "Herstellungspriorit\xE4t 1 ist deaktiviert. Bitte \xFCberpr\xFCfen
+      Sie die Einstellung \"Herstellung erlauben\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Localized: Meine Waffe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Localized: Waffe des Feindes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Localized: Meine Gesundheit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Localized: Jener Feind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Localized: Entfernung zum Feind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Localized: Nahkampfwaffe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Localized: Fernkampfwaffe (mit Munition)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Localized: Keine oder Fernkampfwaffe (ohne Munition)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Localized: Hat mich gesehen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Localized: "Ung\xFCltige Vorhersage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Localized: "Mindesteinsatz betr\xE4gt 100 $."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Localized: "Wette best\xE4tigen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: "Wette \xFCberspringen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: Es gibt leere Vorhersagefelder.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: Eine Person wurde mehrfach platziert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: "F\xFCr heute im Battle Royale eingeteilter \xDCberlebender: {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 2220595640594432
+    m_Localized: Tag beenden?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Localized: "Es gibt nicht zugewiesene \xDCberlebende:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220600589873152
+    m_Localized: "Heute ist Battle-Royale-Tag. \xDCberspringen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: Ein Tag ist vergangen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: Fernkampfwaffe
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359338
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa0600
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe30700

@@ -1,0 +1,240 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Item Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Item
+  m_TableCollectionNameGuidString: 07068eb8a0742384bbdddccd8fcbbbbe
+  m_Entries:
+  - m_Id: 15263879196672
+    m_Key: Knife
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Key: Dagger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Key: Bat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Key: LongSword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Key: Shovel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Key: Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Key: Pistol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Key: AssaultRifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Key: SubMachineGun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Key: ShotGun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Key: SniperRifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Key: Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Key: LASER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Key: Bullet_Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Key: Bullet_Pistol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Key: Bullet_AssaultRifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Key: Bullet_SubMachineGun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Key: Bullet_ShotGun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Key: Bullet_SniperRifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Key: Rocket_Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Key: LowLevelBulletproofHelmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Key: MiddleLevelBulletproofHelmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Key: HighLevelBulletproofHelmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Key: LegendaryBulletproofHelmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Key: LowLevelBulletproofVest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Key: MiddleLevelBulletproofVest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Key: HighLevelBulletproofVest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Key: LegendaryBulletproofVest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Key: BandageRoll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Key: HemostaticBandageRoll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Key: Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Key: Antidote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Key: Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Key: AdvancedPotion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Key: Components
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Key: AdvancedComponent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Key: Chemicals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Key: Gunpowder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Key: Salvages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Key: BearTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Key: LandMine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Key: NoiseTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Key: ChemicalTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Key: ShrapnelTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Key: ExplosiveTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Key: WalkingAid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Key: TrapDetectionDevice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Key: BiometricRader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Key: EnergyBarrier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Key: Knife_Enchanted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Key: Dagger_Enchanted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Key: LongSword_Enchanted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Key: BearTrap_Enchanted
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7835753430880354304
+  references:
+    version: 2
+    RefIds:
+    - rid: 7835753430880354304
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1749613387906

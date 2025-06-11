@@ -442,10 +442,153 @@ MonoBehaviour:
     m_Localized: les deux blessures aux yeux
     m_Metadata:
       m_Items: []
+  - m_Id: 2205515783925760
+    m_Localized: Attaque.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Localized: Ignore.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Localized: S'enfuit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Localized: S'approche.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Localized: Va vers la source du bruit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Localized: Regarde dans la direction du bruit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Localized: Ignore le son.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Localized: "Premi\xE8re personne vue"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Localized: Personne la plus proche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Localized: "Personne avec la plus grande port\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Localized: Aucun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Localized: "Fermer la salle strat\xE9gique ?\\n(Les donn\xE9es non enregistr\xE9es
+      seront perdues.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Localized: Enregistrer toutes les modifications ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Localized: "La priorit\xE9 de fabrication 1 est d\xE9sactiv\xE9e. Veuillez
+      v\xE9rifier l'option \"Autoriser la fabrication\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Localized: "Ma sant\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Localized: Arme de l'ennemi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Localized: Mon arme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Localized: Cet ennemi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Localized: Distance avec l'ennemi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Localized: "Arme de m\xEAl\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Localized: "Arme \xE0 distance (avec munitions)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Localized: "Aucun ou arme \xE0 distance (sans munitions)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Localized: M'a vu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Localized: "Pr\xE9diction invalide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Localized: 'Mise minimale : 100 $.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Localized: Confirmer le pari ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: Passer la mise ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: "Il y a des cases de pr\xE9diction vides."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: "Une personne est pr\xE9dite \xE0 plusieurs rangs."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: "Survivant pr\xE9vu pour le battle royale aujourd'hui : {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 2220595640594432
+    m_Localized: "Terminer la journ\xE9e ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Localized: "Des survivants non assign\xE9s :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220600589873152
+    m_Localized: Aujourd'hui est un jour de battle royale. Passer ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: "Un jour est pass\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: "Arme \xE0 distance"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359339
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa0600
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe30700

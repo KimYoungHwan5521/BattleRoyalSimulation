@@ -1,0 +1,235 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Item_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 07068eb8a0742384bbdddccd8fcbbbbe, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 15263879196672
+    m_Localized: Knife
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Localized: Dagger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Localized: Bat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Localized: Long Sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Localized: Shovel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Localized: Revolver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Localized: Pistol
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Localized: Assault Rifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Localized: Sub Machine Gun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Localized: Shotgun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Localized: Sniper Rifle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Localized: Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Localized: LASER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Localized: Bullet(Revolver)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Localized: Bullet(Pistol)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Localized: Bullet(Assault Rifle)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Localized: Bullet(Sub Machine Gun)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Localized: Bullet(Shotgun)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Localized: Bullet(Sniper Rifle)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Localized: Rocket(Bazooka)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Localized: Low Level Bulletproof Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Localized: Middle Level Bulletproof Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Localized: High Level Bulletproof Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Localized: Legendary Bulletproof Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Localized: Low Level Bulletproof Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Localized: Middle Level Bulletproof Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Localized: High Level Bulletproof Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Localized: Legendary Bulletproof Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Localized: Bandage Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Localized: Hemostatic Bandage Roll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Localized: Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Localized: Antidote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Localized: Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Localized: Advanced Potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Localized: Components
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Localized: Advanced Component
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Localized: Chemicals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Localized: Gunpowder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Localized: Odds and ends
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Localized: Bear Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Localized: Land Mine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Localized: Noise Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Localized: Chemical Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Localized: Shrapnel Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Localized: Explosive Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Localized: Walking Aid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Localized: Trap Detection Device
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Localized: Biometric Rader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Localized: Energy Barrier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Localized: Knife(Enchanted)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Localized: Dagger(Enchanted)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Localized: Long Sword(Enchanted)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Localized: Bear Trap(Enchanted)
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

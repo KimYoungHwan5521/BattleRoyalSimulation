@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -1119,7 +1120,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
             TMP_Dropdown.OptionData optionData;
-            optionData = new(items[i].ToString());
+            optionData = new(new LocalizedString("Item", items[i].ToString()).GetLocalizedString());
             weaponPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
             Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
             weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -1138,31 +1139,31 @@ public class OutGameUIManager : MonoBehaviour
             }
         };
         sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Try run away" }));
+        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Attacks.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Attack", "Ignore", "Try run away" }));
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Attacks.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
         
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Try run away" }));
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Approaches.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
         elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { "Approach", "Ignore", "Try run away" }));
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Approaches.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
 
         heardDistinguishableSoundDropdown.ClearOptions();
-        heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
         elseActionHeardDistinguishableSoundDropdown.ClearOptions();
-        elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
         
         heardIndistinguishableSoundDropdown.ClearOptions();
-        heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
         elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
-        elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { "Go where the sound is heard.", "Look in the direction in which the sound is heard.", "Ignore the sound" }));
+        elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
         
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
-        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { "Who first Seen.", "The closest one.", "Whose weapon's range is longest." }));
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "First seen person").GetLocalizedString(), new LocalizedString("Table", "Nearest person").GetLocalizedString(), new LocalizedString("Table", "Person with the longest range").GetLocalizedString() }));
         
         craftingPriority1Dropdown.ClearOptions();
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new("None") }));
+        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new(new LocalizedString("Table", "None").GetLocalizedString()) }));
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         GameManager.Instance.ObjectUpdate += () =>
         {
@@ -1180,7 +1181,7 @@ public class OutGameUIManager : MonoBehaviour
         for (int i = 0; i < ItemManager.craftables.Count; i++)
         {
             GameObject craftableAllow = PoolManager.Spawn(ResourceEnum.Prefab.CraftableAllow, craftingAllow);
-            craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text = ItemManager.craftables[i].itemType.ToString();
+            craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
             if (Enum.TryParse(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text, out ResourceEnum.Sprite sprite)) craftableAllow.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
             int toggleIndex = i;
             craftableAllow.GetComponentInChildren<Toggle>().onValueChanged.AddListener((value) => { strategies.ToList().Find(x => x.strategyCase == StrategyCase.CraftingAllow).hasChanged = true; });
@@ -1217,7 +1218,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         bool hasChanged = false;
         foreach(Strategy strategy in strategies) if(strategy.hasChanged) { hasChanged = true;  break; }
-        if(hasChanged) OpenConfirmWindow("Close the strategy room?\n(Unsaved content will be deleted)", () => { strategyRoom.SetActive(false); });
+        if(hasChanged) OpenConfirmWindow("Confirm:Close Strategy Room", () => { strategyRoom.SetActive(false); });
         else strategyRoom.SetActive(false);
     }
 
@@ -1236,7 +1237,7 @@ public class OutGameUIManager : MonoBehaviour
         weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
         craftingPriority1Dropdown.ClearOptions();
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new("None") }));
+        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new(new LocalizedString("Table", "None").GetLocalizedString()) }));
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         foreach (var craftable in ItemManager.craftables)
         {
@@ -1244,7 +1245,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
                 TMP_Dropdown.OptionData optionData;
-                optionData = new(craftable.itemType.ToString());
+                optionData = new(new LocalizedString("Item", craftable.itemType.ToString()).GetLocalizedString());
                 craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
                 Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
                 craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -1325,12 +1326,12 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SaveStrategy()
     {
-        OpenConfirmWindow("Save all changes?", () =>
+        OpenConfirmWindow("Confirm:Save all changes?", () =>
         {
             foreach(var craftableAllow in craftableAllows) 
                 if(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text == craftingPriority1Dropdown.options[craftingPriority1Dropdown.value].text)
                 {
-                    Alert("Crafting priority 1 item is not allowed. Check \"Crafting Allow\" section.");
+                    Alert("Alert:Crafting Priority Not Valid");
                     return;
                 }
 
@@ -1553,11 +1554,11 @@ public class OutGameUIManager : MonoBehaviour
     public void Betting()
     {
         int _bettingAmount = int.Parse(bettingAmountInput.text);
-        if (!IsValidPrediction(out string reason)) Alert($"Not valid prediction : {reason}");
-        else if (_bettingAmount < 100) Alert("The minimum bet amount is 100$.");
+        if (!IsValidPrediction(out string reason)) Alert($"{new LocalizedString("Table", "Invalid Prediction").GetLocalizedString()} : {reason}");
+        else if (_bettingAmount < 100) Alert("Alert:Minimum Bet");
         else
         {
-            OpenConfirmWindow("Confirm betting?", () =>
+            OpenConfirmWindow("Confirm:Bet", () =>
             {
                 bettingAmount = _bettingAmount;
                 for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
@@ -1569,7 +1570,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SkipBetting()
     {
-        OpenConfirmWindow("Skip betting?", () => 
+        OpenConfirmWindow("Confirm:Skip Bet", () => 
         {
             bettingAmount = 0;
             bettingRoom.SetActive(false);
@@ -1583,14 +1584,14 @@ public class OutGameUIManager : MonoBehaviour
         {
             if (!predictRankingContestants[i].activeSelf)
             {
-                reason = "Empty predictions exist.";
+                reason = new LocalizedString("Table", "Empty Prediction").GetLocalizedString();
                 return false;
             }
             for(int j = 0; j < i; j++)
             {
                 if(predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text)
                 {
-                    reason = "Duplicate predictions exist.";
+                    reason = new LocalizedString("Table", "Duplicated Prediction").GetLocalizedString();
                     return false;
                 }
             }
@@ -1685,12 +1686,12 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     public void EndTheDay()
     {
-        string message = "Are you done for the day?";
+        string message = new LocalizedString("Table", "End The Day").GetLocalizedString();
         string warning = "";
         if(calendar.Today % 7 < 5)
         {
             bool thereAreUnassignedSurvivors = false;
-            warning = "\n<color=red><i>There are unassigned survivors : ";
+            warning = $"\n<color=red><i>{new LocalizedString("Table", "There are unassigned survivors:").GetLocalizedString()} : ";
             foreach (SurvivorData survivor in mySurvivorsData)
             {
                 if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
@@ -1708,12 +1709,12 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(calendar.LeagueReserveInfo[calendar.Today].reserver != null)
                 {
-                    Alert($"There are survivors who have been reserved for Battle Royale today : <i>{calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName}</i>");
+                    Alert("Alert:Scheduled Battle Royale Today", calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName);
                     return;
                 }
                 else
                 {
-                    message = "There's a Battle Royale match today. just skip it and end the day?";
+                    message = new LocalizedString("Table", "Today is a battle royale day. Skip it?").GetLocalizedString();
                 }
             }
         }
@@ -1734,15 +1735,15 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorTrainingResults[index].SetActive(true);
                         resultTexts[index][0].text = survivor.survivorName;
-                        resultTexts[index][1].text = $"Strength + {survivor.increaseComparedToPrevious_strength}";
+                        resultTexts[index][1].text = $"{new LocalizedString("Table", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
                         resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > 0);
-                        resultTexts[index][2].text = $"Agility + {survivor.increaseComparedToPrevious_agility}";
+                        resultTexts[index][2].text = $"{new LocalizedString("Table", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
                         resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > 0);
-                        resultTexts[index][3].text = $"Fighting + {survivor.increaseComparedToPrevious_fighting}";
+                        resultTexts[index][3].text = $"{new LocalizedString("Table", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
                         resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > 0);
-                        resultTexts[index][4].text = $"Shooting + {survivor.increaseComparedToPrevious_shooting}";
+                        resultTexts[index][4].text = $"{new LocalizedString("Table", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
                         resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
-                        resultTexts[index][5].text = $"Knowledge + {survivor.increaseComparedToPrevious_knowledge}";
+                        resultTexts[index][5].text = $"{new LocalizedString("Table", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
                         resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > 0);
                         index++;
                     }
@@ -1773,7 +1774,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         calendar.Today++;
         calendar.TurnPageCalendar(0);
-        Alert("Ended weekend");
+        Alert("Alert:A day has passed.");
     }
 
     void ApplyTraining(SurvivorData survivor, Training training)

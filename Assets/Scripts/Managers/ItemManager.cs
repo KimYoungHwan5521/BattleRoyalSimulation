@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public class ItemManager
 {
@@ -173,57 +174,57 @@ public class ItemManager
             // Melee Weapons
             case Items.Knife:
                 for(int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Knife", 0.5f, NeedHand.OneHand, DamageType.Slash, 30, 1.7f, 0));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.5f, NeedHand.OneHand, DamageType.Slash, 30, 1.7f, 0));
                 break;
             case Items.Dagger:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Dagger", 1f, NeedHand.OneHand, DamageType.Slash, 40, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1f, NeedHand.OneHand, DamageType.Slash, 40, 2f, 1));
                 break;
             case Items.Bat:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Bat", 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 35, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1f, NeedHand.OneOrTwoHand, DamageType.Strike, 35, 2f, 1));
                 break;
             case Items.LongSword:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Long Sword", 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 50, 2.4f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 2f, NeedHand.OneOrTwoHand, DamageType.Slash, 50, 2.4f, 1));
                 break;
             case Items.Shovel:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, "Shovel", 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 45, 2f, 1));
+                    itemDictionary[wantItem].Add(new MeleeWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 2f, NeedHand.OneOrTwoHand, DamageType.Strike, 45, 2f, 1));
                 break;
             // Ranged Weapons
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Pistol", 0.625f, NeedHand.OneHand, 40, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.625f, NeedHand.OneHand, 40, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
                 break;
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Revolver", 1.1f, NeedHand.OneHand, 80, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1.1f, NeedHand.OneHand, 80, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Shotgun", 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Sub Machine Gun", 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Assault Rifle", 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Sniper Rifle", 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, "Bazooka", 7.9f, NeedHand.TwoHand, 200, 40f, 3f, 10f, 10f, 1, 10f, 2, 6));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 7.9f, NeedHand.TwoHand, 200, 40f, 3f, 10f, 10f, 1, 10f, 2, 6));
                 break;
             case Items.LASER:
                 for (int i = start; i < end; i++)
                 {
-                    RangedWeapon laser = new(wantItem, "LASER", 3.6f, NeedHand.OneHand, 100, 45f, 3f, 10f, 0.5f, 100, 3f, 0, 7);
+                    RangedWeapon laser = new(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.6f, NeedHand.OneHand, 100, 45f, 3f, 10f, 0.5f, 100, 3f, 0, 7);
                     laser.Reload(100);
                     itemDictionary[wantItem].Add(laser);
                 }
@@ -231,161 +232,161 @@ public class ItemManager
             // Bullets
             case Items.Bullet_Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(Revolver)", 0.008f, 7));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.008f, 7));
                 break;
             case Items.Bullet_Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(Pistol)", 0.006f, 17));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.006f, 17));
                 break;
             case Items.Bullet_AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(AssaultRifle)", 0.016f, 30));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.016f, 30));
                 break;
             case Items.Bullet_SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(SubMachineGun)", 0.006f, 30));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.006f, 30));
                 break;
             case Items.Bullet_ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(ShotGun)", 0.032f, 4));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.032f, 4));
                 break;
             case Items.Bullet_SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Bullet(SniperRifle)", 0.012f, 5));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.012f, 5));
                 break;
             case Items.Rocket_Bazooka:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Rocket(Bazooka)", 5f, 1));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 5f, 1));
                 break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Low Level Bulletproof Helmet", 0.7f, 20));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.7f, 20));
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Middle Level Bulletproof Helmet", 1.2f, 40));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1.2f, 40));
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "High Level Bulletproof Helmet", 1.6f, 60));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1.6f, 60));
                 break;
             case Items.LegendaryBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, "Legendary Bulletproof Helmet", 7f, 200));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 7f, 200));
                 break;
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Low Level Bulletproof Vest", 3f, 10));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3f, 10));
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Middle Level Bulletproof Vest", 7f, 30));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 7f, 30));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "High Level Bulletproof Vest", 10f, 50));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 10f, 50));
                 break;
             case Items.LegendaryBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, "Legendary Bulletproof Vest", 36f, 70));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 36f, 70));
                 break;
             // Consumables
             case Items.BandageRoll:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "BandageRoll", 0.027f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.027f));
                 break;
             case Items.HemostaticBandageRoll:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Hemostatic BandageRoll", 0.127f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.127f));
                 break;
             case Items.Poison:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Poison", 0.167f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.167f));
                 break;
             case Items.Antidote:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Antidote", 0.1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.1f));
                 break;
             case Items.Potion:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Potion", 0.7f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.7f));
                 break;
             case Items.AdvancedPotion:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Advanced Potion", 1.3f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1.3f));
                 break;
             // Crafting Materials
             case Items.Components:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Components", 1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 1f));
                 break;
             case Items.AdvancedComponent:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Advanced Component", 0.1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.1f));
                 break;
             case Items.Chemicals:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Chemicals", 0.1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.1f));
                 break;
             case Items.Gunpowder:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Gunpowder", 0.066f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.066f));
                 break;
             case Items.Salvages:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Consumable(wantItem, "Salvages", 0.1f));
+                    itemDictionary[wantItem].Add(new Consumable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.1f));
                 break;
             // Traps
             case Items.BearTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, "Bear Trap", 3f));
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3f));
                 break;
             case Items.BearTrap_Enchanted:
                 for (int i = start; i < end; i++)
                 {
-                    Buriable buriable = new(wantItem, "Bear Trap(Enchanted)", 3f);
+                    Buriable buriable = new(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3f);
                     buriable.Enchant();
                     itemDictionary[wantItem].Add(buriable);
                 }
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, "Land Mine", 3f));
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3f));
                 break;
             case Items.NoiseTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, "Noise Trap", 2f));
+                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 2f));
                 break;
             case Items.ChemicalTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ChemicalTrap(wantItem, "Chemical Trap", 3f));
+                    itemDictionary[wantItem].Add(new ChemicalTrap(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3f));
                 break;
             case Items.ShrapnelTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, "Shrapnel Trap", 7f));
+                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 7f));
                 break;
             case Items.ExplosiveTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, "Explosive Trap", 5f));
+                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 5f));
                 break;
             // ETC
             case Items.WalkingAid:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Walking Aid", 0.3f));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 0.3f));
                 break;
             case Items.TrapDetectionDevice:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Trap Detection Device", 2.3f));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 2.3f));
                 break;
             case Items.BiometricRader:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Biometric Rader", 2.4f));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 2.4f));
                 break;
             case Items.EnergyBarrier:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Item(wantItem, "Energy Barrier", 3.4f));
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()).GetLocalizedString(), 3.4f));
                 break;
             default:
                 Debug.LogAssertion($"Unknown item key : {wantItem}");
