@@ -2,23 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class AutoNewLineLayoutGroup : MonoBehaviour
 {
     Rect Rect => GetComponent<RectTransform>().rect;
     [SerializeField] GameObject[] characteristicsBox;
     [SerializeField] float paddingTop;
+    TextMeshProUGUI[] characteristicsText;
+
+    SurvivorData linkedSurvivor;
+
+    private void Start()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        characteristicsText = new TextMeshProUGUI[characteristicsBox.Length];
+        for(int i = 0; i < characteristicsText.Length; i++) { characteristicsText[i] = characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>(); }
+    }
 
     public void ArrangeCharacteristics(SurvivorData survivorData)
     {
+        linkedSurvivor = survivorData;
         for (int i = 0; i < characteristicsBox.Length; i++)
         {
             if (i < survivorData.characteristics.Count)
             {
-                characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>().text = survivorData.characteristics[i].characteristicName;
-                characteristicsBox[i].GetComponent<Help>().SetDescription(survivorData.characteristics[i].description);
-                characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(Mathf.Min(survivorData.characteristics[i].characteristicName.Length * 19, Rect.width - 1), 40);
                 characteristicsBox[i].SetActive(true);
+                characteristicsText[i].text = survivorData.characteristics[i].characteristicName.GetLocalizedString();
+                characteristicsBox[i].GetComponent<Help>().SetDescription(survivorData.characteristics[i].description);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(characteristicsText[i].rectTransform);
+                characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, 40);
             }
             else
             {
@@ -56,5 +71,11 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         }
 
         GetComponent<RectTransform>().sizeDelta = new(Rect.width, line * childHeight + 5 * Mathf.Max(0, (line - 1)));
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        if (linkedSurvivor == null) return;
+        ArrangeCharacteristics(linkedSurvivor);
     }
 }

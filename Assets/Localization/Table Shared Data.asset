@@ -560,6 +560,66 @@ MonoBehaviour:
     m_Key: Ranged weapon
     m_Metadata:
       m_Items: []
+  - m_Id: 2478171783491584
+    m_Key: 'Lootable items:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478173167611904
+    m_Key: Select a survivor to join the battle royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478174157467648
+    m_Key: Help:Reserve Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478175491256320
+    m_Key: Reserve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Key: Cancel reservation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479575478628352
+    m_Key: Confirm:Go Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479576816611328
+    m_Key: Alert:Reserve Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479578074902528
+    m_Key: Select a survivor to reserve.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479579412885504
+    m_Key: Reserved Survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479581325488128
+    m_Key: No eligible survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481288361078784
+    m_Key: Alert:Already Resistered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481289275437056
+    m_Key: Confirm:Reserve Who Reserved In Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481290374344704
+    m_Key: Alert:Battle royale reserved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481291246759936
+    m_Key: Alert:Reserve Fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481303221497856
+    m_Key: Confirm:Reserve Battle Royale Who Have Injury
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

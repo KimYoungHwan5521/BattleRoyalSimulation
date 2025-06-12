@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characteristic_pt-PT
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-PT
+  m_SharedData: {fileID: 11400000, guid: 7814f6e246f317e458cb9683b7805c48, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 725252134465536
+    m_Localized: "Olho de \xE1guia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725255586377728
+    m_Localized: "Vis\xE3o ruim"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725259134758912
+    m_Localized: "Ouvido agu\xE7ado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725262733471744
+    m_Localized: Ouvido fraco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726785525870592
+    m_Localized: Fera em campeonatos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726791662137344
+    m_Localized: Gigante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726789736951808
+    m_Localized: Azar em campeonatos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726793016897536
+    m_Localized: "An\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727624709632000
+    m_Localized: Fraco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727626269913088
+    m_Localized: "Fort\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727627419152384
+    m_Localized: Brutamontes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728517853114368
+    m_Localized: "P\xE9 de chumbo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728519430172672
+    m_Localized: "P\xE9 leve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728520877207552
+    m_Localized: Assassino
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729555804942336
+    m_Localized: Desajeitado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729557612687360
+    m_Localized: Briguento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729559042945024
+    m_Localized: Artista marcial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730287111204864
+    m_Localized: "Mira inst\xE1vel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730288516296704
+    m_Localized: Atirador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730289392906240
+    m_Localized: "Atirador ex\xEDmio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730802771521536
+    m_Localized: Atirador cauteloso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731293630918656
+    m_Localized: "Abaixo da m\xE9dia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731295199588352
+    m_Localized: Prodigioso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731296130723840
+    m_Localized: "G\xEAnio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734455712509952
+    m_Localized: "Inst\xE1vel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734457407008768
+    m_Localized: Vingador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734459101507584
+    m_Localized: Regenerador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734975512604672
+    m_Localized: Cara de sorte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734977139994624
+    m_Localized: "Amaldi\xE7oado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734978326982656
+    m_Localized: "Aben\xE7oado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735750951333888
+    m_Localized: Robusto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735661847539712
+    m_Localized: "M\xE3os desajeitadas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735664984879104
+    m_Localized: "M\xE3os habilidosas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735668080275456
+    m_Localized: engenheiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735748036292608
+    m_Localized: Fracote
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

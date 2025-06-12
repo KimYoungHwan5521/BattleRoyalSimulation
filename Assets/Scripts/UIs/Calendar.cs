@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship, MeleeLeague, RangeLeague, CraftingLeague };
 public class LeagueReserveData
@@ -161,7 +164,7 @@ public class Calendar : CustomObject
 
     [Header("Reserve Battle Royale")]
     [SerializeField] GameObject reserveForm;
-    [SerializeField] TextMeshProUGUI reserveText;
+    [SerializeField] LocalizeStringEvent reserveText;
     [SerializeField] TMP_Dropdown survivorWhoParticipateInBattleRoyaleDropdown;
     [SerializeField] GameObject reserveButton;
     [SerializeField] GameObject reserveCancelButton;
@@ -531,7 +534,7 @@ public class Calendar : CustomObject
         {
             if (today == wantReserveDate)
             {
-                outGameUIManager.OpenConfirmWindow("Go battle royale?",
+                outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale",
                     () =>
                     {
                         GameManager.Instance.Option.SetSaveButtonInteractable(false);
@@ -543,7 +546,7 @@ public class Calendar : CustomObject
             {
                 if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
                 {
-                    outGameUIManager.Alert("Championships cannot register. If you win the Gold League, you will be registered for the Season Championship automatically, and if you win the Season Championship, you will be registered for the World Championship automatically.");
+                    outGameUIManager.Alert("Alert:Reserve Championship");
                 }
                 else
                 {
@@ -551,7 +554,8 @@ public class Calendar : CustomObject
                     GameManager.Instance.openedWindows.Push(reserveForm);
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
-                        reserveText.text = "Choose who want register for battle royale.";
+                        reserveText.StringReference = new LocalizedString("Table", "Select a survivor to reserve.");
+                        reserveText.RefreshString();
                         SetLeagueInfo(wantReserveDate);
                         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
@@ -560,7 +564,11 @@ public class Calendar : CustomObject
                     }
                     else
                     {
-                        reserveText.text = $"The registered participant for that day is \"{leagueReserveInfo[wantReserveDate].reserver.survivorName}\"";
+                        var temp = new LocalizedString("Table", "Reserved Survivor");
+                        temp.Arguments = new[] { new { param0 = leagueReserveInfo[wantReserveDate].reserver.survivorName } };
+                        reserveText.StringReference = temp;
+                        reserveText.RefreshString();
+                        reserveText.GetComponent<LocalizeStringEvent>().RefreshString();
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
                         reserveButton.SetActive(false);
                         reserveCancelButton.SetActive(true);
@@ -583,7 +591,7 @@ public class Calendar : CustomObject
         farmableItemsText.text = string.Empty;
         foreach(var item in itemPool[leagueReserveInfo[wantReserveDate].itemPool])
         {
-            farmableItemsText.text += $"{item.Key} x {item.Value},\n";
+            farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
         GameManager.Instance.FixLayout(farmableItemsText.GetComponent<RectTransform>());
         farmableItemsScrollRect.verticalNormalizedPosition = 1;
@@ -598,7 +606,7 @@ public class Calendar : CustomObject
             if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].survivorName }));
         if (survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
         {
-            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { "[No qualified survivors]" }));
+            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Table", "No eligible survivor")}]" }));
             reserveButton.GetComponent<Button>().interactable = false;
         }
         else
@@ -622,12 +630,11 @@ public class Calendar : CustomObject
         }
         else if (wantReserver.isReserved)
         {
-            outGameUIManager.Alert($"\"{wantReserver.survivorName}\" is already registered for another match.\n" +
-                $"Leagues other than the Championship can register one at a time.");
+            outGameUIManager.Alert($"Alert:Already Resistered", wantReserver.survivorName);
         }
         else if (NeareastSeasonChampionship.reserver == wantReserver || NeareastWorldChampionship.reserver == wantReserver)
         {
-            outGameUIManager.OpenConfirmWindow("He's headed to the championship. Would you like to book him?", () =>
+            outGameUIManager.OpenConfirmWindow("Confirm:Reserve Who Reserved In Championship", () =>
             {
                 if (wantReserver.injuries.Count > 0) AskAboutInjury();
                 else Reserve();
@@ -643,7 +650,7 @@ public class Calendar : CustomObject
         wantReserver.isReserved = true;
         wantReserver.reservedDate = wantReserveDate;
         TurnPageCalendar(0);
-        outGameUIManager.Alert("Battle royale has been registered.");
+        outGameUIManager.Alert("Alert:Battle royale reserved.");
     }
 
     void AskAboutInjury()
@@ -665,14 +672,14 @@ public class Calendar : CustomObject
 
         if (!availiable)
         {
-            outGameUIManager.Alert("He can't register battle royale.\n<color=red><i>(Cause : Organ Rupture)</i></color>");
+            outGameUIManager.Alert("Alert:Reserve Fail", "\n<color=red><i>(Cause : Organ Rupture)</i></color>");
         }
         else if (injured)
         {
-            outGameUIManager.OpenConfirmWindow($"{wantReserver.survivorName} is injured. Should he still register for Battle Royale?", () =>
+            outGameUIManager.OpenConfirmWindow("Confirm:Reserve Battle Royale Who Have Injury", () =>
             {
                 Reserve();
-            });
+            }, wantReserver.survivorName);
         }
         else Reserve();
     }

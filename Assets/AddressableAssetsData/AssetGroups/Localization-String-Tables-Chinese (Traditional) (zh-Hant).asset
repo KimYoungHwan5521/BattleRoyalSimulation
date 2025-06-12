@@ -24,7 +24,7 @@ MonoBehaviour:
     - Locale-zh-Hant
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16fa2c958b74d974c9e4bdec7fcba46f
-    m_Address: Characteristics_zh-Hant
+    m_Address: Characteristic_zh-Hant
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hant

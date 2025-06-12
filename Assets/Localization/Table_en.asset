@@ -582,10 +582,78 @@ MonoBehaviour:
     m_Localized: Ranged weapon
     m_Metadata:
       m_Items: []
+  - m_Id: 2478171783491584
+    m_Localized: 'Lootable items:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478173167611904
+    m_Localized: Select a survivor to join the battle royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478174157467648
+    m_Localized: Reservations are available until this Friday. Same-day cancellation
+      is not allowed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478175491256320
+    m_Localized: Reserve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Localized: Cancel reservation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479575478628352
+    m_Localized: Proceed to battle royale?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479576816611328
+    m_Localized: You cannot reserve for the championship. Winning the Gold League
+      will automatically reserve you for the Season Championship, and winning the
+      Season Championship will reserve you for the World Championship.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479578074902528
+    m_Localized: Select a survivor to reserve.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479579412885504
+    m_Localized: 'Reserved survivor : {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 2479581325488128
+    m_Localized: No eligible survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481288361078784
+    m_Localized: '{param0} is registered for another match. (Only one match can be
+      reserved at a time, except for championships.)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 2481289275437056
+    m_Localized: This survivor is reserved for a championship. Still proceed?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481290374344704
+    m_Localized: Battle royale reserved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481291246759936
+    m_Localized: He cannot be reserved for battle royale.{param0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 2481303221497856
+    m_Localized: '{param0} is injured. Still reserve?'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359340
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe30700
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800

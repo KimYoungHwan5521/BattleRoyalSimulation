@@ -1,11 +1,12 @@
 using System;
+using UnityEngine.Localization;
 
 [Serializable]
 public class BulletproofHelmet : Item
 {
     float armor;
     public float Armor => armor;
-    public BulletproofHelmet(ItemManager.Items itemType, string itemName, float weight, float armor, int amount = 1) 
+    public BulletproofHelmet(ItemManager.Items itemType, LocalizedString itemName, float weight, float armor, int amount = 1) 
         : base(itemType, itemName, weight, amount)
     {
         this.itemName = itemName;

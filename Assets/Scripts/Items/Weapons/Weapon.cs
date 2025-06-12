@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public enum NeedHand { OneHand, TwoHand, OneOrTwoHand }
 
@@ -18,7 +17,7 @@ public class Weapon : Item
     public float AttackRange => attackRange;
     public int AttackAnimNumber => attackAnimNumber;
 
-    public Weapon(ItemManager.Items itemType, string itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, int attackAnimNumber, int amount = 1) 
+    public Weapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, int attackAnimNumber, int amount = 1) 
         : base(itemType, itemName, weight, amount)
     {
         this.needHand = needHand;

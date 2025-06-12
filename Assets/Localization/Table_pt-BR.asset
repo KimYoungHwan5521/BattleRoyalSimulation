@@ -583,10 +583,79 @@ MonoBehaviour:
     m_Localized: "Predicci\xF3n no v\xE1lida"
     m_Metadata:
       m_Items: []
+  - m_Id: 2478175491256320
+    m_Localized: Reservar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Localized: Cancelar reserva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478171783491584
+    m_Localized: "Itens colet\xE1veis:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478173167611904
+    m_Localized: Selecione um sobrevivente para o battle royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478174157467648
+    m_Localized: "Reservas dispon\xEDveis at\xE9 sexta-feira. Cancelamento no mesmo
+      dia n\xE3o \xE9 permitido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479575478628352
+    m_Localized: Ir para o battle royale?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479576816611328
+    m_Localized: "N\xE3o \xE9 poss\xEDvel reservar para o campeonato. Vencer a Liga
+      Ouro reserva automaticamente para o Campeonato da Temporada, e venc\xEA-lo
+      reserva para o Campeonato Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479578074902528
+    m_Localized: Selecione um sobrevivente para reservar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479579412885504
+    m_Localized: 'sobrevivente reservado : {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 2479581325488128
+    m_Localized: "Nenhum sobrevivente eleg\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481288361078784
+    m_Localized: "{param0} est\xE1 registrado em outra partida.\\n(Somente uma partida
+      pode ser reservada por vez, exceto campeonatos.)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 2481303221497856
+    m_Localized: "{param0} est\xE1 ferido. Deseja reservar mesmo assim?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 2481289275437056
+    m_Localized: "Este sobrevivente j\xE1 est\xE1 reservado para um campeonato. Deseja
+      continuar?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481290374344704
+    m_Localized: Battle royale reservado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481291246759936
+    m_Localized: "Ele n\xE3o pode ser reservado para o battle royale.{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359335
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe30700
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800

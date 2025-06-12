@@ -45,24 +45,24 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         raw = false;
         var localizedString = new LocalizedString("Table", key);
-        LocalizeStringEvent localizeStringEvent = GetComponentInChildren<LocalizeStringEvent>();
-        localizeStringEvent.StringReference = localizedString;
         switch (vars.Length)
         {
             case 0:
                 break;
             case 1:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0] } };
                 break;
             case 2:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0], param1 = vars[1] } };
                 break;
             default:
                 Debug.Log("To many params");
                 break;
         }
+        LocalizeStringEvent localizeStringEvent = GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
         localizeStringEvent.RefreshString();
     }
 

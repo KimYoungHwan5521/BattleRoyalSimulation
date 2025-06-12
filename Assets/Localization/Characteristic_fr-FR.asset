@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characteristic_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: 7814f6e246f317e458cb9683b7805c48, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 725252134465536
+    m_Localized: "\u0152il d\u2019aigle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725255586377728
+    m_Localized: "Vue bouch\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725259134758912
+    m_Localized: Oreille fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725262733471744
+    m_Localized: Oreille sourde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726785525870592
+    m_Localized: "Champion-dans l\u2019\xE2me"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726789736951808
+    m_Localized: "Maudit en comp\xE8t\u2019"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726791662137344
+    m_Localized: "G\xE9ant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726793016897536
+    m_Localized: Nain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727624709632000
+    m_Localized: "Fr\xEAle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727626269913088
+    m_Localized: Costaud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727627419152384
+    m_Localized: Colosse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728517853114368
+    m_Localized: Pied lent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728519430172672
+    m_Localized: Pied rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728520877207552
+    m_Localized: Assassin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729555804942336
+    m_Localized: Maladroit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729557612687360
+    m_Localized: Bastonneur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729559042945024
+    m_Localized: Artiste martial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730287111204864
+    m_Localized: "Vis\xE9e instable"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730288516296704
+    m_Localized: Tireur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730289392906240
+    m_Localized: "Tireur d\u2019\xE9lite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730802771521536
+    m_Localized: Tireur prudent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731293630918656
+    m_Localized: Cancre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731295199588352
+    m_Localized: "Surdou\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731296130723840
+    m_Localized: "G\xE9nie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734455712509952
+    m_Localized: Instable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734457407008768
+    m_Localized: Vengeur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734459101507584
+    m_Localized: "R\xE9g\xE9n\xE9rateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734975512604672
+    m_Localized: Un gars chanceux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734977139994624
+    m_Localized: Maudit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734978326982656
+    m_Localized: "B\xE9ni"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735661847539712
+    m_Localized: Mains maladroites
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735664984879104
+    m_Localized: Mains habiles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735668080275456
+    m_Localized: "ing\xE9nieur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735748036292608
+    m_Localized: "Ch\xE9tif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735750951333888
+    m_Localized: Costaud
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

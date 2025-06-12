@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characteristic_de-DE
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de-DE
+  m_SharedData: {fileID: 11400000, guid: 7814f6e246f317e458cb9683b7805c48, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 725252134465536
+    m_Localized: Adlersblick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725255586377728
+    m_Localized: Schlechte Sicht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725259134758912
+    m_Localized: "Feinf\xFChliges Geh\xF6r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725262733471744
+    m_Localized: "Schwerh\xF6rig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726785525870592
+    m_Localized: Turnier-Ass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726789736951808
+    m_Localized: Turnier-Verfluchter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726791662137344
+    m_Localized: Riese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726793016897536
+    m_Localized: Zwerg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727624709632000
+    m_Localized: Gebrechlich
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727626269913088
+    m_Localized: Stark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727627419152384
+    m_Localized: Kraftpaket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728517853114368
+    m_Localized: "Langsamer Fu\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728519430172672
+    m_Localized: "Schneller Fu\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728520877207552
+    m_Localized: "Attent\xE4ter"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729555804942336
+    m_Localized: "Kampfunf\xE4hig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729557612687360
+    m_Localized: Raufbold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729559042945024
+    m_Localized: "Kampfk\xFCnstler"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730287111204864
+    m_Localized: Wackelige Zielgenauigkeit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730288516296704
+    m_Localized: "Sch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730289392906240
+    m_Localized: "Scharfsch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730802771521536
+    m_Localized: "Vorsichtiger Sch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731296130723840
+    m_Localized: Genie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731295199588352
+    m_Localized: Wunderkind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731293630918656
+    m_Localized: Minderleister
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734455712509952
+    m_Localized: Schwankend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734457407008768
+    m_Localized: "R\xE4cher"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734459101507584
+    m_Localized: Regenerator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734975512604672
+    m_Localized: "Gl\xFCckspilz"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734977139994624
+    m_Localized: Verflucht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734978326982656
+    m_Localized: Gesegnet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735661847539712
+    m_Localized: "Ungeschickte H\xE4nde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735664984879104
+    m_Localized: "Geschickte H\xE4nde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735668080275456
+    m_Localized: Ingenieur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735748036292608
+    m_Localized: "Schw\xE4chling"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735750951333888
+    m_Localized: Robust
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

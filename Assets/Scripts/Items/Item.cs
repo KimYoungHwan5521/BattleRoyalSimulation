@@ -1,17 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 [Serializable]
 public class Item
 {
     public ItemManager.Items itemType;
-    public string itemName;
+    public LocalizedString itemName;
     [SerializeField] public int amount;
     [SerializeField] protected float weight;
 
-    public Item(ItemManager.Items itemType, string itemName, float weight, int amount = 1)
+    public Item(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1)
     {
         this.itemType = itemType;
         this.itemName = itemName;

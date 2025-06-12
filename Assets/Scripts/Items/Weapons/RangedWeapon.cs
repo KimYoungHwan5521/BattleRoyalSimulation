@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 [Serializable]
 public class RangedWeapon : Weapon
@@ -21,7 +20,7 @@ public class RangedWeapon : Weapon
     public float ReloadCoolTime => reloadCoolTime;
     public int CurrentMagazine => currentMagazine;
     public int ShotAnimNumber => shotAnimNumber;
-    public RangedWeapon(ItemManager.Items itemType, string itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, 
+    public RangedWeapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, 
         float minimumRange, float projectileSpeed, float shotCoolTime, int magazineCapacity, 
         float reloadCoolTime, int attackAnimNumber, int shotAnimNumber, int amount = 1)
         : base(itemType, itemName, weight, needHand, attackDamage, attackRange, attackAnimNumber, amount)

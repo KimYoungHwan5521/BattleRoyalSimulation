@@ -1490,7 +1490,7 @@ public class Survivor : CustomObject
     #region Item
     public bool IsValid(Item item)
     {
-        if (item == null || string.IsNullOrEmpty(item.itemName) || item.itemType == ItemManager.Items.NotValid) return false;
+        if (item == null || string.IsNullOrEmpty(item.itemName.GetLocalizedString()) || item.itemType == ItemManager.Items.NotValid) return false;
         return true;
     }
 
@@ -1543,12 +1543,12 @@ public class Survivor : CustomObject
                 GetItem(item);
             }
         }
-        else if(item.itemName.Contains("Bullet") || item.itemName.Contains("Rocket"))
+        else if(item.itemType.ToString().Contains("Bullet") || item.itemType.ToString().Contains("Rocket"))
         {
             currentWeaponisBestWeapon = false;
             GetItem(item);
-            string wantWeapon = item.itemName.Split('(')[0].Split(')')[0];
-            if (inventory.Find(x => x.itemName == wantWeapon) is RangedWeapon weapon && CompareWeaponValue(weapon))
+            string wantWeapon = item.itemType.ToString().Split('(')[0].Split(')')[0];
+            if (inventory.Find(x => x.itemType.ToString() == wantWeapon) is RangedWeapon weapon && CompareWeaponValue(weapon))
             {
                 Equip(weapon);
             }
@@ -1605,7 +1605,7 @@ public class Survivor : CustomObject
                 if (newWeaponAsRangedWeapon.CurrentMagazine > 0) return true;
                 else
                 {
-                    Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})") : inventory.Find(x => x.itemName == $"Rocket(Bazooka)");
+                    Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemType.ToString() == $"Bullet_{newWeapon.itemType}") : inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka");
                     if (bullet != null) return true;
                     else return false;
                 }
@@ -1629,7 +1629,7 @@ public class Survivor : CustomObject
             {
                 // 원 vs 원
                 RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
-                Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemName == $"Bullet({newWeapon.itemName})") : inventory.Find(x => x.itemName == $"Rocket(Bazooka)");
+                Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemType.ToString() == $"Bullet_{newWeapon.itemType}") : inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka");
                 if (newWeaponAsRangedWeapon.CurrentMagazine > 0 || bullet != null)
                 {
                     // 둘 다 총알이 있는 경우

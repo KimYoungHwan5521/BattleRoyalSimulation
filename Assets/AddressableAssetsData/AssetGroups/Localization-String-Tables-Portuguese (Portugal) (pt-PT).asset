@@ -24,7 +24,7 @@ MonoBehaviour:
     - Locale-pt-PT
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 308c2a7adb970ed4f8655035b278ec04
-    m_Address: Characteristics_pt-PT
+    m_Address: Characteristic_pt-PT
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-pt-PT

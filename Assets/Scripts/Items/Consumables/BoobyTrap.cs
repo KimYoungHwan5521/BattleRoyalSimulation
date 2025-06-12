@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Localization;
 
 public abstract class BoobyTrap : Consumable
 {
@@ -17,14 +18,14 @@ public abstract class BoobyTrap : Consumable
 
     public abstract void Trigger(Survivor victim);
 
-    public BoobyTrap(ItemManager.Items itemType, string itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    public BoobyTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
     {
     }
 }
 
 public class NoiseTrap : BoobyTrap
 {
-    public NoiseTrap(ItemManager.Items itemType, string itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    public NoiseTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
     {
     }
 
@@ -36,7 +37,7 @@ public class NoiseTrap : BoobyTrap
 
 public class ChemicalTrap : BoobyTrap
 {
-    public ChemicalTrap(ItemManager.Items itemType, string itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    public ChemicalTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
     {
     }
 
@@ -56,7 +57,7 @@ public class ChemicalTrap : BoobyTrap
 
 public class ShrapnelTrap : BoobyTrap
 {
-    public ShrapnelTrap(ItemManager.Items itemType, string itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    public ShrapnelTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
     {
     }
 
@@ -74,7 +75,7 @@ public class ShrapnelTrap : BoobyTrap
 
 public class ExplosiveTrap : BoobyTrap
 {
-    public ExplosiveTrap(ItemManager.Items itemType, string itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    public ExplosiveTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
     {
     }
 

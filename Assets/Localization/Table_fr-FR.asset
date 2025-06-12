@@ -585,10 +585,79 @@ MonoBehaviour:
     m_Localized: "Arme \xE0 distance"
     m_Metadata:
       m_Items: []
+  - m_Id: 2478171783491584
+    m_Localized: "Objets r\xE9cup\xE9rables :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478173167611904
+    m_Localized: "S\xE9lectionnez un survivant pour le battle royale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478174157467648
+    m_Localized: "R\xE9servation possible jusqu'\xE0 vendredi. Annulation le jour
+      m\xEAme non autoris\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478175491256320
+    m_Localized: "R\xE9server"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Localized: "Annuler la r\xE9servation"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479575478628352
+    m_Localized: Passer au battle royale ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479576816611328
+    m_Localized: "Impossible de r\xE9server pour le championnat. Une victoire en
+      ligue Or vous inscrit automatiquement au championnat de saison, et une victoire
+      \xE0 ce championnat vous inscrit automatiquement au championnat mondial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479578074902528
+    m_Localized: "S\xE9lectionnez un survivant \xE0 r\xE9server."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479579412885504
+    m_Localized: "survivant r\xE9serv\xE9 : {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 2479581325488128
+    m_Localized: "Aucun survivant \xE9ligible"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481288361078784
+    m_Localized: "{param0} est inscrit \xE0 un autre match. (Une seule r\xE9servation
+      \xE0 la fois, sauf pour les championnats.)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 2481303221497856
+    m_Localized: "{param0} est bless\xE9. R\xE9server quand m\xEAme ?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 2481289275437056
+    m_Localized: "Ce survivant est inscrit \xE0 un championnat. Continuer quand m\xEAme
+      ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481290374344704
+    m_Localized: "Battle royale r\xE9serv\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481291246759936
+    m_Localized: "Il ne peut pas \xEAtre r\xE9serv\xE9 pour le battle royale.{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359339
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe30700
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800

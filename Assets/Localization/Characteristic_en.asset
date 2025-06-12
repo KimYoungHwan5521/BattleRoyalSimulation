@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Characteristic_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 7814f6e246f317e458cb9683b7805c48, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 725252134465536
+    m_Localized: Eagle Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725255586377728
+    m_Localized: Bad Eyesight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725259134758912
+    m_Localized: Keen-Eared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725262733471744
+    m_Localized: Hard-of-Hearing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726785525870592
+    m_Localized: Cup-Smart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726789736951808
+    m_Localized: Trophy-Cursed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726791662137344
+    m_Localized: Giant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 726793016897536
+    m_Localized: Dwarf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727624709632000
+    m_Localized: Frail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727626269913088
+    m_Localized: Strongman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 727627419152384
+    m_Localized: Powerhouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728517853114368
+    m_Localized: Heavy-Feet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728519430172672
+    m_Localized: Light-Feet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 728520877207552
+    m_Localized: Assassin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729555804942336
+    m_Localized: Clumsy Fighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729557612687360
+    m_Localized: Brawler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 729559042945024
+    m_Localized: Martial Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730287111204864
+    m_Localized: Shaky Aim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730288516296704
+    m_Localized: Shooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730289392906240
+    m_Localized: Sharpshooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 730802771521536
+    m_Localized: Cautious Gunman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731293630918656
+    m_Localized: Dunce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731295199588352
+    m_Localized: Prodigy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 731296130723840
+    m_Localized: Genius
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734459101507584
+    m_Localized: Regenerator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734457407008768
+    m_Localized: Avenger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734455712509952
+    m_Localized: Ups And Downs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734975512604672
+    m_Localized: Lucky Guy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734977139994624
+    m_Localized: Cursed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 734978326982656
+    m_Localized: Blessed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735668080275456
+    m_Localized: Engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735750951333888
+    m_Localized: Sturdy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735748036292608
+    m_Localized: Fragile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735661847539712
+    m_Localized: Clumsy Hands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 735664984879104
+    m_Localized: Nimble Hands
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

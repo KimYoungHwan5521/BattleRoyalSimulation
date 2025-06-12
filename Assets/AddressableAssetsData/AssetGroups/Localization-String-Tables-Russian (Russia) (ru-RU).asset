@@ -24,7 +24,7 @@ MonoBehaviour:
     - Locale-ru-RU
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6575981fe9951e64ea72e0d9bbafae56
-    m_Address: Characteristics_ru-RU
+    m_Address: Characteristic_ru-RU
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru-RU

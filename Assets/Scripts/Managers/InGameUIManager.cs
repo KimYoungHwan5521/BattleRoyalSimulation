@@ -694,11 +694,11 @@ public class InGameUIManager : MonoBehaviour
                 else if(selectedSurvivor.CurrentWeapon is MeleeWeapon meleeWeapon)
                 {
                     if (meleeWeapon.IsEnchanted) selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName}(Poison enchanted)";
-                    else selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName;
+                    else selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString();
                 }
                 else
                 {
-                    selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName;
+                    selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString();
                 }
             }
             else
@@ -709,12 +709,12 @@ public class InGameUIManager : MonoBehaviour
             if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
                 selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
             else selectedObjectsCurrentHelmetImage.sprite = null;
-            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName : "None";
+            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : "None";
 
             if (selectedSurvivor.CurrentVest != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
                 selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
             else selectedObjectsCurrentVestImage.sprite = null;
-            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName : "None";
+            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : "None";
 
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);

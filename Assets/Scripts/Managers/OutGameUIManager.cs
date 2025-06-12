@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
@@ -69,6 +69,11 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI fightTrainingNameText;
     [SerializeField] TextMeshProUGUI shootingTraningNameText;
     [SerializeField] TextMeshProUGUI studyingNameText;
+    [SerializeField] TextMeshProUGUI weightTrainingExplain;
+    [SerializeField] TextMeshProUGUI runningExplain;
+    [SerializeField] TextMeshProUGUI fightingTrainingExplain;
+    [SerializeField] TextMeshProUGUI shootingTrainingExplain;
+    [SerializeField] TextMeshProUGUI studyExplain;
     int fightTrainingLevel = 1;
     int shootingTrainingLevel = 1;
     int runningLevel = 1;
@@ -204,8 +209,6 @@ public class OutGameUIManager : MonoBehaviour
         SetHireMarketFirst();
         Money = 1000;
 
-        ResetTrainingRoom();
-
         resultTexts = new TextMeshProUGUI[survivorTrainingResults.Length][];
         for (int i = 0; i < survivorTrainingResults.Length; i++)
         {
@@ -214,7 +217,12 @@ public class OutGameUIManager : MonoBehaviour
         eventSystem = FindAnyObjectByType<EventSystem>();
         bettingAmountInput.onValueChanged.AddListener((value) => { ValidateBettingAmount(value); });
         predictions = new string[5];
-        GameManager.Instance.ObjectStart += () => InitializeStrategyRoom();
+        GameManager.Instance.ObjectStart += () =>
+        {
+            RelocalizeTrainingRoom();
+            InitializeStrategyRoom();
+        };
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     public void ResetData()
@@ -228,10 +236,9 @@ public class OutGameUIManager : MonoBehaviour
         runningLevel = 1;
         weightTrainingLevel = 1;
         studyingLevel = 1;
-        ResetTrainingRoom();
     }
 
-    void ResetTrainingRoom()
+    void RelocalizeTrainingRoom()
     {
         var trainingType = new LocalizedString("Table", "Training:Weight");
         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments 
@@ -265,6 +272,12 @@ public class OutGameUIManager : MonoBehaviour
         fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
         shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
         studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
+        weightTrainingExplain.text = $"{new LocalizedString("Table", "Strength").GetLocalizedString()}+";
+        runningExplain.text = $"{new LocalizedString("Table", "Agility").GetLocalizedString()}+";
+        fightingTrainingExplain.text = $"{new LocalizedString("Table", "Fighting").GetLocalizedString()}+";
+        shootingTrainingExplain.text = $"{new LocalizedString("Table", "Shooting").GetLocalizedString()}+";
+        studyExplain.text = $"{new LocalizedString("Table", "Knowledge").GetLocalizedString()}+";
     }
 
     private void Update()
@@ -464,7 +477,6 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
-            ResetTrainingRoom();
             trainingRoom.SetActive(true);
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
@@ -1182,12 +1194,57 @@ public class OutGameUIManager : MonoBehaviour
         {
             GameObject craftableAllow = PoolManager.Spawn(ResourceEnum.Prefab.CraftableAllow, craftingAllow);
             craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
-            if (Enum.TryParse(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text, out ResourceEnum.Sprite sprite)) craftableAllow.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
+            if (Enum.TryParse(ItemManager.craftables[i].itemType.ToString(), out ResourceEnum.Sprite sprite)) craftableAllow.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
             int toggleIndex = i;
             craftableAllow.GetComponentInChildren<Toggle>().onValueChanged.AddListener((value) => { strategies.ToList().Find(x => x.strategyCase == StrategyCase.CraftingAllow).hasChanged = true; });
             craftableAllows.Add(craftableAllow);
         }
+        RelocalizeStrategyRoom();
         SetDefault();
+    }
+
+    void RelocalizeStrategyRoom()
+    {
+        ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
+        for (int i = 0; i < weaponPriority1Dropdown.options.Count; i++)
+        {
+            weaponPriority1Dropdown.options[i].text = new LocalizedString("Item", items[i + (int)ItemManager.Items.Knife].ToString()).GetLocalizedString();
+        }
+        weaponPriority1Dropdown.captionText.text = new LocalizedString("Item", items[weaponPriority1Dropdown.value + (int)ItemManager.Items.Knife].ToString()).GetLocalizedString();
+        sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
+        sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Attacks.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
+        elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Attacks.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
+
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
+        sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Approaches.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
+        elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Approaches.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
+
+        heardDistinguishableSoundDropdown.ClearOptions();
+        heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
+        elseActionHeardDistinguishableSoundDropdown.ClearOptions();
+        elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
+
+        heardIndistinguishableSoundDropdown.ClearOptions();
+        heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
+        elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
+        elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Table", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Table", "Ignores the sound.").GetLocalizedString() }));
+
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "First seen person").GetLocalizedString(), new LocalizedString("Table", "Nearest person").GetLocalizedString(), new LocalizedString("Table", "Person with the longest range").GetLocalizedString() }));
+
+        craftingPriority1Dropdown.options[0].text = new LocalizedString("Table", "None").GetLocalizedString();
+        for(int i=0; i< craftingPriority1Dropdown.options.Count; i++)
+        {
+            craftingPriority1Dropdown.options[i].text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
+        }
+        craftingPriority1Dropdown.captionText.text = new LocalizedString("Item", ItemManager.craftables[craftingPriority1Dropdown.value].itemType.ToString()).GetLocalizedString(); ;
+
+        for (int i = 0; i < craftableAllows.Count; i++)
+        {
+            craftableAllows[i].GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
+        }
     }
 
     public void SetDefault()
@@ -1931,28 +1988,28 @@ public class OutGameUIManager : MonoBehaviour
         confirmButton.onClick.AddListener(()=>confirmCanvas.SetActive(false));
 
         var localizedString = new LocalizedString("Table", key);
-        LocalizeStringEvent localizeStringEvent = confirmText.GetComponentInChildren<LocalizeStringEvent>();
-        localizeStringEvent.StringReference = localizedString;
         switch (vars.Length)
         {
             case 0:
                 break;
             case 1:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0] } };
                 break;
             case 2:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0], param1 = vars[1] } };
                 break;
             case 3:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0], param1 = vars[1], param2 = vars[2] } };
                 break;
             default:
                 Debug.Log("To many params");
                 break;
         }
+        LocalizeStringEvent localizeStringEvent = confirmText.GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
         localizeStringEvent.RefreshString();
         //confirmText.text = wantText;
         confirmCanvas.SetActive(true);
@@ -1964,24 +2021,24 @@ public class OutGameUIManager : MonoBehaviour
         GameObject alertWindow = PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform);
         //alertWindow.GetComponentInChildren<TextMeshProUGUI>().text = message;
         var localizedString = new LocalizedString("Table", key);
-        LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
-        localizeStringEvent.StringReference = localizedString;
         switch (vars.Length)
         {
             case 0:
                 break;
             case 1:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0] } };
                 break;
             case 2:
-                localizeStringEvent.StringReference.Arguments
+                localizedString.Arguments
                     = new[] { new { param0 = vars[0], param1 = vars[1] } };
                 break;
             default:
                 Debug.Log("To many params");
                 break;
         }
+        LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.StringReference = localizedString;
         localizeStringEvent.RefreshString();
         GameManager.Instance.openedWindows.Push(alertWindow);
     }
@@ -2083,6 +2140,11 @@ public class OutGameUIManager : MonoBehaviour
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
-        ResetTrainingRoom();
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        RelocalizeTrainingRoom();
+        RelocalizeStrategyRoom();
     }
 }

@@ -24,7 +24,7 @@ MonoBehaviour:
     - Locale-ko-KR
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db1fddf0977eb9f42b0e0283bb222d1b
-    m_Address: Characteristics_ko-KR
+    m_Address: Characteristic_ko-KR
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ko-KR

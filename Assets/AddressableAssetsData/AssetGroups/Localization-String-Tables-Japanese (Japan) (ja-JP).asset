@@ -24,7 +24,7 @@ MonoBehaviour:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5e543a399dfca6e42b6b20e4a3134a83
-    m_Address: Characteristics_ja-JP
+    m_Address: Characteristic_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP

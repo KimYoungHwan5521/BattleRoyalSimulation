@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics;
+using UnityEngine.Localization;
 
 public enum DamageType { Strike, Slash, GunShot, Explosion, Chemical }
 
@@ -13,7 +13,7 @@ public class MeleeWeapon : Weapon
 
     public void Enchant()
     {
-        itemName = $"{itemType}(Enchanted)";
+        itemName = new LocalizedString("Item", $"{itemType}_Enchanted");
         if (Enum.TryParse(itemType.ToString() + "_Enchanted", out ItemManager.Items result))
         {
             itemType = result;
@@ -22,7 +22,7 @@ public class MeleeWeapon : Weapon
         isEnchanted = true;
     }
 
-    public MeleeWeapon(ItemManager.Items itemType, string itemName, float weight, NeedHand needHand, DamageType damageType, float attackDamage, float attackRange, int attackAnimNumber, int amount = 1) 
+    public MeleeWeapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, DamageType damageType, float attackDamage, float attackRange, int attackAnimNumber, int amount = 1) 
         : base(itemType, itemName, weight, needHand, attackDamage, attackRange, attackAnimNumber, amount)
     { 
         this.damageType = damageType;
