@@ -566,9 +566,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359339
   - m_Id: 2220595640594432
-    m_Localized: "Terminer la journ\xE9e ?"
+    m_Localized: "Terminer la journ\xE9e ?{param0}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7835753295874359339
   - m_Id: 2220597318316032
     m_Localized: "Des survivants non assign\xE9s :"
     m_Metadata:
@@ -654,10 +655,170 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 4006722185785344
+    m_Localized: 'Survivants restants :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006778280407040
+    m_Localized: "<color=red>{param0}</color> a \xE9t\xE9 vaincu par <color=yellow>{param1}</color>."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4006784886435840
+    m_Localized: Coffre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007737786167296
+    m_Localized: En train de piller
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007742873858048
+    m_Localized: En combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007746342547456
+    m_Localized: En investigation du bruit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007747902828544
+    m_Localized: "Pr\xE9paration au combat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007748624248832
+    m_Localized: "Pose d\u2019un pi\xE8ge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Localized: "Cr\xE9ation : {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4009759021264896
+    m_Localized: "En poursuite de l\u2019ennemi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009760531214336
+    m_Localized: En fuite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009761395240960
+    m_Localized: "D\xE9sarmement de pi\xE8ge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009763165237248
+    m_Localized: Enchantement en cours
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011113273946112
+    m_Localized: "Votre survivant ({param0}) a gagn\xE9 !"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4011114574180352
+    m_Localized: "Votre survivant ({param0}) a \xE9t\xE9 vaincu."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4011115551453184
+    m_Localized: "\xC9limination"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011116050575360
+    m_Localized: "D\xE9g\xE2ts totaux inflig\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013401166114816
+    m_Localized: "R\xE9compense de victoire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013402768338944
+    m_Localized: "Prime d\u2019\xE9limination"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013403812720640
+    m_Localized: "Co\xFBt de transfusion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013404630609920
+    m_Localized: 1 $ pour 10 mL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013420254392320
+    m_Localized: "Co\xFBt total des soins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014292761899008
+    m_Localized: '{param0} gagne !'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4014293986635776
+    m_Localized: Gain de pari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014295257509888
+    m_Localized: Gain/perte net
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014296457080832
+    m_Localized: "{param0} est pr\xE9vu pour le prochain {param1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014297795063808
+    m_Localized: "{param0} a surmont\xE9 {param1} et gagn\xE9 {param2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015594363482112
+    m_Localized: "La valeur esp\xE9r\xE9e du pari est sup\xE9rieure \xE0 1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015597047836672
+    m_Localized: "Les stats plafonnent \xE0 100, mais peuvent d\xE9passer gr\xE2ce
+      aux traits."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016011147276288
+    m_Localized: "Si l'entra\xEEnement n\u2019am\xE9liore pas les stats, am\xE9liorez
+      l'installation de formation."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016164918849536
+    m_Localized: Mise au point auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016167221522432
+    m_Localized: Inventaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016169792630784
+    m_Localized: "R\xE9sultat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016172040777728
+    m_Localized: Temps de survie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Localized: Quitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087018927222784
+    m_Localized: "R\xE9serv\xE9 : {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 4087020722384896
+    m_Localized: Championnat de saison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087021989064704
+    m_Localized: Championnat du monde
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359339
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e00

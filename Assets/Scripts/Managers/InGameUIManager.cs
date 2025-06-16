@@ -2,9 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
@@ -170,6 +173,8 @@ public class InGameUIManager : MonoBehaviour
         selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
         selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentInChildren<Image>();
         selectedObjectsCurrentVestText = selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>();
+
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     private void Update()
@@ -263,7 +268,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetLeftSurvivors(int survivorsCount)
     {
-        leftSurvivors.text = $"Left Survivors : {survivorsCount}";
+        leftSurvivors.text = $"{new LocalizedString("Table", "Remaining survivors:").GetLocalizedString()} {survivorsCount}";
     }
 
     public void SetPredictionUI()
@@ -311,7 +316,11 @@ public class InGameUIManager : MonoBehaviour
     public void ShowKillLog(string victim, string cause)
     {
         TextMeshProUGUI killLog = PoolManager.Spawn(ResourceEnum.Prefab.KillLog, display).GetComponentInChildren<TextMeshProUGUI>();
-        string message = $"<color=red>{victim}</color> has defeated by <color=yellow>{cause}</color>";
+        LocalizedString lsMessage = new("Table", "Kill Message")
+        {
+            Arguments = new[] { victim, cause }
+        };
+        string message = lsMessage.GetLocalizedString();
         killLog.text = message;
         log.text += "\n" + message;
         GameManager.Instance.FixLayout(log.GetComponent<RectTransform>());
@@ -405,7 +414,7 @@ public class InGameUIManager : MonoBehaviour
             //Box selectedBox = selectedObject as Box;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
             selectedObjectImage.color = Color.white;
-            selectedObjectName.text = "Box";
+            selectedObjectName.text = new LocalizedString("Table", "Box").GetLocalizedString();
             selectedSurvivorsHealthBar.SetActive(false);
             selectedSurvivorBleedingBar.SetActive(false);
             selectedObjectsCurrentWeapon.SetActive(false);
@@ -534,7 +543,7 @@ public class InGameUIManager : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0.5f, 0.5f);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else if (injury.degree == 1)
@@ -545,14 +554,14 @@ public class InGameUIManager : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0, 0);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else
             {
                 targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
             }
-            targetPart.GetComponentInChildren<Help>().SetDescription($"{injury.site} {injury.type}\nDegree : {injury.degree:0.##}");
+            targetPart.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
         }
     }
 
@@ -656,16 +665,16 @@ public class InGameUIManager : MonoBehaviour
         if (survivor != selectedObject) return;
         selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
         {
-            Survivor.Status.Farming or Survivor.Status.FarmingBox => "Farming",
-            Survivor.Status.InCombat => "In combat",
-            Survivor.Status.InvestigateThreateningSound => "Investigating treatening sound",
-            Survivor.Status.Maintain => "Maintaining",
-            Survivor.Status.Trapping => "Trapping",
-            Survivor.Status.TraceEnemy => "Tracing enemy",
-            Survivor.Status.RunAway => "Running away",
-            Survivor.Status.TrapDisarming => "Trap Disarming",
-            Survivor.Status.Crafting => $"Crafting : {survivor.CurrentCrafting.itemType}",
-            Survivor.Status.Enchanting => $"Enchanting",
+            Survivor.Status.Farming or Survivor.Status.FarmingBox => new LocalizedString("Table", "Looting").GetLocalizedString(),
+            Survivor.Status.InCombat => new LocalizedString("Table", "In Battle").GetLocalizedString(),
+            Survivor.Status.InvestigateThreateningSound => new LocalizedString("Table", "Investigating noise").GetLocalizedString(),
+            Survivor.Status.Maintain => new LocalizedString("Table", "Preparing for combat").GetLocalizedString(),
+            Survivor.Status.Trapping => new LocalizedString("Table", "Setting trap").GetLocalizedString(),
+            Survivor.Status.TraceEnemy => new LocalizedString("Table", "Chasing enemy").GetLocalizedString(),
+            Survivor.Status.RunAway => new LocalizedString("Table", "Fleeing").GetLocalizedString(),
+            Survivor.Status.TrapDisarming => new LocalizedString("Table", "Disarming trap").GetLocalizedString(),
+            Survivor.Status.Crafting => new LocalizedString("Table", "Crafting:") { Arguments = new[] { survivor.CurrentCrafting.itemType.ToString() } }.GetLocalizedString(),
+            Survivor.Status.Enchanting => new LocalizedString("Table", "Enchanting").GetLocalizedString(),
             _ => survivor.CurrentStatus.ToString()
         };
         GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());
@@ -689,13 +698,13 @@ public class InGameUIManager : MonoBehaviour
                 if (selectedSurvivor.CurrentWeapon is RangedWeapon)
                 {
                     int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
-                    selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {validBulletAmount})";
+                    selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString()} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {validBulletAmount})";
                 }
-                else if(selectedSurvivor.CurrentWeapon is MeleeWeapon meleeWeapon)
-                {
-                    if (meleeWeapon.IsEnchanted) selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName}(Poison enchanted)";
-                    else selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString();
-                }
+                //else if(selectedSurvivor.CurrentWeapon is MeleeWeapon meleeWeapon)
+                //{
+                //    if (meleeWeapon.IsEnchanted) selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName}(Poison enchanted)";
+                //    else selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString();
+                //}
                 else
                 {
                     selectedObjectsCurrentWeaponText.text = selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString();
@@ -703,18 +712,18 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentWeaponText.text = "None";
+                selectedObjectsCurrentWeaponText.text = new LocalizedString("Table", "None").GetLocalizedString();
             }
 
             if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
                 selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
             else selectedObjectsCurrentHelmetImage.sprite = null;
-            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : "None";
+            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : new LocalizedString("Table", "None").GetLocalizedString();
 
             if (selectedSurvivor.CurrentVest != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
                 selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
             else selectedObjectsCurrentVestImage.sprite = null;
-            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : "None";
+            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : new LocalizedString("Table", "None").GetLocalizedString();
 
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);
@@ -735,7 +744,7 @@ public class InGameUIManager : MonoBehaviour
                     {
                         selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
                     }
-                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivorsInventory[i].itemName} x {selectedSurvivorsInventory[i].amount}";
+                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivorsInventory[i].itemName.GetLocalizedString()} x {selectedSurvivorsInventory[i].amount}";
                     selectedObjectsItems[i].SetActive(true);
                 }
                 else
@@ -762,7 +771,7 @@ public class InGameUIManager : MonoBehaviour
                     {
                         selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
                     }
-                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName} x {selectedBox.items[i].amount}";
+                    selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName.GetLocalizedString()} x {selectedBox.items[i].amount}";
                     selectedObjectsItems[i].SetActive(true);
                 }
                 else
@@ -802,6 +811,12 @@ public class InGameUIManager : MonoBehaviour
                 
             }
         }
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        leftSurvivors.text = $"{new LocalizedString("Table", "Remaining survivors:").GetLocalizedString()} {GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count}";
+        if(selectedObject != null) SetSelectedObjectInfoOnce();
     }
 
     bool IsPointerOverUI()

@@ -567,9 +567,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 2220595640594432
-    m_Localized: "\xBFTerminar el d\xEDa?"
+    m_Localized: "\xBFTerminar el d\xEDa?{param0}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7835753295874359332
   - m_Id: 2220597318316032
     m_Localized: 'Hay sobrevivientes sin asignar:'
     m_Metadata:
@@ -655,10 +656,169 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
+  - m_Id: 4006784886435840
+    m_Localized: Caja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006778280407040
+    m_Localized: <color=red>{param0}</color> fue derrotado por <color=yellow>{param1}</color>.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4006722185785344
+    m_Localized: 'Supervivientes restantes:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007737786167296
+    m_Localized: Saqueando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007742873858048
+    m_Localized: En combate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007746342547456
+    m_Localized: Investigando ruido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007747902828544
+    m_Localized: "Prepar\xE1ndose para el combate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007748624248832
+    m_Localized: Instalando trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Localized: 'Fabricando : {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4009759021264896
+    m_Localized: Persiguiendo enemigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009760531214336
+    m_Localized: Huyendo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009761395240960
+    m_Localized: Desactivando trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009763165237248
+    m_Localized: Encantando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011113273946112
+    m_Localized: Tu superviviente ({param0}) ha ganado!
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4011114574180352
+    m_Localized: Tu superviviente ({param0}) fue derrotado.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4011115551453184
+    m_Localized: Baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011116050575360
+    m_Localized: "Da\xF1o total"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013401166114816
+    m_Localized: Recompensa de victoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013402768338944
+    m_Localized: Premio por baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013403812720640
+    m_Localized: "Coste de transfusi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013404630609920
+    m_Localized: $1 por 10 mL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013420254392320
+    m_Localized: Costo total de tratamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014292761899008
+    m_Localized: '{param0} gana!'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4014293986635776
+    m_Localized: Pago de apuesta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014295257509888
+    m_Localized: "Beneficio/p\xE9rdida neta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014296457080832
+    m_Localized: "{param0} ha sido programado para el pr\xF3ximo {param1}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014297795063808
+    m_Localized: "{param0} super\xF3 {param1} y obtuvo {param2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015594363482112
+    m_Localized: El valor esperado de la apuesta es mayor que 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015597047836672
+    m_Localized: "Los atributos base tienen l\xEDmite 100, pero pueden superarse
+      con rasgos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016011147276288
+    m_Localized: "Si el entrenamiento no eleva stats, mejora la instalaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016164918849536
+    m_Localized: "Enfoque autom\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016167221522432
+    m_Localized: Inventario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016169792630784
+    m_Localized: Resultado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016172040777728
+    m_Localized: Tiempo de supervivencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087018927222784
+    m_Localized: 'Reservado: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 4087020722384896
+    m_Localized: Campeonato de temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087021989064704
+    m_Localized: Campeonato mundial
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359332
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e00

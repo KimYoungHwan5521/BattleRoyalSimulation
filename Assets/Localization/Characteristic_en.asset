@@ -158,6 +158,148 @@ MonoBehaviour:
     m_Localized: Nimble Hands
     m_Metadata:
       m_Items: []
+  - m_Id: 2117844302622720
+    m_Localized: "Vision + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117846311694336
+    m_Localized: "Vision - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117848945717248
+    m_Localized: "Hearing + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117859976736768
+    m_Localized: "Hearing - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121373159321600
+    m_Localized: Stat Boost in Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121375021592576
+    m_Localized: Stat Drop in Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123912441294848
+    m_Localized: Body Size, Strength + 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123914253234176
+    m_Localized: Body Size, Strength - 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128013937930240
+    m_Localized: "Strength - 10\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128015598874624
+    m_Localized: Strength + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128017360482304
+    m_Localized: Strength + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128817847595008
+    m_Localized: Agility - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128819676311552
+    m_Localized: Agility + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128822692016128
+    m_Localized: Agility + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130467601575936
+    m_Localized: Melee - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130469455458304
+    m_Localized: Melee + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130471170928640
+    m_Localized: Melee + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131666409156608
+    m_Localized: Shooting - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131668028157952
+    m_Localized: Shooting + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131669743628288
+    m_Localized: Shooting + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132317415469056
+    m_Localized: Knowledge - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132319453900800
+    m_Localized: Knowledge + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132321051930624
+    m_Localized: Knowledge + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2133348903874560
+    m_Localized: Shooting Delay +, Shooting Accuracy +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151649654665216
+    m_Localized: Daily Stat Variance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151659720994816
+    m_Localized: Injury Rate +, Injury Recovery Speed -, Natural Bleed Stop Speed
+      -
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151997345689600
+    m_Localized: Injury Rate -, Injury Recovery Speed +, Natural Bleed Stop Speed
+      +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152000088764416
+    m_Localized: Melee + while bleeding, Natural Bleed Stop Speed -
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152004157239296
+    m_Localized: Natural Bleed Stop Speed +, Health Regeneration +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167684596297728
+    m_Localized: Luck + 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167691151994880
+    m_Localized: Luck - 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167694197059584
+    m_Localized: Luck + 100%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169490042843136
+    m_Localized: Crafting Speed - 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169491749924864
+    m_Localized: Crafting Speed + 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169493243097088
+    m_Localized: Crafting Speed + 60%
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

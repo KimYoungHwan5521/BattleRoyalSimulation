@@ -41,9 +41,15 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         this.description = description;
     }
 
+    public void SetDescription(LocalizedString description)
+    {
+        raw = true;
+        this.description = description.GetLocalizedString();
+    }
+
     public void SetDescriptionWithKey(string key, params string[] vars)
     {
-        raw = false;
+        raw = true;
         var localizedString = new LocalizedString("Table", key);
         switch (vars.Length)
         {
@@ -61,9 +67,10 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 Debug.Log("To many params");
                 break;
         }
-        LocalizeStringEvent localizeStringEvent = GetComponentInChildren<LocalizeStringEvent>();
-        localizeStringEvent.StringReference = localizedString;
-        localizeStringEvent.RefreshString();
+        //LocalizeStringEvent localizeStringEvent = GameManager.Instance.description.GetComponentInChildren<LocalizeStringEvent>();
+        //localizeStringEvent.StringReference = localizedString;
+        //localizeStringEvent.RefreshString();
+        description = localizedString.GetLocalizedString();
     }
 
     public void SetDescription(InjurySite injurySite)

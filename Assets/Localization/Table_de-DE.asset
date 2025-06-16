@@ -565,9 +565,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 2220595640594432
-    m_Localized: Tag beenden?
+    m_Localized: Tag beenden?{param0}
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7835753295874359338
   - m_Id: 2220597318316032
     m_Localized: "Es gibt nicht zugewiesene \xDCberlebende:"
     m_Metadata:
@@ -653,10 +654,170 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 4006784886435840
+    m_Localized: Kiste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006778280407040
+    m_Localized: <color=red>{param0}</color> wurde von <color=yellow>{param1}</color>
+      besiegt.
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4006722185785344
+    m_Localized: "Verbleibende \xDCberlebende:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007737786167296
+    m_Localized: "Wird gepl\xFCndert"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007742873858048
+    m_Localized: Im Kampf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007746342547456
+    m_Localized: "Untersucht Ger\xE4uschquelle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007747902828544
+    m_Localized: Kampfvobereitung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007748624248832
+    m_Localized: Falle aufstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Localized: 'Herstellung: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4009759021264896
+    m_Localized: Gegner verfolgend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009760531214336
+    m_Localized: Auf der Flucht
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009761395240960
+    m_Localized: "Falle entsch\xE4rfen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009763165237248
+    m_Localized: Am enchantieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011113273946112
+    m_Localized: "Dein \xDCberlebender ({param0}) hat gewonnen!"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4011114574180352
+    m_Localized: "Dein \xDCberlebender ({param0}) wurde besiegt."
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4011115551453184
+    m_Localized: "T\xF6tung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011116050575360
+    m_Localized: Gesamtschaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013401166114816
+    m_Localized: "Siegpr\xE4mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013402768338944
+    m_Localized: "T\xF6tungspr\xE4mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013403812720640
+    m_Localized: Transfusionskosten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013404630609920
+    m_Localized: 1 $ pro 10 mL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013420254392320
+    m_Localized: Gesamte Behandlungskosten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014292761899008
+    m_Localized: '{param0} gewinnt!'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4014293986635776
+    m_Localized: Wettgewinn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014295257509888
+    m_Localized: Gesamtgewinn/-verlust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014296457080832
+    m_Localized: "{param0} ist f\xFCr das n\xE4chste {param1} geplant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014297795063808
+    m_Localized: "{param0} hat {param1} \xFCberwunden und {param2} erhalten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015594363482112
+    m_Localized: "Der erwartete Wert der Wette ist gr\xF6\xDFer als 1."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015597047836672
+    m_Localized: "Basiswerte sind auf 100 begrenzt, aber Traits k\xF6nnen \xFCberschreiten."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016011147276288
+    m_Localized: "Wenn Training keine Werte erh\xF6ht, r\xFCste die Trainingsanlage
+      auf."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016164918849536
+    m_Localized: Autofokus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016167221522432
+    m_Localized: Inventar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016169792630784
+    m_Localized: Ergebnis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016172040777728
+    m_Localized: "\xDCberlebenszeit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Localized: Verlassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087018927222784
+    m_Localized: 'Reserviert: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 4087020722384896
+    m_Localized: Saisonmeisterschaft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087021989064704
+    m_Localized: Weltmeisterschaft
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359338
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf0800
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e00

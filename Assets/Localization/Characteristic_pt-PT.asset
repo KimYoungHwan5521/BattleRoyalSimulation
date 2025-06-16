@@ -158,6 +158,149 @@ MonoBehaviour:
     m_Localized: Fracote
     m_Metadata:
       m_Items: []
+  - m_Id: 2117844302622720
+    m_Localized: "Vis\xE3o + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117846311694336
+    m_Localized: "Vis\xE3o - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117848945717248
+    m_Localized: "Audi\xE7\xE3o + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117859976736768
+    m_Localized: "Audi\xE7\xE3o - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121373159321600
+    m_Localized: "B\xF4nus em campeonato"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121375021592576
+    m_Localized: Penalidade em campeonato
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123912441294848
+    m_Localized: "Tamanho corporal, For\xE7a + 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123914253234176
+    m_Localized: "Tamanho corporal, For\xE7a - 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128013937930240
+    m_Localized: "For\xE7a - 10\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128015598874624
+    m_Localized: "For\xE7a + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128017360482304
+    m_Localized: "For\xE7a + 20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128817847595008
+    m_Localized: Agilidade - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128819676311552
+    m_Localized: Agilidade + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128822692016128
+    m_Localized: Agilidade + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130467601575936
+    m_Localized: Combate corpo a corpo - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130469455458304
+    m_Localized: Combate corpo a corpo + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130471170928640
+    m_Localized: Combate corpo a corpo + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131666409156608
+    m_Localized: Tiro - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131668028157952
+    m_Localized: Tiro + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131669743628288
+    m_Localized: Tiro + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132317415469056
+    m_Localized: Conhecimento - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132319453900800
+    m_Localized: Conhecimento + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132321051930624
+    m_Localized: Conhecimento + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2133348903874560
+    m_Localized: "Atraso no disparo +, Precis\xE3o de tiro +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151649654665216
+    m_Localized: "Varia\xE7\xE3o di\xE1ria de stats"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151659720994816
+    m_Localized: "Taxa de les\xF5es +, Velocidade de recupera\xE7\xE3o -, Velocidade
+      de estancamento -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151997345689600
+    m_Localized: "Taxa de les\xF5es -, Velocidade de recupera\xE7\xE3o +, Velocidade
+      de estancamento +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152000088764416
+    m_Localized: Combate corpo a corpo + enquanto sangra, Velocidade de estancamento
+      -
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152004157239296
+    m_Localized: "Velocidade de estancamento +, Regenera\xE7\xE3o de sa\xFAde +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167684596297728
+    m_Localized: Sorte + 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167691151994880
+    m_Localized: Sorte - 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167694197059584
+    m_Localized: Sorte + 100%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169490042843136
+    m_Localized: "Velocidade de cria\xE7\xE3o - 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169491749924864
+    m_Localized: "Velocidade de cria\xE7\xE3o + 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169493243097088
+    m_Localized: "Velocidade de cria\xE7\xE3o + 60%"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

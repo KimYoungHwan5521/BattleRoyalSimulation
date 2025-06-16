@@ -1743,12 +1743,12 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     public void EndTheDay()
     {
-        string message = new LocalizedString("Table", "End The Day").GetLocalizedString();
+        string key = "End The Day";
         string warning = "";
         if(calendar.Today % 7 < 5)
         {
             bool thereAreUnassignedSurvivors = false;
-            warning = $"\n<color=red><i>{new LocalizedString("Table", "There are unassigned survivors:").GetLocalizedString()} : ";
+            warning = $"\n<color=red><i>{new LocalizedString("Table", "There are unassigned survivors:").GetLocalizedString()} ";
             foreach (SurvivorData survivor in mySurvivorsData)
             {
                 if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
@@ -1758,7 +1758,7 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
             warning += "</i></color>";
-            if (thereAreUnassignedSurvivors) message += warning;
+            if (!thereAreUnassignedSurvivors) warning = "";
         }
         else
         {
@@ -1771,14 +1771,14 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 else
                 {
-                    message = new LocalizedString("Table", "Today is a battle royale day. Skip it?").GetLocalizedString();
+                    warning = new LocalizedString("Table", "Today is a battle royale day. Skip it?").GetLocalizedString();
                 }
             }
         }
 
         if(calendar.Today % 7 < 5)
         {
-            OpenConfirmWindow(message, () =>
+            OpenConfirmWindow(key, () =>
             {
                 calendar.Today++;
                 calendar.TurnPageCalendar(0);
@@ -1815,14 +1815,14 @@ public class OutGameUIManager : MonoBehaviour
 
                 dailyResult.SetActive(true);
                 GameManager.Instance.openedWindows.Push(dailyResult);
-            });
+            }, warning);
         }
         else if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
         {
-            OpenConfirmWindow(message, () =>
+            OpenConfirmWindow(key, () =>
             {
                 EndTheDayWeekend();
-            });
+            }, warning);
         }
         else EndTheDayWeekend();
     }

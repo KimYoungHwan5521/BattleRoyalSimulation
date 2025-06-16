@@ -155,6 +155,146 @@ MonoBehaviour:
     m_Key: Sturdy
     m_Metadata:
       m_Items: []
+  - m_Id: 2117844302622720
+    m_Key: Help:HawkEye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117846311694336
+    m_Key: Help:BadEye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117848945717248
+    m_Key: Help:KeenHearing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117859976736768
+    m_Key: Help:BadHearing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121373159321600
+    m_Key: Help:ClutchPerformance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121375021592576
+    m_Key: Help:ChokingUnderPressure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123912441294848
+    m_Key: Help:Giant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123914253234176
+    m_Key: Help:Dwarf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128013937930240
+    m_Key: Help:MuscleDeficiency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128015598874624
+    m_Key: Help:Strongman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128017360482304
+    m_Key: Explain:Powerhouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128817847595008
+    m_Key: Help:Heavyfooted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128819676311552
+    m_Key: Help:Lightfooted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128822692016128
+    m_Key: Help:Assassin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130467601575936
+    m_Key: Help:ClumsyFighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130469455458304
+    m_Key: Help:Brawler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130471170928640
+    m_Key: Help:Fighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131666409156608
+    m_Key: Help:PoorAim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131668028157952
+    m_Key: Help:Sniper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131669743628288
+    m_Key: Help:Sharpshooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132317415469056
+    m_Key: Help:Dunce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132319453900800
+    m_Key: Help:Smart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132321051930624
+    m_Key: Help:Genius
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2133348903874560
+    m_Key: Help:CarefulShooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151649654665216
+    m_Key: Help:UpsAndDowns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151659720994816
+    m_Key: Help:Fragile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151997345689600
+    m_Key: Help:Sturdy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152000088764416
+    m_Key: Help:Avenger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152004157239296
+    m_Key: Help:Regenerator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167684596297728
+    m_Key: Help:LuckGuy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167691151994880
+    m_Key: Help:Cursed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167694197059584
+    m_Key: Help:Blessed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169490042843136
+    m_Key: Help:ClumsyHand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169491749924864
+    m_Key: Help:Dexterous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169493243097088
+    m_Key: Help:Engineer
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

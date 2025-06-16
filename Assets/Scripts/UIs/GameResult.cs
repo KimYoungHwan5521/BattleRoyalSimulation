@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public delegate void ReserveNotification();
@@ -44,6 +45,7 @@ public class GameResult : MonoBehaviour
     {
         outGameUIManager = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     private void Update()
@@ -70,24 +72,32 @@ public class GameResult : MonoBehaviour
         bool didPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
         mySurvivorResult.SetActive(didPlayerParticipate);
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
+        SetText(didPlayerParticipate, out int totalProfit);
+        outGameUIManager.Money += totalProfit;
+        GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
+    }
 
-        int totalProfit = 0;
-        if( didPlayerParticipate )
+    void SetText(bool didPlayerParticipate, out int totalProfit)
+    {
+        totalProfit = 0;
+        if (didPlayerParticipate)
         {
             Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
             bool playerWin = GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0;
-            gameResultText.text = playerWin ? $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Won!" : $"Your Survivor({outGameUIManager.MySurvivorDataInBattleRoyale.survivorName}) Has Lost";
-            survivedTimeText.text = $"Survived Time : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
-            killsText.text = $"Kills : {playerSurvivor.KillCount}";
-            totalDamageText.text = $"Total Damage : {(int)playerSurvivor.TotalDamage}";
+            LocalizedString resultText = playerWin ? new LocalizedString("Table", "Your survivor won!") : new LocalizedString("Table", "Your survivor was defeated.");
+            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.survivorName };
+            gameResultText.text = resultText.GetLocalizedString();
+            survivedTimeText.text = $"{new LocalizedString("Table", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
+            killsText.text = $"{new LocalizedString("Table", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
+            totalDamageText.text = $"{new LocalizedString("Table", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
 
             int winPrize = 0;
             int killPrize = 0;
             int totalTreatmentCost = 0;
-            switch(calendar.LeagueReserveInfo[calendar.Today].league)
+            switch (calendar.LeagueReserveInfo[calendar.Today].league)
             {
                 case League.BronzeLeague:
-                    if(playerWin) winPrize = 1000;
+                    if (playerWin) winPrize = 1000;
                     killPrize = playerSurvivor.KillCount * 100;
                     break;
                 case League.SilverLeague:
@@ -107,35 +117,35 @@ public class GameResult : MonoBehaviour
                     killPrize = playerSurvivor.KillCount * 3000;
                     break;
             }
-            winPrizeText.text = $"Win Prize : <color=green>$ {winPrize}</color>";
-            killPrizeText.text = $"Kill Prize : <color=green>$ {killPrize}</color>";
-            for(int i = 0; i<treatments.Length; i++)
+            winPrizeText.text = $"{new LocalizedString("Table", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
+            killPrizeText.text = $"{new LocalizedString("Table", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
+            for (int i = 0; i < treatments.Length; i++)
             {
                 if (i < playerSurvivor.injuries.Count + 1)
                 {
-                    if(i < playerSurvivor.injuries.Count)
+                    if (i < playerSurvivor.injuries.Count)
                     {
                         if (playerSurvivor.rememberAlreadyHaveInjury.Contains(playerSurvivor.injuries[i].site))
                         {
                             treatments[i].SetActive(false);
                             continue;
                         }
-                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{playerSurvivor.injuries[i].site} {playerSurvivor.injuries[i].type}";
+                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                         int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                        treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
+                        //treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
                         totalTreatmentCost += cost;
                         treatments[i].SetActive(true);
                     }
-                    else 
+                    else
                     {
-                        if(playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
+                        if (playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
                         {
                             // ¼öÇ÷ºñ
                             int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
-                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"Blood transfusion fee";
+                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = new LocalizedString("Table", "Blood transfusion cost").GetLocalizedString();
                             treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
-                            treatments[i].GetComponentInChildren<Help>().SetDescription("$1 per 10mL");
+                            treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Table", "Help:Blood transfusion cost").GetLocalizedString());
                             treatments[i].SetActive(true);
                         }
                         else treatments[i].SetActive(false);
@@ -143,23 +153,23 @@ public class GameResult : MonoBehaviour
                 }
                 else treatments[i].SetActive(false);
             }
-            totalTreatmentCostText.text = $"Total Treatment Cost : <color=red>- $ {totalTreatmentCost}</color>";
+            totalTreatmentCostText.text = $"{new LocalizedString("Table", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
             totalProfit = winPrize + killPrize - totalTreatmentCost;
 
             if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
         }
         else
         {
-            gameResultText.text = $"{GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName} Has Won!";
+            gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName } }.GetLocalizedString()}";
         }
 
         // Betting Result
-        if(outGameUIManager.BettingAmount > 0)
+        if (outGameUIManager.BettingAmount > 0)
         {
             bettingPrediction.SetActive(true);
-            for(int i = 0; i<predictionTable.Length; i++)
+            for (int i = 0; i < predictionTable.Length; i++)
             {
-                if(i < outGameUIManager.PredictionNumber)
+                if (i < outGameUIManager.PredictionNumber)
                 {
                     predictionTable[i].SetActive(true);
                     predictionsText[i].text = outGameUIManager.Predictions[i];
@@ -169,10 +179,10 @@ public class GameResult : MonoBehaviour
             }
             int correctExactRanking = 0;
             int correctOnlyRankedIn = 0;
-            for(int i = 0; i<outGameUIManager.PredictionNumber; i++)
+            for (int i = 0; i < outGameUIManager.PredictionNumber; i++)
             {
                 bool doContinue = false;
-                for(int j = 0; j<outGameUIManager.PredictionNumber; j++)
+                for (int j = 0; j < outGameUIManager.PredictionNumber; j++)
                 {
                     if (predictionsText[i].text == rankingsText[j].text)
                     {
@@ -191,23 +201,22 @@ public class GameResult : MonoBehaviour
                     }
                 }
                 if (doContinue) continue;
-                predictionsBG[i].color = new Color(0.88f,0.43f, 0.43f);
+                predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
-            bettingRewardsText.text = $"Bet amount : $ <color=red>- {outGameUIManager.BettingAmount}</color>\nBetting rewards : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
+            bettingRewardsText.text = $"{new LocalizedString("Table", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Table", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
             totalProfit += bettingRewards - outGameUIManager.BettingAmount;
         }
         else
         {
             bettingPrediction.SetActive(false);
-            bettingRewardsText.text = "Betting rewards ; $ 0";
+            bettingRewardsText.text = $"{new LocalizedString("Table", "Betting payout").GetLocalizedString()} : $ 0";
         }
 
-        if (totalProfit >= 0) totalProfitText.text = $"Total Profit/Loss : <color=green>$ {totalProfit}</color>";
-        else totalProfitText.text = $"Total Profit/Loss : <color=red>- $ {-totalProfit}</color>";
-        outGameUIManager.Money += totalProfit;
-        GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
+        if (totalProfit >= 0) totalProfitText.text = $"{new LocalizedString("Table", "Net profit/loss").GetLocalizedString()} : <color=green>$ {totalProfit}</color>";
+        else totalProfitText.text = $"{new LocalizedString("Table", "Net profit/loss").GetLocalizedString()} : <color=red>- $ {-totalProfit}</color>";
+
     }
 
     void Promote(SurvivorData survivor)
@@ -222,7 +231,7 @@ public class GameResult : MonoBehaviour
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert($"{survivor.survivorName} has been booked for next Season Championship\n<i>(In the meantime, he can join other leagues)</i>"); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Table", "Season Championship").GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
@@ -231,9 +240,9 @@ public class GameResult : MonoBehaviour
                 {
                     survivor.characteristics.RemoveAt(characteristic);
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
-                    notification += () => { outGameUIManager.Alert($"{survivor.survivorName} overcame <i>Chocking Under Pressure</i> and acquired new characteristic <i>Clutch Performance</i>"); };
+                    notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                 }
-                notification += () => { outGameUIManager.Alert($"{survivor.survivorName} has been booked for next World Championship\n<i>(In the meantime, he can join other leagues)</i>"); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Table", "World Championship").GetLocalizedString()); };
                 break;
         }
     }
@@ -277,12 +286,10 @@ public class GameResult : MonoBehaviour
         Time.timeScale = lastTimeScale;
     }
 
-    // ESC
-    //void OnCancel(InputValue value)
-    //{
-    //    if(value.Get<float>() > 0 && GameManager.Instance.BattleRoyaleManager.BattleWinner == null)
-    //    {
-    //        gameResult.SetActive(true);
-    //    }
-    //}
+    void OnLocaleChanged(Locale newLocale)
+    {
+        if (GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
+        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _);
+    }
+
 }

@@ -1490,7 +1490,7 @@ public class Survivor : CustomObject
     #region Item
     public bool IsValid(Item item)
     {
-        if (item == null || string.IsNullOrEmpty(item.itemName.GetLocalizedString()) || item.itemType == ItemManager.Items.NotValid) return false;
+        if (item == null || item.itemType == ItemManager.Items.NotValid) return false;
         return true;
     }
 

@@ -158,6 +158,149 @@ MonoBehaviour:
     m_Localized: Robust
     m_Metadata:
       m_Items: []
+  - m_Id: 2117844302622720
+    m_Localized: "Sicht + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117846311694336
+    m_Localized: "Sicht - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117848945717248
+    m_Localized: "Geh\xF6r + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117859976736768
+    m_Localized: "Geh\xF6r - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121373159321600
+    m_Localized: Wertebonus im Turnier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121375021592576
+    m_Localized: Werteabfall im Turnier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123912441294848
+    m_Localized: "K\xF6rpergr\xF6\xDFe, St\xE4rke + 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123914253234176
+    m_Localized: "K\xF6rpergr\xF6\xDFe, St\xE4rke - 30%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128013937930240
+    m_Localized: "St\xE4rke - 10\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128015598874624
+    m_Localized: "St\xE4rke + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128017360482304
+    m_Localized: "St\xE4rke + 20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128817847595008
+    m_Localized: Beweglichkeit - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128819676311552
+    m_Localized: Beweglichkeit + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128822692016128
+    m_Localized: Beweglichkeit + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130467601575936
+    m_Localized: Nahkampf - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130469455458304
+    m_Localized: Nahkampf + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130471170928640
+    m_Localized: Nahkampf + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131666409156608
+    m_Localized: "Schie\xDFen - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131668028157952
+    m_Localized: "Schie\xDFen + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131669743628288
+    m_Localized: "Schie\xDFen + 20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132317415469056
+    m_Localized: Wissen - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132319453900800
+    m_Localized: Wissen + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132321051930624
+    m_Localized: Wissen + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2133348903874560
+    m_Localized: "Schussverz\xF6gerung +, Schussgenauigkeit +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151649654665216
+    m_Localized: "T\xE4gliche Werteabweichung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151659720994816
+    m_Localized: Verletzungsrate +, Erholgeschwindigkeit -, Blutstillungsgeschwindigkeit
+      -
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151997345689600
+    m_Localized: Verletzungsrate -, Erholgeschwindigkeit +, Blutstillungsgeschwindigkeit
+      +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152000088764416
+    m_Localized: "Nahkampf + w\xE4hrend des Blutens, Blutstillungsgeschwindigkeit
+      +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152004157239296
+    m_Localized: Blutstillungsgeschwindigkeit +, Lebensregeneration +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167684596297728
+    m_Localized: "Gl\xFCck + 50%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167691151994880
+    m_Localized: "Gl\xFCck - 50%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167694197059584
+    m_Localized: "Gl\xFCck + 100%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169490042843136
+    m_Localized: Herstellgeschwindigkeit - 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169491749924864
+    m_Localized: Herstellgeschwindigkeit + 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169493243097088
+    m_Localized: Herstellgeschwindigkeit + 60%
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

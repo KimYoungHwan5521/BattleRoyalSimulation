@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
@@ -139,7 +140,7 @@ public class Calendar : CustomObject
                     if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
                     {
                         reserved[i].SetActive(true);
-                        reserved[i].GetComponent<Help>().SetDescription($"Reserver : {leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.survivorName}");
+                        reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.survivorName);
                     }
                     else reserved[i].SetActive(false);
                 }
@@ -514,6 +515,7 @@ public class Calendar : CustomObject
         }
         Today = 0;
         TurnPageCalendar(0);
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     public void OpenCalendar()
@@ -739,6 +741,16 @@ public class Calendar : CustomObject
         scheduleByEachSurvivor.SetActive(false);
         calendarObject.SetActive(false);
         reserveForm.SetActive(false);
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        if (!leagueReserveInfo.ContainsKey(wantReserveDate)) return;
+        farmableItemsText.text = "";
+        foreach (var item in itemPool[leagueReserveInfo[wantReserveDate].itemPool])
+        {
+            farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
+        }
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)

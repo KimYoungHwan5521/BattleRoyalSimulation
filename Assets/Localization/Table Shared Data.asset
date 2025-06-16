@@ -620,6 +620,158 @@ MonoBehaviour:
     m_Key: Confirm:Reserve Battle Royale Who Have Injury
     m_Metadata:
       m_Items: []
+  - m_Id: 4006722185785344
+    m_Key: 'Remaining survivors:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006778280407040
+    m_Key: Kill Message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006784886435840
+    m_Key: Box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007737786167296
+    m_Key: Looting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007742873858048
+    m_Key: In Battle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007746342547456
+    m_Key: Investigating noise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007747902828544
+    m_Key: Preparing for combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007748624248832
+    m_Key: Setting trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009759021264896
+    m_Key: Chasing enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009760531214336
+    m_Key: Fleeing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009761395240960
+    m_Key: Disarming trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Key: 'Crafting:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009763165237248
+    m_Key: Enchanting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011113273946112
+    m_Key: Your survivor won!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011114574180352
+    m_Key: Your survivor was defeated.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011115551453184
+    m_Key: Kill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011116050575360
+    m_Key: Total damage dealt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013401166114816
+    m_Key: Victory reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013402768338944
+    m_Key: Kill reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013403812720640
+    m_Key: Blood transfusion cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013404630609920
+    m_Key: Help:Blood transfusion cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013420254392320
+    m_Key: Total medical cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014292761899008
+    m_Key: wins!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014293986635776
+    m_Key: Betting payout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014295257509888
+    m_Key: Net profit/loss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014296457080832
+    m_Key: Alert:Auto Reserve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014297795063808
+    m_Key: Alert:Overcame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015594363482112
+    m_Key: The expected value of the bet is greater than 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015597047836672
+    m_Key: Base stats cap at 100, but can exceed with traits.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016011147276288
+    m_Key: If training doesn't raise stats, upgrade your training facility.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016164918849536
+    m_Key: Auto Focus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016167221522432
+    m_Key: Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016169792630784
+    m_Key: Result
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016172040777728
+    m_Key: Survival Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087018927222784
+    m_Key: 'Reserved:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087020722384896
+    m_Key: Season Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087021989064704
+    m_Key: World Championship
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

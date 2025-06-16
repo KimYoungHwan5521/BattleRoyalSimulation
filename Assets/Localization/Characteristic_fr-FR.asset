@@ -158,6 +158,148 @@ MonoBehaviour:
     m_Localized: Costaud
     m_Metadata:
       m_Items: []
+  - m_Id: 2117844302622720
+    m_Localized: "Vision + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117846311694336
+    m_Localized: "Vision - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117848945717248
+    m_Localized: "Ou\xEFe + 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2117859976736768
+    m_Localized: "Ou\xEFe - 30%\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121373159321600
+    m_Localized: Bonus en championnat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2121375021592576
+    m_Localized: Malus en championnat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123912441294848
+    m_Localized: Taille corporelle, Force + 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2123914253234176
+    m_Localized: Taille corporelle, Force - 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128013937930240
+    m_Localized: "Force - 10\r"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128015598874624
+    m_Localized: Force + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128017360482304
+    m_Localized: Force + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128817847595008
+    m_Localized: "Agilit\xE9 - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128819676311552
+    m_Localized: "Agilit\xE9 + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2128822692016128
+    m_Localized: "Agilit\xE9 + 20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130467601575936
+    m_Localized: "Combat rapproch\xE9 - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130469455458304
+    m_Localized: "Combat rapproch\xE9 + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2130471170928640
+    m_Localized: "Combat rapproch\xE9 + 20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131666409156608
+    m_Localized: Tir - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131668028157952
+    m_Localized: Tir + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2131669743628288
+    m_Localized: Tir + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132317415469056
+    m_Localized: Connaissance - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132319453900800
+    m_Localized: Connaissance + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2132321051930624
+    m_Localized: Connaissance + 20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2133348903874560
+    m_Localized: "D\xE9lai de tir +, Pr\xE9cision de tir +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151649654665216
+    m_Localized: Variation quotidienne des stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151659720994816
+    m_Localized: "Taux de blessure +, Vitesse de gu\xE9rison -, Vitesse de coagulation
+      -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2151997345689600
+    m_Localized: "Taux de blessure -, Vitesse de gu\xE9rison +, Vitesse de coagulation
+      +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152000088764416
+    m_Localized: "Combat rapproch\xE9 + en saignant, Vitesse de coagulation -"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2152004157239296
+    m_Localized: "Vitesse de coagulation +, R\xE9g\xE9n\xE9ration de sant\xE9 +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167684596297728
+    m_Localized: Chance + 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167691151994880
+    m_Localized: Chance - 50%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2167694197059584
+    m_Localized: Chance + 100%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169490042843136
+    m_Localized: Vitesse de fabrication - 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169491749924864
+    m_Localized: Vitesse de fabrication + 30%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2169493243097088
+    m_Localized: Vitesse de fabrication + 60%
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

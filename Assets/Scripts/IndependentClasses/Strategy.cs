@@ -88,7 +88,6 @@ public class Strategy : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OutGameUIManager.OpenStrategyRoom();
         if(strategyCase == StrategyCase.CraftingAllow) craftableAllows = new bool[ItemManager.craftables.Count];
         if (noCondition) return;
         andOrs = new TMP_Dropdown[conditions.Length];
@@ -135,7 +134,6 @@ public class Strategy : MonoBehaviour
         ActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         ElseActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         andOrs[0].gameObject.SetActive(false);
-        GameManager.Instance.OutGameUIManager.CloseStrategyRoom();
     }
 
     public void SetDefault()
