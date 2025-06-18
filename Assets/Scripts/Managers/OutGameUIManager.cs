@@ -1726,7 +1726,7 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log(odds);
+        //Debug.Log(odds);
         odds *= Factorial(correctExactRanking);
         // 이론상 최대 배당 : x6375600
         return odds;
@@ -1757,6 +1757,7 @@ public class OutGameUIManager : MonoBehaviour
                     warning += $"{survivor.survivorName}, ";
                 }
             }
+            warning = warning[..^2];
             warning += "</i></color>";
             if (!thereAreUnassignedSurvivors) warning = "";
         }

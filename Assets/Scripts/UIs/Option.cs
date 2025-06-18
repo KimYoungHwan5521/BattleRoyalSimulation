@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Tables;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class Option : MonoBehaviour
@@ -25,6 +26,7 @@ public class Option : MonoBehaviour
     [SerializeField] GameObject encyclopedia;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
+    List<GameObject> itemBoxes = new();
 
     [Header("Buttons")]
     [SerializeField] GameObject resume;
@@ -53,6 +55,7 @@ public class Option : MonoBehaviour
         GameManager.Instance.ObjectStart += OptionSetting;
         GameManager.Instance.ObjectStart += ReloadSavedata;
 
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     private void Update()
@@ -70,6 +73,7 @@ public class Option : MonoBehaviour
             string itemName = ((ItemManager.Items)i).ToString();
             if (itemName.Contains("Enchanted")) continue;
             GameObject itemImageBox = PoolManager.Spawn(ResourceEnum.Prefab.ImageBox, itemTable.transform);
+            itemBoxes.Add(itemImageBox);
             if (Enum.TryParse(itemName, out ResourceEnum.Sprite sprite))
             {
                 Sprite sprt = ResourceManager.Get(sprite);
@@ -247,5 +251,14 @@ public class Option : MonoBehaviour
             GameManager.Instance.optionCanvas.SetActive(false);
             GameManager.Instance.Title.title.SetActive(true);
         }
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        foreach (var itemBox in itemBoxes)
+        {
+            itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType);
+        }
+
     }
 }

@@ -656,7 +656,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4006778280407040
-    m_Localized: <color=red>{param0}</color> was defeated by <color=yellow>{param1}</color>.
+    m_Localized: <color=red>{0}</color> was defeated by <color=yellow>{1}</color>.
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -693,7 +693,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4009762284433408
-    m_Localized: 'Crafting: {param0}'
+    m_Localized: 'Crafting: {0}'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -706,12 +706,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4011113273946112
-    m_Localized: Your survivor ({param0}) won!
+    m_Localized: Your survivor ({0}) won!
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
   - m_Id: 4011114574180352
-    m_Localized: Your survivor ({param0}) was defeated.
+    m_Localized: Your survivor ({0}) was defeated.
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -744,7 +744,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4014292761899008
-    m_Localized: '{param0} wins!'
+    m_Localized: '{0} wins!'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -807,6 +807,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4087021989064704
     m_Localized: World Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4350414859857920
+    m_Localized: Bleeding Amount
     m_Metadata:
       m_Items: []
   references:

@@ -230,6 +230,123 @@ MonoBehaviour:
     m_Localized: "B\xE4renfalle(Verzaubert)"
     m_Metadata:
       m_Items: []
+  - m_Id: 2523675439460352
+    m_Localized: Aktuelle Waffe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Localized: Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Localized: Aktueller Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Localized: Weste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Localized: Aktuelle Weste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Localized: Nicht herstellbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Localized: Angriffsschaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527772934729728
+    m_Localized: Schaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Localized: Maximalschaden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Localized: Angriffsreichweite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Localized: "Magazinkapazit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Localized: Erforderliches Wissen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Localized: "R\xFCstung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Localized: Blutstillung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Localized: Verbrauchsgegenstand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Localized: Heilungsmenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Localized: "Herstellungs\xADmaterialien"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Localized: Falle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Localized: Sonstiges
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Localized: Kugel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Localized: "Vergiftet nahe \xDCberlebende bei Detonation."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Localized: Verringert das Bewegungstempo-Malus durch Beinverletzungen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Localized: Erkennt nahegelegene Fallen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Localized: "Erkennt \xDCberlebende auf mittlere Entfernung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Localized: Blockiert Projektile mit 75 % Wahrscheinlichkeit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Localized: "Nahkampfwaffen und \xE4hnliche Gegenst\xE4nde k\xF6nnen verzaubert
+      werden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Localized: Heilt Vergiftungen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Localized: "Erzeugt L\xE4rm."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Localized: Herstellungsrezept
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

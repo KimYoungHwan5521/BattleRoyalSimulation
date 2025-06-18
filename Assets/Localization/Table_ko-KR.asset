@@ -341,7 +341,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1526764213432320
-    m_Localized: "\uCC38\uAC00\uC9C0 \uB9AC\uC2A4\uD2B8"
+    m_Localized: "\uCC38\uAC00\uC790 \uB9AC\uC2A4\uD2B8"
     m_Metadata:
       m_Items: []
   - m_Id: 1527736130138112
@@ -683,7 +683,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4006778280407040
-    m_Localized: "<color=red>{param0}</color>\uC774(\uAC00) <color=yellow>{param1}</color>\uC5D0
+    m_Localized: "<color=red>{0}</color>\uC774(\uAC00) <color=yellow>{1}</color>\uC5D0
       \uC758\uD574 \uD328\uBC30\uD558\uC600\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items:
@@ -725,7 +725,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4009762284433408
-    m_Localized: "\uC81C\uC791 \uC911 : {param0}"
+    m_Localized: "\uC81C\uC791 \uC911 : {0}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
@@ -734,12 +734,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4011113273946112
-    m_Localized: "\uB2F9\uC2E0\uC758 \uC0DD\uC874\uC790({param0})\uAC00 \uC2B9\uB9AC\uD588\uC2B5\uB2C8\uB2E4!"
+    m_Localized: "\uB2F9\uC2E0\uC758 \uC0DD\uC874\uC790({0})\uAC00 \uC2B9\uB9AC\uD588\uC2B5\uB2C8\uB2E4!"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
   - m_Id: 4011114574180352
-    m_Localized: "\uB2F9\uC2E0\uC758 \uC0DD\uC874\uC790({param0})\uB294 \uD328\uBC30\uD588\uC2B5\uB2C8\uB2E4."
+    m_Localized: "\uB2F9\uC2E0\uC758 \uC0DD\uC874\uC790({0})\uB294 \uD328\uBC30\uD588\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
@@ -772,7 +772,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4014292761899008
-    m_Localized: "{param0}\uC758 \uC2B9\uB9AC!"
+    m_Localized: "{0}\uC758 \uC2B9\uB9AC!"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
@@ -841,6 +841,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4087021989064704
     m_Localized: "\uC6D4\uB4DC \uCC54\uD53C\uC5B8\uC27D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4350414859857920
+    m_Localized: "\uCD9C\uD608\uB7C9"
     m_Metadata:
       m_Items: []
   references:

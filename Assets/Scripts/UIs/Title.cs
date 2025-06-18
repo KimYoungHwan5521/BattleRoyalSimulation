@@ -1,8 +1,17 @@
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
     public GameObject title;
+    [SerializeField] RectTransform buttonsRect;
+
+    private void Start()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
 
     public void NewGame()
     {
@@ -23,5 +32,10 @@ public class Title : MonoBehaviour
 #else
     Application.Quit();
 #endif
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(buttonsRect);
     }
 }

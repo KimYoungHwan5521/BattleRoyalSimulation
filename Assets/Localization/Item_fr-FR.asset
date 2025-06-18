@@ -230,6 +230,122 @@ MonoBehaviour:
     m_Localized: "Pi\xE8ge \xE0 ours(Enchant\xE9)"
     m_Metadata:
       m_Items: []
+  - m_Id: 2523675439460352
+    m_Localized: Arme actuelle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Localized: Casque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Localized: Casque actuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Localized: Gilet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Localized: Gilet actuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Localized: "Impossible \xE0 fabriquer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Localized: "D\xE9g\xE2ts d'attaque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527772934729728
+    m_Localized: "D\xE9g\xE2ts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Localized: "D\xE9g\xE2ts max"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Localized: "Port\xE9e d\u2019attaque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Localized: "Capacit\xE9 du chargeur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Localized: Connaissances requises
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Localized: Armure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Localized: "Quantit\xE9 de coagulation"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Localized: Consommable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Localized: "R\xE9cup\xE9ration de sant\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Localized: "Mat\xE9riaux de fabrication"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Localized: "Pi\xE8ge"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Localized: Divers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Localized: Balle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Localized: "Empoisonne les survivants proches lors du d\xE9clenchement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Localized: "R\xE9duit la p\xE9nalit\xE9 de vitesse due aux blessures aux jambes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Localized: "D\xE9tecte les pi\xE8ges proches."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Localized: "D\xE9tecte les survivants \xE0 moyenne distance."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Localized: "Bloque les projectiles avec 75 % de probabilit\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Localized: "Vous pouvez enchanter des armes de m\xEAl\xE9e et similaires."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Localized: "Soigne l\u2019empoisonnement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Localized: "G\xE9n\xE8re du bruit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Localized: Recette de fabrication
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

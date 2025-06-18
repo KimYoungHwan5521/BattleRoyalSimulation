@@ -815,6 +815,7 @@ public class InGameUIManager : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
+        if (GameManager.Instance.BattleRoyaleManager == null) return;
         leftSurvivors.text = $"{new LocalizedString("Table", "Remaining survivors:").GetLocalizedString()} {GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count}";
         if(selectedObject != null) SetSelectedObjectInfoOnce();
     }

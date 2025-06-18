@@ -230,6 +230,122 @@ MonoBehaviour:
     m_Localized: Armadilha para urso(Encantado)
     m_Metadata:
       m_Items: []
+  - m_Id: 2523675439460352
+    m_Localized: Arma atual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Localized: Capacete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Localized: Capacete atual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Localized: Colete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Localized: Colete atual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Localized: "N\xE3o pode ser fabricado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Localized: Dano de ataque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527772934729728
+    m_Localized: Dano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Localized: "Dano m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Localized: Alcance de ataque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Localized: Capacidade do carregador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Localized: "Conhecimento necess\xE1rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Localized: Armadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Localized: Quantidade de hemostasia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Localized: "Consum\xEDvel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Localized: "Recupera\xE7\xE3o de vida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Localized: "Materiais de fabrica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Localized: Armadilha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Localized: Diversos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Localized: Bala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Localized: "Envenena sobreviventes pr\xF3ximos ao ser acionada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Localized: "Reduz a penalidade de velocidade por les\xF5es nas pernas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Localized: "Detecta armadilhas pr\xF3ximas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Localized: "Detecta sobreviventes a m\xE9dia dist\xE2ncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Localized: "Bloqueia proj\xE9teis com 75% de chance."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Localized: Pode encantar armas corpo a corpo e similares.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Localized: Cura o envenenamento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Localized: "Gera ru\xEDdo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Localized: "Receita de cria\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

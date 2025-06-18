@@ -230,6 +230,122 @@ MonoBehaviour:
     m_Localized: Trampa para osos(Encantado)
     m_Metadata:
       m_Items: []
+  - m_Id: 2523675439460352
+    m_Localized: Arma actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Localized: Casco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Localized: Casco actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Localized: Chaleco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Localized: Chaleco actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Localized: No se puede fabricar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Localized: "Da\xF1o de ataque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527772934729728
+    m_Localized: "Da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Localized: "Da\xF1o m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Localized: Alcance de ataque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Localized: Capacidad del cargador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Localized: Conocimiento requerido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Localized: Armadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Localized: Cantidad de hemostasia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Localized: Consumible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Localized: "Recuperaci\xF3n de salud"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Localized: "Materiales de creaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Localized: Trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Localized: Varios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Localized: Bala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Localized: Envenena a los supervivientes cercanos al activarse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Localized: "Reduce la penalizaci\xF3n de velocidad por heridas en las piernas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Localized: Detecta trampas cercanas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Localized: Detecta supervivientes a media distancia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Localized: Bloquea proyectiles con un 75 % de probabilidad.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Localized: Puedes encantar armas cuerpo a cuerpo y similares.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Localized: Cura el envenenamiento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Localized: Genera ruido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Localized: "Receta de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

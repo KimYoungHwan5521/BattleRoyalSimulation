@@ -659,8 +659,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4006778280407040
-    m_Localized: <color=red>{param0}</color> wurde von <color=yellow>{param1}</color>
-      besiegt.
+    m_Localized: <color=red>{0}</color> wurde von <color=yellow>{1}</color> besiegt.
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -689,7 +688,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4009762284433408
-    m_Localized: 'Herstellung: {param0}'
+    m_Localized: 'Herstellung: {0}'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -710,12 +709,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4011113273946112
-    m_Localized: "Dein \xDCberlebender ({param0}) hat gewonnen!"
+    m_Localized: "Dein \xDCberlebender ({0}) hat gewonnen!"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 4011114574180352
-    m_Localized: "Dein \xDCberlebender ({param0}) wurde besiegt."
+    m_Localized: "Dein \xDCberlebender ({0}) wurde besiegt."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -748,7 +747,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4014292761899008
-    m_Localized: '{param0} gewinnt!'
+    m_Localized: '{0} gewinnt!'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -812,6 +811,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 4087021989064704
     m_Localized: Weltmeisterschaft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4350414859857920
+    m_Localized: Blutverlust
     m_Metadata:
       m_Items: []
   references:

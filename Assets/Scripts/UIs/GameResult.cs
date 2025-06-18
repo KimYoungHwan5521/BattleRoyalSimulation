@@ -288,7 +288,7 @@ public class GameResult : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
-        if (GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
+        if (GameManager.Instance.BattleRoyaleManager == null || GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
         SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _);
     }
 

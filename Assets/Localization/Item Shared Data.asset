@@ -227,6 +227,122 @@ MonoBehaviour:
     m_Key: BearTrap_Enchanted
     m_Metadata:
       m_Items: []
+  - m_Id: 2523675439460352
+    m_Key: Current Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Key: Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Key: Current Helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Key: Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Key: Current Vest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Key: Uncraftable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Key: Attack Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527772934729728
+    m_Key: Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Key: Max Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Key: Attack Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Key: Magazine Capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Key: Required Knowledge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Key: Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Key: Bleeding Control
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Key: Consumable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Key: Health Recovery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Key: Crafting Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Key: Trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Key: ETC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Key: Bullet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Key: Explain:ChemicalTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Key: Explain:WalkingAid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Key: Explain:TrapDetectionDevice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Key: Explain:BiometricRader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Key: Explain:EnergyBarrier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Key: Explain:Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Key: Explain:Antidote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Key: Explain:NoiseTrap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Key: Crafting Recipe
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

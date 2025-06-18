@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 public class LoadingCanvas : MonoBehaviour
@@ -13,11 +14,11 @@ public class LoadingCanvas : MonoBehaviour
     float tooltipCool = 10;
     float curTooltipCool;
 
-    List<string> tooltips = new()
+    List<LocalizedString> tooltips = new()
     {
-        "The expected value of a bet is greater than 1.",
-        "The maximum value of an ability is 100 by default, but some survivors with certain characteristics can exceed 100.",
-        "만약 훈련으로 능력치가 오르지 않는다면 시설을 업그레이드 하십시오.",
+        new("Table", "The expected value of the bet is greater than 1."),
+        new("Table", "Base stats cap at 100, but can exceed with traits."),
+        new("Table", "If training doesn't raise stats, upgrade your training facility."),
     };
 
     private void Start()
@@ -56,6 +57,6 @@ public class LoadingCanvas : MonoBehaviour
     void ResetTooltip()
     {
         int rand = Random.Range(0, tooltips.Count);
-        tooltipText.text = tooltips[rand];
+        tooltipText.text = tooltips[rand].GetLocalizedString();
     }
 }

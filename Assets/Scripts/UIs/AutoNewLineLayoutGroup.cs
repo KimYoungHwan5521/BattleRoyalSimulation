@@ -18,12 +18,19 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
     private void Start()
     {
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        FindCharacteristicsText();
+    }
+
+    void FindCharacteristicsText()
+    {
         characteristicsText = new TextMeshProUGUI[characteristicsBox.Length];
         for(int i = 0; i < characteristicsText.Length; i++) { characteristicsText[i] = characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>(); }
+
     }
 
     public void ArrangeCharacteristics(SurvivorData survivorData)
     {
+        if (characteristicsText ==  null) FindCharacteristicsText();
         linkedSurvivor = survivorData;
         for (int i = 0; i < characteristicsBox.Length; i++)
         {
