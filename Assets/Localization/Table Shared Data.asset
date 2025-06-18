@@ -776,6 +776,42 @@ MonoBehaviour:
     m_Key: Bleeding Amount
     m_Metadata:
       m_Items: []
+  - m_Id: 4782425135181824
+    m_Key: 'Sort by:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782426959704064
+    m_Key: Item Type
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782428373184512
+    m_Key: Available training varies depending on injuries.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900300595200
+    m_Key: 'Saved Time:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900787134464
+    m_Key: Autosaved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785912375996416
+    m_Key: Empty Slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785914213101568
+    m_Key: Confirm:Overwrite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785915161014272
+    m_Key: Confirm:Delete Save Data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785916574494720
+    m_Key: Confirm:Return to title
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

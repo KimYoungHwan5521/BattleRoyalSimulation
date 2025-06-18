@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 public enum Tier { Bronze, Silver, Gold }
 
@@ -10,7 +11,9 @@ public class SurvivorData
 {
     public int id = -1;
     // Stats
-    public string survivorName;
+    [SerializeField] string survivorName;
+    public string SurvivorName => survivorName;
+    public LocalizedString localizedSurvivorName;
     public int _strength;
     public int _agility;
     public int _fighting;
@@ -169,9 +172,10 @@ public class SurvivorData
     public int priority1CraftingToInt = -1;
     public bool[] craftingAllows;
 
-    public SurvivorData(string survivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
+    public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {
-        this.survivorName = survivorName;
+        this.localizedSurvivorName = localizedSurvivorName;
+        survivorName = localizedSurvivorName.TableEntryReference.Key;
         _strength = strength;
         _agility = agility;
         _fighting = fighting;
@@ -188,6 +192,7 @@ public class SurvivorData
     public SurvivorData(SurvivorData survivorData)
     {
         survivorName = survivorData.survivorName;
+        localizedSurvivorName = new LocalizedString("Name", survivorName);
         _strength = survivorData._strength;
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;

@@ -282,7 +282,7 @@ public class InGameUIManager : MonoBehaviour
                 {
                     predictionResultRows[i].SetActive(true);
                     predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
-                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.survivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
+                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.SurvivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
                     predictionResultBGs[i].color = Color.white;
                     predictionResultResults[i].text = "";
                 }
@@ -392,7 +392,7 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Survivor);
             Vector3 colorVector = BattleRoyaleManager.colorInfo[selectedSurvivor.survivorID];
             selectedObjectImage.color = new(colorVector.x, colorVector.y, colorVector.z);
-            selectedObjectName.text = selectedSurvivor.survivorName;
+            selectedObjectName.text = selectedSurvivor.survivorName.GetLocalizedString();
 
             strengthBar.fillAmount = selectedSurvivor.CorrectedStrength / 100f;
             agilityBar.fillAmount = selectedSurvivor.CorrectedAgility / 100f;

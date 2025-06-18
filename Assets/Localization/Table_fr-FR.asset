@@ -819,6 +819,43 @@ MonoBehaviour:
     m_Localized: "Quantit\xE9 de saignement"
     m_Metadata:
       m_Items: []
+  - m_Id: 4782425135181824
+    m_Localized: 'Trier par :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782426959704064
+    m_Localized: "Type d\u2019objet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782428373184512
+    m_Localized: "L\u2019entra\xEEnement disponible varie selon les blessures."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900300595200
+    m_Localized: 'Heure de sauvegarde :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900787134464
+    m_Localized: Sauvegarde auto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785912375996416
+    m_Localized: Emplacement vide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785914213101568
+    m_Localized: "Ce slot contient d\xE9j\xE0 des donn\xE9es. \xC9craser ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785915161014272
+    m_Localized: Supprimer cette sauvegarde ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785916574494720
+    m_Localized: "Revenir au menu principal ?\\n<i>(Les donn\xE9es non sauvegard\xE9es
+      seront perdues.)</i>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

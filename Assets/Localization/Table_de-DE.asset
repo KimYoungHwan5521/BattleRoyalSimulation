@@ -817,6 +817,43 @@ MonoBehaviour:
     m_Localized: Blutverlust
     m_Metadata:
       m_Items: []
+  - m_Id: 4782425135181824
+    m_Localized: 'Sortieren nach:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782426959704064
+    m_Localized: Gegenstandstyp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782428373184512
+    m_Localized: "Verf\xFCgbare Trainings variieren je nach Verletzung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900300595200
+    m_Localized: 'Gespeicherte Zeit:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900787134464
+    m_Localized: Automatisch gespeichert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785912375996416
+    m_Localized: Leerer Slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785914213101568
+    m_Localized: "In diesem Slot sind bereits Daten vorhanden. \xDCberschreiben?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785915161014272
+    m_Localized: "Diese Speicherdatei l\xF6schen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785916574494720
+    m_Localized: "Zum Titelbildschirm zur\xFCckkehren?\\n<i>(Nicht gespeicherte Daten
+      gehen verloren.)</i>"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

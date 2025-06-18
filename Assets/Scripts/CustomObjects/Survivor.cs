@@ -5,6 +5,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
@@ -80,7 +82,7 @@ public class Survivor : CustomObject
         }
     }
     public int survivorID;
-    public string survivorName;
+    public LocalizedString survivorName;
     [SerializeField] Status currentStatus;
     public Status CurrentStatus
     {
@@ -633,7 +635,7 @@ public class Survivor : CustomObject
             if(prohibitedAreaTime < 0)
             {
                 IsDead = true;
-                InGameUIManager.ShowKillLog(survivorName, "prohibited area");
+                InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), "prohibited area");
             }
         }
     }
@@ -650,7 +652,7 @@ public class Survivor : CustomObject
         if(curBlood / maxBlood < 0.5f)
         {
             IsDead = true;
-            InGameUIManager.ShowKillLog(survivorName, "hemorrhage");
+            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), "hemorrhage");
         }
     }
 
@@ -2536,7 +2538,7 @@ public class Survivor : CustomObject
         else if( heardVolume > 0.5f)
         {
             // 불분명한 인지
-            if (noiseMaker != null && noiseMaker is Survivor) HeardIndistinguishableSound((noiseMaker as Survivor).survivorName, soundOrigin);
+            if (noiseMaker != null && noiseMaker is Survivor) HeardIndistinguishableSound((noiseMaker as Survivor).survivorName.TableEntryReference.Key, soundOrigin);
             else Debug.LogWarning("There are no noiseMaker");
         }
     }
@@ -2636,7 +2638,7 @@ public class Survivor : CustomObject
                 GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
                 headshot.transform.SetParent(canvas.transform);
             }
-            InGameUIManager.ShowKillLog(survivorName, attacker.survivorName);
+            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());
         }
 
         if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
@@ -2751,7 +2753,7 @@ public class Survivor : CustomObject
             poisonOriginator.killCount++;
             InGameUIManager.UpdateSelectedObjectKillCount(poisonOriginator);
             IsDead = true;
-            InGameUIManager.ShowKillLog(survivorName, poisonOriginator.survivorName);
+            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), poisonOriginator.survivorName.GetLocalizedString());
         }
     }
 
@@ -4159,8 +4161,8 @@ public class Survivor : CustomObject
     public void SetSurvivorInfo(SurvivorData survivorInfo)
     {
         linkedSurvivorData = survivorInfo;
-        survivorName = survivorInfo.survivorName;
-        nameTag.GetComponent<TextMeshProUGUI>().text = survivorInfo.survivorName;
+        survivorName = new LocalizedString("Name", survivorInfo.SurvivorName);
+        nameTag.GetComponent<LocalizeStringEvent>().StringReference = survivorName;
         curHP = maxHP = survivorInfo.Strength + 100;
         curBlood = maxBlood = maxHP * 80;
         bleedingSprite = curBlood - 100;

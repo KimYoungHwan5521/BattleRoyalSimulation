@@ -1,0 +1,423 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Name_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: 99b160a8cd9d6d3469e3c804c3b21dfc, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1262176759808
+    m_Localized: Ryan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1266656276480
+    m_Localized: Levi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1269403545600
+    m_Localized: Henry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1273765621760
+    m_Localized: Benjamin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1277423054848
+    m_Localized: Ethan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1282112286720
+    m_Localized: Andrew
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2495063060480
+    m_Localized: Roman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2496413626368
+    m_Localized: Jaxon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2497474785280
+    m_Localized: Santiago
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2499651629056
+    m_Localized: Micah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3685763051520
+    m_Localized: Jeremiah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3686731935744
+    m_Localized: James
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3687218475008
+    m_Localized: Waylon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3687797288960
+    m_Localized: Cooper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3689760223232
+    m_Localized: Elias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4579430821888
+    m_Localized: Luke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4580806553600
+    m_Localized: Colton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4581280509952
+    m_Localized: Theo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4584887611392
+    m_Localized: Adam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4592995201024
+    m_Localized: Christopher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28639837614080
+    m_Localized: John
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28641502752768
+    m_Localized: Caleb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28642756849664
+    m_Localized: Brooks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28643927060480
+    m_Localized: Silas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28644841418752
+    m_Localized: Miles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29735448539136
+    m_Localized: Lincoln
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29736891379712
+    m_Localized: Lucas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29737986093056
+    m_Localized: Nicholas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29739382796288
+    m_Localized: Matthew
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29740511064064
+    m_Localized: Jameson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30454012506112
+    m_Localized: Dylan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30456461979648
+    m_Localized: Mateo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30458785624064
+    m_Localized: Jackson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30461180571648
+    m_Localized: Oliver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30463730708480
+    m_Localized: Ian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31313236652032
+    m_Localized: Isaac
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31314209730560
+    m_Localized: Anthony
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31315052785664
+    m_Localized: Isaiah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31315862286336
+    m_Localized: Jacob
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31316629843968
+    m_Localized: Theodore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32113807650816
+    m_Localized: Weston
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32114772340736
+    m_Localized: Axel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32116286484480
+    m_Localized: Landon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32117821599744
+    m_Localized: Walker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32118861787136
+    m_Localized: Jayden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32832010907648
+    m_Localized: Christian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32833021734912
+    m_Localized: Logan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32834003202048
+    m_Localized: Bennett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32835957747712
+    m_Localized: Leonardo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32843834650624
+    m_Localized: Jordan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33798680539136
+    m_Localized: Kai
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33800328900608
+    m_Localized: Charles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33801725603840
+    m_Localized: Carter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33803067781120
+    m_Localized: Joseph
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33804598702080
+    m_Localized: Jack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34712246087680
+    m_Localized: Leo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34713248526336
+    m_Localized: Wesley
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34714229993472
+    m_Localized: Nolan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34716281008128
+    m_Localized: Beau
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34719976189952
+    m_Localized: Thomas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35632837095424
+    m_Localized: Aaron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35635991212032
+    m_Localized: Greyson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35638151278592
+    m_Localized: Rowan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35640235847680
+    m_Localized: Alexander
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35642676932608
+    m_Localized: Elijah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36560466145280
+    m_Localized: William
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36561325977600
+    m_Localized: Cameron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36562190004224
+    m_Localized: Julian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36563200831488
+    m_Localized: Ezra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36564106801152
+    m_Localized: Daniel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37275741777920
+    m_Localized: David
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37277188812800
+    m_Localized: Asher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37278392578048
+    m_Localized: Samuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37279650869248
+    m_Localized: Robert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37280909160448
+    m_Localized: Everett
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37882707898368
+    m_Localized: Owen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37883504816128
+    m_Localized: Josiah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37884486283264
+    m_Localized: Michael
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37886415663104
+    m_Localized: Noah
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37889309732864
+    m_Localized: Maverick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38844440834048
+    m_Localized: Joshua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38845984337920
+    m_Localized: Adrian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38847477510144
+    m_Localized: Mason
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38849012625408
+    m_Localized: Ezekiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38850686152704
+    m_Localized: Eli
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39564904820736
+    m_Localized: Angel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39567685644288
+    m_Localized: Wyatt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39569644384256
+    m_Localized: Sebastian
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39571334688768
+    m_Localized: Gabriel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39580146921472
+    m_Localized: Jose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40510472908800
+    m_Localized: Liam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40512859467776
+    m_Localized: Hudson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40514977591296
+    m_Localized: Jonathan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40517435453440
+    m_Localized: Parker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40519511633920
+    m_Localized: Easton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41092751355904
+    m_Localized: Luca
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41094076755968
+    m_Localized: Aiden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41095293104128
+    m_Localized: Nathan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41096735944704
+    m_Localized: Hunter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41098996674560
+    m_Localized: Graham
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

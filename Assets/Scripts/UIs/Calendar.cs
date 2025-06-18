@@ -140,7 +140,7 @@ public class Calendar : CustomObject
                     if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
                     {
                         reserved[i].SetActive(true);
-                        reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.survivorName);
+                        reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.localizedSurvivorName.GetLocalizedString());
                     }
                     else reserved[i].SetActive(false);
                 }
@@ -567,7 +567,7 @@ public class Calendar : CustomObject
                     else
                     {
                         var temp = new LocalizedString("Table", "Reserved Survivor");
-                        temp.Arguments = new[] { new { param0 = leagueReserveInfo[wantReserveDate].reserver.survivorName } };
+                        temp.Arguments = new[] { new { param0 = leagueReserveInfo[wantReserveDate].reserver.localizedSurvivorName.GetLocalizedString() } };
                         reserveText.StringReference = temp;
                         reserveText.RefreshString();
                         reserveText.GetComponent<LocalizeStringEvent>().RefreshString();
@@ -605,34 +605,36 @@ public class Calendar : CustomObject
         //survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
         List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
         for (int i = 0; i < allSurvivor.Count; i++)
-            if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].survivorName }));
+            if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].localizedSurvivorName.GetLocalizedString() }));
         if (survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
         {
-            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Table", "No eligible survivor")}]" }));
+            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Table", "No eligible survivor").GetLocalizedString()}]" }));
             reserveButton.GetComponent<Button>().interactable = false;
         }
         else
         {
-            wantReserver = allSurvivor.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+            wantReserver = allSurvivor.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
             reserveButton.GetComponent<Button>().interactable = true;
         }
+        survivorWhoParticipateInBattleRoyaleDropdown.captionText.text = survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text;
     }
 
     public void OnSurvivorParticipatingInBattleRoyaleSelected()
     {
-        wantReserver = outGameUIManager.MySurvivorsData.Find(x => x.survivorName == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+        wantReserver = outGameUIManager.MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
     }
 
     public void ReserveBattleRoyale()
     {
         if (wantReserver.tier != GetNeedTier(leagueReserveInfo[wantReserveDate].league))
         {
-            outGameUIManager.Alert($"{wantReserver.survivorName}'s tier does not match this league.\n" +
-                $"({wantReserver.survivorName}'s tier : {wantReserver.tier}, league need tier : {GetNeedTier(leagueReserveInfo[wantReserveDate].league)})");
+            Debug.LogWarning("!");
+            //outGameUIManager.Alert($"{wantReserver.survivorName}'s tier does not match this league.\n" +
+            //    $"({wantReserver.survivorName}'s tier : {wantReserver.tier}, league need tier : {GetNeedTier(leagueReserveInfo[wantReserveDate].league)})");
         }
         else if (wantReserver.isReserved)
         {
-            outGameUIManager.Alert($"Alert:Already Resistered", wantReserver.survivorName);
+            outGameUIManager.Alert($"Alert:Already Resistered", wantReserver.localizedSurvivorName.GetLocalizedString());
         }
         else if (NeareastSeasonChampionship.reserver == wantReserver || NeareastWorldChampionship.reserver == wantReserver)
         {
@@ -681,7 +683,7 @@ public class Calendar : CustomObject
             outGameUIManager.OpenConfirmWindow("Confirm:Reserve Battle Royale Who Have Injury", () =>
             {
                 Reserve();
-            }, wantReserver.survivorName);
+            }, wantReserver.localizedSurvivorName.GetLocalizedString());
         }
         else Reserve();
     }
@@ -712,7 +714,7 @@ public class Calendar : CustomObject
             {
                 SurvivorData survivor = outGameUIManager.MySurvivorsData[i];
                 var scheduleTexts = schedules[i].GetComponentsInChildren<TextMeshProUGUI>();
-                scheduleTexts[0].text = survivor.survivorName;
+                scheduleTexts[0].GetComponent<LocalizeStringEvent>().StringReference = survivor.localizedSurvivorName;
                 scheduleTexts[1].text = survivor.tier.ToString();
                 if (survivor.isReserved)
                 {
@@ -751,6 +753,7 @@ public class Calendar : CustomObject
         {
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
+        SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)

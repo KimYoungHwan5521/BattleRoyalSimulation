@@ -85,6 +85,8 @@ public class Option : MonoBehaviour
                 itemImageBox.AddComponent<ItemDataForSort>().Set((ItemManager.Items)i, knowledgeRequired);
             }
         }
+        sortBy.options[0].text = new LocalizedString("Table", "Item Type").GetLocalizedString();
+        sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
     }
 
     void Sorting(int sortBy)
@@ -172,15 +174,15 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"{saveData.ingameDate}\n<i>Saved at {saveData.savedTime}</i>";
-                if (i == 0) info += "<i>Auto-saved</i>";
+                string info = $"{saveData.ingameDate}\n<i>{new LocalizedString("Table", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
+                if (i == 0) info += $"\n<i>{new LocalizedString("Table", "Autosaved").GetLocalizedString()}</i>";
                 saveSlots[i].SetInfo(info);
                 if(i != 0) saveSlots[i].deleteButton.SetActive(true);
                 saveSlots[i].isEmpty = false;
             }
             else
             {
-                saveSlots[i].SetInfo("<i>Empty slot</i>");
+                saveSlots[i].SetInfo($"<i>{new LocalizedString("Table", "Empty Slot").GetLocalizedString()}</i>");
                 if (i != 0) saveSlots[i].deleteButton.SetActive(false);
                 saveSlots[i].isEmpty = true;
             }
@@ -191,7 +193,7 @@ public class Option : MonoBehaviour
     {
         if(!saveSlots[slot].isEmpty)
         {
-            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("This slot already contains data. Do you want to overwrite it?", () =>
+            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Overwrite", () =>
             {
                 GameManager.Instance.Save(slot);
             });
@@ -209,7 +211,7 @@ public class Option : MonoBehaviour
 
     public void DeleteSaveData(int slot)
     {
-        GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Are you sure you want to delete this save data?", () =>
+        GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Delete Save Data", () =>
         {
             PlayerPrefs.DeleteKey($"SaveDataInfo{slot}");
             PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
@@ -234,7 +236,7 @@ public class Option : MonoBehaviour
     {
         if(lastSaveTime > 10)
         {
-            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Go title?\n<i>(Any unsaved content will be deleted.)</i>", () =>
+            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
             {
                 resume.SetActive(false);
                 saveButton.gameObject.SetActive(false);
@@ -259,6 +261,9 @@ public class Option : MonoBehaviour
         {
             itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType);
         }
-
+        ReloadSavedata();
+        sortBy.options[0].text = new LocalizedString("Table", "Item Type").GetLocalizedString();
+        sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
+        sortBy.captionText.text = sortBy.options[sortBy.value].text;
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Localization;
 
 public class BattleRoyaleManager
 {
@@ -30,7 +31,7 @@ public class BattleRoyaleManager
     public List<Survivor> AliveSurvivors => aliveSurvivors;
     Survivor battleWinner;
     public Survivor BattleWinner => battleWinner;
-    public string[] rankings;
+    public LocalizedString[] rankings;
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -181,7 +182,7 @@ public class BattleRoyaleManager
 
     IEnumerator SpawnPlayers()
     {
-        rankings = new string[25];
+        rankings = new LocalizedString[25];
 
         areas = areas.Shuffle();
 
@@ -312,13 +313,13 @@ public class BattleRoyaleManager
             aliveSurvivors.Remove(survivor);
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
             rankings[aliveSurvivors.Count] = survivor.survivorName;
-            InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count], aliveSurvivors.Count);
+            InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count].TableEntryReference.Key, aliveSurvivors.Count);
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
                 rankings[0] = aliveSurvivors[0].survivorName;
-                InGameUIManager.SetSurvivorRank(rankings[0], 0);
+                InGameUIManager.SetSurvivorRank(rankings[0].TableEntryReference.Key, 0);
                 isBattleRoyaleStart = false;
             }
         }

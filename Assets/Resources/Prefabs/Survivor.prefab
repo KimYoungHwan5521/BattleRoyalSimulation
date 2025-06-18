@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 7119861524923746430}
   - component: {fileID: 3854998082265908341}
   - component: {fileID: 6034133783287443525}
+  - component: {fileID: 635285580216097303}
   m_Layer: 0
   m_Name: Name Tag
   m_TagString: Untagged
@@ -514,6 +515,46 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &635285580216097303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668206412693470832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6034133783287443525}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &766323708402973015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHand: {fileID: 8156411755479026267}
   leftHand: {fileID: 118997756523179621}
+  rightHandTF: {fileID: 0}
+  leftHandTF: {fileID: 0}
   sightCollider: {fileID: 1884086056549199540}
   bodyCollider: {fileID: 2819874960600584012}
   bodySprites:
@@ -1135,7 +1178,15 @@ MonoBehaviour:
   progressBar: {fileID: 4765678240565169705}
   linkedSurvivorData:
     id: 0
-    survivorName: 
+    localizedSurvivorName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     _strength: 0
     _agility: 0
     _fighting: 0
@@ -1146,6 +1197,7 @@ MonoBehaviour:
     price: 0
     tier: 0
     isReserved: 0
+    reservedDate: 0
     assignedTraining: 0
     increaseComparedToPrevious_strength: 0
     increaseComparedToPrevious_agility: 0
@@ -1175,7 +1227,15 @@ MonoBehaviour:
     craftingAllows: 
   isDead: 0
   survivorID: 0
-  survivorName: 
+  survivorName:
+    m_TableReference:
+      m_TableCollectionName: 
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   currentStatus: 0
   maxHP: 100
   curHP: 0
@@ -1208,7 +1268,15 @@ MonoBehaviour:
   bloods: []
   currentWeapon:
     itemType: 0
-    itemName: 
+    itemName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     amount: 0
     weight: 0
     needHand: 0
@@ -1217,12 +1285,28 @@ MonoBehaviour:
     attackAnimNumber: 0
   currentHelmet:
     itemType: 0
-    itemName: 
+    itemName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     amount: 0
     weight: 0
   currentVest:
     itemType: 0
-    itemName: 
+    itemName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     amount: 0
     weight: 0
   inventory: []
@@ -1252,6 +1336,9 @@ MonoBehaviour:
   lookAroundCount: 0
   keepAnEyeOnTime: 3
   curKeepAnEyeOnTime: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!58 &2819874960600584012
 CircleCollider2D:
   m_ObjectHideFlags: 0

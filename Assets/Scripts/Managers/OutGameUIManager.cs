@@ -102,7 +102,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Transform survivorsAssignedThis;
     [SerializeField] Transform survivorsWithoutSchedule; 
     [SerializeField] Transform survivorsWithOtherSchedule;
-    List<SurvivorSchedule> survivorSchedules;
+    List<SurvivorSchedule> survivorSchedules = new();
     bool autoAssign = true;
     [SerializeField] GameObject autoAssignCheckBox;
 
@@ -395,7 +395,7 @@ public class OutGameUIManager : MonoBehaviour
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
                         hireClose.SetActive(true);
                     }
-                    survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.survivorName });
+                    survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
                     survivorsDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
                     selectSurvivorGetSurgeryDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
                     selectSurvivorEstablishStrategyDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
@@ -404,26 +404,26 @@ public class OutGameUIManager : MonoBehaviour
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
                     hireSurvivor.SetActive(false);
                 }
-            },  $"{survivorsInHireMarket[candidate].survivorData.survivorName}", $"{survivorsInHireMarket[candidate].survivorData.price}");
+            },  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
         
     }
 
-    string GetRandomName(int depth = 0)
+    LocalizedString GetRandomName(int depth = 0)
     {
         if (depth > 100)
         {
             Debug.LogWarning("Infinite recursion detected");
-            return "(Failed to load name)";
+            return default;
         }
 
         string candidate = Names.SurvivorName[UnityEngine.Random.Range(0, Names.SurvivorName.Length)];
         for (int i = 0; i < 3; i++)
-            if (survivorsInHireMarket[0].survivorData.survivorName == candidate) return GetRandomName(depth++);
+            if (survivorsInHireMarket[0].survivorData.SurvivorName == candidate) return GetRandomName(depth++);
         for (int i = 0; i < mySurvivorsData.Count; i++)
-            if (mySurvivorsData[i].survivorName == candidate) return GetRandomName(depth++);
+            if (mySurvivorsData[i].SurvivorName == candidate) return GetRandomName(depth++);
         for(int i = 0; i < contestantsData.Count; i++)
-            if(contestantsData[i].survivorName == candidate) return GetRandomName(depth++);
-        return candidate;
+            if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth++);
+        return new("Name", candidate);
     }
 
     public void ResetSurvivorsDropdown()
@@ -431,8 +431,10 @@ public class OutGameUIManager : MonoBehaviour
         survivorsDropdown.ClearOptions();
         for(int i = 0; i<mySurvivorsData.Count; i++)
         {
-            survivorsDropdown.AddOptions(new List<string>(new string[] { mySurvivorsData[i].survivorName }));
+            survivorsDropdown.AddOptions(new List<string>(new string[] { mySurvivorsData[i].localizedSurvivorName.GetLocalizedString() }));
         }
+        if (mySurvivorsData.Count == 0) return;
+        survivorsDropdown.captionText.text = survivorsDropdown.options[survivorsDropdown.value].text;
         ResetSelectedSurvivorInfo();
         survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
     }
@@ -452,14 +454,14 @@ public class OutGameUIManager : MonoBehaviour
                     ResetSurvivorsDropdown();
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
                     Alert("Alert:Survivor has been released.");
-                }, $"{wantDismiss.survivorName}");
+                }, $"{wantDismiss.localizedSurvivorName.GetLocalizedString()}");
         }
     }
     #endregion
 
     public void OnSurvivorSelected()
     {
-        SurvivorData survivorInfo = mySurvivorsData.Find(x => x.survivorName == survivorsDropdown.options[survivorsDropdown.value].text);
+        SurvivorData survivorInfo = mySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorsDropdown.options[survivorsDropdown.value].text);
         selectedSurvivor.SetInfo(survivorInfo, true);
     }
 
@@ -539,8 +541,8 @@ public class OutGameUIManager : MonoBehaviour
             }
             survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
             survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
-            if(!assignable) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.survivorName, cause);
-            else if(alreadyAssigned) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.survivorName, targetTraining.GetLocalizedString());
+            if(!assignable) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), cause);
+            else if(alreadyAssigned) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), targetTraining.GetLocalizedString());
             survivorSchedule.GetComponent<Button>().enabled = assignable;
             survivorSchedules.Add(survivorSchedule);
         }
@@ -586,7 +588,7 @@ public class OutGameUIManager : MonoBehaviour
             if (targetText != null)
             {
                 if (targetText.text != "") targetText.text += $"\n";
-                targetText.text += $"{survivor.survivorName}";
+                targetText.text += $"{survivor.localizedSurvivorName.GetLocalizedString()}";
             }
         }
         foreach (var scrollRect in bookedTodayScrollRects)
@@ -602,7 +604,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             survivor.assignedTraining = Training.None;
             ConfirmAssignTraining();
-            Alert("Alert:Training Assignment Cancelled", survivor.survivorName, cause);
+            Alert("Alert:Training Assignment Cancelled", survivor.localizedSurvivorName.GetLocalizedString(), cause);
         }
     }
 
@@ -923,7 +925,7 @@ public class OutGameUIManager : MonoBehaviour
     public void SelectSurvivorToSurgery()
     {
         survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.value], false);
-        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.survivorName == selectSurvivorGetSurgeryDropdown.options[selectSurvivorGetSurgeryDropdown.value].text);
+        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorGetSurgeryDropdown.options[selectSurvivorGetSurgeryDropdown.value].text);
         
         if(survivorWhoWantSurgery.surgeryScheduled)
         {
@@ -1098,7 +1100,7 @@ public class OutGameUIManager : MonoBehaviour
                 if (survivorWhoWantSurgery.assignedTraining != Training.None)
                 {
                     ConfirmAssignTraining();
-                    Alert("Alert:Training  Canceled", $"{ survivorWhoWantSurgery.survivorName }");
+                    Alert("Alert:Training  Canceled", $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }");
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
@@ -1106,7 +1108,7 @@ public class OutGameUIManager : MonoBehaviour
                 SelectSurvivorToSurgery();
                 Alert("Alert:Surgery has been scheduled.");
             }
-        }, $"{ survivorWhoWantSurgery.survivorName }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.shceduledSurgeryCost }");
+        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.shceduledSurgeryCost }");
     }
 
     public void CancelSurgery()
@@ -1290,7 +1292,7 @@ public class OutGameUIManager : MonoBehaviour
     public void SelectSurvivorToEstablishStrategy()
     {
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
-        survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.survivorName == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
+        survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
         weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
         craftingPriority1Dropdown.ClearOptions();
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
@@ -1563,7 +1565,7 @@ public class OutGameUIManager : MonoBehaviour
                 contestants[i].SetActive(true);
                 Vector3 colorVector = BattleRoyaleManager.colorInfo[i];
                 contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
-                contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].survivorName;
+                contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].localizedSurvivorName.GetLocalizedString();
             }
             else contestants[i].SetActive(false);
         }
@@ -1754,7 +1756,7 @@ public class OutGameUIManager : MonoBehaviour
                 if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
                 {
                     thereAreUnassignedSurvivors = true;
-                    warning += $"{survivor.survivorName}, ";
+                    warning += $"{survivor.localizedSurvivorName.GetLocalizedString()}, ";
                 }
             }
             warning = warning[..^2];
@@ -1767,7 +1769,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(calendar.LeagueReserveInfo[calendar.Today].reserver != null)
                 {
-                    Alert("Alert:Scheduled Battle Royale Today", calendar.LeagueReserveInfo[calendar.Today].reserver.survivorName);
+                    Alert("Alert:Scheduled Battle Royale Today", calendar.LeagueReserveInfo[calendar.Today].reserver.localizedSurvivorName.GetLocalizedString());
                     return;
                 }
                 else
@@ -1792,7 +1794,7 @@ public class OutGameUIManager : MonoBehaviour
                     if(survivor.assignedTraining != Training.None)
                     {
                         survivorTrainingResults[index].SetActive(true);
-                        resultTexts[index][0].text = survivor.survivorName;
+                        resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
                         resultTexts[index][1].text = $"{new LocalizedString("Table", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
                         resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > 0);
                         resultTexts[index][2].text = $"{new LocalizedString("Table", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
@@ -2056,7 +2058,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 for (int i = 0; i < contestants.Length; i++)
                 {
-                    int jndex = contestantsData.FindIndex(x => x.survivorName == results[index].gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+                    int jndex = contestantsData.FindIndex(x => x.SurvivorName == results[index].gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
                     if (jndex > -1) selectedContestantData = contestantsData[jndex];
                 }
                 if(selectedContestantData != null)
@@ -2065,7 +2067,7 @@ public class OutGameUIManager : MonoBehaviour
                     selectedContestant.SetActive(true);
                     draggingContestant.SetActive(true);
                     draggingContestant.GetComponentsInChildren<Image>()[1].color = results[index].gameObject.GetComponentsInChildren<Image>()[1].color;
-                    draggingContestant.GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.survivorName;
+                    draggingContestant.GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.localizedSurvivorName.GetLocalizedString();
                 }
             }
         }
@@ -2085,7 +2087,7 @@ public class OutGameUIManager : MonoBehaviour
                         // prediction 할 때 이미 할당된 녀석이면 위치 바꿔주기
                         for(int j = 0; j < predictRankings.Length; j++)
                         {
-                            if (predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == selectedContestantData.survivorName)
+                            if (predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == selectedContestantData.localizedSurvivorName.GetLocalizedString())
                             {
                                 alreadyPredicted = j;
                                 if (predictRankingContestants[i].activeSelf)
@@ -2100,7 +2102,7 @@ public class OutGameUIManager : MonoBehaviour
 
                         predictRankingContestants[i].SetActive(true);
                         predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color = draggingContestant.GetComponentsInChildren<Image>()[1].color;
-                        predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.survivorName;
+                        predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.localizedSurvivorName.GetLocalizedString();
                     }
                 }
             }
@@ -2145,7 +2147,13 @@ public class OutGameUIManager : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
+        if (survivorsDropdown.options.Count == 0) return;
         RelocalizeTrainingRoom();
         RelocalizeStrategyRoom();
+        ResetSurvivorsDropdown();
+        if (survivorsDropdown.options.Count == 0) return;
+        ConfirmAssignTraining();
+        SetOperatingRoom();
+        SetStrategyRoom();
     }
 }

@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class SurvivorInfo : MonoBehaviour
 {
     [SerializeField] Image tierImage;
-    [SerializeField] TextMeshProUGUI survivorNameText;
+    [SerializeField] LocalizeStringEvent survivorNameText;
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
@@ -86,7 +88,7 @@ public class SurvivorInfo : MonoBehaviour
 
     public SurvivorData survivorData;
 
-    public void SetInfo(string survivorName, int strength, int agility, int fighting, int shooting,
+    public void SetInfo(LocalizedString survivorName, int strength, int agility, int fighting, int shooting,
         int knowledge, int characteristicsCount, int price, Tier tier)
     {
         survivorData = new(survivorName, strength, agility, fighting, shooting, knowledge, price, tier);
@@ -94,7 +96,7 @@ public class SurvivorInfo : MonoBehaviour
         Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
         tierImage.sprite = ResourceManager.Get(tierSprite);
         
-        survivorNameText.text = survivorName;
+        survivorNameText.StringReference = survivorName;
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
@@ -118,7 +120,7 @@ public class SurvivorInfo : MonoBehaviour
         tierImage.sprite = ResourceManager.Get(tierSprite);
 
         survivorData = wantSurvivorData;
-        survivorNameText.text = wantSurvivorData.survivorName;
+        survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";
         fightingText.text = $"{wantSurvivorData.Fighting}";

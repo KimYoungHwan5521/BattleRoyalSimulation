@@ -85,7 +85,7 @@ public class GameResult : MonoBehaviour
             Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
             bool playerWin = GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0;
             LocalizedString resultText = playerWin ? new LocalizedString("Table", "Your survivor won!") : new LocalizedString("Table", "Your survivor was defeated.");
-            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.survivorName };
+            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
             gameResultText.text = resultText.GetLocalizedString();
             survivedTimeText.text = $"{new LocalizedString("Table", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
             killsText.text = $"{new LocalizedString("Table", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
@@ -173,7 +173,7 @@ public class GameResult : MonoBehaviour
                 {
                     predictionTable[i].SetActive(true);
                     predictionsText[i].text = outGameUIManager.Predictions[i];
-                    rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i];
+                    rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
                 }
                 else predictionTable[i].SetActive(false);
             }
@@ -231,7 +231,7 @@ public class GameResult : MonoBehaviour
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Table", "Season Championship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "Season Championship").GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
@@ -240,9 +240,9 @@ public class GameResult : MonoBehaviour
                 {
                     survivor.characteristics.RemoveAt(characteristic);
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
-                    notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
+                    notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                 }
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.survivorName, new LocalizedString("Table", "World Championship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "World Championship").GetLocalizedString()); };
                 break;
         }
     }

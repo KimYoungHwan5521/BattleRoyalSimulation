@@ -15,8 +15,8 @@ public class SurvivorSchedule : MonoBehaviour
     public void SetSurvivorData(SurvivorData wantSurvivor, Training curTraining, bool trainable, Transform origin, Transform target)
     {
         survivor = wantSurvivor;
-        if (trainable) survivorName.text = survivor.survivorName;
-        else survivorName.text = $"<color=red>{survivor.survivorName}</color>";
+        if (trainable) survivorName.text = survivor.localizedSurvivorName.GetLocalizedString();
+        else survivorName.text = $"<color=red>{survivor.localizedSurvivorName.GetLocalizedString()}</color>";
         this.curTraining = curTraining;
         assignable = trainable;
         this.origin = origin;

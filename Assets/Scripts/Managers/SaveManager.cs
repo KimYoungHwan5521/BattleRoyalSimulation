@@ -8,7 +8,7 @@ public static class SaveManager
         var saveData = new SurvivorSaveData
         {
             id = data.id,
-            survivorName = data.survivorName,
+            survivorName = data.SurvivorName,
             strength = data._strength,
             agility = data._agility,
             fighting = data._fighting,
@@ -50,7 +50,7 @@ public static class SaveManager
 
     public static SurvivorData FromSaveData(SurvivorSaveData saveData)
     {
-        SurvivorData survivor = new(saveData.survivorName, saveData.strength, saveData.agility,
+        SurvivorData survivor = new(new("Name", saveData.survivorName), saveData.strength, saveData.agility,
             saveData.fighting, saveData.shooting, saveData.knowledge, saveData.price, saveData.tier)
         {
             id = saveData.id,
