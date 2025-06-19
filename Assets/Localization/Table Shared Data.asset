@@ -812,6 +812,34 @@ MonoBehaviour:
     m_Key: Confirm:Return to title
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Key: Severe Bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Key: Restricted Area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Key: Alert:Game Saved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Key: Alert:Game Autosaved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Key: If injury severity is below 1, natural recovery is possible.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Key: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Key: Options
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

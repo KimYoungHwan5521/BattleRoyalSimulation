@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
@@ -281,8 +282,8 @@ public class InGameUIManager : MonoBehaviour
                 if (i < outGameUIManager.PredictionNumber)
                 {
                     predictionResultRows[i].SetActive(true);
-                    predictionResultPredictions[i].text = outGameUIManager.Predictions[i];
-                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.SurvivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
+                    predictionResultPredictions[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
+                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
                     predictionResultBGs[i].color = Color.white;
                     predictionResultResults[i].text = "";
                 }
@@ -292,7 +293,7 @@ public class InGameUIManager : MonoBehaviour
         else predictionResult.SetActive(false);
     }
 
-    public void SetSurvivorRank(string survivorName, int survivorRank)
+    public void SetSurvivorRank(LocalizedString survivorName, int survivorRank)
     {
         for(int i=0; i<outGameUIManager.Predictions.Length; i++)
         {
@@ -543,7 +544,7 @@ public class InGameUIManager : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0.5f, 0.5f);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else if (injury.degree == 1)
@@ -554,14 +555,14 @@ public class InGameUIManager : MonoBehaviour
                 {
                     Image subpartImage = GetTargetImage(subpart);
                     subpartImage.color = new Color(0.5f, 0, 0);
-                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
+                    subpartImage.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
                 }
             }
             else
             {
                 targetPart.color = new Color(1f, (1 - injury.degree) * 0.7f, (1 - injury.degree) * 0.7f);
             }
-            targetPart.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Table", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
+            targetPart.GetComponentInChildren<Help>().SetDescription($"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {injury.degree:0.##}");
         }
     }
 

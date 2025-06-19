@@ -856,6 +856,35 @@ MonoBehaviour:
       seront perdues.)</i>"
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: "H\xE9morragie grave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Zone interdite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: "Jeu sauvegard\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: "Jeu sauvegard\xE9 automatiquement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: "Si la gravit\xE9 de la blessure est inf\xE9rieure \xE0 1, la r\xE9cup\xE9ration
+      naturelle est possible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

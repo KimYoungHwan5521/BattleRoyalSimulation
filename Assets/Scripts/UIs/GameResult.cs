@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
@@ -172,7 +173,7 @@ public class GameResult : MonoBehaviour
                 if (i < outGameUIManager.PredictionNumber)
                 {
                     predictionTable[i].SetActive(true);
-                    predictionsText[i].text = outGameUIManager.Predictions[i];
+                    predictionsText[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
                     rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
                 }
                 else predictionTable[i].SetActive(false);

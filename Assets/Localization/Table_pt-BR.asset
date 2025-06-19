@@ -853,6 +853,35 @@ MonoBehaviour:
       perdidas.)</i>"
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: Hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Zona restrita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: Jogo salvo.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: Jogo salvo automaticamente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: "Se a gravidade da les\xE3o for inferior a 1, \xE9 poss\xEDvel se
+      recuperar naturalmente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: "Op\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

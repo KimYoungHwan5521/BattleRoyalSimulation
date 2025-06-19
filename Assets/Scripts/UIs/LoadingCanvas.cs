@@ -19,6 +19,7 @@ public class LoadingCanvas : MonoBehaviour
         new("Table", "The expected value of the bet is greater than 1."),
         new("Table", "Base stats cap at 100, but can exceed with traits."),
         new("Table", "If training doesn't raise stats, upgrade your training facility."),
+        new("Table", "If injury severity is below 1, natural recovery is possible."),
     };
 
     private void Start()

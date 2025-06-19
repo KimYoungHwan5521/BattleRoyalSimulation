@@ -22,6 +22,9 @@ public class Option : MonoBehaviour
     bool bgmOn = true;
     bool sfxOn = true;
 
+    [Header("Language")]
+    [SerializeField] GameObject languageWindow;
+
     [Header("Encyclopedia")]
     [SerializeField] GameObject encyclopedia;
     [SerializeField] GameObject itemTable;
@@ -144,6 +147,19 @@ public class Option : MonoBehaviour
     {
         GameManager.Instance.openedWindows.Pop().SetActive(false);
         if(GameManager.Instance.openedWindows.Count == 0) Time.timeScale = 1;
+    }
+
+    public void OpenLanguageWindow()
+    {
+        languageWindow.SetActive(true);
+        GameManager.Instance.openedWindows.Push(languageWindow);
+    }
+
+    public void SetLanguage(string localeCode)
+    {
+        Locale locale = LocalizationSettings.AvailableLocales.Locales.Find(x => x.Identifier.Code == localeCode);
+        if (locale != null) LocalizationSettings.SelectedLocale = locale;
+        else Debug.LogWarning($"Wrong locale code : {localeCode}");
     }
 
     public void OpenEncyclopedia()

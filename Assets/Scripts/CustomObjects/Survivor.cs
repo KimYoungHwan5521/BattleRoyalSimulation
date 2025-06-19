@@ -635,7 +635,7 @@ public class Survivor : CustomObject
             if(prohibitedAreaTime < 0)
             {
                 IsDead = true;
-                InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), "prohibited area");
+                InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), new LocalizedString("Table", "Restricted Area").GetLocalizedString());
             }
         }
     }
@@ -652,7 +652,7 @@ public class Survivor : CustomObject
         if(curBlood / maxBlood < 0.5f)
         {
             IsDead = true;
-            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), "hemorrhage");
+            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), new LocalizedString("Table", "Severe Bleeding").GetLocalizedString());
         }
     }
 

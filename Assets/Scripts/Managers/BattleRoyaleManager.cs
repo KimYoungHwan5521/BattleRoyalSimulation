@@ -313,13 +313,13 @@ public class BattleRoyaleManager
             aliveSurvivors.Remove(survivor);
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
             rankings[aliveSurvivors.Count] = survivor.survivorName;
-            InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count].TableEntryReference.Key, aliveSurvivors.Count);
+            InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count], aliveSurvivors.Count);
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
                 rankings[0] = aliveSurvivors[0].survivorName;
-                InGameUIManager.SetSurvivorRank(rankings[0].TableEntryReference.Key, 0);
+                InGameUIManager.SetSurvivorRank(rankings[0], 0);
                 isBattleRoyaleStart = false;
             }
         }

@@ -849,6 +849,34 @@ MonoBehaviour:
     m_Localized: Return to title?\n<i>(Unsaved data will be lost.)</i>
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: Severe Bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Restricted Area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: Game Saved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: Game Autosaved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: If injury severity is below 1, natural recovery is possible.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

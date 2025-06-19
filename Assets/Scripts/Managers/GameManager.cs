@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
         Option.ReloadSavedata();
-        string message = slot == 0 ? "The game has been auto-saved." : "The game has been saved.";
+        string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
         OutGameUIManager.Alert(message);
     }
 

@@ -855,6 +855,35 @@ MonoBehaviour:
     m_Localized: "\xBFVolver al t\xEDtulo?\\n<i>(Se perder\xE1n los datos no guardados.)</i>"
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: Hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Zona restringida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: Juego guardado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: "Juego guardado autom\xE1ticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: "Si la gravedad de la herida es inferior a 1, la recuperaci\xF3n
+      natural es posible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

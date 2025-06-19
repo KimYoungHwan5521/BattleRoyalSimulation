@@ -25,6 +25,12 @@ public class Title : MonoBehaviour
         GameManager.Instance.Option.OpenSaveSlot(false);
     }
 
+    public void Options()
+    {
+        GameManager.Instance.optionCanvas.SetActive(true);
+        GameManager.Instance.openedWindows.Push(GameManager.Instance.optionCanvas);
+    }
+
     public void Quit()
     {
 #if UNITY_EDITOR

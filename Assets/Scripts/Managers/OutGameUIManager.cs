@@ -195,8 +195,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject[] predictRankingContestants;
     public List<SurvivorData> contestantsData;
     [SerializeField] GameObject draggingContestant;
-    string[] predictions;
-    public string[] Predictions => predictions;
+    LocalizedString[] predictions;
+    public LocalizedString[] Predictions => predictions;
     [SerializeField] TMP_InputField bettingAmountInput;
     int bettingAmount;
     public int BettingAmount => bettingAmount;
@@ -216,7 +216,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         eventSystem = FindAnyObjectByType<EventSystem>();
         bettingAmountInput.onValueChanged.AddListener((value) => { ValidateBettingAmount(value); });
-        predictions = new string[5];
+        predictions = new LocalizedString[5];
         GameManager.Instance.ObjectStart += () =>
         {
             RelocalizeTrainingRoom();
@@ -956,7 +956,11 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(injury.degree >= 1)
                 {
-                    surgeryName = $"Artificial {injury.site} transplant";
+                    var localizedSurgeryName = new LocalizedString("Injury", "Prosthetic Implant:")
+                    {
+                        Arguments = new[] { injury.site.ToString() }
+                    };
+                    surgeryName = $"{ localizedSurgeryName.GetLocalizedString() }";
                     switch(injury.site)
                     {
                         case InjurySite.RightBigToe:
@@ -979,7 +983,7 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftRingFinger:
                         case InjurySite.RightLittleFinger:
                         case InjurySite.LeftLittleFinger:
-                            cost = 100;
+                            cost = 50;
                             break;
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
@@ -987,40 +991,29 @@ public class OutGameUIManager : MonoBehaviour
                             break;
                         case InjurySite.RightArm:
                         case InjurySite.LeftArm:
-                            cost = 1000;
+                            cost = 750;
                             break;
                         case InjurySite.RightFoot:
                         case InjurySite.LeftFoot:
-                            string side = injury.site == InjurySite.RightFoot ? "right" : "left";
-                            surgeryName = $"Artificial foot({side}) transplant";
                             cost = 500;
                             break;
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
-                            side = injury.site == InjurySite.RightKnee ? "right" : "left";
-                            surgeryName = $"Artificial leg({side}, under knee) transplant";
-                            cost = 1000;
+                            cost = 750;
                             break;
                         case InjurySite.RightLeg:
                         case InjurySite.LeftLeg:
-                            side = injury.site == InjurySite.RightLeg ? "right" : "left";
-                            surgeryName = $"Artificial leg({side}) transplant";
-                            cost = 2000;
+                            cost = 1000;
                             break;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
-                            side = injury.site == InjurySite.RightEye ? "right" : "left";
-                            surgeryName = $"Artificial eye({side}) transplant";
-                            cost = 3000;
+                            cost = 2000;
                             break;
                         case InjurySite.RightEar:
                         case InjurySite.LeftEar:
-                            side = injury.site == InjurySite.RightEar ? "right" : "left";
-                            surgeryName = $"Artificial ear({side}) transplant";
-                            cost = 1000;
+                            cost = 500;
                             break;
                         case InjurySite.Organ:
-                            surgeryName = $"Artificial organ transplant";
                             cost = 3000;
                             break;
                         default:
@@ -1035,13 +1028,14 @@ public class OutGameUIManager : MonoBehaviour
         {
             foreach(var characteristic in survivorWhoWantSurgery.characteristics)
             {
+                var localizedSurveryName = new LocalizedString("Injury", "Treatment") { Arguments = new[] { characteristic.characteristicName.GetLocalizedString() } };
                 switch(characteristic.type)
                 {
                     case CharacteristicType.BadEye:
-                        surgeryList.Add(new("Bad eye treatment", 2000, InjurySite.LeftEye, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadEye));
+                        surgeryList.Add(new(localizedSurveryName.GetLocalizedString(), 1000, InjurySite.LeftEye, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadEye));
                         break;
                     case CharacteristicType.BadHearing:
-                        surgeryList.Add(new("Bad hearing treatment", 700, InjurySite.LeftEar, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadHearing));
+                        surgeryList.Add(new(localizedSurveryName.GetLocalizedString(), 500, InjurySite.LeftEar, SurgeryType.ChronicDisorderTreatment, CharacteristicType.BadHearing));
                         break;
                     default:
                         break;
@@ -1199,7 +1193,8 @@ public class OutGameUIManager : MonoBehaviour
             if (Enum.TryParse(ItemManager.craftables[i].itemType.ToString(), out ResourceEnum.Sprite sprite)) craftableAllow.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
             int toggleIndex = i;
             craftableAllow.GetComponentInChildren<Toggle>().onValueChanged.AddListener((value) => { strategies.ToList().Find(x => x.strategyCase == StrategyCase.CraftingAllow).hasChanged = true; });
-            craftableAllows.Add(craftableAllow);
+            craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
+            craftableAllows.Add(craftableAllow); 
         }
         RelocalizeStrategyRoom();
         SetDefault();
@@ -1243,10 +1238,6 @@ public class OutGameUIManager : MonoBehaviour
         }
         craftingPriority1Dropdown.captionText.text = new LocalizedString("Item", ItemManager.craftables[craftingPriority1Dropdown.value].itemType.ToString()).GetLocalizedString(); ;
 
-        for (int i = 0; i < craftableAllows.Count; i++)
-        {
-            craftableAllows[i].GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
-        }
     }
 
     public void SetDefault()
@@ -1268,6 +1259,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void OpenStrategyRoom()
     {
+        RelocalizeStrategyRoom();
         strategyRoom.SetActive(true);
         SetStrategyRoom();
         GameManager.Instance.openedWindows.Push(strategyRoom);
@@ -1620,7 +1612,7 @@ public class OutGameUIManager : MonoBehaviour
             OpenConfirmWindow("Confirm:Bet", () =>
             {
                 bettingAmount = _bettingAmount;
-                for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
+                for (int i = 0; i < needPredictionNumber; i++) predictions[i] = predictRankingContestants[i].GetComponentInChildren<LocalizeStringEvent>().StringReference;
                 bettingRoom.SetActive(false);
                 StartBattleRoyale();
             });
@@ -2058,7 +2050,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 for (int i = 0; i < contestants.Length; i++)
                 {
-                    int jndex = contestantsData.FindIndex(x => x.SurvivorName == results[index].gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+                    int jndex = contestantsData.FindIndex(x => x.localizedSurvivorName.GetLocalizedString() == results[index].gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
                     if (jndex > -1) selectedContestantData = contestantsData[jndex];
                 }
                 if(selectedContestantData != null)
@@ -2067,7 +2059,7 @@ public class OutGameUIManager : MonoBehaviour
                     selectedContestant.SetActive(true);
                     draggingContestant.SetActive(true);
                     draggingContestant.GetComponentsInChildren<Image>()[1].color = results[index].gameObject.GetComponentsInChildren<Image>()[1].color;
-                    draggingContestant.GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.localizedSurvivorName.GetLocalizedString();
+                    draggingContestant.GetComponentInChildren<LocalizeStringEvent>().StringReference = selectedContestantData.localizedSurvivorName;
                 }
             }
         }
@@ -2087,14 +2079,14 @@ public class OutGameUIManager : MonoBehaviour
                         // prediction 할 때 이미 할당된 녀석이면 위치 바꿔주기
                         for(int j = 0; j < predictRankings.Length; j++)
                         {
-                            if (predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text == selectedContestantData.localizedSurvivorName.GetLocalizedString())
+                            if (predictRankingContestants[j].GetComponentInChildren<LocalizeStringEvent>().StringReference == selectedContestantData.localizedSurvivorName)
                             {
                                 alreadyPredicted = j;
                                 if (predictRankingContestants[i].activeSelf)
                                 {
                                     predictRankingContestants[j].SetActive(true);
                                     predictRankingContestants[j].GetComponentsInChildren<Image>()[1].color = predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color;
-                                    predictRankingContestants[j].GetComponentInChildren<TextMeshProUGUI>().text = predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text;
+                                    predictRankingContestants[j].GetComponentInChildren<LocalizeStringEvent>().StringReference = predictRankingContestants[i].GetComponentInChildren<LocalizeStringEvent>().StringReference;
                                 }
                                 else predictRankingContestants[j].SetActive(false);
                             }
@@ -2102,7 +2094,7 @@ public class OutGameUIManager : MonoBehaviour
 
                         predictRankingContestants[i].SetActive(true);
                         predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color = draggingContestant.GetComponentsInChildren<Image>()[1].color;
-                        predictRankingContestants[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedContestantData.localizedSurvivorName.GetLocalizedString();
+                        predictRankingContestants[i].GetComponentInChildren<LocalizeStringEvent>().StringReference = selectedContestantData.localizedSurvivorName;
                     }
                 }
             }

@@ -263,6 +263,14 @@ MonoBehaviour:
     m_Key: Degree
     m_Metadata:
       m_Items: []
+  - m_Id: 3205875268907008
+    m_Key: 'Prosthetic Implant:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3205881853964288
+    m_Key: Treatment
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

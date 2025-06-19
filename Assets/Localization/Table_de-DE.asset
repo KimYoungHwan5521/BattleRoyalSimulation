@@ -854,6 +854,35 @@ MonoBehaviour:
       gehen verloren.)</i>"
     m_Metadata:
       m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: Starke Blutung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Sperrgebiet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: Spiel gespeichert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: Spiel automatisch gespeichert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: "Bei einer Verletzungsschwere unter 1 ist nat\xFCrliche Heilung
+      m\xF6glich."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Sprache
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: Optionen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
