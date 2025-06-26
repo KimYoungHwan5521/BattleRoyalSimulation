@@ -651,7 +651,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: "Il ne peut pas \xEAtre r\xE9serv\xE9 pour le battle royale.{param0}"
+    m_Localized: "Il ne peut pas \xEAtre r\xE9serv\xE9 pour le battle royale.\\n(<color=red><i>Cause
+      : {param0}</i></color>)"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
@@ -883,6 +884,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5085890839375872
     m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: "Chirurgie r\xE9ussie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: "Voir les entra\xEEnements programm\xE9s par survivant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: "Les survivants avec les deux mains ou les deux yeux handicap\xE9s
+      ne peuvent pas \xEAtre inscrits aux matchs. Pour les championnats, la participation
+      d\xE9pend de leur \xE9tat le jour m\xEAme."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: "Plus la blessure est grave, plus la gu\xE9rison est lente. Si elle
+      est l\xE9g\xE8re, la r\xE9cup\xE9ration est rapide."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: "Entra\xEEnement programm\xE9"
     m_Metadata:
       m_Items: []
   references:

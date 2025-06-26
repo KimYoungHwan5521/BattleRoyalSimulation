@@ -271,6 +271,14 @@ MonoBehaviour:
     m_Key: Treatment
     m_Metadata:
       m_Items: []
+  - m_Id: 5826427779346432
+    m_Key: Blind in both eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5826436000182272
+    m_Key: Cannot use both hands
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

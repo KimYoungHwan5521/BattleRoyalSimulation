@@ -642,7 +642,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: He cannot be reserved for battle royale.{param0}
+    m_Localized: 'He cannot be reserved for battle royale.\n(<color=red><i>Cause
+      : {param0}</i></color>)'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -875,6 +876,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5085890839375872
     m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: Surgery Successful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: View scheduled training by survivor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: Survivors with both hands or both eyes disabled cannot be scheduled
+      for matches. For championships, participation depends on their condition that
+      day.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: The more severe the injury, the slower the healing. The milder the
+      injury, the faster the recovery.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: Scheduled Training
     m_Metadata:
       m_Items: []
   references:

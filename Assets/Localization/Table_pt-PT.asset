@@ -649,7 +649,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: "Ele n\xE3o pode ser reservado para o battle royale.{param0}"
+    m_Localized: "Ele n\xE3o pode ser reservado para o battle royale.\\n(<color=red><i>Causa
+      : {param0}</i></color>)"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
@@ -880,6 +881,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5085890839375872
     m_Localized: "Op\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: Cirurgia bem-sucedida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: Ver treino agendado por sobrevivente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: "Sobreviventes com ambas as m\xE3os ou olhos incapacitados n\xE3o
+      podem ser agendados para combates. Nos campeonatos, a participa\xE7\xE3o depende
+      da condi\xE7\xE3o no dia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: "Quanto mais grave a les\xE3o, mais lenta a cura. Quanto mais leve,
+      mais r\xE1pida a recupera\xE7\xE3o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: Treino agendado
     m_Metadata:
       m_Items: []
   references:

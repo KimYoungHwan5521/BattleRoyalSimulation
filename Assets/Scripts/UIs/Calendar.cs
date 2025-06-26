@@ -661,11 +661,29 @@ public class Calendar : CustomObject
     {
         bool availiable = true;
         bool injured = false;
+        string cause = "";
+        int eyeInjury = 0;
+        int handInjury = 0;
         foreach (Injury injury in wantReserver.injuries)
         {
             if (injury.site == InjurySite.Organ && injury.degree >= 1)
             {
                 availiable = false;
+                cause = $"{new LocalizedString("Injury", "Organ").GetLocalizedString()} {new LocalizedString("Injury", "Rupture").GetLocalizedString()}";
+                break;
+            }
+            if (injury.site == InjurySite.LeftEye && injury.degree >= 1 || injury.site == InjurySite.RightEye && injury.degree >= 1) eyeInjury++;
+            if ((injury.site == InjurySite.LeftHand || injury.site == InjurySite.LeftArm) && injury.degree >= 1 || (injury.site == InjurySite.RightHand || injury.site == InjurySite.RightArm) && injury.degree >= 1) handInjury++;
+            if ( eyeInjury >= 2 )
+            {
+                availiable = false;
+                cause = $"{new LocalizedString("Injury", "Blind in both eyes").GetLocalizedString()}";
+                break;
+            }
+            if (handInjury >= 2)
+            {
+                availiable = false;
+                cause = $"{new LocalizedString("Injury", "Cannot use both hands").GetLocalizedString()}";
                 break;
             }
             if (injury.degree > 0)
@@ -676,7 +694,7 @@ public class Calendar : CustomObject
 
         if (!availiable)
         {
-            outGameUIManager.Alert("Alert:Reserve Fail", "\n<color=red><i>(Cause : Organ Rupture)</i></color>");
+            outGameUIManager.Alert("Alert:Reserve Fail", "Organ Rupture");
         }
         else if (injured)
         {

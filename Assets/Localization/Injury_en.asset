@@ -277,6 +277,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753611033051140
+  - m_Id: 5826427779346432
+    m_Localized: Blind in both eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5826436000182272
+    m_Localized: Cannot use both hands
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

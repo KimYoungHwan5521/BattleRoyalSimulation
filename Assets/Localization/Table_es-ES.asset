@@ -652,7 +652,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: No se puede reservar para el battle royale.{param0}
+    m_Localized: 'No se puede reservar para el battle royale.\n(<color=red><i>Causa
+      : {param0}</i></color>)'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
@@ -882,6 +883,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5085890839375872
     m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: "Cirug\xEDa exitosa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: Ver entrenamientos programados por sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: "Los supervivientes con ambas manos o ambos ojos incapacitados no
+      pueden ser programados para combates. En campeonatos, la participaci\xF3n depende
+      de su estado ese d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: "Cuanto m\xE1s grave es la herida, m\xE1s lenta es la curaci\xF3n.
+      Cuanto m\xE1s leve, m\xE1s r\xE1pida la recuperaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: Entrenamiento programado
     m_Metadata:
       m_Items: []
   references:

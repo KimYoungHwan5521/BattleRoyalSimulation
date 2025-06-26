@@ -650,7 +650,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: "Er kann nicht f\xFCr das Battle Royale reserviert werden.{param0}"
+    m_Localized: "Er kann nicht f\xFCr das Battle Royale reserviert werden.\\n(<color=red><i>Grund
+      : {param0}</i></color>)"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -881,6 +882,29 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 5085890839375872
     m_Localized: Optionen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: Operation erfolgreich
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: "Geplante Trainings pro \xDCberlebendem anzeigen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: "\xDCberlebende mit beiden H\xE4nden oder Augen verletzt k\xF6nnen
+      nicht f\xFCr K\xE4mpfe angemeldet werden. Bei Meisterschaften h\xE4ngt die
+      Teilnahme vom Tageszustand ab."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: Je schwerer die Verletzung, desto langsamer die Heilung. Leichte
+      Verletzungen heilen schneller.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: Geplantes Training
     m_Metadata:
       m_Items: []
   references:

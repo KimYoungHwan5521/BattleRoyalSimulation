@@ -20,6 +20,8 @@ public class LoadingCanvas : MonoBehaviour
         new("Table", "Base stats cap at 100, but can exceed with traits."),
         new("Table", "If training doesn't raise stats, upgrade your training facility."),
         new("Table", "If injury severity is below 1, natural recovery is possible."),
+        new("Table", "Survivors with both hands or both eyes disabled cannot be scheduled for matches. For championships, participation depends on their condition that day."),
+        new("Table", "The more severe the injury, the slower the healing. The milder the injury, the faster the recovery."),
     };
 
     private void Start()

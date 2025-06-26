@@ -160,6 +160,7 @@ public class SurvivorData
     public List<Injury> injuries = new();
     public bool surgeryScheduled;
     public string scheduledSurgeryName;
+    public LocalizedString localizedScheduledSurgeryName;
     public int shceduledSurgeryCost;
     public InjurySite surgerySite;
     public SurgeryType surgeryType;
