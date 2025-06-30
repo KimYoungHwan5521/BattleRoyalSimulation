@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
-public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration }
+public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration, RecoverySerumAdministeration }
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -116,6 +116,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Toggle surgeryType_Transplantation;
     [SerializeField] Toggle surgeryType_ChronicDisorderTreatment;
     [SerializeField] Toggle surgeryType_Alteration;
+    [SerializeField] Toggle surgeryType_Other_Treatments;
 
     [SerializeField] GameObject selectSurgery;
     [SerializeField] GameObject scheduledSurgery;
@@ -1079,20 +1080,31 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
         }
-
-        for(int i = 0; i < surgeries.Length; i++)
+        else if(surgeryType_Other_Treatments.isOn)
         {
-            if(i < surgeryList.Count)
+            foreach (Injury injury in survivorWhoWantSurgery.injuries)
             {
-                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
-                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
-                surgeries[i].SetActive(true);
-            }
-            else
-            {
-                surgeries[i].SetActive(false);
+                if(injury.degree > 0 && injury.degree < 1)
+                {
+                    surgeryList.Add(new(new("Injury", "Administer Recovery Serum"), 1000, InjurySite.None, SurgeryType.RecoverySerumAdministeration));
+                    break;
+                }
             }
         }
+
+            for (int i = 0; i < surgeries.Length; i++)
+            {
+                if (i < surgeryList.Count)
+                {
+                    surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
+                    surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
+                    surgeries[i].SetActive(true);
+                }
+                else
+                {
+                    surgeries[i].SetActive(false);
+                }
+            }
         surgeries[0].GetComponentInChildren<Toggle>().isOn = true;
     }
 
@@ -1126,12 +1138,16 @@ public class OutGameUIManager : MonoBehaviour
             {
                 Alert("Alert:Not enough money.");
             }
+            else if(surgeryList[index].surgeryType == SurgeryType.RecoverySerumAdministeration && survivorWhoWantSurgery.RecoverySerumAdministered)
+            {
+                Alert("Alert:Already administered");
+            }
             else
             {
                 if (survivorWhoWantSurgery.assignedTraining != Training.None)
                 {
                     ConfirmAssignTraining();
-                    Alert("Alert:Training  Canceled", $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }");
+                    Alert("Alert:Training  Canceled", $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}");
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
@@ -1946,6 +1962,10 @@ public class OutGameUIManager : MonoBehaviour
             }
             survivor.characteristics.Remove(survivor.characteristics.Find(x => x.type == survivor.surgeryCharacteristic));
         }
+        else if(survivor.surgeryType == SurgeryType.RecoverySerumAdministeration)
+        {
+            survivor.RecoverySerumAdministered = true;
+        }
 
         survivor.shceduledSurgeryCost = 0;
         survivor.surgeryScheduled = false;
@@ -1961,6 +1981,12 @@ public class OutGameUIManager : MonoBehaviour
                 if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted)
                 {
                     float recoveryRate = 1;
+                    if (survivor.RecoverySerumAdministered)
+                    {
+                        recoveryRate *= 3;
+                        survivor.recoverySerumMedicalEffectLeft--;
+                        if (survivor.recoverySerumMedicalEffectLeft <= 0) survivor.RecoverySerumAdministered = false;
+                    }
                     if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
                     else if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
                     

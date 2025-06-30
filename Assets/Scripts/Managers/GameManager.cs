@@ -102,8 +102,7 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        GetComponent<Calendar>().Today++;
-        GetComponent<Calendar>().TurnPageCalendar(0);
+        PlayerPrefs.DeleteAll();
     }
 
     void Update()

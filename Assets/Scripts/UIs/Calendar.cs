@@ -7,7 +7,6 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public enum League { None, BronzeLeague, SilverLeague, GoldLeague, SeasonChampionship, WorldChampionship, MeleeLeague, RangeLeague, CraftingLeague };
 public class LeagueReserveData
@@ -95,7 +94,11 @@ public class Calendar : CustomObject
             }
 
             today = value;
-            todayText.text = $"{monthName[Month - 1]} {(today % 28) + 1}, {Year}, ({dateName[today % 7]})";
+            string localizedMonth = new LocalizedString("Table", monthName[Month - 1]).GetLocalizedString();
+            string localizedDateName = new LocalizedString("Table", dateName[today % 7]).GetLocalizedString();
+            LocalizedString date = new("Table", "Date Format");
+            date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
+            todayText.text = date.GetLocalizedString();
             if (value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();
@@ -115,7 +118,7 @@ public class Calendar : CustomObject
 
     readonly string[] dateName =
     {
-        "Mon", "Tue", "WED", "THU", "FRI", "<color=blue>SAT</color>", "<color=red>SUN</color>"
+        "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
     };
 
     int calendarPage = 1;
@@ -772,6 +775,7 @@ public class Calendar : CustomObject
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+        Today = today;
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)

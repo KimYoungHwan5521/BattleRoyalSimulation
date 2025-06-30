@@ -351,7 +351,7 @@ public class InGameUIManager : MonoBehaviour
                 if(hit.TryGetComponent(out CustomObject clickedObject))
                 {
                     selectedObject = clickedObject;
-                    if(clickedObject is Survivor || clickedObject is Box)
+                    if (clickedObject is Survivor || clickedObject is Box)
                     {
                         selectedObjectTab.SetActive(clickedObject is Survivor);
                         if (clickedObject is Survivor)
@@ -361,10 +361,11 @@ public class InGameUIManager : MonoBehaviour
                         }
                         else CurrentTab = 1;
                     }
-                    else
+                    else if (clickedObject is Trap)
                     {
                         selectedObjectTab.SetActive(false);
                     }
+                    else return;
                     SetSelectedObjectInfoOnce();
                     selectedNotNull = true;
                     break;

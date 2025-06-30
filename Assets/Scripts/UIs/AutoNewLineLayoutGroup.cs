@@ -30,6 +30,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
 
     public void ArrangeCharacteristics(SurvivorData survivorData)
     {
+        if (!Application.isPlaying) return;
         if (characteristicsText ==  null) FindCharacteristicsText();
         linkedSurvivor = survivorData;
         for (int i = 0; i < characteristicsBox.Length; i++)

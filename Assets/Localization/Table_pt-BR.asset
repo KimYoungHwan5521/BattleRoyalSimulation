@@ -906,10 +906,99 @@ MonoBehaviour:
     m_Localized: Treino agendado
     m_Metadata:
       m_Items: []
+  - m_Id: 9025630118670336
+    m_Localized: "J\xE1 administrado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9055475942879232
+    m_Localized: Resultado da cirurgia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104711485026304
+    m_Localized: janeiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104718334324736
+    m_Localized: fevereiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104723711422464
+    m_Localized: "mar\xE7o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104726680989696
+    m_Localized: abril
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104731953229824
+    m_Localized: maio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104733136023552
+    m_Localized: junho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104734272679936
+    m_Localized: julho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104735367393280
+    m_Localized: agosto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104736696987648
+    m_Localized: setembro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104737959473152
+    m_Localized: outubro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104739515559936
+    m_Localized: novembro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104741264584704
+    m_Localized: dezembro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113966728507392
+    m_Localized: "<color=blue>s\xE1b</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113968502697984
+    m_Localized: <color=red>dom</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113955655544832
+    m_Localized: seg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113957404569600
+    m_Localized: ter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113958998405120
+    m_Localized: qua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113960625795072
+    m_Localized: qui
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113964169981952
+    m_Localized: sex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113970310443008
+    m_Localized: '{2} de {1}  de {0} ({3})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359335
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e00
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000

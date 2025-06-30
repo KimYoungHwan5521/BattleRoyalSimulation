@@ -285,6 +285,14 @@ MonoBehaviour:
     m_Localized: "Kann beide H\xE4nde nicht benutzen"
     m_Metadata:
       m_Items: []
+  - m_Id: 7192074505482240
+    m_Localized: Andere Behandlungen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7207992618971136
+    m_Localized: Regenerationsserum verabreichen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

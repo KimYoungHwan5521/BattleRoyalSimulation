@@ -285,6 +285,14 @@ MonoBehaviour:
     m_Localized: Cannot use both hands
     m_Metadata:
       m_Items: []
+  - m_Id: 7192074505482240
+    m_Localized: Other Treatments
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7207992618971136
+    m_Localized: Administer Recovery Serum
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

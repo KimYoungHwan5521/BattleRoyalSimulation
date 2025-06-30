@@ -285,6 +285,14 @@ MonoBehaviour:
     m_Localized: No puede usar ambas manos
     m_Metadata:
       m_Items: []
+  - m_Id: 7192074505482240
+    m_Localized: Otros tratamientos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7207992618971136
+    m_Localized: "Administrar suero de recuperaci\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

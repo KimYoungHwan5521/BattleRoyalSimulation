@@ -1508,6 +1508,7 @@ public class Survivor : CustomObject
 
     void AcqireItem(Item item)
     {
+        if (!IsValid(item)) return;
         if (item is Weapon)
         {
             currentWeaponisBestWeapon = false;

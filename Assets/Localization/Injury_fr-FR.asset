@@ -285,6 +285,14 @@ MonoBehaviour:
     m_Localized: Ne peut pas utiliser ses deux mains
     m_Metadata:
       m_Items: []
+  - m_Id: 7192074505482240
+    m_Localized: Autres traitements
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7207992618971136
+    m_Localized: "Administrer le s\xE9rum de r\xE9g\xE9n\xE9ration"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
