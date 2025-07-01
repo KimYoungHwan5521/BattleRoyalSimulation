@@ -116,7 +116,7 @@ public class Calendar : CustomObject
         "July", "August", "September", "October", "November", "December"
     };
 
-    readonly string[] dateName =
+    public readonly string[] dateName =
     {
         "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
     };
@@ -128,18 +128,15 @@ public class Calendar : CustomObject
         set
         {
             calendarPage = value;
-            monthText.text = monthName[(calendarPage - 1) % 12];
+            //monthText.text = monthName[(calendarPage - 1) % 12];
+            monthText.GetComponent<LocalizeStringEvent>().StringReference = new("Table", monthName[(calendarPage - 1) % 12]);
             yearText.text = $"{2101 + (calendarPage - 1) / 12}";
             for (int i = 0; i < 28; i++)
             {
                 datesGone[i].SetActive((calendarPage - 1) * 28 + i < today);
                 if (leagueReserveInfo.ContainsKey(i + 28 * (calendarPage - 1)))
                 {
-                    if (Enum.TryParse(leagueReserveInfo[i + 28 * (calendarPage - 1)].league.ToString(), out ResourceEnum.Sprite result))
-                    {
-                        datesEvent[i].sprite = ResourceManager.Get(result);
-                    }
-                    else Debug.LogWarning($"Can't find sprite : {leagueReserveInfo[i + 28 * (calendarPage - 1)].league}");
+                    datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 28 * (calendarPage - 1)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
                     if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
                     {
                         reserved[i].SetActive(true);
@@ -736,7 +733,7 @@ public class Calendar : CustomObject
                 SurvivorData survivor = outGameUIManager.MySurvivorsData[i];
                 var scheduleTexts = schedules[i].GetComponentsInChildren<TextMeshProUGUI>();
                 scheduleTexts[0].GetComponent<LocalizeStringEvent>().StringReference = survivor.localizedSurvivorName;
-                scheduleTexts[1].text = survivor.tier.ToString();
+                scheduleTexts[1].GetComponent<LocalizeStringEvent>().StringReference = new("Table", survivor.tier.ToString());
                 if (survivor.isReserved)
                 {
                     int date = survivor.reservedDate;
@@ -776,6 +773,7 @@ public class Calendar : CustomObject
         }
         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
         Today = today;
+        CalendarPage = calendarPage;
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
@@ -788,7 +786,35 @@ public class Calendar : CustomObject
 
     public void LoadToday(int today, int curMaxYear)
     {
-        this.today = today;
+        Today = today;
         this.curMaxYear = curMaxYear;
+        CalendarPage = 1;
+    }
+
+    Sprite LoadSprite(League league, string localeCode)
+    {
+        string code = localeCode switch
+        {
+            "zh-Hans" => "SC",
+            "zh-Hant" => "TC",
+            "fr-FR" => "FR",
+            "de-DE" => "DE",
+            "ja-JP" => "JP",
+            "ko-KR" => "KR",
+            "pt-BR" or "pt-PT" => "PT",
+            "ru-RU" => "RU",
+            "es-ES" => "ES",
+            _ => ""
+        };
+
+        if (Enum.TryParse($"{league}{code}", out ResourceEnum.Sprite result))
+        {
+            return ResourceManager.Get(result);
+        }
+        else
+        {
+            Debug.LogWarning($"Can't find sprite : {league}");
+            return default;
+        }
     }
 }

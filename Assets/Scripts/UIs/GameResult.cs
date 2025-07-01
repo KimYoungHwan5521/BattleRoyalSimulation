@@ -232,7 +232,7 @@ public class GameResult : MonoBehaviour
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "Season Championship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "SeasonChampionship").GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
@@ -243,7 +243,7 @@ public class GameResult : MonoBehaviour
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
                     notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                 }
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "World Championship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "WorldChampionship").GetLocalizedString()); };
                 break;
         }
     }

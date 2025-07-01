@@ -995,6 +995,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
+  - m_Id: 9408636008329216
+    m_Localized: Carregamento bem-sucedido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408644191416320
+    m_Localized: Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408647374893056
+    m_Localized: Prata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408650487066624
+    m_Localized: Ouro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409849533722624
+    m_Localized: Liga de Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409851412770816
+    m_Localized: Liga de Prata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409860598296576
+    m_Localized: Liga de Ouro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409870513631232
+    m_Localized: Liga de Combate Corpo a Corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409873973932032
+    m_Localized: "Liga de Combate \xE0 Dist\xE2ncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409903250173952
+    m_Localized: "Liga de Fabrica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -765,11 +765,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4087020722384896
-    m_Key: Season Championship
+    m_Key: SeasonChampionship
     m_Metadata:
       m_Items: []
   - m_Id: 4087021989064704
-    m_Key: World Championship
+    m_Key: WorldChampionship
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
@@ -948,6 +948,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 9113970310443008
     m_Key: Date Format
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408636008329216
+    m_Key: Alert:Load Successful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408644191416320
+    m_Key: Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408647374893056
+    m_Key: Silver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408650487066624
+    m_Key: Gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409849533722624
+    m_Key: BronzeLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409851412770816
+    m_Key: SilverLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409860598296576
+    m_Key: GoldLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409870513631232
+    m_Key: MeleeLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409873973932032
+    m_Key: RangeLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409903250173952
+    m_Key: CraftingLeague
     m_Metadata:
       m_Items: []
   m_Metadata:

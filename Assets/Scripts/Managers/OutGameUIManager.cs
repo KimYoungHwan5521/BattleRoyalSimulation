@@ -829,7 +829,7 @@ public class OutGameUIManager : MonoBehaviour
                             weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                }, $"{(Training)(trainingRoomIndex + 1)}");
+                }, $"{new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
                 break;
             case 1:
                 OpenConfirmWindow("Confirm:Upgrade Facility", () =>
@@ -855,7 +855,7 @@ public class OutGameUIManager : MonoBehaviour
                             runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                }, $"{(Training)(trainingRoomIndex + 1)}");
+                }, $"{new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
                 break;
             case 2:
                 OpenConfirmWindow("Confirm:Upgrade Facility", ()=>
@@ -881,7 +881,7 @@ public class OutGameUIManager : MonoBehaviour
                             fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                }, $"{(Training)(trainingRoomIndex + 1)}");
+                }, $"{new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
                 break;
             case 3:
                 OpenConfirmWindow("Confirm:Upgrade Facility", () =>
@@ -907,7 +907,7 @@ public class OutGameUIManager : MonoBehaviour
                             shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                }, $"{(Training)(trainingRoomIndex + 1)}");
+                }, $"{new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
                 break;
             case 4:
                 OpenConfirmWindow("Confirm:Upgrade Facility", () =>
@@ -933,7 +933,7 @@ public class OutGameUIManager : MonoBehaviour
                             studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
                         }
                     }
-                }, $"{(Training)(trainingRoomIndex + 1)}");
+                }, $"{new LocalizedString("Table", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
                 break;
         }
     }
@@ -2205,7 +2205,7 @@ public class OutGameUIManager : MonoBehaviour
     public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel,
         int runningLevel, int weightTrainingLevel, int studyingLevel)
     {
-        this.money = money;
+        Money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.survivorHireLimit = survivorHireLimit;
         this.fightTrainingLevel = fightTrainingLevel;

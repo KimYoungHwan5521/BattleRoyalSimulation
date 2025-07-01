@@ -990,6 +990,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 9408636008329216
+    m_Localized: Load Successful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408644191416320
+    m_Localized: Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408647374893056
+    m_Localized: Silver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408650487066624
+    m_Localized: Gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409849533722624
+    m_Localized: Bronze League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409851412770816
+    m_Localized: Silver League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409860598296576
+    m_Localized: Gold League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409870513631232
+    m_Localized: Melee League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409873973932032
+    m_Localized: Range League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409903250173952
+    m_Localized: Crafting League
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
