@@ -8,9 +8,9 @@ public class SaveDataInfo
 {
     public string gameVersion;
     public string savedTime;
-    public string ingameDate;
+    public int ingameDate;
 
-    public SaveDataInfo(string gameVersion, string savedTime, string ingameDate)
+    public SaveDataInfo(string gameVersion, string savedTime, int ingameDate)
     {
         this.gameVersion = gameVersion;
         this.savedTime = savedTime;

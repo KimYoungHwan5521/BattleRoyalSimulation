@@ -436,7 +436,7 @@ public class Survivor : CustomObject
     #region Look
     [Header("Look")]
     [SerializeField] Vector2 lookPosition = Vector2.zero;
-    [SerializeField] float lookAroundTime = 0.3f;
+    [SerializeField] float lookAroundTime = 1f;
     [SerializeField] float curLookAroundTime;
     [SerializeField] int lookAroundCount;
     Vector2 keepEyesOnPosition;

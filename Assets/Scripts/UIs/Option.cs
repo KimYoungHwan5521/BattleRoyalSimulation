@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 
 public class Option : MonoBehaviour
 {
+    [SerializeField] GameObject option;
     float lastSaveTime;
     [Header("Sound")]
     [SerializeField] Image bgmImage;
@@ -145,7 +147,7 @@ public class Option : MonoBehaviour
 
     public void Resume()
     {
-        GameManager.Instance.openedWindows.Pop().SetActive(false);
+        option.SetActive(false);
         if(GameManager.Instance.openedWindows.Count == 0) Time.timeScale = 1;
     }
 
@@ -190,17 +192,17 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"{saveData.ingameDate}\n<i>{new LocalizedString("Table", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
+                string info = $"\n<i>{new LocalizedString("Table", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
                 if (i == 0) info += $"\n<i>{new LocalizedString("Table", "Autosaved").GetLocalizedString()}</i>";
-                saveSlots[i].SetInfo(info);
-                if(i != 0) saveSlots[i].deleteButton.SetActive(true);
                 saveSlots[i].isEmpty = false;
+                saveSlots[i].SetInfo(info, saveData.ingameDate);
+                if(i != 0) saveSlots[i].deleteButton.SetActive(true);
             }
             else
             {
+                saveSlots[i].isEmpty = true;
                 saveSlots[i].SetInfo($"<i>{new LocalizedString("Table", "Empty Slot").GetLocalizedString()}</i>");
                 if (i != 0) saveSlots[i].deleteButton.SetActive(false);
-                saveSlots[i].isEmpty = true;
             }
         }
     }

@@ -1890,6 +1890,15 @@ public class OutGameUIManager : MonoBehaviour
     {
         calendar.Today++;
         calendar.TurnPageCalendar(0);
+
+        foreach(var survivor in mySurvivorsData)
+        {
+            survivor.increaseComparedToPrevious_strength = 0;
+            survivor.increaseComparedToPrevious_agility = 0;
+            survivor.increaseComparedToPrevious_fighting = 0;
+            survivor.increaseComparedToPrevious_shooting = 0;
+            survivor.increaseComparedToPrevious_knowledge = 0;
+        }
         Alert("Alert:A day has passed.");
     }
 
