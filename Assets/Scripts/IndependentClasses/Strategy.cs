@@ -86,7 +86,7 @@ public class Strategy : MonoBehaviour
 
     public bool[] craftableAllows;
 
-    private void Start()
+    public void Initialize()
     {
         if(strategyCase == StrategyCase.CraftingAllow) craftableAllows = new bool[ItemManager.craftables.Count];
         if (noCondition) return;

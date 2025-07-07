@@ -135,7 +135,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_InputField search;
     [SerializeField] GameObject deleteSearchText;
 
-    [SerializeField] TMP_Dropdown weaponPriority1Dropdown;
+    [SerializeField] LocalizedDropdown weaponPriority1Dropdown;
     [SerializeField] Strategy[] strategies;
     
     [SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
@@ -152,7 +152,7 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] TMP_Dropdown whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown;
 
-    [SerializeField] TMP_Dropdown craftingPriority1Dropdown;
+    [SerializeField] LocalizedDropdown craftingPriority1Dropdown;
 
     [SerializeField] Transform craftingAllow;
     public List<GameObject> craftableAllows = new();
@@ -1180,15 +1180,13 @@ public class OutGameUIManager : MonoBehaviour
         for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Knife_Enchanted;  i++)
         {
             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
-            TMP_Dropdown.OptionData optionData;
-            optionData = new(new LocalizedString("Item", items[i].ToString()).GetLocalizedString());
-            weaponPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
+            weaponPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
             Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
             weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
         }
         GameManager.Instance.ObjectUpdate += () => 
         { 
-            if(weaponPriority1Dropdown.IsExpanded)
+            if(weaponPriority1Dropdown.dropdown.IsExpanded)
             {
                 var dropdownSprites = weaponPriority1Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
                 for(int i=0; i<weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
@@ -1224,11 +1222,11 @@ public class OutGameUIManager : MonoBehaviour
         
         craftingPriority1Dropdown.ClearOptions();
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new(new LocalizedString("Table", "None").GetLocalizedString()) }));
+        craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Table", "None") });
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         GameManager.Instance.ObjectUpdate += () =>
         {
-            if (craftingPriority1Dropdown.IsExpanded)
+            if (craftingPriority1Dropdown.dropdown.IsExpanded)
             {
                 var dropdownSprites = craftingPriority1Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
                 for (int i = 0; i < craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
@@ -1249,6 +1247,7 @@ public class OutGameUIManager : MonoBehaviour
             craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
             craftableAllows.Add(craftableAllow); 
         }
+        foreach (Strategy strategy in strategies) strategy.Initialize();
         RelocalizeStrategyRoom();
         SetDefault();
     }
@@ -1256,11 +1255,10 @@ public class OutGameUIManager : MonoBehaviour
     void RelocalizeStrategyRoom()
     {
         ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
-        for (int i = 0; i < weaponPriority1Dropdown.options.Count; i++)
+        for (int i = 0; i < weaponPriority1Dropdown.dropdown.options.Count; i++)
         {
-            weaponPriority1Dropdown.options[i].text = new LocalizedString("Item", items[i + (int)ItemManager.Items.Knife].ToString()).GetLocalizedString();
+            weaponPriority1Dropdown.RelocalizeOptions();
         }
-        weaponPriority1Dropdown.captionText.text = new LocalizedString("Item", items[weaponPriority1Dropdown.value + (int)ItemManager.Items.Knife].ToString()).GetLocalizedString();
         sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
         sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Attacks.").GetLocalizedString(), new LocalizedString("Table", "Ignores.").GetLocalizedString(), new LocalizedString("Table", "Runs away.").GetLocalizedString() }));
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
@@ -1284,18 +1282,15 @@ public class OutGameUIManager : MonoBehaviour
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Table", "First seen person").GetLocalizedString(), new LocalizedString("Table", "Nearest person").GetLocalizedString(), new LocalizedString("Table", "Person with the longest range").GetLocalizedString() }));
 
-        craftingPriority1Dropdown.options[0].text = new LocalizedString("Table", "None").GetLocalizedString();
-        for(int i=0; i< craftingPriority1Dropdown.options.Count; i++)
+        for(int i=0; i< craftingPriority1Dropdown.keys.Count; i++)
         {
-            craftingPriority1Dropdown.options[i].text = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString()).GetLocalizedString();
+            craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
         }
-        craftingPriority1Dropdown.captionText.text = new LocalizedString("Item", ItemManager.craftables[craftingPriority1Dropdown.value].itemType.ToString()).GetLocalizedString(); ;
-
     }
 
     public void SetDefault()
     {
-        weaponPriority1Dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
+        weaponPriority1Dropdown.dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
         Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
         selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
@@ -1306,7 +1301,7 @@ public class OutGameUIManager : MonoBehaviour
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 0;
-        craftingPriority1Dropdown.value = 0;
+        craftingPriority1Dropdown.dropdown.value = 0;
         foreach(var craftableAllow in craftableAllows) craftableAllow.GetComponentsInChildren<Toggle>()[0].isOn = true;
     }
 
@@ -1338,24 +1333,22 @@ public class OutGameUIManager : MonoBehaviour
     {
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
         survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
-        weaponPriority1Dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
+        weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
         craftingPriority1Dropdown.ClearOptions();
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { new(new LocalizedString("Table", "None").GetLocalizedString()) }));
+        craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Table", "None") });
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         foreach (var craftable in ItemManager.craftables)
         {
             if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge)
             {
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
-                TMP_Dropdown.OptionData optionData;
-                optionData = new(new LocalizedString("Item", craftable.itemType.ToString()).GetLocalizedString());
-                craftingPriority1Dropdown.AddOptions(new List<TMP_Dropdown.OptionData>(new TMP_Dropdown.OptionData[] { optionData }));
+                craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
                 Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
                 craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
             }
         }
-        craftingPriority1Dropdown.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
+        craftingPriority1Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
         CraftingPriorityChanged();
 
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
@@ -1414,24 +1407,26 @@ public class OutGameUIManager : MonoBehaviour
 
     public void WeaponPriorityChanged()
     {
-        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemSpriteEnum);
-        if(spriteNotNull)
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
+        if (spriteNotNull)
         {
             Image image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
             image.sprite = ResourceManager.Get(itemSpriteEnum);
             image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
         }
+        else Debug.Log($"Sprite not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
     }
 
     public void CraftingPriorityChanged()
     {
-        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority1Dropdown.options[craftingPriority1Dropdown.value].text}", out var itemSpriteEnum);
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
         if (spriteNotNull)
         {
             Image image = craftingPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
             image.sprite = ResourceManager.Get(itemSpriteEnum);
             image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
         }
+        else if(craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key != "None") Debug.Log($"Sprite not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
     }
 
     public void SaveStrategy()
@@ -1439,31 +1434,31 @@ public class OutGameUIManager : MonoBehaviour
         OpenConfirmWindow("Confirm:Save all changes?", () =>
         {
             foreach(var craftableAllow in craftableAllows) 
-                if(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text == craftingPriority1Dropdown.options[craftingPriority1Dropdown.value].text)
+                if(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text == craftingPriority1Dropdown.dropdown.options[craftingPriority1Dropdown.dropdown.value].text)
                 {
                     Alert("Alert:Crafting Priority Not Valid");
                     return;
                 }
 
-            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}", out var itemEnum);
+            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.GetComponentInChildren<LocalizeStringEvent>().StringReference}", out var itemEnum);
             if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
-            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.options[weaponPriority1Dropdown.value].text}");
+            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value]}");
 
-            if(craftingPriority1Dropdown.value == 0)
+            if(craftingPriority1Dropdown.dropdown.value == 0)
             {
                 survivorWhoWantEstablishStrategy.priority1Crafting = null;
                 survivorWhoWantEstablishStrategy.priority1CraftingToInt = -1;
             }
             else
             {
-                ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdown.options[craftingPriority1Dropdown.value].text}");
+                ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value]}");
                 itemNotNull = craftable != null;
                 if (itemNotNull)
                 {
                     survivorWhoWantEstablishStrategy.priority1Crafting = craftable;
-                    survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.value - 1;
+                    survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.dropdown.value - 1;
                 }
-                else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdown.options[craftingPriority1Dropdown.value].text}");
+                else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value]}");
             }
 
             for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
