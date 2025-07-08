@@ -161,7 +161,7 @@ public class GameResult : MonoBehaviour
         }
         else
         {
-            gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName } }.GetLocalizedString()}";
+            gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
         }
 
         // Betting Result

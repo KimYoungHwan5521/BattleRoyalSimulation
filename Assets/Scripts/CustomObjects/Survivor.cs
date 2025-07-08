@@ -4077,6 +4077,8 @@ public class Survivor : CustomObject
                 Debug.LogWarning($"Try to drink wrong item : {curDrinking.itemType}.");
                 break;
         }
+        ConsumptionItem(curDrinking, 1);
+        curDrinking = null;
     }
     #endregion
 

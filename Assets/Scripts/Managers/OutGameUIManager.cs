@@ -364,6 +364,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void OpenHireSurvivorMarket()
     {
+        hireClose.SetActive(mySurvivorsData.Count > 0);
         hireSurvivor.SetActive(true);
         GameManager.Instance.openedWindows.Push(hireSurvivor);
     }
@@ -402,7 +403,6 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorsDropdown.ClearOptions();
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
-                        hireClose.SetActive(true);
                     }
                     survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
                     survivorsDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
@@ -546,7 +546,7 @@ public class OutGameUIManager : MonoBehaviour
                 fitParent = survivorsWithOtherSchedule;
                 targetParent = survivorsAssignedThis;
                 description = "Help:Training Already Assigned";
-                targetTraining = new("Table", survivor.assignedTraining.ToString());
+                targetTraining = new("Table", $"Training:{survivor.assignedTraining}");
             }
             survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
             survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
@@ -1440,9 +1440,9 @@ public class OutGameUIManager : MonoBehaviour
                     return;
                 }
 
-            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.GetComponentInChildren<LocalizeStringEvent>().StringReference}", out var itemEnum);
+            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
             if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
-            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value]}");
+            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
 
             if(craftingPriority1Dropdown.dropdown.value == 0)
             {
@@ -1984,6 +1984,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted)
                 {
+                    float recovery = 0;
                     float recoveryRate = 1;
                     if (survivor.RecoverySerumAdministered)
                     {
@@ -1994,8 +1995,9 @@ public class OutGameUIManager : MonoBehaviour
                     if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
                     else if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
                     
-                    if (injury.degree > 0.9) injury.degree -= (1 - injury.degree) * recoveryRate;
-                    else injury.degree -= (0.1f + (1 - injury.degree) * 0.1f) * recoveryRate;
+                    if (injury.degree > 0.9) recovery = (1 - injury.degree) * recoveryRate;
+                    else recovery = (0.1f + (1 - injury.degree) * 0.1f) * recoveryRate;
+                    injury.degree -= recovery;
 
                     if(injury.degree <= 0) fullyRecovered.Add(injury);
                 }

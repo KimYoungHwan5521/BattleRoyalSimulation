@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -249,7 +248,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void TimeScaleUp()
     {
-        Time.timeScale = Mathf.Min(Time.timeScale + 1, Time.timeScale, 3);
+        Time.timeScale = Mathf.Min(Time.timeScale + 1, 3);
         currentTimeScaleText.text = $"x {(int)Time.timeScale}";
     }
 
@@ -297,7 +296,8 @@ public class InGameUIManager : MonoBehaviour
     {
         for(int i=0; i<outGameUIManager.Predictions.Length; i++)
         {
-            if (outGameUIManager.Predictions[i] == survivorName)
+            if (outGameUIManager.Predictions[i] == null) break;
+            if (outGameUIManager.Predictions[i].TableEntryReference.Key == survivorName.TableEntryReference.Key)
             {
                 predictionResultResults[i].text = survivorRank switch
                 {
@@ -675,7 +675,7 @@ public class InGameUIManager : MonoBehaviour
             Survivor.Status.TraceEnemy => new LocalizedString("Table", "Chasing enemy").GetLocalizedString(),
             Survivor.Status.RunAway => new LocalizedString("Table", "Fleeing").GetLocalizedString(),
             Survivor.Status.TrapDisarming => new LocalizedString("Table", "Disarming trap").GetLocalizedString(),
-            Survivor.Status.Crafting => new LocalizedString("Table", "Crafting:") { Arguments = new[] { survivor.CurrentCrafting.itemType.ToString() } }.GetLocalizedString(),
+            Survivor.Status.Crafting => new LocalizedString("Table", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
             Survivor.Status.Enchanting => new LocalizedString("Table", "Enchanting").GetLocalizedString(),
             _ => survivor.CurrentStatus.ToString()
         };
