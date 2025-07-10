@@ -128,6 +128,12 @@ public class BattleRoyaleManager
                 areaProhibitTime = 60;
                 InGameUIManager.SetCameraLimit(225, 225);
                 break;
+            default:
+                survivorNumber = 25;
+                prohibitAtOnce = 4;
+                areaProhibitTime= 60;
+                InGameUIManager.SetCameraLimit(225, 225);
+                break;
         }
     }
 

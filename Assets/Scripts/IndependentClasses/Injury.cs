@@ -150,7 +150,7 @@ public class Injury
             result.Add(InjurySite.RightIndexToe);
             result.Add(InjurySite.RightMiddleToe);
             result.Add(InjurySite.RightRingToe);
-            result.Add(InjurySite.LeftRingToe);
+            result.Add(InjurySite.RightLittleToe);
             if (upperPart == InjurySite.RightLeg || upperPart == InjurySite.RightKnee)
             {
                 result.Add(InjurySite.RightFoot);
@@ -162,7 +162,7 @@ public class Injury
             result.Add(InjurySite.LeftBigToe);
             result.Add(InjurySite.LeftIndexToe);
             result.Add(InjurySite.LeftMiddleToe);
-            result.Add(InjurySite.RightLittleToe);
+            result.Add(InjurySite.LeftRingToe);
             result.Add(InjurySite.LeftLittleToe);
             if (upperPart == InjurySite.LeftLeg || upperPart == InjurySite.LeftKnee)
             {

@@ -1581,6 +1581,7 @@ public class Survivor : CustomObject
 
     void ConsumptionItem(Item item, int amount)
     {
+        if (!IsValid(item)) return;
         item.amount -= amount;
         if(item.amount <= 0)
         {
@@ -2038,17 +2039,21 @@ public class Survivor : CustomObject
 
             int amount = currentCrafting.outputAmount;
             ItemManager.AddItems(currentCrafting.itemType, amount);
-            bool isWeapon = false;
+            int isEquipable = -1;
             Item item = null;
             for (int i = 1; i <= amount; i++)
             {
                 item = ItemManager.itemDictionary[currentCrafting.itemType][^i];
-                isWeapon = item is Weapon;
-                GetItem(item);
+                if (item is Weapon) isEquipable = 0;
+                else if(item is BulletproofHelmet) isEquipable = 1;
+                else if (item is BulletproofVest) isEquipable = 2;
+                    GetItem(item);
             }
             currentCrafting = null;
             craftables.Clear();
-            if (isWeapon) Equip((Weapon)item);
+            if (isEquipable == 0) Equip((Weapon)item);
+            else if (isEquipable == 1) Equip((BulletproofHelmet)item);
+            else if (isEquipable == 2) Equip((BulletproofVest)item);
             CheckCraftables();
         }
     }
@@ -2422,6 +2427,7 @@ public class Survivor : CustomObject
     bool CanRunAway(out Vector2 destination)
     {
         destination = Vector2.zero;
+        if (TargetEnemy == null) return false;
         List<Vector2> enemyBlockeds = new();
         List<Vector2> imNotBlockeds = new();
         for(int j = 1; j<6; j++)

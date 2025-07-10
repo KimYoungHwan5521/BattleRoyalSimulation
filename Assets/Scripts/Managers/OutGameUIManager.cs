@@ -261,7 +261,7 @@ public class OutGameUIManager : MonoBehaviour
         trainingType = new LocalizedString("Table", "Training:Shooting");
         shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
-        trainingType = new LocalizedString("Table", "Training:Study");
+        trainingType = new LocalizedString("Table", "Training:Studying");
         studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
 
@@ -1598,6 +1598,10 @@ public class OutGameUIManager : MonoBehaviour
                 needSurvivorNumber = 25;
                 needPredictionNumber = 5;
                 break;
+            default:
+                needSurvivorNumber = 25;
+                needPredictionNumber = 5;
+                break;
         }
         for (int i= index; i<needSurvivorNumber; i++)
         {
@@ -1715,10 +1719,10 @@ public class OutGameUIManager : MonoBehaviour
                 switch (totalCorrect)
                 {
                     case 1:
-                        odds = 1.2f;
+                        odds = 1f;
                         break;
                     case 2:
-                        odds = 6;
+                        odds = 3f;
                         break;
                 }
                 break;
@@ -1774,8 +1778,8 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 break;
         }
-        //Debug.Log(odds);
-        odds *= Factorial(correctExactRanking);
+        if (correctExactRanking == 1) odds *= 1.5f;
+        else odds *= Factorial(correctExactRanking);
         // 이론상 최대 배당 : x6375600
         return odds;
     }
@@ -2205,6 +2209,7 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.ClaimLoadInfo("Loading survivors...", 0, 3);
         mySurvivorsData.Clear();
         mySurvivorsData = data;
+        ConfirmAssignTraining();
         yield return null;
     }
 

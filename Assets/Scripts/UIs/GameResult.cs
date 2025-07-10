@@ -134,7 +134,7 @@ public class GameResult : MonoBehaviour
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                         int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                        //treatments[i].GetComponentInChildren<Help>().SetDescription(playerSurvivor.injuries[i].site);
+                        treatments[i].GetComponentInChildren<Help>().SetDescription("");
                         totalTreatmentCost += cost;
                         treatments[i].SetActive(true);
                     }

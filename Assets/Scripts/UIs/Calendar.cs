@@ -310,14 +310,12 @@ public class Calendar : CustomObject
             { ItemManager.Items.ShotGun, 4 },
             { ItemManager.Items.AssaultRifle, 2 },
             { ItemManager.Items.SniperRifle, 2 },
-            { ItemManager.Items.Bazooka, 2 },
             { ItemManager.Items.Bullet_Revolver, 40 },
             { ItemManager.Items.Bullet_Pistol, 40 },
             { ItemManager.Items.Bullet_SubMachineGun, 40 },
             { ItemManager.Items.Bullet_ShotGun, 40 },
             { ItemManager.Items.Bullet_AssaultRifle, 20 },
             { ItemManager.Items.Bullet_SniperRifle, 20 },
-            { ItemManager.Items.Rocket_Bazooka, 20 },
             { ItemManager.Items.LowLevelBulletproofHelmet, 8 },
             { ItemManager.Items.MiddleLevelBulletproofHelmet, 4 },
             { ItemManager.Items.LowLevelBulletproofVest, 8 },
@@ -570,6 +568,7 @@ public class Calendar : CustomObject
                         temp.Arguments = new[] { new { param0 = leagueReserveInfo[wantReserveDate].reserver.localizedSurvivorName.GetLocalizedString() } };
                         reserveText.StringReference = temp;
                         reserveText.RefreshString();
+                        SetLeagueInfo(wantReserveDate);
                         reserveText.GetComponent<LocalizeStringEvent>().RefreshString();
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
                         reserveButton.SetActive(false);

@@ -761,10 +761,12 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentWeapon.SetActive(false);
             selectedObjectsCurrentHelmet.SetActive(false);
             selectedObjectsCurrentVest.SetActive(false);
+            selectedObjectKillCount.text = "-";
             for (int i = 0; i < selectedObjectsItems.Length; i++)
             {
                 if (selectedBox.items.Count > i)
                 {
+                    if (selectedBox.items[i] == null) break;
                     if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedBox.items[i].itemType}", out var spriteEnum))
                     {
                         selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = ResourceManager.Get(spriteEnum);
