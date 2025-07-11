@@ -248,6 +248,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void TimeScaleUp()
     {
+        if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
         Time.timeScale = Mathf.Min(Time.timeScale + 1, 3);
         currentTimeScaleText.text = $"x {(int)Time.timeScale}";
     }
@@ -692,7 +693,7 @@ public class InGameUIManager : MonoBehaviour
             {
                 selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(weaponSpriteEnum);
                 selectedObjectsCurrentWeaponImage.GetComponent<AspectRatioFitter>().aspectRatio
-                    = selectedObjectsCurrentWeaponImage.sprite.textureRect.width / selectedObjectsCurrentWeaponImage.sprite.textureRect.height;
+                    = selectedObjectsCurrentWeaponImage.sprite.rect.width / selectedObjectsCurrentWeaponImage.sprite.rect.height;
             }
             else selectedObjectsCurrentWeaponImage.sprite = null;
             if (selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon))
@@ -740,7 +741,7 @@ public class InGameUIManager : MonoBehaviour
                         Image itemImage = selectedObjectsItems[i].GetComponentInChildren<Image>();
                         itemImage.sprite = ResourceManager.Get(spriteEnum);
                         selectedObjectsItems[i].GetComponentInChildren<AspectRatioFitter>().aspectRatio
-                            = itemImage.sprite.textureRect.width / itemImage.sprite.textureRect.height;
+                            = itemImage.sprite.rect.width / itemImage.sprite.rect.height;
                     }
                     else
                     {

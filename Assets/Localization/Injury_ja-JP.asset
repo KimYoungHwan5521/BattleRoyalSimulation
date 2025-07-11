@@ -268,7 +268,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3205875268907008
-    m_Localized: "\u4EBA\u5DE5\u30A4\u30F3\u30D7\u30E9\u30F3\u30C8\uFF1A{0}"
+    m_Localized: "\u4EBA\u5DE5\u30A4\u30F3\u30D7\u30E9\u30F3\u30C8({0})"
     m_Metadata:
       m_Items:
       - rid: 7835753611033051143

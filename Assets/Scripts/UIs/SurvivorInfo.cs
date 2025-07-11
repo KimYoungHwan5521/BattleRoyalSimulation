@@ -135,11 +135,11 @@ public class SurvivorInfo : MonoBehaviour
 
         if (showIncrease)
         {
-            if (wantSurvivorData.increaseComparedToPrevious_strength > 0) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_agility > 0) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_fighting > 0) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_shooting > 0) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_knowledge > 0) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_strength > -1) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
         }
         SetInjury(wantSurvivorData.injuries);
         SetCharacteristic();

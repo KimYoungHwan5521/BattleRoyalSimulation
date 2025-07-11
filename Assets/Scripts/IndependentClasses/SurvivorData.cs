@@ -150,11 +150,11 @@ public class SurvivorData
     
     // Training
     public Training assignedTraining;
-    public int increaseComparedToPrevious_strength;
-    public int increaseComparedToPrevious_agility;
-    public int increaseComparedToPrevious_fighting;
-    public int increaseComparedToPrevious_shooting;
-    public int increaseComparedToPrevious_knowledge;
+    public int increaseComparedToPrevious_strength = -1;
+    public int increaseComparedToPrevious_agility = -1;
+    public int increaseComparedToPrevious_fighting = -1;
+    public int increaseComparedToPrevious_shooting = -1;
+    public int increaseComparedToPrevious_knowledge = -1;
 
     // Injury, Surgery
     public List<Injury> injuries = new();

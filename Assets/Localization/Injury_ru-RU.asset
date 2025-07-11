@@ -281,8 +281,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3205875268907008
-    m_Localized: "\u041F\u0440\u043E\u0442\u0435\u0437\u043D\u044B\u0439 \u0438\u043C\u043F\u043B\u0430\u043D\u0442:
-      {0}"
+    m_Localized: "\u041F\u0440\u043E\u0442\u0435\u0437\u043D\u044B\u0439 \u0438\u043C\u043F\u043B\u0430\u043D\u0442
+      ({0})"
     m_Metadata:
       m_Items:
       - rid: 7835753611033051147

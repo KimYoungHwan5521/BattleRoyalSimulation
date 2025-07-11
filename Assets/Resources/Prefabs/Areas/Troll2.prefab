@@ -264,6 +264,7 @@ MonoBehaviour:
   farmingSections: []
   garbageObjects: []
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
@@ -25773,6 +25774,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4950425239356394327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25847,7 +25851,7 @@ GameObject:
   - component: {fileID: 4541751907204279495}
   - component: {fileID: 6024947041137557184}
   - component: {fileID: 6074089675624393558}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30981,7 +30985,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6716043494869690790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -31100,6 +31104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &8515697320555350037
 GameObject:
   m_ObjectHideFlags: 0
@@ -31190,3 +31195,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}

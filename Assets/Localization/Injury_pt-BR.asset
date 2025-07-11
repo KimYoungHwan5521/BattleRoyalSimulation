@@ -268,7 +268,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3205875268907008
-    m_Localized: "Implante prot\xE9tico: {0}"
+    m_Localized: "Implante prot\xE9tico ({0})"
     m_Metadata:
       m_Items:
       - rid: 7835753611033051145

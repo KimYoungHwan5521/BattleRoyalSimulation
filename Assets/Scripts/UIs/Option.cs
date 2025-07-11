@@ -73,6 +73,7 @@ public class Option : MonoBehaviour
         resume.SetActive(false);
         saveButton.gameObject.SetActive(false);
         goTitle.SetActive(false);
+        encyclopedia.SetActive(true);
         for(int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
         {
             string itemName = ((ItemManager.Items)i).ToString();
@@ -84,7 +85,7 @@ public class Option : MonoBehaviour
                 Sprite sprt = ResourceManager.Get(sprite);
                 itemImageBox.GetComponentsInChildren<Image>()[1].sprite = sprt;
                 itemImageBox.GetComponent<Help>().SetDescription((ItemManager.Items)i);
-                itemImageBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = sprt.textureRect.width / sprt.textureRect.height;
+                itemImageBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = sprt.rect.width / sprt.rect.height;
                 ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType == (ItemManager.Items)i);
                 int knowledgeRequired = craftable != null ? craftable.requiredKnowledge : 255;
                 itemImageBox.AddComponent<ItemDataForSort>().Set((ItemManager.Items)i, knowledgeRequired);
@@ -92,6 +93,7 @@ public class Option : MonoBehaviour
         }
         sortBy.options[0].text = new LocalizedString("Table", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
+        encyclopedia.SetActive(false);
     }
 
     void Sorting(int sortBy)
@@ -224,7 +226,12 @@ public class Option : MonoBehaviour
 
     public void Load(int slot)
     {
-        StartCoroutine(GameManager.Instance.Load(slot));
+        if (PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}") == "{}") return;
+        else
+        {
+            saveSlotsObject.SetActive(false);
+            StartCoroutine(GameManager.Instance.Load(slot));
+        }
     }
 
     public void DeleteSaveData(int slot)

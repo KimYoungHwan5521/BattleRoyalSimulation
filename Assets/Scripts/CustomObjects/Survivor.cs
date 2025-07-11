@@ -2552,8 +2552,9 @@ public class Survivor : CustomObject
 
     void HeardDistinguishableSound(Vector2 soundOrigin)
     {
+        if (currentStatus == Status.InCombat) return;
+        if(sightMeshRenderer != m_SightAlert)emotionAnimator.SetTrigger("Alert");
         sightMeshRenderer.material = m_SightAlert;
-        emotionAnimator.SetTrigger("Alert");
         if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
         {
             if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardDistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;
@@ -2583,8 +2584,9 @@ public class Survivor : CustomObject
         }
         else soundsMemories.Add(new(heardSound));
 
-        sightMeshRenderer.material = m_SightSuspicious;
-        emotionAnimator.SetTrigger("Suspicious");
+        if (currentStatus == Status.InCombat) return;
+        if(sightMeshRenderer.material != m_SightSuspicious && sightMeshRenderer.material != m_SightAlert) emotionAnimator.SetTrigger("Suspicious");
+        if(sightMeshRenderer.material != m_SightAlert)sightMeshRenderer.material = m_SightSuspicious;
         if (strategyConditions[StrategyCase.HeardIndistinguishableSound].TotalCondition.Invoke())
         {
             if (linkedSurvivorData.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action == 0) threateningSoundPosition = soundOrigin;

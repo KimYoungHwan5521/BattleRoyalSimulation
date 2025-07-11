@@ -76,11 +76,11 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI fightingTrainingExplain;
     [SerializeField] TextMeshProUGUI shootingTrainingExplain;
     [SerializeField] TextMeshProUGUI studyExplain;
-    int fightTrainingLevel = 1;
-    int shootingTrainingLevel = 1;
-    int runningLevel = 1;
-    int weightTrainingLevel = 1;
-    int studyingLevel = 1;
+    [SerializeField] int fightTrainingLevel = 1;
+    [SerializeField] int shootingTrainingLevel = 1;
+    [SerializeField] int runningLevel = 1;
+    [SerializeField] int weightTrainingLevel = 1;
+    [SerializeField] int studyingLevel = 1;
 
     public int FightTrainingLevel => fightTrainingLevel;
     public int ShootingTrainingLevel => shootingTrainingLevel;
@@ -489,6 +489,8 @@ public class OutGameUIManager : MonoBehaviour
         else
         {
             trainingRoom.SetActive(true);
+            ConfirmAssignTraining();
+            RelocalizeTrainingRoom();
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
     }
@@ -972,7 +974,7 @@ public class OutGameUIManager : MonoBehaviour
             buttonCancelSurgery.SetActive(true);
             selectSurgery.SetActive(false);
             buttonScheduleSurgery.SetActive(false);
-            scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.scheduledSurgeryName}";
+            scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString()}";
         }
         else
         {
@@ -995,9 +997,9 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(injury.degree >= 1)
                 {
-                    surgeryName = new LocalizedString("Injury", "Prosthetic Implant:")
+                    surgeryName = new LocalizedString("Injury", "Prosthetic Implant")
                     {
-                        Arguments = new[] { injury.site.ToString() }
+                        Arguments = new[] { new LocalizedString("injury", injury.site.ToString()) }
                     };
                     switch(injury.site)
                     {
@@ -1846,15 +1848,15 @@ public class OutGameUIManager : MonoBehaviour
                         survivorTrainingResults[index].SetActive(true);
                         resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
                         resultTexts[index][1].text = $"{new LocalizedString("Table", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
-                        resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > 0);
+                        resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
                         resultTexts[index][2].text = $"{new LocalizedString("Table", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
-                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > 0);
+                        resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
                         resultTexts[index][3].text = $"{new LocalizedString("Table", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
-                        resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > 0);
+                        resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
                         resultTexts[index][4].text = $"{new LocalizedString("Table", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
-                        resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > 0);
+                        resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
                         resultTexts[index][5].text = $"{new LocalizedString("Table", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
-                        resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > 0);
+                        resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
                         index++;
                     }
                     if(!autoAssign)
@@ -1867,7 +1869,7 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryResult.SetActive(hadSurgery);
                 if(hadSurgery)
                 {
-                    surgeryResultText.text = $"{new LocalizedString("Table", "Surgery Successful")}\n({whoUnderwentSurgery.GetLocalizedString()} : {performedSurgery.GetLocalizedString()})";
+                    surgeryResultText.text = $"{new LocalizedString("Table", "Surgery Successful").GetLocalizedString()}\n({whoUnderwentSurgery.GetLocalizedString()} : {performedSurgery.GetLocalizedString()})";
                 }
                 selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 
@@ -1892,11 +1894,11 @@ public class OutGameUIManager : MonoBehaviour
 
         foreach(var survivor in mySurvivorsData)
         {
-            survivor.increaseComparedToPrevious_strength = 0;
-            survivor.increaseComparedToPrevious_agility = 0;
-            survivor.increaseComparedToPrevious_fighting = 0;
-            survivor.increaseComparedToPrevious_shooting = 0;
-            survivor.increaseComparedToPrevious_knowledge = 0;
+            survivor.increaseComparedToPrevious_strength = -1;
+            survivor.increaseComparedToPrevious_agility = -1;
+            survivor.increaseComparedToPrevious_fighting = -1;
+            survivor.increaseComparedToPrevious_shooting = -1;
+            survivor.increaseComparedToPrevious_knowledge = -1;
         }
         Alert("Alert:A day has passed.");
     }
@@ -1909,32 +1911,37 @@ public class OutGameUIManager : MonoBehaviour
         int survivorShtLv = survivor._shooting / 20;
         int survivorKnowledgeLv = survivor._knowledge / 20;
 
-        survivor.increaseComparedToPrevious_strength = 0;
-        survivor.increaseComparedToPrevious_agility = 0;
-        survivor.increaseComparedToPrevious_fighting = 0;
-        survivor.increaseComparedToPrevious_shooting = 0;
-        survivor.increaseComparedToPrevious_knowledge = 0;
+        survivor.increaseComparedToPrevious_strength = -1;
+        survivor.increaseComparedToPrevious_agility = -1;
+        survivor.increaseComparedToPrevious_fighting = -1;
+        survivor.increaseComparedToPrevious_shooting = -1;
+        survivor.increaseComparedToPrevious_knowledge = -1;
 
         switch (training)
         {
             case Training.Weight:
                 int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
+                survivor.increaseComparedToPrevious_strength = 0;
                 survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0);
                 break;
             case Training.Running:
                 int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
+                survivor.increaseComparedToPrevious_agility = 0;
                 survivor.IncreaseStats(0, increseAgility, 0, 0, 0);
                 break;
             case Training.Fighting:
                 int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
+                survivor.increaseComparedToPrevious_fighting = 0;
                 survivor.IncreaseStats(0, 0, increseFighting, 0, 0);
                 break;
             case Training.Shooting:
                 int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
+                survivor.increaseComparedToPrevious_shooting = 0;
                 survivor.IncreaseStats(0, 0, 0, increseShooting, 0);
                 break;
             case Training.Studying:
                 int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
+                survivor.increaseComparedToPrevious_knowledge = 0;
                 survivor.IncreaseStats(0, 0, 0, 0, increseKnowledge);
                 break;
             default:
@@ -2123,6 +2130,15 @@ public class OutGameUIManager : MonoBehaviour
         LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
         localizeStringEvent.StringReference = localizedString;
         localizeStringEvent.RefreshString();
+        GameManager.Instance.openedWindows.Push(alertWindow);
+    }
+
+    public void DebugLog(string log)
+    {
+        GameObject alertWindow = PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform);
+        LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
+        localizeStringEvent.enabled = false;
+        localizeStringEvent.GetComponent<TextMeshProUGUI>().text = log;
         GameManager.Instance.openedWindows.Push(alertWindow);
     }
 

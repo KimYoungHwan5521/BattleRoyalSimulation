@@ -77,6 +77,15 @@ public class GameManager : MonoBehaviour
 
         outGameUIManger = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
+        inGameUICanvas.SetActive(false);
+
+        Application.logMessageReceived += (log, stack, type) =>
+        {
+            if (type == LogType.Error || type == LogType.Exception)
+            {
+                outGameUIManger.DebugLog(log);
+            }
+        };
 
         gameReady = true;
         CloseLoadInfo();
@@ -249,11 +258,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Load(int slot)
     {
-        if (PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}") == "{}")
-        {
-            yield break;
-        }
-
         gameReady = false;
         ClaimLoadInfo("Loading save data...");
         yield return LoadSaveDataInfo(slot);

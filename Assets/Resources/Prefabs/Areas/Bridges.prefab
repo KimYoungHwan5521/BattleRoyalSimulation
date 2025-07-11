@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6938665735466866415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +428,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1305184005822382113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,6 +594,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7113479656896794003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29869,6 +29878,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6601419073409466239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30123,6 +30135,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1732247595762845508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30377,6 +30392,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7586774093783181490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30540,6 +30558,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &8257083207409681963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30819,6 +30840,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &5132786451771610396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31066,6 +31090,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &367895209354491364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31229,6 +31256,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4995290502543411661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31574,6 +31604,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3020290015695415770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31828,6 +31861,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4950425239356394327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31902,7 +31938,7 @@ GameObject:
   - component: {fileID: 4541751907204279495}
   - component: {fileID: 6024947041137557184}
   - component: {fileID: 6074089675624393558}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41076,7 +41112,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6716043494869690790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -41207,6 +41243,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7291375187179679770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41281,7 +41320,7 @@ GameObject:
   - component: {fileID: 7271678525907304477}
   - component: {fileID: 730522216372760676}
   - component: {fileID: 5394920030447231896}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46007,7 +46046,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7403516868028149015}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -46320,6 +46359,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6325664797144636158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46483,6 +46525,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &73141171182336409
 MonoBehaviour:
   m_ObjectHideFlags: 0

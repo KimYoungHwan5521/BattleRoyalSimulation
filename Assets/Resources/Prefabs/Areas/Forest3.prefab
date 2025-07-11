@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6938665735466866415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +428,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1305184005822382113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -588,6 +594,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7113479656896794003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +791,7 @@ MonoBehaviour:
   farmingSections: []
   garbageObjects: []
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
@@ -26112,6 +26122,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6601419073409466239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26275,6 +26288,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1732247595762845508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26426,6 +26442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &1568309232425165296
 GameObject:
   m_ObjectHideFlags: 0
@@ -26528,6 +26545,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7586774093783181490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26691,6 +26711,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &645888185481045367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26854,6 +26877,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &8257083207409681963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27073,6 +27099,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &2551160346148786600
 GameObject:
   m_ObjectHideFlags: 0
@@ -27209,6 +27236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &3022697140911171120
 GameObject:
   m_ObjectHideFlags: 0
@@ -27311,6 +27339,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &5132786451771610396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27462,6 +27493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &4164688541319424465
 GameObject:
   m_ObjectHideFlags: 0
@@ -27648,6 +27680,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &367895209354491364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27811,6 +27846,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4995290502543411661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27974,6 +28012,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1485585558607563277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28137,6 +28178,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3020290015695415770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28300,6 +28344,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4950425239356394327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28374,7 +28421,7 @@ GameObject:
   - component: {fileID: 4541751907204279495}
   - component: {fileID: 6024947041137557184}
   - component: {fileID: 6074089675624393558}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29768,7 +29815,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6716043494869690790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -29899,6 +29946,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7291375187179679770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30050,6 +30100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fca28434372969941a824ebf28b54c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buriedTrap: {fileID: 0}
 --- !u!1 &8127208494417964837
 GameObject:
   m_ObjectHideFlags: 0
@@ -30152,6 +30203,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6325664797144636158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30315,6 +30369,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &73141171182336409
 MonoBehaviour:
   m_ObjectHideFlags: 0

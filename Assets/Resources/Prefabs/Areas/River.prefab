@@ -25724,6 +25724,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &3808111969622016025
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -26004,7 +26007,7 @@ GameObject:
   - component: {fileID: 4541751907204279495}
   - component: {fileID: 6024947041137557184}
   - component: {fileID: 280099106817451412}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28383,7 +28386,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6716043494869690790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -28425,7 +28428,7 @@ GameObject:
   - component: {fileID: 7271678525907304477}
   - component: {fileID: 730522216372760676}
   - component: {fileID: 2946336896423206101}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28983,7 +28986,7 @@ TilemapCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7403516868028149015}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
