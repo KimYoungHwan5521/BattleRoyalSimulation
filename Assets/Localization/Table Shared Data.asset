@@ -994,6 +994,14 @@ MonoBehaviour:
     m_Key: Stat Total
     m_Metadata:
       m_Items: []
+  - m_Id: 14169095227895808
+    m_Key: Exit Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169112638451712
+    m_Key: Confirm:Exit Battle Royale
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

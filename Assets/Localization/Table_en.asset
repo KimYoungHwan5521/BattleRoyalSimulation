@@ -1034,6 +1034,14 @@ MonoBehaviour:
     m_Localized: Stat Total
     m_Metadata:
       m_Items: []
+  - m_Id: 14169095227895808
+    m_Localized: Exit Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169112638451712
+    m_Localized: Are you sure you want to exit the Battle Royale?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

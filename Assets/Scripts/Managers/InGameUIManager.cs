@@ -39,9 +39,11 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image[] predictionResultPortraits;
     [SerializeField] Image[] predictionResultBGs;
     [SerializeField] TextMeshProUGUI[] predictionResultResults;
+    int predictionLeft;
 
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
+    [SerializeField] GameObject exitBattleRoyale;
 
     [Header("Log")]
     [SerializeField] ScrollRect logScrollView;
@@ -201,6 +203,11 @@ public class InGameUIManager : MonoBehaviour
         Camera.main.transform.position = new(Mathf.Clamp(cameraPos.x, cameraLeftLimit, cameraRightLimit), Mathf.Clamp(cameraPos.y, cameraDownLimit, cameraUpLimit), -10);
     }
 
+    public void CameraMoveToSelectedObject()
+    {
+        if (cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
+    }
+
     public void SetCameraLimit(float rightLimit, float upLimit)
     {
         cameraRightLimit = rightLimit;
@@ -277,7 +284,9 @@ public class InGameUIManager : MonoBehaviour
         if(outGameUIManager.BettingAmount > 0)
         {
             predictionResult.SetActive(true);
-            for(int i=0; i<predictionResultRows.Length; i++)
+            exitBattleRoyale.SetActive(false);
+            predictionLeft = outGameUIManager.PredictionNumber;
+            for (int i=0; i<predictionResultRows.Length; i++)
             {
                 if (i < outGameUIManager.PredictionNumber)
                 {
@@ -290,7 +299,11 @@ public class InGameUIManager : MonoBehaviour
                 else predictionResultRows[i].SetActive(false);
             }
         }
-        else predictionResult.SetActive(false);
+        else
+        {
+            predictionResult.SetActive(false);
+            exitBattleRoyale.SetActive(true);
+        }
     }
 
     public void SetSurvivorRank(LocalizedString survivorName, int survivorRank)
@@ -300,6 +313,7 @@ public class InGameUIManager : MonoBehaviour
             if (outGameUIManager.Predictions[i] == null) break;
             if (outGameUIManager.Predictions[i].TableEntryReference.Key == survivorName.TableEntryReference.Key)
             {
+                predictionLeft--;
                 predictionResultResults[i].text = survivorRank switch
                 {
                     0 => "1st",
@@ -310,6 +324,8 @@ public class InGameUIManager : MonoBehaviour
                 if (i == survivorRank) predictionResultBGs[i].color = new Color(0.48f, 1f, 0.44f);
                 else if(survivorRank < outGameUIManager.PredictionNumber) predictionResultBGs[i].color = new Color(0.89f, 0.93f, 0.39f);
                 else predictionResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
+
+                if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
                 return;
             }
         }
@@ -816,6 +832,15 @@ public class InGameUIManager : MonoBehaviour
                 
             }
         }
+    }
+
+    public void ExitBattleRoyale()
+    {
+        if (GameManager.Instance.BattleRoyaleManager == null || !GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
+        outGameUIManager.OpenConfirmWindow("Confirm:Exit Battle Royale", () =>
+        {
+            GameManager.Instance.GetComponent<GameResult>().ShowGameResult();
+        });
     }
 
     void OnLocaleChanged(Locale newLocale)

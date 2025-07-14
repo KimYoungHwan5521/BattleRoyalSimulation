@@ -63,7 +63,7 @@ public class GameResult : MonoBehaviour
         }
     }
 
-    void ShowGameResult(bool isBattleEnd)
+    public void ShowGameResult(bool isBattleEnd = true)
     {
         lastTimeScale = (int)Time.timeScale;
         Time.timeScale = 0;
@@ -161,7 +161,8 @@ public class GameResult : MonoBehaviour
         }
         else
         {
-            gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
+            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null) gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
+            else ExitBattle();
         }
 
         // Betting Result

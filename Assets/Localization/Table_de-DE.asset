@@ -1040,6 +1040,14 @@ MonoBehaviour:
     m_Localized: Gesamtwerte
     m_Metadata:
       m_Items: []
+  - m_Id: 14169095227895808
+    m_Localized: Battle Royale verlassen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169112638451712
+    m_Localized: "M\xF6chten Sie den Battle Royale wirklich verlassen?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

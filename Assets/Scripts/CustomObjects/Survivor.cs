@@ -233,6 +233,7 @@ public class Survivor : CustomObject
     [SerializeField] float prohibitedAreaTime = 3.1f;
     int timerSound = 3;
 
+    Survivor survivorWhoCausedBleeding;
     public float maxBlood;
     public float curBlood;
     [SerializeField] float bleedingAmount = 0;
@@ -652,7 +653,15 @@ public class Survivor : CustomObject
         if(curBlood / maxBlood < 0.5f)
         {
             IsDead = true;
-            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), new LocalizedString("Table", "Severe Bleeding").GetLocalizedString());
+            string cause;
+            if (survivorWhoCausedBleeding != null)
+            {
+                survivorWhoCausedBleeding.killCount++;
+                cause = survivorWhoCausedBleeding.survivorName.GetLocalizedString();
+                survivorWhoCausedBleeding = null;
+            }
+            else cause = new LocalizedString("Injury", "Severe Bleeding").GetLocalizedString();
+            InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), cause);
         }
     }
 
@@ -2649,7 +2658,7 @@ public class Survivor : CustomObject
         }
 
         if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
-        else GetInjury(specificDamagePart, damageType, damage);
+        else GetInjury(attacker, specificDamagePart, damageType, damage);
         if (attacker.currentWeapon is MeleeWeapon weapon && weapon.IsEnchanted) Poisoning(attacker);
     }
 
@@ -3034,7 +3043,7 @@ public class Survivor : CustomObject
         return injurySite;
     }
 
-    void GetInjury(InjurySite injurySite, DamageType damageType, float damage)
+    void GetInjury(Survivor attacker, InjurySite injurySite, DamageType damageType, float damage)
     {
         InjuryType injuryType = InjuryType.Fracture;
         float injuryDegree = 0;
@@ -3458,7 +3467,7 @@ public class Survivor : CustomObject
         if(injuryDegree > 0.1f)
         {
             AddInjury(injurySite, injuryType, injuryDegree);
-            AddBleeding(injurySite, injuryType, injuryDegree);
+            AddBleeding(attacker, injurySite, injuryType, injuryDegree);
         }
     }
 
@@ -3569,7 +3578,7 @@ public class Survivor : CustomObject
         }
     }
 
-    void AddBleeding(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
+    void AddBleeding(Survivor attacker, InjurySite injurySite, InjuryType injuryType, float injuryDegree)
     {
         // upper part üũ
         if (UpperPartAlreadyLoss(injurySite)) return;
@@ -3645,6 +3654,7 @@ public class Survivor : CustomObject
         }
         if (injuryType == InjuryType.Damage || injuryType == InjuryType.GunshotWound) amount *= 0.5f;
         else if (injuryType == InjuryType.Burn || injuryType == InjuryType.Fracture) amount *= 0.3f;
+        survivorWhoCausedBleeding = attacker;
         BleedingAmount += amount;
     }
 

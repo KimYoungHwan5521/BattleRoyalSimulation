@@ -1041,6 +1041,14 @@ MonoBehaviour:
     m_Localized: "Suma de estad\xEDsticas"
     m_Metadata:
       m_Items: []
+  - m_Id: 14169095227895808
+    m_Localized: Salir del Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169112638451712
+    m_Localized: "\xBFSeguro que quieres salir del Battle Royale?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
