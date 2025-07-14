@@ -90,6 +90,8 @@ public class SurvivorData
         }
     }
 
+    public int StatTotal => Strength + Agility + Fighting + Shooting + Knowledge;
+
     public float Luck
     {
         get

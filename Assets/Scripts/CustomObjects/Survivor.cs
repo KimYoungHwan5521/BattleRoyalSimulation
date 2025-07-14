@@ -2427,7 +2427,6 @@ public class Survivor : CustomObject
     bool CanRunAway(out Vector2 destination)
     {
         destination = Vector2.zero;
-        if (TargetEnemy == null) return false;
         List<Vector2> enemyBlockeds = new();
         List<Vector2> imNotBlockeds = new();
         for(int j = 1; j<6; j++)
@@ -2437,8 +2436,8 @@ public class Survivor : CustomObject
             {
                 float angle = i * 15;
                 Vector2 direction = DirFromAngle(angle);
-                RaycastHit2D[] hits = Physics2D.RaycastAll(TargetEnemy.transform.position, direction, 10f * j, LayerMask.GetMask("Wall", "Edge"));
-                if (hits.Length > 0) enemyBlockeds.Add((Vector2)TargetEnemy.transform.position + direction);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(runAwayFrom.transform.position, direction, 10f * j, LayerMask.GetMask("Wall", "Edge"));
+                if (hits.Length > 0) enemyBlockeds.Add((Vector2)runAwayFrom.transform.position + direction);
             }
         }
         // 그 공간들 중 내위치에서 Ray를 쏴서 내가 갈 수 있을 만한 길인지 판별한다.
@@ -2460,7 +2459,6 @@ public class Survivor : CustomObject
                     destination = candidate;
                 }
             }
-            runAwayFrom = TargetEnemy;
             return true;
         }
         else return false;

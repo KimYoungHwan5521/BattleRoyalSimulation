@@ -1038,6 +1038,10 @@ MonoBehaviour:
     m_Localized: "Ligue d\u2019artisanat"
     m_Metadata:
       m_Items: []
+  - m_Id: 14107829897588736
+    m_Localized: Total des stats
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

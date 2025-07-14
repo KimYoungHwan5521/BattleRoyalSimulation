@@ -990,6 +990,10 @@ MonoBehaviour:
     m_Key: CraftingLeague
     m_Metadata:
       m_Items: []
+  - m_Id: 14107829897588736
+    m_Key: Stat Total
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

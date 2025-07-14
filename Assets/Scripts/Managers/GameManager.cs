@@ -83,9 +83,14 @@ public class GameManager : MonoBehaviour
         {
             if (type == LogType.Error || type == LogType.Exception)
             {
-                outGameUIManger.DebugLog(log);
+                outGameUIManger.DebugLog(log + "\n" + stack);
             }
         };
+#if UNITY_EDITOR
+        Application.runInBackground = false;
+#else
+        Application.runInBackground = true;
+#endif
 
         gameReady = true;
         CloseLoadInfo();

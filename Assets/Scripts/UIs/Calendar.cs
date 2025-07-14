@@ -519,12 +519,13 @@ public class Calendar : CustomObject
     public void OpenCalendar()
     {
         calendarObject.SetActive(true);
+        CalendarPage = today / 28 + 1;
         GameManager.Instance.openedWindows.Push(calendarObject);
     }
 
     public void TurnPageCalendar(int value)
     {
-        CalendarPage = Mathf.Clamp(calendarPage + value, 1, 36);
+        CalendarPage = Mathf.Clamp(calendarPage + value, 1, curMaxYear * 3);
     }
 
     public void OpenReserveBattleRoyaleForm(int date)
@@ -787,7 +788,7 @@ public class Calendar : CustomObject
     {
         Today = today;
         this.curMaxYear = curMaxYear;
-        CalendarPage = 1;
+        TurnPageCalendar(0);
     }
 
     Sprite LoadSprite(League league, string localeCode)

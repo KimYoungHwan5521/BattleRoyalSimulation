@@ -209,6 +209,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_InputField bettingAmountInput;
     int bettingAmount;
     public int BettingAmount => bettingAmount;
+    [SerializeField] LocalizedDropdown sortContestantsListDropdown;
     #endregion
 
     private void Start()
@@ -226,10 +227,23 @@ public class OutGameUIManager : MonoBehaviour
         eventSystem = FindAnyObjectByType<EventSystem>();
         bettingAmountInput.onValueChanged.AddListener((value) => { ValidateBettingAmount(value); });
         predictions = new LocalizedString[5];
+
+        sortContestantsListDropdown.ClearOptions();
+        sortContestantsListDropdown.AddLocalizedOptions(new List<LocalizedString>()
+        {
+            new("Table", "Strength"),
+            new("Table", "Agility"),
+            new("Table", "Fighting"),
+            new("Table", "Shooting"),
+            new("Table", "Knowledge"),
+            new("Table", "Stat Total"),
+        });
+
         GameManager.Instance.ObjectStart += () =>
         {
             RelocalizeTrainingRoom();
             InitializeStrategyRoom();
+            sortContestantsListDropdown.RelocalizeOptions();
         };
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
@@ -1621,6 +1635,7 @@ public class OutGameUIManager : MonoBehaviour
             }
             else contestants[i].SetActive(false);
         }
+        SortContestantsList();
 
         for(int i=0; i<predictRankings.Length; i++)
         {
@@ -1636,10 +1651,53 @@ public class OutGameUIManager : MonoBehaviour
         bettingRoom.SetActive(true);
     }
 
+    public void SortContestantsList()
+    {
+        List<SurvivorData> orderedContestantsData = new();
+        switch(sortContestantsListDropdown.keys[sortContestantsListDropdown.dropdown.value].TableEntryReference.Key)
+        {
+            case "Strength":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.Strength).ToList();
+                break;
+            case "Agility":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.Agility).ToList();
+                break;
+            case "Fighting":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.Fighting).ToList();
+                break;
+            case "Shooting":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.Shooting).ToList();
+                break;
+            case "Knowledge":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.Knowledge).ToList();
+                break;
+            case "Stat Total":
+                orderedContestantsData = contestantsData.OrderByDescending(x => x.StatTotal).ToList();
+                break;
+            default:
+                Debug.LogWarning($"Wrong sort key : {sortContestantsListDropdown.keys[sortContestantsListDropdown.dropdown.value].TableEntryReference.Key}");
+                return;
+        }
+
+        for (int i = 0; i < orderedContestantsData.Count; i++)
+        {
+            int originalDataIndex = contestantsData.FindIndex(x => x.localizedSurvivorName.TableEntryReference.Key == orderedContestantsData[i].localizedSurvivorName.TableEntryReference.Key);
+            Vector3 colorVector = BattleRoyaleManager.colorInfo[originalDataIndex];
+            contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
+            contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[originalDataIndex].localizedSurvivorName.GetLocalizedString();
+        }
+
+    }
+
     public void EasyBet(int amount)
     {
         int curBet = int.Parse(bettingAmountInput.text);
         bettingAmountInput.text = (curBet + amount).ToString();
+    }
+
+    public void MaxBet()
+    {
+        bettingAmountInput.text = money.ToString();
     }
 
     public void ValidateBettingAmount(string value)
@@ -2252,5 +2310,6 @@ public class OutGameUIManager : MonoBehaviour
         ConfirmAssignTraining();
         SetOperatingRoom();
         SetStrategyRoom();
+        sortContestantsListDropdown.RelocalizeOptions();
     }
 }
