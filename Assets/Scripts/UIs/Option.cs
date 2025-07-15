@@ -91,7 +91,7 @@ public class Option : MonoBehaviour
                 itemImageBox.AddComponent<ItemDataForSort>().Set((ItemManager.Items)i, knowledgeRequired);
             }
         }
-        sortBy.options[0].text = new LocalizedString("Table", "Item Type").GetLocalizedString();
+        sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
         encyclopedia.SetActive(false);
     }
@@ -176,7 +176,7 @@ public class Option : MonoBehaviour
     {
         //saveOrLoadText.text = save ? "Save" : "Load";
         saveOrLoadText.GetComponent<LocalizeStringEvent>().StringReference 
-            = save ? new("Table", "Save") : new("Table", "Load");
+            = save ? new("Basic", "Save") : new("Basic", "Load");
         for(int i=1; i<saveSlots.Length; i++)
         {
             saveSlots[i].saveButton.SetActive(save);
@@ -194,8 +194,8 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"\n<i>{new LocalizedString("Table", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
-                if (i == 0) info += $"\n<i>{new LocalizedString("Table", "Autosaved").GetLocalizedString()}</i>";
+                string info = $"\n<i>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
+                if (i == 0) info += $"\n<i>{new LocalizedString("Basic", "Autosaved").GetLocalizedString()}</i>";
                 saveSlots[i].isEmpty = false;
                 saveSlots[i].SetInfo(info, saveData.ingameDate);
                 if(i != 0) saveSlots[i].deleteButton.SetActive(true);
@@ -203,7 +203,7 @@ public class Option : MonoBehaviour
             else
             {
                 saveSlots[i].isEmpty = true;
-                saveSlots[i].SetInfo($"<i>{new LocalizedString("Table", "Empty Slot").GetLocalizedString()}</i>");
+                saveSlots[i].SetInfo($"<i>{new LocalizedString("Basic", "Empty Slot").GetLocalizedString()}</i>");
                 if (i != 0) saveSlots[i].deleteButton.SetActive(false);
             }
         }
@@ -287,7 +287,7 @@ public class Option : MonoBehaviour
             itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType);
         }
         ReloadSavedata();
-        sortBy.options[0].text = new LocalizedString("Table", "Item Type").GetLocalizedString();
+        sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
         sortBy.captionText.text = sortBy.options[sortBy.value].text;
     }

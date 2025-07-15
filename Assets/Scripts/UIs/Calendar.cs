@@ -94,9 +94,9 @@ public class Calendar : CustomObject
             }
 
             today = value;
-            string localizedMonth = new LocalizedString("Table", monthName[Month - 1]).GetLocalizedString();
-            string localizedDateName = new LocalizedString("Table", dateName[today % 7]).GetLocalizedString();
-            LocalizedString date = new("Table", "Date Format");
+            string localizedMonth = new LocalizedString("Basic", monthName[Month - 1]).GetLocalizedString();
+            string localizedDateName = new LocalizedString("Basic", dateName[today % 7]).GetLocalizedString();
+            LocalizedString date = new("Basic", "Date Format");
             date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
             todayText.text = date.GetLocalizedString();
             if (value > 0)
@@ -129,7 +129,7 @@ public class Calendar : CustomObject
         {
             calendarPage = value;
             //monthText.text = monthName[(calendarPage - 1) % 12];
-            monthText.GetComponent<LocalizeStringEvent>().StringReference = new("Table", monthName[(calendarPage - 1) % 12]);
+            monthText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", monthName[(calendarPage - 1) % 12]);
             yearText.text = $"{2101 + (calendarPage - 1) / 12}";
             for (int i = 0; i < 28; i++)
             {
@@ -555,7 +555,7 @@ public class Calendar : CustomObject
                     GameManager.Instance.openedWindows.Push(reserveForm);
                     if (leagueReserveInfo[date + 28 * (calendarPage - 1)].reserver == null)
                     {
-                        reserveText.StringReference = new LocalizedString("Table", "Select a survivor to reserve.");
+                        reserveText.StringReference = new LocalizedString("Basic", "Select a survivor to reserve.");
                         reserveText.RefreshString();
                         SetLeagueInfo(wantReserveDate);
                         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
@@ -565,7 +565,7 @@ public class Calendar : CustomObject
                     }
                     else
                     {
-                        var temp = new LocalizedString("Table", "Reserved Survivor");
+                        var temp = new LocalizedString("Basic", "Reserved Survivor");
                         temp.Arguments = new[] { new { param0 = leagueReserveInfo[wantReserveDate].reserver.localizedSurvivorName.GetLocalizedString() } };
                         reserveText.StringReference = temp;
                         reserveText.RefreshString();
@@ -608,7 +608,7 @@ public class Calendar : CustomObject
             if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].localizedSurvivorName.GetLocalizedString() }));
         if (survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
         {
-            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Table", "No eligible survivor").GetLocalizedString()}]" }));
+            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Basic", "No eligible survivor").GetLocalizedString()}]" }));
             reserveButton.GetComponent<Button>().interactable = false;
         }
         else
@@ -733,7 +733,7 @@ public class Calendar : CustomObject
                 SurvivorData survivor = outGameUIManager.MySurvivorsData[i];
                 var scheduleTexts = schedules[i].GetComponentsInChildren<TextMeshProUGUI>();
                 scheduleTexts[0].GetComponent<LocalizeStringEvent>().StringReference = survivor.localizedSurvivorName;
-                scheduleTexts[1].GetComponent<LocalizeStringEvent>().StringReference = new("Table", survivor.tier.ToString());
+                scheduleTexts[1].GetComponent<LocalizeStringEvent>().StringReference = new("Basic", survivor.tier.ToString());
                 if (survivor.isReserved)
                 {
                     int date = survivor.reservedDate;

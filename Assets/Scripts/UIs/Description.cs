@@ -23,7 +23,7 @@ public class Description : MonoBehaviour
     public void SetText(string text)
     {
         descriptionText.GetComponent<LocalizeStringEvent>().enabled = true;
-        descriptionText.GetComponent<LocalizeStringEvent>().StringReference = new("Table", text);
+        descriptionText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", text);
     }
 
     public void SetRawText(string text)

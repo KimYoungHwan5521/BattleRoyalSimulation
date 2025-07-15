@@ -16,12 +16,12 @@ public class LoadingCanvas : MonoBehaviour
 
     List<LocalizedString> tooltips = new()
     {
-        new("Table", "The expected value of the bet is greater than 1."),
-        new("Table", "Base stats cap at 100, but can exceed with traits."),
-        new("Table", "If training doesn't raise stats, upgrade your training facility."),
-        new("Table", "If injury severity is below 1, natural recovery is possible."),
-        new("Table", "Survivors with both hands or both eyes disabled cannot be scheduled for matches. For championships, participation depends on their condition that day."),
-        new("Table", "The more severe the injury, the slower the healing. The milder the injury, the faster the recovery."),
+        new("Basic", "The expected value of the bet is greater than 1."),
+        new("Basic", "Base stats cap at 100, but can exceed with traits."),
+        new("Basic", "If training doesn't raise stats, upgrade your training facility."),
+        new("Basic", "If injury severity is below 1, natural recovery is possible."),
+        new("Basic", "Survivors with both hands or both eyes disabled cannot be scheduled for matches. For championships, participation depends on their condition that day."),
+        new("Basic", "The more severe the injury, the slower the healing. The milder the injury, the faster the recovery."),
     };
 
     private void Start()

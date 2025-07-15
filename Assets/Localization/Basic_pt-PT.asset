@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Table_pt-BR
+  m_Name: Basic_pt-PT
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: pt-BR
+    m_Code: pt-PT
   m_SharedData: {fileID: 11400000, guid: bb29ff58396a29e45949a9146d3df52d, type: 2}
   m_Metadata:
     m_Items:
-    - rid: 7835753295874359335
+    - rid: 7835753295874359334
   m_TableData:
   - m_Id: 221632851968
     m_Localized: Novo jogo
@@ -40,7 +40,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6592856125440
-    m_Localized: Salvar
+    m_Localized: Guardar
     m_Metadata:
       m_Items: []
   - m_Id: 6594592567296
@@ -68,7 +68,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 71171598512128
-    m_Localized: Agendar
+    m_Localized: "Hor\xE1rio"
     m_Metadata:
       m_Items: []
   - m_Id: 72283097460736
@@ -147,7 +147,7 @@ MonoBehaviour:
     m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n$ {cost}"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 78462544572416
     m_Localized: Os sobreviventes podem treinar em ambientes melhores para aumentar
       seus atributos.
@@ -157,13 +157,13 @@ MonoBehaviour:
     m_Localized: '{trainingType} (lv {level})'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1470839012257792
     m_Localized: Contratar
     m_Metadata:
       m_Items: []
   - m_Id: 1470839968559104
-    m_Localized: Liberar sobrevivente
+    m_Localized: Libertar sobrevivente
     m_Metadata:
       m_Items: []
   - m_Id: 1470840908083200
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1486550820515840
-    m_Localized: Redefinir
+    m_Localized: Repor
     m_Metadata:
       m_Items: []
   - m_Id: 1486551541936128
@@ -358,12 +358,12 @@ MonoBehaviour:
     m_Localized: Comprar {param0} por ${param1}?
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1779581587091456
     m_Localized: Libertar {param0}?
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1779577963212800
     m_Localized: Limite de sobreviventes atingido.
     m_Metadata:
@@ -385,23 +385,23 @@ MonoBehaviour:
       {param1}</color>)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
-  - m_Id: 1780918479548416
-    m_Localized: "{param0} est\xE1 atribu\xEDdo a {param1}."
+      - rid: 7835753295874359334
+  - m_Id: 1780920513785856
+    m_Localized: "Melhorar a instala\xE7\xE3o de {param0}?"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1780919674925056
     m_Localized: "A atribui\xE7\xE3o de treino de {param0} foi cancelada devido a
       les\xE3o. (<color=red>Causa: {param1}</color>)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
-  - m_Id: 1780920513785856
-    m_Localized: "Melhorar a instala\xE7\xE3o de {param0}?"
+      - rid: 7835753295874359334
+  - m_Id: 1780918479548416
+    m_Localized: "{param0} est\xE1 atribu\xEDdo a {param1}."
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1780917154148352
     m_Localized: "A sala de treino est\xE1 fechada nos fins de semana."
     m_Metadata:
@@ -410,18 +410,18 @@ MonoBehaviour:
     m_Localized: 'Deseja agendar a cirurgia? {param0} : {param1} ( $ {param2} )'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1875853614575616
-    m_Localized: O treinamento de {param0} foi cancelado.
+    m_Localized: O treino de {param0} foi cancelado.
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 1875847331508224
     m_Localized: Cirurgia agendada
     m_Metadata:
       m_Items: []
   - m_Id: 1875849713872896
-    m_Localized: "A sala de cirurgia n\xE3o funciona aos finais de semana."
+    m_Localized: "A sala de opera\xE7\xF5es est\xE1 encerrada aos fins de semana."
     m_Metadata:
       m_Items: []
   - m_Id: 1875855443292160
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2206103192006656
-    m_Localized: "Vai at\xE9 onde ouviu o som."
+    m_Localized: Vai para o local do som.
     m_Metadata:
       m_Items: []
   - m_Id: 2206104244776960
@@ -490,7 +490,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2207013309837312
-    m_Localized: "Salvar todas as altera\xE7\xF5es?"
+    m_Localized: "Guardar todas as altera\xE7\xF5es?"
     m_Metadata:
       m_Items: []
   - m_Id: 2207014039646208
@@ -558,12 +558,12 @@ MonoBehaviour:
     m_Localized: 'Sobrevivente agendado para o battle royale hoje: {param0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 2220595640594432
     m_Localized: Encerrar o dia?{param0}
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 2220597318316032
     m_Localized: "H\xE1 sobreviventes n\xE3o atribu\xEDdos:"
     m_Metadata:
@@ -623,7 +623,7 @@ MonoBehaviour:
     m_Localized: 'sobrevivente reservado : {param0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 2479581325488128
     m_Localized: "Nenhum sobrevivente eleg\xEDvel"
     m_Metadata:
@@ -633,12 +633,12 @@ MonoBehaviour:
       pode ser reservada por vez, exceto campeonatos.)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 2481303221497856
     m_Localized: "{param0} est\xE1 ferido. Deseja reservar mesmo assim?"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 2481289275437056
     m_Localized: "Este sobrevivente j\xE1 est\xE1 reservado para um campeonato. Deseja
       continuar?"
@@ -653,7 +653,7 @@ MonoBehaviour:
       : {param0}</i></color>)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4006722185785344
     m_Localized: 'Sobreviventes restantes:'
     m_Metadata:
@@ -662,7 +662,7 @@ MonoBehaviour:
     m_Localized: <color=red>{0}</color> foi derrotado por <color=yellow>{1}</color>.
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4006784886435840
     m_Localized: Caixa
     m_Metadata:
@@ -691,7 +691,7 @@ MonoBehaviour:
     m_Localized: 'Criando: {0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4009759021264896
     m_Localized: Perseguindo inimigo
     m_Metadata:
@@ -712,12 +712,12 @@ MonoBehaviour:
     m_Localized: Seu sobrevivente ({0}) venceu!
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4011114574180352
     m_Localized: Seu sobrevivente ({0}) foi derrotado.
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4011115551453184
     m_Localized: "Elimina\xE7\xE3o"
     m_Metadata:
@@ -750,7 +750,7 @@ MonoBehaviour:
     m_Localized: '{0} vence!'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4014293986635776
     m_Localized: Pagamento de aposta
     m_Metadata:
@@ -804,13 +804,13 @@ MonoBehaviour:
     m_Localized: 'Reservado: {param0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 4087020722384896
     m_Localized: Campeonato da Temporada
     m_Metadata:
       m_Items: []
   - m_Id: 4087021989064704
-    m_Localized: Campeonato Mundial
+    m_Localized: Campeonato do Mundo
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
@@ -830,11 +830,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4785900300595200
-    m_Localized: 'Hora salva:'
+    m_Localized: 'Hora guardada:'
     m_Metadata:
       m_Items: []
   - m_Id: 4785900787134464
-    m_Localized: "Salvamento autom\xE1tico"
+    m_Localized: "Guardado autom\xE1tico"
     m_Metadata:
       m_Items: []
   - m_Id: 4785912375996416
@@ -846,11 +846,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4785915161014272
-    m_Localized: Excluir estes dados salvos?
+    m_Localized: Apagar estes dados guardados?
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: "Voltar ao t\xEDtulo?\\n<i>(Informa\xE7\xF5es n\xE3o salvas ser\xE3o
+    m_Localized: "Voltar ao t\xEDtulo?\\n<i>(Informa\xE7\xF5es n\xE3o guardadas ser\xE3o
       perdidas.)</i>"
     m_Metadata:
       m_Items: []
@@ -863,16 +863,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5085885500026880
-    m_Localized: Jogo salvo.
+    m_Localized: Jogo guardado.
     m_Metadata:
       m_Items: []
   - m_Id: 5085886779289600
-    m_Localized: Jogo salvo automaticamente.
+    m_Localized: Jogo guardado automaticamente.
     m_Metadata:
       m_Items: []
   - m_Id: 5085888150827008
-    m_Localized: "Se a gravidade da les\xE3o for inferior a 1, \xE9 poss\xEDvel se
-      recuperar naturalmente."
+    m_Localized: "Se a gravidade da les\xE3o for inferior a 1, \xE9 poss\xEDvel recuperar
+      naturalmente."
     m_Metadata:
       m_Items: []
   - m_Id: 5085889379758080
@@ -994,7 +994,7 @@ MonoBehaviour:
     m_Localized: '{2} de {1}  de {0} ({3})'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359335
+      - rid: 7835753295874359334
   - m_Id: 9408636008329216
     m_Localized: Carregamento bem-sucedido
     m_Metadata:
@@ -1044,13 +1044,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14169112638451712
-    m_Localized: Tem certeza de que deseja sair do Battle Royale?
+    m_Localized: Tem a certeza de que deseja sair do Battle Royale?
     m_Metadata:
       m_Items: []
   references:
     version: 2
     RefIds:
-    - rid: 7835753295874359335
+    - rid: 7835753295874359334
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000

@@ -85,12 +85,12 @@ public class GameResult : MonoBehaviour
         {
             Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
             bool playerWin = GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0;
-            LocalizedString resultText = playerWin ? new LocalizedString("Table", "Your survivor won!") : new LocalizedString("Table", "Your survivor was defeated.");
+            LocalizedString resultText = playerWin ? new LocalizedString("Basic", "Your survivor won!") : new LocalizedString("Basic", "Your survivor was defeated.");
             resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
             gameResultText.text = resultText.GetLocalizedString();
-            survivedTimeText.text = $"{new LocalizedString("Table", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
-            killsText.text = $"{new LocalizedString("Table", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
-            totalDamageText.text = $"{new LocalizedString("Table", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
+            survivedTimeText.text = $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
+            killsText.text = $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
+            totalDamageText.text = $"{new LocalizedString("Basic", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
 
             int winPrize = 0;
             int killPrize = 0;
@@ -118,8 +118,8 @@ public class GameResult : MonoBehaviour
                     killPrize = playerSurvivor.KillCount * 3000;
                     break;
             }
-            winPrizeText.text = $"{new LocalizedString("Table", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
-            killPrizeText.text = $"{new LocalizedString("Table", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
+            winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
+            killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
             for (int i = 0; i < treatments.Length; i++)
             {
                 if (i < playerSurvivor.injuries.Count + 1)
@@ -144,9 +144,9 @@ public class GameResult : MonoBehaviour
                         {
                             // ¼öÇ÷ºñ
                             int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
-                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = new LocalizedString("Table", "Blood transfusion cost").GetLocalizedString();
+                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = new LocalizedString("Basic", "Blood transfusion cost").GetLocalizedString();
                             treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
-                            treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Table", "Help:Blood transfusion cost").GetLocalizedString());
+                            treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Basic", "Help:Blood transfusion cost").GetLocalizedString());
                             treatments[i].SetActive(true);
                         }
                         else treatments[i].SetActive(false);
@@ -154,14 +154,14 @@ public class GameResult : MonoBehaviour
                 }
                 else treatments[i].SetActive(false);
             }
-            totalTreatmentCostText.text = $"{new LocalizedString("Table", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
+            totalTreatmentCostText.text = $"{new LocalizedString("Basic", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
             totalProfit = winPrize + killPrize - totalTreatmentCost;
 
             if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
         }
         else
         {
-            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null) gameResultText.text = $"{new LocalizedString("Table", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
+            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null) gameResultText.text = $"{new LocalizedString("Basic", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
             else ExitBattle();
         }
 
@@ -207,17 +207,17 @@ public class GameResult : MonoBehaviour
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
-            bettingRewardsText.text = $"{new LocalizedString("Table", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Table", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
+            bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
             totalProfit += bettingRewards - outGameUIManager.BettingAmount;
         }
         else
         {
             bettingPrediction.SetActive(false);
-            bettingRewardsText.text = $"{new LocalizedString("Table", "Betting payout").GetLocalizedString()} : $ 0";
+            bettingRewardsText.text = $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : $ 0";
         }
 
-        if (totalProfit >= 0) totalProfitText.text = $"{new LocalizedString("Table", "Net profit/loss").GetLocalizedString()} : <color=green>$ {totalProfit}</color>";
-        else totalProfitText.text = $"{new LocalizedString("Table", "Net profit/loss").GetLocalizedString()} : <color=red>- $ {-totalProfit}</color>";
+        if (totalProfit >= 0) totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=green>$ {totalProfit}</color>";
+        else totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=red>- $ {-totalProfit}</color>";
 
     }
 
@@ -233,7 +233,7 @@ public class GameResult : MonoBehaviour
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "SeasonChampionship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
@@ -244,7 +244,7 @@ public class GameResult : MonoBehaviour
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
                     notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                 }
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Table", "WorldChampionship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
                 break;
         }
     }

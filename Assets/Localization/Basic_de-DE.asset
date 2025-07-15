@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Table_pt-PT
+  m_Name: Basic_de-DE
   m_EditorClassIdentifier: 
   m_LocaleId:
-    m_Code: pt-PT
+    m_Code: de-DE
   m_SharedData: {fileID: 11400000, guid: bb29ff58396a29e45949a9146d3df52d, type: 2}
   m_Metadata:
     m_Items:
-    - rid: 7835753295874359334
+    - rid: 7835753295874359338
   m_TableData:
   - m_Id: 221632851968
-    m_Localized: Novo jogo
+    m_Localized: Neues Spiel
     m_Metadata:
       m_Items: []
   - m_Id: 5832965681152
-    m_Localized: Carregar jogo
+    m_Localized: Spiel laden
     m_Metadata:
       m_Items: []
   - m_Id: 5856420229120
-    m_Localized: Sair
+    m_Localized: Beenden
     m_Metadata:
       m_Items: []
   - m_Id: 6583620268032
@@ -36,967 +36,968 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6588460494848
-    m_Localized: Cancelar
+    m_Localized: Abbrechen
     m_Metadata:
       m_Items: []
   - m_Id: 6592856125440
-    m_Localized: Guardar
+    m_Localized: Speichern
     m_Metadata:
       m_Items: []
   - m_Id: 6594592567296
-    m_Localized: "Enciclop\xE9dia"
+    m_Localized: "Enzyklop\xE4die"
     m_Metadata:
       m_Items: []
   - m_Id: 6741300932608
-    m_Localized: "Para o t\xEDtulo"
+    m_Localized: Zum Titelbild
     m_Metadata:
       m_Items: []
   - m_Id: 12507453911040
-    m_Localized: Retomar
+    m_Localized: Wieder aufnehmen
     m_Metadata:
       m_Items: []
   - m_Id: 71164493361152
-    m_Localized: Sala de treino
+    m_Localized: Trainingsraum
     m_Metadata:
       m_Items: []
   - m_Id: 71167060275200
-    m_Localized: Sala de cirurgia
+    m_Localized: Operationsraum
     m_Metadata:
       m_Items: []
   - m_Id: 71168792522752
-    m_Localized: "Sala de estrat\xE9gia"
+    m_Localized: Strategie-Raum
     m_Metadata:
       m_Items: []
   - m_Id: 71171598512128
-    m_Localized: "Hor\xE1rio"
+    m_Localized: Zeitplan
     m_Metadata:
       m_Items: []
   - m_Id: 72283097460736
-    m_Localized: Contrate um sobrevivente.
+    m_Localized: "\xDCberlebenden anheuern."
     m_Metadata:
       m_Items: []
   - m_Id: 72287484702720
-    m_Localized: "A loja de contrata\xE7\xF5es \xE9 redefinida diariamente."
+    m_Localized: "Der Einstellungs-Shop wird t\xE4glich zur\xFCckgesetzt."
     m_Metadata:
       m_Items: []
   - m_Id: 72947416494080
-    m_Localized: "For\xE7a"
+    m_Localized: "St\xE4rke"
     m_Metadata:
       m_Items: []
   - m_Id: 72949572366336
-    m_Localized: Agilidade
+    m_Localized: Beweglichkeit
     m_Metadata:
       m_Items: []
   - m_Id: 72951577243648
-    m_Localized: Combate corpo a corpo
+    m_Localized: Nahkampf
     m_Metadata:
       m_Items: []
   - m_Id: 72953187856384
-    m_Localized: Tiro
+    m_Localized: "Schie\xDFen"
     m_Metadata:
       m_Items: []
   - m_Id: 72955045933056
-    m_Localized: Conhecimento
+    m_Localized: Wissen
     m_Metadata:
       m_Items: []
   - m_Id: 74870907531264
-    m_Localized: "Treino de for\xE7a"
+    m_Localized: Krafttraining
     m_Metadata:
       m_Items: []
   - m_Id: 74872807550976
-    m_Localized: Corrida
+    m_Localized: Laufen
     m_Metadata:
       m_Items: []
   - m_Id: 74876133634048
-    m_Localized: Treino de combate corpo a corpo
+    m_Localized: Nahkampftraining
     m_Metadata:
       m_Items: []
   - m_Id: 74877828132864
-    m_Localized: Treino de tiro
+    m_Localized: "Schie\xDFtraining"
     m_Metadata:
       m_Items: []
   - m_Id: 74879803650048
-    m_Localized: Estudo
+    m_Localized: Lernen
     m_Metadata:
       m_Items: []
   - m_Id: 76230210154496
-    m_Localized: 'Reservado :'
+    m_Localized: 'Reserviert :'
     m_Metadata:
       m_Items: []
   - m_Id: 76231183233024
-    m_Localized: Reservado para este treino
+    m_Localized: "F\xFCr dieses Training reserviert"
     m_Metadata:
       m_Items: []
   - m_Id: 76231959179264
-    m_Localized: "Sobreviventes n\xE3o atribu\xEDdos"
+    m_Localized: "Nicht zugewiesene \xDCberlebende"
     m_Metadata:
       m_Items: []
   - m_Id: 76232462495744
-    m_Localized: "Sobreviventes atribu\xEDdos a outro treino"
+    m_Localized: "Anderes Training zugewiesene \xDCberlebende"
     m_Metadata:
       m_Items: []
   - m_Id: 78460103487488
-    m_Localized: "Atribui\xE7\xE3o autom\xE1tica"
+    m_Localized: Automatische Zuweisung
     m_Metadata:
       m_Items: []
   - m_Id: 78461097537536
-    m_Localized: "No final do dia, o mesmo treino ser\xE1 atribu\xEDdo automaticamente."
+    m_Localized: Am Ende des Tages wird dasselbe Training automatisch zugewiesen.
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n$ {cost}"
+    m_Localized: Anlagen-Upgrade\n$ {cost}
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 78462544572416
-    m_Localized: Os sobreviventes podem treinar em ambientes melhores para aumentar
-      seus atributos.
+    m_Localized: "\xDCberlebende k\xF6nnen in besseren Umgebungen trainieren und
+      ihre Werte steigern."
     m_Metadata:
       m_Items: []
   - m_Id: 89402442838016
     m_Localized: '{trainingType} (lv {level})'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1470839012257792
-    m_Localized: Contratar
+    m_Localized: Anheuern
     m_Metadata:
       m_Items: []
   - m_Id: 1470839968559104
-    m_Localized: Libertar sobrevivente
+    m_Localized: "\xDCberlebenden entlassen"
     m_Metadata:
       m_Items: []
   - m_Id: 1470840908083200
-    m_Localized: Contratar sobrevivente
+    m_Localized: "\xDCberlebenden anheuern"
     m_Metadata:
       m_Items: []
   - m_Id: 1470841721778176
-    m_Localized: Selecione um sobrevivente para contratar.
+    m_Localized: "W\xE4hlen Sie einen \xDCberlebenden zum Anheuern."
     m_Metadata:
       m_Items: []
   - m_Id: 1470842845851648
-    m_Localized: Terminar o dia
+    m_Localized: Tag beenden
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: "Implante de pr\xF3tese"
+    m_Localized: Prothesenimplantat
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
-    m_Localized: "Tratar doen\xE7a cr\xF3nica"
+    m_Localized: Chronische Krankheit behandeln
     m_Metadata:
       m_Items: []
   - m_Id: 1473305707606016
-    m_Localized: "Modifica\xE7\xE3o (n\xE3o implementada)"
+    m_Localized: Modifikation (nicht implementiert)
     m_Metadata:
       m_Items: []
   - m_Id: 1474242958389248
-    m_Localized: Nome da cirurgia
+    m_Localized: Operationsname
     m_Metadata:
       m_Items: []
   - m_Id: 1474244426395648
-    m_Localized: Costo
+    m_Localized: Kosten
     m_Metadata:
       m_Items: []
   - m_Id: 1474245642743808
-    m_Localized: Cirurgia agendada
+    m_Localized: Geplante Operation
     m_Metadata:
       m_Items: []
   - m_Id: 1474246649376768
-    m_Localized: Agendar cirurgia
+    m_Localized: Operation planen
     m_Metadata:
       m_Items: []
   - m_Id: 1474255897817088
-    m_Localized: Cancelar cirurgia
+    m_Localized: Operation abbrechen
     m_Metadata:
       m_Items: []
   - m_Id: 1486550820515840
-    m_Localized: Repor
+    m_Localized: "Zur\xFCcksetzen"
     m_Metadata:
       m_Items: []
   - m_Id: 1486551541936128
-    m_Localized: "Copiar estrat\xE9gia"
+    m_Localized: Strategie kopieren
     m_Metadata:
       m_Items: []
   - m_Id: 1486552280133632
-    m_Localized: "Colar estrat\xE9gia"
+    m_Localized: "Strategie einf\xFCgen"
     m_Metadata:
       m_Items: []
   - m_Id: 1486567614509056
-    m_Localized: "Copiar todas as estrat\xE9gias"
+    m_Localized: Alle Strategien kopieren
     m_Metadata:
       m_Items: []
   - m_Id: 1486575189422080
-    m_Localized: "Colar todas as estrat\xE9gias"
+    m_Localized: "Alle Strategien einf\xFCgen"
     m_Metadata:
       m_Items: []
   - m_Id: 1486579081736192
-    m_Localized: Pesquisar
+    m_Localized: Suchen
     m_Metadata:
       m_Items: []
   - m_Id: 1488350583779328
-    m_Localized: Prioridade de arma
+    m_Localized: "Waffenpriorit\xE4t"
     m_Metadata:
       m_Items: []
   - m_Id: 1488356887818240
-    m_Localized: Quando o inimigo for visto e estiver ao alcance
+    m_Localized: Wenn der Feind gesehen wird und sich im Angriffsbereich befindet
     m_Metadata:
       m_Items: []
   - m_Id: 1488359144353792
-    m_Localized: Quando o inimigo for visto, mas estiver fora do alcance
+    m_Localized: "Wenn der Feind gesehen wird, aber au\xDFerhalb der Reichweite ist"
     m_Metadata:
       m_Items: []
   - m_Id: 1488360671080448
-    m_Localized: Quando se ouve um som alto
+    m_Localized: "Wenn ein lautes Ger\xE4usch geh\xF6rt wird"
     m_Metadata:
       m_Items: []
   - m_Id: 1488364739555328
-    m_Localized: Quando se ouve um som baixo
+    m_Localized: "Wenn ein leises Ger\xE4usch geh\xF6rt wird"
     m_Metadata:
       m_Items: []
   - m_Id: 1491856883511296
-    m_Localized: "\rprioridade 1"
+    m_Localized: "\rPriorit\xE4t 1"
     m_Metadata:
       m_Items: []
   - m_Id: 1493279654342656
-    m_Localized: "Quando h\xE1 v\xE1rios inimigos"
+    m_Localized: Wenn mehrere Feinde da sind
     m_Metadata:
       m_Items: []
   - m_Id: 1493281537585152
-    m_Localized: "Prioridade de fabrica\xE7\xE3o"
+    m_Localized: "Handwerkspriorit\xE4t"
     m_Metadata:
       m_Items: []
   - m_Id: 1493283026563072
-    m_Localized: "Permitir fabrica\xE7\xE3o"
+    m_Localized: Herstellung erlauben
     m_Metadata:
       m_Items: []
   - m_Id: 1493293415854080
-    m_Localized: "Salvar estrat\xE9gia"
+    m_Localized: Strategie speichern
     m_Metadata:
       m_Items: []
   - m_Id: 1515900643110912
-    m_Localized: "O operador AND \xE9 avaliado antes do operador OR. Exemplo: A <#FF6A89>OR</color>
-      B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color> (B <#FF6A89>AND</color>
-      C) <#FF6A89>OR</color> D"
+    m_Localized: 'Der UND-Operator wird vor dem ODER-Operator ausgewertet. Beispiel:
+      A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
+      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D'
     m_Metadata:
       m_Items: []
   - m_Id: 1515902283083776
-    m_Localized: "Se um item tiver prioridade de fabrica\xE7\xE3o, os materiais n\xE3o
-      ser\xE3o consumidos at\xE9 ser fabricado."
+    m_Localized: "Wenn ein Gegenstand eine Herstellungspriorit\xE4t hat, werden seine
+      Materialien erst beim Herstellen verbraucht."
     m_Metadata:
       m_Items: []
   - m_Id: 1516466236616704
-    m_Localized: Item
+    m_Localized: Gegenstand
     m_Metadata:
       m_Items: []
   - m_Id: 1516467704623104
-    m_Localized: Permitir
+    m_Localized: Erlauben
     m_Metadata:
       m_Items: []
   - m_Id: 1516469067771904
-    m_Localized: "N\xE3o permitir"
+    m_Localized: Nicht erlauben
     m_Metadata:
       m_Items: []
   - m_Id: 1517011882012672
-    m_Localized: Ver cronograma por sobrevivente
+    m_Localized: "Zeitplan pro \xDCberlebendem anzeigen"
     m_Metadata:
       m_Items: []
   - m_Id: 1517012590850048
-    m_Localized: Nome
+    m_Localized: Name
     m_Metadata:
       m_Items: []
   - m_Id: 1517013446488064
-    m_Localized: "N\xEDvel"
+    m_Localized: Stufe
     m_Metadata:
       m_Items: []
   - m_Id: 1517014104993792
-    m_Localized: Battle Royale agendado
+    m_Localized: Geplanter Battle Royale
     m_Metadata:
       m_Items: []
   - m_Id: 1520448703098880
-    m_Localized: "Adicionar condi\xE7\xE3o"
+    m_Localized: "Bedingung hinzuf\xFCgen"
     m_Metadata:
       m_Items: []
   - m_Id: 1526760363061248
-    m_Localized: "Resultados di\xE1rios"
+    m_Localized: "T\xE4gliche Ergebnisse"
     m_Metadata:
       m_Items: []
   - m_Id: 1526761734598656
-    m_Localized: Resultados de treino
+    m_Localized: Trainingsergebnisse
     m_Metadata:
       m_Items: []
   - m_Id: 1526762510544896
-    m_Localized: "Arraste para prever a classifica\xE7\xE3o."
+    m_Localized: Ziehen, um die Platzierung vorherzusagen.
     m_Metadata:
       m_Items: []
   - m_Id: 1526763219382272
-    m_Localized: "Sua previs\xE3o"
+    m_Localized: Ihre Vorhersage
     m_Metadata:
       m_Items: []
   - m_Id: 1526764213432320
-    m_Localized: Lista de participantes
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1527737434566656
-    m_Localized: Apostar
+    m_Localized: Teilnehmerliste
     m_Metadata:
       m_Items: []
   - m_Id: 1527736130138112
-    m_Localized: "Voc\xEA pode receber uma recompensa ao prever um sobrevivente que
-      entre no ranking. Prever a posi\xE7\xE3o exata concede uma recompensa maior."
+    m_Localized: "Wenn Sie einen \xDCberlebenden richtig vorhersagen, der es ins
+      Ranking schafft, erhalten Sie eine Belohnung. Eine genaue Vorhersage bringt
+      eine gr\xF6\xDFere Belohnung."
     m_Metadata:
       m_Items: []
   - m_Id: 1527736943833088
-    m_Localized: 'Quantia da aposta :'
+    m_Localized: 'Einsatzbetrag :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Wetten
     m_Metadata:
       m_Items: []
   - m_Id: 1527738642526208
-    m_Localized: Pular aposta
+    m_Localized: "Wette \xFCberspringen"
     m_Metadata:
       m_Items: []
   - m_Id: 1779577510227968
-    m_Localized: Comprar {param0} por ${param1}?
+    m_Localized: "{param0} f\xFCr ${param1} kaufen?"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1779581587091456
-    m_Localized: Libertar {param0}?
+    m_Localized: '{param0} freigeben?'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1779577963212800
-    m_Localized: Limite de sobreviventes atingido.
+    m_Localized: "\xDCberlebendenlimit erreicht."
     m_Metadata:
       m_Items: []
   - m_Id: 1779578860793856
-    m_Localized: Dinheiro insuficiente.
+    m_Localized: Nicht genug Geld.
     m_Metadata:
       m_Items: []
   - m_Id: 1779580240719872
-    m_Localized: Deve ter pelo menos um sobrevivente.
+    m_Localized: "Sie m\xFCssen mindestens einen \xDCberlebenden haben."
     m_Metadata:
       m_Items: []
   - m_Id: 1779582107185152
-    m_Localized: O sobrevivente foi libertado.
+    m_Localized: "\xDCberlebender wurde freigegeben."
     m_Metadata:
       m_Items: []
   - m_Id: 1780917842014208
-    m_Localized: "{param0} n\xE3o pode ser atribu\xEDdo a este treino. (<color=red>Causa:
-      {param1}</color>)"
+    m_Localized: '{param0} kann diesem Training nicht zugewiesen werden. (<color=red>Grund:
+      {param1}</color>)'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1780920513785856
-    m_Localized: "Melhorar a instala\xE7\xE3o de {param0}?"
+    m_Localized: '{param0}-Einrichtung upgraden?'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1780919674925056
-    m_Localized: "A atribui\xE7\xE3o de treino de {param0} foi cancelada devido a
-      les\xE3o. (<color=red>Causa: {param1}</color>)"
+    m_Localized: 'Die Trainingszuweisung von {param0} wurde wegen einer Verletzung
+      storniert. (<color=red>Grund: {param1}</color>)'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1780918479548416
-    m_Localized: "{param0} est\xE1 atribu\xEDdo a {param1}."
+    m_Localized: '{param0} ist {param1} zugewiesen.'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1780917154148352
-    m_Localized: "A sala de treino est\xE1 fechada nos fins de semana."
+    m_Localized: Der Trainingsraum ist am Wochenende geschlossen.
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: 'Deseja agendar a cirurgia? {param0} : {param1} ( $ {param2} )'
+    m_Localized: "M\xF6chten Sie die Operation planen? {param0} : {param1} ( $ {param2}
+      )"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1875853614575616
-    m_Localized: O treino de {param0} foi cancelado.
+    m_Localized: Das Training von {param0} wurde abgesagt.
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 1875847331508224
-    m_Localized: Cirurgia agendada
+    m_Localized: Operation geplant
     m_Metadata:
       m_Items: []
   - m_Id: 1875849713872896
-    m_Localized: "A sala de opera\xE7\xF5es est\xE1 encerrada aos fins de semana."
+    m_Localized: Der Operationssaal ist am Wochenende geschlossen.
     m_Metadata:
       m_Items: []
   - m_Id: 1875855443292160
-    m_Localized: A cirurgia foi agendada.
+    m_Localized: Die Operation wurde geplant.
     m_Metadata:
       m_Items: []
   - m_Id: 1875857540444160
-    m_Localized: Deseja cancelar a cirurgia?
+    m_Localized: "M\xF6chten Sie die Operation absagen?"
     m_Metadata:
       m_Items: []
   - m_Id: 1875860564537344
-    m_Localized: A cirurgia foi cancelada.
+    m_Localized: Die Operation wurde abgesagt.
     m_Metadata:
       m_Items: []
   - m_Id: 1881728492302336
-    m_Localized: "Ambas as les\xF5es oculares"
+    m_Localized: beide Augenverletzungen
     m_Metadata:
       m_Items: []
   - m_Id: 2205515783925760
-    m_Localized: Ataca.
+    m_Localized: Greift an.
     m_Metadata:
       m_Items: []
   - m_Id: 2205518430531584
-    m_Localized: Ignora.
+    m_Localized: Ignoriert.
     m_Metadata:
       m_Items: []
   - m_Id: 2205521488179200
-    m_Localized: Foge.
+    m_Localized: "L\xE4uft weg."
     m_Metadata:
       m_Items: []
   - m_Id: 2205524055093248
-    m_Localized: Aproxima-se.
+    m_Localized: "N\xE4hert sich."
     m_Metadata:
       m_Items: []
   - m_Id: 2206103192006656
-    m_Localized: Vai para o local do som.
+    m_Localized: "Geht zur Ger\xE4uschquelle."
     m_Metadata:
       m_Items: []
   - m_Id: 2206104244776960
-    m_Localized: "Olha na dire\xE7\xE3o do som."
+    m_Localized: "Blickt in Richtung des Ger\xE4uschs."
     m_Metadata:
       m_Items: []
   - m_Id: 2206105071054848
-    m_Localized: Ignora o som.
+    m_Localized: "Ignoriert das Ger\xE4usch."
     m_Metadata:
       m_Items: []
   - m_Id: 2206541953953792
-    m_Localized: Primeira pessoa vista
+    m_Localized: Als erstes gesehene Person
     m_Metadata:
       m_Items: []
   - m_Id: 2206543556177920
-    m_Localized: "Pessoa mais pr\xF3xima"
+    m_Localized: "N\xE4chste Person"
     m_Metadata:
       m_Items: []
   - m_Id: 2206544390844416
-    m_Localized: Pessoa com maior alcance
+    m_Localized: "Person mit der gr\xF6\xDFten Reichweite"
     m_Metadata:
       m_Items: []
   - m_Id: 2207011464343552
-    m_Localized: Nenhum
+    m_Localized: Keine
     m_Metadata:
       m_Items: []
   - m_Id: 2207012504530944
-    m_Localized: "Fechar a sala estrat\xE9gica?\\n(Informa\xE7\xF5es n\xE3o salvas
-      ser\xE3o perdidas.)"
+    m_Localized: "Strategieraum schlie\xDFen?\\n(Nicht gespeicherte Daten gehen verloren.)"
     m_Metadata:
       m_Items: []
   - m_Id: 2207013309837312
-    m_Localized: "Guardar todas as altera\xE7\xF5es?"
+    m_Localized: "Alle \xC4nderungen speichern?"
     m_Metadata:
       m_Items: []
   - m_Id: 2207014039646208
-    m_Localized: "A prioridade de fabrica\xE7\xE3o 1 est\xE1 desativada. Verifique
-      a op\xE7\xE3o \"Permitir fabrica\xE7\xE3o\"."
+    m_Localized: "Herstellungspriorit\xE4t 1 ist deaktiviert. Bitte \xFCberpr\xFCfen
+      Sie die Einstellung \"Herstellung erlauben\"."
     m_Metadata:
       m_Items: []
   - m_Id: 2217236376383488
-    m_Localized: Minha arma
+    m_Localized: Meine Waffe
     m_Metadata:
       m_Items: []
   - m_Id: 2217237827612672
-    m_Localized: Arma do inimigo
+    m_Localized: Waffe des Feindes
     m_Metadata:
       m_Items: []
   - m_Id: 2217238918131712
-    m_Localized: "Minha sa\xFAde"
+    m_Localized: Meine Gesundheit
     m_Metadata:
       m_Items: []
   - m_Id: 2217240138674176
-    m_Localized: Esse inimigo
+    m_Localized: Jener Feind
     m_Metadata:
       m_Items: []
   - m_Id: 2217241258553344
-    m_Localized: "Dist\xE2ncia at\xE9 o inimigo"
+    m_Localized: Entfernung zum Feind
     m_Metadata:
       m_Items: []
   - m_Id: 2218605367848960
-    m_Localized: Arma corpo a corpo
+    m_Localized: Nahkampfwaffe
     m_Metadata:
       m_Items: []
   - m_Id: 2218606189932544
-    m_Localized: "Arma de longo alcance (com muni\xE7\xE3o)"
+    m_Localized: Fernkampfwaffe (mit Munition)
     m_Metadata:
       m_Items: []
   - m_Id: 2218607007821824
-    m_Localized: "Nenhuma ou arma de longo alcance (sem muni\xE7\xE3o)"
+    m_Localized: Keine oder Fernkampfwaffe (ohne Munition)
     m_Metadata:
       m_Items: []
   - m_Id: 2218608010260480
-    m_Localized: Me viu.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2219314939228160
-    m_Localized: "Previs\xE3o inv\xE1lida"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2219315786477568
-    m_Localized: "A aposta m\xEDnima \xE9 $100."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2219317690691584
-    m_Localized: Confirmar aposta?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2219320089833472
-    m_Localized: Pular aposta?
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2219323407527936
-    m_Localized: "Existem campos de previs\xE3o vazios."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2220598824071168
-    m_Localized: 'Sobrevivente agendado para o battle royale hoje: {param0}'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359334
-  - m_Id: 2220595640594432
-    m_Localized: Encerrar o dia?{param0}
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359334
-  - m_Id: 2220597318316032
-    m_Localized: "H\xE1 sobreviventes n\xE3o atribu\xEDdos:"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2220600589873152
-    m_Localized: "Hoje \xE9 dia de battle royale. Pular?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2220602338897920
-    m_Localized: Um dia se passou.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2224273214730240
-    m_Localized: Arma de longo alcance
+    m_Localized: Hat mich gesehen.
     m_Metadata:
       m_Items: []
   - m_Id: 2219314020675584
-    m_Localized: "Predicci\xF3n no v\xE1lida"
+    m_Localized: "Ung\xFCltige Vorhersage"
     m_Metadata:
       m_Items: []
-  - m_Id: 2478175491256320
-    m_Localized: Reservar
+  - m_Id: 2219314939228160
+    m_Localized: "Mindesteinsatz betr\xE4gt 100 $."
     m_Metadata:
       m_Items: []
-  - m_Id: 2478176929902592
-    m_Localized: Cancelar reserva
+  - m_Id: 2219315786477568
+    m_Localized: "Wette best\xE4tigen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: "Wette \xFCberspringen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: Es gibt leere Vorhersagefelder.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: Eine Person wurde mehrfach platziert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: "F\xFCr heute im Battle Royale eingeteilter \xDCberlebender: {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 2220595640594432
+    m_Localized: Tag beenden?{param0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 2220597318316032
+    m_Localized: "Es gibt nicht zugewiesene \xDCberlebende:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220600589873152
+    m_Localized: "Heute ist Battle-Royale-Tag. \xDCberspringen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: Ein Tag ist vergangen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: Fernkampfwaffe
     m_Metadata:
       m_Items: []
   - m_Id: 2478171783491584
-    m_Localized: "Itens colet\xE1veis:"
+    m_Localized: "Sammelbare Gegenst\xE4nde:"
     m_Metadata:
       m_Items: []
   - m_Id: 2478173167611904
-    m_Localized: Selecione um sobrevivente para o battle royale.
+    m_Localized: "W\xE4hle einen \xDCberlebenden f\xFCr das Battle Royale."
     m_Metadata:
       m_Items: []
   - m_Id: 2478174157467648
-    m_Localized: "Reservas dispon\xEDveis at\xE9 sexta-feira. Cancelamento no mesmo
-      dia n\xE3o \xE9 permitido."
+    m_Localized: "Reservierungen sind bis Freitag m\xF6glich, Stornierungen am selben
+      Tag nicht erlaubt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478175491256320
+    m_Localized: Reservieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Localized: Reservierung stornieren
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Ir para o battle royale?
+    m_Localized: Zum Battle Royale gehen?
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
-    m_Localized: "N\xE3o \xE9 poss\xEDvel reservar para o campeonato. Vencer a Liga
-      Ouro reserva automaticamente para o Campeonato da Temporada, e venc\xEA-lo
-      reserva para o Campeonato Mundial."
+    m_Localized: "F\xFCr die Meisterschaft kann nicht reserviert werden. Ein Sieg
+      in der Goldliga f\xFChrt automatisch zur Reservierung der Saisonmeisterschaft,
+      und ein Sieg dort zur Weltmeisterschaft."
     m_Metadata:
       m_Items: []
   - m_Id: 2479578074902528
-    m_Localized: Selecione um sobrevivente para reservar.
+    m_Localized: "W\xE4hle einen zu reservierenden \xDCberlebenden."
     m_Metadata:
       m_Items: []
   - m_Id: 2479579412885504
-    m_Localized: 'sobrevivente reservado : {param0}'
+    m_Localized: "reservierter \xDCberlebender : {param0}"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 2479581325488128
-    m_Localized: "Nenhum sobrevivente eleg\xEDvel"
+    m_Localized: "Kein qualifizierter \xDCberlebender"
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} est\xE1 registrado em outra partida.\\n(Somente uma partida
-      pode ser reservada por vez, exceto campeonatos.)"
+    m_Localized: "{param0} ist f\xFCr ein anderes Match registriert. (Nur ein Match
+      gleichzeitig erlaubt, au\xDFer Meisterschaften.)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 2481303221497856
-    m_Localized: "{param0} est\xE1 ferido. Deseja reservar mesmo assim?"
+    m_Localized: '{param0} ist verletzt. Trotzdem reservieren?'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 2481289275437056
-    m_Localized: "Este sobrevivente j\xE1 est\xE1 reservado para um campeonato. Deseja
-      continuar?"
+    m_Localized: "Dieser \xDCberlebende ist f\xFCr eine Meisterschaft reserviert.
+      Trotzdem reservieren?"
     m_Metadata:
       m_Items: []
   - m_Id: 2481290374344704
-    m_Localized: Battle royale reservado.
+    m_Localized: Battle Royale reserviert.
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: "Ele n\xE3o pode ser reservado para o battle royale.\\n(<color=red><i>Causa
+    m_Localized: "Er kann nicht f\xFCr das Battle Royale reserviert werden.\\n(<color=red><i>Grund
       : {param0}</i></color>)"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
-  - m_Id: 4006722185785344
-    m_Localized: 'Sobreviventes restantes:'
+      - rid: 7835753295874359338
+  - m_Id: 4006784886435840
+    m_Localized: Kiste
     m_Metadata:
       m_Items: []
   - m_Id: 4006778280407040
-    m_Localized: <color=red>{0}</color> foi derrotado por <color=yellow>{1}</color>.
+    m_Localized: <color=red>{0}</color> wurde von <color=yellow>{1}</color> besiegt.
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
-  - m_Id: 4006784886435840
-    m_Localized: Caixa
+      - rid: 7835753295874359338
+  - m_Id: 4006722185785344
+    m_Localized: "Verbleibende \xDCberlebende:"
     m_Metadata:
       m_Items: []
   - m_Id: 4007737786167296
-    m_Localized: A saquear
+    m_Localized: "Wird gepl\xFCndert"
     m_Metadata:
       m_Items: []
   - m_Id: 4007742873858048
-    m_Localized: Em combate
+    m_Localized: Im Kampf
     m_Metadata:
       m_Items: []
   - m_Id: 4007746342547456
-    m_Localized: Investigando o som
+    m_Localized: "Untersucht Ger\xE4uschquelle"
     m_Metadata:
       m_Items: []
   - m_Id: 4007747902828544
-    m_Localized: Preparar para combate
+    m_Localized: Kampfvobereitung
     m_Metadata:
       m_Items: []
   - m_Id: 4007748624248832
-    m_Localized: Configurando armadilha
+    m_Localized: Falle aufstellen
     m_Metadata:
       m_Items: []
   - m_Id: 4009762284433408
-    m_Localized: 'Criando: {0}'
+    m_Localized: 'Herstellung: {0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 4009759021264896
-    m_Localized: Perseguindo inimigo
+    m_Localized: Gegner verfolgend
     m_Metadata:
       m_Items: []
   - m_Id: 4009760531214336
-    m_Localized: Fugindo
+    m_Localized: Auf der Flucht
     m_Metadata:
       m_Items: []
   - m_Id: 4009761395240960
-    m_Localized: Desarmando armadilha
+    m_Localized: "Falle entsch\xE4rfen"
     m_Metadata:
       m_Items: []
   - m_Id: 4009763165237248
-    m_Localized: Encantando
+    m_Localized: Am enchantieren
     m_Metadata:
       m_Items: []
   - m_Id: 4011113273946112
-    m_Localized: Seu sobrevivente ({0}) venceu!
+    m_Localized: "Dein \xDCberlebender ({0}) hat gewonnen!"
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 4011114574180352
-    m_Localized: Seu sobrevivente ({0}) foi derrotado.
+    m_Localized: "Dein \xDCberlebender ({0}) wurde besiegt."
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 4011115551453184
-    m_Localized: "Elimina\xE7\xE3o"
+    m_Localized: "T\xF6tung"
     m_Metadata:
       m_Items: []
   - m_Id: 4011116050575360
-    m_Localized: Dano total
+    m_Localized: Gesamtschaden
     m_Metadata:
       m_Items: []
   - m_Id: 4013401166114816
-    m_Localized: "Recompensa de vit\xF3ria"
+    m_Localized: "Siegpr\xE4mie"
     m_Metadata:
       m_Items: []
   - m_Id: 4013402768338944
-    m_Localized: "Recompensa por elimina\xE7\xE3o"
+    m_Localized: "T\xF6tungspr\xE4mie"
     m_Metadata:
       m_Items: []
   - m_Id: 4013403812720640
-    m_Localized: "Custo de transfus\xE3o"
+    m_Localized: Transfusionskosten
     m_Metadata:
       m_Items: []
   - m_Id: 4013404630609920
-    m_Localized: $1 por 10 mL
+    m_Localized: 1 $ pro 10 mL
     m_Metadata:
       m_Items: []
   - m_Id: 4013420254392320
-    m_Localized: Custo total de tratamento
+    m_Localized: Gesamte Behandlungskosten
     m_Metadata:
       m_Items: []
   - m_Id: 4014292761899008
-    m_Localized: '{0} vence!'
+    m_Localized: '{0} gewinnt!'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 4014293986635776
-    m_Localized: Pagamento de aposta
+    m_Localized: Wettgewinn
     m_Metadata:
       m_Items: []
   - m_Id: 4014295257509888
-    m_Localized: "Lucro/preju\xEDzo l\xEDquido"
+    m_Localized: Gesamtgewinn/-verlust
     m_Metadata:
       m_Items: []
   - m_Id: 4014296457080832
-    m_Localized: "{param0} foi agendado para o pr\xF3ximo {param1}."
+    m_Localized: "{param0} ist f\xFCr das n\xE4chste {param1} geplant."
     m_Metadata:
       m_Items: []
   - m_Id: 4014297795063808
-    m_Localized: '{param0} superou {param1} e conquistou {param2}.'
+    m_Localized: "{param0} hat {param1} \xFCberwunden und {param2} erhalten."
     m_Metadata:
       m_Items: []
   - m_Id: 4015594363482112
-    m_Localized: "O valor esperado da aposta \xE9 maior que 1."
+    m_Localized: "Der erwartete Wert der Wette ist gr\xF6\xDFer als 1."
     m_Metadata:
       m_Items: []
   - m_Id: 4015597047836672
-    m_Localized: "Os atributos base limitam-se a 100, mas podem ultrapassar com tra\xE7os."
+    m_Localized: "Basiswerte sind auf 100 begrenzt, aber Traits k\xF6nnen \xFCberschreiten."
     m_Metadata:
       m_Items: []
   - m_Id: 4016011147276288
-    m_Localized: "Se o treino n\xE3o melhorar os atributos, atualize a instala\xE7\xE3o
-      de treino."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 4016174972596224
-    m_Localized: Salir
+    m_Localized: "Wenn Training keine Werte erh\xF6ht, r\xFCste die Trainingsanlage
+      auf."
     m_Metadata:
       m_Items: []
   - m_Id: 4016164918849536
-    m_Localized: "Foco autom\xE1tico"
+    m_Localized: Autofokus
     m_Metadata:
       m_Items: []
   - m_Id: 4016167221522432
-    m_Localized: "Invent\xE1rio"
+    m_Localized: Inventar
     m_Metadata:
       m_Items: []
   - m_Id: 4016169792630784
-    m_Localized: Resultado
+    m_Localized: Ergebnis
     m_Metadata:
       m_Items: []
   - m_Id: 4016172040777728
-    m_Localized: "Tempo de sobreviv\xEAncia"
+    m_Localized: "\xDCberlebenszeit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Localized: Verlassen
     m_Metadata:
       m_Items: []
   - m_Id: 4087018927222784
-    m_Localized: 'Reservado: {param0}'
+    m_Localized: 'Reserviert: {param0}'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 4087020722384896
-    m_Localized: Campeonato da Temporada
+    m_Localized: Saisonmeisterschaft
     m_Metadata:
       m_Items: []
   - m_Id: 4087021989064704
-    m_Localized: Campeonato do Mundo
+    m_Localized: Weltmeisterschaft
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: Quantidade de sangramento
+    m_Localized: Blutverlust
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
-    m_Localized: 'Ordenar por:'
+    m_Localized: 'Sortieren nach:'
     m_Metadata:
       m_Items: []
   - m_Id: 4782426959704064
-    m_Localized: Tipo de item
+    m_Localized: Gegenstandstyp
     m_Metadata:
       m_Items: []
   - m_Id: 4782428373184512
-    m_Localized: "O treino dispon\xEDvel varia conforme as les\xF5es."
+    m_Localized: "Verf\xFCgbare Trainings variieren je nach Verletzung."
     m_Metadata:
       m_Items: []
   - m_Id: 4785900300595200
-    m_Localized: 'Hora guardada:'
+    m_Localized: 'Gespeicherte Zeit:'
     m_Metadata:
       m_Items: []
   - m_Id: 4785900787134464
-    m_Localized: "Guardado autom\xE1tico"
+    m_Localized: Automatisch gespeichert
     m_Metadata:
       m_Items: []
   - m_Id: 4785912375996416
-    m_Localized: "Espa\xE7o vazio"
+    m_Localized: Leerer Slot
     m_Metadata:
       m_Items: []
   - m_Id: 4785914213101568
-    m_Localized: "Este espa\xE7o j\xE1 cont\xE9m dados. Substituir?"
+    m_Localized: "In diesem Slot sind bereits Daten vorhanden. \xDCberschreiben?"
     m_Metadata:
       m_Items: []
   - m_Id: 4785915161014272
-    m_Localized: Apagar estes dados guardados?
+    m_Localized: "Diese Speicherdatei l\xF6schen?"
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: "Voltar ao t\xEDtulo?\\n<i>(Informa\xE7\xF5es n\xE3o guardadas ser\xE3o
-      perdidas.)</i>"
+    m_Localized: "Zum Titelbildschirm zur\xFCckkehren?\\n<i>(Nicht gespeicherte Daten
+      gehen verloren.)</i>"
     m_Metadata:
       m_Items: []
   - m_Id: 5085882547236864
-    m_Localized: Hemorragia grave
+    m_Localized: Starke Blutung
     m_Metadata:
       m_Items: []
   - m_Id: 5085884178821120
-    m_Localized: Zona restrita
+    m_Localized: Sperrgebiet
     m_Metadata:
       m_Items: []
   - m_Id: 5085885500026880
-    m_Localized: Jogo guardado.
+    m_Localized: Spiel gespeichert.
     m_Metadata:
       m_Items: []
   - m_Id: 5085886779289600
-    m_Localized: Jogo guardado automaticamente.
+    m_Localized: Spiel automatisch gespeichert.
     m_Metadata:
       m_Items: []
   - m_Id: 5085888150827008
-    m_Localized: "Se a gravidade da les\xE3o for inferior a 1, \xE9 poss\xEDvel recuperar
-      naturalmente."
+    m_Localized: "Bei einer Verletzungsschwere unter 1 ist nat\xFCrliche Heilung
+      m\xF6glich."
     m_Metadata:
       m_Items: []
   - m_Id: 5085889379758080
-    m_Localized: Idioma
+    m_Localized: Sprache
     m_Metadata:
       m_Items: []
   - m_Id: 5085890839375872
-    m_Localized: "Op\xE7\xF5es"
+    m_Localized: Optionen
     m_Metadata:
       m_Items: []
   - m_Id: 7593812567846912
-    m_Localized: Cirurgia bem-sucedida
+    m_Localized: Operation erfolgreich
     m_Metadata:
       m_Items: []
   - m_Id: 7594071343820800
-    m_Localized: Ver treino agendado por sobrevivente
+    m_Localized: "Geplante Trainings pro \xDCberlebendem anzeigen"
     m_Metadata:
       m_Items: []
   - m_Id: 7594255456989184
-    m_Localized: "Sobreviventes com ambas as m\xE3os ou olhos incapacitados n\xE3o
-      podem ser agendados para combates. Nos campeonatos, a participa\xE7\xE3o depende
-      da condi\xE7\xE3o no dia."
+    m_Localized: "\xDCberlebende mit beiden H\xE4nden oder Augen verletzt k\xF6nnen
+      nicht f\xFCr K\xE4mpfe angemeldet werden. Bei Meisterschaften h\xE4ngt die
+      Teilnahme vom Tageszustand ab."
     m_Metadata:
       m_Items: []
   - m_Id: 7594256941772800
-    m_Localized: "Quanto mais grave a les\xE3o, mais lenta a cura. Quanto mais leve,
-      mais r\xE1pida a recupera\xE7\xE3o."
+    m_Localized: Je schwerer die Verletzung, desto langsamer die Heilung. Leichte
+      Verletzungen heilen schneller.
     m_Metadata:
       m_Items: []
   - m_Id: 7599693611200512
-    m_Localized: Treino agendado
+    m_Localized: Geplantes Training
     m_Metadata:
       m_Items: []
   - m_Id: 9025630118670336
-    m_Localized: "J\xE1 administrado"
+    m_Localized: Bereits verabreicht
     m_Metadata:
       m_Items: []
   - m_Id: 9055475942879232
-    m_Localized: Resultado da cirurgia
+    m_Localized: Operationsergebnis
     m_Metadata:
       m_Items: []
   - m_Id: 9104711485026304
-    m_Localized: janeiro
+    m_Localized: Januar
     m_Metadata:
       m_Items: []
   - m_Id: 9104718334324736
-    m_Localized: fevereiro
+    m_Localized: Februar
     m_Metadata:
       m_Items: []
   - m_Id: 9104723711422464
-    m_Localized: "mar\xE7o"
+    m_Localized: "M\xE4rz"
     m_Metadata:
       m_Items: []
   - m_Id: 9104726680989696
-    m_Localized: abril
+    m_Localized: April
     m_Metadata:
       m_Items: []
   - m_Id: 9104731953229824
-    m_Localized: maio
+    m_Localized: Mai
     m_Metadata:
       m_Items: []
   - m_Id: 9104733136023552
-    m_Localized: junho
+    m_Localized: Juni
     m_Metadata:
       m_Items: []
   - m_Id: 9104734272679936
-    m_Localized: julho
+    m_Localized: Juli
     m_Metadata:
       m_Items: []
   - m_Id: 9104735367393280
-    m_Localized: agosto
+    m_Localized: August
     m_Metadata:
       m_Items: []
   - m_Id: 9104736696987648
-    m_Localized: setembro
+    m_Localized: September
     m_Metadata:
       m_Items: []
   - m_Id: 9104737959473152
-    m_Localized: outubro
+    m_Localized: Oktober
     m_Metadata:
       m_Items: []
   - m_Id: 9104739515559936
-    m_Localized: novembro
+    m_Localized: November
     m_Metadata:
       m_Items: []
   - m_Id: 9104741264584704
-    m_Localized: dezembro
+    m_Localized: Dezember
     m_Metadata:
       m_Items: []
   - m_Id: 9113966728507392
-    m_Localized: "<color=blue>s\xE1b</color>"
+    m_Localized: <color=blue>Sa</color>
     m_Metadata:
       m_Items: []
   - m_Id: 9113968502697984
-    m_Localized: <color=red>dom</color>
+    m_Localized: <color=red>So</color>
     m_Metadata:
       m_Items: []
   - m_Id: 9113955655544832
-    m_Localized: seg
+    m_Localized: Mo
     m_Metadata:
       m_Items: []
   - m_Id: 9113957404569600
-    m_Localized: ter
+    m_Localized: Di
     m_Metadata:
       m_Items: []
   - m_Id: 9113958998405120
-    m_Localized: qua
+    m_Localized: Mi
     m_Metadata:
       m_Items: []
   - m_Id: 9113960625795072
-    m_Localized: qui
+    m_Localized: Do
     m_Metadata:
       m_Items: []
   - m_Id: 9113964169981952
-    m_Localized: sex
+    m_Localized: Fr
     m_Metadata:
       m_Items: []
   - m_Id: 9113970310443008
-    m_Localized: '{2} de {1}  de {0} ({3})'
+    m_Localized: '{2} {1} {0} ({3})'
     m_Metadata:
       m_Items:
-      - rid: 7835753295874359334
+      - rid: 7835753295874359338
   - m_Id: 9408636008329216
-    m_Localized: Carregamento bem-sucedido
+    m_Localized: Laden erfolgreich
     m_Metadata:
       m_Items: []
   - m_Id: 9408644191416320
@@ -1004,53 +1005,53 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 9408647374893056
-    m_Localized: Prata
+    m_Localized: Silber
     m_Metadata:
       m_Items: []
   - m_Id: 9408650487066624
-    m_Localized: Ouro
+    m_Localized: Gold
     m_Metadata:
       m_Items: []
   - m_Id: 9409849533722624
-    m_Localized: Liga de Bronze
+    m_Localized: Bronze-Liga
     m_Metadata:
       m_Items: []
   - m_Id: 9409851412770816
-    m_Localized: Liga de Prata
+    m_Localized: Silber-Liga
     m_Metadata:
       m_Items: []
   - m_Id: 9409860598296576
-    m_Localized: Liga de Ouro
+    m_Localized: Gold-Liga
     m_Metadata:
       m_Items: []
   - m_Id: 9409870513631232
-    m_Localized: Liga de Combate Corpo a Corpo
+    m_Localized: Nahkampf-Liga
     m_Metadata:
       m_Items: []
   - m_Id: 9409873973932032
-    m_Localized: "Liga de Combate \xE0 Dist\xE2ncia"
+    m_Localized: Fernkampf-Liga
     m_Metadata:
       m_Items: []
   - m_Id: 9409903250173952
-    m_Localized: "Liga de Fabrica\xE7\xE3o"
+    m_Localized: Handwerksliga
     m_Metadata:
       m_Items: []
   - m_Id: 14107829897588736
-    m_Localized: Soma de atributos
+    m_Localized: Gesamtwerte
     m_Metadata:
       m_Items: []
   - m_Id: 14169095227895808
-    m_Localized: Sair do Battle Royale
+    m_Localized: Battle Royale verlassen
     m_Metadata:
       m_Items: []
   - m_Id: 14169112638451712
-    m_Localized: Tem a certeza de que deseja sair do Battle Royale?
+    m_Localized: "M\xF6chten Sie den Battle Royale wirklich verlassen?"
     m_Metadata:
       m_Items: []
   references:
     version: 2
     RefIds:
-    - rid: 7835753295874359334
+    - rid: 7835753295874359338
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
         m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000

@@ -9,1049 +9,1007 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
-  m_Name: Table_de-DE
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Basic Shared Data
   m_EditorClassIdentifier: 
-  m_LocaleId:
-    m_Code: de-DE
-  m_SharedData: {fileID: 11400000, guid: bb29ff58396a29e45949a9146d3df52d, type: 2}
-  m_Metadata:
-    m_Items:
-    - rid: 7835753295874359338
-  m_TableData:
+  m_TableCollectionName: Basic
+  m_TableCollectionNameGuidString: bb29ff58396a29e45949a9146d3df52d
+  m_Entries:
   - m_Id: 221632851968
-    m_Localized: Neues Spiel
+    m_Key: New Game
     m_Metadata:
       m_Items: []
   - m_Id: 5832965681152
-    m_Localized: Spiel laden
+    m_Key: Load
     m_Metadata:
       m_Items: []
   - m_Id: 5856420229120
-    m_Localized: Beenden
+    m_Key: Quit
     m_Metadata:
       m_Items: []
   - m_Id: 6583620268032
-    m_Localized: OK
+    m_Key: Confirm
     m_Metadata:
       m_Items: []
   - m_Id: 6588460494848
-    m_Localized: Abbrechen
+    m_Key: Cancel
     m_Metadata:
       m_Items: []
   - m_Id: 6592856125440
-    m_Localized: Speichern
+    m_Key: Save
     m_Metadata:
       m_Items: []
   - m_Id: 6594592567296
-    m_Localized: "Enzyklop\xE4die"
+    m_Key: Encyclopedia
     m_Metadata:
       m_Items: []
   - m_Id: 6741300932608
-    m_Localized: Zum Titelbild
+    m_Key: Title
     m_Metadata:
       m_Items: []
   - m_Id: 12507453911040
-    m_Localized: Wieder aufnehmen
+    m_Key: Resume
     m_Metadata:
       m_Items: []
   - m_Id: 71164493361152
-    m_Localized: Trainingsraum
+    m_Key: Training Room
     m_Metadata:
       m_Items: []
   - m_Id: 71167060275200
-    m_Localized: Operationsraum
+    m_Key: Surgery Room
     m_Metadata:
       m_Items: []
   - m_Id: 71168792522752
-    m_Localized: Strategie-Raum
+    m_Key: Strategy Room
     m_Metadata:
       m_Items: []
   - m_Id: 71171598512128
-    m_Localized: Zeitplan
+    m_Key: Schedule
     m_Metadata:
       m_Items: []
   - m_Id: 72283097460736
-    m_Localized: "\xDCberlebenden anheuern."
+    m_Key: Hire a survivor.
     m_Metadata:
       m_Items: []
   - m_Id: 72287484702720
-    m_Localized: "Der Einstellungs-Shop wird t\xE4glich zur\xFCckgesetzt."
+    m_Key: Help:Hire Market
     m_Metadata:
       m_Items: []
   - m_Id: 72947416494080
-    m_Localized: "St\xE4rke"
+    m_Key: Strength
     m_Metadata:
       m_Items: []
   - m_Id: 72949572366336
-    m_Localized: Beweglichkeit
+    m_Key: Agility
     m_Metadata:
       m_Items: []
   - m_Id: 72951577243648
-    m_Localized: Nahkampf
+    m_Key: Fighting
     m_Metadata:
       m_Items: []
   - m_Id: 72953187856384
-    m_Localized: "Schie\xDFen"
+    m_Key: Shooting
     m_Metadata:
       m_Items: []
   - m_Id: 72955045933056
-    m_Localized: Wissen
+    m_Key: Knowledge
     m_Metadata:
       m_Items: []
   - m_Id: 74870907531264
-    m_Localized: Krafttraining
+    m_Key: Training:Weight
     m_Metadata:
       m_Items: []
   - m_Id: 74872807550976
-    m_Localized: Laufen
+    m_Key: Training:Running
     m_Metadata:
       m_Items: []
   - m_Id: 74876133634048
-    m_Localized: Nahkampftraining
+    m_Key: Training:Fighting
     m_Metadata:
       m_Items: []
   - m_Id: 74877828132864
-    m_Localized: "Schie\xDFtraining"
+    m_Key: Training:Shooting
     m_Metadata:
       m_Items: []
   - m_Id: 74879803650048
-    m_Localized: Lernen
+    m_Key: Training:Studying
     m_Metadata:
       m_Items: []
   - m_Id: 76230210154496
-    m_Localized: 'Reserviert :'
+    m_Key: Reserved
     m_Metadata:
       m_Items: []
   - m_Id: 76231183233024
-    m_Localized: "F\xFCr dieses Training reserviert"
+    m_Key: Reserved for this training
     m_Metadata:
       m_Items: []
   - m_Id: 76231959179264
-    m_Localized: "Nicht zugewiesene \xDCberlebende"
+    m_Key: Unassigned survivors
     m_Metadata:
       m_Items: []
   - m_Id: 76232462495744
-    m_Localized: "Anderes Training zugewiesene \xDCberlebende"
+    m_Key: Survivors assigned to other training
     m_Metadata:
       m_Items: []
   - m_Id: 78460103487488
-    m_Localized: Automatische Zuweisung
+    m_Key: Auto-assign
     m_Metadata:
       m_Items: []
   - m_Id: 78461097537536
-    m_Localized: Am Ende des Tages wird dasselbe Training automatisch zugewiesen.
+    m_Key: Help:Auto-assign
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Anlagen-Upgrade\n$ {cost}
+    m_Key: Facility Upgrade
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 78462544572416
-    m_Localized: "\xDCberlebende k\xF6nnen in besseren Umgebungen trainieren und
-      ihre Werte steigern."
+    m_Key: Help:Facility Upgrade
     m_Metadata:
       m_Items: []
   - m_Id: 89402442838016
-    m_Localized: '{trainingType} (lv {level})'
+    m_Key: Training(lv)
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 1470839012257792
-    m_Localized: Anheuern
+    m_Key: Hire
     m_Metadata:
       m_Items: []
   - m_Id: 1470839968559104
-    m_Localized: "\xDCberlebenden entlassen"
+    m_Key: Release Survivor
     m_Metadata:
       m_Items: []
   - m_Id: 1470840908083200
-    m_Localized: "\xDCberlebenden anheuern"
+    m_Key: Hire Survivor
     m_Metadata:
       m_Items: []
   - m_Id: 1470841721778176
-    m_Localized: "W\xE4hlen Sie einen \xDCberlebenden zum Anheuern."
+    m_Key: Select a survivor to hire.
     m_Metadata:
       m_Items: []
   - m_Id: 1470842845851648
-    m_Localized: Tag beenden
+    m_Key: End Day
     m_Metadata:
       m_Items: []
   - m_Id: 1473302310219776
-    m_Localized: Prothesenimplantat
+    m_Key: Transplant Surgery
     m_Metadata:
       m_Items: []
   - m_Id: 1473304247988224
-    m_Localized: Chronische Krankheit behandeln
+    m_Key: Treat Chronic Illness
     m_Metadata:
       m_Items: []
   - m_Id: 1473305707606016
-    m_Localized: Modifikation (nicht implementiert)
+    m_Key: Augmentation (Not Implemented)
     m_Metadata:
       m_Items: []
   - m_Id: 1474242958389248
-    m_Localized: Operationsname
+    m_Key: Surgery Name
     m_Metadata:
       m_Items: []
   - m_Id: 1474244426395648
-    m_Localized: Kosten
+    m_Key: Cost
     m_Metadata:
       m_Items: []
   - m_Id: 1474245642743808
-    m_Localized: Geplante Operation
+    m_Key: 'Scheduled Surgery :'
     m_Metadata:
       m_Items: []
   - m_Id: 1474246649376768
-    m_Localized: Operation planen
+    m_Key: Schedule Surgery
     m_Metadata:
       m_Items: []
   - m_Id: 1474255897817088
-    m_Localized: Operation abbrechen
+    m_Key: Cancel Surgery
     m_Metadata:
       m_Items: []
   - m_Id: 1486550820515840
-    m_Localized: "Zur\xFCcksetzen"
+    m_Key: Reset
     m_Metadata:
       m_Items: []
   - m_Id: 1486551541936128
-    m_Localized: Strategie kopieren
+    m_Key: Copy Strategy
     m_Metadata:
       m_Items: []
   - m_Id: 1486552280133632
-    m_Localized: "Strategie einf\xFCgen"
+    m_Key: Paste Strategy
     m_Metadata:
       m_Items: []
   - m_Id: 1486567614509056
-    m_Localized: Alle Strategien kopieren
+    m_Key: Copy All Strategies
     m_Metadata:
       m_Items: []
   - m_Id: 1486575189422080
-    m_Localized: "Alle Strategien einf\xFCgen"
+    m_Key: Paste All Strategies
     m_Metadata:
       m_Items: []
   - m_Id: 1486579081736192
-    m_Localized: Suchen
+    m_Key: Search
     m_Metadata:
       m_Items: []
   - m_Id: 1488350583779328
-    m_Localized: "Waffenpriorit\xE4t"
+    m_Key: Weapon Priority
     m_Metadata:
       m_Items: []
   - m_Id: 1488356887818240
-    m_Localized: Wenn der Feind gesehen wird und sich im Angriffsbereich befindet
+    m_Key: When the enemy is seen and within attack range.
     m_Metadata:
       m_Items: []
   - m_Id: 1488359144353792
-    m_Localized: "Wenn der Feind gesehen wird, aber au\xDFerhalb der Reichweite ist"
+    m_Key: When the enemy is seen but outside attack range.
     m_Metadata:
       m_Items: []
   - m_Id: 1488360671080448
-    m_Localized: "Wenn ein lautes Ger\xE4usch geh\xF6rt wird"
+    m_Key: When a loud noise is heard.
     m_Metadata:
       m_Items: []
   - m_Id: 1488364739555328
-    m_Localized: "Wenn ein leises Ger\xE4usch geh\xF6rt wird"
+    m_Key: When a small noise is heard.
     m_Metadata:
       m_Items: []
   - m_Id: 1491856883511296
-    m_Localized: "\rPriorit\xE4t 1"
+    m_Key: Priority 1
     m_Metadata:
       m_Items: []
   - m_Id: 1493279654342656
-    m_Localized: Wenn mehrere Feinde da sind
+    m_Key: When there are multiple enemies.
     m_Metadata:
       m_Items: []
   - m_Id: 1493281537585152
-    m_Localized: "Handwerkspriorit\xE4t"
+    m_Key: Crafting Priority
     m_Metadata:
       m_Items: []
   - m_Id: 1493283026563072
-    m_Localized: Herstellung erlauben
+    m_Key: Allow Crafting
     m_Metadata:
       m_Items: []
   - m_Id: 1493293415854080
-    m_Localized: Strategie speichern
+    m_Key: Save Strategy
     m_Metadata:
       m_Items: []
   - m_Id: 1515900643110912
-    m_Localized: 'Der UND-Operator wird vor dem ODER-Operator ausgewertet. Beispiel:
-      A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
-      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D'
+    m_Key: Help:Add Condition
     m_Metadata:
       m_Items: []
   - m_Id: 1515902283083776
-    m_Localized: "Wenn ein Gegenstand eine Herstellungspriorit\xE4t hat, werden seine
-      Materialien erst beim Herstellen verbraucht."
+    m_Key: Help:Crafting Priority
     m_Metadata:
       m_Items: []
   - m_Id: 1516466236616704
-    m_Localized: Gegenstand
+    m_Key: Item
     m_Metadata:
       m_Items: []
   - m_Id: 1516467704623104
-    m_Localized: Erlauben
+    m_Key: Allow
     m_Metadata:
       m_Items: []
   - m_Id: 1516469067771904
-    m_Localized: Nicht erlauben
+    m_Key: Disallow
     m_Metadata:
       m_Items: []
   - m_Id: 1517011882012672
-    m_Localized: "Zeitplan pro \xDCberlebendem anzeigen"
+    m_Key: View Schedule by Survivor
     m_Metadata:
       m_Items: []
   - m_Id: 1517012590850048
-    m_Localized: Name
+    m_Key: Name
     m_Metadata:
       m_Items: []
   - m_Id: 1517013446488064
-    m_Localized: Stufe
+    m_Key: Tier
     m_Metadata:
       m_Items: []
   - m_Id: 1517014104993792
-    m_Localized: Geplanter Battle Royale
+    m_Key: Scheduled Battle Royale
     m_Metadata:
       m_Items: []
   - m_Id: 1520448703098880
-    m_Localized: "Bedingung hinzuf\xFCgen"
+    m_Key: Add Condition
     m_Metadata:
       m_Items: []
   - m_Id: 1526760363061248
-    m_Localized: "T\xE4gliche Ergebnisse"
+    m_Key: Daily Results
     m_Metadata:
       m_Items: []
   - m_Id: 1526761734598656
-    m_Localized: Trainingsergebnisse
+    m_Key: Training Results
     m_Metadata:
       m_Items: []
   - m_Id: 1526762510544896
-    m_Localized: Ziehen, um die Platzierung vorherzusagen.
+    m_Key: Drag to predict the ranking.
     m_Metadata:
       m_Items: []
   - m_Id: 1526763219382272
-    m_Localized: Ihre Vorhersage
+    m_Key: Your Prediction
     m_Metadata:
       m_Items: []
   - m_Id: 1526764213432320
-    m_Localized: Teilnehmerliste
+    m_Key: Participant List
     m_Metadata:
       m_Items: []
   - m_Id: 1527736130138112
-    m_Localized: "Wenn Sie einen \xDCberlebenden richtig vorhersagen, der es ins
-      Ranking schafft, erhalten Sie eine Belohnung. Eine genaue Vorhersage bringt
-      eine gr\xF6\xDFere Belohnung."
+    m_Key: You can receive a reward for predicting a survivor who ranks. Predicting
+      the exact rank gives a bigger reward.
     m_Metadata:
       m_Items: []
   - m_Id: 1527736943833088
-    m_Localized: 'Einsatzbetrag :'
+    m_Key: 'Bet Amount :'
     m_Metadata:
       m_Items: []
   - m_Id: 1527737434566656
-    m_Localized: Wetten
+    m_Key: Bet
     m_Metadata:
       m_Items: []
   - m_Id: 1527738642526208
-    m_Localized: "Wette \xFCberspringen"
+    m_Key: Skip Betting
     m_Metadata:
       m_Items: []
   - m_Id: 1779577510227968
-    m_Localized: "{param0} f\xFCr ${param1} kaufen?"
+    m_Key: Confirm:Purchase
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1779581587091456
-    m_Localized: '{param0} freigeben?'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 1779577963212800
-    m_Localized: "\xDCberlebendenlimit erreicht."
+    m_Key: Alert:Survivor limit reached.
     m_Metadata:
       m_Items: []
   - m_Id: 1779578860793856
-    m_Localized: Nicht genug Geld.
+    m_Key: Alert:Not enough money.
     m_Metadata:
       m_Items: []
   - m_Id: 1779580240719872
-    m_Localized: "Sie m\xFCssen mindestens einen \xDCberlebenden haben."
+    m_Key: Alert:You must have at least one survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779581587091456
+    m_Key: Confirm:Release
     m_Metadata:
       m_Items: []
   - m_Id: 1779582107185152
-    m_Localized: "\xDCberlebender wurde freigegeben."
+    m_Key: Alert:Survivor has been released.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Key: Alert:Training room is closed on weekends.
     m_Metadata:
       m_Items: []
   - m_Id: 1780917842014208
-    m_Localized: '{param0} kann diesem Training nicht zugewiesen werden. (<color=red>Grund:
-      {param1}</color>)'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1780920513785856
-    m_Localized: '{param0}-Einrichtung upgraden?'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1780919674925056
-    m_Localized: 'Die Trainingszuweisung von {param0} wurde wegen einer Verletzung
-      storniert. (<color=red>Grund: {param1}</color>)'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1780918479548416
-    m_Localized: '{param0} ist {param1} zugewiesen.'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1780917154148352
-    m_Localized: Der Trainingsraum ist am Wochenende geschlossen.
+    m_Key: Help:Cannot Assign Training
     m_Metadata:
       m_Items: []
-  - m_Id: 1875851668418560
-    m_Localized: "M\xF6chten Sie die Operation planen? {param0} : {param1} ( $ {param2}
-      )"
+  - m_Id: 1780918479548416
+    m_Key: Help:Training Already Assigned
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 1875853614575616
-    m_Localized: Das Training von {param0} wurde abgesagt.
+      m_Items: []
+  - m_Id: 1780919674925056
+    m_Key: Alert:Training Assignment Cancelled
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
+  - m_Id: 1780920513785856
+    m_Key: Confirm:Upgrade Facility
+    m_Metadata:
+      m_Items: []
   - m_Id: 1875847331508224
-    m_Localized: Operation geplant
+    m_Key: Surgery scheduled
     m_Metadata:
       m_Items: []
   - m_Id: 1875849713872896
-    m_Localized: Der Operationssaal ist am Wochenende geschlossen.
+    m_Key: Alert:The operating room is closed on weekends.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Key: Confirm:Schedule Surgery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875853614575616
+    m_Key: Alert:Training  Canceled
     m_Metadata:
       m_Items: []
   - m_Id: 1875855443292160
-    m_Localized: Die Operation wurde geplant.
+    m_Key: Alert:Surgery has been scheduled.
     m_Metadata:
       m_Items: []
   - m_Id: 1875857540444160
-    m_Localized: "M\xF6chten Sie die Operation absagen?"
+    m_Key: Confirm:Cancel Surgery
     m_Metadata:
       m_Items: []
   - m_Id: 1875860564537344
-    m_Localized: Die Operation wurde abgesagt.
+    m_Key: Alert:Surgery has been canceled.
     m_Metadata:
       m_Items: []
   - m_Id: 1881728492302336
-    m_Localized: beide Augenverletzungen
+    m_Key: Both eye injuries
     m_Metadata:
       m_Items: []
   - m_Id: 2205515783925760
-    m_Localized: Greift an.
+    m_Key: Attacks.
     m_Metadata:
       m_Items: []
   - m_Id: 2205518430531584
-    m_Localized: Ignoriert.
+    m_Key: Ignores.
     m_Metadata:
       m_Items: []
   - m_Id: 2205521488179200
-    m_Localized: "L\xE4uft weg."
+    m_Key: Runs away.
     m_Metadata:
       m_Items: []
   - m_Id: 2205524055093248
-    m_Localized: "N\xE4hert sich."
+    m_Key: Approaches.
     m_Metadata:
       m_Items: []
   - m_Id: 2206103192006656
-    m_Localized: "Geht zur Ger\xE4uschquelle."
+    m_Key: Goes to the source of the sound.
     m_Metadata:
       m_Items: []
   - m_Id: 2206104244776960
-    m_Localized: "Blickt in Richtung des Ger\xE4uschs."
+    m_Key: Looks in the direction of the sound.
     m_Metadata:
       m_Items: []
   - m_Id: 2206105071054848
-    m_Localized: "Ignoriert das Ger\xE4usch."
+    m_Key: Ignores the sound.
     m_Metadata:
       m_Items: []
   - m_Id: 2206541953953792
-    m_Localized: Als erstes gesehene Person
+    m_Key: First seen person
     m_Metadata:
       m_Items: []
   - m_Id: 2206543556177920
-    m_Localized: "N\xE4chste Person"
+    m_Key: Nearest person
     m_Metadata:
       m_Items: []
   - m_Id: 2206544390844416
-    m_Localized: "Person mit der gr\xF6\xDFten Reichweite"
+    m_Key: Person with the longest range
     m_Metadata:
       m_Items: []
   - m_Id: 2207011464343552
-    m_Localized: Keine
+    m_Key: None
     m_Metadata:
       m_Items: []
   - m_Id: 2207012504530944
-    m_Localized: "Strategieraum schlie\xDFen?\\n(Nicht gespeicherte Daten gehen verloren.)"
+    m_Key: Confirm:Close Strategy Room
     m_Metadata:
       m_Items: []
   - m_Id: 2207013309837312
-    m_Localized: "Alle \xC4nderungen speichern?"
+    m_Key: Confirm:Save all changes?
     m_Metadata:
       m_Items: []
   - m_Id: 2207014039646208
-    m_Localized: "Herstellungspriorit\xE4t 1 ist deaktiviert. Bitte \xFCberpr\xFCfen
-      Sie die Einstellung \"Herstellung erlauben\"."
+    m_Key: Alert:Crafting Priority Not Valid
     m_Metadata:
       m_Items: []
   - m_Id: 2217236376383488
-    m_Localized: Meine Waffe
+    m_Key: My weapon
     m_Metadata:
       m_Items: []
   - m_Id: 2217237827612672
-    m_Localized: Waffe des Feindes
+    m_Key: Enemy's weapon
     m_Metadata:
       m_Items: []
   - m_Id: 2217238918131712
-    m_Localized: Meine Gesundheit
+    m_Key: My health
     m_Metadata:
       m_Items: []
   - m_Id: 2217240138674176
-    m_Localized: Jener Feind
+    m_Key: That enemy
     m_Metadata:
       m_Items: []
   - m_Id: 2217241258553344
-    m_Localized: Entfernung zum Feind
+    m_Key: Distance to enemy
     m_Metadata:
       m_Items: []
   - m_Id: 2218605367848960
-    m_Localized: Nahkampfwaffe
+    m_Key: Melee weapon
     m_Metadata:
       m_Items: []
   - m_Id: 2218606189932544
-    m_Localized: Fernkampfwaffe (mit Munition)
+    m_Key: Ranged weapon (with bullets)
     m_Metadata:
       m_Items: []
   - m_Id: 2218607007821824
-    m_Localized: Keine oder Fernkampfwaffe (ohne Munition)
+    m_Key: None or ranged weapon (without bullets)
     m_Metadata:
       m_Items: []
   - m_Id: 2218608010260480
-    m_Localized: Hat mich gesehen.
+    m_Key: Saw me.
     m_Metadata:
       m_Items: []
   - m_Id: 2219314020675584
-    m_Localized: "Ung\xFCltige Vorhersage"
+    m_Key: Invalid Prediction
     m_Metadata:
       m_Items: []
   - m_Id: 2219314939228160
-    m_Localized: "Mindesteinsatz betr\xE4gt 100 $."
+    m_Key: Alert:Minimum Bet
     m_Metadata:
       m_Items: []
   - m_Id: 2219315786477568
-    m_Localized: "Wette best\xE4tigen?"
+    m_Key: Confirm:Bet
     m_Metadata:
       m_Items: []
   - m_Id: 2219317690691584
-    m_Localized: "Wette \xFCberspringen?"
+    m_Key: Confirm:Skip Bet
     m_Metadata:
       m_Items: []
   - m_Id: 2219320089833472
-    m_Localized: Es gibt leere Vorhersagefelder.
+    m_Key: Empty Prediction
     m_Metadata:
       m_Items: []
   - m_Id: 2219323407527936
-    m_Localized: Eine Person wurde mehrfach platziert.
+    m_Key: Duplicated Prediction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220595640594432
+    m_Key: End The Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220597318316032
+    m_Key: 'There are unassigned survivors:'
     m_Metadata:
       m_Items: []
   - m_Id: 2220598824071168
-    m_Localized: "F\xFCr heute im Battle Royale eingeteilter \xDCberlebender: {param0}"
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 2220595640594432
-    m_Localized: Tag beenden?{param0}
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 2220597318316032
-    m_Localized: "Es gibt nicht zugewiesene \xDCberlebende:"
+    m_Key: Alert:Scheduled Battle Royale Today
     m_Metadata:
       m_Items: []
   - m_Id: 2220600589873152
-    m_Localized: "Heute ist Battle-Royale-Tag. \xDCberspringen?"
+    m_Key: Today is a battle royale day. Skip it?
     m_Metadata:
       m_Items: []
   - m_Id: 2220602338897920
-    m_Localized: Ein Tag ist vergangen.
+    m_Key: Alert:A day has passed.
     m_Metadata:
       m_Items: []
   - m_Id: 2224273214730240
-    m_Localized: Fernkampfwaffe
+    m_Key: Ranged weapon
     m_Metadata:
       m_Items: []
   - m_Id: 2478171783491584
-    m_Localized: "Sammelbare Gegenst\xE4nde:"
+    m_Key: 'Lootable items:'
     m_Metadata:
       m_Items: []
   - m_Id: 2478173167611904
-    m_Localized: "W\xE4hle einen \xDCberlebenden f\xFCr das Battle Royale."
+    m_Key: Select a survivor to join the battle royale.
     m_Metadata:
       m_Items: []
   - m_Id: 2478174157467648
-    m_Localized: "Reservierungen sind bis Freitag m\xF6glich, Stornierungen am selben
-      Tag nicht erlaubt."
+    m_Key: Help:Reserve Battle Royale
     m_Metadata:
       m_Items: []
   - m_Id: 2478175491256320
-    m_Localized: Reservieren
+    m_Key: Reserve
     m_Metadata:
       m_Items: []
   - m_Id: 2478176929902592
-    m_Localized: Reservierung stornieren
+    m_Key: Cancel reservation
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Zum Battle Royale gehen?
+    m_Key: Confirm:Go Battle Royale
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
-    m_Localized: "F\xFCr die Meisterschaft kann nicht reserviert werden. Ein Sieg
-      in der Goldliga f\xFChrt automatisch zur Reservierung der Saisonmeisterschaft,
-      und ein Sieg dort zur Weltmeisterschaft."
+    m_Key: Alert:Reserve Championship
     m_Metadata:
       m_Items: []
   - m_Id: 2479578074902528
-    m_Localized: "W\xE4hle einen zu reservierenden \xDCberlebenden."
+    m_Key: Select a survivor to reserve.
     m_Metadata:
       m_Items: []
   - m_Id: 2479579412885504
-    m_Localized: "reservierter \xDCberlebender : {param0}"
+    m_Key: Reserved Survivor
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 2479581325488128
-    m_Localized: "Kein qualifizierter \xDCberlebender"
+    m_Key: No eligible survivor
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} ist f\xFCr ein anderes Match registriert. (Nur ein Match
-      gleichzeitig erlaubt, au\xDFer Meisterschaften.)"
+    m_Key: Alert:Already Resistered
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 2481303221497856
-    m_Localized: '{param0} ist verletzt. Trotzdem reservieren?'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 2481289275437056
-    m_Localized: "Dieser \xDCberlebende ist f\xFCr eine Meisterschaft reserviert.
-      Trotzdem reservieren?"
+    m_Key: Confirm:Reserve Who Reserved In Championship
     m_Metadata:
       m_Items: []
   - m_Id: 2481290374344704
-    m_Localized: Battle Royale reserviert.
+    m_Key: Alert:Battle royale reserved.
     m_Metadata:
       m_Items: []
   - m_Id: 2481291246759936
-    m_Localized: "Er kann nicht f\xFCr das Battle Royale reserviert werden.\\n(<color=red><i>Grund
-      : {param0}</i></color>)"
+    m_Key: Alert:Reserve Fail
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 4006784886435840
-    m_Localized: Kiste
+      m_Items: []
+  - m_Id: 2481303221497856
+    m_Key: Confirm:Reserve Battle Royale Who Have Injury
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006722185785344
+    m_Key: 'Remaining survivors:'
     m_Metadata:
       m_Items: []
   - m_Id: 4006778280407040
-    m_Localized: <color=red>{0}</color> wurde von <color=yellow>{1}</color> besiegt.
+    m_Key: Kill Message
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
-  - m_Id: 4006722185785344
-    m_Localized: "Verbleibende \xDCberlebende:"
+      m_Items: []
+  - m_Id: 4006784886435840
+    m_Key: Box
     m_Metadata:
       m_Items: []
   - m_Id: 4007737786167296
-    m_Localized: "Wird gepl\xFCndert"
+    m_Key: Looting
     m_Metadata:
       m_Items: []
   - m_Id: 4007742873858048
-    m_Localized: Im Kampf
+    m_Key: In Battle
     m_Metadata:
       m_Items: []
   - m_Id: 4007746342547456
-    m_Localized: "Untersucht Ger\xE4uschquelle"
+    m_Key: Investigating noise
     m_Metadata:
       m_Items: []
   - m_Id: 4007747902828544
-    m_Localized: Kampfvobereitung
+    m_Key: Preparing for combat
     m_Metadata:
       m_Items: []
   - m_Id: 4007748624248832
-    m_Localized: Falle aufstellen
+    m_Key: Setting trap
     m_Metadata:
       m_Items: []
-  - m_Id: 4009762284433408
-    m_Localized: 'Herstellung: {0}'
-    m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
   - m_Id: 4009759021264896
-    m_Localized: Gegner verfolgend
+    m_Key: Chasing enemy
     m_Metadata:
       m_Items: []
   - m_Id: 4009760531214336
-    m_Localized: Auf der Flucht
+    m_Key: Fleeing
     m_Metadata:
       m_Items: []
   - m_Id: 4009761395240960
-    m_Localized: "Falle entsch\xE4rfen"
+    m_Key: Disarming trap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Key: 'Crafting:'
     m_Metadata:
       m_Items: []
   - m_Id: 4009763165237248
-    m_Localized: Am enchantieren
+    m_Key: Enchanting
     m_Metadata:
       m_Items: []
   - m_Id: 4011113273946112
-    m_Localized: "Dein \xDCberlebender ({0}) hat gewonnen!"
+    m_Key: Your survivor won!
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 4011114574180352
-    m_Localized: "Dein \xDCberlebender ({0}) wurde besiegt."
+    m_Key: Your survivor was defeated.
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 4011115551453184
-    m_Localized: "T\xF6tung"
+    m_Key: Kill
     m_Metadata:
       m_Items: []
   - m_Id: 4011116050575360
-    m_Localized: Gesamtschaden
+    m_Key: Total damage dealt
     m_Metadata:
       m_Items: []
   - m_Id: 4013401166114816
-    m_Localized: "Siegpr\xE4mie"
+    m_Key: Victory reward
     m_Metadata:
       m_Items: []
   - m_Id: 4013402768338944
-    m_Localized: "T\xF6tungspr\xE4mie"
+    m_Key: Kill reward
     m_Metadata:
       m_Items: []
   - m_Id: 4013403812720640
-    m_Localized: Transfusionskosten
+    m_Key: Blood transfusion cost
     m_Metadata:
       m_Items: []
   - m_Id: 4013404630609920
-    m_Localized: 1 $ pro 10 mL
+    m_Key: Help:Blood transfusion cost
     m_Metadata:
       m_Items: []
   - m_Id: 4013420254392320
-    m_Localized: Gesamte Behandlungskosten
+    m_Key: Total medical cost
     m_Metadata:
       m_Items: []
   - m_Id: 4014292761899008
-    m_Localized: '{0} gewinnt!'
+    m_Key: wins!
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 4014293986635776
-    m_Localized: Wettgewinn
+    m_Key: Betting payout
     m_Metadata:
       m_Items: []
   - m_Id: 4014295257509888
-    m_Localized: Gesamtgewinn/-verlust
+    m_Key: Net profit/loss
     m_Metadata:
       m_Items: []
   - m_Id: 4014296457080832
-    m_Localized: "{param0} ist f\xFCr das n\xE4chste {param1} geplant."
+    m_Key: Alert:Auto Reserve
     m_Metadata:
       m_Items: []
   - m_Id: 4014297795063808
-    m_Localized: "{param0} hat {param1} \xFCberwunden und {param2} erhalten."
+    m_Key: Alert:Overcame
     m_Metadata:
       m_Items: []
   - m_Id: 4015594363482112
-    m_Localized: "Der erwartete Wert der Wette ist gr\xF6\xDFer als 1."
+    m_Key: The expected value of the bet is greater than 1.
     m_Metadata:
       m_Items: []
   - m_Id: 4015597047836672
-    m_Localized: "Basiswerte sind auf 100 begrenzt, aber Traits k\xF6nnen \xFCberschreiten."
+    m_Key: Base stats cap at 100, but can exceed with traits.
     m_Metadata:
       m_Items: []
   - m_Id: 4016011147276288
-    m_Localized: "Wenn Training keine Werte erh\xF6ht, r\xFCste die Trainingsanlage
-      auf."
+    m_Key: If training doesn't raise stats, upgrade your training facility.
     m_Metadata:
       m_Items: []
   - m_Id: 4016164918849536
-    m_Localized: Autofokus
+    m_Key: Auto Focus
     m_Metadata:
       m_Items: []
   - m_Id: 4016167221522432
-    m_Localized: Inventar
+    m_Key: Inventory
     m_Metadata:
       m_Items: []
   - m_Id: 4016169792630784
-    m_Localized: Ergebnis
+    m_Key: Result
     m_Metadata:
       m_Items: []
   - m_Id: 4016172040777728
-    m_Localized: "\xDCberlebenszeit"
+    m_Key: Survival Time
     m_Metadata:
       m_Items: []
   - m_Id: 4016174972596224
-    m_Localized: Verlassen
+    m_Key: Exit
     m_Metadata:
       m_Items: []
   - m_Id: 4087018927222784
-    m_Localized: 'Reserviert: {param0}'
+    m_Key: 'Reserved:'
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 4087020722384896
-    m_Localized: Saisonmeisterschaft
+    m_Key: SeasonChampionship
     m_Metadata:
       m_Items: []
   - m_Id: 4087021989064704
-    m_Localized: Weltmeisterschaft
+    m_Key: WorldChampionship
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: Blutverlust
+    m_Key: Bleeding Amount
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
-    m_Localized: 'Sortieren nach:'
+    m_Key: 'Sort by:'
     m_Metadata:
       m_Items: []
   - m_Id: 4782426959704064
-    m_Localized: Gegenstandstyp
+    m_Key: Item Type
     m_Metadata:
       m_Items: []
   - m_Id: 4782428373184512
-    m_Localized: "Verf\xFCgbare Trainings variieren je nach Verletzung."
+    m_Key: Available training varies depending on injuries.
     m_Metadata:
       m_Items: []
   - m_Id: 4785900300595200
-    m_Localized: 'Gespeicherte Zeit:'
+    m_Key: 'Saved Time:'
     m_Metadata:
       m_Items: []
   - m_Id: 4785900787134464
-    m_Localized: Automatisch gespeichert
+    m_Key: Autosaved
     m_Metadata:
       m_Items: []
   - m_Id: 4785912375996416
-    m_Localized: Leerer Slot
+    m_Key: Empty Slot
     m_Metadata:
       m_Items: []
   - m_Id: 4785914213101568
-    m_Localized: "In diesem Slot sind bereits Daten vorhanden. \xDCberschreiben?"
+    m_Key: Confirm:Overwrite
     m_Metadata:
       m_Items: []
   - m_Id: 4785915161014272
-    m_Localized: "Diese Speicherdatei l\xF6schen?"
+    m_Key: Confirm:Delete Save Data
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: "Zum Titelbildschirm zur\xFCckkehren?\\n<i>(Nicht gespeicherte Daten
-      gehen verloren.)</i>"
+    m_Key: Confirm:Return to title
     m_Metadata:
       m_Items: []
   - m_Id: 5085882547236864
-    m_Localized: Starke Blutung
+    m_Key: Severe Bleeding
     m_Metadata:
       m_Items: []
   - m_Id: 5085884178821120
-    m_Localized: Sperrgebiet
+    m_Key: Restricted Area
     m_Metadata:
       m_Items: []
   - m_Id: 5085885500026880
-    m_Localized: Spiel gespeichert.
+    m_Key: Alert:Game Saved.
     m_Metadata:
       m_Items: []
   - m_Id: 5085886779289600
-    m_Localized: Spiel automatisch gespeichert.
+    m_Key: Alert:Game Autosaved.
     m_Metadata:
       m_Items: []
   - m_Id: 5085888150827008
-    m_Localized: "Bei einer Verletzungsschwere unter 1 ist nat\xFCrliche Heilung
-      m\xF6glich."
+    m_Key: If injury severity is below 1, natural recovery is possible.
     m_Metadata:
       m_Items: []
   - m_Id: 5085889379758080
-    m_Localized: Sprache
+    m_Key: Language
     m_Metadata:
       m_Items: []
   - m_Id: 5085890839375872
-    m_Localized: Optionen
+    m_Key: Options
     m_Metadata:
       m_Items: []
   - m_Id: 7593812567846912
-    m_Localized: Operation erfolgreich
+    m_Key: Surgery Successful
     m_Metadata:
       m_Items: []
   - m_Id: 7594071343820800
-    m_Localized: "Geplante Trainings pro \xDCberlebendem anzeigen"
+    m_Key: View scheduled training by survivor
     m_Metadata:
       m_Items: []
   - m_Id: 7594255456989184
-    m_Localized: "\xDCberlebende mit beiden H\xE4nden oder Augen verletzt k\xF6nnen
-      nicht f\xFCr K\xE4mpfe angemeldet werden. Bei Meisterschaften h\xE4ngt die
-      Teilnahme vom Tageszustand ab."
+    m_Key: Survivors with both hands or both eyes disabled cannot be scheduled for
+      matches. For championships, participation depends on their condition that day.
     m_Metadata:
       m_Items: []
   - m_Id: 7594256941772800
-    m_Localized: Je schwerer die Verletzung, desto langsamer die Heilung. Leichte
-      Verletzungen heilen schneller.
+    m_Key: The more severe the injury, the slower the healing. The milder the injury,
+      the faster the recovery.
     m_Metadata:
       m_Items: []
   - m_Id: 7599693611200512
-    m_Localized: Geplantes Training
+    m_Key: Scheduled Training
     m_Metadata:
       m_Items: []
   - m_Id: 9025630118670336
-    m_Localized: Bereits verabreicht
+    m_Key: Alert:Already administered
     m_Metadata:
       m_Items: []
   - m_Id: 9055475942879232
-    m_Localized: Operationsergebnis
+    m_Key: Surgery Result
     m_Metadata:
       m_Items: []
   - m_Id: 9104711485026304
-    m_Localized: Januar
+    m_Key: January
     m_Metadata:
       m_Items: []
   - m_Id: 9104718334324736
-    m_Localized: Februar
+    m_Key: February
     m_Metadata:
       m_Items: []
   - m_Id: 9104723711422464
-    m_Localized: "M\xE4rz"
+    m_Key: March
     m_Metadata:
       m_Items: []
   - m_Id: 9104726680989696
-    m_Localized: April
+    m_Key: April
     m_Metadata:
       m_Items: []
   - m_Id: 9104731953229824
-    m_Localized: Mai
+    m_Key: May
     m_Metadata:
       m_Items: []
   - m_Id: 9104733136023552
-    m_Localized: Juni
+    m_Key: June
     m_Metadata:
       m_Items: []
   - m_Id: 9104734272679936
-    m_Localized: Juli
+    m_Key: July
     m_Metadata:
       m_Items: []
   - m_Id: 9104735367393280
-    m_Localized: August
+    m_Key: August
     m_Metadata:
       m_Items: []
   - m_Id: 9104736696987648
-    m_Localized: September
+    m_Key: September
     m_Metadata:
       m_Items: []
   - m_Id: 9104737959473152
-    m_Localized: Oktober
+    m_Key: October
     m_Metadata:
       m_Items: []
   - m_Id: 9104739515559936
-    m_Localized: November
+    m_Key: November
     m_Metadata:
       m_Items: []
   - m_Id: 9104741264584704
-    m_Localized: Dezember
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9113966728507392
-    m_Localized: <color=blue>Sa</color>
-    m_Metadata:
-      m_Items: []
-  - m_Id: 9113968502697984
-    m_Localized: <color=red>So</color>
+    m_Key: December
     m_Metadata:
       m_Items: []
   - m_Id: 9113955655544832
-    m_Localized: Mo
+    m_Key: Mon
     m_Metadata:
       m_Items: []
   - m_Id: 9113957404569600
-    m_Localized: Di
+    m_Key: Tue
     m_Metadata:
       m_Items: []
   - m_Id: 9113958998405120
-    m_Localized: Mi
+    m_Key: Wed
     m_Metadata:
       m_Items: []
   - m_Id: 9113960625795072
-    m_Localized: Do
+    m_Key: Thu
     m_Metadata:
       m_Items: []
   - m_Id: 9113964169981952
-    m_Localized: Fr
+    m_Key: Fri
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113966728507392
+    m_Key: Sat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113968502697984
+    m_Key: Sun
     m_Metadata:
       m_Items: []
   - m_Id: 9113970310443008
-    m_Localized: '{2} {1} {0} ({3})'
+    m_Key: Date Format
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 9408636008329216
-    m_Localized: Laden erfolgreich
+    m_Key: Alert:Load Successful
     m_Metadata:
       m_Items: []
   - m_Id: 9408644191416320
-    m_Localized: Bronze
+    m_Key: Bronze
     m_Metadata:
       m_Items: []
   - m_Id: 9408647374893056
-    m_Localized: Silber
+    m_Key: Silver
     m_Metadata:
       m_Items: []
   - m_Id: 9408650487066624
-    m_Localized: Gold
+    m_Key: Gold
     m_Metadata:
       m_Items: []
   - m_Id: 9409849533722624
-    m_Localized: Bronze-Liga
+    m_Key: BronzeLeague
     m_Metadata:
       m_Items: []
   - m_Id: 9409851412770816
-    m_Localized: Silber-Liga
+    m_Key: SilverLeague
     m_Metadata:
       m_Items: []
   - m_Id: 9409860598296576
-    m_Localized: Gold-Liga
+    m_Key: GoldLeague
     m_Metadata:
       m_Items: []
   - m_Id: 9409870513631232
-    m_Localized: Nahkampf-Liga
+    m_Key: MeleeLeague
     m_Metadata:
       m_Items: []
   - m_Id: 9409873973932032
-    m_Localized: Fernkampf-Liga
+    m_Key: RangeLeague
     m_Metadata:
       m_Items: []
   - m_Id: 9409903250173952
-    m_Localized: Handwerksliga
+    m_Key: CraftingLeague
     m_Metadata:
       m_Items: []
   - m_Id: 14107829897588736
-    m_Localized: Gesamtwerte
+    m_Key: Stat Total
     m_Metadata:
       m_Items: []
   - m_Id: 14169095227895808
-    m_Localized: Battle Royale verlassen
+    m_Key: Exit Battle Royale
     m_Metadata:
       m_Items: []
   - m_Id: 14169112638451712
-    m_Localized: "M\xF6chten Sie den Battle Royale wirklich verlassen?"
+    m_Key: Confirm:Exit Battle Royale
     m_Metadata:
       m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7835753295874359320
   references:
     version: 2
     RefIds:
-    - rid: 7835753295874359338
-      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+    - rid: 7835753295874359320
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000
+        m_CustomEpoch: 1749103872408

@@ -120,7 +120,7 @@ public class Strategy : MonoBehaviour
             andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
             notValids[i].SetActive(false);
             variable1s[i].ClearOptions();
-            variable1s[i].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "My weapon").GetLocalizedString(), new LocalizedString("Table", "Enemy's weapon").GetLocalizedString(), new LocalizedString("Table", "My health").GetLocalizedString(), new LocalizedString("Table", "That enemy").GetLocalizedString(), new LocalizedString("Table", "Distance to enemy").GetLocalizedString() }));
+            variable1s[i].AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "My weapon").GetLocalizedString(), new LocalizedString("Basic", "Enemy's weapon").GetLocalizedString(), new LocalizedString("Basic", "My health").GetLocalizedString(), new LocalizedString("Basic", "That enemy").GetLocalizedString(), new LocalizedString("Basic", "Distance to enemy").GetLocalizedString() }));
             OnVariable1Changed(i);
 
             andOrs[i].onValueChanged.AddListener((value) => hasChanged = true);
@@ -175,13 +175,13 @@ public class Strategy : MonoBehaviour
         {
             case 0: // My weapon
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Melee weapon").GetLocalizedString(), new LocalizedString("Table", "Ranged weapon (with bullets)").GetLocalizedString(), new LocalizedString("Table", "None or ranged weapon (without bullets)").GetLocalizedString() }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Melee weapon").GetLocalizedString(), new LocalizedString("Basic", "Ranged weapon (with bullets)").GetLocalizedString(), new LocalizedString("Basic", "None or ranged weapon (without bullets)").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
             case 1: // The enemy's weapon
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Melee weapon").GetLocalizedString(), new LocalizedString("Table", "Ranged weapon").GetLocalizedString(), new LocalizedString("Table", "None").GetLocalizedString() }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Melee weapon").GetLocalizedString(), new LocalizedString("Basic", "Ranged weapon").GetLocalizedString(), new LocalizedString("Basic", "None").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;
@@ -193,7 +193,7 @@ public class Strategy : MonoBehaviour
                 break;
             case 3: // The enemy
                 operators[conditionNumber].AddOptions(new List<string>(new string[] { "is", "is not" }));
-                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Table", "Saw me.").GetLocalizedString() }));
+                variable2s[conditionNumber].AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Saw me.").GetLocalizedString() }));
                 variable2s[conditionNumber].gameObject.SetActive(true);
                 inputFieldsGameObject[conditionNumber].SetActive(false);
                 break;

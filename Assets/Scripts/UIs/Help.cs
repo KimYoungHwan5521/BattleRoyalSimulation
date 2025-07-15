@@ -49,7 +49,7 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void SetDescriptionWithKey(string key, params string[] vars)
     {
         raw = true;
-        var localizedString = new LocalizedString("Table", key);
+        var localizedString = new LocalizedString("Basic", key);
         switch (vars.Length)
         {
             case 0:
@@ -90,22 +90,22 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         description += item switch
         {
             ItemManager.Items.NotValid => throw new System.NotImplementedException(),
-            ItemManager.Items.Knife => $"\n{new LocalizedString("Table", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 30",
-            ItemManager.Items.Dagger => $"\n{new LocalizedString("Table", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 40",
-            ItemManager.Items.Bat => $"\n{new LocalizedString("Table", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 35",
-            ItemManager.Items.LongSword => $"\n{new LocalizedString("Table", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 50",
-            ItemManager.Items.Shovel => $"\n{new LocalizedString("Table", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 45",
+            ItemManager.Items.Knife => $"\n{new LocalizedString("Basic", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 30",
+            ItemManager.Items.Dagger => $"\n{new LocalizedString("Basic", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 40",
+            ItemManager.Items.Bat => $"\n{new LocalizedString("Basic", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 35",
+            ItemManager.Items.LongSword => $"\n{new LocalizedString("Basic", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 50",
+            ItemManager.Items.Shovel => $"\n{new LocalizedString("Basic", "Melee weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 45",
             ItemManager.Items.Knife_Enchanted => "",
             ItemManager.Items.Dagger_Enchanted => "",
             ItemManager.Items.LongSword_Enchanted => "",
-            ItemManager.Items.Revolver => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 80\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 7",
-            ItemManager.Items.Pistol => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 17",
-            ItemManager.Items.AssaultRifle => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 110\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 50\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 30",
-            ItemManager.Items.SubMachineGun => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 25\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 30",
-            ItemManager.Items.ShotGun => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40x12\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 4",
-            ItemManager.Items.SniperRifle => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 200\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 90\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 5",
-            ItemManager.Items.Bazooka => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 200\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 1",
-            ItemManager.Items.LASER => $"\n{new LocalizedString("Table", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 100\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 45\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : ¡Ä",
+            ItemManager.Items.Revolver => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 80\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 7",
+            ItemManager.Items.Pistol => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 17",
+            ItemManager.Items.AssaultRifle => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 110\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 50\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 30",
+            ItemManager.Items.SubMachineGun => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 25\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 30",
+            ItemManager.Items.ShotGun => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 40x12\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 20\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 4",
+            ItemManager.Items.SniperRifle => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 200\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 90\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 5",
+            ItemManager.Items.Bazooka => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Max Damage").GetLocalizedString()} : 200\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 40\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : 1",
+            ItemManager.Items.LASER => $"\n{new LocalizedString("Basic", "Ranged weapon").GetLocalizedString()}\n{new LocalizedString("Item", "Damage").GetLocalizedString()} : 100\n{new LocalizedString("Item", "Attack Range").GetLocalizedString()} : 45\n{new LocalizedString("Item", "Magazine Capacity").GetLocalizedString()} : ¡Ä",
             ItemManager.Items.Bullet_Revolver => $"\n{new LocalizedString("Item", "Bullet").GetLocalizedString()}",
             ItemManager.Items.Bullet_Pistol => $"\n{new LocalizedString("Item", "Bullet").GetLocalizedString()}",
             ItemManager.Items.Bullet_AssaultRifle => $"\n{new LocalizedString("Item", "Bullet").GetLocalizedString()}",

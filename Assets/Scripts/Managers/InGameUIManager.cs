@@ -276,7 +276,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetLeftSurvivors(int survivorsCount)
     {
-        leftSurvivors.text = $"{new LocalizedString("Table", "Remaining survivors:").GetLocalizedString()} {survivorsCount}";
+        leftSurvivors.text = $"{new LocalizedString("Basic", "Remaining survivors:").GetLocalizedString()} {survivorsCount}";
     }
 
     public void SetPredictionUI()
@@ -334,7 +334,7 @@ public class InGameUIManager : MonoBehaviour
     public void ShowKillLog(string victim, string cause)
     {
         TextMeshProUGUI killLog = PoolManager.Spawn(ResourceEnum.Prefab.KillLog, display).GetComponentInChildren<TextMeshProUGUI>();
-        LocalizedString lsMessage = new("Table", "Kill Message")
+        LocalizedString lsMessage = new("Basic", "Kill Message")
         {
             Arguments = new[] { victim, cause }
         };
@@ -433,7 +433,7 @@ public class InGameUIManager : MonoBehaviour
             //Box selectedBox = selectedObject as Box;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
             selectedObjectImage.color = Color.white;
-            selectedObjectName.text = new LocalizedString("Table", "Box").GetLocalizedString();
+            selectedObjectName.text = new LocalizedString("Basic", "Box").GetLocalizedString();
             selectedSurvivorsHealthBar.SetActive(false);
             selectedSurvivorBleedingBar.SetActive(false);
             selectedObjectsCurrentWeapon.SetActive(false);
@@ -684,16 +684,16 @@ public class InGameUIManager : MonoBehaviour
         if (survivor != selectedObject) return;
         selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
         {
-            Survivor.Status.Farming or Survivor.Status.FarmingBox => new LocalizedString("Table", "Looting").GetLocalizedString(),
-            Survivor.Status.InCombat => new LocalizedString("Table", "In Battle").GetLocalizedString(),
-            Survivor.Status.InvestigateThreateningSound => new LocalizedString("Table", "Investigating noise").GetLocalizedString(),
-            Survivor.Status.Maintain => new LocalizedString("Table", "Preparing for combat").GetLocalizedString(),
-            Survivor.Status.Trapping => new LocalizedString("Table", "Setting trap").GetLocalizedString(),
-            Survivor.Status.TraceEnemy => new LocalizedString("Table", "Chasing enemy").GetLocalizedString(),
-            Survivor.Status.RunAway => new LocalizedString("Table", "Fleeing").GetLocalizedString(),
-            Survivor.Status.TrapDisarming => new LocalizedString("Table", "Disarming trap").GetLocalizedString(),
-            Survivor.Status.Crafting => new LocalizedString("Table", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
-            Survivor.Status.Enchanting => new LocalizedString("Table", "Enchanting").GetLocalizedString(),
+            Survivor.Status.Farming or Survivor.Status.FarmingBox => new LocalizedString("Basic", "Looting").GetLocalizedString(),
+            Survivor.Status.InCombat => new LocalizedString("Basic", "In Battle").GetLocalizedString(),
+            Survivor.Status.InvestigateThreateningSound => new LocalizedString("Basic", "Investigating noise").GetLocalizedString(),
+            Survivor.Status.Maintain => new LocalizedString("Basic", "Preparing for combat").GetLocalizedString(),
+            Survivor.Status.Trapping => new LocalizedString("Basic", "Setting trap").GetLocalizedString(),
+            Survivor.Status.TraceEnemy => new LocalizedString("Basic", "Chasing enemy").GetLocalizedString(),
+            Survivor.Status.RunAway => new LocalizedString("Basic", "Fleeing").GetLocalizedString(),
+            Survivor.Status.TrapDisarming => new LocalizedString("Basic", "Disarming trap").GetLocalizedString(),
+            Survivor.Status.Crafting => new LocalizedString("Basic", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
+            Survivor.Status.Enchanting => new LocalizedString("Basic", "Enchanting").GetLocalizedString(),
             _ => survivor.CurrentStatus.ToString()
         };
         GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());
@@ -731,18 +731,18 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentWeaponText.text = new LocalizedString("Table", "None").GetLocalizedString();
+                selectedObjectsCurrentWeaponText.text = new LocalizedString("Basic", "None").GetLocalizedString();
             }
 
             if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
                 selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
             else selectedObjectsCurrentHelmetImage.sprite = null;
-            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : new LocalizedString("Table", "None").GetLocalizedString();
+            selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : new LocalizedString("Basic", "None").GetLocalizedString();
 
             if (selectedSurvivor.CurrentVest != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
                 selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
             else selectedObjectsCurrentVestImage.sprite = null;
-            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : new LocalizedString("Table", "None").GetLocalizedString();
+            selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : new LocalizedString("Basic", "None").GetLocalizedString();
 
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);
@@ -846,7 +846,7 @@ public class InGameUIManager : MonoBehaviour
     void OnLocaleChanged(Locale newLocale)
     {
         if (GameManager.Instance.BattleRoyaleManager == null) return;
-        leftSurvivors.text = $"{new LocalizedString("Table", "Remaining survivors:").GetLocalizedString()} {GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count}";
+        leftSurvivors.text = $"{new LocalizedString("Basic", "Remaining survivors:").GetLocalizedString()} {GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count}";
         if(selectedObject != null) SetSelectedObjectInfoOnce();
     }
 
