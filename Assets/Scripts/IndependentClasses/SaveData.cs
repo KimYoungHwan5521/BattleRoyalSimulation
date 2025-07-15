@@ -42,6 +42,7 @@ public class SurvivorSaveData
     public int shooting;
     public int knowledge;
     public int luck;
+    public int crafting;
     public List<Characteristic> characteristics;
     public int price;
     public Tier tier;

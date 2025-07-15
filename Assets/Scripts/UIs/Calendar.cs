@@ -103,6 +103,7 @@ public class Calendar : CustomObject
             {
                 outGameUIManager.SurvivorsRecovery();
                 outGameUIManager.ResetHireMarket();
+                outGameUIManager.HideEndTheWeekend(today % 7 > 4);
                 if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
 

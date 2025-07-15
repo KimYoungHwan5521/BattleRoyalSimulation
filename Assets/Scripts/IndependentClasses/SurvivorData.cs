@@ -20,6 +20,7 @@ public class SurvivorData
     public int _shooting;
     public int _knowledge;
     public int _luck;
+    public int _crafting;
 
     public int Strength
     {
@@ -92,7 +93,7 @@ public class SurvivorData
 
     public int StatTotal => Strength + Agility + Fighting + Shooting + Knowledge;
 
-    public float Luck
+    public int Luck
     {
         get
         {
@@ -103,6 +104,16 @@ public class SurvivorData
             return result;
         }
     }
+
+    public int Crafting
+    {
+        get { return _crafting; }
+        set
+        {
+            _crafting = Math.Min(value, 100);
+        }
+    }
+
     public List<Characteristic> characteristics = new();
     public int price;
 
@@ -196,6 +207,7 @@ public class SurvivorData
         _shooting = shooting;
         _knowledge = knowledge;
         _luck = 50;
+        _crafting = 0;
         this.price = price;
         this.tier = tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
@@ -222,6 +234,7 @@ public class SurvivorData
 
     public void IncreaseStats(int strength, int agility, int fighting, int shooting, int knowledge)
     {
+        if (_strength + strength > 100 || _agility + agility > 100 || _fighting + fighting > 100 || _shooting + shooting > 100 || _knowledge + knowledge > 100) return;
         _strength += strength;
         _agility += agility;
         _fighting += fighting;

@@ -15,6 +15,7 @@ public static class SaveManager
             shooting = data._shooting,
             knowledge = data._knowledge,
             luck = data._luck,
+            crafting = data._crafting,
             characteristics = data.characteristics,
             price = data.price,
             tier = data.tier,
@@ -57,6 +58,7 @@ public static class SaveManager
         {
             id = saveData.id,
             _luck = saveData.luck,
+            _crafting = saveData.crafting,
             characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,
             reservedDate = saveData.reservedDate,

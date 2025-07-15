@@ -2058,6 +2058,9 @@ public class Survivor : CustomObject
                 else if (item is BulletproofVest) isEquipable = 2;
                     GetItem(item);
             }
+
+            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
+            if (chanceToIncreaseStat < currentCrafting.requiredKnowledge * 0.1f) linkedSurvivorData.Crafting++;
             currentCrafting = null;
             craftables.Clear();
             if (isEquipable == 0) Equip((Weapon)item);
@@ -2404,6 +2407,8 @@ public class Survivor : CustomObject
             {
                 animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
                 animator.SetTrigger("Fire");
+                float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
+                if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime) linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
                 curShotTime = CurrentWeaponAsRangedWeapon.ShotCoolTime;
             }
         }
@@ -2814,11 +2819,14 @@ public class Survivor : CustomObject
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
             float criticalRate = 0.1f * coefficient * attacker.luck / luck;
 
+            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
             if (probability < avoidRate)
             {
                 // 회피
                 damage = 0;
                 hitSound = "avoid, 1";
+
+                if (chanceToIncreaseStat < 0.1f) linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
             }
             else if (probability < avoidRate + defendRate)
             {
@@ -2826,7 +2834,9 @@ public class Survivor : CustomObject
                 damage *= 0.5f;
                 damagePart = InjurySiteMajor.Arms;
                 hitSound = "guard, 2";
-            }
+
+				if (chanceToIncreaseStat < 0.05f) linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+			}
             else if (probability > 1 - criticalRate)
             {
                 // 치명타
@@ -2834,8 +2844,15 @@ public class Survivor : CustomObject
                 if (damageType == DamageType.Strike) damagePart = InjurySiteMajor.Head;
                 else damagePart = InjurySiteMajor.Torso;
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
-            }
-            else hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+
+				if (chanceToIncreaseStat < 0.2f) attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+			}
+            else
+            {
+                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+
+				if (chanceToIncreaseStat < 0.05f) attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+			}
         }
 
         if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Armor;
@@ -4004,7 +4021,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
-        craftingSpeed = injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed;
+        craftingSpeed = (1 + 0.01f * linkedSurvivorData.Crafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed;
         animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
     }
@@ -4021,16 +4038,24 @@ public class Survivor : CustomObject
                 if (currentWeapon.NeedHand == NeedHand.OneOrTwoHand && (rightHandDisabled || leftHandDisabled)) damage *= 0.7f;
                 TargetEnemy.TakeDamage(this, damage);
             }
-            else PlaySFX("avoid, 1", this);
+            else
+            {
+                PlaySFX("avoid, 1", this);
+                if (!TargetEnemy.inSightEnemies.Contains(this)) TargetEnemy.inSightEnemies.Add(this);
+            }
         }
         else
         {
             if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < attackRange)
             {
                 TargetEnemy.TakeDamage(this, attackDamage);
+			}
+            else
+            {
+                PlaySFX("avoid, 1", this);
+                if (!TargetEnemy.inSightEnemies.Contains(this)) TargetEnemy.inSightEnemies.Add(this);
             }
-            else PlaySFX("avoid, 1", this);
-        }
+		}
     }
 
     void AE_Reload()

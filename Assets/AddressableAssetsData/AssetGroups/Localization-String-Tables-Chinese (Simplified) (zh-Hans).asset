@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: aad2bbcc8d2ad434a9ad5a5273515944
   m_SerializeEntries:
   - m_GUID: a87af0b9d8b42ed409b1bc2fe2534da5
-    m_Address: Table_zh-Hans
+    m_Address: Basic_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

@@ -113,7 +113,8 @@ public class InGameUIManager : MonoBehaviour
     Image selectedObjectsCurrentVestImage;
     TextMeshProUGUI selectedObjectsCurrentVestText;
 
-    [SerializeField] GameObject[] selectedObjectsItems;
+    [SerializeField] Transform selectedObjectsInventory;
+    GameObject[] selectedObjectsItems;
 
     [Header("Injuries")]
     [SerializeField] GameObject injuriesTab;
@@ -175,6 +176,9 @@ public class InGameUIManager : MonoBehaviour
         selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
         selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentInChildren<Image>();
         selectedObjectsCurrentVestText = selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>();
+
+        selectedObjectsItems = new GameObject[selectedObjectsInventory.childCount];
+        for (int i = 0; i < selectedObjectsInventory.childCount; i++) selectedObjectsItems[i] = selectedObjectsInventory.GetChild(i).gameObject;
 
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
