@@ -194,7 +194,7 @@ Transform:
   - {fileID: 1989667517801575334}
   - {fileID: 6231467115546715850}
   - {fileID: 2703554746571323208}
-  - {fileID: 4702986551874004496}
+  - {fileID: 796147954625984767}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8018354410924787301
@@ -264,6 +264,7 @@ MonoBehaviour:
   farmingSections: []
   garbageObjects: []
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
@@ -25613,7 +25614,7 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
---- !u!1001 &5418904319852730043
+--- !u!1001 &106944848869181524
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -25670,8 +25671,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
---- !u!4 &4702986551874004496 stripped
+--- !u!4 &796147954625984767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 754227169252962475, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
-  m_PrefabInstance: {fileID: 5418904319852730043}
+  m_PrefabInstance: {fileID: 106944848869181524}
   m_PrefabAsset: {fileID: 0}
