@@ -30,8 +30,13 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.MuscleDeficiency)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Strongman)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Powerhouse)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Assassin)) result -= 10;
+            if (HaveCharacteristic(CharacteristicType.Fatty)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Soldier)) result += 5;
+            if (HaveCharacteristic(CharacteristicType.Luchador)) result += 10;
             if (HaveCharacteristic(CharacteristicType.Giant)) result = (int)(result * 1.3f);
             else if (HaveCharacteristic(CharacteristicType.Dwarf)) result = (int)(result * 0.7f);
+            else if (HaveCharacteristic(CharacteristicType.BigMan)) result = (int)(result * 1.15f);
             if (ClutchThePerformance) result += 10;
             else if(ChockingUnderPressure) result -= 10;
             return Mathf.Max(result, 0);
@@ -44,7 +49,10 @@ public class SurvivorData
             int result = _agility;
             if (HaveCharacteristic(CharacteristicType.Heavyfooted)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Lightfooted)) result += 10;
-            if (HaveCharacteristic(CharacteristicType.Assassin)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Assassin)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Fatty)) result -= 10;
+            if (HaveCharacteristic(CharacteristicType.Soldier)) result += 5;
+            if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
             return Mathf.Max(result, 0);
@@ -58,6 +66,9 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.ClumsyFighter)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Brawler)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Fighter)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Boxer)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
             return Mathf.Max(result, 0);
@@ -72,6 +83,7 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.PoorAim)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Sniper)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Sharpshooter)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
             return Mathf.Max(result, 0);

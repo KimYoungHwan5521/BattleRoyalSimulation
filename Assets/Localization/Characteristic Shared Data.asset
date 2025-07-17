@@ -295,6 +295,54 @@ MonoBehaviour:
     m_Key: Help:Engineer
     m_Metadata:
       m_Items: []
+  - m_Id: 13383792842043392
+    m_Key: BigMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Key: Help:BigMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Key: Fatty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Key: Soldier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Key: Boxer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Key: Luchador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Key: QuickDrawer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Key: Help:Fatty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Key: Help:Soldier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Key: Help:Boxer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Key: Help:Luchador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Key: Help:QuickDrawer
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: "Tamanho corporal, For\xE7a - 30%"
+    m_Localized: "Tamanho corporal, For\xE7a - 50%"
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: Agilidade + 20
+    m_Localized: "For\xE7a - 10, Agilidade + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -299,6 +299,55 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: "Velocidade de cria\xE7\xE3o + 60%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: "Grandalh\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: "Tamanho corporal, For\xE7a - 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: Gordo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: Soldado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: Pugilista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: Lutador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: "Saque r\xE1pido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: "For\xE7a + 10, Agilidade - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: "For\xE7a + 5, Agilidade + 5, Combate corpo a corpo + 10, Tiro +
+      10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: Agilidade + 10, Combate corpo a corpo + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: "For\xE7a + 10, Agilidade + 5, Combate corpo a corpo + 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: Atraso no disparo -, Tempo de recarregamento -
     m_Metadata:
       m_Items: []
   references:

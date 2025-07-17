@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: "\u4F53\u683C, \u529B - 30%"
+    m_Localized: "\u4F53\u683C, \u529B - 50%"
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "\u654F\u6377 + 20"
+    m_Localized: "\u529B - 10, \u654F\u6377 + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -301,6 +301,56 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: "\u88FD\u4F5C\u901F\u5EA6 + 60%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: "\u30D3\u30C3\u30B0\u30DE\u30F3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: "\u4F53\u683C, \u529B - 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: "\u30C7\u30D6"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: "\u5175\u58EB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: "\u30DC\u30AF\u30B5\u30FC"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: "\u30EB\u30C1\u30E3\u30C9\u30FC\u30EB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: "\u30AF\u30A4\u30C3\u30AF\u30C9\u30ED\u30A6"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: "\u529B + 10, \u654F\u6377 - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: "\u529B + 5, \u654F\u6377 + 5, \u683C\u95D8 + 10, \u5C04\u6483 +
+      10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: "\u654F\u6377 + 10, \u683C\u95D8 + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: "\u529B + 10, \u654F\u6377 + 5, \u683C\u95D8 + 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: "\u5C04\u6483\u30C7\u30A3\u30EC\u30A4 -, \u30EA\u30ED\u30FC\u30C9\u6642\u9593
+      -"
     m_Metadata:
       m_Items: []
   references:

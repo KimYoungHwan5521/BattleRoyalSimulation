@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: "\u4F53\u578B, \u529B\u91CF - 30%"
+    m_Localized: "\u4F53\u578B, \u529B\u91CF - 50%"
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "\u654F\u6377 + 20"
+    m_Localized: "\u529B\u91CF - 10, \u654F\u6377 + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -300,6 +300,55 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: "\u5236\u4F5C\u901F\u5EA6 + 60%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: "\u5927\u5757\u5934"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: "\u4F53\u578B, \u529B\u91CF + 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: "\u80D6\u5B50"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: "\u58EB\u5175"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: "\u62F3\u51FB\u624B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: "\u6454\u89D2\u624B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: "\u5FEB\u67AA\u624B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: "\u529B\u91CF + 10, \u654F\u6377 - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: "\u529B\u91CF + 5, \u654F\u6377 + 5, \u8FD1\u6218 + 10, \u5C04\u51FB
+      + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: "\u654F\u6377 + 10, \u8FD1\u6218 + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: "\u529B\u91CF + 10, \u654F\u6377 + 5, \u8FD1\u6218 + 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: "\u5C04\u51FB\u5EF6\u8FDF -, \u88C5\u5F39\u65F6\u95F4 -"
     m_Metadata:
       m_Items: []
   references:

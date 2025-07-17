@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: "Tama\xF1o corporal, Fuerza - 30%"
+    m_Localized: "Tama\xF1o corporal, Fuerza - 50%"
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: Agilidad + 20
+    m_Localized: Fuerza - 10, Agilidad + 20
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -299,6 +299,55 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: "Velocidad de creaci\xF3n + 60%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: "Grandull\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: "Tama\xF1o corporal, Fuerza - 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: Gordo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: Soldado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: Boxeador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: Luchador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: "Pistolero r\xE1pido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: Fuerza + 10, Agilidad - 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: Fuerza + 5, Agilidad + 5, Combate cuerpo a cuerpo + 10, Disparo
+      + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: Agilidad + 10, Combate cuerpo a cuerpo + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: Fuerza + 10, Agilidad + 5, Combate cuerpo a cuerpo + 5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: Retardo de disparo -, Tiempo de recarga -
     m_Metadata:
       m_Items: []
   references:

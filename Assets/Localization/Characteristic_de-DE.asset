@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: "K\xF6rpergr\xF6\xDFe, St\xE4rke - 30%"
+    m_Localized: "K\xF6rpergr\xF6\xDFe, St\xE4rke - 50%"
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: Beweglichkeit + 20
+    m_Localized: "St\xE4rke - 10, Beweglichkeit + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -299,6 +299,55 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: Herstellgeschwindigkeit + 60%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: "Gro\xDFer Kerl"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: "K\xF6rpergr\xF6\xDFe, St\xE4rke - 15%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: Fettsack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: Soldat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: Boxer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: Luchador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: Schnellzieher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: "St\xE4rke + 10, Beweglichkeit - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: "St\xE4rke + 5, Beweglichkeit + 5, Nahkampf + 10, Schie\xDFen +
+      10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: Beweglichkeit + 10, Nahkampf + 10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: "St\xE4rke + 10, Beweglichkeit + 5, Nahkampf + 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: "Schussverz\xF6gerung -, Nachladezeit -"
     m_Metadata:
       m_Items: []
   references:

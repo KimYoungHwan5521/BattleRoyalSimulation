@@ -30,6 +30,7 @@ public enum CharacteristicType
     Genius,
     Giant,
     Dwarf,
+    BigMan,
     CarefulShooter,
     Fragile,
     Sturdy,
@@ -42,6 +43,11 @@ public enum CharacteristicType
     ClumsyHand,
     Dexterous,
     Engineer,
+    Fatty,
+    Soldier,
+    Boxer,
+    Luchador,
+    QuickDrawer,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -81,8 +87,9 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.BadHearing, CharacteristicRarity.Common, 0, CharacteristicType.KeenHearing));
         characteristics.Add(new(CharacteristicType.ClutchPerformance, CharacteristicRarity.Rare, 0, CharacteristicType.ChokingUnderPressure));
         characteristics.Add(new(CharacteristicType.ChokingUnderPressure, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClutchPerformance));
-        characteristics.Add(new(CharacteristicType.Giant, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dwarf));
-        characteristics.Add(new(CharacteristicType.Dwarf, CharacteristicRarity.Uncommon, 0, CharacteristicType.Giant));
+        characteristics.Add(new(CharacteristicType.Giant, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dwarf, CharacteristicType.BigMan));
+        characteristics.Add(new(CharacteristicType.Dwarf, CharacteristicRarity.Uncommon, 0, CharacteristicType.Giant, CharacteristicType.BigMan));
+        characteristics.Add(new(CharacteristicType.BigMan, CharacteristicRarity.Common, 0, CharacteristicType.Giant, CharacteristicType.Dwarf));
         characteristics.Add(new(CharacteristicType.MuscleDeficiency, CharacteristicRarity.Common, 0, CharacteristicType.Strongman, CharacteristicType.Powerhouse));
         characteristics.Add(new(CharacteristicType.Strongman, CharacteristicRarity.Common, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Powerhouse));
         characteristics.Add(new(CharacteristicType.Powerhouse, CharacteristicRarity.Uncommon, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman));
@@ -110,6 +117,11 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.ClumsyHand, CharacteristicRarity.Common, 0, CharacteristicType.Dexterous, CharacteristicType.Engineer));
         characteristics.Add(new(CharacteristicType.Dexterous, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyHand, CharacteristicType.Engineer));
         characteristics.Add(new(CharacteristicType.Engineer, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous));
+        characteristics.Add(new(CharacteristicType.Fatty, CharacteristicRarity.Common, 0));
+        characteristics.Add(new(CharacteristicType.Soldier, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.Boxer, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.Luchador, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.QuickDrawer, CharacteristicRarity.Uncommon, 0, CharacteristicType.CarefulShooter));
         yield return null;
     }
 

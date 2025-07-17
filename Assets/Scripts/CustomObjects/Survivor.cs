@@ -433,6 +433,7 @@ public class Survivor : CustomObject
     [SerializeField] float aimDelay = 1.5f;
     [SerializeField] float curAimDelay;
     [SerializeField] float curShotTime;
+    [SerializeField] float reloadSpeed = 1;
     #endregion
     #region Look
     [Header("Look")]
@@ -2421,6 +2422,7 @@ public class Survivor : CustomObject
         animator.SetBool("Crafting", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
+        animator.SetFloat("ReloadSpeed", reloadSpeed);
         curAimDelay = 0;
     }
     #endregion
@@ -3905,6 +3907,7 @@ public class Survivor : CustomObject
     int characteristicCorrection_Knowledge = 0;
     float characteristicCorrection_AimTime = 0;
     int characteristicCorrection_AimErrorRange = 0;
+    float characteristicCorrection_ReloadSpeed = 1;
     float characteristicCorrection_NatualHemostasis = 1;
     float characteristicCorrection_BloodRegeneration = 1;
     float characteristicCorrection_HpRegeneration = 1;
@@ -3946,14 +3949,24 @@ public class Survivor : CustomObject
                     foreach(Transform child in transform.Find("Head")) child.localScale = new(0.77f, 0.77f);
                     break;
                 case CharacteristicType.Dwarf:
-                    transform.localScale = new(0.7f, 0.7f);
-                    foreach (Transform child in rightHand.transform) child.localScale = new(1.43f, 1.43f);
-                    foreach (Transform child in leftHand.transform) child.localScale = new(1.43f, 1.43f);
-                    foreach (Transform child in transform.Find("Head")) child.localScale = new(1.43f, 1.43f);
+                    transform.localScale = new(0.5f, 0.5f);
+                    foreach (Transform child in rightHand.transform) child.localScale = new(2f, 2f);
+                    foreach (Transform child in leftHand.transform) child.localScale = new(2f, 2f);
+                    foreach (Transform child in transform.Find("Head")) child.localScale = new(2f, 2f);
+                    break;
+                case CharacteristicType.BigMan:
+                    transform.localScale = new(1.15f, 1.15f);
+                    foreach (Transform child in rightHand.transform) child.localScale = new(0.87f, 0.87f);
+                    foreach (Transform child in leftHand.transform) child.localScale = new(0.87f, 0.87f);
+                    foreach (Transform child in transform.Find("Head")) child.localScale = new(0.87f, 0.87f);
                     break;
                 case CharacteristicType.CarefulShooter:
                     characteristicCorrection_AimTime *= 2;
                     characteristicCorrection_AimErrorRange += 20;
+                    break;
+                case CharacteristicType.QuickDrawer:
+                    characteristicCorrection_AimTime *= 0.5f;
+                    characteristicCorrection_ReloadSpeed *= 2;
                     break;
                 case CharacteristicType.Fragile:
                     characteristicCorrection_NatualHemostasis *= 0.5f;
@@ -4000,6 +4013,7 @@ public class Survivor : CustomObject
         correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
         aimErrorRange = 20f / Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedShooting + characteristicCorrection_AimErrorRange, 1), 20));
         aimDelay = 1.5f * characteristicCorrection_AimTime;
+        reloadSpeed = characteristicCorrection_ReloadSpeed * characteristicCorrection_CraftingSpeed;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;
         hpRegeneration = characteristicCorrection_HpRegeneration;

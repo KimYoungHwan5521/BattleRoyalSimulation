@@ -187,7 +187,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2123914253234176
-    m_Localized: Taille corporelle, Force - 30%
+    m_Localized: Taille corporelle, Force - 50%
     m_Metadata:
       m_Items: []
   - m_Id: 2128013937930240
@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "Agilit\xE9 + 20"
+    m_Localized: "Force - 10, Agilit\xE9 + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -298,6 +298,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2169493243097088
     m_Localized: Vitesse de fabrication + 60%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13383792842043392
+    m_Localized: Gros costaud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384150976884736
+    m_Localized: Taille corporelle, Force - 15%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384548156502016
+    m_Localized: Grosse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384553445519360
+    m_Localized: Soldat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384555689472000
+    m_Localized: Boxeur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384557052620800
+    m_Localized: Luchador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13384563218247680
+    m_Localized: Tireur rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397051175399424
+    m_Localized: "Force + 10, Agilit\xE9 - 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052119117824
+    m_Localized: "Force + 5, Agilit\xE9 + 5, Combat rapproch\xE9 + 10, Tir + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397052903452672
+    m_Localized: "Agilit\xE9 + 10, Combat rapproch\xE9 + 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397053801033728
+    m_Localized: "Force + 10, Agilit\xE9 + 5, Combat rapproch\xE9 + 5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13397249872162816
+    m_Localized: "D\xE9lai de tir -, Temps de rechargement -"
     m_Metadata:
       m_Items: []
   references:
