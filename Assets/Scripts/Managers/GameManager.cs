@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
     {
         OutGameUIManager.ResetData();
         calendar.ResetData();
+        outGameUIManger.ChecklistBattleRoyale();
     }
 
     public IEnumerator BattleRoyaleStart()
@@ -277,6 +278,9 @@ public class GameManager : MonoBehaviour
         gameReady = true;
         title.title.SetActive(false);
         option.SetSaveButtonInteractable(true);
+
+        outGameUIManger.ChecklistTraining();
+        outGameUIManger.ChecklistBattleRoyale();
         OutGameUIManager.Alert("Alert:Load Successful");
     }
     #endregion

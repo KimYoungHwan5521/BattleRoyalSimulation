@@ -656,6 +656,41 @@ public class Calendar : CustomObject
         wantReserver.reservedDate = wantReserveDate;
         TurnPageCalendar(0);
         outGameUIManager.Alert("Alert:Battle royale reserved.");
+        outGameUIManager.ChecklistBattleRoyale();
+    }
+
+    // -1 : Not able, 0 : Injured but able, 1 : Able
+    public int CapableBattleRoyale(SurvivorData survivor, out string cause)
+    {
+        cause = "";
+        bool injured = false;
+        int eyeInjury = 0;
+        int handInjury = 0;
+        foreach (Injury injury in survivor.injuries)
+        {
+            if (injury.site == InjurySite.Organ && injury.degree >= 1)
+            {
+                cause = $"{new LocalizedString("Injury", "Organ").GetLocalizedString()} {new LocalizedString("Injury", "Rupture").GetLocalizedString()}";
+                return -1;
+            }
+            if (injury.site == InjurySite.LeftEye && injury.degree >= 1 || injury.site == InjurySite.RightEye && injury.degree >= 1) eyeInjury++;
+            if ((injury.site == InjurySite.LeftHand || injury.site == InjurySite.LeftArm) && injury.degree >= 1 || (injury.site == InjurySite.RightHand || injury.site == InjurySite.RightArm) && injury.degree >= 1) handInjury++;
+            if (eyeInjury >= 2)
+            {
+                cause = $"{new LocalizedString("Injury", "Blind in both eyes").GetLocalizedString()}";
+                return -1;
+            }
+            if (handInjury >= 2)
+            {
+                cause = $"{new LocalizedString("Injury", "Cannot use both hands").GetLocalizedString()}";
+                return -1;
+            }
+            if (injury.degree > 0)
+            {
+                injured = true;
+            }
+        }
+        return injured ? 0 : 1;
     }
 
     void AskAboutInjury()
@@ -663,39 +698,13 @@ public class Calendar : CustomObject
         bool availiable = true;
         bool injured = false;
         string cause = "";
-        int eyeInjury = 0;
-        int handInjury = 0;
-        foreach (Injury injury in wantReserver.injuries)
-        {
-            if (injury.site == InjurySite.Organ && injury.degree >= 1)
-            {
-                availiable = false;
-                cause = $"{new LocalizedString("Injury", "Organ").GetLocalizedString()} {new LocalizedString("Injury", "Rupture").GetLocalizedString()}";
-                break;
-            }
-            if (injury.site == InjurySite.LeftEye && injury.degree >= 1 || injury.site == InjurySite.RightEye && injury.degree >= 1) eyeInjury++;
-            if ((injury.site == InjurySite.LeftHand || injury.site == InjurySite.LeftArm) && injury.degree >= 1 || (injury.site == InjurySite.RightHand || injury.site == InjurySite.RightArm) && injury.degree >= 1) handInjury++;
-            if ( eyeInjury >= 2 )
-            {
-                availiable = false;
-                cause = $"{new LocalizedString("Injury", "Blind in both eyes").GetLocalizedString()}";
-                break;
-            }
-            if (handInjury >= 2)
-            {
-                availiable = false;
-                cause = $"{new LocalizedString("Injury", "Cannot use both hands").GetLocalizedString()}";
-                break;
-            }
-            if (injury.degree > 0)
-            {
-                injured = true;
-            }
-        }
+        int able = CapableBattleRoyale(wantReserver, out cause);
+        availiable = able > -1;
+        injured = able < 1;
 
         if (!availiable)
         {
-            outGameUIManager.Alert("Alert:Reserve Fail", "Organ Rupture");
+            outGameUIManager.Alert("Alert:Reserve Fail", cause);
         }
         else if (injured)
         {
@@ -723,6 +732,7 @@ public class Calendar : CustomObject
         leagueReserveInfo[wantReserveDate].reserver.isReserved = false;
         leagueReserveInfo[wantReserveDate].reserver = null;
         TurnPageCalendar(0);
+        outGameUIManager.ChecklistBattleRoyale();
     }
 
     public void OpenScheduleByEachSurvivor()

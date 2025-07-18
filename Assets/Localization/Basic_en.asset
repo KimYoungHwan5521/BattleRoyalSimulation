@@ -1050,6 +1050,34 @@ MonoBehaviour:
     m_Localized: Skip until the weekend?
     m_Metadata:
       m_Items: []
+  - m_Id: 15645991207759872
+    m_Localized: Checklist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Localized: (Click to jump)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Localized: <color=green>All survivors assigned to training.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Localized: '<color=red>Survivors without training: {0}</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Localized: <color=green>All battle royales reserved for this week.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Localized: <color=red>Some battle royales this week are not reserved.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Localized: (Click the desired league to reserve the Battle Royale.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

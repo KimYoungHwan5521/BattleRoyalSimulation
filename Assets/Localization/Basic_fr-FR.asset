@@ -1058,6 +1058,36 @@ MonoBehaviour:
     m_Localized: Terminer la semaine
     m_Metadata:
       m_Items: []
+  - m_Id: 15645991207759872
+    m_Localized: "Liste de v\xE9rification"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Localized: "(Cliquez pour acc\xE9der)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Localized: "<color=green>Tous les survivants ont \xE9t\xE9 assign\xE9s \xE0
+      l'entra\xEEnement.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Localized: "<color=red>Survivants sans entra\xEEnement : {0}</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Localized: "<color=green>Tous les battle royales de cette semaine sont r\xE9serv\xE9s.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Localized: "<color=red>Certains battle royales de cette semaine ne sont pas
+      r\xE9serv\xE9s.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Localized: "(Cliquez sur la ligue souhait\xE9e pour r\xE9server le Battle Royale.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

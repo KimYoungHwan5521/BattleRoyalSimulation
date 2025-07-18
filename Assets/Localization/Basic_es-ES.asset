@@ -1057,6 +1057,34 @@ MonoBehaviour:
     m_Localized: "\xBFSaltar hasta el fin de semana?"
     m_Metadata:
       m_Items: []
+  - m_Id: 15645991207759872
+    m_Localized: "Lista de verificaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Localized: (Haz clic para ir)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Localized: <color=green>Todos los supervivientes han sido asignados al entrenamiento.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Localized: '<color=red>Supervivientes sin entrenamiento: {0}</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Localized: "<color=green>Todos los battle royales de esta semana est\xE1n reservados.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Localized: "<color=red>Algunos battle royales de esta semana no est\xE1n reservados.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Localized: (Haz clic en la liga deseada para reservar el Battle Royale.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

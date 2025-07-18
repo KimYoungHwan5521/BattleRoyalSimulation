@@ -1010,6 +1010,34 @@ MonoBehaviour:
     m_Key: Confirm:End the Week
     m_Metadata:
       m_Items: []
+  - m_Id: 15645991207759872
+    m_Key: Checklist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Key: (Click to jump)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Key: All survivors assigned to training.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Key: 'Survivors without training:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Key: All battle royales reserved for this week.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Key: Some battle royales this week are not reserved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Key: (Click the desired league to reserve the Battle Royale.)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

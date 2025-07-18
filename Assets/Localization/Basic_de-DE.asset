@@ -1056,6 +1056,35 @@ MonoBehaviour:
     m_Localized: Woche beenden
     m_Metadata:
       m_Items: []
+  - m_Id: 15645991207759872
+    m_Localized: Checkliste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Localized: (Klicken zum Springen)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Localized: "<color=green>Alle \xDCberlebenden sind dem Training zugewiesen.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Localized: "<color=red>Nicht zugewiesene \xDCberlebende: {0}</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Localized: <color=green>Alle Battle Royales dieser Woche sind reserviert.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Localized: <color=red>Einige Battle Royales dieser Woche sind nicht reserviert.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Localized: "(Klicken Sie auf die gew\xFCnschte Liga, um den Battle Royale zu
+      reservieren.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

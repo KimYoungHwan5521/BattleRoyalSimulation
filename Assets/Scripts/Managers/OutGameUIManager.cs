@@ -11,6 +11,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
@@ -44,6 +45,14 @@ public class OutGameUIManager : MonoBehaviour
             else moneyText.text = $"{money:###,###,###,##0}";
         }
     }
+
+    [Header("Checklist")]
+    [SerializeField] GameObject checkTrainingTrue;
+    [SerializeField] GameObject checkTrainingFalse;
+    [SerializeField] LocalizeStringEvent checkTrainingText;
+    [SerializeField] GameObject checkBattleRoyaleTrue;
+    [SerializeField] GameObject checkBattleRoyaleFalse;
+    [SerializeField] LocalizeStringEvent checkBattleRoyaleText;
 
     [Header("Survivors / Hire Market")]
     int mySurvivorsId = 0;
@@ -246,6 +255,34 @@ public class OutGameUIManager : MonoBehaviour
             InitializeStrategyRoom();
             sortContestantsListDropdown.RelocalizeOptions();
         };
+        bool colorChanged = false;
+        GameManager.Instance.ObjectUpdate += () =>
+        {
+            if (selectSurvivorGetSurgeryDropdown.IsExpanded)
+            {
+                if (!colorChanged)
+                {
+                    var dropdownSprites = selectSurvivorGetSurgeryDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
+                    for (int i = 0; i < mySurvivorsData.Count; i++)
+                    {
+                        bool exit = false;
+                        foreach (var injury in mySurvivorsData[i].injuries)
+                        {
+                            if (injury.degree > 0)
+                            {
+                                dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
+                                exit = true;
+                                break;
+                            }
+                        }
+                        if(!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
+                    }
+                    colorChanged = true;
+                }
+            }
+            else colorChanged = false;
+
+        };
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
@@ -409,6 +446,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Money -= survivorsInHireMarket[candidate].survivorData.price;
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
+                    ChecklistTraining();
                     mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
                     mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
@@ -475,6 +513,7 @@ public class OutGameUIManager : MonoBehaviour
             OpenConfirmWindow("Confirm:Release", () =>
                 {
                     mySurvivorsData.Remove(wantDismiss);
+                    ChecklistTraining();
                     ResetSurvivorsDropdown();
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
                     Alert("Alert:Survivor has been released.");
@@ -651,6 +690,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.GetComponent<RectTransform>());
         }
+        ChecklistTraining();
     }
 
     public void CheckTrainable(SurvivorData survivor)
@@ -2111,6 +2151,75 @@ public class OutGameUIManager : MonoBehaviour
     }
     #endregion
 
+    #region Checklist
+    public void ChecklistTraining()
+    {
+        string unassigned = "";
+        foreach(var survivor in mySurvivorsData)
+        {
+            if(survivor.assignedTraining == Training.None)
+            {
+                if(Trainable(survivor, Training.Weight) || Trainable(survivor, Training.Running) || Trainable(survivor, Training.Fighting) || Trainable(survivor, Training.Shooting) || Trainable(survivor, Training.Studying))
+                {
+                    unassigned += survivor.localizedSurvivorName.GetLocalizedString();
+                    unassigned += ", ";
+                }
+            }
+        }
+        if (unassigned != "")
+        {
+            unassigned = unassigned[..^2];
+            checkTrainingTrue.SetActive(false);
+            checkTrainingFalse.SetActive(true);
+            LocalizedString localizedString = new("Basic", "Survivors without training:");
+            localizedString.Arguments = new[] { unassigned };
+            checkTrainingText.StringReference = localizedString;
+        }
+        else
+        {
+            checkTrainingTrue.SetActive(true);
+            checkTrainingFalse.SetActive(false);
+            checkTrainingText.StringReference = new("Basic", "All survivors assigned to training.");
+        }
+        GameManager.Instance.FixLayout(checkTrainingText.GetComponent<RectTransform>());
+    }
+
+    public void ChecklistBattleRoyale()
+    {
+        bool thereAreNotReservedRoyale = false;
+        int monday = calendar.Today - calendar.Today % 7;
+        if (calendar.Today < monday + 5 && calendar.LeagueReserveInfo.ContainsKey(monday + 5))
+        {
+            if (calendar.LeagueReserveInfo[monday + 5].reserver == null)
+            {
+                thereAreNotReservedRoyale = true;
+            }
+        }
+        if (calendar.Today < monday + 6 && calendar.LeagueReserveInfo.ContainsKey(monday + 6))
+        {
+            if (calendar.LeagueReserveInfo[monday + 6].reserver == null)
+            {
+                thereAreNotReservedRoyale = true;
+            }
+        }
+
+        if(thereAreNotReservedRoyale)
+        {
+            checkBattleRoyaleTrue.SetActive(false);
+            checkBattleRoyaleFalse.SetActive(true);
+            checkBattleRoyaleText.StringReference = new("Basic", "Some battle royales this week are not reserved.");
+        }
+        else
+        {
+            checkBattleRoyaleTrue.SetActive(true);
+            checkBattleRoyaleFalse.SetActive(false);
+            checkBattleRoyaleText.StringReference = new("Basic", "All battle royales reserved for this week.");
+        }
+        checkBattleRoyaleText.RefreshString();
+        GameManager.Instance.FixLayout(checkBattleRoyaleText.GetComponent<RectTransform>());
+    }
+    #endregion
+
     public SurvivorData CreateRandomSurvivorData()
     {
         League league = calendar.LeagueReserveInfo[calendar.Today].league;
@@ -2333,6 +2442,7 @@ public class OutGameUIManager : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
+        ChecklistTraining();
         if (survivorsDropdown.options.Count == 0) return;
         RelocalizeTrainingRoom();
         RelocalizeStrategyRoom();
