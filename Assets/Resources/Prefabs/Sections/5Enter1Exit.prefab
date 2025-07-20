@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6372217328008653890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +268,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7878236030303646133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,6 +434,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &5601267547006318686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +758,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2339359058315130261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,6 +1197,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4910147164042261106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1348,6 +1363,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4589984810568548501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1602,6 +1620,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6668059997306974127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3620,6 +3641,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3337261184770099809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3783,6 +3807,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2691630819836376594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3992,6 +4019,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7525798157623373172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4064,7 +4094,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 2559660137470379270}
+  - component: {fileID: 1055051810713615207}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -11538,8 +11568,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &2559660137470379270
-TilemapCollider2D:
+--- !u!60 &1055051810713615207
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -11571,8 +11601,25 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: -5}
+      - {x: 0, y: 5}
+      - {x: -9, y: 5}
+      - {x: -9, y: 23}
+      - {x: -23, y: 23}
+      - {x: -23, y: -23}
+      - {x: -9, y: -22}
+      - {x: -9, y: -5}
   m_UseDelaunayMesh: 0
 --- !u!1 &8562406199164290997
 GameObject:
@@ -11676,6 +11723,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6671694688017064526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11839,6 +11889,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &200346161272003545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12002,6 +12055,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7154671704455949285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12165,6 +12221,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2079586249978913074
 MonoBehaviour:
   m_ObjectHideFlags: 0

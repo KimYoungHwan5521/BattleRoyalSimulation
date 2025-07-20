@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 8971607455267918619}
   - component: {fileID: 8018354410924787301}
   - component: {fileID: 2696446842607445563}
+  - component: {fileID: 991359662852762140}
   m_Layer: 0
   m_Name: CenterBunker
   m_TagString: Ground
@@ -272,10 +273,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmingSections: []
   garbageObjects: []
+  navMeshModifierVolume: {fileID: 991359662852762140}
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
+--- !u!114 &991359662852762140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513520193804478862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 50, y: 50, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2551160346148786600
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +351,6 @@ GameObject:
   - component: {fileID: 3143063854482364092}
   - component: {fileID: 7927462235937885659}
   - component: {fileID: 4008052883533359589}
-  - component: {fileID: 1167007563725842348}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -25526,22 +25544,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &1167007563725842348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2905339854839469022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 0
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!1 &4164688541319424465
 GameObject:
   m_ObjectHideFlags: 0

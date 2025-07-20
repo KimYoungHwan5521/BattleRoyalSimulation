@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 8971607455267918619}
   - component: {fileID: 8018354410924787301}
   - component: {fileID: 2696446842607445563}
+  - component: {fileID: 1446199329335215154}
   m_Layer: 0
   m_Name: 5Bunkers
   m_TagString: Ground
@@ -270,10 +271,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmingSections: []
   garbageObjects: []
+  navMeshModifierVolume: {fileID: 1446199329335215154}
   isProhibited_Plan: 0
+  isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
+--- !u!114 &1446199329335215154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513520193804478862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 50, y: 50, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &1048657546663262954
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,6 +395,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7237453345886335025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +561,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2316680808212085930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,6 +772,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &735709521122113094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -910,6 +938,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &9036444093016331195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,6 +1104,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7661332473853844746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,6 +1354,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3340074977143617473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,7 +1429,6 @@ GameObject:
   - component: {fileID: 7474709036193623079}
   - component: {fileID: 2895278986883039219}
   - component: {fileID: 2977693326855515476}
-  - component: {fileID: 3994138738604853880}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -26594,22 +26630,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &3994138738604853880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173878376501712438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 0
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!1 &7035410547737931107
 GameObject:
   m_ObjectHideFlags: 0
@@ -26712,6 +26732,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7368601770938904786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26875,6 +26898,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &8328873050717163328
 MonoBehaviour:
   m_ObjectHideFlags: 0

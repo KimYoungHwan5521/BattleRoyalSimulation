@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 8971607455267918619}
   - component: {fileID: 8018354410924787301}
   - component: {fileID: 2696446842607445563}
+  - component: {fileID: 3996545438867905972}
   m_Layer: 0
   m_Name: Troll
   m_TagString: Ground
@@ -263,11 +264,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   farmingSections: []
   garbageObjects: []
+  navMeshModifierVolume: {fileID: 3996545438867905972}
   isProhibited_Plan: 0
   isProhibited: 0
   adjacentAreas: []
   markProhibitedArea_Plan: {fileID: 4164688541319424465}
   markProhibitedArea: {fileID: 173198887210656548}
+--- !u!114 &3996545438867905972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513520193804478862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 50, y: 50, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Area: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2551160346148786600
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +426,6 @@ GameObject:
   - component: {fileID: 7474709036193623079}
   - component: {fileID: 2895278986883039219}
   - component: {fileID: 2977693326855515476}
-  - component: {fileID: 3994138738604853880}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -25598,22 +25615,6 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!114 &3994138738604853880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173878376501712438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 0
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!1001 &106944848869181524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25665,6 +25666,26 @@ PrefabInstance:
     - target: {fileID: 1970154036847493114, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
       propertyPath: m_Name
       value: 46x46_Troll
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583419539607775150, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[0].m_Data
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583419539607775150, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_Data
+      value: 
+      objectReference: {fileID: 1269810330, guid: 3595b31c03778514ab4c4ccad9e703d4, type: 3}
+    - target: {fileID: 7583419539607775150, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[0].m_RefCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583419539607775150, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[7].m_RefCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583419539607775150, guid: 1d173b4e6c655df47ae9514cba0ce0de, type: 3}
+      propertyPath: m_Tiles.Array.data[272].second.m_TileSpriteIndex
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

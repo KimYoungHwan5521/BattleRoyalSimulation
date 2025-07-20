@@ -3167,7 +3167,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 6
-      m_TileSpriteIndex: 0
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5432,8 +5432,8 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: d387a8468ef63194982215e79c0db412, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 1
-    m_Data: {fileID: 1269810330, guid: 3595b31c03778514ab4c4ccad9e703d4, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 280
     m_Data: {fileID: -1446356915, guid: 3595b31c03778514ab4c4ccad9e703d4, type: 3}
   - m_RefCount: 191
@@ -5446,8 +5446,8 @@ Tilemap:
     m_Data: {fileID: 906788578, guid: 3595b31c03778514ab4c4ccad9e703d4, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 103023774, guid: 159e55c9e1a6c4342b67d5c905ec6fa1, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1269810330, guid: 3595b31c03778514ab4c4ccad9e703d4, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 946432821, guid: 159e55c9e1a6c4342b67d5c905ec6fa1, type: 3}
   - m_RefCount: 4
@@ -5771,7 +5771,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 1606308826509319931}
+  - component: {fileID: 8512875579781822534}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -27065,8 +27065,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &1606308826509319931
-TilemapCollider2D:
+--- !u!61 &8512875579781822534
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -27094,10 +27094,19 @@ TilemapCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 46, y: 46}
+  m_EdgeRadius: 0

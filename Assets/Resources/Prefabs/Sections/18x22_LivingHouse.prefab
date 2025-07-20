@@ -286,6 +286,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &6723848060641472458
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -806,6 +809,9 @@ MonoBehaviour:
   obstructionRate: 0.2
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &1620931377780429964
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,6 +2988,9 @@ MonoBehaviour:
   obstructionRate: 0.2
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &4612305231526448053
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,7 +3482,7 @@ GameObject:
   - component: {fileID: 4612186408385564589}
   - component: {fileID: 3867220016756458175}
   - component: {fileID: 7636900263290854246}
-  - component: {fileID: 6944765143023617139}
+  - component: {fileID: 4944892384287186250}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -8101,8 +8110,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &6944765143023617139
-TilemapCollider2D:
+--- !u!61 &4944892384287186250
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8133,10 +8142,19 @@ TilemapCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: -37, y: -9}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 16.113398, y: 20.008743}
+  m_EdgeRadius: 0
 --- !u!1 &5444894852742015421
 GameObject:
   m_ObjectHideFlags: 0
@@ -8584,6 +8602,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &5713640618670558786
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9242,6 +9263,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &8173357327733653213
 BoxCollider2D:
   m_ObjectHideFlags: 0

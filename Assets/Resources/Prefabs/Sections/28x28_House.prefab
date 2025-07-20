@@ -193,6 +193,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6372217328008653890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +359,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3203789323700689134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +525,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1639241156105362175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -749,6 +758,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6646645712327390037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1185,6 +1197,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3298439213294927110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1348,6 +1363,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &5584223462871216593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1511,6 +1529,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7873966650260175981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1856,6 +1877,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4732962278663428562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2019,6 +2043,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &9001415025352462077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4137,6 +4164,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2691630819836376594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4300,6 +4330,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3150887130732207015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4509,6 +4542,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4796857892435722736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4672,7 +4708,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 3164568370036830502}
+  - component: {fileID: 4156856780878550133}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -12646,8 +12682,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &3164568370036830502
-TilemapCollider2D:
+--- !u!61 &4156856780878550133
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -12679,6 +12715,15 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 28, y: 28}
+  m_EdgeRadius: 0

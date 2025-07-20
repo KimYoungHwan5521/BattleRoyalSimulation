@@ -270,6 +270,7 @@ public class BattleRoyaleManager
                 }
             }
         }
+        GameManager.Instance.NavMeshSurface.BuildNavMesh();
     }
 
     // true : blocked, false : not blocked

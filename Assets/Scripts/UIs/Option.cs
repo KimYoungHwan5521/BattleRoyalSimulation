@@ -194,7 +194,7 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"\n<i>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
+                string info = $"\n<i>[{i}] {new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</i>";
                 if (i == 0) info += $"\n<i>{new LocalizedString("Basic", "Autosaved").GetLocalizedString()}</i>";
                 saveSlots[i].isEmpty = false;
                 saveSlots[i].SetInfo(info, saveData.ingameDate);
@@ -203,7 +203,7 @@ public class Option : MonoBehaviour
             else
             {
                 saveSlots[i].isEmpty = true;
-                saveSlots[i].SetInfo($"<i>{new LocalizedString("Basic", "Empty Slot").GetLocalizedString()}</i>");
+                saveSlots[i].SetInfo($"<i>[{i}] {new LocalizedString("Basic", "Empty Slot").GetLocalizedString()}</i>");
                 if (i != 0) saveSlots[i].deleteButton.SetActive(false);
             }
         }

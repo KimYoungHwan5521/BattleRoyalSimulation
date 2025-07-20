@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6372217328008653890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,6 +627,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &4010537731547931396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1011,6 +1017,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1349075025331914741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1335,6 +1344,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2216735992393706863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3094,6 +3106,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2691630819836376594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3303,7 +3318,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 7310811218741266223}
+  - component: {fileID: 1868999567655932148}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -8037,8 +8052,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &7310811218741266223
-TilemapCollider2D:
+--- !u!61 &1868999567655932148
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8070,9 +8085,18 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 46, y: 10}
+  m_EdgeRadius: 0
 --- !u!1 &8423331816137704331
 GameObject:
   m_ObjectHideFlags: 0
@@ -8443,6 +8467,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1062082441128160361
 MonoBehaviour:
   m_ObjectHideFlags: 0

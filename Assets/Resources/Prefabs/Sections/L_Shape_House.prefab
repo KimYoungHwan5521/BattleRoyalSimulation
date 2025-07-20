@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &6372217328008653890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,6 +599,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2339359058315130261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,6 +765,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1014830731476674021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,6 +931,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3302486024812602085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2171,6 +2183,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2691630819836376594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2289,7 +2304,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 6581386890430324892}
+  - component: {fileID: 9008929925313466394}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -6447,8 +6462,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &6581386890430324892
-TilemapCollider2D:
+--- !u!60 &9008929925313466394
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6476,12 +6491,27 @@ TilemapCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 15, y: 5}
+      - {x: -5, y: 5}
+      - {x: -5, y: -15}
+      - {x: 5, y: -15}
+      - {x: 5, y: -5}
+      - {x: 15, y: -5}
   m_UseDelaunayMesh: 0
 --- !u!1 &8468390431821613361
 GameObject:
@@ -6585,6 +6615,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2444019979910144945
 MonoBehaviour:
   m_ObjectHideFlags: 0

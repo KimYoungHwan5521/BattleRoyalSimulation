@@ -1178,6 +1178,7 @@ MonoBehaviour:
   progressBar: {fileID: 4765678240565169705}
   linkedSurvivorData:
     id: 0
+    survivorName: 
     localizedSurvivorName:
       m_TableReference:
         m_TableCollectionName: 
@@ -1193,6 +1194,7 @@ MonoBehaviour:
     _shooting: 0
     _knowledge: 0
     _luck: 0
+    _crafting: 0
     characteristics: []
     price: 0
     tier: 0
@@ -1207,10 +1209,20 @@ MonoBehaviour:
     injuries: []
     surgeryScheduled: 0
     scheduledSurgeryName: 
+    localizedScheduledSurgeryName:
+      m_TableReference:
+        m_TableCollectionName: 
+      m_TableEntryReference:
+        m_KeyId: 0
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
     shceduledSurgeryCost: 0
     surgerySite: 0
     surgeryType: 0
     surgeryCharacteristic: 0
+    recoverySerumMedicalEffectLeft: 0
     priority1Weapon: 0
     priority1Crafting:
       itemType: 0
@@ -1260,7 +1272,7 @@ MonoBehaviour:
   rightHandDisabled: 0
   leftHandDisabled: 0
   dizzyRateByConcussion: 0
-  prohibitedAreaTime: 3.1
+  prohibitedAreaTime: 5.1
   maxBlood: 0
   curBlood: 0
   bleedingAmount: 0
@@ -1330,6 +1342,7 @@ MonoBehaviour:
   aimDelay: 1.5
   curAimDelay: 0
   curShotTime: 0
+  reloadSpeed: 1
   lookPosition: {x: 0, y: 0}
   lookAroundTime: 0.3
   curLookAroundTime: 0

@@ -230,8 +230,8 @@ public class Survivor : CustomObject
             prohibitTimer.SetActive(value);
         }
     }
-    [SerializeField] float prohibitedAreaTime = 3.1f;
-    int timerSound = 3;
+    [SerializeField] float prohibitedAreaTime = 5.1f;
+    int timerSound = 5;
 
     Survivor survivorWhoCausedBleeding;
     public float maxBlood;
@@ -1415,7 +1415,7 @@ public class Survivor : CustomObject
             string sfxName = "";
             foreach(var col in cols)
             {
-                if(col.TryGetComponent(out Tilemap tile))
+                if(col.name == "Floor")
                 {
                     sfxName = "footstep_concrete";
                     break;

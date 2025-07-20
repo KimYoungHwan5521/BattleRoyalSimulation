@@ -102,6 +102,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &9115820200891201824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +729,9 @@ MonoBehaviour:
   obstructionRate: 0.3
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &1263277240981567790
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -889,6 +895,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &2339359058315130261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,6 +1222,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &3302486024812602085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,6 +1388,9 @@ MonoBehaviour:
   obstructionRate: 0.1
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &1058790950357721383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3552,6 +3567,9 @@ MonoBehaviour:
   obstructionRate: 0.3
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!61 &9005062525068632658
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3715,7 +3733,7 @@ GameObject:
   - component: {fileID: 1016633575155971064}
   - component: {fileID: 4830517529582818264}
   - component: {fileID: 5199875283287946763}
-  - component: {fileID: 7789360636030892698}
+  - component: {fileID: 6611923767964457193}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -8659,8 +8677,8 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
---- !u!19719996 &7789360636030892698
-TilemapCollider2D:
+--- !u!61 &6611923767964457193
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -8691,10 +8709,19 @@ TilemapCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_MaximumTileChangeCount: 1000
-  m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: -1.5, y: -13.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 13, y: 37}
+  m_EdgeRadius: 0
 --- !u!1 &8555315880475268835
 GameObject:
   m_ObjectHideFlags: 0
@@ -8797,6 +8824,9 @@ MonoBehaviour:
   obstructionRate: 0.3
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7959480324413881594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9111,6 +9141,9 @@ MonoBehaviour:
   obstructionRate: 0.4
   ownerArea: {fileID: 0}
   items: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!114 &7744830821569862185
 MonoBehaviour:
   m_ObjectHideFlags: 0
