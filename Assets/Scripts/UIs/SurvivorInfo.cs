@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class SurvivorInfo : MonoBehaviour
@@ -95,6 +94,7 @@ public class SurvivorInfo : MonoBehaviour
 
         Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
         tierImage.sprite = ResourceManager.Get(tierSprite);
+        tierImage.GetComponent<Help>().SetDescriptionWithKey(tier.ToString());
         
         survivorNameText.StringReference = survivorName;
         strengthText.text = $"{survivorData.Strength}";
@@ -118,6 +118,7 @@ public class SurvivorInfo : MonoBehaviour
     {
         Enum.TryParse(wantSurvivorData.tier.ToString(), out ResourceEnum.Sprite tierSprite);
         tierImage.sprite = ResourceManager.Get(tierSprite);
+        tierImage.GetComponent<Help>().SetDescriptionWithKey(wantSurvivorData.tier.ToString());
 
         survivorData = wantSurvivorData;
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;

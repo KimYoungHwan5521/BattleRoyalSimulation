@@ -1038,6 +1038,30 @@ MonoBehaviour:
     m_Key: (Click the desired league to reserve the Battle Royale.)
     m_Metadata:
       m_Items: []
+  - m_Id: 16669567583055872
+    m_Key: Help:Reserve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Key: Help:Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Key: Help:Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Key: Help:Fighting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Key: Help:Shooting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Key: Help:Knowledge
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

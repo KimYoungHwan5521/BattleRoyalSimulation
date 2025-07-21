@@ -11,7 +11,6 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
@@ -483,8 +482,11 @@ public class OutGameUIManager : MonoBehaviour
             if (survivorsInHireMarket[0].survivorData.SurvivorName == candidate) return GetRandomName(depth++);
         for (int i = 0; i < mySurvivorsData.Count; i++)
             if (mySurvivorsData[i].SurvivorName == candidate) return GetRandomName(depth++);
-        for(int i = 0; i < contestantsData.Count; i++)
-            if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth++);
+        if(contestantsData != null)
+        {
+            for(int i = 0; i < contestantsData.Count; i++)
+                if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth++);
+        }
         return new("Name", candidate);
     }
 
@@ -543,7 +545,7 @@ public class OutGameUIManager : MonoBehaviour
         else
         {
             trainingRoom.SetActive(true);
-            ConfirmAssignTraining();
+            AssignTraining();
             RelocalizeTrainingRoom();
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
@@ -649,16 +651,20 @@ public class OutGameUIManager : MonoBehaviour
         {
             survivorSchedule.survivor.assignedTraining = survivorSchedule.whereAmI;
         }
+        AssignTraining();
+    }
 
+    public void AssignTraining()
+    {
         weightTrainingBookers.text = "";
         runningBookers.text = "";
         fightTrainingBookers.text = "";
         shootingTrainingBookers.text = "";
         studyingBookers.text = "";
-        foreach(SurvivorData survivor in mySurvivorsData)
+        foreach (SurvivorData survivor in mySurvivorsData)
         {
             TextMeshProUGUI targetText;
-            switch(survivor.assignedTraining)
+            switch (survivor.assignedTraining)
             {
                 case Training.Fighting:
                     targetText = fightTrainingBookers;
@@ -699,7 +705,7 @@ public class OutGameUIManager : MonoBehaviour
         else
         {
             survivor.assignedTraining = Training.None;
-            ConfirmAssignTraining();
+            AssignTraining();
             Alert("Alert:Training Assignment Cancelled", survivor.localizedSurvivorName.GetLocalizedString(), cause);
         }
     }
@@ -1203,7 +1209,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if (survivorWhoWantSurgery.assignedTraining != Training.None)
                 {
-                    ConfirmAssignTraining();
+                    AssignTraining();
                     Alert("Alert:Training  Canceled", $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}");
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
@@ -1621,6 +1627,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void StartBattleRoyale()
     {
+        GameManager.Instance.Option.SetSaveButtonInteractable(false);
         mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
@@ -1628,8 +1635,40 @@ public class OutGameUIManager : MonoBehaviour
     #region Betting
     public void OpenBettingRoom()
     {
-        contestantsData = new();
+        if(contestantsData == null) SetContestants();
         bettingAmountInput.text = "0";
+
+        for (int i = 0; i < contestants.Length; i++)
+        {
+            if (i < contestantsData.Count)
+            {
+                contestants[i].SetActive(true);
+                Vector3 colorVector = BattleRoyaleManager.colorInfo[i];
+                contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
+                contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].localizedSurvivorName.GetLocalizedString();
+            }
+            else contestants[i].SetActive(false);
+        }
+        SortContestantsList();
+
+        for (int i = 0; i < predictRankings.Length; i++)
+        {
+            if (i < needPredictionNumber)
+            {
+                predictRankings[i].SetActive(true);
+                predictRankingContestants[i].SetActive(false);
+            }
+            else predictRankings[i].SetActive(false);
+        }
+        selectedContestant.SetActive(false);
+
+        bettingRoom.SetActive(true);
+        GameManager.Instance.openedWindows.Push(bettingRoom);
+    }
+
+    public void SetContestants()
+    {
+        contestantsData = new();
         int index = 0;
         if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
         {
@@ -1660,36 +1699,10 @@ public class OutGameUIManager : MonoBehaviour
                 needPredictionNumber = 5;
                 break;
         }
-        for (int i= index; i<needSurvivorNumber; i++)
+        for (int i = index; i < needSurvivorNumber; i++)
         {
             contestantsData.Add(CreateRandomSurvivorData());
         }
-
-        for(int i=0; i<contestants.Length; i++)
-        {
-            if(i < contestantsData.Count)
-            {
-                contestants[i].SetActive(true);
-                Vector3 colorVector = BattleRoyaleManager.colorInfo[i];
-                contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
-                contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].localizedSurvivorName.GetLocalizedString();
-            }
-            else contestants[i].SetActive(false);
-        }
-        SortContestantsList();
-
-        for(int i=0; i<predictRankings.Length; i++)
-        {
-            if(i < needPredictionNumber)
-            {
-                predictRankings[i].SetActive(true);
-                predictRankingContestants[i].SetActive(false);
-            }
-            else predictRankings[i].SetActive(false);
-        }
-        selectedContestant.SetActive(false);
-
-        bettingRoom.SetActive(true);
     }
 
     public void SortContestantsList()
@@ -1896,6 +1909,7 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     void DayEnd(int week = 0)
     {
+        contestants = null;
         calendar.Today++;
         calendar.TurnPageCalendar(0);
 
@@ -1923,7 +1937,7 @@ public class OutGameUIManager : MonoBehaviour
             if (!autoAssign)
             {
                 survivor.assignedTraining = Training.None;
-                ConfirmAssignTraining();
+                AssignTraining();
             }
             Surgery(survivor);
         }
@@ -1993,6 +2007,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void EndTheDayWeekend()
     {
+        contestantsData = null;
         calendar.Today++;
         calendar.TurnPageCalendar(0);
 
@@ -2423,12 +2438,12 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.ClaimLoadInfo("Loading survivors...", 0, 3);
         mySurvivorsData.Clear();
         mySurvivorsData = data;
-        ConfirmAssignTraining();
+        AssignTraining();
         yield return null;
     }
 
     public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel,
-        int runningLevel, int weightTrainingLevel, int studyingLevel)
+        int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData)
     {
         Money = money;
         this.mySurvivorsId = mySurvivorsId;
@@ -2438,6 +2453,7 @@ public class OutGameUIManager : MonoBehaviour
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
+        this.contestantsData = contestantsData;
     }
 
     void OnLocaleChanged(Locale newLocale)
@@ -2448,7 +2464,7 @@ public class OutGameUIManager : MonoBehaviour
         RelocalizeStrategyRoom();
         ResetSurvivorsDropdown();
         if (survivorsDropdown.options.Count == 0) return;
-        ConfirmAssignTraining();
+        AssignTraining();
         SetOperatingRoom();
         SetStrategyRoom();
         sortContestantsListDropdown.RelocalizeOptions();

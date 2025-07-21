@@ -204,6 +204,7 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.AgilityTrainingLevel,
             OutGameUIManager.WeightTrainingLevel,
             OutGameUIManager.StudyLevel,
+            OutGameUIManager.contestantsData,
             calendar.Today,
             calendar.CurMaxYear
             )
@@ -239,7 +240,8 @@ public class GameManager : MonoBehaviour
         saveData.shootingTrainingLevel,
         saveData.runningLevel,
         saveData.weightTrainingLevel,
-        saveData.studyingLevel
+        saveData.studyingLevel,
+        saveData.contestantsData
             );
         outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
         outGameUIManger.survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);

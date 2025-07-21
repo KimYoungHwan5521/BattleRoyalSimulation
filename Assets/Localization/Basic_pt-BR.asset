@@ -1083,6 +1083,33 @@ MonoBehaviour:
     m_Localized: (Clique na liga desejada para reservar o Battle Royale.)
     m_Metadata:
       m_Items: []
+  - m_Id: 16669567583055872
+    m_Localized: "Apenas sobreviventes com o mesmo n\xEDvel podem participar das
+      ligas regulares (Bronze, Prata, Ouro)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Localized: "For\xE7a: afeta a sa\xFAde, o volume de sangue e o poder de ataque."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Localized: 'Agilidade: afeta a velocidade de ataque, movimento e coleta.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Localized: "Combate corpo a corpo: afeta a precis\xE3o, defesa e esquiva em
+      lutas corpo a corpo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Localized: "Tiro: afeta a precis\xE3o durante ataques \xE0 dist\xE2ncia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Localized: 'Conhecimento: quanto mais alto, mais itens podem ser fabricados
+      durante a batalha. (Veja o manual)'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

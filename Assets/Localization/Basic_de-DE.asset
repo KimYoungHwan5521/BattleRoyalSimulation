@@ -1085,6 +1085,33 @@ MonoBehaviour:
       reservieren.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 16669567583055872
+    m_Localized: "Nur \xDCberlebende mit derselben Stufe k\xF6nnen an den regul\xE4ren
+      Ligen (Bronze, Silber, Gold) teilnehmen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Localized: "St\xE4rke: Beeinflusst Gesundheit, Blutmenge und Angriffskraft."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Localized: "Beweglichkeit: Beeinflusst Angriffs-, Bewegungs- und Pl\xFCnderungsgeschwindigkeit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Localized: 'Nahkampf: Beeinflusst Treffgenauigkeit, Verteidigungs- und Ausweichrate
+      im Nahkampf.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Localized: "Schie\xDFen: Beeinflusst die Genauigkeit bei Fernangriffen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Localized: "Wissen: Mit h\xF6herem Wissen k\xF6nnen mehr Gegenst\xE4nde im
+      Kampf hergestellt werden. (Siehe Handbuch)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

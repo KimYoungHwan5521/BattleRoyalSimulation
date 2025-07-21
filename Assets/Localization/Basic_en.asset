@@ -1078,6 +1078,33 @@ MonoBehaviour:
     m_Localized: (Click the desired league to reserve the Battle Royale.)
     m_Metadata:
       m_Items: []
+  - m_Id: 16669567583055872
+    m_Localized: Only survivors with matching tiers can apply for the regular leagues
+      (Bronze, Silver, Gold).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Localized: 'Strength: Affects health, blood volume, and attack power.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Localized: 'Agility: Affects attack speed, movement speed, and looting speed.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Localized: 'Melee: Affects accuracy, defense rate, and evasion rate in close
+      combat.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Localized: 'Shooting: Affects accuracy during ranged attacks.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Localized: 'Knowledge: Higher knowledge allows crafting more items during battle.
+      (See guidebook)'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

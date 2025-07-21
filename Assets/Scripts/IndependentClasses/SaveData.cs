@@ -116,11 +116,12 @@ public class ETCData
     public int studyingLevel;
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];
+    public List<SurvivorData> contestantsData = new List<SurvivorData>();
     // calendar
     public int today;
     public int curMaxYear;
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, int today, int curMaxYear)
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
@@ -130,6 +131,7 @@ public class ETCData
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
+        this.contestantsData = contestantsData;
         this.today = today;
         this.curMaxYear = curMaxYear;
     }

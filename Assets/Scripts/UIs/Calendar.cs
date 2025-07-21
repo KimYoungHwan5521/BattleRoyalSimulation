@@ -99,14 +99,16 @@ public class Calendar : CustomObject
             LocalizedString date = new("Basic", "Date Format");
             date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
             todayText.text = date.GetLocalizedString();
+            outGameUIManager.HideEndTheWeekend(value % 7 > 4);
             if (value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();
                 outGameUIManager.ResetHireMarket();
-                outGameUIManager.HideEndTheWeekend(today % 7 > 4);
                 if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
 
+            if (value % 7 == 0) outGameUIManager.ChecklistBattleRoyale();
+            if (leagueReserveInfo.ContainsKey(value) && outGameUIManager.contestantsData == null) outGameUIManager.SetContestants();
         }
     }
     public int Month { get { return 1 + today / 28; } }
@@ -539,7 +541,6 @@ public class Calendar : CustomObject
                 outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale",
                     () =>
                     {
-                        GameManager.Instance.Option.SetSaveButtonInteractable(false);
                         outGameUIManager.OpenBettingRoom();
                         outGameUIManager.calendarObject.SetActive(false);
                     });

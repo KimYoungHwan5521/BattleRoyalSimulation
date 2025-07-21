@@ -1088,6 +1088,35 @@ MonoBehaviour:
     m_Localized: "(Cliquez sur la ligue souhait\xE9e pour r\xE9server le Battle Royale.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 16669567583055872
+    m_Localized: "Seuls les survivants du m\xEAme niveau peuvent s'inscrire aux ligues
+      r\xE9guli\xE8res (Bronze, Argent, Or)."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Localized: "Force : influence la sant\xE9, la quantit\xE9 de sang et la puissance
+      d\u2019attaque."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Localized: "Agilit\xE9 : influence la vitesse d\u2019attaque, de d\xE9placement
+      et de fouille."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Localized: "Combat rapproch\xE9 : influence la pr\xE9cision, la d\xE9fense
+      et l\u2019esquive au corps \xE0 corps."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Localized: "Tir : influence la pr\xE9cision lors des attaques \xE0 distance."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Localized: "Connaissance : plus elle est \xE9lev\xE9e, plus vous pouvez fabriquer
+      d\u2019objets en combat. (Voir le guide)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
