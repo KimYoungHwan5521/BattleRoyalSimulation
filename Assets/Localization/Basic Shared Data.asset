@@ -1062,6 +1062,18 @@ MonoBehaviour:
     m_Key: Help:Knowledge
     m_Metadata:
       m_Items: []
+  - m_Id: 17095594465619968
+    m_Key: Click a training and assign a survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095599989518336
+    m_Key: Click a survivor to assign them to a training.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095620239618048
+    m_Key: Click today's league in the schedule to go to the Battle Royale.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

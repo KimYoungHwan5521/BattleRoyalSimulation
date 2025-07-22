@@ -563,7 +563,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359340
   - m_Id: 2220597318316032
-    m_Localized: 'There are unassigned survivors:'
+    m_Localized: 'There are survivors who are not assigned training. :'
     m_Metadata:
       m_Items: []
   - m_Id: 2220598824071168
@@ -1103,6 +1103,18 @@ MonoBehaviour:
   - m_Id: 16669574688206848
     m_Localized: 'Knowledge: Higher knowledge allows crafting more items during battle.
       (See guidebook)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095594465619968
+    m_Localized: Click a training and assign a survivor.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095599989518336
+    m_Localized: Click a survivor to assign them to a training.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095620239618048
+    m_Localized: Click today's league in the schedule to go to the Battle Royale.
     m_Metadata:
       m_Items: []
   references:

@@ -570,7 +570,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 2220597318316032
-    m_Localized: "Es gibt nicht zugewiesene \xDCberlebende:"
+    m_Localized: "Es gibt \xDCberlebende, denen keine Ausbildung zugewiesen wird.:"
     m_Metadata:
       m_Items: []
   - m_Id: 2220600589873152
@@ -1110,6 +1110,19 @@ MonoBehaviour:
   - m_Id: 16669574688206848
     m_Localized: "Wissen: Mit h\xF6herem Wissen k\xF6nnen mehr Gegenst\xE4nde im
       Kampf hergestellt werden. (Siehe Handbuch)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095594465619968
+    m_Localized: "Klicken Sie auf ein Training, um einen \xDCberlebenden zuzuweisen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095599989518336
+    m_Localized: "Klicken Sie auf einen \xDCberlebenden, um ihn einem Training zuzuweisen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095620239618048
+    m_Localized: Klicken Sie im Zeitplan auf die heutige Liga, um zum Battle Royale
+      zu gelangen.
     m_Metadata:
       m_Items: []
   references:

@@ -28,6 +28,7 @@ public class Calendar : CustomObject
 {
     [SerializeField] GameObject scheduleByEachSurvivor;
     [SerializeField] GameObject[] schedules;
+    [SerializeField] GameObject tip;
 
     Dictionary<int, LeagueReserveData> leagueReserveInfo = new();
     public Dictionary<int, LeagueReserveData> LeagueReserveInfo => leagueReserveInfo;
@@ -86,6 +87,7 @@ public class Calendar : CustomObject
         get { return today; }
         set
         {
+            tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
             if (leagueReserveInfo.ContainsKey(today) && leagueReserveInfo[today].reserver != null)
             {
                 leagueReserveInfo[today].reserver.isReserved = false;
@@ -108,7 +110,7 @@ public class Calendar : CustomObject
             }
 
             if (value % 7 == 0) outGameUIManager.ChecklistBattleRoyale();
-            if (leagueReserveInfo.ContainsKey(value) && outGameUIManager.contestantsData == null) outGameUIManager.SetContestants();
+            if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
         }
     }
     public int Month { get { return 1 + today / 28; } }

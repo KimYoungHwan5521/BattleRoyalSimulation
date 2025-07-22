@@ -211,7 +211,7 @@ public class OutGameUIManager : MonoBehaviour
     public int PredictionNumber => needPredictionNumber;
     [SerializeField] GameObject[] predictRankings;
     [SerializeField] GameObject[] predictRankingContestants;
-    public List<SurvivorData> contestantsData;
+    public List<SurvivorData> contestantsData = null;
     [SerializeField] GameObject draggingContestant;
     LocalizedString[] predictions;
     public LocalizedString[] Predictions => predictions;
@@ -1635,7 +1635,7 @@ public class OutGameUIManager : MonoBehaviour
     #region Betting
     public void OpenBettingRoom()
     {
-        if(contestantsData == null) SetContestants();
+        if(contestantsData == null || contestantsData.Count == 0) SetContestants();
         bettingAmountInput.text = "0";
 
         for (int i = 0; i < contestants.Length; i++)
@@ -1909,7 +1909,7 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     void DayEnd(int week = 0)
     {
-        contestants = null;
+        contestantsData = null;
         calendar.Today++;
         calendar.TurnPageCalendar(0);
 
