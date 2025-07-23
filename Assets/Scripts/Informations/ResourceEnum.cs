@@ -58,6 +58,7 @@ namespace ResourceEnum
         Map_2x2_08,
         Map_2x2_09,
         Map_2x2_10,
+        Map_2x2_11,
         Map_3x3_01,
         Map_3x3_02,
         Map_3x3_03,

@@ -57,6 +57,7 @@ public class ResourcesPath
         "NavMeshDatas/Map_2x2_08",
         "NavMeshDatas/Map_2x2_09",
         "NavMeshDatas/Map_2x2_10",
+        "NavMeshDatas/Map_2x2_11",
         "NavMeshDatas/Map_3x3_01",
         "NavMeshDatas/Map_3x3_02",
         "NavMeshDatas/Map_3x3_03",

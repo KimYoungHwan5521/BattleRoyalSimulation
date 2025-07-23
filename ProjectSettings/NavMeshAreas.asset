@@ -12,9 +12,9 @@ NavMeshProjectSettings:
   - name: Jump
     cost: 2
   - name: Prohibit_planned
-    cost: 10
+    cost: 1
   - name: Prohibited
-    cost: 100
+    cost: 1
   - name: 
     cost: 1
   - name: 
