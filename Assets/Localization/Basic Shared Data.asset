@@ -1074,6 +1074,46 @@ MonoBehaviour:
     m_Key: Click today's league in the schedule to go to the Battle Royale.
     m_Metadata:
       m_Items: []
+  - m_Id: 20246174931415040
+    m_Key: Help:Victory Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355684815663104
+    m_Key: Total Record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355686745042944
+    m_Key: Win Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355688380821504
+    m_Key: Total Record Gold+
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355690075320320
+    m_Key: Total Kill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355691618824192
+    m_Key: Total Survival Time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355710430277632
+    m_Key: Total Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20356972957724672
+    m_Key: Total Medical Cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20356975931486208
+    m_Key: Total Damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20356978624229376
+    m_Key: Total Take Damage
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

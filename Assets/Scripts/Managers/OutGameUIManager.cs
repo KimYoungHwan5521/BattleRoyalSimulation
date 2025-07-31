@@ -1191,13 +1191,13 @@ public class OutGameUIManager : MonoBehaviour
         }
 
         survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
-        survivorWhoWantSurgery.shceduledSurgeryCost = surgeryList[index].surgeryCost;
+        survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
         survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
         survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
         survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
         OpenConfirmWindow("Confirm:Schedule Surgery", ()=>
         {
-            if(money < survivorWhoWantSurgery.shceduledSurgeryCost)
+            if(money < survivorWhoWantSurgery.scheduledSurgeryCost)
             {
                 Alert("Alert:Not enough money.");
             }
@@ -1214,11 +1214,11 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
-                Money -= survivorWhoWantSurgery.shceduledSurgeryCost;
+                Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
                 SelectSurvivorToSurgery();
                 Alert("Alert:Surgery has been scheduled.");
             }
-        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.shceduledSurgeryCost }");
+        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
     }
 
     public void CancelSurgery()
@@ -1226,8 +1226,8 @@ public class OutGameUIManager : MonoBehaviour
         OpenConfirmWindow("Confirm:Cancel Surgery", () =>
         {
             survivorWhoWantSurgery.surgeryScheduled = false;
-            Money += survivorWhoWantSurgery.shceduledSurgeryCost;
-            survivorWhoWantSurgery.shceduledSurgeryCost = 0;
+            Money += survivorWhoWantSurgery.scheduledSurgeryCost;
+            survivorWhoWantSurgery.scheduledSurgeryCost = 0;
             SelectSurvivorToSurgery();
             Alert("Alert:Surgery has been canceled.");
         });
@@ -2126,7 +2126,8 @@ public class OutGameUIManager : MonoBehaviour
             survivor.RecoverySerumAdministered = true;
         }
 
-        survivor.shceduledSurgeryCost = 0;
+        survivor.totalSurgeryFee += survivor.scheduledSurgeryCost;
+        survivor.scheduledSurgeryCost = 0;
         survivor.surgeryScheduled = false;
     }
 

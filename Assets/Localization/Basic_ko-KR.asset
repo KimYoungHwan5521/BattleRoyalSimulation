@@ -1170,10 +1170,64 @@ MonoBehaviour:
       \uD074\uB9AD\uD574\uC11C \uBC30\uD2C0\uB85C\uC584\uB85C \uAC00\uC138\uC694."
     m_Metadata:
       m_Items: []
+  - m_Id: 20246174931415040
+    m_Localized: "\uC21C\uC704 : \uC0C1\uC704 25% = \uC0C1\uAE08 50%, \uC21C\uC704
+      : \uC0C1\uC704 50% = \uC0C1\uAE08 25%."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355684815663104
+    m_Localized: "\uD1B5\uC0B0 \uC804\uC801 : {0}\uC2B9 {1}\uC21C\uC704\uBC29\uC5B4
+      {2}\uD328"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20355686745042944
+    m_Localized: "\uC2B9\uB960 : {0}% (\uC2B9+\uC21C\uC704\uBC29\uC5B4\uC728 {1}%)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20355688380821504
+    m_Localized: "\uACE8\uB4DC \uB9AC\uADF8 \uC774\uC0C1 \uC804\uC801 : {0}\uC2B9
+      {1}\uC21C\uC704\uBC29\uC5B4 {2}\uD328"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20355690075320320
+    m_Localized: "\uCD1D \uCC98\uCE58 \uC218 : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20355691618824192
+    m_Localized: "\uCD1D \uC0DD\uC874\uC2DC\uAC04: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20355710430277632
+    m_Localized: "\uCD1D \uC0C1\uAE08 : <color=green>{0}$</color> (\uC21C\uC704\uC0C1\uAE08
+      {1}$ + \uCC98\uCE58\uC0C1\uAE08 {2}$)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20356972957724672
+    m_Localized: "\uCD1D \uCE58\uB8CC\uBE44 : <color=red>{0}$</color> (\uC751\uAE09\uCC98\uCE58
+      \uBC0F \uC218\uD608\uBE44 {1}$ + \uC218\uC220\uBE44 {2}$)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20356975931486208
+    m_Localized: "\uCD1D \uC785\uD78C \uD53C\uD574\uB7C9 : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 20356978624229376
+    m_Localized: "\uCD1D \uBC1B\uC740 \uD53C\uD574\uB7C9 : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359336
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b61200000f098326351480000f098a56351480000f018076451480000f0186c6451480000f018c86451480000f058296951480000f0d81d8f52480000f018cf8f52480000f0986f90524800

@@ -1124,10 +1124,62 @@ MonoBehaviour:
     m_Localized: Haz clic en la liga de hoy en el calendario para ir al Battle Royale.
     m_Metadata:
       m_Items: []
+  - m_Id: 20246174931415040
+    m_Localized: "Clasificaci\xF3n: Top 25 % = 50 % de recompensa, Top 50 % = 25
+      %."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355684815663104
+    m_Localized: "R\xE9cord total: {0} victorias, {1} defensas de rango, {2} derrotas"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20355686745042944
+    m_Localized: 'Tasa de victoria: {0}% (victorias + defensa de rango: {1}%)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20355688380821504
+    m_Localized: "R\xE9cord Liga Oro+: {0} victorias, {1} defensas, {2} derrotas"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20355690075320320
+    m_Localized: 'Total de bajas: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20355691618824192
+    m_Localized: 'Tiempo total de supervivencia: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20355710430277632
+    m_Localized: 'Recompensa total: <color=green>{0}$</color> (rango {1}$ + bajas
+      {2}$)'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20356972957724672
+    m_Localized: "Costo m\xE9dico total: <color=red>{0}$</color> (primeros auxilios
+      + transfusi\xF3n {1}$ + cirug\xEDa {2}$)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20356975931486208
+    m_Localized: "Da\xF1o total infligido: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 20356978624229376
+    m_Localized: "Da\xF1o total recibido: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
   references:
     version: 2
     RefIds:
     - rid: 7835753295874359332
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b612000
+        m_Entries: 00f0d8a04f51000000f0185a5c47000000f0582d8452060000f058208552060000f0583fbc53060000f098debc53060000f098acbc53060000f05865bc53060000f058c013aa060000f0583414aa060000f018749fe3070000f058f7b7d0080000f0186dbbd0080000f058a3b8d0080000f018122acf080000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f058b69ee3070000f018c4243c0e0000f0583f1f850e0000f0d8921b61200000f098326351480000f098a56351480000f018076451480000f0186c6451480000f018c86451480000f0986f9052480000f018cf8f52480000f058296951480000f0d81d8f524800

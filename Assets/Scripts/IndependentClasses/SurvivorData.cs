@@ -186,7 +186,7 @@ public class SurvivorData
     public bool surgeryScheduled;
     public string scheduledSurgeryName;
     public LocalizedString localizedScheduledSurgeryName;
-    public int shceduledSurgeryCost;
+    public int scheduledSurgeryCost;
     public InjurySite surgerySite;
     public SurgeryType surgeryType;
     public CharacteristicType surgeryCharacteristic;
@@ -208,6 +208,30 @@ public class SurvivorData
     [SerializeField] public ItemManager.Craftable priority1Crafting = null;
     public int priority1CraftingToInt = -1;
     public bool[] craftingAllows;
+
+    // Stastics
+    public int winCount;
+    public int rankDefenseCount;
+    public int loseCount;
+    public int winCountGoldPlus;
+    public int rankDefenseCountGoldPlus;
+    public int loseCountGoldPlus;
+    public int totalKill;
+    public float totalSurvivedTime;
+    public int totalRankPrize;
+    public int totalKillPrize;
+    public int totalTreatmentFee;
+    public int totalSurgeryFee;
+    public float totalGiveDamage;
+    public float totalTakeDamage;
+    public bool wonBronzeLeague;
+    public bool wonSilverLeague;
+    public bool wonGoldLeague;
+    public bool wonSeasonChampionship;
+    public bool wonWorldChampionship;
+    public bool wonMeleeLeague;
+    public bool wonRangedLeague;
+    public bool wonCraftingLeague;
 
     public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {

@@ -68,6 +68,28 @@ public class SurvivorSaveData
     public ItemManager.Craftable priority1Crafting;
     public int priority1CraftingToInt;
     public bool[] craftingAllows;
+    public int winCount;
+    public int rankDefenseCount;
+    public int loseCount;
+    public int winCountGoldPlus;
+    public int rankDefenseCountGoldPlus;
+    public int loseCountGoldPlus;
+    public int totalKill;
+    public float totalSurvivedTime;
+    public int totalRankPrize;
+    public int totalKillPrize;
+    public int totalTreatmentFee;
+    public int totalSurgeryFee;
+    public float totalGiveDamage;
+    public float totalTakeDamage;
+    public bool wonBronzeLeague;
+    public bool wonSilverLeague;
+    public bool wonGoldLeague;
+    public bool wonSeasonChampionship;
+    public bool wonWorldChampionship;
+    public bool wonMeleeLeague;
+    public bool wonRangedLeague;
+    public bool wonCraftingLeague;
 }
 
 [Serializable]

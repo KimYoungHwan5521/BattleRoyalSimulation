@@ -78,44 +78,78 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
+    // playerWin | 1: win, 25: top 25%, 50: top 50%, -1 : bottom 50%
+    int playerWin;
+    int winPrize = 0;
+    int killPrize = 0;
+    int totalTreatmentCost = 0;
     void SetText(bool didPlayerParticipate, out int totalProfit)
     {
         totalProfit = 0;
         if (didPlayerParticipate)
         {
             Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
-            bool playerWin = GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0;
-            LocalizedString resultText = playerWin ? new LocalizedString("Basic", "Your survivor won!") : new LocalizedString("Basic", "Your survivor was defeated.");
+            playerWin = -1;
+            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0) playerWin = 1;
+            else
+            {
+                for(int i=0; i<GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
+                {
+                    float percentile = (float)i + 1 / GameManager.Instance.BattleRoyaleManager.rankings.Length;
+                    if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
+                    {
+                        if (percentile <= 0.25f) playerWin = 25;
+                        else if (percentile <= 0.5f) playerWin = 50;
+                        else playerWin = -1;
+                        break;
+                    }
+                }
+            }
+            LocalizedString resultText = playerWin == 1 ? new LocalizedString("Basic", "Your survivor won!") : new LocalizedString("Basic", "Your survivor was defeated.");
             resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
             gameResultText.text = resultText.GetLocalizedString();
             survivedTimeText.text = $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
             killsText.text = $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
             totalDamageText.text = $"{new LocalizedString("Basic", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
 
-            int winPrize = 0;
-            int killPrize = 0;
-            int totalTreatmentCost = 0;
+            winPrize = 0;
+            killPrize = 0;
+            totalTreatmentCost = 0;
             switch (calendar.LeagueReserveInfo[calendar.Today].league)
             {
                 case League.BronzeLeague:
-                    if (playerWin) winPrize = 1000;
+                    if (playerWin == 1) winPrize = 1000;
+                    else if (playerWin == 50) winPrize = 500;
                     killPrize = playerSurvivor.KillCount * 100;
                     break;
                 case League.SilverLeague:
-                    if (playerWin) winPrize = 3000;
+                    if (playerWin == 1) winPrize = 3000;
+                    else if (playerWin == 25) winPrize = 1500;
+                    else if (playerWin == 50) winPrize = 750;
                     killPrize = playerSurvivor.KillCount * 200;
                     break;
                 case League.GoldLeague:
-                    if (playerWin) winPrize = 10000;
+                    if (playerWin == 1) winPrize = 10000;
+                    else if (playerWin == 25) winPrize = 5000;
+                    else if (playerWin == 50) winPrize = 2500;
                     killPrize = playerSurvivor.KillCount * 500;
                     break;
                 case League.SeasonChampionship:
-                    if (playerWin) winPrize = 30000;
+                    if (playerWin == 1) winPrize = 30000;
+                    else if (playerWin == 25) winPrize = 15000;
+                    else if (playerWin == 50) winPrize = 7500;
                     killPrize = playerSurvivor.KillCount * 1000;
                     break;
                 case League.WorldChampionship:
-                    if (playerWin) winPrize = 100000;
+                    if (playerWin == 1) winPrize = 100000;
+                    else if (playerWin == 25) winPrize = 50000;
+                    else if (playerWin == 50) winPrize = 25000;
                     killPrize = playerSurvivor.KillCount * 3000;
+                    break;
+                default:
+                    if (playerWin == 1) winPrize = 30000;
+                    else if (playerWin == 25) winPrize = 15000;
+                    else if (playerWin == 50) winPrize = 7500;
                     break;
             }
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
@@ -157,7 +191,7 @@ public class GameResult : MonoBehaviour
             totalTreatmentCostText.text = $"{new LocalizedString("Basic", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
             totalProfit = winPrize + killPrize - totalTreatmentCost;
 
-            if (playerWin) Promote(playerSurvivor.LinkedSurvivorData);
+            if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
         }
         else
         {
@@ -267,6 +301,7 @@ public class GameResult : MonoBehaviour
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
             foreach (GameObject buried in survivor.burieds) PoolManager.Despawn(buried);
         }
+        if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);
@@ -279,6 +314,63 @@ public class GameResult : MonoBehaviour
         // Auto save
         GameManager.Instance.Save(0);
         GameManager.Instance.Option.SetSaveButtonInteractable(true);
+    }
+
+    void LinkStastics()
+    {
+        SurvivorData survivor = outGameUIManager.MySurvivorDataInBattleRoyale;
+        var league = calendar.LeagueReserveInfo[calendar.Today].league;
+        bool goldPlus = league != League.BronzeLeague && league != League.SilverLeague;
+        if(playerWin == 1)
+        {
+            survivor.winCount++;
+            if(goldPlus) survivor.winCountGoldPlus++;
+            switch(league)
+            {
+                case League.BronzeLeague:
+                    survivor.wonBronzeLeague = true;
+                    break;
+                case League.SilverLeague:
+                    survivor.wonSilverLeague = true;
+                    break;
+                case League.GoldLeague:
+                    survivor.wonGoldLeague = true;
+                    break;
+                case League.SeasonChampionship:
+                    survivor.wonSeasonChampionship = true;
+                    break;
+                case League.WorldChampionship:
+                    survivor.wonWorldChampionship = true;
+                    break;
+                case League.MeleeLeague:
+                    survivor.wonMeleeLeague = true;
+                    break;
+                case League.RangeLeague:
+                    survivor.wonRangedLeague = true;
+                    break;
+                case League.CraftingLeague:
+                    survivor.wonCraftingLeague = true;
+                    break;
+            }
+        }
+        else if(playerWin > 1)
+        {
+            survivor.rankDefenseCount++;
+            if (goldPlus) survivor.rankDefenseCountGoldPlus++;
+        }
+        else
+        {
+            survivor.loseCount++;
+            if (goldPlus) survivor.loseCountGoldPlus++;
+        }
+        Survivor pawn = GameManager.Instance.BattleRoyaleManager.Survivors[0];
+        survivor.totalKill += pawn.KillCount;
+        survivor.totalSurvivedTime += pawn.SurvivedTime;
+        survivor.totalGiveDamage += pawn.TotalDamage;
+        survivor.totalTakeDamage += pawn.MaxHP - pawn.CurHP;
+        survivor.totalRankPrize += winPrize;
+        survivor.totalKillPrize += killPrize;
+        survivor.totalTreatmentFee += totalTreatmentCost;
     }
 
     public void KeepWatching()

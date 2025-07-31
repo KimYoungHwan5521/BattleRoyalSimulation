@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class SurvivorInfo : MonoBehaviour
@@ -73,6 +74,24 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] Image rightLittleToe;
     [SerializeField] Image leftLittleToe;
 
+    [Header("Stastics")]
+    [SerializeField] GameObject trophyBronze;
+    [SerializeField] GameObject trophySilver;
+    [SerializeField] GameObject trophyGold;
+    [SerializeField] GameObject trophySeason;
+    [SerializeField] GameObject trophyMelee;
+    [SerializeField] GameObject trophyRanged;
+    [SerializeField] GameObject trophyCrafting;
+    [SerializeField] GameObject trophyWorld;
+    [SerializeField] TextMeshProUGUI totalRecord;
+    [SerializeField] TextMeshProUGUI totalRecordGoldPlus;
+    [SerializeField] TextMeshProUGUI totalKill;
+    [SerializeField] TextMeshProUGUI totalSurvivalTime;
+    [SerializeField] TextMeshProUGUI totalPrize;
+    [SerializeField] TextMeshProUGUI totalFee;
+    [SerializeField] TextMeshProUGUI totalGiveDamage;
+    [SerializeField] TextMeshProUGUI totalTakeDamage;
+
     [SerializeField] GameObject soldOutImage;
     bool soldOut;
     public bool SoldOut
@@ -86,6 +105,11 @@ public class SurvivorInfo : MonoBehaviour
     }
 
     public SurvivorData survivorData;
+
+    private void Start()
+    {
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
 
     public void SetInfo(LocalizedString survivorName, int strength, int agility, int fighting, int shooting,
         int knowledge, int characteristicsCount, int price, Tier tier)
@@ -144,6 +168,7 @@ public class SurvivorInfo : MonoBehaviour
         }
         SetInjury(wantSurvivorData.injuries);
         SetCharacteristic();
+        SetStastics();
     }
 
     Image GetTargetImage(InjurySite site)
@@ -333,5 +358,92 @@ public class SurvivorInfo : MonoBehaviour
     public void SetCharacteristic()
     {
         characteristicsLayout.ArrangeCharacteristics(survivorData);
+    }
+
+    void SetStastics()
+    {
+        if (trophyBronze == null) return;
+        trophyBronze.SetActive(survivorData.wonBronzeLeague);
+        trophySilver.SetActive(survivorData.wonSilverLeague);
+        trophyGold.SetActive(survivorData.wonGoldLeague);
+        trophySeason.SetActive(survivorData.wonSeasonChampionship);
+        trophyMelee.SetActive(survivorData.wonMeleeLeague);
+        trophyRanged.SetActive(survivorData.wonRangedLeague);
+        trophyCrafting.SetActive(survivorData.wonCraftingLeague);
+        trophyWorld.SetActive(survivorData.wonWorldChampionship);
+
+        LocalizedString localizedString = new("Basic", "Total Record")
+        {
+            Arguments = new[] { $"{survivorData.winCount}", $"{survivorData.rankDefenseCount}", $"{survivorData.loseCount}" }
+        };
+        totalRecord.text = $"{localizedString.GetLocalizedString()}\n";
+        string winRate = survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount > 0 ? 
+            $"{survivorData.winCount / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount):0.##}" : "0";
+        string rankDefenseRate = survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount > 0 ? 
+            $"{(survivorData.winCount + survivorData.rankDefenseCount) / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount):0.##}" : "0";
+        localizedString = new("Basic", "Win Rate")
+        {
+            Arguments = new[] { winRate, rankDefenseRate }
+        };
+        totalRecord.text += localizedString.GetLocalizedString();
+
+        localizedString = new("Basic", "Total Record Gold+")
+        {
+            Arguments = new[] {$"{survivorData.winCountGoldPlus}", $"{survivorData.rankDefenseCountGoldPlus}", $"{survivorData.loseCountGoldPlus}" }
+        };
+        totalRecordGoldPlus.text = $"{localizedString.GetLocalizedString()}\n";
+        winRate = survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus > 0 ?
+            $"{survivorData.winCountGoldPlus / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus):0.##}" : "0";
+        rankDefenseRate = survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus > 0 ?
+            $"{(survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus) / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus):0.##}" : "0";
+        localizedString = new("Basic", "Win Rate")
+        {
+            Arguments = new[] { winRate, rankDefenseRate }
+        };
+        totalRecordGoldPlus.text += localizedString.GetLocalizedString();
+
+        localizedString = new("Basic", "Total Kill")
+        {
+            Arguments = new[] { $"{survivorData.totalKill}" }
+        };
+        totalKill.text = localizedString.GetLocalizedString();
+
+        int time = (int)survivorData.totalSurvivedTime;
+        localizedString = new("Basic", "Total Survival Time")
+        {
+            Arguments = new[] { $"{time / 3600}h {(time % 3600) / 60}m {time % 60}s" }
+        };
+        totalSurvivalTime.text = localizedString.GetLocalizedString();
+
+        string total = $"{survivorData.totalRankPrize + survivorData.totalKillPrize}";
+        localizedString = new("Basic", "Total Reward")
+        {
+            Arguments = new[] { total, $"{survivorData.totalRankPrize}", $"{survivorData.totalKillPrize}" }
+        };
+        totalPrize.text = localizedString.GetLocalizedString();
+
+        total = $"{survivorData.totalTreatmentFee + survivorData.totalSurgeryFee}";
+        localizedString = new("Basic", "Total Medical Cost")
+        {
+            Arguments = new[] { total, $"{survivorData.totalTreatmentFee}", $"{survivorData.totalSurgeryFee}" }
+        };
+        totalFee.text = localizedString.GetLocalizedString();
+
+        localizedString = new("Basic", "Total Damage")
+        {
+            Arguments = new[] { $"{survivorData.totalGiveDamage}" }
+        };
+        totalGiveDamage.text = localizedString.GetLocalizedString();
+
+        localizedString = new("Basic", "Total Take Damage")
+        {
+            Arguments = new[] { $"{survivorData.totalTakeDamage}" }
+        };
+        totalTakeDamage.text = localizedString.GetLocalizedString();
+    }
+
+    void OnLocaleChanged(Locale newLocale)
+    {
+        SetStastics();
     }
 }
