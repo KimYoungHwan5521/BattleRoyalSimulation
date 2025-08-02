@@ -1,4 +1,5 @@
 using NavMeshPlus.Components;
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -60,6 +61,20 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        if (!SteamAPI.Init())
+        {
+            Debug.LogError("SteamAPI 초기화 실패");
+            //Application.Quit();
+        }
+        else
+        {
+            Debug.Log("SteamAPI 초기화 성공");
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        SteamAPI.Shutdown();
     }
 
     public IEnumerator Start()
@@ -123,6 +138,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (!gameReady) return;
+        //SteamAPI.RunCallbacks(); // 필수!
 
         ManagerStart?.Invoke();
         ManagerStart = null;

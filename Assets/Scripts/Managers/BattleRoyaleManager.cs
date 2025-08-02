@@ -212,6 +212,7 @@ public class BattleRoyaleManager
                 //if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
                 //else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
                 survivor.SetSurvivorInfo(OutGameUIManager.contestantsData[survivorIndex]);
+                if (OutGameUIManager.MySurvivorDataInBattleRoyale != null) survivor.playerSurvivor = true;
 
                 if(survivorIndex < colorInfo.Length)
                 {

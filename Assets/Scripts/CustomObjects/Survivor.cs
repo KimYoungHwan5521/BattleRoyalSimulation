@@ -462,10 +462,26 @@ public class Survivor : CustomObject
     #endregion
     #region Game Result
     [Header("Game Result")]
+    public bool playerSurvivor;
     float survivedTime;
     public float SurvivedTime => survivedTime;
     int killCount;
-    public int KillCount => killCount;
+    public int KillCount
+    {
+        get { return killCount; }
+        set
+        {
+            if(playerSurvivor)
+            {
+                PlayerPrefs.SetInt("Total Kill", value - killCount);
+                if (PlayerPrefs.GetInt("Total Kill") > 100) AcheivementManager.UnlockAchievement("Bloody Hands");
+                else if (PlayerPrefs.GetInt("Total Kill") > 10) AcheivementManager.UnlockAchievement("Bloody Arms");
+
+                if (value >= 5) AcheivementManager.UnlockAchievement("Pentakill");
+            }
+            killCount = value;
+        }
+    }
     float totalDamage;
     public float TotalDamage => totalDamage;
     #endregion
@@ -657,7 +673,7 @@ public class Survivor : CustomObject
             string cause;
             if (survivorWhoCausedBleeding != null)
             {
-                survivorWhoCausedBleeding.killCount++;
+                survivorWhoCausedBleeding.KillCount++;
                 cause = survivorWhoCausedBleeding.survivorName.GetLocalizedString();
                 survivorWhoCausedBleeding = null;
             }
@@ -2059,6 +2075,13 @@ public class Survivor : CustomObject
                 else if (item is BulletproofVest) isEquipable = 2;
                     GetItem(item);
             }
+            if(playerSurvivor)
+            {
+                linkedSurvivorData.craftingCount++;
+                PlayerPrefs.SetInt("Total Crafting Count", PlayerPrefs.GetInt("Total Crafting Count") + 1);
+                if (PlayerPrefs.GetInt("Total Crafting Count") >= 100) AcheivementManager.UnlockAchievement("Foreman");
+                if (linkedSurvivorData.craftingCount >= 10) AcheivementManager.UnlockAchievement("Craftsman");
+            }
 
             float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
             if (chanceToIncreaseStat < currentCrafting.requiredKnowledge * 0.1f) linkedSurvivorData.Crafting++;
@@ -2652,7 +2675,7 @@ public class Survivor : CustomObject
         if (curHP <= 0)
         {
             curHP = 0;
-            attacker.killCount++;
+            attacker.KillCount++;
             InGameUIManager.UpdateSelectedObjectKillCount(attacker);
             attacker.FindNewNearestFarmingTarget();
             IsDead = true;
@@ -2773,7 +2796,7 @@ public class Survivor : CustomObject
         if (curHP <= 0)
         {
             curHP = 0;
-            poisonOriginator.killCount++;
+            poisonOriginator.KillCount++;
             InGameUIManager.UpdateSelectedObjectKillCount(poisonOriginator);
             IsDead = true;
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), poisonOriginator.survivorName.GetLocalizedString());
@@ -2911,6 +2934,11 @@ public class Survivor : CustomObject
     public void TakeDamage(Trap trap, InjurySite injurySite)
     {
         ApplyDamage(trap.setter, trap.Damage, InjurySiteMajor.Legs, injurySite, trap.DamageType);
+        if(IsDead && trap.setter.playerSurvivor)
+        {
+            PlayerPrefs.SetInt("Total Trap Kill", PlayerPrefs.GetInt("Total Trap Kill") + 1);
+            if (PlayerPrefs.GetInt("Total Trap Kill") >= 10) AcheivementManager.UnlockAchievement("Sun Tzu");
+        }
     }
 
     public void TakeDamage(Trap trap, float damage, int side = 0)

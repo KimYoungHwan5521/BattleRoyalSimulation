@@ -90,6 +90,7 @@ public class SurvivorSaveData
     public bool wonMeleeLeague;
     public bool wonRangedLeague;
     public bool wonCraftingLeague;
+    public int craftingCount;
 }
 
 [Serializable]

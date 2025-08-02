@@ -39,6 +39,8 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.BigMan)) result = (int)(result * 1.15f);
             if (ClutchThePerformance) result += 10;
             else if(ChockingUnderPressure) result -= 10;
+
+            if (result >= 100) AcheivementManager.UnlockAchievement("Powerhouse");
             return Mathf.Max(result, 0);
         }
     }
@@ -55,6 +57,8 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
+
+            if (result >= 100) AcheivementManager.UnlockAchievement("Quick-Footed");
             return Mathf.Max(result, 0);
         }
     }
@@ -71,8 +75,9 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
-            return Mathf.Max(result, 0);
 
+            if (result >= 100) AcheivementManager.UnlockAchievement("Martial Artist");
+            return Mathf.Max(result, 0);
         }
     }
     public int Shooting
@@ -86,6 +91,8 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
+
+            if (result >= 100) AcheivementManager.UnlockAchievement("Sharpshooter");
             return Mathf.Max(result, 0);
         }
     }
@@ -99,6 +106,8 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
+
+            if (result >= 100) AcheivementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);
         }
     }
@@ -232,6 +241,7 @@ public class SurvivorData
     public bool wonMeleeLeague;
     public bool wonRangedLeague;
     public bool wonCraftingLeague;
+    public int craftingCount;
 
     public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
     {

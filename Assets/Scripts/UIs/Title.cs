@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Title : MonoBehaviour
 {
     public GameObject title;
+    [SerializeField] GameObject credits;
     [SerializeField] RectTransform buttonsRect;
 
     private void Start()
@@ -38,6 +39,12 @@ public class Title : MonoBehaviour
 #else
     Application.Quit();
 #endif
+    }
+
+    public void Credits()
+    {
+        credits.SetActive(true);
+        GameManager.Instance.openedWindows.Push(credits);
     }
 
     void OnLocaleChanged(Locale newLocale)

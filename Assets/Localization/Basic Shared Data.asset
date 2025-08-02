@@ -1114,6 +1114,14 @@ MonoBehaviour:
     m_Key: Total Take Damage
     m_Metadata:
       m_Items: []
+  - m_Id: 20985916245471232
+    m_Key: Theoretical max payout is 6,375,600x.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21070832937267200
+    m_Key: Credits
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

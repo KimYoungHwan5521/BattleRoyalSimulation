@@ -63,6 +63,7 @@ public static class SaveManager
             wonMeleeLeague = data.wonMeleeLeague,
             wonRangedLeague = data.wonRangedLeague,
             wonCraftingLeague = data.wonCraftingLeague,
+            craftingCount = data.craftingCount,
 };
 
         foreach (var kv in data.strategyDictionary)
@@ -125,6 +126,7 @@ public static class SaveManager
             wonMeleeLeague = saveData.wonMeleeLeague,
             wonRangedLeague = saveData.wonRangedLeague,
             wonCraftingLeague = saveData.wonCraftingLeague,
+            craftingCount = saveData.craftingCount,
 };
 
         survivor.strategyDictionary.Clear();
