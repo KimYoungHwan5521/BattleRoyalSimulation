@@ -1192,6 +1192,10 @@ MonoBehaviour:
     m_Localized: "Cr\xE9dits"
     m_Metadata:
       m_Items: []
+  - m_Id: 21371860463185920
+    m_Localized: Supprimer la condition
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

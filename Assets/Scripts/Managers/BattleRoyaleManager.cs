@@ -234,16 +234,13 @@ public class BattleRoyaleManager
     public void SetProhibitArea(int number)
     {
         int count = 0;
-        List<Area> turnedOn = new();
         foreach (Area area in areas)
         {
             if (area.IsProhibited_Plan) area.IsProhibited = true;
-            turnedOn.Add(area);
         }
         foreach (Area area in areas) if (!area.IsProhibited_Plan && !area.IsProhibited) count++;
         if (count == 1)
         {
-            //foreach (var area in turnedOn) area.TurnOffWater();
             return;
         }
         if (number >= count) number = count;
@@ -267,7 +264,6 @@ public class BattleRoyaleManager
                 if(!CheckPathBlock(candidate))
                 {
                     candidate.IsProhibited_Plan = true;
-                    turnedOn.Add(candidate);
                     foreach (Survivor survivor in survivors)
                     {
                         survivor.RemoveProhibitArea(candidate);
@@ -282,7 +278,6 @@ public class BattleRoyaleManager
             }
         }
         //GameManager.Instance.NavMeshSurface.BuildNavMesh();
-        //foreach (var area in turnedOn) area.TurnOffWater();
     }
 
     // true : blocked, false : not blocked

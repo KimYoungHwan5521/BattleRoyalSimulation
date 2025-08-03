@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 using UnityEngine.UI;
 
 public class LoadingCanvas : MonoBehaviour
@@ -61,6 +62,6 @@ public class LoadingCanvas : MonoBehaviour
     void ResetTooltip()
     {
         int rand = Random.Range(0, tooltips.Count);
-        tooltipText.text = tooltips[rand].GetLocalizedString();
+        tooltipText.GetComponent<LocalizeStringEvent>().StringReference = tooltips[rand];
     }
 }

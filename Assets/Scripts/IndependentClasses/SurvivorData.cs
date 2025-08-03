@@ -40,7 +40,7 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if(ChockingUnderPressure) result -= 10;
 
-            if (result >= 100) AcheivementManager.UnlockAchievement("Powerhouse");
+            if (id > 0 && result >= 100) AcheivementManager.UnlockAchievement("Powerhouse");
             return Mathf.Max(result, 0);
         }
     }
@@ -58,7 +58,7 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (result >= 100) AcheivementManager.UnlockAchievement("Quick-Footed");
+            if (id > 0 && result >= 100) AcheivementManager.UnlockAchievement("Quick-Footed");
             return Mathf.Max(result, 0);
         }
     }
@@ -76,7 +76,7 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (result >= 100) AcheivementManager.UnlockAchievement("Martial Artist");
+            if (id > 0 && result >= 100) AcheivementManager.UnlockAchievement("Martial Artist");
             return Mathf.Max(result, 0);
         }
     }
@@ -92,7 +92,7 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (result >= 100) AcheivementManager.UnlockAchievement("Sharpshooter");
+            if (id > 0 && result >= 100) AcheivementManager.UnlockAchievement("Sharpshooter");
             return Mathf.Max(result, 0);
         }
     }
@@ -107,7 +107,7 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (result >= 100) AcheivementManager.UnlockAchievement("Genius");
+            if (id > 0 && result >= 100) AcheivementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);
         }
     }

@@ -1062,7 +1062,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     surgeryName = new LocalizedString("Injury", "Prosthetic Implant")
                     {
-                        Arguments = new[] { new LocalizedString("injury", injury.site.ToString()) }
+                        Arguments = new[] { new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString() }
                     };
                     switch(injury.site)
                     {
@@ -1157,19 +1157,19 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
 
-            for (int i = 0; i < surgeries.Length; i++)
+        for (int i = 0; i < surgeries.Length; i++)
+        {
+            if (i < surgeryList.Count)
             {
-                if (i < surgeryList.Count)
-                {
-                    surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
-                    surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
-                    surgeries[i].SetActive(true);
-                }
-                else
-                {
-                    surgeries[i].SetActive(false);
-                }
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
+                surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
+                surgeries[i].SetActive(true);
             }
+            else
+            {
+                surgeries[i].SetActive(false);
+            }
+        }
         surgeries[0].GetComponentInChildren<Toggle>().isOn = true;
     }
 
@@ -1665,6 +1665,7 @@ public class OutGameUIManager : MonoBehaviour
         selectedContestant.SetActive(false);
 
         bettingRoom.SetActive(true);
+        sortContestantsListDropdown.RelocalizeOptions();
         GameManager.Instance.openedWindows.Push(bettingRoom);
     }
 
@@ -1915,6 +1916,7 @@ public class OutGameUIManager : MonoBehaviour
         calendar.Today++;
         calendar.TurnPageCalendar(0);
 
+        dailyResult.SetActive(true);
         int index = 0;
         foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
         foreach (SurvivorData survivor in mySurvivorsData)
@@ -1950,7 +1952,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 
-        dailyResult.SetActive(true);
+        GameManager.Instance.FixLayout(dailyResult.GetComponent<RectTransform>());
         GameManager.Instance.openedWindows.Push(dailyResult);
     }
 
@@ -2097,7 +2099,11 @@ public class OutGameUIManager : MonoBehaviour
 
     void Surgery(SurvivorData survivor)
     {
-        if (!survivor.surgeryScheduled) return;
+        if (!survivor.surgeryScheduled)
+        {
+            hadSurgery = false;
+            return;
+        }
         hadSurgery = true;
         whoUnderwentSurgery = survivor.localizedSurvivorName;
         performedSurgery = survivor.localizedScheduledSurgeryName;

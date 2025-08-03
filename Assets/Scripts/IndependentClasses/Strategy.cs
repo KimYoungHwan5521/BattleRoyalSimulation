@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public enum StrategyCase
@@ -134,6 +135,7 @@ public class Strategy : MonoBehaviour
         ActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         ElseActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
         andOrs[0].gameObject.SetActive(false);
+        LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
     public void SetDefault()
@@ -289,6 +291,19 @@ public class Strategy : MonoBehaviour
                 inputFields[i].text = copyStrategy.conditions[i].inputInt.ToString();
             }
             ElseActionDropdown.value = copyStrategy.elseAction;
+        }
+    }
+
+    void OnLocaleChanged(Locale locale)
+    {
+        for(int i=0; i<conditions.Length;i++)
+        {
+            andOrs[i].ClearOptions();
+            andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
+            notValids[i].SetActive(false);
+            variable1s[i].ClearOptions();
+            variable1s[i].AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "My weapon").GetLocalizedString(), new LocalizedString("Basic", "Enemy's weapon").GetLocalizedString(), new LocalizedString("Basic", "My health").GetLocalizedString(), new LocalizedString("Basic", "That enemy").GetLocalizedString(), new LocalizedString("Basic", "Distance to enemy").GetLocalizedString() }));
+            OnVariable1Changed(i);
         }
     }
 }

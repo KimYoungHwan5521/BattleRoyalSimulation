@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class Survivor : CustomObject
@@ -137,6 +136,7 @@ public class Survivor : CustomObject
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
     Vector3 lastVelocity;
+    bool temporaryAllowProhibitArea;
     #endregion
     #region Characteristic
     [Header("Characteristic")]
@@ -744,6 +744,16 @@ public class Survivor : CustomObject
         //if (curAICool++ < GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) return;
         //aiCool = GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count;
         //curAICool = 0;
+        if(temporaryAllowProhibitArea)
+        {
+            if (!GetCurrentArea().IsProhibited_Plan && !GetCurrentArea().IsProhibited)
+            {
+                temporaryAllowProhibitArea = false;
+                agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Prohibited"));
+                agent.areaMask &= ~(1 << NavMesh.GetAreaFromName("Prohibit_planned"));
+            }
+        }
+
         if(isBlind)
         {
             agent.SetDestination(transform.position);
@@ -2432,7 +2442,7 @@ public class Survivor : CustomObject
                 animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
                 animator.SetTrigger("Fire");
                 float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
-                if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime) linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
+                if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime * 0.01f) linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
                 curShotTime = CurrentWeaponAsRangedWeapon.ShotCoolTime;
             }
         }
@@ -4104,7 +4114,7 @@ public class Survivor : CustomObject
     {
         int amount;
         if (currentWeapon.itemType == ItemManager.Items.ShotGun) amount = 1;
-        else amount = Math.Clamp(ValidBullet.amount, 1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
+        else amount = Math.Max(1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
         ConsumptionItem(ValidBullet, amount);
         CurrentWeaponAsRangedWeapon.Reload(amount);
         InGameUIManager.UpdateSelectedObjectInventory(this);
@@ -4241,7 +4251,15 @@ public class Survivor : CustomObject
 
     public Area GetCurrentArea()
     {
-        return GameManager.Instance.BattleRoyaleManager.GetArea(transform.position);
+        Area result = GameManager.Instance.BattleRoyaleManager.GetArea(transform.position);
+        if (!isDead)
+        {
+            temporaryAllowProhibitArea = true;
+            if (result.IsProhibited) agent.areaMask |= 1 << NavMesh.GetAreaFromName("Prohibited");
+            else if (result.IsProhibited_Plan) agent.areaMask |= 1 << NavMesh.GetAreaFromName("Prohibit_planned");
+            else temporaryAllowProhibitArea = false;
+        }
+        return result;
     }
 
     public void SetSurvivorInfo(SurvivorData survivorInfo)

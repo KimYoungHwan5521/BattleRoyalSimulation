@@ -1184,6 +1184,10 @@ MonoBehaviour:
     m_Localized: "Cr\xE9ditos"
     m_Metadata:
       m_Items: []
+  - m_Id: 21371860463185920
+    m_Localized: "Eliminar condici\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

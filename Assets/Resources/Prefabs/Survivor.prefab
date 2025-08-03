@@ -1218,7 +1218,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-    shceduledSurgeryCost: 0
+    scheduledSurgeryCost: 0
     surgerySite: 0
     surgeryType: 0
     surgeryCharacteristic: 0
@@ -1237,6 +1237,29 @@ MonoBehaviour:
       craftingTime: 0
     priority1CraftingToInt: 0
     craftingAllows: 
+    winCount: 0
+    rankDefenseCount: 0
+    loseCount: 0
+    winCountGoldPlus: 0
+    rankDefenseCountGoldPlus: 0
+    loseCountGoldPlus: 0
+    totalKill: 0
+    totalSurvivedTime: 0
+    totalRankPrize: 0
+    totalKillPrize: 0
+    totalTreatmentFee: 0
+    totalSurgeryFee: 0
+    totalGiveDamage: 0
+    totalTakeDamage: 0
+    wonBronzeLeague: 0
+    wonSilverLeague: 0
+    wonGoldLeague: 0
+    wonSeasonChampionship: 0
+    wonWorldChampionship: 0
+    wonMeleeLeague: 0
+    wonRangedLeague: 0
+    wonCraftingLeague: 0
+    craftingCount: 0
   isDead: 0
   survivorID: 0
   survivorName:
@@ -1349,6 +1372,7 @@ MonoBehaviour:
   lookAroundCount: 0
   keepAnEyeOnTime: 3
   curKeepAnEyeOnTime: 0
+  playerSurvivor: 0
   references:
     version: 2
     RefIds: []

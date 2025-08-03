@@ -1176,6 +1176,10 @@ MonoBehaviour:
     m_Localized: Credits
     m_Metadata:
       m_Items: []
+  - m_Id: 21371860463185920
+    m_Localized: Delete condition
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
