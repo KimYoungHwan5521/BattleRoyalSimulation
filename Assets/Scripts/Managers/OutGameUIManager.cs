@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Components;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
@@ -2028,6 +2029,20 @@ public class OutGameUIManager : MonoBehaviour
 
     public void EndTheWeek()
     {
+        string warning;
+        bool thereAreUnassignedSurvivors = false;
+        warning = $"\n<color=red><i>{new LocalizedString("Basic", "There are unassigned survivors:").GetLocalizedString()} ";
+        foreach (SurvivorData survivor in mySurvivorsData)
+        {
+            if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
+            {
+                thereAreUnassignedSurvivors = true;
+                warning += $"{survivor.localizedSurvivorName.GetLocalizedString()}, ";
+            }
+        }
+        warning = warning[..^2];
+        warning += "</i></color>";
+        if (!thereAreUnassignedSurvivors) warning = "";
         OpenConfirmWindow("Confirm:End the Week", () =>
         {
             int week = 0;
@@ -2040,7 +2055,7 @@ public class OutGameUIManager : MonoBehaviour
                     break;
                 }
             }
-        });
+        }, warning);
     }
 
     public void HideEndTheWeekend(bool hide)

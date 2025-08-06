@@ -37,7 +37,11 @@ public class SurvivorSchedule : MonoBehaviour
             {
                 transform.SetParent(origin, false);
             }
-            if (whereAmI == curTraining) whereAmI = survivor.assignedTraining;
+            if (whereAmI == curTraining)
+            {
+                if(amIOrigin) whereAmI = Training.None;
+                else whereAmI = survivor.assignedTraining;
+            }
             else whereAmI = curTraining;
             amIOrigin = !amIOrigin;
             GameManager.Instance.FixLayout(GameManager.Instance.outCanvas.GetComponent<RectTransform>());
