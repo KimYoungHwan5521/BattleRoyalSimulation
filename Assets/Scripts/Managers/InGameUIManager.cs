@@ -80,6 +80,7 @@ public class InGameUIManager : MonoBehaviour
         {
             currentTab = value;
             statTab.SetActive(value == 0);
+            if(value == 0 && selectedObject is Survivor selectedSurvivor) characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
             inventoryTab.SetActive(value == 1);
             injuriesTab.SetActive(value == 2);
         }

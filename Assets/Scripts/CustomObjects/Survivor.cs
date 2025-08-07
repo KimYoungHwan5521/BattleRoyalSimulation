@@ -404,6 +404,7 @@ public class Survivor : CustomObject
     #region Farming
     [Header("Farming")]
     [SerializeField] Area currentFarmingArea;
+    [SerializeField] public Area lastCurrentArea;
     public Area CurrentFarmingArea
     {
         get => currentFarmingArea;
@@ -4251,7 +4252,7 @@ public class Survivor : CustomObject
 
     public Area GetCurrentArea()
     {
-        Area result = GameManager.Instance.BattleRoyaleManager.GetArea(transform.position);
+        Area result = GameManager.Instance.BattleRoyaleManager.GetArea(transform.position, lastCurrentArea);
         if (!isDead)
         {
             temporaryAllowProhibitArea = true;
@@ -4259,6 +4260,7 @@ public class Survivor : CustomObject
             else if (result.IsProhibited_Plan) agent.areaMask |= 1 << NavMesh.GetAreaFromName("Prohibit_planned");
             else temporaryAllowProhibitArea = false;
         }
+        lastCurrentArea = result;
         return result;
     }
 

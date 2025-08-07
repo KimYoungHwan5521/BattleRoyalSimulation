@@ -421,6 +421,7 @@ public class OutGameUIManager : MonoBehaviour
         hireClose.SetActive(mySurvivorsData.Count > 0);
         hireSurvivor.SetActive(true);
         GameManager.Instance.openedWindows.Push(hireSurvivor);
+        foreach (var survivorInfo in survivorsInHireMarket) survivorInfo.SetCharacteristic();
     }
 
     public void CloseAll()

@@ -208,6 +208,7 @@ public class BattleRoyaleManager
                 Survivor survivor = PoolManager.Spawn(ResourceEnum.Prefab.Survivor, spawnPosition).GetComponent<Survivor>();
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
+                survivor.lastCurrentArea = areas[i];
                 survivor.survivorID = survivorIndex;
                 //if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
                 //else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
@@ -365,11 +366,30 @@ public class BattleRoyaleManager
         GameObject.Destroy(map);
 
     }
+
     public Area GetArea(Vector2 position)
     {
         float distance;
         float minDistance = float.MaxValue;
         Area nearest = null;
+        foreach (var area in areas)
+        {
+            Transform areaTransform = area.transform;
+            distance = Vector2.Distance(position, areaTransform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearest = area;
+            }
+        }
+        return nearest;
+    }
+
+    public Area GetArea(Vector2 position, Area lastArea)
+    {
+        float distance;
+        float minDistance = Vector2.Distance(position, lastArea.transform.position) - 0.01f;
+        Area nearest = lastArea;
         foreach (var area in areas)
         {
             Transform areaTransform = area.transform;
