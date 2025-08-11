@@ -1623,8 +1623,8 @@ public class Survivor : CustomObject
         if(item.amount <= 0)
         {
             inventory.Remove(item);
-            InGameUIManager.UpdateSelectedObjectInventory(this);
         }
+        InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
     // if newWeapon value > current weapon : return true
@@ -1905,7 +1905,8 @@ public class Survivor : CustomObject
                     }
                 }
                 // 이미 보유 중인 아이템은 만들지 않음
-                if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null) continue;
+                if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null || currentWeapon.itemType == craftables[^i].itemType
+                    || currentHelmet.itemType == craftables[^i].itemType || currentVest.itemType == craftables[^i].itemType) continue;
                 // 총 필요성 검사
                 bool gunNeeds = false;
                 if(currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
@@ -1947,7 +1948,7 @@ public class Survivor : CustomObject
                             ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
                             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
                             ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.Bazooka => 4,
+                            ItemManager.Items.Bazooka => 3,
                             _ => 5
                         };
                         int candidateTier = craftables[^i].itemType switch
@@ -1955,7 +1956,7 @@ public class Survivor : CustomObject
                             ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
                             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
                             ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.Bazooka => 4,
+                            ItemManager.Items.Bazooka => 3,
                             _ => 5
                         };
                         gunNeeds = candidateTier > curWeaponTier;
@@ -2020,6 +2021,20 @@ public class Survivor : CustomObject
                                 return true;
                             }
                             else continue;
+                        }
+                        else continue;
+                    case ItemManager.Items.Revolver:
+                    case ItemManager.Items.Pistol:
+                    case ItemManager.Items.SubMachineGun:
+                    case ItemManager.Items.ShotGun:
+                    case ItemManager.Items.SniperRifle:
+                    case ItemManager.Items.AssaultRifle:
+                    case ItemManager.Items.Bazooka:
+                    case ItemManager.Items.LASER:
+                        if (gunNeeds)
+                        {
+                            currentCrafting = craftables[^i];
+                            return true;
                         }
                         else continue;
                     default:
@@ -2181,9 +2196,13 @@ public class Survivor : CustomObject
                 if (Enum.TryParse(curBurying.itemType.ToString(), out ResourceEnum.Prefab trap))
                 {
                     Trap settedTrap = PoolManager.Spawn(trap, trapPlace.transform.position).GetComponent<Trap>();
+                    settedTrap.GetComponent<Animator>().SetTrigger("Reset");
                     if (curBurying.IsEnchanted) settedTrap.Enchant();
                     settedTrap.setter = this;
+                    settedTrap.linkedItem = new Buriable(curBurying.itemType, curBurying.itemName, 10);
                     trapPlace.SetTrap(settedTrap);
+                    ConsumptionItem(Inventory.Find(x => x.itemType == curBurying.itemType), 1);
+                    curBurying = null;
                     burieds.Add(settedTrap.gameObject);
                 }
                 else Debug.LogWarning($"Failed to spawn trap : {curBurying.itemType}");
@@ -2650,7 +2669,7 @@ public class Survivor : CustomObject
     #endregion
 
     #region Take Damage
-    void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, InjurySite specificDamagePart, DamageType damageType)
+    void ApplyDamage(Survivor attacker, float damage, Item weapon, InjurySiteMajor damagePart, InjurySite specificDamagePart, DamageType damageType)
     {
         if (isDead) return;
         Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
@@ -2695,15 +2714,40 @@ public class Survivor : CustomObject
                 GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
                 headshot.transform.SetParent(canvas.transform);
             }
+            if(attacker.playerSurvivor)
+            {
+                if (weapon == null)
+                {
+                    PlayerPrefs.SetInt($"Bare Knuckle Kill", PlayerPrefs.GetInt($"Bare Knuckle Kill") + 1);
+                    if(PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AcheivementManager.UnlockAchievement("Bruce Lee");
+                }
+                else if (weapon is MeleeWeapon)
+                {
+                    PlayerPrefs.SetInt($"Melee Weapon Kill", PlayerPrefs.GetInt($"Melee Weapon Kill") + 1);
+                    if(PlayerPrefs.GetInt($"Melee Weapon Kill") >= 30) AcheivementManager.UnlockAchievement("Lethal Weapon");
+                }
+                else if (weapon is RangedWeapon)
+                {
+                    PlayerPrefs.SetInt($"Ranged Weapon Kill", PlayerPrefs.GetInt($"Ranged Weapon Kill") + 1);
+                    if (PlayerPrefs.GetInt($"Ranged Weapon Kill") >= 30) AcheivementManager.UnlockAchievement("Gunslinger");
+                }
+                if(weapon != null)
+                {
+                    PlayerPrefs.SetInt($"{weapon.itemType} Kill", PlayerPrefs.GetInt($"{weapon.itemType} Kill") + 1);
+                    int count = PlayerPrefs.GetInt($"{weapon.itemType} Kill");
+                    if ((weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted) && count >= 10) AcheivementManager.UnlockAchievement("Sword Master");
+                    if (weapon.itemType == ItemManager.Items.SniperRifle && count >= 10) AcheivementManager.UnlockAchievement("Sniper");
+                }
+            }
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());
         }
 
         if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
         else GetInjury(attacker, specificDamagePart, damageType, damage);
-        if (attacker.currentWeapon is MeleeWeapon weapon && weapon.IsEnchanted) Poisoning(attacker);
+        if (weapon is MeleeWeapon meleeWeapon && meleeWeapon.IsEnchanted) Poisoning(attacker);
     }
 
-    void ApplyDamage(Survivor attacker, float damage, InjurySiteMajor damagePart, DamageType damageType)
+    void ApplyDamage(Survivor attacker, float damage, Item weapon, InjurySiteMajor damagePart, DamageType damageType)
     {
         if (isDead) return;
         if (damage > 0)
@@ -2724,7 +2768,7 @@ public class Survivor : CustomObject
                     }
                 }
             }
-            ApplyDamage(attacker, damage, damagePart, specificDamagePart, damageType);
+            ApplyDamage(attacker, damage, weapon, damagePart, specificDamagePart, damageType);
         }
 
         if (inSightEnemies.Contains(attacker))
@@ -2744,7 +2788,7 @@ public class Survivor : CustomObject
     }
 
     //                                                                                side - 0: don't know / 1: right / 2: left
-    void ApplyExplosionDamage(Survivor attacker, float damage, InjurySiteMajor injurySiteMajor, int side = 0)
+    void ApplyExplosionDamage(Survivor attacker, float damage, Item weapon, InjurySiteMajor injurySiteMajor, int side = 0)
     {
         switch(injurySiteMajor)
         {
@@ -2766,35 +2810,35 @@ public class Survivor : CustomObject
                 if (randCheek < 0.7f) count++;
                 if (randNeck < 0.3f) count++;
                 float dividedDamage = damage / count;
-                ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Head, DamageType.Explosion);
-                if(randLEye < 0.3f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEye, DamageType.Explosion);
-                if(randREye < 0.3f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.RightEye, DamageType.Explosion);
-                if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
-                if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
-                if(randNose < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Nose, DamageType.Explosion);
-                if(randCheek < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Cheek, DamageType.Explosion);
-                if(randNeck < 0.7f) ApplyDamage(attacker, dividedDamage, InjurySiteMajor.Head, InjurySite.Neck, DamageType.Explosion);
+                ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Head, DamageType.Explosion);
+                if(randLEye < 0.3f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.LeftEye, DamageType.Explosion);
+                if(randREye < 0.3f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.RightEye, DamageType.Explosion);
+                if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
+                if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
+                if(randNose < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Nose, DamageType.Explosion);
+                if(randCheek < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Cheek, DamageType.Explosion);
+                if(randNeck < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Neck, DamageType.Explosion);
                 break;
             case InjurySiteMajor.Torso:
-                ApplyDamage(attacker, damage / 2, InjurySiteMajor.Torso, InjurySite.Chest, DamageType.Explosion);
-                ApplyDamage(attacker, damage / 2, InjurySiteMajor.Torso, InjurySite.Abdomen, DamageType.Explosion);
+                ApplyDamage(attacker, damage / 2, weapon, InjurySiteMajor.Torso, InjurySite.Chest, DamageType.Explosion);
+                ApplyDamage(attacker, damage / 2, weapon, InjurySiteMajor.Torso, InjurySite.Abdomen, DamageType.Explosion);
                 break;
             case InjurySiteMajor.Arms:
-                ApplyDamage(attacker, damage, InjurySiteMajor.Arms, DamageType.Explosion);
+                ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Arms, DamageType.Explosion);
                 break;
             case InjurySiteMajor.Legs:
                 float rand = UnityEngine.Random.Range(0, 1f);
                 if(rand > 0.3f)
                 {
-                    if(side == 1) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightFoot, DamageType.Explosion);
-                    else if(side == 2) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftFoot, DamageType.Explosion);
-                    else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, rand > 0.65f ? InjurySite.RightFoot : InjurySite.LeftFoot, DamageType.Explosion);
+                    if(side == 1) ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, InjurySite.RightFoot, DamageType.Explosion);
+                    else if(side == 2) ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, InjurySite.LeftFoot, DamageType.Explosion);
+                    else ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, rand > 0.65f ? InjurySite.RightFoot : InjurySite.LeftFoot, DamageType.Explosion);
                 }
                 else
                 {
-                    if(side == 1) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.RightKnee, DamageType.Explosion);
-                    else if(side == 2) ApplyDamage(attacker, damage, InjurySiteMajor.Legs, InjurySite.LeftKnee, DamageType.Explosion);
-                    else ApplyDamage(attacker, damage, InjurySiteMajor.Legs, rand > 0.15f ? InjurySite.RightKnee : InjurySite.LeftKnee, DamageType.Explosion);
+                    if(side == 1) ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, InjurySite.RightKnee, DamageType.Explosion);
+                    else if(side == 2) ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, InjurySite.LeftKnee, DamageType.Explosion);
+                    else ApplyDamage(attacker, damage, weapon, InjurySiteMajor.Legs, rand > 0.15f ? InjurySite.RightKnee : InjurySite.LeftKnee, DamageType.Explosion);
                 }
                 break;
         }
@@ -2810,11 +2854,12 @@ public class Survivor : CustomObject
             poisonOriginator.KillCount++;
             InGameUIManager.UpdateSelectedObjectKillCount(poisonOriginator);
             IsDead = true;
+            if (poisonOriginator.playerSurvivor) AcheivementManager.UnlockAchievement("Viper");
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), poisonOriginator.survivorName.GetLocalizedString());
         }
     }
 
-    public void TakeDamage(Survivor attacker, float damage)
+    public void TakeDamage(Survivor attacker, float damage, Item weapon)
     {
         string hitSound;
         DamageType damageType = DamageType.Strike;
@@ -2894,7 +2939,7 @@ public class Survivor : CustomObject
         if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Armor;
 
         PlaySFX(hitSound, this);
-        ApplyDamage(attacker, damage, damagePart, damageType);
+        ApplyDamage(attacker, damage, weapon, damagePart, damageType);
     }
 
     public void TakeDamage(Bullet bullet)
@@ -2939,12 +2984,12 @@ public class Survivor : CustomObject
             if (currentVest != null) damage -= currentVest.Armor;
         }
 
-        ApplyDamage(launcher, damage, damagePart, DamageType.GunShot);
+        ApplyDamage(launcher, damage, launcher.CurrentWeapon, damagePart, DamageType.GunShot);
     }
 
     public void TakeDamage(Trap trap, InjurySite injurySite)
     {
-        ApplyDamage(trap.setter, trap.Damage, InjurySiteMajor.Legs, injurySite, trap.DamageType);
+        ApplyDamage(trap.setter, trap.Damage, trap.linkedItem, InjurySiteMajor.Legs, injurySite, trap.DamageType);
         if(IsDead && trap.setter.playerSurvivor)
         {
             PlayerPrefs.SetInt("Total Trap Kill", PlayerPrefs.GetInt("Total Trap Kill") + 1);
@@ -2954,15 +2999,15 @@ public class Survivor : CustomObject
 
     public void TakeDamage(Trap trap, float damage, int side = 0)
     {
-        if (trap.DamageType == DamageType.Explosion) ApplyExplosionDamage(trap.setter, damage, InjurySiteMajor.Legs, side);
-        else ApplyDamage(trap.setter, damage, InjurySiteMajor.Legs, trap.DamageType);
+        if (trap.DamageType == DamageType.Explosion) ApplyExplosionDamage(trap.setter, damage, trap.linkedItem, InjurySiteMajor.Legs, side);
+        else ApplyDamage(trap.setter, damage, trap.linkedItem, InjurySiteMajor.Legs, trap.DamageType);
     }
 
     public void TakeDamage(BoobyTrap boobyTrap, float damage)
     {
-        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Head);
-        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, InjurySiteMajor.Torso);
-        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.2f, InjurySiteMajor.Arms);
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, boobyTrap, InjurySiteMajor.Head);
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.4f, boobyTrap, InjurySiteMajor.Torso);
+        ApplyExplosionDamage(boobyTrap.Setter, damage * 0.2f, boobyTrap, InjurySiteMajor.Arms);
     }
 
     public void TakeDamage(Rocket rocket, float damage, bool critical)
@@ -2974,22 +3019,22 @@ public class Survivor : CustomObject
             switch(site)
             {
                 case 0:
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Head);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Head);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
                     break;
                 case 1:
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, InjurySiteMajor.Head);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.5f, InjurySiteMajor.Torso);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, InjurySiteMajor.Arms);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Legs);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Head);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.5f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.2f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Arms);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Legs);
                     break;
                 case 2:
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Arms);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Arms);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
                     break;
                 case 3:
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, InjurySiteMajor.Legs);
-                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, InjurySiteMajor.Torso);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.75f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Legs);
+                    ApplyExplosionDamage(rocket.Launcher, damage * 0.25f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
                     break;
             }
         }
@@ -2998,13 +3043,13 @@ public class Survivor : CustomObject
             site = UnityEngine.Random.Range(0, 2);
             if(site == 0)
             {
-                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, InjurySiteMajor.Arms);
-                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Torso);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Arms);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
             }
             else
             {
-                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, InjurySiteMajor.Arms);
-                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, InjurySiteMajor.Torso);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Arms);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
             }
         }
     }
@@ -4089,7 +4134,7 @@ public class Survivor : CustomObject
             {
                 float damage = currentWeapon.AttackDamage + attackDamage;
                 if (currentWeapon.NeedHand == NeedHand.OneOrTwoHand && (rightHandDisabled || leftHandDisabled)) damage *= 0.7f;
-                TargetEnemy.TakeDamage(this, damage);
+                TargetEnemy.TakeDamage(this, damage, currentWeapon);
             }
             else
             {
@@ -4101,7 +4146,7 @@ public class Survivor : CustomObject
         {
             if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < attackRange)
             {
-                TargetEnemy.TakeDamage(this, attackDamage);
+                TargetEnemy.TakeDamage(this, attackDamage, null);
 			}
             else
             {

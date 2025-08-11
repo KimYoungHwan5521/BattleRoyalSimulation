@@ -286,10 +286,10 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetPredictionUI()
     {
+        exitBattleRoyale.SetActive(false);
         if(outGameUIManager.BettingAmount > 0)
         {
             predictionResult.SetActive(true);
-            exitBattleRoyale.SetActive(false);
             predictionLeft = outGameUIManager.PredictionNumber;
             for (int i=0; i<predictionResultRows.Length; i++)
             {
@@ -304,10 +304,10 @@ public class InGameUIManager : MonoBehaviour
                 else predictionResultRows[i].SetActive(false);
             }
         }
-        else
+        else 
         {
             predictionResult.SetActive(false);
-            exitBattleRoyale.SetActive(true);
+            if (outGameUIManager.MySurvivorDataInBattleRoyale == null) exitBattleRoyale.SetActive(true);
         }
     }
 

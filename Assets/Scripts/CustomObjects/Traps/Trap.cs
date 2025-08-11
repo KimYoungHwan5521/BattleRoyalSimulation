@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Trap : CustomObject
 {
+    public Item linkedItem;
+
     Animator animator;
     public Survivor setter;
     protected Survivor victim;
