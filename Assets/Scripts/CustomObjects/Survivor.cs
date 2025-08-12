@@ -474,11 +474,18 @@ public class Survivor : CustomObject
         {
             if(playerSurvivor)
             {
-                PlayerPrefs.SetInt("Total Kill", value - killCount);
-                if (PlayerPrefs.GetInt("Total Kill") > 100) AcheivementManager.UnlockAchievement("Bloody Hands");
-                else if (PlayerPrefs.GetInt("Total Kill") > 10) AcheivementManager.UnlockAchievement("Bloody Arms");
+                if(value > killCount)
+                {
+                    int curTotalKill = PlayerPrefs.GetInt("Total Kill");
+                    PlayerPrefs.SetInt("Total Kill", curTotalKill + 1);
+                    AchievementManager.SetStat("Total_Kill", curTotalKill + 1);
+                    linkedSurvivorData.totalKill++;
+                    if (linkedSurvivorData.totalKill >= 30) AchievementManager.UnlockAchievement("Notorious");
+                    if (PlayerPrefs.GetInt("Total Kill") > 100) AchievementManager.UnlockAchievement("Bloody Hands");
+                    else if (PlayerPrefs.GetInt("Total Kill") > 10) AchievementManager.UnlockAchievement("Bloody Arms");
+                }
 
-                if (value >= 5) AcheivementManager.UnlockAchievement("Pentakill");
+                if (value >= 5) AchievementManager.UnlockAchievement("Pentakill");
             }
             killCount = value;
         }
@@ -2104,9 +2111,11 @@ public class Survivor : CustomObject
             if(playerSurvivor)
             {
                 linkedSurvivorData.craftingCount++;
-                PlayerPrefs.SetInt("Total Crafting Count", PlayerPrefs.GetInt("Total Crafting Count") + 1);
-                if (PlayerPrefs.GetInt("Total Crafting Count") >= 100) AcheivementManager.UnlockAchievement("Foreman");
-                if (linkedSurvivorData.craftingCount >= 10) AcheivementManager.UnlockAchievement("Craftsman");
+                int totalCrafting = PlayerPrefs.GetInt("Total Crafting Count");
+                PlayerPrefs.SetInt("Total Crafting Count", totalCrafting + 1);
+                AchievementManager.SetStat("Total_Crafting", totalCrafting + 1);
+                if (PlayerPrefs.GetInt("Total Crafting Count") >= 100) AchievementManager.UnlockAchievement("Foreman");
+                if (linkedSurvivorData.craftingCount >= 10) AchievementManager.UnlockAchievement("Craftsman");
             }
 
             float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
@@ -2719,24 +2728,27 @@ public class Survivor : CustomObject
                 if (weapon == null)
                 {
                     PlayerPrefs.SetInt($"Bare Knuckle Kill", PlayerPrefs.GetInt($"Bare Knuckle Kill") + 1);
-                    if(PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AcheivementManager.UnlockAchievement("Bruce Lee");
+                    AchievementManager.SetStat("Total_BareHandKill ", PlayerPrefs.GetInt($"Bare Knuckle Kill"));
+                    if(PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AchievementManager.UnlockAchievement("Bruce Lee");
                 }
                 else if (weapon is MeleeWeapon)
                 {
                     PlayerPrefs.SetInt($"Melee Weapon Kill", PlayerPrefs.GetInt($"Melee Weapon Kill") + 1);
-                    if(PlayerPrefs.GetInt($"Melee Weapon Kill") >= 30) AcheivementManager.UnlockAchievement("Lethal Weapon");
+                    AchievementManager.SetStat("Total_MeleeKill", PlayerPrefs.GetInt($"Melee Weapon Kill"));
+                    if (PlayerPrefs.GetInt($"Melee Weapon Kill") >= 30) AchievementManager.UnlockAchievement("Lethal Weapon");
                 }
                 else if (weapon is RangedWeapon)
                 {
                     PlayerPrefs.SetInt($"Ranged Weapon Kill", PlayerPrefs.GetInt($"Ranged Weapon Kill") + 1);
-                    if (PlayerPrefs.GetInt($"Ranged Weapon Kill") >= 30) AcheivementManager.UnlockAchievement("Gunslinger");
+                    AchievementManager.SetStat("Total_RangedKill", PlayerPrefs.GetInt($"Ranged Weapon Kill"));
+                    if (PlayerPrefs.GetInt($"Ranged Weapon Kill") >= 30) AchievementManager.UnlockAchievement("Gunslinger");
                 }
                 if(weapon != null)
                 {
                     PlayerPrefs.SetInt($"{weapon.itemType} Kill", PlayerPrefs.GetInt($"{weapon.itemType} Kill") + 1);
                     int count = PlayerPrefs.GetInt($"{weapon.itemType} Kill");
-                    if ((weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted) && count >= 10) AcheivementManager.UnlockAchievement("Sword Master");
-                    if (weapon.itemType == ItemManager.Items.SniperRifle && count >= 10) AcheivementManager.UnlockAchievement("Sniper");
+                    if ((weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted) && count >= 10) AchievementManager.UnlockAchievement("Sword Master");
+                    if (weapon.itemType == ItemManager.Items.SniperRifle && count >= 10) AchievementManager.UnlockAchievement("Sniper");
                 }
             }
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());
@@ -2854,7 +2866,7 @@ public class Survivor : CustomObject
             poisonOriginator.KillCount++;
             InGameUIManager.UpdateSelectedObjectKillCount(poisonOriginator);
             IsDead = true;
-            if (poisonOriginator.playerSurvivor) AcheivementManager.UnlockAchievement("Viper");
+            if (poisonOriginator.playerSurvivor) AchievementManager.UnlockAchievement("Viper");
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), poisonOriginator.survivorName.GetLocalizedString());
         }
     }
@@ -2993,7 +3005,8 @@ public class Survivor : CustomObject
         if(IsDead && trap.setter.playerSurvivor)
         {
             PlayerPrefs.SetInt("Total Trap Kill", PlayerPrefs.GetInt("Total Trap Kill") + 1);
-            if (PlayerPrefs.GetInt("Total Trap Kill") >= 10) AcheivementManager.UnlockAchievement("Sun Tzu");
+            AchievementManager.SetStat("Total_TrapKill", PlayerPrefs.GetInt("Total Trap Kill"));
+            if (PlayerPrefs.GetInt("Total Trap Kill") >= 10) AchievementManager.UnlockAchievement("Sun Tzu");
         }
     }
 

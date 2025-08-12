@@ -44,7 +44,7 @@ public class OutGameUIManager : MonoBehaviour
             if(money < 0) moneyText.text = $"<color=red>{money:###,###,###,##0}</color>";
             else moneyText.text = $"{money:###,###,###,##0}";
 
-            if (value >= 100000) AcheivementManager.UnlockAchievement("Hundred-Thousandaire");
+            if (value >= 100000) AchievementManager.UnlockAchievement("Hundred-Thousandaire");
         }
     }
 

@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
@@ -107,7 +106,23 @@ public class GameResult : MonoBehaviour
                 }
             }
             LocalizedString resultText = playerWin == 1 ? new LocalizedString("Basic", "Your survivor won!") : new LocalizedString("Basic", "Your survivor was defeated.");
-            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
+            if(playerWin == 1)
+            {
+                if (AchievementManager.GetStat("Total_Win", out int totalWin))
+                {
+                    AchievementManager.SetStat("Total_Win", totalWin + 1);
+                    if (totalWin + 1 >= 10) AchievementManager.UnlockAchievement("Tactician");
+                }
+            }
+            else
+            {
+                if (AchievementManager.GetStat("Total_Lose", out int totalLose))
+                {
+                    AchievementManager.SetStat("Total_Lose", totalLose + 1);
+                    if (totalLose + 1 >= 10) AchievementManager.UnlockAchievement("Experience");
+                }
+            }
+                resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
             gameResultText.text = resultText.GetLocalizedString();
             survivedTimeText.text = $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
             killsText.text = $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
@@ -122,7 +137,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 1000;
-                        AcheivementManager.UnlockAchievement("Bronze Cup");
+                        AchievementManager.UnlockAchievement("Bronze Cup");
                     }
                     else if (playerWin == 50) winPrize = 500;
                     killPrize = playerSurvivor.KillCount * 100;
@@ -131,7 +146,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 3000;
-                        AcheivementManager.UnlockAchievement("Silver Cup");
+                        AchievementManager.UnlockAchievement("Silver Cup");
                     }
                     else if (playerWin == 25) winPrize = 1500;
                     else if (playerWin == 50) winPrize = 750;
@@ -141,7 +156,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 10000;
-                        AcheivementManager.UnlockAchievement("Gold Cup");
+                        AchievementManager.UnlockAchievement("Gold Cup");
                     }
                     else if (playerWin == 25) winPrize = 5000;
                     else if (playerWin == 50) winPrize = 2500;
@@ -151,7 +166,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 30000;
-                        AcheivementManager.UnlockAchievement("Season Champion");
+                        AchievementManager.UnlockAchievement("Season Champion");
                     }
                     else if (playerWin == 25) winPrize = 15000;
                     else if (playerWin == 50) winPrize = 7500;
@@ -161,8 +176,8 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 100000;
-                        AcheivementManager.UnlockAchievement("World Champion");
-                        if (playerSurvivor.LinkedSurvivorData.loseCount == 0) AcheivementManager.UnlockAchievement("Royal Loader");
+                        AchievementManager.UnlockAchievement("World Champion");
+                        if (playerSurvivor.LinkedSurvivorData.loseCount == 0) AchievementManager.UnlockAchievement("Royal Loader");
                     }
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
@@ -172,7 +187,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 30000;
-                        AcheivementManager.UnlockAchievement("Melee Champion");
+                        AchievementManager.UnlockAchievement("Melee Champion");
                     }
                     else if (playerWin == 25) winPrize = 15000;
                     else if (playerWin == 50) winPrize = 7500;
@@ -181,7 +196,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 30000;
-                        AcheivementManager.UnlockAchievement("Shooting Champion");
+                        AchievementManager.UnlockAchievement("Shooting Champion");
                     }
                     else if (playerWin == 25) winPrize = 15000;
                     else if (playerWin == 50) winPrize = 7500;
@@ -190,7 +205,7 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 30000;
-                        AcheivementManager.UnlockAchievement("Crafting Champion");
+                        AchievementManager.UnlockAchievement("Crafting Champion");
                     }
                     else if (playerWin == 25) winPrize = 15000;
                     else if (playerWin == 50) winPrize = 7500;
@@ -284,8 +299,8 @@ public class GameResult : MonoBehaviour
                 predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
-            if (odds >= 100) AcheivementManager.UnlockAchievement("God of Betting");
-            else if (odds >= 10) AcheivementManager.UnlockAchievement("King of Betting");
+            if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
+            else if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
             bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
             totalProfit += bettingRewards - outGameUIManager.BettingAmount;
@@ -323,7 +338,7 @@ public class GameResult : MonoBehaviour
                     survivor.characteristics.RemoveAt(characteristic);
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
                     notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
-                    AcheivementManager.UnlockAchievement("Overcome");
+                    AchievementManager.UnlockAchievement("Overcome");
                 }
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
                 break;
@@ -375,7 +390,6 @@ public class GameResult : MonoBehaviour
         if(playerWin == 1)
         {
             survivor.winCount++;
-            if (survivor.winCount >= 10) AcheivementManager.UnlockAchievement("Tactician");
             if(goldPlus) survivor.winCountGoldPlus++;
             switch(league)
             {
@@ -406,7 +420,7 @@ public class GameResult : MonoBehaviour
             }
             if (survivor.wonBronzeLeague && survivor.wonSilverLeague && survivor.wonGoldLeague && survivor.wonSeasonChampionship
                 && survivor.wonWorldChampionship && survivor.wonMeleeLeague && survivor.wonRangedLeague && survivor.wonCraftingLeague)
-                AcheivementManager.UnlockAchievement("Legend");
+                AchievementManager.UnlockAchievement("Legend");
         }
         else if(playerWin > 1)
         {
@@ -417,15 +431,15 @@ public class GameResult : MonoBehaviour
         {
             survivor.loseCount++;
             if (goldPlus) survivor.loseCountGoldPlus++;
-            if (survivor.loseCount >= 10) AcheivementManager.UnlockAchievement("Experience");
         }
         Survivor pawn = GameManager.Instance.BattleRoyaleManager.Survivors[0];
         survivor.totalKill += pawn.KillCount;
-        if (survivor.totalKill >= 30) AcheivementManager.UnlockAchievement("Notorious");
-        if (playerWin == 1 && pawn.KillCount == 0) AcheivementManager.UnlockAchievement("Vulture Victory");
+        if (survivor.totalKill >= 30) AchievementManager.UnlockAchievement("Notorious");
+        if (playerWin == 1 && pawn.KillCount == 0) AchievementManager.UnlockAchievement("Vulture Victory");
         survivor.totalSurvivedTime += pawn.SurvivedTime;
         PlayerPrefs.SetFloat("Total Survival Time", PlayerPrefs.GetFloat("Total Survival Time") + pawn.SurvivedTime);
-        if (PlayerPrefs.GetFloat("Total Survival Time") >= 3600) AcheivementManager.UnlockAchievement("1 hour");
+        AchievementManager.SetStat("Total_SurvivalTime", PlayerPrefs.GetFloat("Total Survival Time"));
+        if (PlayerPrefs.GetFloat("Total Survival Time") >= 3600) AchievementManager.UnlockAchievement("1 hour");
         survivor.totalGiveDamage += pawn.TotalDamage;
         survivor.totalTakeDamage += pawn.MaxHP - pawn.CurHP;
         survivor.totalRankPrize += winPrize;

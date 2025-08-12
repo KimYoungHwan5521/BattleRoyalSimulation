@@ -333,6 +333,7 @@ public class InGameUIManager : MonoBehaviour
                 return;
             }
         }
+        if(outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead) exitBattleRoyale.SetActive(true);
     }
 
     public void ShowKillLog(string victim, string cause)

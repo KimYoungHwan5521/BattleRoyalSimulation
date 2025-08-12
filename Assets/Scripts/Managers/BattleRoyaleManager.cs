@@ -332,7 +332,7 @@ public class BattleRoyaleManager
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
                 battleWinner = aliveSurvivors[0];
-                if (battleWinner.playerSurvivor && battleWinner.KillCount >= survivorNumber - 1) AcheivementManager.UnlockAchievement("Ace");
+                if (battleWinner.playerSurvivor && battleWinner.KillCount >= survivorNumber - 1) AchievementManager.UnlockAchievement("Ace");
                 rankings[0] = aliveSurvivors[0].survivorName;
                 InGameUIManager.SetSurvivorRank(rankings[0], 0);
                 isBattleRoyaleStart = false;

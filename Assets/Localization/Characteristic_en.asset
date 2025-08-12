@@ -305,7 +305,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13384150976884736
-    m_Localized: Body Size, Strength - 15%
+    m_Localized: Body Size, Strength + 15%
     m_Metadata:
       m_Items: []
   - m_Id: 13384548156502016
