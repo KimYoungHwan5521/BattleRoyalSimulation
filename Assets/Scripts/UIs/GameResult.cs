@@ -20,6 +20,9 @@ public class GameResult : MonoBehaviour
     [SerializeField] TextMeshProUGUI survivedTimeText;
     [SerializeField] TextMeshProUGUI killsText;
     [SerializeField] TextMeshProUGUI totalDamageText;
+    [SerializeField] TextMeshProUGUI increaseFightingText;
+    [SerializeField] TextMeshProUGUI increaseShootingText;
+    [SerializeField] TextMeshProUGUI increaseCraftingText;
     [SerializeField] GameObject buttonKeepWatching;
 
     [SerializeField] TextMeshProUGUI winPrizeText;
@@ -122,11 +125,14 @@ public class GameResult : MonoBehaviour
                     if (totalLose + 1 >= 10) AchievementManager.UnlockAchievement("Experience");
                 }
             }
-                resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
+            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
             gameResultText.text = resultText.GetLocalizedString();
             survivedTimeText.text = $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
             killsText.text = $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
             totalDamageText.text = $"{new LocalizedString("Basic", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
+            increaseFightingText.text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {playerSurvivor.IncreaseFighting}";
+            increaseShootingText.text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {playerSurvivor.IncreaseShooting}";
+            increaseCraftingText.text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {playerSurvivor.IncreaseCrafting}";
 
             winPrize = 0;
             killPrize = 0;

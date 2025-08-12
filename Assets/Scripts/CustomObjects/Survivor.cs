@@ -135,6 +135,14 @@ public class Survivor : CustomObject
 
     float bloodRegeneration = 1;
     float hpRegeneration = 1;
+
+    int increaseFighting;
+    public int IncreaseFighting => increaseFighting;
+    int increaseShooting;
+    public int IncreaseShooting => increaseShooting;
+    int increaseCrafting;
+    public int IncreaseCrafting => increaseCrafting;
+
     Vector3 lastVelocity;
     bool temporaryAllowProhibitArea;
     #endregion
@@ -2118,8 +2126,12 @@ public class Survivor : CustomObject
                 if (linkedSurvivorData.craftingCount >= 10) AchievementManager.UnlockAchievement("Craftsman");
             }
 
-            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
-            if (chanceToIncreaseStat < currentCrafting.requiredKnowledge * 0.1f) linkedSurvivorData.Crafting++;
+            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
+            if (chanceToIncreaseStat < currentCrafting.requiredKnowledge * 0.01f)
+            {
+                linkedSurvivorData.Crafting++;
+                increaseCrafting++;
+            }
             currentCrafting = null;
             craftables.Clear();
             if (isEquipable == 0) Equip((Weapon)item);
@@ -2470,8 +2482,12 @@ public class Survivor : CustomObject
             {
                 animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
                 animator.SetTrigger("Fire");
-                float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
-                if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime * 0.01f) linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
+                float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
+                if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime * 0.1f)
+                {
+                    linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
+                    increaseShooting++;
+                }
                 curShotTime = CurrentWeaponAsRangedWeapon.ShotCoolTime;
             }
         }
@@ -2912,14 +2928,18 @@ public class Survivor : CustomObject
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
             float criticalRate = 0.1f * coefficient * attacker.luck / luck;
 
-            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1);
+            float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
             if (probability < avoidRate)
             {
                 // 회피
                 damage = 0;
                 hitSound = "avoid, 1";
 
-                if (chanceToIncreaseStat < 0.1f) linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                if (chanceToIncreaseStat < 0.1f)
+                {
+                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    increaseFighting++;
+                }
             }
             else if (probability < avoidRate + defendRate)
             {
@@ -2928,8 +2948,12 @@ public class Survivor : CustomObject
                 damagePart = InjurySiteMajor.Arms;
                 hitSound = "guard, 2";
 
-				if (chanceToIncreaseStat < 0.05f) linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
-			}
+				if (chanceToIncreaseStat < 0.05f)
+                {
+                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    increaseFighting++;
+                }
+            }
             else if (probability > 1 - criticalRate)
             {
                 // 치명타
@@ -2938,14 +2962,22 @@ public class Survivor : CustomObject
                 else damagePart = InjurySiteMajor.Torso;
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
-				if (chanceToIncreaseStat < 0.2f) attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
-			}
+				if (chanceToIncreaseStat < 0.2f)
+                {
+                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    increaseFighting++;
+                }
+            }
             else
             {
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
-				if (chanceToIncreaseStat < 0.05f) attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
-			}
+				if (chanceToIncreaseStat < 0.05f)
+                {
+                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    increaseFighting++;
+                }
+            }
         }
 
         if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Armor;

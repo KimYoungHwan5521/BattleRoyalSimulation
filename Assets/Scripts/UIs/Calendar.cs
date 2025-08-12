@@ -751,14 +751,20 @@ public class Calendar : CustomObject
                 if (survivor.isReserved)
                 {
                     int date = survivor.reservedDate;
-                    scheduleTexts[2].text = $"{date % 28 + 1} {monthName[date / 28]}, {2101 + (date / 28) / 12}\n({leagueReserveInfo[date].league})";
-                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{NeareastSeasonChampionshipDate % 28 + 1} {monthName[NeareastSeasonChampionshipDate / 28]}, {2101 + (NeareastSeasonChampionshipDate / 28) / 12}\n(Season Championship)";
-                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{NeareastWorldChampionshipDate % 28 + 1} {monthName[NeareastWorldChampionshipDate / 28]}, {2101 + (NeareastWorldChampionshipDate / 28) / 12}\n(World Championship)";
+                    LocalizedString dateFormatYMD = new("Basic", "Date Format YMD");
+                    dateFormatYMD.Arguments = new[] { $"{2101 + (date / 28) / 12}", $"{new LocalizedString("Basic", $"{monthName[(date / 28) % 12]}").GetLocalizedString()}", $"{date % 28 + 1}" };
+                    scheduleTexts[2].text = $"{dateFormatYMD.GetLocalizedString()}\n({new LocalizedString("Basic", $"{leagueReserveInfo[date].league}").GetLocalizedString()})";
+                    LocalizedString dateFormatYMD2 = new("Basic", "Date Format YMD");
+                    dateFormatYMD2.Arguments = new[] { $"{2101 + (NeareastSeasonChampionshipDate / 28) / 12}", $"{new LocalizedString("Basic", $"{monthName[(NeareastSeasonChampionshipDate / 28) % 12]}").GetLocalizedString()}", $"{NeareastSeasonChampionshipDate % 28 + 1}" };
+                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{dateFormatYMD2.GetLocalizedString()}\n({new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()})";
+                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text += $"\n{dateFormatYMD2.GetLocalizedString()}\n({new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()})";
                 }
                 else
                 {
-                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text = $"{NeareastSeasonChampionshipDate % 28 + 1} {monthName[NeareastSeasonChampionshipDate / 28]}, {2101 + (NeareastSeasonChampionshipDate / 28) / 12}\n(Season Championship)";
-                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text = $"{NeareastWorldChampionshipDate % 28 + 1} {monthName[NeareastWorldChampionshipDate / 28]}, {2101 + (NeareastWorldChampionshipDate / 28) / 12}\n(World Championship)";
+                    LocalizedString dateFormatYMD = new("Basic", "Date Format YMD");
+                    dateFormatYMD.Arguments = new[] {$"{2101 + (NeareastSeasonChampionshipDate / 28) / 12}", $"{new LocalizedString("Basic", $"{monthName[(NeareastSeasonChampionshipDate / 28) % 12]}")}", $"{NeareastSeasonChampionshipDate % 28 + 1}" };
+                    if (NeareastSeasonChampionship.reserver == survivor) scheduleTexts[2].text = $"{dateFormatYMD.GetLocalizedString()}\n({new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()})";
+                    else if (NeareastWorldChampionship.reserver == survivor) scheduleTexts[2].text = $"{dateFormatYMD.GetLocalizedString()}\n({new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()})";
                     else scheduleTexts[2].text = "-";
                 }
 
@@ -788,6 +794,7 @@ public class Calendar : CustomObject
         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
         Today = today;
         CalendarPage = calendarPage;
+        OpenScheduleByEachSurvivor();
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
