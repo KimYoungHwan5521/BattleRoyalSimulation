@@ -489,8 +489,8 @@ public class Survivor : CustomObject
                     AchievementManager.SetStat("Total_Kill", curTotalKill + 1);
                     linkedSurvivorData.totalKill++;
                     if (linkedSurvivorData.totalKill >= 30) AchievementManager.UnlockAchievement("Notorious");
-                    if (PlayerPrefs.GetInt("Total Kill") > 100) AchievementManager.UnlockAchievement("Bloody Hands");
-                    else if (PlayerPrefs.GetInt("Total Kill") > 10) AchievementManager.UnlockAchievement("Bloody Arms");
+                    if (PlayerPrefs.GetInt("Total Kill") >= 100) AchievementManager.UnlockAchievement("Bloody Arms");
+                    else if (PlayerPrefs.GetInt("Total Kill") >= 10) AchievementManager.UnlockAchievement("Bloody Hand");
                 }
 
                 if (value >= 5) AchievementManager.UnlockAchievement("Pentakill");
