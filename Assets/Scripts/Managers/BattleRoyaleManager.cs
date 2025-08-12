@@ -208,15 +208,16 @@ public class BattleRoyaleManager
                 for (int k = 0; k < areas.Length; k++) survivor.farmingAreas.Add(areas[k], false);
                 survivor.CurrentFarmingArea = areas[i];
                 survivor.lastCurrentArea = areas[i];
-                survivor.survivorID = survivorIndex;
+                int thereIsPlayerSurvivor = OutGameUIManager.MySurvivorDataInBattleRoyale == null ? 1 : 0;
+                survivor.survivorID = survivorIndex + thereIsPlayerSurvivor;
                 //if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
                 //else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
                 survivor.SetSurvivorInfo(OutGameUIManager.contestantsData[survivorIndex]);
                 if (survivorIndex == 0 && OutGameUIManager.MySurvivorDataInBattleRoyale != null) survivor.playerSurvivor = true;
 
-                if(survivorIndex < colorInfo.Length)
+                if (survivorIndex + thereIsPlayerSurvivor < colorInfo.Length)
                 {
-                    survivor.SetColor(colorInfo[survivorIndex]);
+                    survivor.SetColor(colorInfo[survivorIndex + thereIsPlayerSurvivor]);
                 }
                 else
                 {

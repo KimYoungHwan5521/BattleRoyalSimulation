@@ -190,7 +190,7 @@ public class OutGameUIManager : MonoBehaviour
     [Header("Schedule")]
     public GameObject calendarObject;
     Calendar calendar;
-    SurvivorData mySurvivorDataInBattleRoyale;
+    [SerializeField] SurvivorData mySurvivorDataInBattleRoyale;
     public SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
 
     [Header("Daily Result")]
@@ -452,7 +452,7 @@ public class OutGameUIManager : MonoBehaviour
                     ChecklistTraining();
                     mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
-                    mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
+                    //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
                     if(mySurvivorsData.Count == 1)
@@ -1642,12 +1642,14 @@ public class OutGameUIManager : MonoBehaviour
         if(contestantsData == null || contestantsData.Count == 0) SetContestants();
         bettingAmountInput.text = "0";
 
+        mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
+        int thereIsPlayerSurvivor = mySurvivorDataInBattleRoyale == null ? 1 : 0;
         for (int i = 0; i < contestants.Length; i++)
         {
             if (i < contestantsData.Count)
             {
                 contestants[i].SetActive(true);
-                Vector3 colorVector = BattleRoyaleManager.colorInfo[i];
+                Vector3 colorVector = BattleRoyaleManager.colorInfo[i + thereIsPlayerSurvivor];
                 contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
                 contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[i].localizedSurvivorName.GetLocalizedString();
             }
@@ -1745,10 +1747,11 @@ public class OutGameUIManager : MonoBehaviour
                 return;
         }
 
+        int thereIsPlayerSurvivor = mySurvivorDataInBattleRoyale == null ? 1 : 0;
         for (int i = 0; i < orderedContestantsData.Count; i++)
         {
             int originalDataIndex = contestantsData.FindIndex(x => x.localizedSurvivorName.TableEntryReference.Key == orderedContestantsData[i].localizedSurvivorName.TableEntryReference.Key);
-            Vector3 colorVector = BattleRoyaleManager.colorInfo[originalDataIndex];
+            Vector3 colorVector = BattleRoyaleManager.colorInfo[originalDataIndex + thereIsPlayerSurvivor];
             contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
             contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[originalDataIndex].localizedSurvivorName.GetLocalizedString();
         }
