@@ -124,6 +124,12 @@ public class SoundManager
         }
         else source = null;
     }
+
+    public void Enqueue(AudioSource audioSource)
+    {
+        GameManager.Instance.SoundManager.sfxQueue.Enqueue(audioSource);
+    }
+
     public static void StopBGM()
     {
         foreach (var bgm in GameManager.Instance.SoundManager.bgmArray)

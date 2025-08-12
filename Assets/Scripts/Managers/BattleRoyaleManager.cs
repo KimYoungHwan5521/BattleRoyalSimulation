@@ -212,7 +212,7 @@ public class BattleRoyaleManager
                 //if (survivorIndex == 0) survivor.SetSurvivorInfo(OutGameUIManager.MySurvivorDataInBattleRoyale);
                 //else survivor.SetSurvivorInfo(OutGameUIManager.CreateRandomSurvivorData());
                 survivor.SetSurvivorInfo(OutGameUIManager.contestantsData[survivorIndex]);
-                if (OutGameUIManager.MySurvivorDataInBattleRoyale != null) survivor.playerSurvivor = true;
+                if (survivorIndex == 0 && OutGameUIManager.MySurvivorDataInBattleRoyale != null) survivor.playerSurvivor = true;
 
                 if(survivorIndex < colorInfo.Length)
                 {
@@ -360,11 +360,12 @@ public class BattleRoyaleManager
 
     public void Destroy()
     {
+        GameManager.Instance.SoundManager.Enqueue(bgsfx);
         foreach (Survivor survivor in survivors) survivor.MyDestroy();
 
         foreach (Area area in areas) if (area.garbageObjects != null) foreach (GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);
         GameObject.Destroy(map);
-
+        GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
     }
 
     public Area GetArea(Vector2 position)
