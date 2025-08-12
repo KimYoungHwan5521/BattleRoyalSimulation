@@ -261,8 +261,7 @@ public class InGameUIManager : MonoBehaviour
     public void TimeScaleUp()
     {
         if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
-        Time.timeScale = Mathf.Min(Time.timeScale + 1, 3);
-        currentTimeScaleText.text = $"x {(int)Time.timeScale}";
+        SetTimeScale((int)Mathf.Min(Time.timeScale + 1, 3));
     }
 
     public void Pause()

@@ -1655,6 +1655,13 @@ public class OutGameUIManager : MonoBehaviour
         }
         SortContestantsList();
 
+        needPredictionNumber = calendar.LeagueReserveInfo[calendar.Today].league switch
+        {
+            League.BronzeLeague => 2,
+            League.SilverLeague => 3,
+            League.GoldLeague => 4,
+            _ => 5
+        };
         for (int i = 0; i < predictRankings.Length; i++)
         {
             if (i < needPredictionNumber)

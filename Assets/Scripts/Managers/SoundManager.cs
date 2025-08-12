@@ -13,6 +13,7 @@ public class SoundManager
 
     AudioSource[] bgmArray = new AudioSource[2];
     const int sfxMaxNumber = 30;
+    AudioSource[] sfxArray = new AudioSource[sfxMaxNumber];
     Queue<AudioSource> sfxQueue = new();
 
     Action AudioEffectUpdate;
@@ -52,6 +53,7 @@ public class SoundManager
             currentSource.outputAudioMixerGroup = AMGsfx;
             currentSource.playOnAwake = false;
             currentSource.spatialBlend = 1;
+            sfxArray[i] = currentSource;
             sfxQueue.Enqueue(currentSource);
         }
 
@@ -160,7 +162,12 @@ public class SoundManager
 
     public void PitchShift(float wantPitch)
     {
-        foreach (var audioSource in GameManager.Instance.SoundManager.bgmArray) audioSource.pitch = wantPitch;
-        foreach (var audioSource in GameManager.Instance.SoundManager.sfxQueue) audioSource.pitch = wantPitch;
+        //foreach (var audioSource in GameManager.Instance.SoundManager.bgmArray) audioSource.pitch = wantPitch;
+        foreach (var audioSource in GameManager.Instance.SoundManager.sfxArray)
+        {
+            audioSource.pitch = wantPitch > 0 ? wantPitch : 1;
+            if (wantPitch > 0) currentMixer.SetFloat("SFX_Pitch", 1 / wantPitch);
+            else currentMixer.SetFloat("SFX_Pitch", 1);
+        }
     }
 }

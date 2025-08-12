@@ -34,11 +34,13 @@ public class Trap : CustomObject
         animator = GetComponent<Animator>();
     }
 
-    protected virtual void Trigger(bool rightLeg)
+    protected virtual bool Trigger(bool rightLeg)
     {
+        if (ownerPlace == null) return false;
         if(animator != null) animator.SetTrigger("Triggered");
         ownerPlace.SetTrap(null);
         ownerPlace = null;
+        return true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

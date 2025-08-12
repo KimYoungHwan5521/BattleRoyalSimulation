@@ -335,13 +335,14 @@ public class GameResult : MonoBehaviour
         resultClaimed = true;
     }
 
-    public void ExitBattle()
+    public void ExitBattle(bool goTitle = false)
     {
         gameResult.SetActive(false);
         AudioSource bgsfx = GameManager.Instance.BattleRoyaleManager.bgsfx;
         SoundManager.StopSFX(bgsfx);
         bgsfx.minDistance = 1;
         bgsfx.maxDistance = 500;
+        GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(1);
         SoundManager.Play(ResourceEnum.BGM.the_birth_of_hip_hop);
         foreach (Survivor survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
@@ -352,15 +353,18 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.inGameUICanvas.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.globalCanvas.SetActive(true);
-        GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
-        GameManager.Instance.OutGameUIManager.CheckTrainable(GameManager.Instance.BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
-        GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
-        GameManager.Instance.BattleRoyaleManager.Destroy();
-        notification?.Invoke();
+        if(!goTitle)
+        {
+            GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+            GameManager.Instance.OutGameUIManager.CheckTrainable(GameManager.Instance.BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
+            GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
+            notification?.Invoke();
+            // Auto save
+            GameManager.Instance.Save(0);
+            GameManager.Instance.Option.SetSaveButtonInteractable(true);
+        }
         notification = null;
-        // Auto save
-        GameManager.Instance.Save(0);
-        GameManager.Instance.Option.SetSaveButtonInteractable(true);
+        GameManager.Instance.DestroyBattleRoyaleManager();
     }
 
     void LinkStastics()

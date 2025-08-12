@@ -48,8 +48,6 @@ public class BattleRoyaleManager
     {
         SoundManager.StopBGM();
         SoundManager.Play(ResourceEnum.SFX.forest, Vector3.zero, true, out bgsfx);
-        bgsfx.maxDistance = float.MaxValue;
-        bgsfx.minDistance = float.MaxValue;
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;
@@ -67,6 +65,7 @@ public class BattleRoyaleManager
 
     void BattleRoyaleManagerUpdate()
     {
+        if(bgsfx != null) bgsfx.transform.position = Camera.main.transform.position;
         if(isBattleRoyaleStart)
         {
             battleTime += Time.deltaTime;

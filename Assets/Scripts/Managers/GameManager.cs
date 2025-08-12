@@ -152,6 +152,13 @@ public class GameManager : MonoBehaviour
         ObjectDestroy = null;
     }
 
+    public void DestroyBattleRoyaleManager()
+    {
+        if (battleRoyaleManager == null) return;
+        battleRoyaleManager.Destroy();
+        battleRoyaleManager = null;
+    }
+
     #region Save / Load
     void SaveSaveDataInfo(int slot)
     {
@@ -283,6 +290,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator Load(int slot)
     {
         gameReady = false;
+        if (BattleRoyaleManager != null) GetComponent<GameResult>().ExitBattle(true);
         ClaimLoadInfo("Loading save data...");
         yield return LoadSaveDataInfo(slot);
         yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));

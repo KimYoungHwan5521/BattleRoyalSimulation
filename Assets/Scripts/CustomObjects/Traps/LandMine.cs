@@ -3,9 +3,9 @@ using UnityEngine;
 public class LandMine : Trap
 {
     [SerializeField] float explosionRange = 2;
-    protected override void Trigger(bool rightLeg)
+    protected override bool Trigger(bool rightLeg)
     {
-        base.Trigger(rightLeg);
+        if(!base.Trigger(rightLeg)) return false;
         victim.TakeDamage(this, rightLeg ? InjurySite.RightFoot : InjurySite.LeftFoot);
         var hits = Physics2D.OverlapCircleAll(transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
@@ -18,5 +18,6 @@ public class LandMine : Trap
                 splashedSurvivor.TakeDamage(this, damage / (distance * distance), rightLeg ? 1 : 2);
             }
         }
+        return true;
     }
 }

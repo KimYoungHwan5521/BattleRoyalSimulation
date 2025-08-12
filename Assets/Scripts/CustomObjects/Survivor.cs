@@ -4340,6 +4340,11 @@ public class Survivor : CustomObject
 
     void ApplyStrategies()
     {
+        if (linkedSurvivorData.strategyDictionary == null)
+        {
+            linkedSurvivorData.strategyDictionary = new();
+            Strategy.ResetStrategyDictionary(linkedSurvivorData.strategyDictionary);
+        }
         foreach (var strategyDictionary in linkedSurvivorData.strategyDictionary)
         {
             Conditions condition = new()

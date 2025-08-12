@@ -263,21 +263,24 @@ public class Option : MonoBehaviour
         {
             GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
             {
-                resume.SetActive(false);
-                saveButton.gameObject.SetActive(false);
-                goTitle.SetActive(false);
-                GameManager.Instance.optionCanvas.SetActive(false);
-                GameManager.Instance.Title.title.SetActive(true);
+                GoingTitle();
             });
         }
         else
         {
-            resume.SetActive(false);
-            saveButton.gameObject.SetActive(false);
-            goTitle.SetActive(false);
-            GameManager.Instance.optionCanvas.SetActive(false);
-            GameManager.Instance.Title.title.SetActive(true);
+            GoingTitle();
         }
+    }
+
+    void GoingTitle()
+    {
+        if(GameManager.Instance.BattleRoyaleManager != null) GameManager.Instance.GetComponent<GameResult>().ExitBattle(true);
+        resume.SetActive(false);
+        saveButton.gameObject.SetActive(false);
+        goTitle.SetActive(false);
+        GameManager.Instance.optionCanvas.SetActive(false);
+        GameManager.Instance.Title.title.SetActive(true);
+
     }
 
     void OnLocaleChanged(Locale newLocale)
