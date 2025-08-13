@@ -1206,6 +1206,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
+  - m_Id: 25083154626310144
+    m_Localized: "Se a les\xE3o n\xE3o estiver completamente perdida, curar\xE1 naturalmente."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

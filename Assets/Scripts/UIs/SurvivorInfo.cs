@@ -378,9 +378,9 @@ public class SurvivorInfo : MonoBehaviour
         };
         totalRecord.text = $"{localizedString.GetLocalizedString()}\n";
         string winRate = survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount > 0 ? 
-            $"{survivorData.winCount / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount):0.##}" : "0";
+            $"{(float)survivorData.winCount / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount) * 100:0.##}" : "0";
         string rankDefenseRate = survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount > 0 ? 
-            $"{(survivorData.winCount + survivorData.rankDefenseCount) / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount):0.##}" : "0";
+            $"{((float)survivorData.winCount + survivorData.rankDefenseCount) / (survivorData.winCount + survivorData.rankDefenseCount + survivorData.loseCount) * 100:0.##}" : "0";
         localizedString = new("Basic", "Win Rate")
         {
             Arguments = new[] { winRate, rankDefenseRate }
@@ -393,9 +393,9 @@ public class SurvivorInfo : MonoBehaviour
         };
         totalRecordGoldPlus.text = $"{localizedString.GetLocalizedString()}\n";
         winRate = survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus > 0 ?
-            $"{survivorData.winCountGoldPlus / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus):0.##}" : "0";
+            $"{(float)survivorData.winCountGoldPlus / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus) * 100:0.##}" : "0";
         rankDefenseRate = survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus > 0 ?
-            $"{(survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus) / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus):0.##}" : "0";
+            $"{((float)survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus) / (survivorData.winCountGoldPlus + survivorData.rankDefenseCountGoldPlus + survivorData.loseCountGoldPlus) * 100:0.##}" : "0";
         localizedString = new("Basic", "Win Rate")
         {
             Arguments = new[] { winRate, rankDefenseRate }
@@ -431,13 +431,13 @@ public class SurvivorInfo : MonoBehaviour
 
         localizedString = new("Basic", "Total Damage")
         {
-            Arguments = new[] { $"{survivorData.totalGiveDamage}" }
+            Arguments = new[] { $"{(int)survivorData.totalGiveDamage}" }
         };
         totalGiveDamage.text = localizedString.GetLocalizedString();
 
         localizedString = new("Basic", "Total Take Damage")
         {
-            Arguments = new[] { $"{survivorData.totalTakeDamage}" }
+            Arguments = new[] { $"{(int)survivorData.totalTakeDamage}" }
         };
         totalTakeDamage.text = localizedString.GetLocalizedString();
     }

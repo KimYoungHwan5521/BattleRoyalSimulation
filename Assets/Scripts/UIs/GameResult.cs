@@ -274,7 +274,8 @@ public class GameResult : MonoBehaviour
                 {
                     predictionTable[i].SetActive(true);
                     predictionsText[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
-                    rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
+                    if (GameManager.Instance.BattleRoyaleManager.rankings[i] == null) rankingsText[i].text = "?";
+                    else rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
                 }
                 else predictionTable[i].SetActive(false);
             }

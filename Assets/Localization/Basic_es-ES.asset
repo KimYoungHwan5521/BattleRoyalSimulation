@@ -1208,6 +1208,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
+  - m_Id: 25083154626310144
+    m_Localized: "Si la lesi\xF3n no est\xE1 completamente perdida, sanar\xE1 de
+      forma natural."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

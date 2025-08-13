@@ -331,11 +331,10 @@ public class InGameUIManager : MonoBehaviour
                 else if(survivorRank < outGameUIManager.PredictionNumber) predictionResultBGs[i].color = new Color(0.89f, 0.93f, 0.39f);
                 else predictionResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
 
-                if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
-                return;
+                break;
             }
         }
-        if(outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead) exitBattleRoyale.SetActive(true);
+        if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
     }
 
     public void ShowKillLog(string victim, string cause)

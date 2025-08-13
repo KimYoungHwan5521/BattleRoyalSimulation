@@ -1142,6 +1142,10 @@ MonoBehaviour:
     m_Key: Date Format YMD
     m_Metadata:
       m_Items: []
+  - m_Id: 25083154626310144
+    m_Key: If the injury is not completely lost, it will heal naturally.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

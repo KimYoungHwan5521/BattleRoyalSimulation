@@ -608,8 +608,16 @@ public class Calendar : CustomObject
         survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
         //survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
         List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
-        for (int i = 0; i < allSurvivor.Count; i++)
-            if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].localizedSurvivorName.GetLocalizedString() }));
+        if (leagueReserveInfo[wantReserveDate].league == League.MeleeLeague || leagueReserveInfo[wantReserveDate].league == League.RangeLeague || leagueReserveInfo[wantReserveDate].league == League.CraftingLeague)
+        {
+            for (int i = 0; i < allSurvivor.Count; i++)
+                survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].localizedSurvivorName.GetLocalizedString() }));
+        }
+        else
+        {
+            for (int i = 0; i < allSurvivor.Count; i++)
+                if (allSurvivor[i].tier == tier) survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { allSurvivor[i].localizedSurvivorName.GetLocalizedString() }));
+        }
         if (survivorWhoParticipateInBattleRoyaleDropdown.options.Count < 1)
         {
             survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Basic", "No eligible survivor").GetLocalizedString()}]" }));
@@ -630,13 +638,7 @@ public class Calendar : CustomObject
 
     public void ReserveBattleRoyale()
     {
-        if (wantReserver.tier != GetNeedTier(leagueReserveInfo[wantReserveDate].league))
-        {
-            Debug.LogWarning("!");
-            //outGameUIManager.Alert($"{wantReserver.survivorName}'s tier does not match this league.\n" +
-            //    $"({wantReserver.survivorName}'s tier : {wantReserver.tier}, league need tier : {GetNeedTier(leagueReserveInfo[wantReserveDate].league)})");
-        }
-        else if (wantReserver.isReserved)
+        if (wantReserver.isReserved)
         {
             outGameUIManager.Alert($"Alert:Already Resistered", wantReserver.localizedSurvivorName.GetLocalizedString());
         }

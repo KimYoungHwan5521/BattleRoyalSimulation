@@ -1206,6 +1206,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 25083154626310144
+    m_Localized: "Wenn die Verletzung nicht vollst\xE4ndig verloren ist, heilt sie
+      von selbst."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

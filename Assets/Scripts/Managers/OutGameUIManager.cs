@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -410,7 +409,7 @@ public class OutGameUIManager : MonoBehaviour
                 randShooting,
                 randKnowledge,
                 characteristicCount,
-                (int)(value * value * value * totalRand),
+                (int)(value * value * totalRand),
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }

@@ -24,6 +24,7 @@ public class LoadingCanvas : MonoBehaviour
         new("Basic", "Survivors with both hands or both eyes disabled cannot be scheduled for matches. For championships, participation depends on their condition that day."),
         new("Basic", "The more severe the injury, the slower the healing. The milder the injury, the faster the recovery."),
         new("Basic", "Theoretical max payout is 6,375,600x."),
+        new("Basic", "If the injury is not completely lost, it will heal naturally."),
     };
 
     private void Start()
