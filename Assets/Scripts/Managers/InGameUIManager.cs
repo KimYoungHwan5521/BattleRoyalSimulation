@@ -414,6 +414,7 @@ public class InGameUIManager : MonoBehaviour
         selectedObject = survivor;
         selectedObjectTab.SetActive(true);
         cameraTarget = selectedObject.transform;
+        Camera.main.transform.position = new(selectedObject.transform.position.x, selectedObject.transform.position.y, -10);
         SetSelectedObjectInfoOnce();
     }
 

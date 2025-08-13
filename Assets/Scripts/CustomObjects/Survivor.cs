@@ -2948,7 +2948,7 @@ public class Survivor : CustomObject
                 damagePart = InjurySiteMajor.Arms;
                 hitSound = "guard, 2";
 
-				if (chanceToIncreaseStat < 0.05f)
+				if (chanceToIncreaseStat < 0.02f)
                 {
                     linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
                     increaseFighting++;
@@ -2962,7 +2962,7 @@ public class Survivor : CustomObject
                 else damagePart = InjurySiteMajor.Torso;
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
-				if (chanceToIncreaseStat < 0.2f)
+				if (chanceToIncreaseStat < 0.1f)
                 {
                     attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
                     increaseFighting++;
@@ -2972,7 +2972,7 @@ public class Survivor : CustomObject
             {
                 hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
-				if (chanceToIncreaseStat < 0.05f)
+				if (chanceToIncreaseStat < 0.02f)
                 {
                     attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
                     increaseFighting++;
