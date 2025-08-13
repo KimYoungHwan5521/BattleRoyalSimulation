@@ -190,7 +190,18 @@ public class OutGameUIManager : MonoBehaviour
     public GameObject calendarObject;
     Calendar calendar;
     [SerializeField] SurvivorData mySurvivorDataInBattleRoyale;
-    public SurvivorData MySurvivorDataInBattleRoyale => mySurvivorDataInBattleRoyale;
+    public SurvivorData MySurvivorDataInBattleRoyale
+    {
+        get
+        {
+            if (mySurvivorDataInBattleRoyale == null || mySurvivorDataInBattleRoyale.localizedSurvivorName == null) return null;
+            else
+            {
+                Debug.Log(mySurvivorDataInBattleRoyale.localizedSurvivorName);
+                return mySurvivorDataInBattleRoyale;
+            }
+        }
+    }
 
     [Header("Daily Result")]
     [SerializeField] GameObject buttonEndTheWeek;

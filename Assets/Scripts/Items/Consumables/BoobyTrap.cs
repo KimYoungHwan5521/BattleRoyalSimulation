@@ -31,6 +31,7 @@ public class NoiseTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
+        if (ownnerBox == null) return;
         ownnerBox.PlaySFX("alarm_short,1500");
     }
 }
@@ -43,6 +44,7 @@ public class ChemicalTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
+        if (ownnerBox == null) return;
         PoolManager.Spawn(ResourceEnum.Prefab.GasLeak, ownnerBox.transform.position);
         var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, 2f, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
@@ -63,6 +65,7 @@ public class ShrapnelTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
+        if (ownnerBox == null) return;
         SoundManager.Play(ResourceEnum.SFX.bang_04, ownnerBox.transform.position);
         for (int i=0; i < 48; i++)
         {
@@ -81,6 +84,7 @@ public class ExplosiveTrap : BoobyTrap
 
     public override void Trigger(Survivor victim)
     {
+        if (ownnerBox == null) return;
         PoolManager.Spawn(ResourceEnum.Prefab.Explosion, ownnerBox.transform.position);
         victim.TakeDamage(this, 100);
         var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, 2f, LayerMask.GetMask("Survivor"));

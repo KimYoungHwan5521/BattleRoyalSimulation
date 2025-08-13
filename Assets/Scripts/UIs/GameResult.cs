@@ -261,7 +261,7 @@ public class GameResult : MonoBehaviour
         else
         {
             if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null) gameResultText.text = $"{new LocalizedString("Basic", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
-            else ExitBattle();
+            else gameResultText.text = $"{new LocalizedString("Basic", "Result").GetLocalizedString()}"; ;
         }
 
         // Betting Result
@@ -306,8 +306,8 @@ public class GameResult : MonoBehaviour
                 predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
             }
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
+            if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
             if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
-            else if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
             int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
             bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
             totalProfit += bettingRewards - outGameUIManager.BettingAmount;

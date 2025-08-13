@@ -1356,6 +1356,7 @@ MonoBehaviour:
   runAwayDestination: {x: 0, y: 0}
   runAwayFrom: {fileID: 0}
   currentFarmingArea: {fileID: 0}
+  lastCurrentArea: {fileID: 0}
   lastFarmingArea: {fileID: 0}
   targetFarmingSection: {fileID: 0}
   targetFarmingBox: {fileID: 0}
@@ -4285,15 +4286,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 71b374be849a918448ad014183de1d93, type: 2}
-  m_sharedMaterial: {fileID: -5290427811389435963, guid: 71b374be849a918448ad014183de1d93, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bed79b9a7e3cc6443a113ce2cb15fe62, type: 2}
+  m_sharedMaterial: {fileID: -5290427811389435963, guid: bed79b9a7e3cc6443a113ce2cb15fe62, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4294377216
+  m_fontColor: {r: 0, g: 1, b: 0.9627454, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

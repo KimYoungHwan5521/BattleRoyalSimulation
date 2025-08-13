@@ -2236,7 +2236,7 @@ public class Survivor : CustomObject
 
     bool SetBoobyTrap()
     {
-        if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null) return false;
+        if (curSettingBoobyTrap == null || curSettingBoobyTrapBox == null || targetFarmingBox == null) return false;
         CurrentStatus = Status.Trapping;
         agent.SetDestination(transform.position);
         lookPosition = curSettingBoobyTrapBox.transform.position;
