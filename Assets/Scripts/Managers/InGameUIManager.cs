@@ -296,9 +296,11 @@ public class InGameUIManager : MonoBehaviour
                 {
                     predictionResultRows[i].SetActive(true);
                     predictionResultPredictions[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
-                    predictionResultPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[i]).GetComponent<SpriteRenderer>().color;
+                    Survivor survivor = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[i]);
+                    predictionResultPortraits[i].color = survivor.GetComponent<SpriteRenderer>().color;
                     predictionResultBGs[i].color = Color.white;
                     predictionResultResults[i].text = "";
+                    predictionResultRows[i].GetComponent<PredictedSurvivor>().linkedSurvivor = survivor;
                 }
                 else predictionResultRows[i].SetActive(false);
             }
@@ -405,6 +407,15 @@ public class InGameUIManager : MonoBehaviour
             }
         }
         if(!selectedNotNull) selectedObject = null;
+    }
+
+    public void SelectObject(Survivor survivor)
+    {
+        selectedObject = survivor;
+        selectedObjectTab.SetActive(true);
+        cameraTarget = selectedObject.transform;
+        autoFocus.GetComponent<Toggle>().isOn = true;
+        SetSelectedObjectInfoOnce();
     }
 
     void SetSelectedObjectInfoOnce()

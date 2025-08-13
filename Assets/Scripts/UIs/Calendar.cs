@@ -530,7 +530,7 @@ public class Calendar : CustomObject
 
     public void TurnPageCalendar(int value)
     {
-        CalendarPage = Mathf.Clamp(calendarPage + value, 1, curMaxYear * 3);
+        CalendarPage = Mathf.Clamp(calendarPage + value, 1, curMaxYear * 12);
     }
 
     public void OpenReserveBattleRoyaleForm(int date)
