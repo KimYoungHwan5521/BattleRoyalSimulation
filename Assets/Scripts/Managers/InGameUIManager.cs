@@ -414,7 +414,6 @@ public class InGameUIManager : MonoBehaviour
         selectedObject = survivor;
         selectedObjectTab.SetActive(true);
         cameraTarget = selectedObject.transform;
-        autoFocus.GetComponent<Toggle>().isOn = true;
         SetSelectedObjectInfoOnce();
     }
 

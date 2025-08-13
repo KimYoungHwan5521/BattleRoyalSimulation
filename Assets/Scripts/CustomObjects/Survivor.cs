@@ -2741,10 +2741,10 @@ public class Survivor : CustomObject
             }
             if(attacker.playerSurvivor)
             {
-                if (weapon == null)
+                if (weapon == null || !IsValid(weapon))
                 {
                     PlayerPrefs.SetInt($"Bare Knuckle Kill", PlayerPrefs.GetInt($"Bare Knuckle Kill") + 1);
-                    AchievementManager.SetStat("Total_BareHandKill ", PlayerPrefs.GetInt($"Bare Knuckle Kill"));
+                    AchievementManager.SetStat("Total_BareHandKill", PlayerPrefs.GetInt($"Bare Knuckle Kill"));
                     if(PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AchievementManager.UnlockAchievement("Bruce Lee");
                 }
                 else if (weapon is MeleeWeapon)
@@ -2922,11 +2922,11 @@ public class Survivor : CustomObject
         {
             float probability = UnityEngine.Random.Range(0, 1f);
             float coefficient = (linkedSurvivorData.Fighting / Mathf.Max(attacker.linkedSurvivorData.Fighting, 1)) * (moveSpeed / attacker.moveSpeed);
-            float avoidRate = 0.2f * coefficient;
-            float defendRate = 0.3f * coefficient;
+            float avoidRate = Mathf.Min(0.1f * coefficient, 0.3f);
+            float defendRate = Mathf.Min(0.4f * coefficient, 0.7f);
             if (rightHandDisabled) defendRate -= defendRate * 0.5f;
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
-            float criticalRate = 0.1f * coefficient * attacker.luck / luck;
+            float criticalRate = 0.1f / coefficient * attacker.luck / luck;
 
             float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
             if (probability < avoidRate)
