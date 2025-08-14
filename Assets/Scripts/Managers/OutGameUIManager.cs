@@ -197,7 +197,6 @@ public class OutGameUIManager : MonoBehaviour
             if (mySurvivorDataInBattleRoyale == null || mySurvivorDataInBattleRoyale.localizedSurvivorName == null) return null;
             else
             {
-                Debug.Log(mySurvivorDataInBattleRoyale.localizedSurvivorName);
                 return mySurvivorDataInBattleRoyale;
             }
         }

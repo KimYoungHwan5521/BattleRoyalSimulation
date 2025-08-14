@@ -147,6 +147,7 @@ public class BattleRoyaleManager
 
     IEnumerator ItemSetting(int itemPool)
     {
+        farmingItems = new();
         Calendar calendar = GameManager.Instance.Calendar;
         foreach(var item in calendar.itemPool[itemPool])
         {
@@ -362,6 +363,7 @@ public class BattleRoyaleManager
     public void Destroy()
     {
         GameManager.Instance.SoundManager.Enqueue(bgsfx);
+        bgsfx = null;
         foreach (Survivor survivor in survivors) survivor.MyDestroy();
 
         foreach (Area area in areas) if (area.garbageObjects != null) foreach (GameObject garbageObject in area.garbageObjects) GameObject.Destroy(garbageObject);

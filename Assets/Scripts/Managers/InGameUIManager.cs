@@ -852,6 +852,7 @@ public class InGameUIManager : MonoBehaviour
     public void ExitBattleRoyale()
     {
         if (GameManager.Instance.BattleRoyaleManager == null || !GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
+        SetTimeScale(0);
         outGameUIManager.OpenConfirmWindow("Confirm:Exit Battle Royale", () =>
         {
             GameManager.Instance.GetComponent<GameResult>().ShowGameResult();
