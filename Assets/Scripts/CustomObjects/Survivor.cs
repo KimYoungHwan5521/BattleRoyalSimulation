@@ -1087,7 +1087,7 @@ public class Survivor : CustomObject
             // 파밍을 하는 경우:
             // 1. 막금구가 아님
             // 2. 막금구인 경우 : 무기가 priority1 무기가 아님 || 총알이 없음
-            if (!lastArea || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null))
+            if (!lastArea || !IsValid(currentWeapon) || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null))
             {
                 if (targetFarmingCorpse != null)
                 {
@@ -1931,6 +1931,15 @@ public class Survivor : CustomObject
                 }
                 else if(currentWeapon is not RangedWeapon)
                 {
+                    // 현재 무기가 총이 아니면 총부터 만들도록
+                    bool isRangedWeapon = craftables[^i].itemType switch
+                    {
+                        ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle or ItemManager.Items.AssaultRifle
+                        or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun or ItemManager.Items.Pistol or ItemManager.Items.Revolver
+                        => true,
+                        _ => false,
+                    };
+                    if (!isRangedWeapon) continue;
                     // 총이 없으면 무조건 만들고
                     gunNeeds = true;
                 }
@@ -1962,16 +1971,16 @@ public class Survivor : CustomObject
                         {
                             ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
                             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
-                            ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.Bazooka => 3,
+                            ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
+                            ItemManager.Items.AssaultRifle => 4,
                             _ => 5
                         };
                         int candidateTier = craftables[^i].itemType switch
                         {
                             ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
                             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
-                            ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.Bazooka => 3,
+                            ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
+                            ItemManager.Items.AssaultRifle => 4,
                             _ => 5
                         };
                         gunNeeds = candidateTier > curWeaponTier;
