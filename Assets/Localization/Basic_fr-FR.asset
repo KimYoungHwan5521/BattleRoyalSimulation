@@ -1221,6 +1221,10 @@ MonoBehaviour:
       naturellement."
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "Soigne en un jour les blessures pouvant gu\xE9rir naturellement."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

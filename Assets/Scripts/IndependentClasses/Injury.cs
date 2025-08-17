@@ -36,6 +36,7 @@ public enum InjuryType
     PermanentVisualImpairment,
     RecoveringFromSurgery,
     ArtificialPartsTransplanted,
+    ArtificialPartsDamaged,
 }
 
 [Serializable]

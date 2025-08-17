@@ -199,17 +199,6 @@ public class SurvivorData
     public InjurySite surgerySite;
     public SurgeryType surgeryType;
     public CharacteristicType surgeryCharacteristic;
-    bool recoverySerumAdministered;
-    public bool RecoverySerumAdministered
-    {
-        get => recoverySerumAdministered;
-        set
-        {
-            recoverySerumAdministered = value;
-            if (value) recoverySerumMedicalEffectLeft = 3;
-        }
-    }
-    public int recoverySerumMedicalEffectLeft;
 
     // Strategy
     public ItemManager.Items priority1Weapon = ItemManager.Items.AssaultRifle;

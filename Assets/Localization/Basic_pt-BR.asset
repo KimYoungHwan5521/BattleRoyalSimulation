@@ -1210,6 +1210,10 @@ MonoBehaviour:
     m_Localized: "Se a les\xE3o n\xE3o estiver completamente perdida, curar\xE1 naturalmente."
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "Cura em um dia as les\xF5es que podem se recuperar naturalmente."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

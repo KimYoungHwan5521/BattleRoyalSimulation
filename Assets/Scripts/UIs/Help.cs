@@ -40,6 +40,16 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         this.description = description;
     }
 
+    public void SetDescription(SurgeryType surgeryType)
+    {
+        raw = false;
+        description = surgeryType switch
+        {
+            SurgeryType.RecoverySerumAdministeration => "Help:RecoverySerumAdministeration",
+            _ => ""
+        };
+    }
+
     public void SetDescription(LocalizedString description)
     {
         raw = true;

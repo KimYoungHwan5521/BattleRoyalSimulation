@@ -3659,7 +3659,7 @@ public class Survivor : CustomObject
                 degree = Mathf.Clamp(damage / 100, 0, 1f);
                 break;
         }
-        AddInjury(artificalPart.site, InjuryType.ArtificialPartsTransplanted, degree);
+        AddInjury(artificalPart.site, InjuryType.ArtificialPartsDamaged, degree);
     }
 
     void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
@@ -3722,7 +3722,8 @@ public class Survivor : CustomObject
                             break;
                         // Losable
                         default:
-                            AddInjury(injurySite, InjuryType.Rupture, 1);
+                            if (injuryType == InjuryType.ArtificialPartsDamaged) AddInjury(injurySite, InjuryType.ArtificialPartsDamaged, 1);
+                            else AddInjury(injurySite, InjuryType.Rupture, 1);
                             break;
                     }
                 }
@@ -3889,6 +3890,7 @@ public class Survivor : CustomObject
         float penaltiedCraftingSpeedByLeftArm = 1;
         foreach (Injury injury in injuries)
         {
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1) continue;
             switch(injury.site)
             {
                 case InjurySite.RightEar:

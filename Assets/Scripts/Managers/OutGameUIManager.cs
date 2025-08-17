@@ -210,8 +210,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject surgeryResult;
     [SerializeField] TextMeshProUGUI surgeryResultText;
     bool hadSurgery;
-    LocalizedString whoUnderwentSurgery;
-    LocalizedString performedSurgery;
+    List<LocalizedString> whoUnderwentSurgery = new();
+    List<LocalizedString> performedSurgery = new();
 
     [Header("Betting")]
     [SerializeField] GameObject bettingRoom;
@@ -1069,12 +1069,22 @@ public class OutGameUIManager : MonoBehaviour
         {
             foreach(Injury injury in survivorWhoWantSurgery.injuries)
             {
-                if(injury.degree >= 1)
+                if(injury.degree >= 1 || injury.degree > 0 && injury.type == InjuryType.ArtificialPartsDamaged)
                 {
-                    surgeryName = new LocalizedString("Injury", "Prosthetic Implant")
+                    if(injury.type == InjuryType.ArtificialPartsDamaged)
                     {
-                        Arguments = new[] { new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString() }
-                    };
+                        surgeryName = new LocalizedString("Injury", "Replace Prosthetic")
+                        {
+                            Arguments = new[] { new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString() }
+                        };
+                    }
+                    else
+                    {
+                        surgeryName = new LocalizedString("Injury", "Prosthetic Implant")
+                        {
+                            Arguments = new[] { new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString() }
+                        };
+                    }
                     switch(injury.site)
                     {
                         case InjurySite.RightBigToe:
@@ -1134,6 +1144,7 @@ public class OutGameUIManager : MonoBehaviour
                             Debug.LogWarning($"Can't transplant site : {injury.site}");
                             break;
                     }
+                    if (injury.type == InjuryType.ArtificialPartsDamaged) cost /= 2;
                     surgeryList.Add(new(surgeryName, cost, injury.site, SurgeryType.Transplant));
                 }
             }
@@ -1174,6 +1185,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
                 surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
+                surgeries[i].GetComponent<Help>().SetDescription(surgeryList[i].surgeryType);
                 surgeries[i].SetActive(true);
             }
             else
@@ -1214,16 +1226,12 @@ public class OutGameUIManager : MonoBehaviour
             {
                 Alert("Alert:Not enough money.");
             }
-            else if(surgeryList[index].surgeryType == SurgeryType.RecoverySerumAdministeration && survivorWhoWantSurgery.RecoverySerumAdministered)
-            {
-                Alert("Alert:Already administered");
-            }
             else
             {
                 if (survivorWhoWantSurgery.assignedTraining != Training.None)
                 {
                     AssignTraining();
-                    Alert("Alert:Training  Canceled", $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}");
+                    Alert("Alert:Training Canceled", $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}");
                 }
                 survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
@@ -1966,11 +1974,6 @@ public class OutGameUIManager : MonoBehaviour
             }
             Surgery(survivor);
         }
-        surgeryResult.SetActive(hadSurgery);
-        if (hadSurgery)
-        {
-            surgeryResultText.text = $"{new LocalizedString("Basic", "Surgery Successful").GetLocalizedString()}\n({whoUnderwentSurgery.GetLocalizedString()} : {performedSurgery.GetLocalizedString()})";
-        }
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 
         GameManager.Instance.FixLayout(dailyResult.GetComponent<RectTransform>());
@@ -2018,6 +2021,7 @@ public class OutGameUIManager : MonoBehaviour
             OpenConfirmWindow(key, () =>
             {
                 DayEnd();
+                ShowSurgeryResult();
             }, warning);
         }
         else if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
@@ -2075,6 +2079,7 @@ public class OutGameUIManager : MonoBehaviour
                     break;
                 }
             }
+            ShowSurgeryResult();
         }, warning);
     }
 
@@ -2136,12 +2141,12 @@ public class OutGameUIManager : MonoBehaviour
     {
         if (!survivor.surgeryScheduled)
         {
-            hadSurgery = false;
+            //hadSurgery = false;
             return;
         }
         hadSurgery = true;
-        whoUnderwentSurgery = survivor.localizedSurvivorName;
-        performedSurgery = survivor.localizedScheduledSurgeryName;
+        whoUnderwentSurgery.Add(survivor.localizedSurvivorName);
+        performedSurgery.Add(survivor.localizedScheduledSurgeryName);
         if(survivor.surgeryType == SurgeryType.Transplant)
         {
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
@@ -2166,7 +2171,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         else if(survivor.surgeryType == SurgeryType.RecoverySerumAdministeration)
         {
-            survivor.RecoverySerumAdministered = true;
+            survivor.injuries.RemoveAll(x => x.degree < 1 && x.degree > 0 && x.type != InjuryType.ArtificialPartsDamaged);
         }
 
         survivor.totalSurgeryFee += survivor.scheduledSurgeryCost;
@@ -2181,16 +2186,10 @@ public class OutGameUIManager : MonoBehaviour
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {
-                if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted)
+                if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted && injury.type != InjuryType.ArtificialPartsDamaged)
                 {
                     float recovery = 0;
                     float recoveryRate = 1;
-                    if (survivor.RecoverySerumAdministered)
-                    {
-                        recoveryRate *= 3;
-                        survivor.recoverySerumMedicalEffectLeft--;
-                        if (survivor.recoverySerumMedicalEffectLeft <= 0) survivor.RecoverySerumAdministered = false;
-                    }
                     if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
                     else if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
                     
@@ -2207,6 +2206,23 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
         ResetSelectedSurvivorInfo();
+    }
+
+    void ShowSurgeryResult()
+    {
+        surgeryResult.SetActive(hadSurgery);
+        if (hadSurgery)
+        {
+            surgeryResultText.text = "";
+            for (int i = 0; i < whoUnderwentSurgery.Count; i++) surgeryResultText.text += $"{new LocalizedString("Basic", "Surgery Successful").GetLocalizedString()}\n({whoUnderwentSurgery[i].GetLocalizedString()} : {performedSurgery[i].GetLocalizedString()})\n";
+            whoUnderwentSurgery.Clear();
+            performedSurgery.Clear();
+        }
+    }
+
+    public void CloseDailyResult()
+    {
+        hadSurgery = false;
     }
     #endregion
 

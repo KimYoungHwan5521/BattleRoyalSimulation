@@ -1211,6 +1211,10 @@ MonoBehaviour:
       von selbst."
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "Heilt in einem Tag Verletzungen, die sich von selbst erholen k\xF6nnen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1262,6 +1262,11 @@ MonoBehaviour:
       \uC790\uC5F0\uD788 \uCE58\uC720 \uB429\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "\uC790\uC5F0 \uD68C\uBCF5 \uAC00\uB2A5\uD55C \uBD80\uC0C1\uC744
+      \uD558\uB8E8\uB9CC\uC5D0 \uC644\uCE58\uC2DC\uD0B5\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

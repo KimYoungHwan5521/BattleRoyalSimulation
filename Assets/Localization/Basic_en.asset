@@ -1203,6 +1203,10 @@ MonoBehaviour:
     m_Localized: If the injury is not completely lost, it will heal naturally.
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: Heals naturally recoverable injuries in a single day.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1213,6 +1213,11 @@ MonoBehaviour:
       forma natural."
     m_Metadata:
       m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "Cura en un solo d\xEDa las heridas que pueden recuperarse de forma
+      natural."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

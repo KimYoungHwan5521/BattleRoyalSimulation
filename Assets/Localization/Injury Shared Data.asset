@@ -287,6 +287,14 @@ MonoBehaviour:
     m_Key: Administer Recovery Serum
     m_Metadata:
       m_Items: []
+  - m_Id: 24734501986430976
+    m_Key: ArtificialPartsDamaged
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24734509330657280
+    m_Key: Replace Prosthetic
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

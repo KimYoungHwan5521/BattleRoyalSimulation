@@ -293,10 +293,19 @@ MonoBehaviour:
     m_Localized: "\uD68C\uBCF5\uD608\uCCAD \uD22C\uC5EC"
     m_Metadata:
       m_Items: []
+  - m_Id: 24734501986430976
+    m_Localized: "\uBCF4\uD615\uBB3C \uD30C\uC190\uB428"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24734509330657280
+    m_Localized: "\uBCF4\uD615\uBB3C \uAD50\uCCB4({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051144
   references:
     version: 2
     RefIds:
     - rid: 7835753611033051144
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f09800ba630b0000f01889bb630b00
+        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df5700

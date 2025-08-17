@@ -61,8 +61,8 @@ public class SurvivorSaveData
     public InjurySite surgerySite;
     public SurgeryType surgeryType;
     public CharacteristicType surgeryCharacteristic;
-    public bool recoverySerumAdministered;
-    public int recoverySerumMedicalEffectLeft;
+    //public bool recoverySerumAdministered;
+    //public int recoverySerumMedicalEffectLeft;
     public ItemManager.Items priority1Weapon;
     public List<StrategyDictionaryEntry> strategyDictionaryEntries;
     public ItemManager.Craftable priority1Crafting;

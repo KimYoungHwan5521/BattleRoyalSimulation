@@ -197,7 +197,7 @@ public class SurvivorInfo : MonoBehaviour
             InjurySite.RightHand => rightHand,
             InjurySite.LeftHand => leftHand,
             InjurySite.RightThumb => rightThumb,
-            InjurySite.RightIndexFinger => leftThumb,
+            InjurySite.RightIndexFinger => rightIndexFinger,
             InjurySite.RightMiddleFinger => rightMiddleFinger,
             InjurySite.RightRingFinger => rightRingFinger,
             InjurySite.RightLittleFinger => rightLittleFinger,
@@ -234,9 +234,9 @@ public class SurvivorInfo : MonoBehaviour
         foreach(var injury in injuries)
         {
             Image targetPart = GetTargetImage(injury.site);
-            if (injury.type == InjuryType.ArtificialPartsTransplanted)
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged)
             {
-                targetPart.color = new Color(0.5f, 0.5f, 0.5f);
+                targetPart.color = new Color(0.6f, 0.6f, 0.6f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
                 foreach (var subpart in subparts)
                 {
@@ -248,7 +248,7 @@ public class SurvivorInfo : MonoBehaviour
             }
             else if(injury.degree == 1)
             {
-                targetPart.color = new Color(0.5f, 0, 0);
+                targetPart.color = new Color(0.3f, 0.3f, 0.3f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
                 foreach(var subpart in subparts)
                 {

@@ -401,7 +401,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875853614575616
-    m_Key: Alert:Training  Canceled
+    m_Key: Alert:Training Canceled
     m_Metadata:
       m_Items: []
   - m_Id: 1875855443292160
@@ -1144,6 +1144,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25083154626310144
     m_Key: If the injury is not completely lost, it will heal naturally.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26557387210551296
+    m_Key: Help:RecoverySerumAdministeration
     m_Metadata:
       m_Items: []
   m_Metadata:

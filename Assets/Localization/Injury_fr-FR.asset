@@ -293,10 +293,19 @@ MonoBehaviour:
     m_Localized: "Administrer le s\xE9rum de r\xE9g\xE9n\xE9ration"
     m_Metadata:
       m_Items: []
+  - m_Id: 24734501986430976
+    m_Localized: "Proth\xE8se endommag\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24734509330657280
+    m_Localized: "Remplacer la proth\xE8se ({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051141
   references:
     version: 2
     RefIds:
     - rid: 7835753611033051141
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f09800ba630b0000f01889bb630b00
+        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df5700

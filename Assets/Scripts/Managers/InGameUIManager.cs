@@ -569,7 +569,7 @@ public class InGameUIManager : MonoBehaviour
         foreach (var injury in survivor.injuries)
         {
             Image targetPart = GetTargetImage(injury.site);
-            if (injury.type == InjuryType.ArtificialPartsTransplanted)
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged)
             {
                 targetPart.color = new Color(0.5f, 0.5f, 0.5f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
