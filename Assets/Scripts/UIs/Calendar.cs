@@ -96,7 +96,7 @@ public class Calendar : CustomObject
             }
 
             today = value;
-            string localizedMonth = new LocalizedString("Basic", monthName[Month - 1]).GetLocalizedString();
+            string localizedMonth = new LocalizedString("Basic", monthName[(Month - 1) % 12]).GetLocalizedString();
             string localizedDateName = new LocalizedString("Basic", dateName[today % 7]).GetLocalizedString();
             LocalizedString date = new("Basic", "Date Format");
             date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
@@ -205,7 +205,7 @@ public class Calendar : CustomObject
     public int CurMaxYear => curMaxYear;
     void AddLeagueReserveInfo(int howManyYears)
     {
-        for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 3 * 336; i++)
+        for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 336; i++)
         {
             if (i % 336 == 335)
             {

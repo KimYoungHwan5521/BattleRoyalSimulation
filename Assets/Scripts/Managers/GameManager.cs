@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     public void Test()
     {
-        PlayerPrefs.DeleteAll();
+        calendar.Today = 336;
     }
 
     void Update()

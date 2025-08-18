@@ -327,11 +327,16 @@ public class OutGameUIManager : MonoBehaviour
         studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
             = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
 
-        weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
-        runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
-        fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
-        shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
-        studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
+        weightTrainingUpgradeButtion.SetActive(weightTrainingLevel < facilityUpgradeCost.Length + 1);
+        runningUpgradeButtion.SetActive(runningLevel < facilityUpgradeCost.Length + 1);
+        fightTrainingUpgradeButtion.SetActive(fightTrainingLevel < facilityUpgradeCost.Length + 1);
+        shootingTrainingUpgradeButtion.SetActive(shootingTrainingLevel < facilityUpgradeCost.Length + 1);
+        studyingUpgradeButtion.SetActive(studyingLevel < facilityUpgradeCost.Length + 1);
+        if (weightTrainingLevel < facilityUpgradeCost.Length + 1) weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
+        if (runningLevel < facilityUpgradeCost.Length + 1) runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
+        if (fightTrainingLevel < facilityUpgradeCost.Length + 1) fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
+        if (shootingTrainingLevel < facilityUpgradeCost.Length + 1) shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
+        if (studyingLevel < facilityUpgradeCost.Length + 1) studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
 
         weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
         runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -733,7 +738,7 @@ public class OutGameUIManager : MonoBehaviour
         int eyeInjury = 0;
         foreach(Injury injury in survivor.injuries)
         {
-            if (injury.type == InjuryType.ArtificialPartsTransplanted) continue;
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || (injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1)) continue;
             if (injury.degree < 0.1f) continue;
             switch(training)
             {
@@ -1635,6 +1640,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         GameManager.Instance.Option.SetSaveButtonInteractable(false);
         mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
+        if (mySurvivorDataInBattleRoyale == null) AchievementManager.UnlockAchievement("Spectator");
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
 

@@ -279,7 +279,10 @@ public class BattleRoyaleManager
                 }
             }
         }
-        //GameManager.Instance.NavMeshSurface.BuildNavMesh();
+        foreach(Area area in areas)
+        {
+            area.GetDistances();
+        }
     }
 
     // true : blocked, false : not blocked
@@ -303,7 +306,7 @@ public class BattleRoyaleManager
         while(queue.Count > 0)
         {
             esc++;
-            if (esc > 100)
+            if (esc > 1000)
             {
                 Debug.LogWarning("Infinite loop detected!");
                 break;

@@ -1159,6 +1159,8 @@ public class Survivor : CustomObject
     public Area FindNearest(Dictionary<Area, bool> candidates)
     {
         Area nearest = null;
+        int minAreaDistance = 100;
+        int areaDistance;
         float minDistance = float.MaxValue;
         float distance;
         List<Area> reserveRemoves = new();
@@ -1171,11 +1173,24 @@ public class Survivor : CustomObject
                 reserveRemoves.Add(area);
                 continue;
             }
-            distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
-            if (distance < minDistance)
+
+            Area curArea = GetCurrentArea();
+            if (curArea.Distances.ContainsKey(candidate.Key)) areaDistance = curArea.Distances[candidate.Key];
+            else continue;
+            if(areaDistance < minAreaDistance)
             {
-                minDistance = distance;
+                minAreaDistance = areaDistance;
                 nearest = candidate.Key;
+                minDistance = float.MaxValue;
+            }
+            else if(areaDistance == minAreaDistance)
+            {
+                distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearest = candidate.Key;
+                }
             }
         }
         foreach (Area reserveRemove in reserveRemoves)
@@ -3700,6 +3715,7 @@ public class Survivor : CustomObject
             if (index != -1 && injuries[index].type != InjuryType.PermanentVisualImpairment)
             {
                 injuries[index].degree += injuryDegree;
+                if (injuries[index].type == InjuryType.ArtificialPartsTransplanted) injuries[index].type = InjuryType.ArtificialPartsDamaged;
                 // dgree가 1이 되면 loss
                 if (injuries[index].degree >= 1)
                 {
@@ -4379,7 +4395,7 @@ public class Survivor : CustomObject
         injuries = survivorInfo.injuries;
         foreach(Injury injury in injuries)
         {
-            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
+            if (injury.type == InjuryType.ArtificialPartsTransplanted|| injury.type == InjuryType.ArtificialPartsDamaged || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
         }
 
         lastPosition = transform.position;
