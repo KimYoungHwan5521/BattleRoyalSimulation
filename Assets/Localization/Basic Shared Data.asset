@@ -1150,6 +1150,10 @@ MonoBehaviour:
     m_Key: Help:RecoverySerumAdministeration
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Key: You can assign training to a survivor by left/right-clicking them.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

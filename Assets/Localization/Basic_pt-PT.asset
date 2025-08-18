@@ -1215,6 +1215,11 @@ MonoBehaviour:
     m_Localized: "Cura em um dia as les\xF5es que podem recuperar-se naturalmente."
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: "Pode atribuir treino a um sobrevivente clicando com o bot\xE3o
+      esquerdo/direito."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

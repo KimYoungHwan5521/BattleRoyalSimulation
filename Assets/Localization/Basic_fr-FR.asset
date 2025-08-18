@@ -1225,6 +1225,11 @@ MonoBehaviour:
     m_Localized: "Soigne en un jour les blessures pouvant gu\xE9rir naturellement."
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: "Vous pouvez assigner un entra\xEEnement \xE0 un survivant en cliquant
+      dessus avec le bouton gauche/droit."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

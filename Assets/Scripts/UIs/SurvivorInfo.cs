@@ -12,6 +12,7 @@ public class SurvivorInfo : MonoBehaviour
 {
     [SerializeField] Image tierImage;
     [SerializeField] LocalizeStringEvent survivorNameText;
+    [SerializeField] LocalizeStringEvent scheduledTrainingText;
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
@@ -116,11 +117,15 @@ public class SurvivorInfo : MonoBehaviour
     {
         survivorData = new(survivorName, strength, agility, fighting, shooting, knowledge, price, tier);
 
-        Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
-        tierImage.sprite = ResourceManager.Get(tierSprite);
-        tierImage.GetComponent<Help>().SetDescriptionWithKey(tier.ToString());
+        if (tierImage != null)
+        {
+            Enum.TryParse(tier.ToString(), out ResourceEnum.Sprite tierSprite); 
+            tierImage.sprite = ResourceManager.Get(tierSprite);
+            tierImage.GetComponent<Help>().SetDescriptionWithKey(tier.ToString());
+        }
         
         survivorNameText.StringReference = survivorName;
+        if (scheduledTrainingText != null) scheduledTrainingText.StringReference = new("Basic", $"{survivorData.assignedTraining}");
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
@@ -140,11 +145,20 @@ public class SurvivorInfo : MonoBehaviour
 
     public void SetInfo(SurvivorData wantSurvivorData, bool showIncrease)
     {
-        Enum.TryParse(wantSurvivorData.tier.ToString(), out ResourceEnum.Sprite tierSprite);
-        tierImage.sprite = ResourceManager.Get(tierSprite);
-        tierImage.GetComponent<Help>().SetDescriptionWithKey(wantSurvivorData.tier.ToString());
+        if(tierImage != null)
+        {
+            Enum.TryParse(wantSurvivorData.tier.ToString(), out ResourceEnum.Sprite tierSprite);
+            tierImage.sprite = ResourceManager.Get(tierSprite);
+            tierImage.GetComponent<Help>().SetDescriptionWithKey(wantSurvivorData.tier.ToString());
+        }
 
         survivorData = wantSurvivorData;
+        if (scheduledTrainingText != null)
+        {
+            if(survivorData.assignedTraining == Training.None) scheduledTrainingText.StringReference = new("Basic", $"None");
+            else scheduledTrainingText.StringReference = new("Basic", $"Training:{survivorData.assignedTraining}");
+
+        }
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";

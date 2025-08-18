@@ -1218,6 +1218,11 @@ MonoBehaviour:
       natural."
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: "Puedes asignar entrenamiento a un superviviente haciendo clic izquierdo/derecho
+      en \xE9l."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

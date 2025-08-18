@@ -518,6 +518,42 @@ public class Calendar : CustomObject
         }
         Today = 0;
         TurnPageCalendar(0);
+        bool colorChanged = false;
+        GameManager.Instance.ObjectUpdate += () =>
+        {
+            if (survivorWhoParticipateInBattleRoyaleDropdown.IsExpanded)
+            {
+                if (!colorChanged)
+                {
+                    var dropdownSprites = survivorWhoParticipateInBattleRoyaleDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
+                    for (int i = 0; i < survivorWhoParticipateInBattleRoyaleDropdown.options.Count; i++)
+                    {
+                        bool exit = false;
+                        SurvivorData targetSurvivorData = outGameUIManager.MySurvivorsData.Find(
+                            x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[i].text);
+                        // 예외처리
+                        if(targetSurvivorData == null)
+                        {
+                            Debug.LogError($"Can't find survivor name : {survivorWhoParticipateInBattleRoyaleDropdown.options[i].text}");
+                            break;
+                        }
+
+                        foreach (var injury in targetSurvivorData.injuries)
+                        {
+                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged) || injury.degree >= 1)
+                            {
+                                dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
+                                exit = true;
+                                break;
+                            }
+                        }
+                        if (!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
+                    }
+                    colorChanged = true;
+                }
+            }
+            else colorChanged = false;
+        };
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 

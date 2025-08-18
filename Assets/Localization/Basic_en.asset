@@ -1207,6 +1207,10 @@ MonoBehaviour:
     m_Localized: Heals naturally recoverable injuries in a single day.
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: You can assign training to a survivor by left/right-clicking them.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

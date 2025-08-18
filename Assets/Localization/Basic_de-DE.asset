@@ -1215,6 +1215,11 @@ MonoBehaviour:
     m_Localized: "Heilt in einem Tag Verletzungen, die sich von selbst erholen k\xF6nnen."
     m_Metadata:
       m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: "Sie k\xF6nnen einem \xDCberlebenden durch Links-/Rechtsklick ein
+      Training zuweisen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

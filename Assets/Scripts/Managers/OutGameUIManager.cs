@@ -279,7 +279,7 @@ public class OutGameUIManager : MonoBehaviour
                         bool exit = false;
                         foreach (var injury in mySurvivorsData[i].injuries)
                         {
-                            if (injury.degree > 0)
+                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged) || injury.degree >= 1)
                             {
                                 dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
                                 exit = true;
@@ -292,7 +292,6 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
             else colorChanged = false;
-
         };
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
@@ -637,22 +636,8 @@ public class OutGameUIManager : MonoBehaviour
         {
             if (i < mySurvivorsData.Count)
             {
-                SurvivorData survivor = mySurvivorsData[i];
-                var scheduleTexts = scheduledTrainings[i].GetComponentsInChildren<TextMeshProUGUI>();
-                scheduleTexts[0].GetComponent<LocalizeStringEvent>().StringReference = survivor.localizedSurvivorName;
-                string trainingName = mySurvivorsData[i].assignedTraining switch
-                {
-                    Training.None => "None",
-                    Training.Weight => "Training:Weight",
-                    Training.Running => "Training:Running",
-                    Training.Fighting => "Training:Fighting",
-                    Training.Shooting => "Training:Shooting",
-                    Training.Studying => "Training:Studying",
-                    _ => throw new NotImplementedException(),
-                };
-                scheduleTexts[1].GetComponent<LocalizeStringEvent>().StringReference = new("Basic", trainingName);
-
                 scheduledTrainings[i].SetActive(true);
+                scheduledTrainings[i].GetComponent<SurvivorInfo>().SetInfo(mySurvivorsData[i], false);
             }
             else scheduledTrainings[i].SetActive(false);
         }
@@ -732,7 +717,7 @@ public class OutGameUIManager : MonoBehaviour
         return false;
     }
 
-    bool Trainable(SurvivorData survivor, Training training)
+    public bool Trainable(SurvivorData survivor, Training training)
     {
         return Trainable(survivor, training, out string cause);
     }

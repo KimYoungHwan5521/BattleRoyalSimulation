@@ -12,6 +12,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
     [SerializeField] GameObject[] characteristicsBox;
     [SerializeField] float paddingTop;
     TextMeshProUGUI[] characteristicsText;
+    [SerializeField] float wantHeight = 40;
 
     SurvivorData linkedSurvivor;
 
@@ -41,7 +42,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
                 characteristicsText[i].text = survivorData.characteristics[i].characteristicName.GetLocalizedString();
                 characteristicsBox[i].GetComponent<Help>().SetDescription(survivorData.characteristics[i].description);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(characteristicsText[i].rectTransform);
-                characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, 40);
+                characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, wantHeight);
             }
             else
             {
