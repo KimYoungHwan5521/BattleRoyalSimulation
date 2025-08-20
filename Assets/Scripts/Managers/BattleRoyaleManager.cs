@@ -148,6 +148,7 @@ public class BattleRoyaleManager
     IEnumerator ItemSetting(int itemPool)
     {
         farmingItems = new();
+        ItemManager.itemDictionary = new();
         Calendar calendar = GameManager.Instance.Calendar;
         foreach(var item in calendar.itemPool[itemPool])
         {
@@ -191,6 +192,7 @@ public class BattleRoyaleManager
                         else targetBox.items.Add(farmingItems[currentIndex]);
                         currentIndex++;
                         GameManager.ClaimLoadInfo("Placing items", currentIndex, farmingItems.Count);
+                        if (currentIndex >= farmingItems.Count) yield break;
                     }
                 }
             }
