@@ -1399,17 +1399,26 @@ public class OutGameUIManager : MonoBehaviour
         else strategyRoom.SetActive(false);
     }
 
+    bool strategyRoomJustOpend = true;
     void SetStrategyRoom()
     {
         selectSurvivorEstablishStrategyDropdown.ClearOptions();
         selectSurvivorEstablishStrategyDropdown.AddOptions(survivorsDropdown.options);
+        survivorWhoWantEstablishStrategy = mySurvivorsData[0];
+        strategyRoomJustOpend = true;
         SelectSurvivorToEstablishStrategy();
         foreach (var strategy in strategies) strategy.hasChanged = false;
     }
 
     public void SelectSurvivorToEstablishStrategy()
     {
-        SaveStrategy();
+        if (strategyRoomJustOpend) strategyRoomJustOpend = false;
+        else
+        {
+            bool hasChanged = false;
+            foreach (Strategy strategy in strategies) if (strategy.hasChanged) { hasChanged = true; break; }
+            if(hasChanged) SaveStrategy();
+        }
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
         survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
         weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
@@ -1450,7 +1459,9 @@ public class OutGameUIManager : MonoBehaviour
                     break;
                 }
             }
-            for(int j = 0;j < 5; j++)
+            if (strategy.ActionDropdown != null) strategy.ActionDropdown.value = strategyDictionary.Value.action;
+            if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.value = strategyDictionary.Value.elseAction;
+            for (int j = 0; j < 5; j++)
             {
                 if (j < strategyDictionary.Value.conditionConut)
                 {
@@ -1464,6 +1475,7 @@ public class OutGameUIManager : MonoBehaviour
                 else break;
             }
         }
+        foreach (var strategy in strategies) strategy.hasChanged = false;
     }
 
     void Search(string word)
@@ -1557,7 +1569,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             if(strategy.NoCondition)
             {
-                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(0, 0, 0);
+                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(strategy.ActionDropdown != null ? strategy.ActionDropdown.value : 0, strategy.ElseActionDropdown != null ? strategy.ElseActionDropdown.value : 0, 0);
             }
             else
             {
@@ -1568,7 +1580,7 @@ public class OutGameUIManager : MonoBehaviour
                     conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
                 }
                 survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
-                    new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
+                    new(strategy.ActionDropdown.value, strategy.ElseActionDropdown.value, strategy.activeConditionCount, conditionData);
             }
             strategy.hasChanged = false;
         }

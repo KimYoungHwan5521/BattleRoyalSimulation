@@ -73,15 +73,34 @@ public class Strategy : MonoBehaviour
     GameObject[] inputFieldsPercents;
     [HideInInspector] public TMP_InputField[] inputFields;
     [SerializeField] GameObject action;
-    TMP_Dropdown ActionDropdown => action.GetComponentInChildren<TMP_Dropdown>();
+    public TMP_Dropdown ActionDropdown
+    {
+        get
+        {
+            if (action == null) return null;
+            else return action.GetComponentInChildren<TMP_Dropdown>();
+        }
+    }
     [SerializeField] GameObject elseAction;
-    TMP_Dropdown ElseActionDropdown => elseAction.GetComponentInChildren<TMP_Dropdown>();
+    public TMP_Dropdown ElseActionDropdown
+    {
+        get
+        {
+            if (elseAction == null) return null;
+            else return elseAction.GetComponentInChildren<TMP_Dropdown>();
+        }
+    }
 
     public StrategyCase strategyCase;
     [SerializeField] bool noCondition;
     public bool NoCondition => noCondition;
     StrategyData copyStrategy;
     public bool hasChanged;
+    public bool HasChanged
+    {
+        get => hasChanged;
+        set => hasChanged = value;
+    }
 
     public string CaseName => transform.Find("Case Name").GetComponentInChildren<TextMeshProUGUI>().text;
 
@@ -157,6 +176,7 @@ public class Strategy : MonoBehaviour
         elseAction.SetActive(true);
         activeConditionCount++;
         GameManager.Instance.FixLayout(GetComponent<RectTransform>());
+        hasChanged = true;
     }
 
     public void DeleteCondition()
@@ -167,6 +187,7 @@ public class Strategy : MonoBehaviour
         if(activeConditionCount == 0) elseAction.SetActive(false);
         // active가 꺼진 후에 StartCoroutine을 하면 에러가 뜨기 때문에 게임매니저가 StartCoroutine 호출
         GameManager.Instance.FixLayout(GetComponent<RectTransform>());
+        hasChanged = true;
     }
 
     public void OnVariable1Changed(int conditionNumber)

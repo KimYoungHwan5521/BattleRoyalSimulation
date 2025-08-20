@@ -2389,8 +2389,26 @@ public class Survivor : CustomObject
         {
             keepEyesOnPosition = threateningSoundPosition;
             threateningSoundPosition = Vector2.zero;
+            return;
         }
-        if (Vector2.Distance(transform.position, threateningSoundPosition) < 1f)
+
+        // 도달 가능하지 못한 곳에 좌표가 찍히면 벽박고 있는 문제 해결
+        int destinationMargin = 1;
+        while(destinationMargin < 10)
+        {
+            if (destinationMargin > 4)
+            {
+                threateningSoundPosition = Vector2.zero;
+                return;
+            }
+            if(!NavMesh.SamplePosition(threateningSoundPosition, out NavMeshHit hit, 1f, NavMesh.AllAreas)) destinationMargin++;
+            else
+            {
+                threateningSoundPosition = hit.position;
+                break;
+            }
+        }
+        if (Vector2.Distance(transform.position, threateningSoundPosition) < destinationMargin)
         {
             LookAround();
         }
@@ -2561,6 +2579,21 @@ public class Survivor : CustomObject
         if (runAwayDestination != Vector2.zero)
         {
             CurrentStatus = Status.RunAway;
+            int destinationMargin = 1;
+            while (destinationMargin < 10)
+            {
+                if(destinationMargin > 4)
+                {
+                    runAwayDestination = Vector2.zero;
+                    return false;
+                }
+                if (!NavMesh.SamplePosition(runAwayDestination, out NavMeshHit hit, 1f, NavMesh.AllAreas)) destinationMargin++;
+                else
+                {
+                    runAwayDestination = hit.position;
+                    break;
+                }
+            }
             agent.SetDestination(runAwayDestination);
             return true;
         }

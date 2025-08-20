@@ -160,7 +160,7 @@ public class BattleRoyaleManager
     {
         farmingItems = farmingItems.Shuffle();
 
-        int curruntIndex = 0;
+        int currentIndex = 0;
         int areaRemainder;
         int sectionRemainder;
         int boxRemainder;
@@ -179,9 +179,19 @@ public class BattleRoyaleManager
                 for (int k = 0; k < areas[i].farmingSections[j].boxes.Length; k++)
                 {
                     boxRemainder = k < sectionItemNum % areas[i].farmingSections[j].boxes.Length ? 1 : 0;
-                    areas[i].farmingSections[j].boxes[k].items.Add(farmingItems[curruntIndex]);
-                    curruntIndex++;
-                    GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
+                    int boxItemNum = sectionItemNum / areas[i].farmingSections[j].boxes.Length + boxRemainder;
+                    Box targetBox = areas[i].farmingSections[j].boxes[k];
+                    for (int l = 0; l< boxItemNum; l++)
+                    {
+                        int index = targetBox.items.FindIndex(x => x.itemType == farmingItems[currentIndex].itemType);
+                        if (index > -1)
+                        {
+                            targetBox.items[index].amount += farmingItems[currentIndex].amount;
+                        }
+                        else targetBox.items.Add(farmingItems[currentIndex]);
+                        currentIndex++;
+                        GameManager.ClaimLoadInfo("Placing items", currentIndex, farmingItems.Count);
+                    }
                 }
             }
             yield return null;

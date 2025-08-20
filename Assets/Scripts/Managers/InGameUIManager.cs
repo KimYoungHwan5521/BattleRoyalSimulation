@@ -732,8 +732,8 @@ public class InGameUIManager : MonoBehaviour
             {
                 if (selectedSurvivor.CurrentWeapon is RangedWeapon)
                 {
-                    int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
-                    selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString()} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {validBulletAmount})";
+                    //int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
+                    selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString()} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {selectedSurvivor.CurrentWeaponAsRangedWeapon.MagazineCapacity})";
                 }
                 //else if(selectedSurvivor.CurrentWeapon is MeleeWeapon meleeWeapon)
                 //{
