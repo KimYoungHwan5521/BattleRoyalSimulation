@@ -473,6 +473,10 @@ public class OutGameUIManager : MonoBehaviour
                         survivorsDropdown.ClearOptions();
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
                     }
+                    else if (mySurvivorsData.Count >= 10)
+                    {
+                        AchievementManager.UnlockAchievement("Full House");
+                    }
                     survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
                     survivorsDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
                     selectSurvivorGetSurgeryDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
@@ -1405,6 +1409,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SelectSurvivorToEstablishStrategy()
     {
+        SaveStrategy();
         survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
         survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
         weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
@@ -1493,74 +1498,81 @@ public class OutGameUIManager : MonoBehaviour
 
     public void CraftingPriorityChanged()
     {
+        Image image = craftingPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
         bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
         if (spriteNotNull)
         {
-            Image image = craftingPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
             image.sprite = ResourceManager.Get(itemSpriteEnum);
             image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
         }
-        else if(craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key != "None") Debug.Log($"Sprite not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+        else if(craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key == "None") 
+        {
+            image.sprite = null;
+        }
+        else
+        {
+            Debug.Log($"Sprite not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+        }
     }
 
     public void SaveStrategy()
     {
-        OpenConfirmWindow("Confirm:Save all changes?", () =>
+        bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
+        if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
+        else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+
+        if(craftingPriority1Dropdown.dropdown.value == 0)
         {
-            foreach(var craftableAllow in craftableAllows) 
-                if(craftableAllow.GetComponentInChildren<TextMeshProUGUI>().text == craftingPriority1Dropdown.dropdown.options[craftingPriority1Dropdown.dropdown.value].text)
+            survivorWhoWantEstablishStrategy.priority1Crafting = null;
+            survivorWhoWantEstablishStrategy.priority1CraftingToInt = -1;
+        }
+        else
+        {
+            foreach (var craftableAllow in craftableAllows)
+            {
+                if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}"
+                && craftableAllow.GetComponentsInChildren<Toggle>()[1].isOn)
                 {
                     Alert("Alert:Crafting Priority Not Valid");
                     return;
                 }
+            }
 
-            bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
-            if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
-            else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
-
-            if(craftingPriority1Dropdown.dropdown.value == 0)
+            ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+            itemNotNull = craftable != null;
+            if (itemNotNull)
             {
-                survivorWhoWantEstablishStrategy.priority1Crafting = null;
-                survivorWhoWantEstablishStrategy.priority1CraftingToInt = -1;
+                survivorWhoWantEstablishStrategy.priority1Crafting = craftable;
+                survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.dropdown.value - 1;
+            }
+            else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+        }
+
+        for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
+        {
+            survivorWhoWantEstablishStrategy.craftingAllows[i] = craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn;
+        }
+
+        foreach(Strategy strategy in strategies)
+        {
+            if(strategy.NoCondition)
+            {
+                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(0, 0, 0);
             }
             else
             {
-                ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value]}");
-                itemNotNull = craftable != null;
-                if (itemNotNull)
+                ConditionData[] conditionData = new ConditionData[5];
+                for (int i = 0; i < 5; i++)
                 {
-                    survivorWhoWantEstablishStrategy.priority1Crafting = craftable;
-                    survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.dropdown.value - 1;
+                    if(!int.TryParse(strategy.inputFields[i].text, out int num)) num = 0;
+                    conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
                 }
-                else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value]}");
+                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
+                    new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
             }
-
-            for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
-            {
-                survivorWhoWantEstablishStrategy.craftingAllows[i] = craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn;
-            }
-
-            foreach(Strategy strategy in strategies)
-            {
-                if(strategy.NoCondition)
-                {
-                    survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(0, 0, 0);
-                }
-                else
-                {
-                    ConditionData[] conditionData = new ConditionData[5];
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if(!int.TryParse(strategy.inputFields[i].text, out int num)) num = 0;
-                        conditionData[i] = new(strategy.andOrs[i].value, strategy.variable1s[i].value, strategy.operators[i].value, strategy.variable2s[i].value, num);
-                    }
-                    survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] =
-                        new(sawAnEnemyAndItIsInAttackRangeDropdown.value, elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value, strategy.activeConditionCount, conditionData);
-                }
-                strategy.hasChanged = false;
-            }
-
-        });
+            strategy.hasChanged = false;
+        }
+        Alert("Alert:Strategy Saved");
     }
 
     public void CopyAllStrategies()

@@ -373,9 +373,9 @@ public class InGameUIManager : MonoBehaviour
             {
                 if(hit.TryGetComponent(out CustomObject clickedObject))
                 {
-                    selectedObject = clickedObject;
                     if (clickedObject is Survivor || clickedObject is Box)
                     {
+                        selectedObject = clickedObject;
                         selectedObjectTab.SetActive(clickedObject is Survivor);
                         if (clickedObject is Survivor)
                         {
@@ -384,10 +384,10 @@ public class InGameUIManager : MonoBehaviour
                         }
                         else CurrentTab = 1;
                     }
-                    else if (clickedObject is Trap)
-                    {
-                        selectedObjectTab.SetActive(false);
-                    }
+                    //else if (clickedObject is Trap)
+                    //{
+                    //    selectedObjectTab.SetActive(false);
+                    //}
                     else return;
                     SetSelectedObjectInfoOnce();
                     selectedNotNull = true;
@@ -454,6 +454,7 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentWeapon.SetActive(false);
             selectedObjectsCurrentHelmet.SetActive(false);
             selectedObjectsCurrentVest.SetActive(false);
+            selectedObjectCurrentStatus.text = "";
         }
         else
         {
@@ -518,7 +519,7 @@ public class InGameUIManager : MonoBehaviour
             InjurySite.RightHand => rightHand,
             InjurySite.LeftHand => leftHand,
             InjurySite.RightThumb => rightThumb,
-            InjurySite.RightIndexFinger => leftThumb,
+            InjurySite.RightIndexFinger => rightIndexFinger,
             InjurySite.RightMiddleFinger => rightMiddleFinger,
             InjurySite.RightRingFinger => rightRingFinger,
             InjurySite.RightLittleFinger => rightLittleFinger,

@@ -228,15 +228,19 @@ public class Survivor : CustomObject
     float dizzyDuration = 3f;
     float curDizzyDuration;
 
-    bool inProhibitedArea;
+    //bool inProhibitedArea;
     public bool InProhibitedArea
     {
-        get { return InProhibitedArea; }
-        set
+        get
         {
-            inProhibitedArea = value;
-            prohibitTimer.SetActive(value);
+            return GetCurrentArea().IsProhibited;
         }
+        //get { return InProhibitedArea; }
+        //set
+        //{
+        //    inProhibitedArea = value;
+        //    prohibitTimer.SetActive(value);
+        //}
     }
     [SerializeField] float prohibitedAreaTime = 5.1f;
     int timerSound = 5;
@@ -573,7 +577,7 @@ public class Survivor : CustomObject
         if (isBlind) return;
 
         curFixedUpdateCool += Time.fixedDeltaTime;
-        float fUpdateCool = 0.1f * Time.timeScale;
+        float fUpdateCool = 0.1f;
         if (curFixedUpdateCool > fUpdateCool)
         {
             curFixedUpdateCool = 0;
@@ -657,11 +661,12 @@ public class Survivor : CustomObject
 
     void CheckProhibitArea()
     {
-        if(inProhibitedArea)
+        if(InProhibitedArea)
         {
             prohibitedAreaTime -= Time.deltaTime;
             if(prohibitedAreaTime < timerSound)
             {
+                prohibitTimer.SetActive(true);
                 prohibitTimer.GetComponent<TextMeshProUGUI>().text = timerSound.ToString();
                 SoundManager.Play(ResourceEnum.SFX.piep, transform.position);
                 timerSound--;
@@ -695,6 +700,7 @@ public class Survivor : CustomObject
             }
             else cause = new LocalizedString("Injury", "Severe Bleeding").GetLocalizedString();
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), cause);
+            if(playerSurvivor) AchievementManager.UnlockAchievement("Severe Bleeding");
         }
     }
 
@@ -1120,7 +1126,7 @@ public class Survivor : CustomObject
         {
             if(!corpse.Value)
             {
-                if(corpse.Key.GetCurrentArea().IsProhibited || corpse.Key.GetCurrentArea().IsProhibited_Plan)
+                if(corpse.Key.lastCurrentArea.IsProhibited || corpse.Key.lastCurrentArea.IsProhibited_Plan)
                 {
                     farmingCorpses[corpse.Key] = true;
                     return false;
@@ -1231,7 +1237,7 @@ public class Survivor : CustomObject
                 else if (typeof(TKey) == typeof(Survivor))
                 {
                     Survivor corpse = candidate.Key as Survivor;
-                    Area corpseArea = corpse.GetCurrentArea();
+                    Area corpseArea = corpse.lastCurrentArea;
                     if (corpseArea.IsProhibited || corpseArea.IsProhibited_Plan)
                     {
                         farmingCorpses[corpse] = true;
@@ -1314,7 +1320,7 @@ public class Survivor : CustomObject
 
     void FarmingCorpse()
     {
-        if (targetFarmingCorpse.CurrentFarmingArea == null || targetFarmingCorpse.currentFarmingArea.IsProhibited || targetFarmingCorpse.currentFarmingArea.IsProhibited_Plan)
+        if (targetFarmingCorpse.lastCurrentArea == null || targetFarmingCorpse.lastCurrentArea.IsProhibited || targetFarmingCorpse.lastCurrentArea.IsProhibited_Plan)
         {
             farmingCorpses[targetFarmingCorpse] = true;
             targetFarmingCorpse = null;
@@ -1406,7 +1412,10 @@ public class Survivor : CustomObject
                 return;
             }
 
-            curFarmingTime += Time.deltaTime * aiCool * farmingSpeed;
+            float multiply = 1f;
+            // 상자가 비었으면 파밍시간 절반
+            if (targetFarmingBox.items.Count == 0) multiply = 2f;
+            curFarmingTime += Time.deltaTime * aiCool * farmingSpeed * multiply;
             progressBar.fillAmount = curFarmingTime / farmingTime;
             if (curFarmingTime > farmingTime)
             {
@@ -1442,7 +1451,7 @@ public class Survivor : CustomObject
     void PlayFarmingNoise()
     {
         float rand = UnityEngine.Random.Range(0, 1f);
-        float volume = isAssassin ? 2 : 3;
+        float volume = isAssassin ? 2 : 4;
         if(rand > 0.75f)
         {
             targetFarmingBox.PlaySFX($"farmingNoise01,{volume}", this);
@@ -1480,7 +1489,7 @@ public class Survivor : CustomObject
             }
             if (string.IsNullOrEmpty(sfxName)) sfxName = "footstep_grass";
             sfxName += leftFoot ? "1" : "2";
-            sfxName += isAssassin ? ",2" : ",0.5";
+            sfxName += isAssassin ? ",3" : ",0.5";
             PlaySFX(sfxName);
             leftFoot = !leftFoot;
         }
@@ -1664,22 +1673,23 @@ public class Survivor : CustomObject
         if(!IsValid(currentWeapon)) return true;
         if(newWeapon.itemName == currentWeapon.itemName) return false;
 
-        if (newWeapon.itemType == linkedSurvivorData.priority1Weapon) return true;
-        else if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon) return false;
+        if (newWeapon.itemType == linkedSurvivorData.priority1Weapon)
+        {
+            if (newWeapon is RangedWeapon rangedWeapon) return HaveBullet(rangedWeapon);
+            else return true;
+        }
+        else if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+        {
+            if (currentWeapon is RangedWeapon rangedWeapon) return HaveBullet(rangedWeapon);
+            else return false;
+        }
 
         if (currentWeapon is MeleeWeapon)
         {
-            if (newWeapon is RangedWeapon)
+            if (newWeapon is RangedWeapon rangedWeapon)
             {
                 // 근 vs 원
-                RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
-                if (newWeaponAsRangedWeapon.CurrentMagazine > 0) return true;
-                else
-                {
-                    Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemType.ToString() == $"Bullet_{newWeapon.itemType}") : inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka");
-                    if (bullet != null) return true;
-                    else return false;
-                }
+                return HaveBullet(rangedWeapon);
             }
             else
             {
@@ -1700,8 +1710,7 @@ public class Survivor : CustomObject
             {
                 // 원 vs 원
                 RangedWeapon newWeaponAsRangedWeapon = newWeapon as RangedWeapon;
-                Item bullet = newWeapon.itemType != ItemManager.Items.Bazooka ? inventory.Find(x => x.itemType.ToString() == $"Bullet_{newWeapon.itemType}") : inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka");
-                if (newWeaponAsRangedWeapon.CurrentMagazine > 0 || bullet != null)
+                if (HaveBullet(newWeaponAsRangedWeapon))
                 {
                     // 둘 다 총알이 있는 경우
                     if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
@@ -1723,6 +1732,16 @@ public class Survivor : CustomObject
                 }
             }
         }
+    }
+
+    bool HaveBullet(RangedWeapon wantWeapon)
+    {
+        return wantWeapon.itemType switch
+        {
+            ItemManager.Items.LASER => true,
+            ItemManager.Items.Bazooka => wantWeapon.CurrentMagazine > 0 || inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka") != null,
+            _ => wantWeapon.CurrentMagazine > 0 || inventory.Find(x => x.itemType.ToString() == $"Bullet_{wantWeapon.itemType}") != null,
+        };
     }
 
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
@@ -1935,72 +1954,77 @@ public class Survivor : CustomObject
                     }
                 }
                 // 이미 보유 중인 아이템은 만들지 않음
-                if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null || currentWeapon.itemType == craftables[^i].itemType
-                    || currentHelmet.itemType == craftables[^i].itemType || currentVest.itemType == craftables[^i].itemType) continue;
+                if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null || (IsValid(currentWeapon) && currentWeapon.itemType == craftables[^i].itemType)
+                    || (IsValid(currentHelmet) && currentHelmet.itemType == craftables[^i].itemType) || (IsValid(currentVest) && currentVest.itemType == craftables[^i].itemType)) continue;
                 // 총 필요성 검사
                 bool gunNeeds = false;
-                if(currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+                if (IsValid(currentWeapon))
                 {
-                    // 지금 무기가 priority1이면 패스
-                    gunNeeds = false;
-                }
-                else if(currentWeapon is not RangedWeapon)
-                {
-                    // 현재 무기가 총이 아니면 총부터 만들도록
-                    bool isRangedWeapon = craftables[^i].itemType switch
+                    if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
                     {
-                        ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle or ItemManager.Items.AssaultRifle
-                        or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun or ItemManager.Items.Pistol or ItemManager.Items.Revolver
-                        => true,
-                        _ => false,
-                    };
-                    if (!isRangedWeapon) continue;
-                    // 총이 없으면 무조건 만들고
-                    gunNeeds = true;
-                }
-                else if(craftables[^i].itemType == linkedSurvivorData.priority1Weapon)
-                {
-                    // priority1 무기면 만들고
-                    gunNeeds = true;
-                }
-                else
-                {
-                    bool needCompare = false;
-                    // 총이 있는데 총알이 없으면 총기 티어비교
-                    if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
-                    else
+                        // 지금 무기가 priority1이면 패스
+                        gunNeeds = false;
+                    }
+                    else if (currentWeapon is not RangedWeapon)
                     {
-                        // 총알이 있으면, 내가 만드려는 무기의 총알이 있을 때만 총기 티어 비교
-                        string bulletName;
-                        if (craftables[^i].itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{craftables[^i].itemType}";
-                        else bulletName = "Rocket_Bazooka";
-                        if (Enum.TryParse(bulletName, out ItemManager.Items bullet))
+                        // 현재 무기가 총이 아니면 총부터 만들도록 craftables[^i]가 총이 아니면 패스
+                        bool isRangedWeapon = craftables[^i].itemType switch
                         {
-                            Item validBullet = inventory.Find(x => x.itemType == bullet);
-                            if (validBullet != null) needCompare = true;
+                            ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle or ItemManager.Items.AssaultRifle
+                            or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun or ItemManager.Items.Pistol or ItemManager.Items.Revolver
+                            => true,
+                            _ => false,
+                        };
+                        if (!isRangedWeapon) continue;
+                        // 총이 없으면 무조건 만들고
+                        gunNeeds = true;
+                    }
+                    else 
+                    {
+                        // 총이 있는 경우면
+                        // craftables[^i]가 priority1 무기면 만들고
+                        if (craftables[^i].itemType == linkedSurvivorData.priority1Weapon) gunNeeds = true;
+                        else
+                        {
+                            bool needCompare = false;
+                            // 총이 있는데 총알이 없으면 총기 티어비교
+                            if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
+                            else
+                            {
+                                // 총알이 있으면, 내가 만드려는 무기의 총알이 있을 때만 총기 티어 비교
+                                string bulletName;
+                                if (craftables[^i].itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{craftables[^i].itemType}";
+                                else bulletName = "Rocket_Bazooka";
+                                if (Enum.TryParse(bulletName, out ItemManager.Items bullet))
+                                {
+                                    Item validBullet = inventory.Find(x => x.itemType == bullet);
+                                    if (validBullet != null) needCompare = true;
+                                }
+                            }
+                            if (needCompare)
+                            {
+                                int curWeaponTier = currentWeapon.itemType switch
+                                {
+                                    ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
+                                    ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
+                                    ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
+                                    ItemManager.Items.AssaultRifle => 4,
+                                    _ => 5
+                                };
+                                int candidateTier = craftables[^i].itemType switch
+                                {
+                                    ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
+                                    ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
+                                    ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
+                                    ItemManager.Items.AssaultRifle => 4,
+                                    _ => 5
+                                };
+                                gunNeeds = candidateTier > curWeaponTier;
+                            }
                         }
                     }
-                    if (needCompare)
-                    {
-                        int curWeaponTier = currentWeapon.itemType switch
-                        {
-                            ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
-                            ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
-                            ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.AssaultRifle => 4,
-                            _ => 5
-                        };
-                        int candidateTier = craftables[^i].itemType switch
-                        {
-                            ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
-                            ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
-                            ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
-                            ItemManager.Items.AssaultRifle => 4,
-                            _ => 5
-                        };
-                        gunNeeds = candidateTier > curWeaponTier;
-                    }
                 }
+                else gunNeeds = true;
                 // 총알 필요성 검사
                 bool bulletNeeds = false;
                 Item bestWeapon = null;
@@ -2111,6 +2135,7 @@ public class Survivor : CustomObject
     void Craft()
     {
         CurrentStatus = Status.Crafting;
+        lookPosition = transform.position + transform.forward;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
@@ -2158,7 +2183,7 @@ public class Survivor : CustomObject
             }
             currentCrafting = null;
             craftables.Clear();
-            if (isEquipable == 0) Equip((Weapon)item);
+            if (isEquipable == 0 && CompareWeaponValue((Weapon)item)) Equip((Weapon)item);
             else if (isEquipable == 1) Equip((BulletproofHelmet)item);
             else if (isEquipable == 2) Equip((BulletproofVest)item);
             CheckCraftables();
@@ -2594,7 +2619,7 @@ public class Survivor : CustomObject
 
     void CalculateSightMesh()
     {
-        sightEdgeCount = (int)((35 - GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) * 0.8f);
+        sightEdgeCount = (int)((35 - GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) * 1.5f);
         sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
         sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
         sightColliderPoints = new Vector2[sightVertices.Length];
@@ -2783,12 +2808,20 @@ public class Survivor : CustomObject
                     AchievementManager.SetStat("Total_RangedKill", PlayerPrefs.GetInt($"Ranged Weapon Kill"));
                     if (PlayerPrefs.GetInt($"Ranged Weapon Kill") >= 30) AchievementManager.UnlockAchievement("Gunslinger");
                 }
-                if(weapon != null)
+                if(IsValid(weapon))
                 {
                     PlayerPrefs.SetInt($"{weapon.itemType} Kill", PlayerPrefs.GetInt($"{weapon.itemType} Kill") + 1);
                     int count = PlayerPrefs.GetInt($"{weapon.itemType} Kill");
-                    if ((weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted) && count >= 10) AchievementManager.UnlockAchievement("Sword Master");
-                    if (weapon.itemType == ItemManager.Items.SniperRifle && count >= 10) AchievementManager.UnlockAchievement("Sniper");
+                    if (weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted)
+                    {
+                        AchievementManager.SetStat("Sword Master", count);
+                        if(count >= 10) AchievementManager.UnlockAchievement("Sword Master");
+                    }
+                    if (weapon.itemType == ItemManager.Items.SniperRifle)
+                    {
+                        AchievementManager.SetStat("Sniper", count);
+                        if(count >= 10) AchievementManager.UnlockAchievement("Sniper");
+                    }
                 }
             }
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());

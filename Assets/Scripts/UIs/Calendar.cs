@@ -149,7 +149,11 @@ public class Calendar : CustomObject
                     }
                     else reserved[i].SetActive(false);
                 }
-                else datesEvent[i].sprite = null;
+                else
+                {
+                    datesEvent[i].sprite = null;
+                    reserved[i].SetActive(false);
+                }
             }
         }
     }
@@ -209,24 +213,24 @@ public class Calendar : CustomObject
         {
             if (i % 336 == 335)
             {
-                leagueReserveInfo.Add(i, new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4));
+                leagueReserveInfo[i] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4);
             }
             else if (i % 336 == 48)
             {
-                leagueReserveInfo.Add(i, new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01, 5));
+                leagueReserveInfo[i] = new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01, 5);
             }
             else if (i % 336 == 160)
             {
-                leagueReserveInfo.Add(i, new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01, 6));
+                leagueReserveInfo[i] = new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01, 6);
             }
             else if (i % 336 == 272)
             {
-                leagueReserveInfo.Add(i, new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01, 7));
+                leagueReserveInfo[i] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01, 7);
             }
 
             if (i % 112 == 83)
             {
-                leagueReserveInfo.Add(i, new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01, 3));
+                leagueReserveInfo[i] = new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01, 3);
             }
 
             if (i % 28 == 27)
@@ -234,12 +238,12 @@ public class Calendar : CustomObject
                 if (!leagueReserveInfo.ContainsKey(i))
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-                    leagueReserveInfo.Add(i, new(League.GoldLeague, map, 2));
+                    leagueReserveInfo[i] = new(League.GoldLeague, map, 2);               
                 }
                 else if (leagueReserveInfo[i].league != League.SeasonChampionship)
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-                    leagueReserveInfo.Add(i - 1, new(League.GoldLeague, map, 2));
+                    leagueReserveInfo[i - 1] = new(League.GoldLeague, map, 2);
                 }
             }
 
@@ -250,20 +254,20 @@ public class Calendar : CustomObject
                     if (!leagueReserveInfo.ContainsKey(i - 1))
                     {
                         ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-                        leagueReserveInfo.Add(i - 1, new(League.SilverLeague, map, 1));
+                        leagueReserveInfo[i - 1] = new(League.SilverLeague, map, 1);
                     }
                 }
                 else
                 {
                     ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-                    leagueReserveInfo.Add(i, new(League.SilverLeague, map, 1));
+                    leagueReserveInfo[i] = new(League.SilverLeague, map, 1);
                 }
             }
 
             if ((i - 1) % 7 == 5 && !leagueReserveInfo.ContainsKey(i - 1))
             {
                 ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
-                leagueReserveInfo.Add(i - 1, new(League.BronzeLeague, map, 0));
+                leagueReserveInfo[i - 1] = new(League.BronzeLeague, map, 0);
             }
         }
         curMaxYear += howManyYears;
@@ -726,7 +730,7 @@ public class Calendar : CustomObject
                 cause = $"{new LocalizedString("Injury", "Cannot use both hands").GetLocalizedString()}";
                 return -1;
             }
-            if (injury.degree > 0)
+            if (injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged || injury.degree >= 1)
             {
                 injured = true;
             }

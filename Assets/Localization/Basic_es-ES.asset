@@ -1223,6 +1223,15 @@ MonoBehaviour:
       en \xE9l."
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: La estrategia ha sido guardada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: "<!> Se detect\xF3 un error durante la depuraci\xF3n. Se recomienda
+      guardar los datos en otra ranura y reiniciar."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

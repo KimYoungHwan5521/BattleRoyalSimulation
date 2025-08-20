@@ -148,8 +148,8 @@ public class CharacteristicManager
 
         int wantRarity;
         float rand = UnityEngine.Random.Range(0, 1f);
-        if (rand < 0.9f) wantRarity = 0;
-        else if (rand < 0.99f) wantRarity = 1;
+        if (rand < 0.8f) wantRarity = 0;
+        else if (rand < 0.97f) wantRarity = 1;
         else wantRarity = 2;
 
         for(int i = 0; i < howMany; i++)

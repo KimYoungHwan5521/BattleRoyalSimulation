@@ -1230,6 +1230,16 @@ MonoBehaviour:
       dessus avec le bouton gauche/droit."
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: "La strat\xE9gie a \xE9t\xE9 sauvegard\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: "<!> Une erreur a \xE9t\xE9 d\xE9tect\xE9e lors du d\xE9bogage.
+      Il est recommand\xE9 de sauvegarder les donn\xE9es dans un autre emplacement
+      et de red\xE9marrer."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -160,24 +160,26 @@ public class BattleRoyaleManager
     {
         farmingItems = farmingItems.Shuffle();
 
-        int boxIndex;
         int curruntIndex = 0;
         int areaRemainder;
         int sectionRemainder;
+        int boxRemainder;
 
         areas = areas.Shuffle();
         for (int i = 0; i < areas.Length; i++)
         {
             areaRemainder = i < farmingItems.Count % areas.Length ? 1 : 0;
             int areaItemNum = farmingItems.Count / areas.Length + areaRemainder;
+            areas[i].farmingSections = areas[i].farmingSections.Shuffle();
             for (int j = 0; j < areas[i].farmingSections.Length; j++)
             {
                 sectionRemainder = j < areaItemNum % areas[i].farmingSections.Length ? 1 : 0;
                 int sectionItemNum = areaItemNum / areas[i].farmingSections.Length + sectionRemainder;
-                for (int k = 0; k < sectionItemNum; k++)
+                areas[i].farmingSections[j].boxes = areas[i].farmingSections[j].boxes.Shuffle();
+                for (int k = 0; k < areas[i].farmingSections[j].boxes.Length; k++)
                 {
-                    boxIndex = UnityEngine.Random.Range(0, areas[i].farmingSections[j].boxes.Length);
-                    areas[i].farmingSections[j].boxes[boxIndex].items.Add(farmingItems[curruntIndex]);
+                    boxRemainder = k < sectionItemNum % areas[i].farmingSections[j].boxes.Length ? 1 : 0;
+                    areas[i].farmingSections[j].boxes[k].items.Add(farmingItems[curruntIndex]);
                     curruntIndex++;
                     GameManager.ClaimLoadInfo("Placing items", curruntIndex, farmingItems.Count);
                 }
@@ -250,7 +252,7 @@ public class BattleRoyaleManager
         for (int i = 0; i < number; i++)
         {
             esc++;
-            if (esc > 100)
+            if (esc > 1000)
             {
                 Debug.LogWarning("Infinite loop detected!");
                 return;

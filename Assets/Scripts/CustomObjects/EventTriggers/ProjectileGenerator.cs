@@ -60,7 +60,7 @@ public class ProjectileGenerator : CustomObject
 
     public void DrawBeam()
     {
-        PlaySFX("laser,2", owner, muzzleTF.position);
+        PlaySFX("laser,10", owner, muzzleTF.position);
         Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
 
         float err = owner.AimErrorRange;

@@ -1154,6 +1154,14 @@ MonoBehaviour:
     m_Key: You can assign training to a survivor by left/right-clicking them.
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Key: Alert:Strategy Saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Key: Alert:Error
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

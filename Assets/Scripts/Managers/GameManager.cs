@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
             if (type == LogType.Error || type == LogType.Exception)
             {
                 outGameUIManger.DebugLog(log + "\n" + stack);
+                outGameUIManger.Alert("Alert:Error");
             }
         };
 #if UNITY_EDITOR
@@ -130,9 +131,9 @@ public class GameManager : MonoBehaviour
         yield return battleRoyaleManager.Initiate();
     }
 
-    public void Test()
+    public void Test(int wantDate)
     {
-        calendar.Today = 336;
+        calendar.Today = wantDate;
     }
 
     void Update()

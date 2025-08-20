@@ -1220,6 +1220,15 @@ MonoBehaviour:
       Training zuweisen."
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: Strategie wurde gespeichert.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: "<!> W\xE4hrend des Debuggens wurde ein Fehler erkannt. Es wird
+      empfohlen, die Daten in einem anderen Slot zu speichern und neu zu starten."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

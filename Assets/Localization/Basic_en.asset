@@ -1211,6 +1211,15 @@ MonoBehaviour:
     m_Localized: You can assign training to a survivor by left/right-clicking them.
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: Strategy has been saved.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: <!> An error was detected during debugging. It is recommended to
+      save data in another slot and restart.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

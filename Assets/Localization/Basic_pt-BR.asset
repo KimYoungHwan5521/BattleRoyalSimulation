@@ -1219,6 +1219,15 @@ MonoBehaviour:
       esquerdo/direito."
     m_Metadata:
       m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: "A estrat\xE9gia foi salva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: "<!> Um erro foi detectado durante a depura\xE7\xE3o. Recomenda-se
+      salvar os dados em outro slot e reiniciar."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
