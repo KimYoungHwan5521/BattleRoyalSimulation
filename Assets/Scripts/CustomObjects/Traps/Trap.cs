@@ -7,6 +7,7 @@ public class Trap : CustomObject
     Animator animator;
     public Survivor setter;
     protected Survivor victim;
+    public Survivor Victim => victim;
     public TrapPlace ownerPlace;
     [SerializeField] ItemManager.Items itemType;
     public ItemManager.Items ItemType => itemType;

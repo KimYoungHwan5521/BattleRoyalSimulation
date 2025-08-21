@@ -56,7 +56,9 @@ public class SurvivorSaveData
     public int increaseComparedToPrevious_knowledge;
     public List<Injury> injuries;
     public bool surgeryScheduled;
-    public string scheduledSurgeryName;
+    //public string scheduledSurgeryName;
+    public string localizedScheduledSurgeryTable;
+    public string localizedScheduledSurgeryEntry;
     public int shceduledSurgeryCost;
     public InjurySite surgerySite;
     public SurgeryType surgeryType;

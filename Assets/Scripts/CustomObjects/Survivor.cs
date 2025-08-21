@@ -117,11 +117,13 @@ public class Survivor : CustomObject
     public class SoundsMemory
     {
         public string soundName;
+        public Vector2 soundOrigin;
         public float soundTime;
 
-        public SoundsMemory(string soundName)
+        public SoundsMemory(string soundName, Vector2 soundOrigin)
         {
             this.soundName = soundName;
+            this.soundOrigin = soundOrigin;
             soundTime = 0;
         }
     }
@@ -198,14 +200,14 @@ public class Survivor : CustomObject
         }
     }
     bool isBlind;
-    bool dizzy;
+    [SerializeField] bool dizzy;
     bool Dizzy
     {
         get { return dizzy; }
         set
         {
             dizzy = value;
-            emotionAnimator.SetTrigger("Dizzy");
+            if(value) emotionAnimator.SetTrigger("Dizzy");
         }
     }
     [SerializeField] float dizzyRateByConcussion = 0;
@@ -405,6 +407,7 @@ public class Survivor : CustomObject
     }
     Survivor lastTargetEnemy;
     [SerializeField] Vector2 targetEnemiesLastPosition;
+    public Vector2 TargetEnemiesLastPosition => targetEnemiesLastPosition;
     [SerializeField] Vector2 threateningSoundPosition;
     float curSetDestinationCool = 1f;
     [SerializeField] Vector2 runAwayDestination;
@@ -574,7 +577,7 @@ public class Survivor : CustomObject
     private void FixedUpdate()
     {
         if(!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
-        if (isBlind) return;
+        if (isBlind || dizzy) return;
 
         curFixedUpdateCool += Time.fixedDeltaTime;
         float fUpdateCool = 0.1f;
@@ -592,7 +595,7 @@ public class Survivor : CustomObject
     #region Look
     void Look()
     {
-        if (keepEyesOnPosition != Vector2.zero)
+        if (keepEyesOnPosition != Vector2.zero && inSightEnemies.Count == 0)
         {
             curKeepAnEyeOnTime += Time.fixedDeltaTime;
             Look(keepEyesOnPosition);
@@ -723,6 +726,8 @@ public class Survivor : CustomObject
         {
             if (dizzy)
             {
+                agent.SetDestination(transform.position);
+                lookPosition = Vector2.zero;
                 curDizzyDuration += Time.deltaTime;
                 if (curDizzyDuration > dizzyDuration)
                 {
@@ -846,6 +851,8 @@ public class Survivor : CustomObject
         else
         {
             CurrentStatus = Status.InCombat;
+            targetFarmingCorpse = null;
+            targetFarmingSection = null;
             // 대상이 죽어버릴 경우
             if (TargetEnemy.isDead)
             {
@@ -1352,6 +1359,7 @@ public class Survivor : CustomObject
                     targetFarmingCorpse.UnequipBulletproofVest();
                 }
                 targetFarmingCorpse.inventory.Clear();
+                InGameUIManager.UpdateSelectedObjectInventory(targetFarmingCorpse);
                 farmingCorpses[targetFarmingCorpse] = true;
                 targetFarmingCorpse = null;
                 CheckCraftables();
@@ -1626,7 +1634,7 @@ public class Survivor : CustomObject
         {
             currentWeaponisBestWeapon = false;
             GetItem(item);
-            string wantWeapon = item.itemType.ToString().Split('(')[0].Split(')')[0];
+            string wantWeapon = item.itemType.ToString().Split('_')[1];
             if (inventory.Find(x => x.itemType.ToString() == wantWeapon) is RangedWeapon weapon && CompareWeaponValue(weapon))
             {
                 Equip(weapon);
@@ -1671,7 +1679,7 @@ public class Survivor : CustomObject
     {
         if (!CanUse(newWeapon)) return false;
         if(!IsValid(currentWeapon)) return true;
-        if(newWeapon.itemName == currentWeapon.itemName) return false;
+        if(newWeapon.itemName.TableEntryReference.Key == currentWeapon.itemName.TableEntryReference.Key) return false;
 
         if (newWeapon.itemType == linkedSurvivorData.priority1Weapon)
         {
@@ -1904,13 +1912,33 @@ public class Survivor : CustomObject
             {
                 if (inventory.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType) == null)
                 {
-                    var priority1 = craftables.Find(x => x == linkedSurvivorData.priority1Crafting);
-                    if (priority1 != null)
+                    // 0: weapon, 1: helmet, 2: vest
+                    int check = linkedSurvivorData.priority1Crafting.itemType switch
                     {
-                        currentCrafting = priority1;
-                        return true;
+                        ItemManager.Items.Revolver or ItemManager.Items.Pistol or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun
+                        or ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER => 0,
+                        ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet
+                        or ItemManager.Items.LegendaryBulletproofHelmet => 1,
+                        ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest
+                        or ItemManager.Items.LegendaryBulletproofVest => 2,
+                        _ => -1
+                    };
+                    if(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority1Crafting.itemType
+                        || check == 1 && currentHelmet != null && currentHelmet.itemType == linkedSurvivorData.priority1Crafting.itemType
+                        || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority1Crafting.itemType)
+                    {
+                        lockPriorityCraftingsMaterials = false;
                     }
-                    else lockPriorityCraftingsMaterials = true;
+                    else
+                    {
+                        var priority1 = craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
+                        if (priority1 != null)
+                        {
+                            currentCrafting = priority1;
+                            return true;
+                        }
+                        else lockPriorityCraftingsMaterials = true;
+                    }
                 }
                 else lockPriorityCraftingsMaterials = false;
             }
@@ -1921,35 +1949,39 @@ public class Survivor : CustomObject
                 if (!linkedSurvivorData.craftingAllows[ItemManager.craftables.FindIndex(x => x.itemType == craftables[^i].itemType)]) continue;
                 if(lockPriorityCraftingsMaterials)
                 {
-                    // 만약에 이 craftable이 craftingPriority1의 재료가 아니면
-                    if (!linkedSurvivorData.priority1Crafting.etcNeedItems.ContainsKey(craftables[^i].itemType))
+                    if (linkedSurvivorData.priority1Crafting != null && linkedSurvivorData.priority1Crafting.etcNeedItems != null && linkedSurvivorData.priority1Crafting.etcNeedItems.Count > 0)
                     {
-                        // 재료가 여분인지 체크
-                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                        if (ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
-                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                        if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                    }
-                    else
-                    {
-                        // 재료가 맞으면
-                        // 이미 재료가 충분히 만들어져 있는지 체크
-                        Item alreadyHave = inventory.Find(x => x.itemType == craftables[^i].itemType);
-                        if(alreadyHave != null && alreadyHave.amount >= linkedSurvivorData.priority1Crafting.etcNeedItems[craftables[^i].itemType])
+                        // 만약에 이 craftable이 craftingPriority1의 재료가 아니면
+                        if(!linkedSurvivorData.priority1Crafting.etcNeedItems.ContainsKey(craftables[^i].itemType))
                         {
-                            // 재료가 충분하면 여분으로만 더 만들게
-                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if(ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
-                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            // priority1 만들 재료를 남겨두고도 충분하면 만들고
+                            // 그렇지 않으면 넘어가
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if (ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
                         }
-                        // 아니면(priority1의 재료면) 만듦
                         else
                         {
-                            currentCrafting = craftables[^i];
-                            return true;
+                            // 이 craftable이 craftingPriority1의 재료면
+                            // 이미 재료가 충분히 만들어져 있는지 체크
+                            Item alreadyHave = inventory.Find(x => x.itemType == craftables[^i].itemType);
+                            if(alreadyHave != null && alreadyHave.amount >= linkedSurvivorData.priority1Crafting.etcNeedItems[craftables[^i].itemType])
+                            {
+                                // 재료가 충분하면 하위재료를 priority1 만들 수 있는 만큼만 남기고 충분하면 여분으로만 더 만들게
+                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                                if(ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
+                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            }
+                            // 아니면(priority1의 재료가 부족하면) 만듦
+                            else
+                            {
+                                currentCrafting = craftables[^i];
+                                return true;
+                            }
                         }
                     }
                 }
@@ -2028,7 +2060,11 @@ public class Survivor : CustomObject
                 // 총알 필요성 검사
                 bool bulletNeeds = false;
                 Item bestWeapon = null;
-                if (linkedSurvivorData.priority1Weapon != ItemManager.Items.NotValid) bestWeapon = inventory.Find(x => x.itemType == linkedSurvivorData.priority1Weapon);
+                if (linkedSurvivorData.priority1Weapon != ItemManager.Items.NotValid)
+                {
+                    if (IsValid(currentWeapon) && currentWeapon.itemType == linkedSurvivorData.priority1Weapon) bestWeapon = currentWeapon;
+                    else bestWeapon = inventory.Find(x => x.itemType == linkedSurvivorData.priority1Weapon);
+                }
                 if (bestWeapon == null)
                 {
                     float maxRange = 0;
@@ -2135,7 +2171,7 @@ public class Survivor : CustomObject
     void Craft()
     {
         CurrentStatus = Status.Crafting;
-        lookPosition = transform.position + transform.forward;
+        lookPosition = Vector2.zero;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
@@ -2163,7 +2199,7 @@ public class Survivor : CustomObject
                 if (item is Weapon) isEquipable = 0;
                 else if(item is BulletproofHelmet) isEquipable = 1;
                 else if (item is BulletproofVest) isEquipable = 2;
-                    GetItem(item);
+                AcqireItem(item);
             }
             if(playerSurvivor)
             {
@@ -2706,7 +2742,8 @@ public class Survivor : CustomObject
     #region Hearing
     public void HearSound(float volume, Vector2 soundOrigin, CustomObject noiseMaker)
     {
-        if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor) || noiseMaker == lastTargetEnemy) return;
+        if (noiseMaker == this || inSightEnemies.Contains(noiseMaker as Survivor) || noiseMaker == lastTargetEnemy
+            || noiseMaker is Trap trap && trap.Victim == this) return;
         float distance = Vector2.Distance(transform.position, soundOrigin);
         float heardVolume = volume * hearingAbility / (distance * distance);
         //Debug.Log($"{survivorName}, {(noiseMaker as Survivor).survivorName}, {heardVolume}");
@@ -2746,7 +2783,7 @@ public class Survivor : CustomObject
     {
         //Debug.Log(noiseMaker);
         heardSound = noiseMaker;
-        SoundsMemory sound = soundsMemories.Find(x => x.soundName == noiseMaker);
+        SoundsMemory sound = soundsMemories.Find(x => x.soundName == noiseMaker || Vector2.Distance(soundOrigin, x.soundOrigin) < 2f);
         if (sound != null)
         {
             if(sound.soundTime > 1)
@@ -2756,7 +2793,7 @@ public class Survivor : CustomObject
                 return;
             }
         }
-        else soundsMemories.Add(new(heardSound));
+        else soundsMemories.Add(new(heardSound, soundOrigin));
 
         if (currentStatus == Status.InCombat) return;
         if(sightMeshRenderer.material != m_SightSuspicious && sightMeshRenderer.material != m_SightAlert) emotionAnimator.SetTrigger("Suspicious");
@@ -2784,7 +2821,7 @@ public class Survivor : CustomObject
         bool noPain = false;
         if (alreadyHaveInjury != null)
         {
-            if (alreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted)
+            if (alreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || alreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged)
             {
                 damagedPartIsArtifical = true;
                 // 재밌는 switch 용법
@@ -3746,7 +3783,7 @@ public class Survivor : CustomObject
     void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
     {
         if (injuryDegree == 0) return;
-        if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture)
+        if(injuryType == InjuryType.Loss || injuryType == InjuryType.Amputation || injuryType == InjuryType.Rupture || injuryType == InjuryType.ArtificialPartsDamaged && injuryDegree >= 1)
         {
             int index = injuries.FindIndex(x => x.site == injurySite);
             if (index == -1)
@@ -3764,7 +3801,7 @@ public class Survivor : CustomObject
             List<Injury> toRemove = new();
             foreach(var injury in injuries)
             {
-                if(subparts.Contains(injury.site) && injury.degree >= 1) toRemove.Add(injury);
+                if(subparts.Contains(injury.site)) toRemove.Add(injury);
             }
             foreach(var injury in toRemove)
             {
@@ -3904,6 +3941,7 @@ public class Survivor : CustomObject
         bool left = false;
         foreach(var injury in injuries)
         {
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1) continue;
             switch(injury.site)
             {
                 case InjurySite.RightLeg:
@@ -4257,7 +4295,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
-        craftingSpeed = (1 + 0.01f * linkedSurvivorData.Crafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed;
+        craftingSpeed = Mathf.Max((1 + 0.01f * linkedSurvivorData.Crafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
     }
@@ -4384,10 +4422,14 @@ public class Survivor : CustomObject
 
     public void SightOut(Survivor survivor)
     {
-        if (survivor == TargetEnemy && survivor != isDead)
+        if (survivor == TargetEnemy)
         {
-            targetEnemiesLastPosition = survivor.transform.position;
-            lastTargetEnemy = survivor;
+            if (survivor != isDead)
+            {
+                targetEnemiesLastPosition = survivor.transform.position;
+                lastTargetEnemy = survivor;
+            }
+            else if(!farmingCorpses.ContainsKey(survivor)) farmingCorpses.Add(survivor, false);
         }
         if(inSightEnemies.Contains(survivor)) inSightEnemies.Remove(survivor);
     }

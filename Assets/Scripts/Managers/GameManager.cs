@@ -136,6 +136,10 @@ public class GameManager : MonoBehaviour
         calendar.Today = wantDate;
     }
 
+    public void Test2(int wantNumber)
+    {
+        BattleRoyaleManager.SetProhibitArea(wantNumber);
+    }
     void Update()
     {
         if (!gameReady) return;

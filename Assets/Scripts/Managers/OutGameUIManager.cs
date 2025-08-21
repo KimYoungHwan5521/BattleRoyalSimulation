@@ -2336,7 +2336,7 @@ public class OutGameUIManager : MonoBehaviour
                 check++;
                 continue;
             }
-            if (check >= 100) Debug.LogWarning("Infinite roof has detected");
+            if (check >= 1000) Debug.LogWarning("Infinite roof has detected");
             SurvivorData survivorData = new(
                 GetRandomName(),
                 randStrength,

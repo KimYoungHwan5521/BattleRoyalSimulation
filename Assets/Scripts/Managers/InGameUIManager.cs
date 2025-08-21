@@ -210,7 +210,9 @@ public class InGameUIManager : MonoBehaviour
 
     public void CameraMoveToSelectedObject()
     {
-        if (cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
+        if(selectedObject == null) return;
+        cameraTarget = selectedObject.transform;
+        Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
     }
 
     public void SetCameraLimit(float rightLimit, float upLimit)

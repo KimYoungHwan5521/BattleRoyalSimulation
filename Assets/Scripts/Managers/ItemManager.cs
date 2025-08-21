@@ -219,7 +219,7 @@ public class ItemManager
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 7.9f, NeedHand.TwoHand, 200, 40f, 3f, 10f, 3f, 1, 5f, 2, 6));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 7.9f, NeedHand.TwoHand, 300, 40f, 3f, 10f, 3f, 1, 5f, 2, 6));
                 break;
             case Items.LASER:
                 for (int i = start; i < end; i++)

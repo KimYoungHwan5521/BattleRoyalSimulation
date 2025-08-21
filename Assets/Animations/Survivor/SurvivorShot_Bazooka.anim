@@ -272,7 +272,7 @@ AnimationClip:
   m_Events:
   - time: 0.033333335
     functionName: PlaySFX
-    data: rocket_launch,100
+    data: rocket_launch,250
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

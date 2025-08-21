@@ -85,6 +85,7 @@ public class BattleRoyaleManager
         if (Enum.TryParse(Calendar_.LeagueReserveInfo[Calendar_.Today].map.ToString(), out ResourceEnum.NavMeshData navMeshDataEnum))
         {
             map = GameObject.Instantiate(ResourceManager.Get(Calendar_.LeagueReserveInfo[Calendar_.Today].map));
+            map.transform.position = Vector3.zero;
             NavMeshData navMeshData = GameManager.Instance.NavMeshSurface.navMeshData = ResourceManager.Get(navMeshDataEnum);
             NavMesh.RemoveAllNavMeshData();
             NavMesh.AddNavMeshData(navMeshData);

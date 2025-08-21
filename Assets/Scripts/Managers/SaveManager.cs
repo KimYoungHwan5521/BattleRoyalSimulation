@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine.Localization;
 
 public static class SaveManager
 {
@@ -29,7 +30,9 @@ public static class SaveManager
             increaseComparedToPrevious_knowledge = data.increaseComparedToPrevious_knowledge,
             injuries = data.injuries,
             surgeryScheduled = data.surgeryScheduled,
-            scheduledSurgeryName = data.scheduledSurgeryName,
+            //scheduledSurgeryName = data.scheduledSurgeryName,
+            localizedScheduledSurgeryTable = data.localizedScheduledSurgeryName != null ? data.localizedScheduledSurgeryName.TableReference.TableCollectionName : "",
+            localizedScheduledSurgeryEntry = data.localizedScheduledSurgeryName != null ? data.localizedScheduledSurgeryName.TableEntryReference.Key : "",
             shceduledSurgeryCost = data.scheduledSurgeryCost,
             surgerySite = data.surgerySite,
             surgeryType = data.surgeryType,
@@ -93,7 +96,8 @@ public static class SaveManager
             increaseComparedToPrevious_knowledge = saveData.increaseComparedToPrevious_knowledge,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,
-            scheduledSurgeryName = saveData.scheduledSurgeryName,
+            localizedScheduledSurgeryName = !string.IsNullOrEmpty(saveData.localizedScheduledSurgeryEntry) ? new(saveData.localizedScheduledSurgeryTable, saveData.localizedScheduledSurgeryEntry) : null,
+            scheduledSurgeryName = !string.IsNullOrEmpty(saveData.localizedScheduledSurgeryEntry) ? new LocalizedString(saveData.localizedScheduledSurgeryTable, saveData.localizedScheduledSurgeryEntry).GetLocalizedString() : "",
             scheduledSurgeryCost = saveData.shceduledSurgeryCost,
             surgerySite = saveData.surgerySite,
             surgeryType = saveData.surgeryType,
