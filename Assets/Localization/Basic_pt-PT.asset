@@ -1229,6 +1229,10 @@ MonoBehaviour:
       guardar os dados noutro slot e reiniciar."
     m_Metadata:
       m_Items: []
+  - m_Id: 28005633560735744
+    m_Localized: A procurar inimigos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -23,5 +23,26 @@ public class Names
         "Liam", "Hudson", "Jonathan", "Parker", "Easton", 
         "Luca", "Aiden", "Nathan", "Hunter", "Graham",
 
+        "Santa", "Herakles", "Basil", "Garth", "Lars",
+        "Ulf", "Hanz", "Gregori", "Misha", "Nikolai",
+        "Sasha", "Guido", "Dario", "Elmo", "Dennis",
+        "Forrest", "Max", "Paul", "Nico", "Ali",
+        "Hussein", "Malik", "Zaid", "Raafi", "Alejandro",
+        "Carlos", "Hernando", "Pancho", "Pepe", "Santos",
+        "Hassan", "Musad", "Nadir", "Sheldon", "Krishna",
+        "Tanish", "Yamato", "Yuki", "Akira", "Shanyuan",
+        "Tingfeng", "Yanlin", "Bahari", "Jumo", "Rafiki",
+        "Antoine", "Armand", "Jerome", "Pedro", "Tino",
+
+        "Janusz", "Cody", "Jalal", "Dariush", "Saam",
+        "Chakra", "Maly", "Nimol", "Phala", "Rathanak",
+        "Randika", "Young-Hwan", "Hendrik", "Aristides", "Demetri",
+        "Gregorios", "Kristos", "Silvanos", "Oddvar", "Sigurd",
+        "Wilhelm", "Wolfric", "Klaus", "Maximilian", "Aleksai",
+        "Avel", "Igor", "Andrei", "Umberto", "Pasqualino",
+        "Archibald", "Ephraim", "Cezar", "Xavier", "Mallalai",
+        "Diya-al-Din", "Qssim", "Tarik", "Byrne", "Montgomery",
+        "Ren", "Tatsuo", "Dingxiang", "Longwei", "Din",
+        "Chiamaka", "Acamapichtli", "Itzcoatl", "Richardo", "Zinon",
     };
 }

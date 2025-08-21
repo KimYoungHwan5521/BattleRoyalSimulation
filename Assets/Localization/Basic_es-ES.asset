@@ -1232,6 +1232,10 @@ MonoBehaviour:
       guardar los datos en otra ranura y reiniciar."
     m_Metadata:
       m_Items: []
+  - m_Id: 28005633560735744
+    m_Localized: Buscando enemigos
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

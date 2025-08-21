@@ -298,7 +298,7 @@ public class Strategy : MonoBehaviour
             }
             return;
         }
-        ActionDropdown.value = copyStrategy.action;
+        if(ActionDropdown.options.Count > copyStrategy.action) ActionDropdown.value = copyStrategy.action;
         if(!noCondition)
         {
             SetDefault();

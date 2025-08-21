@@ -317,7 +317,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173198887210656548}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.1}
@@ -791,7 +791,6 @@ MonoBehaviour:
   farmingSections: []
   garbageObjects: []
   navMeshModifierVolume: {fileID: 534685176596815678}
-  water: {fileID: 6074089675624393558}
   isProhibited_Plan: 0
   isProhibited: 0
   adjacentAreas: []

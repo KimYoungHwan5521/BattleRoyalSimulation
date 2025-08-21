@@ -1220,6 +1220,10 @@ MonoBehaviour:
       save data in another slot and restart.
     m_Metadata:
       m_Items: []
+  - m_Id: 28005633560735744
+    m_Localized: Searching for enemies
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1824,7 +1824,7 @@ public class OutGameUIManager : MonoBehaviour
     public void Betting()
     {
         int _bettingAmount = int.Parse(bettingAmountInput.text);
-        if (!IsValidPrediction(out string reason)) Alert($"{new LocalizedString("Basic", "Invalid Prediction").GetLocalizedString()} : {reason}");
+        if (!IsValidPrediction(out string reason)) Alert("Invalid Prediction", reason);
         else if (_bettingAmount < 100) Alert("Alert:Minimum Bet");
         else
         {
@@ -2424,6 +2424,7 @@ public class OutGameUIManager : MonoBehaviour
     public void DebugLog(string log)
     {
         GameObject alertWindow = PoolManager.Spawn(ResourceEnum.Prefab.Alert, alertCanvas.transform);
+        alertWindow.GetComponentsInChildren<RectTransform>()[1].sizeDelta = new(1280, 720);
         LocalizeStringEvent localizeStringEvent = alertWindow.GetComponentInChildren<LocalizeStringEvent>();
         localizeStringEvent.enabled = false;
         localizeStringEvent.GetComponent<TextMeshProUGUI>().text = log;

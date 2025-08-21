@@ -12,7 +12,8 @@ using UnityEngine.UI;
 public class Survivor : CustomObject
 {
     #region Variables and Properties
-    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, TrapDisarming, Crafting, Enchanting }
+    public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, 
+        TrapDisarming, Crafting, Enchanting, FindingEnemy }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -664,12 +665,12 @@ public class Survivor : CustomObject
 
     void CheckProhibitArea()
     {
+        prohibitTimer.SetActive(InProhibitedArea);
         if(InProhibitedArea)
         {
             prohibitedAreaTime -= Time.deltaTime;
             if(prohibitedAreaTime < timerSound)
             {
-                prohibitTimer.SetActive(true);
                 prohibitTimer.GetComponent<TextMeshProUGUI>().text = timerSound.ToString();
                 SoundManager.Play(ResourceEnum.SFX.piep, transform.position);
                 timerSound--;
@@ -1528,6 +1529,7 @@ public class Survivor : CustomObject
 
     void ExploreLastFarmingArea()
     {
+        CurrentStatus = Status.FindingEnemy;
         if (Vector2.Distance(agent.destination, transform.position) < 1f)
         {
             Vector2 wantPosition = transform.position;

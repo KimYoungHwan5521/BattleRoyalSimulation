@@ -1229,6 +1229,10 @@ MonoBehaviour:
       empfohlen, die Daten in einem anderen Slot zu speichern und neu zu starten."
     m_Metadata:
       m_Items: []
+  - m_Id: 28005633560735744
+    m_Localized: Feinde werden gesucht
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
