@@ -60,6 +60,7 @@ public class ProjectileGenerator : CustomObject
 
     public void DrawBeam()
     {
+        if(muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled ? owner.leftHandTF : owner.rightHandTF);
         PlaySFX("laser,10", owner, muzzleTF.position);
         Vector2 destination;
         if (owner.TargetEnemy != null) destination = (Vector2)owner.TargetEnemy.transform.position;

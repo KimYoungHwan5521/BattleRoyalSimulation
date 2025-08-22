@@ -15,11 +15,14 @@ public class BiometricRader : MonoBehaviour
         if(count > cool)
         {
             count = 0;
-            Vector2[] vector2s = new Vector2[detecteds.Count];
-            for(int i=0; i<vector2s.Length; i++)
+            List<Vector2> vector2s = new();
+            List<Survivor> removeReserve = new();
+            for(int i=0; i< detecteds.Count; i++)
             {
-                vector2s[i] = detecteds[i].transform.position;
+                if (detecteds[i] == owner || detecteds[i].IsDead) removeReserve.Add(detecteds[i]);
+                else vector2s.Add(detecteds[i].transform.position);
             }
+            foreach(Survivor survivor in removeReserve) detecteds.Remove(survivor);
             owner.DetectSurvivor(vector2s);
         }
     }

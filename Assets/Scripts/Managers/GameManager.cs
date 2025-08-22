@@ -13,7 +13,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVirsion = "1.0";
+    public static string gameVirsion = "1.0a";
 
     public CustomStart ManagerStart;
     public CustomUpdate ManagerUpdate;
@@ -303,8 +303,11 @@ public class GameManager : MonoBehaviour
         yield return LoadETCData(slot);
         outGameUIManger.CloseAll();
         calendar.CloseAll();
-        outGameUIManger.ResetSurvivorsDropdown();
         ClaimLoadInfo("Setting markets...", 3, 3);
+        outGameUIManger.ResetSurvivorsDropdown();
+        ClaimLoadInfo("Version checking...", 0, 1);
+        yield return VersionCompatible(slot);
+        ClaimLoadInfo("Version checking...", 1, 1);
         CloseLoadInfo();
         gameReady = true;
         title.title.SetActive(false);
@@ -313,6 +316,18 @@ public class GameManager : MonoBehaviour
         outGameUIManger.ChecklistTraining();
         outGameUIManger.ChecklistBattleRoyale();
         OutGameUIManager.Alert("Alert:Load Successful");
+    }
+
+    IEnumerator VersionCompatible(int slot)
+    {
+        string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+        var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+        string loadedDataGameVersion = saveData.gameVersion;
+        if(loadedDataGameVersion == "1.0")
+        {
+            calendar.CalendarUpdate();
+        }
+        yield return null;
     }
     #endregion
 

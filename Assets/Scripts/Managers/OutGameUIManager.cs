@@ -1362,6 +1362,7 @@ public class OutGameUIManager : MonoBehaviour
 
         for(int i=0; i< craftingPriority1Dropdown.keys.Count; i++)
         {
+            if (i >= ItemManager.craftables.Count) break;
             craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
         }
     }
@@ -1378,16 +1379,16 @@ public class OutGameUIManager : MonoBehaviour
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = 0;
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
-        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 0;
+        whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 1;
         craftingPriority1Dropdown.dropdown.value = 0;
         foreach(var craftableAllow in craftableAllows) craftableAllow.GetComponentsInChildren<Toggle>()[0].isOn = true;
     }
 
     public void OpenStrategyRoom()
     {
-        RelocalizeStrategyRoom();
         strategyRoom.SetActive(true);
         SetStrategyRoom();
+        RelocalizeStrategyRoom();
         GameManager.Instance.openedWindows.Push(strategyRoom);
     }
 
@@ -2354,6 +2355,8 @@ public class OutGameUIManager : MonoBehaviour
             else if (randCharCount < 0.9f) characteristicCount = 2;
             else characteristicCount = 3;
             CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicCount);
+
+            survivorData.priority1Weapon = ItemManager.Items.LASER;
             return survivorData;
         }
         return new(GetRandomName(), 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));

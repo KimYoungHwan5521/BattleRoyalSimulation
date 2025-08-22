@@ -174,7 +174,7 @@ public static class SaveManager
             int itemPool = entry.itemPool;
             SurvivorData reserver = GameManager.Instance.OutGameUIManager.MySurvivorsData.Find(x => x.id == entry.reserverId);
 
-            var reserveData = new LeagueReserveData(league, map, itemPool);
+            var reserveData = new LeagueReserveData(league, map);
             reserveData.reserver = reserver;
 
             result[entry.key] = reserveData;

@@ -381,7 +381,7 @@ public class Survivor : CustomObject
     Box curSettingBoobyTrapBox;
 
     public List<GameObject> burieds = new();
-    List<Trap> detectedTraps = new();
+    [SerializeField] List<Trap> detectedTraps = new();
     List<Box> detectedTrapSetBoxes = new();
     Trap curDisarmTrap;
     float curDisarmTime;
@@ -527,6 +527,7 @@ public class Survivor : CustomObject
 
         emotion.transform.parent = null;
         canvas.transform.SetParent(null);
+        biometricRader.transform.parent = null;
         prohibitTimer.SetActive(false);
         progressBar.fillAmount = 0;
 
@@ -550,6 +551,7 @@ public class Survivor : CustomObject
         }
         emotion.transform.position = new(transform.position.x, transform.position.y + 1);
         canvas.transform.position = new(transform.position.x, transform.position.y);
+        biometricRader.transform.position = new(transform.position.x, transform.position.y);
         
         survivedTime += Time.deltaTime;
         CheckProhibitArea();
@@ -571,6 +573,7 @@ public class Survivor : CustomObject
     {
         Destroy(emotion);
         Destroy(canvas);
+        Destroy(biometricRader);
         base.MyDestroy();
     }
 
@@ -833,6 +836,7 @@ public class Survivor : CustomObject
                 if(detectedTraps.Count > 0)
                 {
                     DisarmTrap();
+                    return;
                 }
             }
 
@@ -854,6 +858,7 @@ public class Survivor : CustomObject
             CurrentStatus = Status.InCombat;
             targetFarmingCorpse = null;
             targetFarmingSection = null;
+            animator.SetBool("Crafting", false);
             // 대상이 죽어버릴 경우
             if (TargetEnemy.isDead)
             {
@@ -1409,16 +1414,27 @@ public class Survivor : CustomObject
             farmingSFXPlayed = true;
             agent.SetDestination(transform.position);
 
-            // 상자에 설치된 부비트랩이 있으면 폭발
+            // 상자에 설치된 부비트랩이 있으면
             BoobyTrap setBoobyTrap = targetFarmingBox.items.Find(x => x is BoobyTrap) as BoobyTrap;
             if (setBoobyTrap != null && setBoobyTrap.IsTriggered)
             {
-                setBoobyTrap.Trigger(this);
-                targetFarmingBox.items.Remove(setBoobyTrap);
-                InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
-                farmingBoxes[targetFarmingBox] = true;
-                targetFarmingBox = null;
-                return;
+                // 감지장치가 있으면 파밍x
+                if(inventory.Find(x => x.itemType == ItemManager.Items.TrapDetectionDevice) != null)
+                {
+                    farmingBoxes[targetFarmingBox] = true;
+                    targetFarmingBox = null;
+                    return;
+                }
+                // 없으면 폭발
+                else
+                {
+                    setBoobyTrap.Trigger(this);
+                    targetFarmingBox.items.Remove(setBoobyTrap);
+                    InGameUIManager.UpdateSelectedObjectInventory(targetFarmingBox);
+                    farmingBoxes[targetFarmingBox] = true;
+                    targetFarmingBox = null;
+                    return;
+                }
             }
 
             float multiply = 1f;
@@ -1690,7 +1706,7 @@ public class Survivor : CustomObject
         }
         else if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
         {
-            if (currentWeapon is RangedWeapon rangedWeapon) return HaveBullet(rangedWeapon);
+            if (currentWeapon is RangedWeapon rangedWeapon) return !HaveBullet(rangedWeapon);
             else return false;
         }
 
@@ -2359,9 +2375,11 @@ public class Survivor : CustomObject
         if (!detectedTraps.Contains(trap)) detectedTraps.Add(trap);
     }
 
+    bool reached;
     void DisarmTrap()
     {
-        if(curDisarmTrap == null)
+        CurrentStatus = Status.TrapDisarming;
+        if (curDisarmTrap == null)
         {
             Trap nearestTrap = null;
             float minDistance = float.MaxValue;
@@ -2376,14 +2394,15 @@ public class Survivor : CustomObject
                 }
             }
             curDisarmTrap = nearestTrap;
+            reached = false;
         }
-        else if(Vector2.Distance(transform.position, curDisarmTrap.transform.position) > 1.5f)
+        else if(Vector2.Distance(transform.position, curDisarmTrap.transform.position) > 1.5f && !reached)
         {
             agent.SetDestination(curDisarmTrap.transform.position);
         }
         else
         {
-            CurrentStatus = Status.TrapDisarming;
+            reached = true;
             agent.SetDestination(transform.position);
             lookPosition = curDisarmTrap.transform.position;
             curDisarmTime += Time.deltaTime * aiCool;
@@ -2398,9 +2417,14 @@ public class Survivor : CustomObject
             }
         }
     }
+
+    void DisarmBoobyTrap()
+    {
+        // 추후 업데이트
+    }
     #endregion
 
-    public void DetectSurvivor(Vector2[] positions)
+    public void DetectSurvivor(List<Vector2> positions)
     {
         float minDistance = float.MaxValue;
         float distance;
@@ -2414,6 +2438,7 @@ public class Survivor : CustomObject
                 nearest = position;
             }
         }
+        if (sightMeshRenderer.material != m_SightAlert) sightMeshRenderer.material = m_SightSuspicious;
         targetEnemiesLastPosition = nearest;
     }
 
@@ -2766,7 +2791,7 @@ public class Survivor : CustomObject
     void HeardDistinguishableSound(Vector2 soundOrigin)
     {
         if (currentStatus == Status.InCombat) return;
-        if(sightMeshRenderer != m_SightAlert)emotionAnimator.SetTrigger("Alert");
+        if(sightMeshRenderer.material != m_SightAlert)emotionAnimator.SetTrigger("Alert");
         sightMeshRenderer.material = m_SightAlert;
         if (strategyConditions[StrategyCase.HeardDistinguishableSound].TotalCondition.Invoke())
         {
@@ -2846,6 +2871,7 @@ public class Survivor : CustomObject
             or InjurySite.RightRingToe or InjurySite.LeftRingToe or InjurySite.RightLittleToe or InjurySite.LeftLittleToe => Mathf.Min(damage, 10),
             _ => damage
         };
+        maxDamage = Mathf.Max(maxDamage, 0);
         if (!(damagedPartIsArtifical && noPain)) curHP -= maxDamage;
         attacker.totalDamage += maxDamage;
         if (curHP <= 0)
@@ -2886,12 +2912,12 @@ public class Survivor : CustomObject
                     int count = PlayerPrefs.GetInt($"{weapon.itemType} Kill");
                     if (weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted)
                     {
-                        AchievementManager.SetStat("Sword Master", count);
+                        AchievementManager.SetStat("Total_SowrdKill", count);
                         if(count >= 10) AchievementManager.UnlockAchievement("Sword Master");
                     }
                     if (weapon.itemType == ItemManager.Items.SniperRifle)
                     {
-                        AchievementManager.SetStat("Sniper", count);
+                        AchievementManager.SetStat("Total_SniperKill", count);
                         if(count >= 10) AchievementManager.UnlockAchievement("Sniper");
                     }
                 }
@@ -3166,8 +3192,9 @@ public class Survivor : CustomObject
         if(IsDead && trap.setter.playerSurvivor)
         {
             PlayerPrefs.SetInt("Total Trap Kill", PlayerPrefs.GetInt("Total Trap Kill") + 1);
-            AchievementManager.SetStat("Total_TrapKill", PlayerPrefs.GetInt("Total Trap Kill"));
-            if (PlayerPrefs.GetInt("Total Trap Kill") >= 10) AchievementManager.UnlockAchievement("Sun Tzu");
+            //AchievementManager.SetStat("Total_TrapKill", PlayerPrefs.GetInt("Total Trap Kill"));
+            //if (PlayerPrefs.GetInt("Total Trap Kill") >= 10) 
+                AchievementManager.UnlockAchievement("Sun Tzu");
         }
     }
 

@@ -259,7 +259,7 @@ public class Strategy : MonoBehaviour
         wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
-        wantDictionary.Add(StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget, new(0, 0, 0));
+        wantDictionary.Add(StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget, new(1, 0, 0));
     }
 
     public void CopyStrategy()

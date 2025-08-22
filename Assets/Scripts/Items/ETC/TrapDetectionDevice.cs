@@ -10,11 +10,15 @@ public class TrapDetectionDevice : MonoBehaviour
     {
         if(collision.TryGetComponent(out Box box))
         {
-            if(box.items.Find(x => x is BoobyTrap) != null) owner.DetectTrap(box);
+            Item item = box.items.Find(x => x is BoobyTrap);
+            if (item != null)
+            {
+                if(((BoobyTrap)item).Setter != owner) owner.DetectTrap(box);
+            }
         }
         else if(collision.TryGetComponent(out Trap trap))
         {
-            owner.DetectTrap(trap);
+            if(trap.setter != owner) owner.DetectTrap(trap);
         }
     }
 }

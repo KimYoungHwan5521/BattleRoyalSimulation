@@ -170,6 +170,7 @@ public class Bullet : CustomObject
                     PlaySFX("ricochet2,5", launcher);
                 }
             }
+            DelayedDespawn();
         }
     }
 }
