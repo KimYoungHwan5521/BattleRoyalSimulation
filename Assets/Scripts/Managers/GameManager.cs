@@ -3,6 +3,7 @@ using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,7 +14,8 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVirsion = "1.0a";
+    public static string gameVersion = "1.1";
+    [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
     public CustomUpdate ManagerUpdate;
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
         outGameUIManger = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
         inGameUICanvas.SetActive(false);
+        foreach (var versionText in versionTexts) versionText.text = $"Version - {gameVersion}";
 
         Application.logMessageReceived += (log, stack, type) =>
         {
@@ -169,7 +172,7 @@ public class GameManager : MonoBehaviour
     {
         string saveTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         int ingameDate = calendar.Today;
-        var saveData = new SaveDataInfo(gameVirsion, saveTime, ingameDate);
+        var saveData = new SaveDataInfo(gameVersion, saveTime, ingameDate);
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"SaveDataInfo{slot}", json);
         PlayerPrefs.Save();
@@ -180,7 +183,7 @@ public class GameManager : MonoBehaviour
         string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
         var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
         string loadedDataGameVersion = saveData.gameVersion;
-        if( loadedDataGameVersion != gameVirsion )
+        if( loadedDataGameVersion != gameVersion )
         {
             ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
         }
@@ -234,7 +237,8 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.StudyLevel,
             OutGameUIManager.contestantsData,
             calendar.Today,
-            calendar.CurMaxYear
+            calendar.CurMaxYear,
+            calendar.participationConfirmed
             )
         {
             hireMarketSurvivorData =
@@ -277,7 +281,7 @@ public class GameManager : MonoBehaviour
         outGameUIManger.survivorsInHireMarket[0].SoldOut = saveData.soldOut[0];
         outGameUIManger.survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
         outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
-        calendar.LoadToday(saveData.today, saveData.curMaxYear);
+        calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
         yield return null;
     }
 

@@ -1236,6 +1236,27 @@ MonoBehaviour:
     m_Localized: Buscando enemigos
     m_Metadata:
       m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: "Los datos guardados no coinciden con la versi\xF3n actual del juego.
+      Es posible que el juego no funcione correctamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: "Selecciona al superviviente que participar\xE1 en el battle royale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: Seleccionar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: No participar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: "\xBFConfirmar? (Una vez seleccionado, no se puede cambiar.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

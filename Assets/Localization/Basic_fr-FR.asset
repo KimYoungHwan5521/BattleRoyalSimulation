@@ -1244,6 +1244,27 @@ MonoBehaviour:
     m_Localized: "Recherche d\u2019ennemis"
     m_Metadata:
       m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: "Les donn\xE9es sauvegard\xE9es ne correspondent pas \xE0 la version
+      actuelle du jeu. Le jeu pourrait ne pas fonctionner correctement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: "S\xE9lectionnez le survivant qui participera au battle royale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: "S\xE9lectionner"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: Ne pas participer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: "Confirmer ? (Une fois choisi, il ne peut plus \xEAtre modifi\xE9.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

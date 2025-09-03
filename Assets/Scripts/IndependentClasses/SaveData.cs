@@ -145,8 +145,9 @@ public class ETCData
     // calendar
     public int today;
     public int curMaxYear;
+    public bool participationConfirmed;
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear)
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
@@ -159,5 +160,6 @@ public class ETCData
         this.contestantsData = contestantsData;
         this.today = today;
         this.curMaxYear = curMaxYear;
+        this.participationConfirmed = participationConfirmed;
     }
 }

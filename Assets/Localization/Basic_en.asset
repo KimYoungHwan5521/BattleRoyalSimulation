@@ -1224,6 +1224,27 @@ MonoBehaviour:
     m_Localized: Searching for enemies
     m_Metadata:
       m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: The saved data does not match the current game version. The game
+      may not function properly.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: Select the survivor to participate in the battle royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: Select
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: Decline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: Confirm? (Once selected, it cannot be changed.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

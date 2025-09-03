@@ -1233,6 +1233,29 @@ MonoBehaviour:
     m_Localized: Feinde werden gesucht
     m_Metadata:
       m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: "Die gespeicherten Daten stimmen nicht mit der aktuellen Spielversion
+      \xFCberein. Das Spiel funktioniert m\xF6glicherweise nicht richtig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: "W\xE4hlen Sie den \xDCberlebenden aus, der am Battle Royale teilnehmen
+      soll."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: "W\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: Nicht teilnehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: "Best\xE4tigen? (Einmal ausgew\xE4hlt, kann es nicht ge\xE4ndert
+      werden.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

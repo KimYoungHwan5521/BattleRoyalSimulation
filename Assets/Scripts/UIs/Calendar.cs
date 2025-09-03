@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
@@ -106,6 +107,7 @@ public class Calendar : CustomObject
                 leagueReserveInfo[value - 1].reserver.reservedDate = -1;
                 leagueReserveInfo[value - 1].reserver = null;
             }
+            participationConfirmed = false;
 
             string localizedMonth = new LocalizedString("Basic", monthName[(Month - 1) % 12]).GetLocalizedString();
             string localizedDateName = new LocalizedString("Basic", dateName[today % 7]).GetLocalizedString();
@@ -189,6 +191,9 @@ public class Calendar : CustomObject
     [SerializeField] TMP_Dropdown survivorWhoParticipateInBattleRoyaleDropdown;
     [SerializeField] GameObject reserveButton;
     [SerializeField] GameObject reserveCancelButton;
+    [SerializeField] GameObject participateButton;
+    [SerializeField] GameObject notParticipateButton;
+    public bool participationConfirmed;
     int wantReserveDate;
     SurvivorData wantReserver;
     [SerializeField] Image minimapImage;
@@ -635,12 +640,29 @@ public class Calendar : CustomObject
         {
             if (today == wantReserveDate)
             {
-                outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale",
-                    () =>
-                    {
-                        outGameUIManager.OpenBettingRoom();
-                        outGameUIManager.calendarObject.SetActive(false);
-                    });
+                if (leagueReserveInfo[Today].reserver != null || participationConfirmed || leagueReserveInfo[Today].league == League.SeasonChampionship || leagueReserveInfo[Today].league == League.WorldChampionship)
+                {
+                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale",
+                        () =>
+                        {
+                            outGameUIManager.OpenBettingRoom();
+                            outGameUIManager.calendarObject.SetActive(false);
+                        });
+                }
+                else
+                {
+                    reserveForm.SetActive(true);
+                    GameManager.Instance.openedWindows.Push(reserveForm);
+                    reserveText.StringReference = new LocalizedString("Basic", "Select the survivor to participate in the battle royale.");
+                    reserveText.RefreshString();
+                    SetLeagueInfo(wantReserveDate);
+                    SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+                    survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
+                    reserveButton.SetActive(false);
+                    reserveCancelButton.SetActive(false);
+                    participateButton.SetActive(true);
+                    notParticipateButton.SetActive(true);
+                }
             }
             else
             {
@@ -661,6 +683,8 @@ public class Calendar : CustomObject
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                         reserveButton.SetActive(true);
                         reserveCancelButton.SetActive(false);
+                        participateButton.SetActive(false);
+                        notParticipateButton.SetActive(false);
                     }
                     else
                     {
@@ -673,6 +697,8 @@ public class Calendar : CustomObject
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(false);
                         reserveButton.SetActive(false);
                         reserveCancelButton.SetActive(true);
+                        participateButton.SetActive(false);
+                        notParticipateButton.SetActive(false);
                     }
                 }
 
@@ -701,7 +727,6 @@ public class Calendar : CustomObject
     public void SetBattleRoyaleReserveBox(Tier tier)
     {
         survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
-        //survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(outGameUIManager.SurvivorsDropdown.options);
         List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
         if (leagueReserveInfo[wantReserveDate].league == League.MeleeLeague || leagueReserveInfo[wantReserveDate].league == League.RangeLeague || leagueReserveInfo[wantReserveDate].league == League.CraftingLeague)
         {
@@ -717,11 +742,13 @@ public class Calendar : CustomObject
         {
             survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(new List<string>(new string[] { $"[{new LocalizedString("Basic", "No eligible survivor").GetLocalizedString()}]" }));
             reserveButton.GetComponent<Button>().interactable = false;
+            participateButton.GetComponent<Button>().interactable = false;
         }
         else
         {
             wantReserver = allSurvivor.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
             reserveButton.GetComponent<Button>().interactable = true;
+            participateButton.GetComponent<Button>().interactable = true;
         }
         survivorWhoParticipateInBattleRoyaleDropdown.captionText.text = survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text;
     }
@@ -749,6 +776,20 @@ public class Calendar : CustomObject
         else Reserve();
     }
 
+    public void ParticipateBattleRoyale()
+    {
+        if (NeareastSeasonChampionship.reserver == wantReserver || NeareastWorldChampionship.reserver == wantReserver)
+        {
+            outGameUIManager.OpenConfirmWindow("Confirm:Reserve Who Reserved In Championship", () =>
+            {
+                if (wantReserver.injuries.Count > 0) AskAboutInjury();
+                else Participate();
+            });
+        }
+        else if (wantReserver.injuries.Count > 0) AskAboutInjury();
+        else Participate();
+    }
+
     public void Reserve()
     {
         leagueReserveInfo[wantReserveDate].reserver = wantReserver;
@@ -757,6 +798,30 @@ public class Calendar : CustomObject
         TurnPageCalendar(0);
         outGameUIManager.Alert("Alert:Battle royale reserved.");
         outGameUIManager.ChecklistBattleRoyale();
+    }
+
+    void Participate()
+    {
+        outGameUIManager.OpenConfirmWindow("Confirm:Participate", () =>
+        {
+            participationConfirmed = true;
+            leagueReserveInfo[Today].reserver = wantReserver;
+            outGameUIManager.contestantsData[0] = wantReserver;
+            outGameUIManager.OpenBettingRoom();
+            outGameUIManager.calendarObject.SetActive(false);
+            reserveForm.SetActive(false);
+        });
+    }
+
+    public void NotParticipateBattleRoyale()
+    {
+        outGameUIManager.OpenConfirmWindow("Confirm:Participate", () =>
+        { 
+            participationConfirmed = true;
+            outGameUIManager.OpenBettingRoom();
+            outGameUIManager.calendarObject.SetActive(false);
+            reserveForm.SetActive(false);
+        });
     }
 
     // -1 : Not able, 0 : Injured but able, 1 : Able
@@ -793,7 +858,8 @@ public class Calendar : CustomObject
         return injured ? 0 : 1;
     }
 
-    void AskAboutInjury()
+    // reserve = false => participate
+    void AskAboutInjury(bool reserve = true)
     {
         bool availiable = true;
         bool injured = false;
@@ -804,16 +870,20 @@ public class Calendar : CustomObject
 
         if (!availiable)
         {
-            outGameUIManager.Alert("Alert:Reserve Fail", cause);
+            if(reserve) outGameUIManager.Alert("Alert:Reserve Fail", cause);
+            else outGameUIManager.Alert("Alert:Participate Fail", cause);
         }
         else if (injured)
         {
-            outGameUIManager.OpenConfirmWindow("Confirm:Reserve Battle Royale Who Have Injury", () =>
-            {
-                Reserve();
-            }, wantReserver.localizedSurvivorName.GetLocalizedString());
+            string askText = reserve ? "Confirm:Reserve Battle Royale Who Have Injury" : "Confirm:Participate Battle Royale Who Have Injury";
+            UnityAction action = reserve? () => Reserve() : () => Participate();
+            outGameUIManager.OpenConfirmWindow(askText, action, wantReserver.localizedSurvivorName.GetLocalizedString());
         }
-        else Reserve();
+        else
+        {
+            if(reserve) Reserve();
+            else Participate();
+        }
     }
 
     public Tier GetNeedTier(League league)
@@ -902,10 +972,11 @@ public class Calendar : CustomObject
         yield return null;
     }
 
-    public void LoadToday(int today, int curMaxYear)
+    public void LoadToday(int today, int curMaxYear, bool participationConfirmed)
     {
         Today = today;
         this.curMaxYear = curMaxYear;
+        this.participationConfirmed = participationConfirmed;
         TurnPageCalendar(0);
     }
 

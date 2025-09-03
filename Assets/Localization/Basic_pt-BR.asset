@@ -1232,6 +1232,27 @@ MonoBehaviour:
     m_Localized: Procurando inimigos
     m_Metadata:
       m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: "Os dados salvos n\xE3o correspondem \xE0 vers\xE3o atual do jogo.
+      O jogo pode n\xE3o funcionar corretamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: "Selecione o sobrevivente que participar\xE1 no battle royale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: Selecionar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: "N\xE3o participar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: "Confirmar? (Uma vez escolhido, n\xE3o poder\xE1 ser alterado.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
