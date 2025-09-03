@@ -143,14 +143,14 @@ public class ItemManager
         craftables.Add(new Craftable(Items.ExplosiveTrap, 85, 1, 0, 1, 0, 3, 1, 0, 14f));
         craftables.Add(new Craftable(Items.HighLevelBulletproofHelmet, 88, 0, 6, 0, 9, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.HighLevelBulletproofVest, 92, 0, 6, 0, 12, 0, 1, 0, 21f));
-        craftables.Add(new Craftable(Items.BiometricRader, 96, 2, 8, 0, 2, 0, 1, 0, 14f));
-        craftables.Add(new Craftable(Items.TrapDetectionDevice, 100, 3, 5, 0, 2, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.BiometricRader, 96, 1, 8, 0, 2, 0, 1, 0, 14f));
+        craftables.Add(new Craftable(Items.TrapDetectionDevice, 100, 2, 5, 0, 2, 0, 1, 0, 21f));
         craftables.Add(new Craftable(Items.AdvancedPotion, 104, 0, 0, 3, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.Potion, 1)));
         craftables.Add(new Craftable(Items.LegendaryBulletproofHelmet, 108, 0, 6, 0, 0, 0, 1, 0, 35f, new KeyValuePair<Items, int>(Items.HighLevelBulletproofHelmet, 1), new KeyValuePair<Items, int>(Items.MiddleLevelBulletproofHelmet, 2), new KeyValuePair<Items, int>(Items.LowLevelBulletproofHelmet, 4)));
         craftables.Add(new Craftable(Items.AdvancedComponent, 110, 0, 4, 0, 0, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.LegendaryBulletproofVest, 112, 0, 6, 0, 0, 0, 1, 0, 35f, new KeyValuePair<Items, int>(Items.HighLevelBulletproofVest, 1), new KeyValuePair<Items, int>(Items.MiddleLevelBulletproofVest, 2), new KeyValuePair<Items, int>(Items.LowLevelBulletproofVest, 4)));
-        craftables.Add(new Craftable(Items.EnergyBarrier, 116, 4, 8, 0, 4, 0, 1, 0, 21f));
-        craftables.Add(new Craftable(Items.LASER, 120, 4, 8, 2, 8, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.EnergyBarrier, 116, 2, 4, 0, 8, 0, 1, 0, 21f));
+        craftables.Add(new Craftable(Items.LASER, 120, 2, 8, 2, 4, 0, 1, 0, 21f));
         yield return null;
     }
 

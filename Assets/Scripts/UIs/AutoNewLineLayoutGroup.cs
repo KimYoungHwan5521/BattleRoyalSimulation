@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -11,6 +10,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
     Rect Rect => GetComponent<RectTransform>().rect;
     [SerializeField] GameObject[] characteristicsBox;
     [SerializeField] float paddingTop;
+    [SerializeField] float wantSpacing = 5f;
     TextMeshProUGUI[] characteristicsText;
     [SerializeField] float wantHeight = 40;
 
@@ -66,20 +66,20 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         float childHeight = children.Count > 0 ? children[0].rect.height : 0;
         foreach (RectTransform child in children)
         {
-            if(line == 0 || width + 5 + child.rect.width > Rect.width)
+            if(line == 0 || width + wantSpacing + child.rect.width > Rect.width)
             {
                 line++;
                 width = 0;
             }
             else
             {
-                width += 5;
+                width += wantSpacing;
             }
-            child.anchoredPosition = new(width, -(child.rect.height + 5) * (line - 1) - paddingTop);
+            child.anchoredPosition = new(width, -(child.rect.height + wantSpacing) * (line - 1) - paddingTop);
             width += child.rect.width;
         }
 
-        GetComponent<RectTransform>().sizeDelta = new(Rect.width, line * childHeight + 5 * Mathf.Max(0, (line - 1)));
+        GetComponent<RectTransform>().sizeDelta = new(Rect.width, line * childHeight + wantSpacing * Mathf.Max(0, (line - 1)));
     }
 
     void OnLocaleChanged(Locale newLocale)

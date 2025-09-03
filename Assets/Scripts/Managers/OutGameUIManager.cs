@@ -567,6 +567,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             trainingRoom.SetActive(true);
             AssignTraining();
+            SetTrainingRoomSurvivorsInfo();
             RelocalizeTrainingRoom();
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
@@ -636,11 +637,8 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    public void OpenScheduledTrainingByEachSurvivor()
+    public void SetTrainingRoomSurvivorsInfo()
     {
-        scheduledTrainingByEachSurvivor.SetActive(true);
-        GameManager.Instance.openedWindows.Push(scheduledTrainingByEachSurvivor);
-
         for (int i = 0; i < scheduledTrainings.Length; i++)
         {
             if (i < mySurvivorsData.Count)
@@ -1101,23 +1099,23 @@ public class OutGameUIManager : MonoBehaviour
                         case InjurySite.LeftRingFinger:
                         case InjurySite.RightLittleFinger:
                         case InjurySite.LeftLittleFinger:
-                            cost = 50;
+                            cost = 10;
                             break;
                         case InjurySite.RightHand:
                         case InjurySite.LeftHand:
-                            cost = 500;
+                            cost = 100;
                             break;
                         case InjurySite.RightArm:
                         case InjurySite.LeftArm:
-                            cost = 750;
+                            cost = 250;
                             break;
                         case InjurySite.RightFoot:
                         case InjurySite.LeftFoot:
-                            cost = 500;
+                            cost = 100;
                             break;
                         case InjurySite.RightKnee:
                         case InjurySite.LeftKnee:
-                            cost = 750;
+                            cost = 250;
                             break;
                         case InjurySite.RightLeg:
                         case InjurySite.LeftLeg:
@@ -1125,14 +1123,14 @@ public class OutGameUIManager : MonoBehaviour
                             break;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
-                            cost = 2000;
+                            cost = 400;
                             break;
                         case InjurySite.RightEar:
                         case InjurySite.LeftEar:
-                            cost = 500;
+                            cost = 100;
                             break;
                         case InjurySite.Organ:
-                            cost = 3000;
+                            cost = 600;
                             break;
                         default:
                             Debug.LogWarning($"Can't transplant site : {injury.site}");
