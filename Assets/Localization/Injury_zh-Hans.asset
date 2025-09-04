@@ -302,10 +302,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753611033051138
+  - m_Id: 31280139435831296
+    m_Localized: "\u5F3A\u5316\u8EAB\u4F53\u79FB\u690D/\u66F4\u6362 ({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051138
+  - m_Id: 31280180976218112
+    m_Localized: "\u8D85\u8D8A\u8EAB\u4F53\u79FB\u690D/\u66F4\u6362 ({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051138
+  - m_Id: 31280147316928512
+    m_Localized: "\u5F3A\u5316\u8EAB\u4F53\u5DF2\u79FB\u690D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280149221142528
+    m_Localized: "\u5F3A\u5316\u8EAB\u4F53\u5DF2\u635F\u574F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280182591025152
+    m_Localized: "\u8D85\u8D8A\u8EAB\u4F53\u5DF2\u79FB\u690D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280184419741696
+    m_Localized: "\u8D85\u8D8A\u8EAB\u4F53\u5DF2\u635F\u574F"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753611033051138
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df5700
+        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df570000f098ff1e216f0000f098ab28216f00

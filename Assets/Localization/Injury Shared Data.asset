@@ -295,6 +295,30 @@ MonoBehaviour:
     m_Key: Replace Prosthetic
     m_Metadata:
       m_Items: []
+  - m_Id: 31280139435831296
+    m_Key: Augmented Part Implant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280147316928512
+    m_Key: AugmentedPartsTransplanted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280149221142528
+    m_Key: AugmentedPartsDamaged
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280180976218112
+    m_Key: Transcendant Part Implant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280182591025152
+    m_Key: TranscendantPartsTransplanted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280184419741696
+    m_Key: TranscendantPartsDamaged
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

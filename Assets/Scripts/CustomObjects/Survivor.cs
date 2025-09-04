@@ -2851,13 +2851,18 @@ public class Survivor : CustomObject
     {
         if (isDead) return;
         Injury alreadyHaveInjury = injuries.Find(x => x.site == specificDamagePart);
-        bool damagedPartIsArtifical = false;
+        // 0 : not artificial, 1 : artificial, 2 : augmented, 3 : transcendant
+        int damagedPartIsArtifical = 0;
         bool noPain = false;
         if (alreadyHaveInjury != null)
         {
-            if (alreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || alreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged)
+            if (alreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || alreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged
+                || alreadyHaveInjury.type == InjuryType.AugmentedPartsTransplanted || alreadyHaveInjury.type == InjuryType.AugmentedPartsDamaged
+                || alreadyHaveInjury.type == InjuryType.TranscendantPartsTransplanted || alreadyHaveInjury.type == InjuryType.TranscendantPartsDamaged)
             {
-                damagedPartIsArtifical = true;
+                if (alreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || alreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged) damagedPartIsArtifical = 1;
+                else if (alreadyHaveInjury.type == InjuryType.AugmentedPartsTransplanted || alreadyHaveInjury.type == InjuryType.AugmentedPartsDamaged) damagedPartIsArtifical = 2;
+                else if (alreadyHaveInjury.type == InjuryType.TranscendantPartsTransplanted || alreadyHaveInjury.type == InjuryType.TranscendantPartsDamaged) damagedPartIsArtifical = 3;
                 // 재밌는 switch 용법
                 noPain = alreadyHaveInjury.site switch
                 {
@@ -2865,7 +2870,7 @@ public class Survivor : CustomObject
                     _ => true,
                 };
             }
-            if (!damagedPartIsArtifical && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
+            if (damagedPartIsArtifical == 0 && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
         }
         float maxDamage = specificDamagePart switch
         {
@@ -2879,7 +2884,7 @@ public class Survivor : CustomObject
             _ => damage
         };
         maxDamage = Mathf.Max(maxDamage, 0);
-        if (!(damagedPartIsArtifical && noPain)) curHP -= maxDamage;
+        if (!(damagedPartIsArtifical > 0 && noPain)) curHP -= maxDamage;
         attacker.totalDamage += maxDamage;
         if (curHP <= 0)
         {
@@ -2932,7 +2937,7 @@ public class Survivor : CustomObject
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());
         }
 
-        if (damagedPartIsArtifical) GetDamageArtificalPart(alreadyHaveInjury, damage);
+        if (damagedPartIsArtifical > 0) GetDamageArtificalPart(alreadyHaveInjury, damage, damagedPartIsArtifical);
         else GetInjury(attacker, specificDamagePart, damageType, damage);
         if (weapon is MeleeWeapon meleeWeapon && meleeWeapon.IsEnchanted) Poisoning(attacker);
     }
@@ -3782,10 +3787,12 @@ public class Survivor : CustomObject
         }
     }
 
-    void GetDamageArtificalPart(Injury artificalPart, float damage)
+    void GetDamageArtificalPart(Injury artificalPart, float damage, int artificialType)
     {
         float degree;
-        switch(artificalPart.site)
+        if (artificialType == 2) damage /= 2;
+        else if (artificialType == 3) damage /= 4;
+        switch (artificalPart.site)
         {
             case InjurySite.RightThumb:
             case InjurySite.LeftThumb:
@@ -3813,7 +3820,9 @@ public class Survivor : CustomObject
                 degree = Mathf.Clamp(damage / 100, 0, 1f);
                 break;
         }
-        AddInjury(artificalPart.site, InjuryType.ArtificialPartsDamaged, degree);
+        if(artificialType == 1) AddInjury(artificalPart.site, InjuryType.ArtificialPartsDamaged, degree);
+        else if(artificialType == 2) AddInjury(artificalPart.site, InjuryType.AugmentedPartsDamaged, degree);
+        else if(artificialType == 3) AddInjury(artificalPart.site, InjuryType.TranscendantPartsDamaged, degree);
     }
 
     void AddInjury(InjurySite injurySite, InjuryType injuryType, float injuryDegree)
@@ -3855,6 +3864,8 @@ public class Survivor : CustomObject
             {
                 injuries[index].degree += injuryDegree;
                 if (injuries[index].type == InjuryType.ArtificialPartsTransplanted) injuries[index].type = InjuryType.ArtificialPartsDamaged;
+                else if (injuries[index].type == InjuryType.AugmentedPartsTransplanted) injuries[index].type = InjuryType.AugmentedPartsDamaged;
+                else if (injuries[index].type == InjuryType.TranscendantPartsTransplanted) injuries[index].type = InjuryType.TranscendantPartsDamaged;
                 // dgree가 1이 되면 loss
                 if (injuries[index].degree >= 1)
                 {
@@ -3879,6 +3890,8 @@ public class Survivor : CustomObject
                         // Losable
                         default:
                             if (injuryType == InjuryType.ArtificialPartsDamaged) AddInjury(injurySite, InjuryType.ArtificialPartsDamaged, 1);
+                            else if (injuryType == InjuryType.AugmentedPartsDamaged) AddInjury(injurySite, InjuryType.AugmentedPartsDamaged, 1);
+                            else if (injuryType == InjuryType.TranscendantPartsDamaged) AddInjury(injurySite, InjuryType.TranscendantPartsDamaged, 1);
                             else AddInjury(injurySite, InjuryType.Rupture, 1);
                             break;
                     }
@@ -3979,6 +3992,8 @@ public class Survivor : CustomObject
         foreach(var injury in injuries)
         {
             if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1) continue;
+            if (injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged && injury.degree < 1) continue;
+            if (injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged && injury.degree < 1) continue;
             switch(injury.site)
             {
                 case InjurySite.RightLeg:
@@ -4048,6 +4063,8 @@ public class Survivor : CustomObject
         foreach (Injury injury in injuries)
         {
             if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1) continue;
+            if (injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged && injury.degree < 1) continue;
+            if (injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged && injury.degree < 1) continue;
             switch(injury.site)
             {
                 case InjurySite.RightEar:
@@ -4537,11 +4554,12 @@ public class Survivor : CustomObject
         luck = linkedSurvivorData.Luck;
         charicteristics = survivorInfo.characteristics;
 
-        injuries = survivorInfo.injuries;
-        foreach(Injury injury in injuries)
-        {
-            if (injury.type == InjuryType.ArtificialPartsTransplanted|| injury.type == InjuryType.ArtificialPartsDamaged || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
-        }
+        // ?
+        //injuries = survivorInfo.injuries;
+        //foreach(Injury injury in injuries)
+        //{
+        //    if (injury.type == InjuryType.ArtificialPartsTransplanted|| injury.type == InjuryType.ArtificialPartsDamaged || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
+        //}
 
         lastPosition = transform.position;
         ApplyCharacteristics();

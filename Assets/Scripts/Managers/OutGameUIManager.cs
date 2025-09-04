@@ -14,7 +14,14 @@ using UnityEngine.UI;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
-public enum SurgeryType { Transplant, ChronicDisorderTreatment, Alteration, RecoverySerumAdministeration }
+public enum SurgeryType 
+{ 
+    ArtificialPartTransplant,
+    AugmentedPartTransplant,
+    TrancendantPartTransplant,
+    ChronicDisorderTreatment,
+    RecoverySerumAdministeration,
+}
 
 public class OutGameUIManager : MonoBehaviour
 {
@@ -279,7 +286,7 @@ public class OutGameUIManager : MonoBehaviour
                         bool exit = false;
                         foreach (var injury in mySurvivorsData[i].injuries)
                         {
-                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged) || injury.degree >= 1)
+                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged) || injury.degree >= 1)
                             {
                                 dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
                                 exit = true;
@@ -741,6 +748,8 @@ public class OutGameUIManager : MonoBehaviour
         foreach(Injury injury in survivor.injuries)
         {
             if (injury.type == InjuryType.ArtificialPartsTransplanted || (injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1)) continue;
+            if (injury.type == InjuryType.AugmentedPartsTransplanted || (injury.type == InjuryType.AugmentedPartsDamaged && injury.degree < 1)) continue;
+            if (injury.type == InjuryType.TranscendantPartsTransplanted || (injury.type == InjuryType.TranscendantPartsDamaged && injury.degree < 1)) continue;
             if (injury.degree < 0.1f) continue;
             switch(training)
             {
@@ -1061,9 +1070,9 @@ public class OutGameUIManager : MonoBehaviour
         {
             foreach(Injury injury in survivorWhoWantSurgery.injuries)
             {
-                if(injury.degree >= 1 || injury.degree > 0 && injury.type == InjuryType.ArtificialPartsDamaged)
+                if(injury.degree >= 1 || injury.degree > 0 && (injury.type == InjuryType.ArtificialPartsDamaged || injury.type == InjuryType.AugmentedPartsDamaged || injury.type == InjuryType.TranscendantPartsDamaged))
                 {
-                    if(injury.type == InjuryType.ArtificialPartsDamaged)
+                    if(injury.degree < 1)
                     {
                         surgeryName = new LocalizedString("Injury", "Replace Prosthetic")
                         {
@@ -1119,7 +1128,7 @@ public class OutGameUIManager : MonoBehaviour
                             break;
                         case InjurySite.RightLeg:
                         case InjurySite.LeftLeg:
-                            cost = 1000;
+                            cost = 500;
                             break;
                         case InjurySite.RightEye:
                         case InjurySite.LeftEye:
@@ -1136,8 +1145,7 @@ public class OutGameUIManager : MonoBehaviour
                             Debug.LogWarning($"Can't transplant site : {injury.site}");
                             break;
                     }
-                    if (injury.type == InjuryType.ArtificialPartsDamaged) cost /= 2;
-                    surgeryList.Add(new(surgeryName, cost, injury.site, SurgeryType.Transplant));
+                    surgeryList.Add(new(surgeryName, cost, injury.site, SurgeryType.ArtificialPartTransplant));
                 }
             }
         }
@@ -1159,11 +1167,61 @@ public class OutGameUIManager : MonoBehaviour
                 }
             }
         }
-        else if(surgeryType_Other_Treatments.isOn)
+        else if(surgeryType_Alteration.isOn)
+        {
+            LocalizedString localizedSurgeryName;
+            Injury injury;
+            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.RightArm);
+            // 이미 이식된 상태면 안뜨게
+            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
+            {
+                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
+                {
+                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightArm")).GetLocalizedString() } };
+                    surgeryList.Add(new(localizedSurgeryName, 2500, InjurySite.RightArm, SurgeryType.AugmentedPartTransplant));
+                }
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightArm")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, 25000, InjurySite.RightArm, SurgeryType.TrancendantPartTransplant));
+            }
+            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.LeftArm);
+            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
+            {
+                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
+                {
+                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftArm")).GetLocalizedString() } };
+                    surgeryList.Add(new(localizedSurgeryName, 2500, InjurySite.LeftArm, SurgeryType.AugmentedPartTransplant));
+                }
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftArm")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, 25000, InjurySite.LeftArm, SurgeryType.TrancendantPartTransplant));
+            }
+            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.RightLeg);
+            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
+            {
+                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
+                {
+                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightLeg")).GetLocalizedString() } };
+                    surgeryList.Add(new(localizedSurgeryName, 5000, InjurySite.RightLeg, SurgeryType.AugmentedPartTransplant));
+                }
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightLeg")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, 50000, InjurySite.RightLeg, SurgeryType.TrancendantPartTransplant));
+            }
+            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.LeftLeg);
+            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
+            {
+                if (injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
+                {
+                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftLeg")).GetLocalizedString() } };
+                    surgeryList.Add(new(localizedSurgeryName, 5000, InjurySite.LeftLeg, SurgeryType.AugmentedPartTransplant));
+                }
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftLeg")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, 50000, InjurySite.LeftLeg, SurgeryType.TrancendantPartTransplant));
+            }
+        }
+        else if (surgeryType_Other_Treatments.isOn)
         {
             foreach (Injury injury in survivorWhoWantSurgery.injuries)
             {
-                if(injury.degree > 0 && injury.degree < 1)
+                if (injury.degree > 0 && injury.degree < 1)
                 {
                     surgeryList.Add(new(new("Injury", "Administer Recovery Serum"), 1000, InjurySite.None, SurgeryType.RecoverySerumAdministeration));
                     break;
@@ -2161,16 +2219,36 @@ public class OutGameUIManager : MonoBehaviour
         hadSurgery = true;
         whoUnderwentSurgery.Add(survivor.localizedSurvivorName);
         performedSurgery.Add(survivor.localizedScheduledSurgeryName);
-        if(survivor.surgeryType == SurgeryType.Transplant)
+        if(survivor.surgeryType == SurgeryType.ArtificialPartTransplant)
         {
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
             surgeryInjury.type = InjuryType.ArtificialPartsTransplanted;
             surgeryInjury.degree = 0;
-            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.RecoveringFromSurgery, 0.5f));
+            //survivor.injuries.Add(new(survivor.surgerySite, InjuryType.RecoveringFromSurgery, 0.5f));
+        }
+        else if(survivor.surgeryType == SurgeryType.AugmentedPartTransplant)
+        {
+            Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
+            if(surgeryInjury != null)
+            {
+                surgeryInjury.type = InjuryType.AugmentedPartsTransplanted;
+                surgeryInjury.degree = 0;
+            }
+            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.AugmentedPartsTransplanted, 0));
+        }
+        else if(survivor.surgeryType == SurgeryType.TrancendantPartTransplant)
+        {
+            Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite); 
+            if (surgeryInjury != null)
+            {
+                surgeryInjury.type = InjuryType.TranscendantPartsTransplanted;
+                surgeryInjury.degree = 0;
+            }
+            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.TranscendantPartsTransplanted, 0));
         }
         else if (survivor.surgeryType == SurgeryType.ChronicDisorderTreatment)
         {
-            switch(survivor.surgeryCharacteristic)
+            switch (survivor.surgeryCharacteristic)
             {
                 case CharacteristicType.BadEye:
                     survivor.injuries.Add(new(InjurySite.LeftEye, InjuryType.RecoveringFromSurgery, 0.4f));
@@ -2183,9 +2261,9 @@ public class OutGameUIManager : MonoBehaviour
             }
             survivor.characteristics.Remove(survivor.characteristics.Find(x => x.type == survivor.surgeryCharacteristic));
         }
-        else if(survivor.surgeryType == SurgeryType.RecoverySerumAdministeration)
+        else if (survivor.surgeryType == SurgeryType.RecoverySerumAdministeration)
         {
-            survivor.injuries.RemoveAll(x => x.degree < 1 && x.degree > 0 && x.type != InjuryType.ArtificialPartsDamaged);
+            survivor.injuries.RemoveAll(x => x.degree < 1 && x.degree > 0 && x.type != InjuryType.ArtificialPartsDamaged && x.type != InjuryType.AugmentedPartsDamaged && x.type != InjuryType.TranscendantPartsDamaged);
         }
 
         survivor.totalSurgeryFee += survivor.scheduledSurgeryCost;
@@ -2200,7 +2278,9 @@ public class OutGameUIManager : MonoBehaviour
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {
-                if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted && injury.type != InjuryType.ArtificialPartsDamaged)
+                if(injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted && injury.type != InjuryType.ArtificialPartsDamaged
+                    && injury.type != InjuryType.AugmentedPartsTransplanted && injury.type != InjuryType.AugmentedPartsDamaged
+                    && injury.type != InjuryType.TranscendantPartsTransplanted && injury.type != InjuryType.TranscendantPartsDamaged)
                 {
                     float recovery = 0;
                     float recoveryRate = 1;

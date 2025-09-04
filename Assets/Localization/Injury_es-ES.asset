@@ -302,10 +302,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753611033051148
+  - m_Id: 31280139435831296
+    m_Localized: Implante/Reemplazo de cuerpo aumentado ({0})
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051148
+  - m_Id: 31280180976218112
+    m_Localized: Implante/Reemplazo de cuerpo trascendente ({0})
+    m_Metadata:
+      m_Items:
+      - rid: 7835753611033051148
+  - m_Id: 31280147316928512
+    m_Localized: Cuerpo aumentado implantado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280149221142528
+    m_Localized: "Cuerpo aumentado da\xF1ado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280182591025152
+    m_Localized: Cuerpo trascendente implantado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280184419741696
+    m_Localized: "Cuerpo trascendente da\xF1ado"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
     - rid: 7835753611033051148
       type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
       data:
-        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df5700
+        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df570000f098ff1e216f0000f098ab28216f00

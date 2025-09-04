@@ -34,9 +34,14 @@ public enum InjuryType
     Concussion, // ³úÁøÅÁ
     Burn, // È­»ó
     PermanentVisualImpairment,
+    
     RecoveringFromSurgery,
     ArtificialPartsTransplanted,
     ArtificialPartsDamaged,
+    AugmentedPartsTransplanted,
+    AugmentedPartsDamaged,
+    TranscendantPartsTransplanted,
+    TranscendantPartsDamaged,
 }
 
 [Serializable]
