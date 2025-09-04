@@ -346,6 +346,10 @@ MonoBehaviour:
     m_Localized: Recette de fabrication
     m_Metadata:
       m_Items: []
+  - m_Id: 30863543156404224
+    m_Localized: Par acquisition
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

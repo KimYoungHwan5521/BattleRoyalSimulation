@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -80,7 +81,7 @@ public class InGameUIManager : MonoBehaviour
         {
             currentTab = value;
             statTab.SetActive(value == 0);
-            if(value == 0 && selectedObject is Survivor selectedSurvivor) characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
+            if (value == 0 && selectedObject is Survivor selectedSurvivor) characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
             inventoryTab.SetActive(value == 1);
             injuriesTab.SetActive(value == 2);
         }
@@ -114,6 +115,7 @@ public class InGameUIManager : MonoBehaviour
     Image selectedObjectsCurrentVestImage;
     TextMeshProUGUI selectedObjectsCurrentVestText;
 
+    [SerializeField] TMP_Dropdown selectedObjectInventorySortDropdown;
     [SerializeField] Transform selectedObjectsInventory;
     GameObject[] selectedObjectsItems;
 
@@ -181,6 +183,12 @@ public class InGameUIManager : MonoBehaviour
         selectedObjectsItems = new GameObject[selectedObjectsInventory.childCount];
         for (int i = 0; i < selectedObjectsInventory.childCount; i++) selectedObjectsItems[i] = selectedObjectsInventory.GetChild(i).gameObject;
 
+        selectedObjectInventorySortDropdown.ClearOptions();
+        selectedObjectInventorySortDropdown.AddOptions(new List<string> {
+            new LocalizedString("Item", "Acquired").GetLocalizedString(),
+            new LocalizedString("Basic", "Item Type").GetLocalizedString()
+            });
+
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
@@ -193,7 +201,7 @@ public class InGameUIManager : MonoBehaviour
 
     void AutoCameraMove()
     {
-        if(autoFocus.GetComponent<Toggle>().isOn && cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
+        if (autoFocus.GetComponent<Toggle>().isOn && cameraTarget != null) Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
     }
 
     void ManualCameraMove()
@@ -210,7 +218,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void CameraMoveToSelectedObject()
     {
-        if(selectedObject == null) return;
+        if (selectedObject == null) return;
         cameraTarget = selectedObject.transform;
         Camera.main.transform.position = new(cameraTarget.transform.position.x, cameraTarget.transform.position.y, -10);
     }
@@ -234,7 +242,7 @@ public class InGameUIManager : MonoBehaviour
 
     void OnScrollWheel(InputValue value)
     {
-        if(!IsPointerOverUI())Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.02f, 1, 100);
+        if (!IsPointerOverUI()) Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.02f, 1, 100);
     }
 
     void OnClick(InputValue value)
@@ -247,7 +255,7 @@ public class InGameUIManager : MonoBehaviour
             clickPos = Input.mousePosition;
             cameraPosBeforeClick = Camera.main.transform.position;
         }
-        else if(Vector2.Distance(Input.mousePosition, clickPos) < 30f)
+        else if (Vector2.Distance(Input.mousePosition, clickPos) < 30f)
         {
             SelectObject();
         }
@@ -268,7 +276,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void Pause()
     {
-        if(Time.timeScale > 0)
+        if (Time.timeScale > 0)
         {
             lastTimeScale = (int)Time.timeScale;
             SetTimeScale(0);
@@ -288,11 +296,11 @@ public class InGameUIManager : MonoBehaviour
     public void SetPredictionUI()
     {
         exitBattleRoyale.SetActive(false);
-        if(outGameUIManager.BettingAmount > 0)
+        if (outGameUIManager.BettingAmount > 0)
         {
             predictionResult.SetActive(true);
             predictionLeft = outGameUIManager.PredictionNumber;
-            for (int i=0; i<predictionResultRows.Length; i++)
+            for (int i = 0; i < predictionResultRows.Length; i++)
             {
                 if (i < outGameUIManager.PredictionNumber)
                 {
@@ -307,7 +315,7 @@ public class InGameUIManager : MonoBehaviour
                 else predictionResultRows[i].SetActive(false);
             }
         }
-        else 
+        else
         {
             predictionResult.SetActive(false);
             if (outGameUIManager.MySurvivorDataInBattleRoyale == null) exitBattleRoyale.SetActive(true);
@@ -316,7 +324,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void SetSurvivorRank(LocalizedString survivorName, int survivorRank)
     {
-        for(int i=0; i<outGameUIManager.Predictions.Length; i++)
+        for (int i = 0; i < outGameUIManager.Predictions.Length; i++)
         {
             if (outGameUIManager.Predictions[i] == null) break;
             if (outGameUIManager.Predictions[i].TableEntryReference.Key == survivorName.TableEntryReference.Key)
@@ -330,7 +338,7 @@ public class InGameUIManager : MonoBehaviour
                     _ => $"{survivorRank + 1}th",
                 };
                 if (i == survivorRank) predictionResultBGs[i].color = new Color(0.48f, 1f, 0.44f);
-                else if(survivorRank < outGameUIManager.PredictionNumber) predictionResultBGs[i].color = new Color(0.89f, 0.93f, 0.39f);
+                else if (survivorRank < outGameUIManager.PredictionNumber) predictionResultBGs[i].color = new Color(0.89f, 0.93f, 0.39f);
                 else predictionResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
 
                 break;
@@ -355,7 +363,7 @@ public class InGameUIManager : MonoBehaviour
 
     public void ClearLog()
     {
-        log.text = ""; 
+        log.text = "";
         strengthText.GetComponent<Help>().SetDescription("");
         agilityText.GetComponent<Help>().SetDescription("");
         fightingText.GetComponent<Help>().SetDescription("");
@@ -371,9 +379,9 @@ public class InGameUIManager : MonoBehaviour
         bool selectedNotNull = false;
         foreach (Collider2D hit in hits)
         {
-            if(!hit.isTrigger)
+            if (!hit.isTrigger)
             {
-                if(hit.TryGetComponent(out CustomObject clickedObject))
+                if (hit.TryGetComponent(out CustomObject clickedObject))
                 {
                     if (clickedObject is Survivor || clickedObject is Box)
                     {
@@ -398,7 +406,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                if(hit.TryGetComponent(out Survivor survivor) && survivor.IsDead)
+                if (hit.TryGetComponent(out Survivor survivor) && survivor.IsDead)
                 {
                     selectedObject = survivor;
                     SetSelectedObjectInfoOnce();
@@ -407,7 +415,7 @@ public class InGameUIManager : MonoBehaviour
                 }
             }
         }
-        if(!selectedNotNull) selectedObject = null;
+        if (!selectedNotNull) selectedObject = null;
     }
 
     public void SelectObject(Survivor survivor)
@@ -422,7 +430,7 @@ public class InGameUIManager : MonoBehaviour
     void SetSelectedObjectInfoOnce()
     {
         if (selectedObject == null) return;
-        if(selectedObject is Survivor)
+        if (selectedObject is Survivor)
         {
             Survivor selectedSurvivor = selectedObject as Survivor;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Survivor);
@@ -445,7 +453,7 @@ public class InGameUIManager : MonoBehaviour
             characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
 
         }
-        else if(selectedObject is Box)
+        else if (selectedObject is Box)
         {
             //Box selectedBox = selectedObject as Box;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
@@ -461,7 +469,7 @@ public class InGameUIManager : MonoBehaviour
         else
         {
             string name = selectedObject.name.Split('(')[0];
-            if(Enum.TryParse(name, out ResourceEnum.Sprite sprite)) selectedObjectImage.sprite = ResourceManager.Get(sprite);
+            if (Enum.TryParse(name, out ResourceEnum.Sprite sprite)) selectedObjectImage.sprite = ResourceManager.Get(sprite);
             selectedObjectImage.color = Color.white;
             selectedObjectName.text = name;
             selectedSurvivorsHealthBar.SetActive(false);
@@ -475,7 +483,7 @@ public class InGameUIManager : MonoBehaviour
 
     void UpdatableSelectedObjectInfo(CustomObject selectedObject)
     {
-        if(selectedObject is Survivor)
+        if (selectedObject is Survivor)
         {
             //UpdateSelectedObjectStat(selectedObject as Survivor);
             UpdateSelectedObjectInjury(selectedObject as Survivor);
@@ -718,10 +726,15 @@ public class InGameUIManager : MonoBehaviour
         GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());
     }
 
+    public void UpdateSelectedObjectInventory()
+    {
+        if(selectedObject != null) UpdatableSelectedObjectInfo(selectedObject);
+    }
+
     public void UpdateSelectedObjectInventory(CustomObject selected)
     {
         if (selected != selectedObject) return;
-        if(selected is Survivor)
+        if (selected is Survivor)
         {
             Survivor selectedSurvivor = selected as Survivor;
             if (selectedSurvivor.CurrentWeapon != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentWeapon.itemType}", out var weaponSpriteEnum))
@@ -766,7 +779,9 @@ public class InGameUIManager : MonoBehaviour
             selectedObjectsCurrentWeapon.SetActive(true);
             selectedObjectsCurrentHelmet.SetActive(true);
             selectedObjectsCurrentVest.SetActive(true);
-            List<Item> selectedSurvivorsInventory = selectedSurvivor.Inventory;
+            List<Item> selectedSurvivorsInventory = selectedSurvivor.Inventory.ToList();
+            // 아이템 타입 순
+            if (selectedObjectInventorySortDropdown.value == 1) selectedSurvivorsInventory.Sort((x, y) => CompareItemType(x.itemType, y.itemType));
             for (int i = 0; i < selectedObjectsItems.Length; i++)
             {
                 if (selectedSurvivorsInventory.Count > i)
@@ -791,7 +806,7 @@ public class InGameUIManager : MonoBehaviour
                 }
             }
         }
-        else if(selected is Box)
+        else if (selected is Box)
         {
             Box selectedBox = selected as Box;
             selectedObjectsCurrentWeapon.SetActive(false);
@@ -825,7 +840,7 @@ public class InGameUIManager : MonoBehaviour
 
     void UpdateSelectedObjectInfo()
     {
-        if(selectedObject == null)
+        if (selectedObject == null)
         {
             seletedImage.SetActive(false);
             selectedObjectInfo.SetActive(false);
@@ -835,7 +850,7 @@ public class InGameUIManager : MonoBehaviour
             seletedImage.transform.position = selectedObject.transform.position;
             seletedImage.SetActive(true);
             selectedObjectInfo.SetActive(true);
-            if(selectedObject is Survivor)
+            if (selectedObject is Survivor)
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;
                 autoFocus.SetActive(true);
@@ -848,7 +863,7 @@ public class InGameUIManager : MonoBehaviour
                 selectedSurvivorBleedingBarImage.fillAmount = (selectedSurvivor.maxBlood - selectedSurvivor.curBlood) / (selectedSurvivor.maxBlood * 0.5f);
 
                 bleedingAnim.SetBool("Bleeding", selectedSurvivor.BleedingAmount > 0);
-                
+
             }
         }
     }
@@ -863,11 +878,18 @@ public class InGameUIManager : MonoBehaviour
         });
     }
 
+    int CompareItemType(ItemManager.Items x, ItemManager.Items y)
+    {
+        return (int)x < (int)y ? -1 : 1;
+    }
+
     void OnLocaleChanged(Locale newLocale)
     {
         if (GameManager.Instance.BattleRoyaleManager == null) return;
         leftSurvivors.text = $"{new LocalizedString("Basic", "Remaining survivors:").GetLocalizedString()} {GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count}";
-        if(selectedObject != null) SetSelectedObjectInfoOnce();
+        selectedObjectInventorySortDropdown.options[0].text = new LocalizedString("Basic", "Acquired").GetLocalizedString();
+        selectedObjectInventorySortDropdown.options[1].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
+        if (selectedObject != null) SetSelectedObjectInfoOnce();
     }
 
     bool IsPointerOverUI()

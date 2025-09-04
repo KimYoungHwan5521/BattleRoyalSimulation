@@ -343,6 +343,10 @@ MonoBehaviour:
     m_Key: Crafting Recipe
     m_Metadata:
       m_Items: []
+  - m_Id: 30863543156404224
+    m_Key: Acquired
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

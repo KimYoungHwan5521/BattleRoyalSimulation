@@ -346,6 +346,10 @@ MonoBehaviour:
     m_Localized: "Receta de fabricaci\xF3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 30863543156404224
+    m_Localized: "Por obtenci\xF3n"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

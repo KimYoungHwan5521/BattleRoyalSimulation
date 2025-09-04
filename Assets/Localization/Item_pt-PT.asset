@@ -346,6 +346,10 @@ MonoBehaviour:
     m_Localized: "Receita de cria\xE7\xE3o"
     m_Metadata:
       m_Items: []
+  - m_Id: 30863543156404224
+    m_Localized: "Por aquisi\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
