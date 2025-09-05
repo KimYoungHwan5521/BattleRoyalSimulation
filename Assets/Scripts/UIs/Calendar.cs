@@ -782,11 +782,11 @@ public class Calendar : CustomObject
         {
             outGameUIManager.OpenConfirmWindow("Confirm:Reserve Who Reserved In Championship", () =>
             {
-                if (wantReserver.injuries.Count > 0) AskAboutInjury();
+                if (wantReserver.injuries.Count > 0) AskAboutInjury(false);
                 else Participate();
             });
         }
-        else if (wantReserver.injuries.Count > 0) AskAboutInjury();
+        else if (wantReserver.injuries.Count > 0) AskAboutInjury(false);
         else Participate();
     }
 
@@ -850,7 +850,7 @@ public class Calendar : CustomObject
                 cause = $"{new LocalizedString("Injury", "Cannot use both hands").GetLocalizedString()}";
                 return -1;
             }
-            if (injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged || injury.degree >= 1)
+            if (injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged || injury.degree >= 1)
             {
                 injured = true;
             }

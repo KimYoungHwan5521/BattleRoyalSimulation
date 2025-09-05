@@ -415,7 +415,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: 'Do you want to schedule surgery? {param0} : {param1} ($ {param2})'
+    m_Localized: 'Do you want to schedule surgery?\n {param0} : {param1} ($ {param2})'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340

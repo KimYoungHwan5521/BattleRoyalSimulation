@@ -408,8 +408,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: "M\xF6chten Sie die Operation planen? {param0} : {param1} ( $ {param2}
-      )"
+    m_Localized: "M\xF6chten Sie die Operation planen?\\n {param0} : {param1} ( $
+      {param2} )"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338

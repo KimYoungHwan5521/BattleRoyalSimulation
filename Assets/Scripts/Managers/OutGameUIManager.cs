@@ -174,6 +174,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Transform craftingAllow;
     public List<GameObject> craftableAllows = new();
 
+    [Serializable]
     struct SurgeryInfo
     {
         public LocalizedString surgeryName;
@@ -191,7 +192,7 @@ public class OutGameUIManager : MonoBehaviour
             this.surgeryCharacteristic = surgeryCharacteristic;
         }
     }
-    List<SurgeryInfo> surgeryList;
+    [SerializeField] List<SurgeryInfo> surgeryList;
 
     [Header("Schedule")]
     public GameObject calendarObject;
@@ -1169,59 +1170,18 @@ public class OutGameUIManager : MonoBehaviour
         }
         else if(surgeryType_Alteration.isOn)
         {
-            LocalizedString localizedSurgeryName;
-            Injury injury;
-            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.RightArm);
-            // 이미 이식된 상태면 안뜨게
-            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
-            {
-                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
-                {
-                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightArm")).GetLocalizedString() } };
-                    surgeryList.Add(new(localizedSurgeryName, 2500, InjurySite.RightArm, SurgeryType.AugmentedPartTransplant));
-                }
-                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightArm")).GetLocalizedString() } };
-                surgeryList.Add(new(localizedSurgeryName, 25000, InjurySite.RightArm, SurgeryType.TrancendantPartTransplant));
-            }
-            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.LeftArm);
-            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
-            {
-                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
-                {
-                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftArm")).GetLocalizedString() } };
-                    surgeryList.Add(new(localizedSurgeryName, 2500, InjurySite.LeftArm, SurgeryType.AugmentedPartTransplant));
-                }
-                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftArm")).GetLocalizedString() } };
-                surgeryList.Add(new(localizedSurgeryName, 25000, InjurySite.LeftArm, SurgeryType.TrancendantPartTransplant));
-            }
-            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.RightLeg);
-            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
-            {
-                if(injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
-                {
-                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightLeg")).GetLocalizedString() } };
-                    surgeryList.Add(new(localizedSurgeryName, 5000, InjurySite.RightLeg, SurgeryType.AugmentedPartTransplant));
-                }
-                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "RightLeg")).GetLocalizedString() } };
-                surgeryList.Add(new(localizedSurgeryName, 50000, InjurySite.RightLeg, SurgeryType.TrancendantPartTransplant));
-            }
-            injury = survivorWhoWantSurgery.injuries.Find(x => x.site == InjurySite.LeftLeg);
-            if(injury == null || injury.type != InjuryType.TranscendantPartsTransplanted)
-            {
-                if (injury == null || injury.type != InjuryType.AugmentedPartsTransplanted)
-                {
-                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftLeg")).GetLocalizedString() } };
-                    surgeryList.Add(new(localizedSurgeryName, 5000, InjurySite.LeftLeg, SurgeryType.AugmentedPartTransplant));
-                }
-                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", "LeftLeg")).GetLocalizedString() } };
-                surgeryList.Add(new(localizedSurgeryName, 50000, InjurySite.LeftLeg, SurgeryType.TrancendantPartTransplant));
-            }
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightEye, 4000, 40000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftEye, 4000, 40000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightArm, 2500, 25000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftArm, 2500, 25000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightLeg, 5000, 50000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftLeg, 5000, 50000);
         }
         else if (surgeryType_Other_Treatments.isOn)
         {
             foreach (Injury injury in survivorWhoWantSurgery.injuries)
             {
-                if (injury.degree > 0 && injury.degree < 1)
+                if (injury.degree > 0 && injury.degree < 1 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged)
                 {
                     surgeryList.Add(new(new("Injury", "Administer Recovery Serum"), 1000, InjurySite.None, SurgeryType.RecoverySerumAdministeration));
                     break;
@@ -1246,6 +1206,65 @@ public class OutGameUIManager : MonoBehaviour
         surgeries[0].GetComponentInChildren<Toggle>().isOn = true;
     }
 
+    void AddTransplantSurgeryToSurgeryList(InjurySite wantSite, int wantCostAugmentBody, int wantCostTranscendantBody)
+    {
+        LocalizedString localizedSurgeryName;
+        Injury injury;
+        injury = survivorWhoWantSurgery.injuries.Find(x => x.site == wantSite);
+        if (injury == null)
+        {
+            // 부상이 없는 경우 : 무조건 개조 선택지가 뜬다.
+            localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+            surgeryList.Add(new(localizedSurgeryName, wantCostAugmentBody, wantSite, SurgeryType.AugmentedPartTransplant));
+            localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+            surgeryList.Add(new(localizedSurgeryName, wantCostTranscendantBody, wantSite, SurgeryType.TrancendantPartTransplant));
+        }
+        else
+        {
+            // 부상이 있는 경우 : 그 부상이 이미 이식된 경우가 아닐 때만 뜬다.
+            if (injury.type != InjuryType.TranscendantPartsTransplanted)
+            {
+                // 강화신체의 경우 초월신체와 강화신체가 모두 아닐 때에만 뜬다.
+                if (injury.type != InjuryType.AugmentedPartsTransplanted || CheckSubpartDamaged(wantSite, 2))
+                {
+                    localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+                    surgeryList.Add(new(localizedSurgeryName, wantCostAugmentBody, wantSite, SurgeryType.AugmentedPartTransplant));
+                }
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, wantCostTranscendantBody, wantSite, SurgeryType.TrancendantPartTransplant));
+            }
+            else if (CheckSubpartDamaged(wantSite, 3))
+            {
+                // 그 부상이 이식된 경우에도 하위부위가 손상된 경우엔 뜬다.
+                localizedSurgeryName = new LocalizedString("Injury", "Augmented Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, wantCostAugmentBody, wantSite, SurgeryType.AugmentedPartTransplant));
+                localizedSurgeryName = new LocalizedString("Injury", "Transcendant Part Implant") { Arguments = new[] { (new LocalizedString("Injury", $"{wantSite}")).GetLocalizedString() } };
+                surgeryList.Add(new(localizedSurgeryName, wantCostTranscendantBody, wantSite, SurgeryType.TrancendantPartTransplant));
+            }
+        }
+    }
+
+    bool CheckSubpartDamaged(InjurySite upperpart, int upperpartsTier)
+    {
+        foreach (var subpart in Injury.GetSubparts(upperpart))
+        {
+            Injury subpartInjury = survivorWhoWantSurgery.injuries.Find(x => x.site == subpart);
+            if (subpartInjury != null)
+            {
+                if (subpartInjury.degree > 0) return true;
+                else
+                {
+                    int subpartsTier = 0;
+                    if (subpartInjury.type == InjuryType.ArtificialPartsTransplanted) subpartsTier = 1;
+                    else if (subpartInjury.type == InjuryType.AugmentedPartsTransplanted) subpartsTier = 2;
+                    else if (subpartInjury.type == InjuryType.TranscendantPartsTransplanted) subpartsTier = 3;
+                    return upperpartsTier > subpartsTier;
+                }
+            }
+        }
+        return false;
+    }
+
     public void ScheduleSurgery()
     {
         if (surgeryList.Count == 0) return;
@@ -1266,6 +1285,7 @@ public class OutGameUIManager : MonoBehaviour
         }
 
         survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
+        survivorWhoWantSurgery.scheduledSurgeryName = survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString();
         survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
         survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
         survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
@@ -1289,7 +1309,7 @@ public class OutGameUIManager : MonoBehaviour
                 SelectSurvivorToSurgery();
                 Alert("Alert:Surgery has been scheduled.");
             }
-        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryName }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
+        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
     }
 
     public void CancelSurgery()
@@ -1659,7 +1679,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         float cost = 0;
 
-        switch(injury.site)
+        switch (injury.site)
         {
             case InjurySite.Skull:
             case InjurySite.Brain:
@@ -1670,6 +1690,8 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftEye:
             case InjurySite.RightEar:
             case InjurySite.LeftEar:
+            case InjurySite.Cheek:
+            case InjurySite.Neck:
             case InjurySite.Nose:
             case InjurySite.Jaw:
                 cost = injury.degree * 50;
@@ -1690,7 +1712,7 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftArm:
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
-                cost = injury.degree * 50; 
+                cost = injury.degree * 50;
                 break;
             case InjurySite.RightHand:
             case InjurySite.LeftHand:
@@ -1710,7 +1732,20 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftLittleFinger:
             case InjurySite.RightBigToe:
             case InjurySite.LeftBigToe:
+            case InjurySite.RightIndexToe:
+            case InjurySite.LeftIndexToe:
+            case InjurySite.RightMiddleToe:
+            case InjurySite.LeftMiddleToe:
+            case InjurySite.RightRingToe:
+            case InjurySite.LeftRingToe:
+            case InjurySite.RightLittleToe:
+            case InjurySite.LeftLittleToe:
                 cost = injury.degree * 10;
+                break;
+            case InjurySite.None:
+                break;
+            default:
+                Debug.LogWarning($"Missing body parts : {injury.site}");
                 break;
         }
 
@@ -2234,7 +2269,7 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.type = InjuryType.AugmentedPartsTransplanted;
                 surgeryInjury.degree = 0;
             }
-            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.AugmentedPartsTransplanted, 0));
+            else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.AugmentedPartsTransplanted, 0));
         }
         else if(survivor.surgeryType == SurgeryType.TrancendantPartTransplant)
         {
@@ -2244,7 +2279,7 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.type = InjuryType.TranscendantPartsTransplanted;
                 surgeryInjury.degree = 0;
             }
-            survivor.injuries.Add(new(survivor.surgerySite, InjuryType.TranscendantPartsTransplanted, 0));
+            else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.TranscendantPartsTransplanted, 0));
         }
         else if (survivor.surgeryType == SurgeryType.ChronicDisorderTreatment)
         {

@@ -408,8 +408,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359339
   - m_Id: 1875851668418560
-    m_Localized: 'Voulez-vous programmer une chirurgie ? {param0} : {param1} ( $
-      {param2} )'
+    m_Localized: 'Voulez-vous programmer une chirurgie ?\n {param0} : {param1} (
+      $ {param2} )'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339

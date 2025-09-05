@@ -2872,13 +2872,36 @@ public class Survivor : CustomObject
             }
             if (damagedPartIsArtifical == 0 && (damagePart == InjurySiteMajor.Head || damagePart == InjurySiteMajor.Torso || alreadyHaveInjury.degree < 1)) damage *= 1 + alreadyHaveInjury.degree;
         }
+        else
+        {
+            // Upperparts 체크
+            foreach(var upperpart in Injury.GetUpperParts(specificDamagePart))
+            {
+                Injury upperpartAlreadyHaveInjury = injuries.Find(x => x.site == upperpart);
+                if(upperpartAlreadyHaveInjury != null)
+                {
+                    if (upperpartAlreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged
+                        || upperpartAlreadyHaveInjury.type == InjuryType.AugmentedPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.AugmentedPartsDamaged
+                        || upperpartAlreadyHaveInjury.type == InjuryType.TranscendantPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.TranscendantPartsDamaged)
+                    {
+                        if (upperpartAlreadyHaveInjury.type == InjuryType.ArtificialPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.ArtificialPartsDamaged) damagedPartIsArtifical = 1;
+                        else if (upperpartAlreadyHaveInjury.type == InjuryType.AugmentedPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.AugmentedPartsDamaged) damagedPartIsArtifical = 2;
+                        else if (upperpartAlreadyHaveInjury.type == InjuryType.TranscendantPartsTransplanted || upperpartAlreadyHaveInjury.type == InjuryType.TranscendantPartsDamaged) damagedPartIsArtifical = 3;
+                        noPain = true;
+                        injuries.Add(new(specificDamagePart, upperpartAlreadyHaveInjury.type, 0));
+                        alreadyHaveInjury = injuries[^1];
+                        break;
+                    }
+                }
+            }
+        }
         float maxDamage = specificDamagePart switch
         {
             InjurySite.RightArm or InjurySite.LeftArm or InjurySite.RightLeg or InjurySite.LeftLeg => Mathf.Min(damage, 80),
             InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Max(damage, 50),
             InjurySite.RightHand or InjurySite.LeftHand or InjurySite.RightFoot or InjurySite.LeftFoot => Mathf.Min(damage, 30),
             InjurySite.RightThumb or InjurySite.LeftThumb or InjurySite.RightIndexFinger or InjurySite.LeftIndexFinger or InjurySite.RightMiddleFinger or InjurySite.LeftMiddleFinger
-            or InjurySite.RightRingFinger or InjurySite.LeftRingFinger or InjurySite.RightLittleFinger or InjurySite.LeftLittleFinger or InjurySite.RightBigToe or InjurySite.LeftBigToe 
+            or InjurySite.RightRingFinger or InjurySite.LeftRingFinger or InjurySite.RightLittleFinger or InjurySite.LeftLittleFinger or InjurySite.RightBigToe or InjurySite.LeftBigToe
             or InjurySite.RightIndexToe or InjurySite.LeftIndexToe or InjurySite.RightMiddleToe or InjurySite.LeftMiddleToe
             or InjurySite.RightRingToe or InjurySite.LeftRingToe or InjurySite.RightLittleToe or InjurySite.LeftLittleToe => Mathf.Min(damage, 10),
             _ => damage
@@ -2937,7 +2960,13 @@ public class Survivor : CustomObject
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), attacker.survivorName.GetLocalizedString());
         }
 
-        if (damagedPartIsArtifical > 0) GetDamageArtificalPart(alreadyHaveInjury, damage, damagedPartIsArtifical);
+        if (damagedPartIsArtifical > 0)
+        {
+            if (alreadyHaveInjury == null)
+            {
+            }
+            GetDamageArtificalPart(alreadyHaveInjury, damage, damagedPartIsArtifical);
+        }
         else GetInjury(attacker, specificDamagePart, damageType, damage);
         if (weapon is MeleeWeapon meleeWeapon && meleeWeapon.IsEnchanted) Poisoning(attacker);
     }
@@ -4034,13 +4063,22 @@ public class Survivor : CustomObject
     float injuryCorrection_AttackSpeed = 1;
     float injuryCorrection_MoveSpeed = 1;
     float injuryCorrection_AttackDamage = 1;
-    bool isLeftEyeArtificial;
+    int isLeftEyeArtificial = 0;
     bool isLeftEyePermanentVisualImpairment;
-    bool isRightEyeArtificial;
+    int isRightEyeArtificial = 0;
     bool isRightEyePermanentVisualImpairment;
     float injuryCorrection_LeftSightRange = 1;
     float injuryCorrection_RightSightRange = 1;
     float injuryCorrection_CraftingSpeed = 1;
+
+    bool augmentedRightArm;
+    bool transcendantRightArm;
+    bool augmentedLeftArm;
+    bool transcendantLeftArm;
+    bool augmentedRightLeg;
+    bool transcendantRightLeg;
+    bool augmentedLeftLeg;
+    bool transcendantLeftLeg;
     void ApplyInjuryPenalty()
     {
         InGameUIManager.UpdateSelectedObjectInjury(this);
@@ -4060,6 +4098,7 @@ public class Survivor : CustomObject
         float penaltiedMoveSpeedByLeftToe = 1;
         float penaltiedCraftingSpeedByRightArm = 1;
         float penaltiedCraftingSpeedByLeftArm = 1;
+
         foreach (Injury injury in injuries)
         {
             if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1) continue;
@@ -4074,7 +4113,9 @@ public class Survivor : CustomObject
                     ear2Penalty = injury.degree;
                     break;
                 case InjurySite.RightEye:
-                    if (injury.type == InjuryType.ArtificialPartsTransplanted) isRightEyeArtificial = true;
+                    if ((injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged) && injury.degree < 1) isRightEyeArtificial = 1;
+                    else if ((injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged) && injury.degree < 1) isRightEyeArtificial = 2;
+                    else if ((injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged) && injury.degree < 1) isRightEyeArtificial = 3;
                     else if (injury.type == InjuryType.PermanentVisualImpairment) isRightEyePermanentVisualImpairment = true;
                     else
                     {
@@ -4085,7 +4126,9 @@ public class Survivor : CustomObject
                     }
                     break;
                 case InjurySite.LeftEye:
-                    if (injury.type == InjuryType.ArtificialPartsTransplanted) isLeftEyeArtificial = true;
+                    if ((injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged) && injury.degree < 1) isLeftEyeArtificial = 1;
+                    else if ((injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged) && injury.degree < 1) isLeftEyeArtificial = 2;
+                    else if ((injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged) && injury.degree < 1) isLeftEyeArtificial = 3;
                     else if (injury.type == InjuryType.PermanentVisualImpairment) isLeftEyePermanentVisualImpairment = true;
                     else
                     {
@@ -4101,11 +4144,18 @@ public class Survivor : CustomObject
                     penaltiedMoveSpeedByOrgan = 1 - injury.degree;
                     break;
                 case InjurySite.RightArm:
+                    if ((augmentedRightArm || transcendantRightArm) && injury.degree < 1)
+                    {
+                        if (augmentedRightArm) penaltiedAttackDamageByRightArm *= 1.1f;
+                        else if (transcendantRightArm) penaltiedAttackDamageByRightArm *= 1.2f;
+                        break;
+                    }
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightHand:
+                    if ((augmentedRightArm || transcendantRightArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) RightHandDisabled = true;
@@ -4115,15 +4165,18 @@ public class Survivor : CustomObject
                 case InjurySite.RightMiddleFinger:
                 case InjurySite.RightRingFinger:
                 case InjurySite.RightLittleFinger:
+                    if ((augmentedRightArm || transcendantRightArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.1f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.LeftArm:
+                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftHand:
+                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) LeftHandDisabled = true;
@@ -4133,16 +4186,30 @@ public class Survivor : CustomObject
                 case InjurySite.LeftMiddleFinger:
                 case InjurySite.LeftRingFinger:
                 case InjurySite.LeftLittleFinger:
+                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1)
+                    {
+                        if (augmentedLeftArm) penaltiedAttackDamageByLeftArm *= 1.1f;
+                        else if(transcendantLeftArm) penaltiedAttackDamageByLeftArm *= 1.2f;
+                        break;
+                    }
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.RightLeg:
+                    if ((augmentedRightLeg || transcendantRightLeg) && injury.degree < 1)
+                    {
+                        if (augmentedRightLeg) penaltiedMoveSpeedByRightLeg *= 1.1f;
+                        else if (transcendantRightLeg) penaltiedMoveSpeedByRightLeg *= 1.2f;
+                        break;
+                    }
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightKnee:
+                    if ((augmentedRightLeg || transcendantRightLeg) && injury.degree < 1) break;
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightFoot:
+                    if ((augmentedRightLeg || transcendantRightLeg) && injury.degree < 1) break;
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, (1 - injury.degree * 0.5f));
                     break;
                 case InjurySite.RightBigToe:
@@ -4150,25 +4217,35 @@ public class Survivor : CustomObject
                 case InjurySite.RightMiddleToe:
                 case InjurySite.RightRingToe:
                 case InjurySite.RightLittleToe:
+                    if ((augmentedRightLeg || transcendantRightLeg) && injury.degree < 1) break;
                     penaltiedMoveSpeedByRightToe *= (1 - injury.degree * 0.1f);
                     penaltiedMoveSpeedByRightLeg = Mathf.Min(penaltiedMoveSpeedByRightLeg, penaltiedMoveSpeedByRightToe);
                     break;
                 case InjurySite.LeftLeg:
+                    if ((augmentedLeftLeg || transcendantLeftLeg) && injury.degree < 1)
+                    {
+                        if (augmentedRightLeg) penaltiedMoveSpeedByLeftLeg *= 1.1f;
+                        else if (transcendantRightLeg) penaltiedMoveSpeedByLeftLeg *= 1.2f;
+                        break;
+                    }
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.1f));
+                    break;
+                case InjurySite.LeftKnee:
+                    if ((augmentedLeftLeg || transcendantLeftLeg) && injury.degree < 1) break;
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
+                    break;
+                case InjurySite.LeftFoot:
+                    if ((augmentedLeftLeg || transcendantLeftLeg) && injury.degree < 1) break;
+                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
+                    break;
+                case InjurySite.LeftBigToe:
                 case InjurySite.LeftIndexToe:
                 case InjurySite.LeftMiddleToe:
                 case InjurySite.LeftRingToe:
                 case InjurySite.LeftLittleToe:
+                    if ((augmentedLeftLeg || transcendantLeftLeg) && injury.degree < 1) break;
                     penaltiedMoveSpeedByLeftToe *= (1 - injury.degree * 0.1f);
                     penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, penaltiedMoveSpeedByLeftToe);
-                    break;
-                case InjurySite.LeftKnee:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
-                    break;
-                case InjurySite.LeftFoot:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.5f));
-                    break;
-                case InjurySite.LeftBigToe:
-                    penaltiedMoveSpeedByLeftLeg = Mathf.Min(penaltiedMoveSpeedByLeftLeg, (1 - injury.degree * 0.1f));
                     break;
                 case InjurySite.Brain:
                     dizzyRateByConcussion = injury.degree;
@@ -4336,10 +4413,14 @@ public class Survivor : CustomObject
 
     void ApplyCorrectionStats()
     {
-        if (isLeftEyeArtificial) leftSightRange = 30 * injuryCorrection_LeftSightRange;
+        if (isLeftEyeArtificial > 2) leftSightRange = 60 * injuryCorrection_LeftSightRange;
+        else if (isLeftEyeArtificial == 2) leftSightRange = 45 * injuryCorrection_LeftSightRange;
+        else if (isLeftEyeArtificial == 1) leftSightRange = 35 * injuryCorrection_LeftSightRange;
         else if(isLeftEyePermanentVisualImpairment) leftSightRange = 15 * injuryCorrection_LeftSightRange * characteristicCorrection_SightRange;
         else leftSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_LeftSightRange;
-        if (isRightEyeArtificial) rightSightRange = 30 * injuryCorrection_RightSightRange;
+        if (isRightEyeArtificial > 2) rightSightRange = 60 * injuryCorrection_RightSightRange;
+        else if (isRightEyeArtificial == 2) rightSightRange = 45 * injuryCorrection_RightSightRange;
+        else if (isRightEyeArtificial == 1) rightSightRange = 35 * injuryCorrection_RightSightRange;
         else if (isRightEyePermanentVisualImpairment) rightSightRange = 15 * injuryCorrection_RightSightRange * characteristicCorrection_SightRange;
         else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
@@ -4554,12 +4635,28 @@ public class Survivor : CustomObject
         luck = linkedSurvivorData.Luck;
         charicteristics = survivorInfo.characteristics;
 
-        // ?
-        //injuries = survivorInfo.injuries;
-        //foreach(Injury injury in injuries)
-        //{
-        //    if (injury.type == InjuryType.ArtificialPartsTransplanted|| injury.type == InjuryType.ArtificialPartsDamaged || injury.degree == 1) rememberAlreadyHaveInjury.Add(injury.site);
-        //}
+        injuries = survivorInfo.injuries;
+        // game result 단계에서 돈을 걷지 않기 위해
+        foreach (Injury injury in injuries)
+        {
+            if (injury.degree == 1 || injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged
+                || injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged
+                || injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged) rememberAlreadyHaveInjury.Add(injury.site);
+        }
+        Injury tempInjury;
+        tempInjury = injuries.Find(x => x.site == InjurySite.RightArm);
+        augmentedRightArm = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
+        transcendantRightArm = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        tempInjury = injuries.Find(x => x.site == InjurySite.LeftArm);
+        augmentedLeftArm = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
+        transcendantLeftArm = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        tempInjury = injuries.Find(x => x.site == InjurySite.RightLeg);
+        augmentedRightLeg = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
+        transcendantRightLeg = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        tempInjury = injuries.Find(x => x.site == InjurySite.LeftLeg);
+        augmentedLeftLeg = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
+        transcendantLeftLeg = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+
 
         lastPosition = transform.position;
         ApplyCharacteristics();

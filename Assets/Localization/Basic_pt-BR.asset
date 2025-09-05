@@ -407,7 +407,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: 'Deseja agendar a cirurgia? {param0} : {param1} ( $ {param2} )'
+    m_Localized: 'Deseja agendar a cirurgia?\n {param0} : {param1} ( $ {param2} )'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335

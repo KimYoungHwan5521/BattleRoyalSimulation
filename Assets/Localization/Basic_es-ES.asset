@@ -409,7 +409,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: "\xBFDesea programar la cirug\xEDa? {param0} : {param1} ( $ {param2}
+    m_Localized: "\xBFDesea programar la cirug\xEDa?\\n {param0} : {param1} ( $ {param2}
       )"
     m_Metadata:
       m_Items:

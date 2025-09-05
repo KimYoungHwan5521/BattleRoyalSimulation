@@ -429,8 +429,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1875851668418560
-    m_Localized: "\uC218\uC220\uC744 \uC608\uC57D\uD569\uB2C8\uAE4C?{param0} : {param1}($
-      {param2})"
+    m_Localized: "\uC218\uC220\uC744 \uC608\uC57D\uD569\uB2C8\uAE4C?\\n{param0} :
+      {param1}($ {param2})"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336

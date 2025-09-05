@@ -402,7 +402,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359341
   - m_Id: 1875851668418560
-    m_Localized: "\u662F\u5426\u9810\u7D04\u624B\u8853\uFF1F{param0} \uFF1A {param1}\uFF08$
+    m_Localized: "\u662F\u5426\u9810\u7D04\u624B\u8853\uFF1F\\n{param0} \uFF1A {param1}\uFF08$
       {param2}\uFF09"
     m_Metadata:
       m_Items:
