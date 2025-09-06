@@ -328,6 +328,37 @@ MonoBehaviour:
     m_Localized: Corpo transcendente danificado
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: "Cura em um dia as les\xF5es que podem se recuperar naturalmente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: "A maioria das pr\xF3teses tem desempenho e durabilidade semelhantes
+      ao corpo original. No entanto, o fato de n\xE3o sentirem dor d\xE1 uma vantagem
+      em manter o combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: "As pr\xF3teses oculares t\xEAm vis\xE3o inferior \xE0 de uma pessoa
+      comum. No entanto, o fato de n\xE3o sentirem dor d\xE1 uma vantagem em manter
+      o combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: "As pr\xF3teses aumentadas t\xEAm desempenho e durabilidade um pouco
+      melhores que o corpo original."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: "As pr\xF3teses oculares aumentadas t\xEAm desempenho semelhante
+      ao do corpo original, mas uma durabilidade um pouco melhor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: "As pr\xF3teses transcendentais t\xEAm desempenho e durabilidade
+      melhores que o corpo original."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

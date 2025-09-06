@@ -1187,6 +1187,10 @@ MonoBehaviour:
     m_Key: Confirm:Participate
     m_Metadata:
       m_Items: []
+  - m_Id: 33723748986712064
+    m_Key: Alert:CharacteristicRemoved
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

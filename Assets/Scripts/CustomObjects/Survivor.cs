@@ -245,8 +245,8 @@ public class Survivor : CustomObject
         //    prohibitTimer.SetActive(value);
         //}
     }
-    [SerializeField] float prohibitedAreaTime = 5.1f;
-    int timerSound = 5;
+    [SerializeField] float prohibitedAreaTime = 10f;
+    int timerSound = 9;
 
     Survivor survivorWhoCausedBleeding;
     public float maxBlood;
@@ -4170,7 +4170,12 @@ public class Survivor : CustomObject
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.LeftArm:
-                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
+                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1)
+                    {
+                        if (augmentedLeftArm) penaltiedAttackDamageByLeftArm *= 1.1f;
+                        else if (transcendantLeftArm) penaltiedAttackDamageByLeftArm *= 1.2f;
+                        break;
+                    }
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) LeftHandDisabled = true;
@@ -4186,12 +4191,7 @@ public class Survivor : CustomObject
                 case InjurySite.LeftMiddleFinger:
                 case InjurySite.LeftRingFinger:
                 case InjurySite.LeftLittleFinger:
-                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1)
-                    {
-                        if (augmentedLeftArm) penaltiedAttackDamageByLeftArm *= 1.1f;
-                        else if(transcendantLeftArm) penaltiedAttackDamageByLeftArm *= 1.2f;
-                        break;
-                    }
+                    if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
@@ -4425,7 +4425,7 @@ public class Survivor : CustomObject
         else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
 
-        attackDamage = 5 * Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedStrength + correctedFighting, 1), 40)) * injuryCorrection_AttackDamage;
+        attackDamage = 5 * Mathf.Max(0.2f, (correctedStrength + correctedFighting) / 40f) * injuryCorrection_AttackDamage;
         attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
@@ -4641,7 +4641,13 @@ public class Survivor : CustomObject
         {
             if (injury.degree == 1 || injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged
                 || injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged
-                || injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged) rememberAlreadyHaveInjury.Add(injury.site);
+                || injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged)
+            {
+                if (rememberAlreadyHaveInjury.Contains(injury.site)) continue;
+                rememberAlreadyHaveInjury.Add(injury.site);
+                foreach (var subpart in Injury.GetSubparts(injury.site)) 
+                    if (!rememberAlreadyHaveInjury.Contains(subpart)) rememberAlreadyHaveInjury.Add(subpart);
+            }
         }
         Injury tempInjury;
         tempInjury = injuries.Find(x => x.site == InjurySite.RightArm);

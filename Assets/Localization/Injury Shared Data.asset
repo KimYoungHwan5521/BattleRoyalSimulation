@@ -319,6 +319,30 @@ MonoBehaviour:
     m_Key: TranscendantPartsDamaged
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Key: Help:RecoverySerumAdministeration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Key: Help:ArtificialPartTransplant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Key: Help:ArtificialPartTransplant_Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Key: Help:AugmentedPartTransplant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Key: Help:AugmentedPartTransplant_Eye
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Key: Help:TrancendantPartTransplant
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

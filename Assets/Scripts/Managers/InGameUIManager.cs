@@ -596,15 +596,15 @@ public class InGameUIManager : MonoBehaviour
             else if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged)
             {
                 Color wantColor = new(0.6f, 0.6f, 0.6f);
-                targetPart.color = wantColor;
+                targetPart.color = wantColor * (1 - injury.degree * 0.5f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
                 foreach (var subpart in subparts)
                 {
                     Image subpartImage = GetTargetImage(subpart);
-                    subpartImage.color = wantColor;
                     Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
                     float subpartInjuryDegree = subpartInjury != null ? subpartInjury.degree : 0;
                     InjuryType subpartInjuryType = subpartInjury != null ? subpartInjury.type : InjuryType.ArtificialPartsTransplanted;
+                    if (subpartInjury == null) subpartImage.color = wantColor;
                     subpartImage.GetComponentInChildren<Help>()
                         .SetDescription($"{new LocalizedString("Injury", subpart.ToString()).GetLocalizedString()} {new LocalizedString("Injury", subpartInjuryType.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {subpartInjuryDegree:0.##}");
                 }
@@ -612,15 +612,15 @@ public class InGameUIManager : MonoBehaviour
             else if (injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged)
             {
                 Color wantColor = new(1f, 0f, 1f);
-                targetPart.color = wantColor;
+                targetPart.color = wantColor * (1 - injury.degree * 0.5f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
                 foreach (var subpart in subparts)
                 {
                     Image subpartImage = GetTargetImage(subpart);
-                    subpartImage.color = wantColor;
                     Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
                     float subpartInjuryDegree = subpartInjury != null ? subpartInjury.degree : 0;
                     InjuryType subpartInjuryType = subpartInjury != null ? subpartInjury.type : InjuryType.AugmentedPartsTransplanted;
+                    if (subpartInjury == null) subpartImage.color = wantColor;
                     subpartImage.GetComponentInChildren<Help>()
                         .SetDescription($"{new LocalizedString("Injury", subpart.ToString()).GetLocalizedString()} {new LocalizedString("Injury", subpartInjuryType.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {subpartInjuryDegree:0.##}");
                 }
@@ -628,15 +628,15 @@ public class InGameUIManager : MonoBehaviour
             else if (injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged)
             {
                 Color wantColor = new(0f, 1f, 1f);
-                targetPart.color = wantColor;
+                targetPart.color = wantColor * (1 - injury.degree * 0.5f);
                 List<InjurySite> subparts = Injury.GetSubparts(injury.site);
                 foreach (var subpart in subparts)
                 {
                     Image subpartImage = GetTargetImage(subpart);
-                    subpartImage.color = wantColor;
                     Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
                     float subpartInjuryDegree = subpartInjury != null ? subpartInjury.degree : 0;
                     InjuryType subpartInjuryType = subpartInjury != null ? subpartInjury.type : InjuryType.TranscendantPartsTransplanted;
+                    if (subpartInjury == null) subpartImage.color = wantColor;
                     subpartImage.GetComponentInChildren<Help>()
                         .SetDescription($"{new LocalizedString("Injury", subpart.ToString()).GetLocalizedString()} {new LocalizedString("Injury", subpartInjuryType.ToString()).GetLocalizedString()}\n{new LocalizedString("Injury", "Degree").GetLocalizedString()} : {subpartInjuryDegree:0.##}");
                 }

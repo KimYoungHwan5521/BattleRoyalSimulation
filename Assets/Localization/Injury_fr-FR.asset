@@ -328,6 +328,37 @@ MonoBehaviour:
     m_Localized: "Corps transcendant endommag\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: "Soigne en un jour les blessures pouvant gu\xE9rir naturellement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: "La plupart des proth\xE8ses ont des performances et une durabilit\xE9
+      similaires au corps d\u2019origine. Cependant, le fait de ne pas ressentir
+      la douleur donne un avantage pour poursuivre le combat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: "Les proth\xE8ses oculaires offrent une vision inf\xE9rieure \xE0
+      celle d\u2019une personne moyenne. Cependant, le fait de ne pas ressentir la
+      douleur donne un avantage pour poursuivre le combat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: "Les proth\xE8ses augment\xE9es ont des performances et une durabilit\xE9
+      l\xE9g\xE8rement sup\xE9rieures au corps d\u2019origine."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: "Les proth\xE8ses oculaires augment\xE9es ont des performances similaires
+      au corps d\u2019origine mais une durabilit\xE9 l\xE9g\xE8rement meilleure."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: "Les proth\xE8ses transcendantes ont de meilleures performances
+      et une durabilit\xE9 sup\xE9rieure au corps d\u2019origine."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -328,6 +328,37 @@ MonoBehaviour:
     m_Localized: Transcendent Body Damaged
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: Heals naturally recoverable injuries in a single day.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: Most prosthetics have similar performance and durability to the
+      original body. However, the fact that they do not feel pain gives an advantage
+      in sustaining combat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: Eye prosthetics have weaker vision than the average human eyesight.
+      However, the fact that they do not feel pain gives an advantage in sustaining
+      combat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: Augmented prosthetics have slightly better performance and durability
+      than the original body.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: Augmented eye prosthetics have performance similar to the original
+      body but slightly better durability.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: Transcendent prosthetics have better performance and durability
+      than the original body.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

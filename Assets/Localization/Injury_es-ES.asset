@@ -328,6 +328,38 @@ MonoBehaviour:
     m_Localized: "Cuerpo trascendente da\xF1ado"
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: "Cura en un solo d\xEDa las heridas que pueden recuperarse de forma
+      natural."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: "La mayor\xEDa de las pr\xF3tesis tienen un rendimiento y una durabilidad
+      similares al cuerpo original. Sin embargo, el no sentir dolor da una ventaja
+      para mantener el combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: "Las pr\xF3tesis oculares tienen una visi\xF3n inferior a la de
+      una persona promedio. Sin embargo, el no sentir dolor da una ventaja para mantener
+      el combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: "Las pr\xF3tesis aumentadas tienen un rendimiento y una durabilidad
+      ligeramente mejores que el cuerpo original."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: "Las pr\xF3tesis oculares aumentadas tienen un rendimiento similar
+      al del cuerpo original, pero una durabilidad ligeramente mejor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: "Las pr\xF3tesis trascendentes tienen un rendimiento y una durabilidad
+      superiores al cuerpo original."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

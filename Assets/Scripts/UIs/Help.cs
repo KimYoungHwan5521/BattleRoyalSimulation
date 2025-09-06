@@ -40,14 +40,26 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         this.description = description;
     }
 
-    public void SetDescription(SurgeryType surgeryType)
+    public void SetDescription(SurgeryType surgeryType, InjurySite site)
     {
-        raw = false;
-        description = surgeryType switch
+        raw = true;
+        string key = "";
+        if (surgeryType == SurgeryType.RecoverySerumAdministeration) key = "Help:RecoverySerumAdministeration";
+        else if(surgeryType == SurgeryType.ArtificialPartTransplant)
         {
-            SurgeryType.RecoverySerumAdministeration => "Help:RecoverySerumAdministeration",
-            _ => ""
-        };
+            if (site == InjurySite.RightEye || site == InjurySite.LeftEye) key = "Help:ArtificialPartTransplant_Eye";
+            else key = "Help:ArtificialPartTransplant";
+        }
+        else if (surgeryType == SurgeryType.AugmentedPartTransplant)
+        {
+            if (site == InjurySite.RightEye || site == InjurySite.LeftEye) key = "Help:AugmentedPartTransplant_Eye";
+            else key = "Help:AugmentedPartTransplant";
+        }
+        else if (surgeryType == SurgeryType.TrancendantPartTransplant)
+        {
+            key = "Help:TrancendantPartTransplant";
+        }
+        description = new LocalizedString("Injury", key).GetLocalizedString();
     }
 
     public void SetDescription(LocalizedString description)

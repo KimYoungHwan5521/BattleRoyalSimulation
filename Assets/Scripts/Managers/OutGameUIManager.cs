@@ -1195,7 +1195,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = surgeryList[i].surgeryName.GetLocalizedString();
                 surgeries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"$ {surgeryList[i].surgeryCost}";
-                surgeries[i].GetComponent<Help>().SetDescription(surgeryList[i].surgeryType);
+                surgeries[i].GetComponent<Help>().SetDescription(surgeryList[i].surgeryType, surgeryList[i].surgerySite);
                 surgeries[i].SetActive(true);
             }
             else
@@ -1413,6 +1413,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             weaponPriority1Dropdown.RelocalizeOptions();
         }
+        weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
         sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
         sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
@@ -1619,7 +1620,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             foreach (var craftableAllow in craftableAllows)
             {
-                if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}"
+                if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value - 1].TableEntryReference.Key}"
                 && craftableAllow.GetComponentsInChildren<Toggle>()[1].isOn)
                 {
                     Alert("Alert:Crafting Priority Not Valid");
@@ -2270,6 +2271,7 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.degree = 0;
             }
             else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.AugmentedPartsTransplanted, 0));
+            AchievementManager.UnlockAchievement("Augmented Prosthetic");
         }
         else if(survivor.surgeryType == SurgeryType.TrancendantPartTransplant)
         {
@@ -2280,6 +2282,7 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.degree = 0;
             }
             else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.TranscendantPartsTransplanted, 0));
+            AchievementManager.UnlockAchievement("Transcendent Prosthetic");
         }
         else if (survivor.surgeryType == SurgeryType.ChronicDisorderTreatment)
         {
@@ -2299,6 +2302,23 @@ public class OutGameUIManager : MonoBehaviour
         else if (survivor.surgeryType == SurgeryType.RecoverySerumAdministeration)
         {
             survivor.injuries.RemoveAll(x => x.degree < 1 && x.degree > 0 && x.type != InjuryType.ArtificialPartsDamaged && x.type != InjuryType.AugmentedPartsDamaged && x.type != InjuryType.TranscendantPartsDamaged);
+        }
+
+        Characteristic? characteristic = survivor.characteristics.Find(x => x.type == CharacteristicType.BadEye || x.type == CharacteristicType.HawkEye);
+        if(characteristic.HasValue && characteristic.Value.characteristicName != null)
+        {
+            Injury leftEyeCheck = survivor.injuries.Find(x => x.site == InjurySite.LeftEye);
+            Injury rightEyeCheck = survivor.injuries.Find(x => x.site == InjurySite.RightEye);
+            if (leftEyeCheck != null && (leftEyeCheck.type == InjuryType.ArtificialPartsTransplanted || leftEyeCheck.type == InjuryType.ArtificialPartsDamaged
+                || leftEyeCheck.type == InjuryType.AugmentedPartsTransplanted || leftEyeCheck.type == InjuryType.AugmentedPartsDamaged
+                || leftEyeCheck.type == InjuryType.TranscendantPartsTransplanted || leftEyeCheck.type == InjuryType.TranscendantPartsDamaged)
+                && rightEyeCheck != null && (rightEyeCheck.type == InjuryType.ArtificialPartsTransplanted || rightEyeCheck.type == InjuryType.ArtificialPartsDamaged
+                || rightEyeCheck.type == InjuryType.AugmentedPartsTransplanted || rightEyeCheck.type == InjuryType.AugmentedPartsDamaged
+                || rightEyeCheck.type == InjuryType.TranscendantPartsTransplanted || rightEyeCheck.type == InjuryType.TranscendantPartsDamaged))
+            {
+                Alert("Alert:CharacteristicRemoved", new LocalizedString("Characteristic", characteristic.Value.type.ToString()).GetLocalizedString());
+                survivor.characteristics.Remove(characteristic.Value);
+            }
         }
 
         survivor.totalSurgeryFee += survivor.scheduledSurgeryCost;

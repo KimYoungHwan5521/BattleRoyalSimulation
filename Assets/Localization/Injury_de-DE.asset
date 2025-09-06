@@ -328,6 +328,37 @@ MonoBehaviour:
     m_Localized: "Transzendenter K\xF6rper besch\xE4digt"
     m_Metadata:
       m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: "Heilt in einem Tag Verletzungen, die sich von selbst erholen k\xF6nnen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: "Die meisten Prothesen haben \xE4hnliche Leistung und Haltbarkeit
+      wie der urspr\xFCngliche K\xF6rper. Doch dass sie keinen Schmerz empfinden,
+      ist ein Vorteil, um den Kampf fortzusetzen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: "Augenprothesen haben eine schw\xE4chere Sicht als das durchschnittliche
+      menschliche Sehverm\xF6gen. Doch dass sie keinen Schmerz empfinden, ist ein
+      Vorteil, um den Kampf fortzusetzen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: "Augmentierte Prothesen haben eine etwas bessere Leistung und Haltbarkeit
+      als der urspr\xFCngliche K\xF6rper."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: "Augmentierte Augenprothesen haben eine \xE4hnliche Leistung wie
+      der urspr\xFCngliche K\xF6rper, aber eine etwas bessere Haltbarkeit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: "Transzendente Prothesen haben bessere Leistung und Haltbarkeit
+      als der urspr\xFCngliche K\xF6rper."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
