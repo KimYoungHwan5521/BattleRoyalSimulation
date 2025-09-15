@@ -114,6 +114,7 @@ public class Calendar : CustomObject
             LocalizedString date = new("Basic", "Date Format");
             date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
             todayText.text = date.GetLocalizedString();
+            GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
             outGameUIManager.HideEndTheWeekend(value % 7 > 4);
             if (value > 0)
             {
@@ -952,6 +953,7 @@ public class Calendar : CustomObject
 
     void OnLocaleChanged(Locale newLocale)
     {
+        Today = today;
         if (!leagueReserveInfo.ContainsKey(wantReserveDate)) return;
         farmableItemsText.text = "";
         foreach (var item in itemPool[leagueReserveInfo[wantReserveDate].itemPool])
@@ -959,7 +961,6 @@ public class Calendar : CustomObject
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
         SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
-        Today = today;
         CalendarPage = calendarPage;
         OpenScheduleByEachSurvivor();
     }

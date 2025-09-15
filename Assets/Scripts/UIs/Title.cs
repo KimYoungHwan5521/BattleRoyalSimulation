@@ -49,6 +49,6 @@ public class Title : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(buttonsRect);
+        GameManager.Instance.FixLayout(buttonsRect);
     }
 }

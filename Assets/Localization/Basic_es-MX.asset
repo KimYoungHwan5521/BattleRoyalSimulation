@@ -1,0 +1,1271 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Basic_es-MX
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-MX
+  m_SharedData: {fileID: 11400000, guid: bb29ff58396a29e45949a9146d3df52d, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4743152768665780226
+  m_TableData:
+  - m_Id: 221632851968
+    m_Localized: Nuevo juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5832965681152
+    m_Localized: Cargar partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5856420229120
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6583620268032
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6588460494848
+    m_Localized: Cancelar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6592856125440
+    m_Localized: Guardar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6594592567296
+    m_Localized: Enciclopedia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6741300932608
+    m_Localized: "Al t\xEDtulo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12507453911040
+    m_Localized: Reanudar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71164493361152
+    m_Localized: Sala de entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71167060275200
+    m_Localized: "Sala de cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71168792522752
+    m_Localized: Sala de estrategia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71171598512128
+    m_Localized: Cronograma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72283097460736
+    m_Localized: Contrata a un sobreviviente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72287484702720
+    m_Localized: "La tienda de contrataci\xF3n se reinicia cada d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72947416494080
+    m_Localized: Fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72949572366336
+    m_Localized: Agilidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72951577243648
+    m_Localized: Combate cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72953187856384
+    m_Localized: Disparo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72955045933056
+    m_Localized: Conocimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74870907531264
+    m_Localized: Entrenamiento de fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74872807550976
+    m_Localized: Correr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74876133634048
+    m_Localized: Entrenamiento cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74877828132864
+    m_Localized: Entrenamiento de tiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74879803650048
+    m_Localized: Estudiar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76230210154496
+    m_Localized: 'Reservado :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231183233024
+    m_Localized: Reservado para este entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76231959179264
+    m_Localized: Sobrevivientes no asignados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76232462495744
+    m_Localized: Sobrevivientes asignados a otro entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78460103487488
+    m_Localized: "Asignaci\xF3n autom\xE1tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461097537536
+    m_Localized: "Al finalizar el d\xEDa, se asignar\xE1 autom\xE1ticamente el mismo
+      entrenamiento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78461974147072
+    m_Localized: Mejora de instalaciones\n$ {cost}
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 78462544572416
+    m_Localized: "Los sobrevivientes pueden entrenar en mejores condiciones y mejorar
+      sus estad\xEDsticas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89402442838016
+    m_Localized: '{trainingType} (lv {level})'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1470839012257792
+    m_Localized: Contratar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470839968559104
+    m_Localized: Liberar sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470840908083200
+    m_Localized: Contratar sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470841721778176
+    m_Localized: Selecciona un sobreviviente para contratar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1470842845851648
+    m_Localized: "Terminar el d\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473302310219776
+    m_Localized: "Implante de pr\xF3tesis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473304247988224
+    m_Localized: "Tratar enfermedad cr\xF3nica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473305707606016
+    m_Localized: Mejora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474242958389248
+    m_Localized: "Nombre de la cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474244426395648
+    m_Localized: Costo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474245642743808
+    m_Localized: "Cirug\xEDa programada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474246649376768
+    m_Localized: "Programar cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1474255897817088
+    m_Localized: "Cancelar cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486550820515840
+    m_Localized: Restablecer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486551541936128
+    m_Localized: Copiar estrategia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486552280133632
+    m_Localized: Pegar estrategia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486567614509056
+    m_Localized: Copiar todas las estrategias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486575189422080
+    m_Localized: Pegar todas las estrategias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486579081736192
+    m_Localized: Buscar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488350583779328
+    m_Localized: Prioridad de arma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488356887818240
+    m_Localized: "Cuando se ve al enemigo y est\xE1 en el rango de ataque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488359144353792
+    m_Localized: "Cuando se ve al enemigo pero est\xE1 fuera de alcance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488360671080448
+    m_Localized: Cuando se escucha un ruido fuerte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1488364739555328
+    m_Localized: Cuando se escucha un ruido bajo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1491856883511296
+    m_Localized: "\rprioridad 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493279654342656
+    m_Localized: Cuando hay varios enemigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493281537585152
+    m_Localized: "Prioridad de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493283026563072
+    m_Localized: "Permitir fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1493293415854080
+    m_Localized: Guardar estrategia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515900643110912
+    m_Localized: "El operador AND se eval\xFAa antes que el operador OR. Ejemplo:
+      A <#FF6A89>OR</color> B <#FF6A89>AND</color> C <#FF6A89>OR</color> D = A <#FF6A89>OR</color>
+      (B <#FF6A89>AND</color> C) <#FF6A89>OR</color> D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1515902283083776
+    m_Localized: "Si un objeto tiene prioridad de fabricaci\xF3n, sus materiales
+      no se consumir\xE1n hasta que se fabrique."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516466236616704
+    m_Localized: Objeto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516467704623104
+    m_Localized: Permitir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1516469067771904
+    m_Localized: No permitir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517011882012672
+    m_Localized: Ver horario por sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517012590850048
+    m_Localized: Nombre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517013446488064
+    m_Localized: Nivel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1517014104993792
+    m_Localized: Battle Royale programado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1520448703098880
+    m_Localized: "A\xF1adir condici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526760363061248
+    m_Localized: Resultados diarios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526761734598656
+    m_Localized: Resultados de entrenamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526762510544896
+    m_Localized: "Arrastra para predecir la clasificaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526763219382272
+    m_Localized: "Tu predicci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1526764213432320
+    m_Localized: Lista de participantes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736130138112
+    m_Localized: "Puedes recibir una recompensa si predices a un superviviente que
+      entre en el ranking. Si aciertas exactamente la posici\xF3n, recibir\xE1s una
+      recompensa mayor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527736943833088
+    m_Localized: 'Monto de la apuesta :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527737434566656
+    m_Localized: Apostar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1527738642526208
+    m_Localized: Omitir apuesta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779577510227968
+    m_Localized: "\xBFComprar {param0} por ${param1}?"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1779577963212800
+    m_Localized: "Se alcanz\xF3 el l\xEDmite de sobrevivientes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779578860793856
+    m_Localized: No tienes suficiente dinero.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779580240719872
+    m_Localized: Debes tener al menos un sobreviviente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1779581587091456
+    m_Localized: "\xBFLiberar a {param0}?"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1779582107185152
+    m_Localized: El sobreviviente ha sido liberado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917154148352
+    m_Localized: "La sala de entrenamiento est\xE1 cerrada los fines de semana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1780917842014208
+    m_Localized: 'No se puede asignar a {param0} a este entrenamiento. (<color=red>Causa:
+      {param1}</color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1780918479548416
+    m_Localized: "{param0} est\xE1 asignado a {param1}."
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1780919674925056
+    m_Localized: "La asignaci\xF3n de entrenamiento de {param0} se cancel\xF3 por
+      lesi\xF3n. (<color=red>Causa: {param1}</color>)"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1780920513785856
+    m_Localized: "\xBFMejorar la instalaci\xF3n de {param0}?"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1875847331508224
+    m_Localized: "Cirug\xEDa programada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875849713872896
+    m_Localized: "El quir\xF3fano est\xE1 cerrado los fines de semana."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875851668418560
+    m_Localized: "\xBFDesea programar la cirug\xEDa?\\n {param0} : {param1} ( $ {param2}
+      )"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1875853614575616
+    m_Localized: El entrenamiento de {param0} ha sido cancelado.
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 1875855443292160
+    m_Localized: "La cirug\xEDa ha sido programada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875857540444160
+    m_Localized: "\xBFDesea cancelar la cirug\xEDa?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1875860564537344
+    m_Localized: "La cirug\xEDa ha sido cancelada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1881728492302336
+    m_Localized: ambas lesiones oculares
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205515783925760
+    m_Localized: Ataca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205518430531584
+    m_Localized: Ignora.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205521488179200
+    m_Localized: Huye.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2205524055093248
+    m_Localized: Se acerca.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206103192006656
+    m_Localized: Va al lugar del sonido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206104244776960
+    m_Localized: "Mira en la direcci\xF3n del sonido."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206105071054848
+    m_Localized: Ignora el sonido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206541953953792
+    m_Localized: Primera persona vista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206543556177920
+    m_Localized: "Persona m\xE1s cercana"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2206544390844416
+    m_Localized: Persona con mayor alcance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207011464343552
+    m_Localized: Ninguno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207012504530944
+    m_Localized: "\xBFCerrar la sala de estrategia?\\n(Se perder\xE1n los datos no
+      guardados.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207013309837312
+    m_Localized: "\xBFGuardar todos los cambios?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2207014039646208
+    m_Localized: "La prioridad de fabricaci\xF3n 1 est\xE1 desactivada. Verifica
+      la opci\xF3n \"Permitir fabricaci\xF3n\"."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217236376383488
+    m_Localized: Mi arma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217237827612672
+    m_Localized: Arma del enemigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217238918131712
+    m_Localized: Mi salud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217240138674176
+    m_Localized: Ese enemigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2217241258553344
+    m_Localized: Distancia al enemigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218605367848960
+    m_Localized: Arma cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218606189932544
+    m_Localized: Arma a distancia (con balas)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218607007821824
+    m_Localized: Ninguna o arma a distancia (sin balas)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2218608010260480
+    m_Localized: Me vio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314020675584
+    m_Localized: "Predicci\xF3n no v\xE1lida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219314939228160
+    m_Localized: "La apuesta m\xEDnima es de $100."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219315786477568
+    m_Localized: "\xBFConfirmar apuesta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219317690691584
+    m_Localized: "\xBFOmitir apuesta?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219320089833472
+    m_Localized: "Hay casillas de predicci\xF3n vac\xEDas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2219323407527936
+    m_Localized: "Una persona fue predicha en m\xE1s de una posici\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220595640594432
+    m_Localized: "\xBFTerminar el d\xEDa?{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 2220597318316032
+    m_Localized: "Hay sobreviventes a quienes no se les asigna ning\xFAn entrenamiento.:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220598824071168
+    m_Localized: 'Sobrevivente programado para el battle royale hoy: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 2220600589873152
+    m_Localized: "Hoy es d\xEDa de battle royale. \xBFOmitir?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220602338897920
+    m_Localized: "Ha pasado un d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2224273214730240
+    m_Localized: Arma a distancia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478173167611904
+    m_Localized: Selecciona un sobreviviente para el battle royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478171783491584
+    m_Localized: 'Objetos saqueables:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478174157467648
+    m_Localized: "Reservas posibles hasta el viernes. No se permiten cancelaciones
+      el mismo d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478175491256320
+    m_Localized: Reservar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2478176929902592
+    m_Localized: Cancelar reserva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479575478628352
+    m_Localized: "\xBFIr al battle royale?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479576816611328
+    m_Localized: "No se puede reservar para el campeonato. Ganar la Liga de Oro te
+      inscribir\xE1 autom\xE1ticamente al Campeonato de Temporada, y ganar ese campeonato
+      te inscribir\xE1 al Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479578074902528
+    m_Localized: Selecciona un sobreviviente para reservar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2479579412885504
+    m_Localized: 'sobreviviente reservado : {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 2479581325488128
+    m_Localized: No hay sobrevivientes elegibles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481288361078784
+    m_Localized: "{param0} est\xE1 registrado en otro combate. (Solo se puede reservar
+      un combate a la vez, salvo campeonatos.)"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 2481289275437056
+    m_Localized: "Este sobreviviente ya est\xE1 inscrito en el campeonato. \xBFReservar
+      de todos modos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481290374344704
+    m_Localized: Battle royale reservado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2481291246759936
+    m_Localized: 'No se puede reservar para el battle royale.\n(<color=red><i>Causa
+      : {param0}</i></color>)'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 2481303221497856
+    m_Localized: "{param0} est\xE1 herido. \xBFReservar de todos modos?"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4006722185785344
+    m_Localized: 'Sobervivientes restantes:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4006778280407040
+    m_Localized: <color=red>{0}</color> fue derrotado por <color=yellow>{1}</color>.
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4006784886435840
+    m_Localized: Caja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007737786167296
+    m_Localized: Saqueando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007742873858048
+    m_Localized: En combate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007746342547456
+    m_Localized: Investigando ruido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007747902828544
+    m_Localized: "Prepar\xE1ndose para el combate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4007748624248832
+    m_Localized: Instalando trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009759021264896
+    m_Localized: Persiguiendo enemigo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009760531214336
+    m_Localized: Huyendo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009761395240960
+    m_Localized: Desactivando trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4009762284433408
+    m_Localized: 'Fabricando : {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4009763165237248
+    m_Localized: Encantando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011113273946112
+    m_Localized: "\xA1Tu sobreviviente ({param0}) ha ganado!"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4011114574180352
+    m_Localized: Tu sobreviviente ({param0}) fue derrotado.
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4011115551453184
+    m_Localized: Baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4011116050575360
+    m_Localized: "Da\xF1o total"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013401166114816
+    m_Localized: Recompensa de victoria
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013402768338944
+    m_Localized: Premio por baja
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013403812720640
+    m_Localized: "Costo de transfusi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013404630609920
+    m_Localized: $1 por 10 mL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4013420254392320
+    m_Localized: Costo total de tratamiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014292761899008
+    m_Localized: "\xA1{param0} gana!"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4014293986635776
+    m_Localized: Pago de apuesta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014295257509888
+    m_Localized: "Beneficio/p\xE9rdida neta"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4014296457080832
+    m_Localized: "{param0} ha sido programado para el pr\xF3ximo {param1}."
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4014297795063808
+    m_Localized: "{param0} super\xF3 {param1} y obtuvo {param2}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015594363482112
+    m_Localized: El valor esperado de la apuesta es mayor que 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4015597047836672
+    m_Localized: "Los atributos base tienen un l\xEDmite de 100, pero pueden superarse
+      con caracter\xEDsticas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016011147276288
+    m_Localized: "Si el entrenamiento no aumenta estad\xEDsticas, mejora la instalaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016164918849536
+    m_Localized: "Enfoque autom\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016167221522432
+    m_Localized: Inventario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016169792630784
+    m_Localized: Resultado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016172040777728
+    m_Localized: Tiempo de supervivencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4016174972596224
+    m_Localized: Salir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087018927222784
+    m_Localized: 'Reservado: {param0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 4087020722384896
+    m_Localized: Campeonato de temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4087021989064704
+    m_Localized: Campeonato mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4350414859857920
+    m_Localized: Cantidad de sangrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782425135181824
+    m_Localized: 'Ordenar por:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782426959704064
+    m_Localized: Tipo de objeto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4782428373184512
+    m_Localized: "El entrenamiento disponible var\xEDa seg\xFAn las heridas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900300595200
+    m_Localized: 'Hora guardada:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785900787134464
+    m_Localized: "Guardado autom\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785912375996416
+    m_Localized: "Ranura vac\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785914213101568
+    m_Localized: "Esta ranura ya contiene datos. \xBFSobrescribir?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785915161014272
+    m_Localized: "\xBFEliminar estos datos guardados?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4785916574494720
+    m_Localized: "\xBFVolver al t\xEDtulo?\\n<i>(Se perder\xE1n los datos no guardados.)</i>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085882547236864
+    m_Localized: Hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085884178821120
+    m_Localized: Zona restringida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085885500026880
+    m_Localized: Juego guardado.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085886779289600
+    m_Localized: "Juego guardado autom\xE1ticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085888150827008
+    m_Localized: "Si la gravedad de la herida es menor a 1, la recuperaci\xF3n natural
+      es posible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085889379758080
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085890839375872
+    m_Localized: Opciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7593812567846912
+    m_Localized: "Cirug\xEDa exitosa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594071343820800
+    m_Localized: Ver entrenamientos programados por sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594255456989184
+    m_Localized: "Los sobrevivientes con ambas manos o ambos ojos incapacitados no
+      pueden ser programados para combates. En campeonatos, la participaci\xF3n depende
+      de su estado ese d\xEDa."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7594256941772800
+    m_Localized: "Cuanto m\xE1s grave es la herida, m\xE1s lenta es la curaci\xF3n.
+      Cuanto m\xE1s leve, m\xE1s r\xE1pida la recuperaci\xF3n."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7599693611200512
+    m_Localized: Entrenamiento programado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9025630118670336
+    m_Localized: Ya administrado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9055475942879232
+    m_Localized: "Resultado de la cirug\xEDa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104711485026304
+    m_Localized: enero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104718334324736
+    m_Localized: febrero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104723711422464
+    m_Localized: marzo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104726680989696
+    m_Localized: abril
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104731953229824
+    m_Localized: mayo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104733136023552
+    m_Localized: junio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104734272679936
+    m_Localized: julio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104735367393280
+    m_Localized: agosto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104736696987648
+    m_Localized: septiembre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104737959473152
+    m_Localized: octubre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104739515559936
+    m_Localized: noviembre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9104741264584704
+    m_Localized: diciembre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113955655544832
+    m_Localized: lun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113957404569600
+    m_Localized: mar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113958998405120
+    m_Localized: "mi\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113960625795072
+    m_Localized: jue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113964169981952
+    m_Localized: vie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113966728507392
+    m_Localized: "<color=blue>s\xE1b</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113968502697984
+    m_Localized: <color=red>dom</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9113970310443008
+    m_Localized: '{2} de {1}  de {0} ({3})'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 9408636008329216
+    m_Localized: Carga exitosa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408644191416320
+    m_Localized: Bronce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408647374893056
+    m_Localized: Plata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9408650487066624
+    m_Localized: Oro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409849533722624
+    m_Localized: Liga de bronce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409851412770816
+    m_Localized: Liga de plata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409860598296576
+    m_Localized: Liga de oro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409870513631232
+    m_Localized: Liga cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409873973932032
+    m_Localized: Liga a distancia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9409903250173952
+    m_Localized: "Liga de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14107829897588736
+    m_Localized: "Suma de estad\xEDsticas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169095227895808
+    m_Localized: Salir del Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14169112638451712
+    m_Localized: "\xBFSeguro que quieres salir del Battle Royale?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14437159202779136
+    m_Localized: Terminar la semana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14437166169518080
+    m_Localized: "\xBFSaltar hasta el fin de semana?{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 15645991207759872
+    m_Localized: "Lista de verificaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645992545742848
+    m_Localized: (Haz clic para ir)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645994240241664
+    m_Localized: <color=green>Todos los sobrevivientes han sido asignados al entrenamiento.</color>
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645995171377152
+    m_Localized: '<color=red>Sobrevivientes sin entrenamiento: {0}</color>'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645996400308224
+    m_Localized: "<color=green>Todos los battle royales de esta semana est\xE1n reservados.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15645997130117120
+    m_Localized: "<color=red>Algunos battle royales de esta semana no est\xE1n reservados.</color>"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15672719858790400
+    m_Localized: (Haz clic en la liga deseada para reservar el Battle Royale.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669567583055872
+    m_Localized: Solo los sobrevivientes con el mismo nivel pueden inscribirse en
+      las ligas regulares (Bronce, Plata, Oro).
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669569193668608
+    m_Localized: 'Fuerza: afecta la salud, la cantidad de sangre y el poder de ataque.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669570472931328
+    m_Localized: 'Agilidad: afecta la velocidad de ataque, movimiento y saqueo.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669571852857344
+    m_Localized: "Combate cuerpo a cuerpo: afecta la precisi\xF3n, defensa y evasi\xF3n
+      en combates cercanos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669573392166912
+    m_Localized: "Disparo: afecta la precisi\xF3n al atacar a distancia."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16669574688206848
+    m_Localized: "Conocimiento: cuanto m\xE1s alto sea, m\xE1s objetos podr\xE1s
+      fabricar durante la batalla. (Consulta el manual)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095594465619968
+    m_Localized: Haz clic en un entrenamiento y asigna a un superviviente.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095599989518336
+    m_Localized: Haz clic en un superviviente para asignarlo a un entrenamiento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17095620239618048
+    m_Localized: Haz clic en la liga de hoy en el calendario para ir al Battle Royale.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20246174931415040
+    m_Localized: "Clasificaci\xF3n: Top 25 % = 50 % de recompensa, Top 50 % = 25
+      %."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20355684815663104
+    m_Localized: "R\xE9cord total: {0} victorias, {1} defensas de rango, {2} derrotas"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20355686745042944
+    m_Localized: 'Tasa de victoria: {0}% (victorias + defensa de rango: {1}%)'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20355688380821504
+    m_Localized: "R\xE9cord Liga Oro+: {0} victorias, {1} defensas, {2} derrotas"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20355690075320320
+    m_Localized: 'Total de bajas: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20355691618824192
+    m_Localized: 'Tiempo total de supervivencia: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20355710430277632
+    m_Localized: 'Recompensa total: <color=green>{0}$</color> (rango {1}$ + bajas
+      {2}$)'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20356972957724672
+    m_Localized: "Costo m\xE9dico total: <color=red>{0}$</color> (primeros auxilios
+      + transfusi\xF3n {1}$ + cirug\xEDa {2}$)"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20356975931486208
+    m_Localized: "Da\xF1o total infligido: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20356978624229376
+    m_Localized: "Da\xF1o total recibido: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 20985916245471232
+    m_Localized: "El pago m\xE1ximo te\xF3rico es de 6,375,600 veces."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21070832937267200
+    m_Localized: "Cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21371860463185920
+    m_Localized: "Eliminar condici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24796881168691200
+    m_Localized: "Estad\xEDsticas aumentadas durante la batalla"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24796884821929984
+    m_Localized: "Fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24796887023939584
+    m_Localized: "Afecta la velocidad de fabricaci\xF3n independientemente de la
+      estad\xEDstica de Conocimiento."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24801603418124288
+    m_Localized: '{2} de {1}  de {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 25083154626310144
+    m_Localized: "Si la lesi\xF3n no est\xE1 completamente perdida, sanar\xE1 de
+      forma natural."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26557387210551296
+    m_Localized: "Cura en un solo d\xEDa las heridas que pueden recuperarse de forma
+      natural."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26901118354780160
+    m_Localized: "Puedes asignar entrenamiento a un sobreviviente haciendo clic izquierdo/derecho
+      en \xE9l."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27582987333332992
+    m_Localized: La estrategia ha sido guardada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27583027690926080
+    m_Localized: "<!> Se detect\xF3 un error durante la depuraci\xF3n. Se recomienda
+      guardar los datos en otra ranura y reiniciar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28005633560735744
+    m_Localized: Buscando enemigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32698192723767296
+    m_Localized: "Los datos guardados no coinciden con la versi\xF3n actual del juego.
+      Es posible que el juego no funcione correctamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729102223470592
+    m_Localized: "Selecciona al sobreviviente que participar\xE1 en el battle royale."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729103691476992
+    m_Localized: Seleccionar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729105042042880
+    m_Localized: No participar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32729107017560064
+    m_Localized: "\xBFConfirmar? (Una vez seleccionado, no se puede cambiar.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33723748986712064
+    m_Localized: "Debido a la cirug\xEDa, la caracter\xEDstica {param0} ha sido eliminada."
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  references:
+    version: 2
+    RefIds:
+    - rid: 4743152768665780226
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00f0185a5c47000000f0d8a04f51000000f058208552060000f0582d8452060000f0583fbc53060000f05865bc53060000f098acbc53060000f098debc53060000f058c013aa060000f0583414aa060000f058b69ee3070000f018749fe3070000f018122acf080000f058f7b7d0080000f058a3b8d0080000f0186dbbd0080000f018c4243c0e0000f09888db3e0e0000f0d81516400e0000f0586316400e0000f0185efa420e0000f0583afb420e0000f0583f1f850e0000f0d8921b61200000f018b1864a330000f098326351480000f098a56351480000f018076451480000f0186c6451480000f018c86451480000f058296951480000f0d81d8f52480000f018cf8f52480000f0986f9052480000f09849ed1c580000f0d82e92cf7700

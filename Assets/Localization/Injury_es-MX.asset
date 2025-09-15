@@ -1,0 +1,369 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Injury_es-MX
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-MX
+  m_SharedData: {fileID: 11400000, guid: e7211a34fcf2f6245bcdbb87189f3d69, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4743152768665780227
+  m_TableData:
+  - m_Id: 15357210849280
+    m_Localized: Cabeza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15361187049472
+    m_Localized: Torso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15364118867968
+    m_Localized: Brazo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15366899691520
+    m_Localized: Pierna
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15369449828352
+    m_Localized: Ojo derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17068923088896
+    m_Localized: Ojo izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17071355785216
+    m_Localized: Oreja derecha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17078418993152
+    m_Localized: Oreja izquierda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18219605225472
+    m_Localized: Mejilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18220364394496
+    m_Localized: Nariz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18221215838208
+    m_Localized: "Mand\xEDbula"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18222042116096
+    m_Localized: "Cr\xE2nio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18224135073792
+    m_Localized: "C\xE9rebro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18226018316288
+    m_Localized: "Pesco\xE7o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20443156770816
+    m_Localized: Pecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20444167598080
+    m_Localized: Costilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20445400723456
+    m_Localized: Abdomen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20446336053248
+    m_Localized: "\xD3rgano"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21345976512512
+    m_Localized: Brazo derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21347025088512
+    m_Localized: Brazo izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21348207882240
+    m_Localized: Mano derecha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349139017728
+    m_Localized: Mano izquierda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22831091478528
+    m_Localized: Pulgar derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22832072945664
+    m_Localized: "Dedo \xEDndice derecho"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22832903417856
+    m_Localized: Dedo medio derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22833566117888
+    m_Localized: Anular derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22834681802752
+    m_Localized: "Me\xF1ique derecho"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23587685199872
+    m_Localized: Pulgar izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23588385648640
+    m_Localized: "Dedo \xEDndice izquierdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23589333561344
+    m_Localized: Dedo medio izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36593282379776
+    m_Localized: "Recuperaci\xF3n postoperatoria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36591931813888
+    m_Localized: "P\xE9rdida permanente de visi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36590761603072
+    m_Localized: Quemadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36589348122624
+    m_Localized: "Conmoci\xF3n cerebral"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36585816518656
+    m_Localized: "P\xE9rdida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30602675417088
+    m_Localized: Ruptura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30598388838400
+    m_Localized: "Lesi\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30595838701568
+    m_Localized: Herida de bala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30593217261568
+    m_Localized: "Amputaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30589362696192
+    m_Localized: Corte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30179512086528
+    m_Localized: Fractura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30178312515584
+    m_Localized: Cardenal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28147623456768
+    m_Localized: "Me\xF1ique del pie izquierdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28146205782016
+    m_Localized: Cuarto dedo del pie izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28144758747136
+    m_Localized: Dedo medio del pie izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28143081025536
+    m_Localized: Segundo dedo del pie izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28141642379264
+    m_Localized: Dedo gordo del pie izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27381856792576
+    m_Localized: "Me\xF1ique del pie derecho"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27381047291904
+    m_Localized: Cuarto dedo del pie derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27380535586816
+    m_Localized: Dedo medio del pie derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27380405563392
+    m_Localized: Segundo dedo del pie derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27378719453184
+    m_Localized: Dedo gordo del pie derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25214047547392
+    m_Localized: Pie izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25213347098624
+    m_Localized: Pie derecho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25211287695360
+    m_Localized: Rodilla izquierda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25210566275072
+    m_Localized: Rodilla derecha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25209643528192
+    m_Localized: Pierna izquierda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25208922107904
+    m_Localized: Pierna derecha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23592219242496
+    m_Localized: "Me\xF1ique izquierdo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23590096924672
+    m_Localized: Anular izquierdo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36595203371008
+    m_Localized: "Pr\xF3tesis implantada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69975156518912
+    m_Localized: Grado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3205875268907008
+    m_Localized: "Implante prot\xE9sico ({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780227
+  - m_Id: 3205881853964288
+    m_Localized: Tratamiento de {0}
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780227
+  - m_Id: 5826427779346432
+    m_Localized: Ciego de ambos ojos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5826436000182272
+    m_Localized: No puede usar ambas manos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7192074505482240
+    m_Localized: Otros tratamientos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7207992618971136
+    m_Localized: "Administrar suero de recuperaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24734501986430976
+    m_Localized: "Pr\xF3tesis da\xF1ada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24734509330657280
+    m_Localized: "Reemplazar la pr\xF3tesis ({0})"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780227
+  - m_Id: 31280139435831296
+    m_Localized: Implante/Reemplazo de cuerpo aumentado ({0})
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780227
+  - m_Id: 31280147316928512
+    m_Localized: Cuerpo aumentado implantado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280149221142528
+    m_Localized: "Cuerpo aumentado da\xF1ado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280180976218112
+    m_Localized: Implante/Reemplazo de cuerpo trascendente ({0})
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780227
+  - m_Id: 31280182591025152
+    m_Localized: Cuerpo trascendente implantado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31280184419741696
+    m_Localized: "Cuerpo trascendente da\xF1ado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896405762699264
+    m_Localized: "Cura en un solo d\xEDa las heridas que pueden recuperarse de forma
+      natural."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896407448809472
+    m_Localized: "La mayor\xEDa de las pr\xF3tesis tienen un rendimiento y una durabilidad
+      similares al cuerpo original. Sin embargo, el no sentir dolor da una ventaja
+      para mantener el combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896408740655104
+    m_Localized: "Las pr\xF3tesis oculares tienen una visi\xF3n inferior a la de
+      una persona promedio. Sin embargo, el no sentir dolor da una ventaja para mantener
+      el combate."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896410196078592
+    m_Localized: "Las pr\xF3tesis aumentadas tienen un rendimiento y una durabilidad
+      ligeramente mejores que el cuerpo original."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896411685056512
+    m_Localized: "Las pr\xF3tesis oculares aumentadas tienen un rendimiento similar
+      al del cuerpo original, pero una durabilidad ligeramente mejor."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31896892662673408
+    m_Localized: "Las pr\xF3tesis trascendentes tienen un rendimiento y una durabilidad
+      superiores al cuerpo original."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4743152768665780227
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00f09800ba630b0000f01889bb630b0000f058bae7df570000f098ff1e216f0000f098ab28216f00

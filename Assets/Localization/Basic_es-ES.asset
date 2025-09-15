@@ -164,15 +164,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1470839968559104
-    m_Localized: Liberar sobreviviente
+    m_Localized: Liberar supervivientes
     m_Metadata:
       m_Items: []
   - m_Id: 1470840908083200
-    m_Localized: Contratar sobreviviente
+    m_Localized: Contratar supervivientes
     m_Metadata:
       m_Items: []
   - m_Id: 1470841721778176
-    m_Localized: Selecciona un sobreviviente para contratar.
+    m_Localized: Selecciona un supervivientes para contratar.
     m_Metadata:
       m_Items: []
   - m_Id: 1470842845851648
@@ -592,7 +592,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2478173167611904
-    m_Localized: Selecciona un sobreviviente para el battle royale.
+    m_Localized: Selecciona un superviviente para el battle royale.
     m_Metadata:
       m_Items: []
   - m_Id: 2478174157467648
@@ -619,16 +619,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479578074902528
-    m_Localized: Selecciona un sobreviviente para reservar.
+    m_Localized: Selecciona un superviviente para reservar.
     m_Metadata:
       m_Items: []
   - m_Id: 2479579412885504
-    m_Localized: 'sobreviviente reservado : {param0}'
+    m_Localized: 'superviviente reservado : {param0}'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 2479581325488128
-    m_Localized: No hay sobrevivientes elegibles
+    m_Localized: No hay supervivientes elegibles
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
@@ -643,7 +643,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 2481289275437056
-    m_Localized: "Este sobreviviente ya est\xE1 inscrito al campeonato. \xBFReservar
+    m_Localized: "Este superviviente ya est\xE1 inscrito al campeonato. \xBFReservar
       de todos modos?"
     m_Metadata:
       m_Items: []

@@ -1844,6 +1844,12 @@ public class Survivor : CustomObject
             {
                 Debug.LogWarning($"Can't find weapon : {currentWeapon.itemType}");
             }
+            curWeaponTF = transform.Find("Left Hand").Find($"{currentWeapon.itemType}");
+            if (curWeaponTF != null)
+            {
+                curWeaponTF.gameObject.SetActive(false);
+                projectileGenerator.muzzleTF = null;
+            }
             currentWeapon = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);

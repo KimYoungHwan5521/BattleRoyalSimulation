@@ -1383,7 +1383,7 @@ MonoBehaviour:
   leftHandDisabled: 0
   dizzy: 0
   dizzyRateByConcussion: 0
-  prohibitedAreaTime: 5.1
+  prohibitedAreaTime: 10
   maxBlood: 0
   curBlood: 0
   bleedingAmount: 0
@@ -1438,6 +1438,7 @@ MonoBehaviour:
   trappingTime: 3
   curTrappingTime: 0
   burieds: []
+  detectedTraps: []
   inSightEnemies: []
   targetEnemiesLastPosition: {x: 0, y: 0}
   threateningSoundPosition: {x: 0, y: 0}

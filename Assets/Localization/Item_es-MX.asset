@@ -1,0 +1,355 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Item_es-MX
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-MX
+  m_SharedData: {fileID: 11400000, guid: 07068eb8a0742384bbdddccd8fcbbbbe, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 2527772934729728
+    m_Localized: "Da\xF1o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527775791050752
+    m_Localized: "Da\xF1o m\xE1ximo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527778693509120
+    m_Localized: Alcance de ataque
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15263879196672
+    m_Localized: Cuchillo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15280081793024
+    m_Localized: Daga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15282522877952
+    m_Localized: Bate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15284896854016
+    m_Localized: Espada larga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15288206159872
+    m_Localized: Pala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16185602666496
+    m_Localized: "Rev\xF3lver"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16187783704576
+    m_Localized: Pistola
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16189532729344
+    m_Localized: Fusil de asalto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16192405827584
+    m_Localized: Subfusil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16199821357056
+    m_Localized: Escopeta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17665969680384
+    m_Localized: Fusil de francotirador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17667857117184
+    m_Localized: Bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17669383843840
+    m_Localized: "L\xC1SER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19577670529024
+    m_Localized: "Bala(Rev\xF3lver)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19579553771520
+    m_Localized: Bala(Pistola)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19581135024128
+    m_Localized: Bala(Fusil de asalto)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19582707888128
+    m_Localized: Bala(Subfusil)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19584402386944
+    m_Localized: Bala(Escopeta)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19585958473728
+    m_Localized: Bala(Fusil de francotirador)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19587669749760
+    m_Localized: Cohete(Bazooka)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23798025351168
+    m_Localized: Casco antibalas bajo nivel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23799522717696
+    m_Localized: Casco antibalas nivel medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23800932003840
+    m_Localized: Casco antibalas nivel alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23802622308352
+    m_Localized: Casco antibalas legendario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24467339800576
+    m_Localized: Chaleco antibalas bajo nivel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24468283518976
+    m_Localized: Chaleco antibalas nivel medio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469244014592
+    m_Localized: Chaleco antibalas nivel alto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24469898326016
+    m_Localized: Chaleco antibalas legendario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32681993236480
+    m_Localized: Rollo de vendas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32683473825792
+    m_Localized: "Rollo de vendas hemost\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32684979580928
+    m_Localized: Veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32686254649344
+    m_Localized: "Ant\xEDdoto"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32687651352576
+    m_Localized: Pocion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 32688943198208
+    m_Localized: "Poci\xF3n avanzada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35728051990528
+    m_Localized: Componentes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35729897484288
+    m_Localized: Componente avanzado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35731482931200
+    m_Localized: "Productos qu\xEDmicos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35732925771776
+    m_Localized: "P\xF3lvora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35734402166784
+    m_Localized: Repuestos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44176684675072
+    m_Localized: Trampa para osos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44178710523904
+    m_Localized: Mina terrestre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44180354691072
+    m_Localized: Trampa de ruido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44181625565184
+    m_Localized: "Trampa qu\xEDmica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44183399755776
+    m_Localized: Trampa de metralla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44185316552704
+    m_Localized: Trampa explosiva
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45384199630848
+    m_Localized: Andador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45387810926592
+    m_Localized: "Dispositivo de detecci\xF3n de trampas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45394999963648
+    m_Localized: "Radar biom\xE9trico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45397894033408
+    m_Localized: "Barrera energ\xE9tica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46081720774656
+    m_Localized: Cuchillo(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46128273354752
+    m_Localized: Daga(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46131716878336
+    m_Localized: Espada larga(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46134694834176
+    m_Localized: Trampa para osos(Encantado)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523675439460352
+    m_Localized: Arma actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523677184290816
+    m_Localized: Casco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523678706823168
+    m_Localized: Casco actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523680183218176
+    m_Localized: Chaleco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2523681663807488
+    m_Localized: Chaleco actual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526037067493376
+    m_Localized: No se puede fabricar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2526038736826368
+    m_Localized: "Da\xF1o de ataque"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527781470138368
+    m_Localized: Capacidad del cargador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2527784360013824
+    m_Localized: Conocimiento requerido
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533813638459392
+    m_Localized: Armadura
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533815039356928
+    m_Localized: Cantidad de hemostasia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533816381534208
+    m_Localized: Consumible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533818000535552
+    m_Localized: "Recuperaci\xF3n de salud"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2533824606564352
+    m_Localized: "Materiales de creaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534563324162048
+    m_Localized: Trampa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2534566243397632
+    m_Localized: Varios
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2558904493469696
+    m_Localized: Bala
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588442917138432
+    m_Localized: Envenena a los sobrevivientes cercanos al activarse.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588444640997376
+    m_Localized: "Reduce la penalizaci\xF3n de velocidad por heridas en las piernas."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588991691485184
+    m_Localized: Detecta trampas cercanas.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588993360818176
+    m_Localized: Detecta sobrevivientes a media distancia.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2588995155980288
+    m_Localized: Bloquea proyectiles con un 75 % de probabilidad.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589779297890304
+    m_Localized: Puedes encantar armas cuerpo a cuerpo y similares.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2589792266678272
+    m_Localized: Cura el envenenamiento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2590913500606464
+    m_Localized: Genera ruido.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2593521262981120
+    m_Localized: "Receta de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30863543156404224
+    m_Localized: "Por obtenci\xF3n"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

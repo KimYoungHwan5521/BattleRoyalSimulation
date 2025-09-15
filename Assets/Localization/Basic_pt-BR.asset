@@ -565,7 +565,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359335
   - m_Id: 2220597318316032
-    m_Localized: "\r\nH\xE1 sobreviventes aos quais n\xE3o \xE9 atribu\xEDdo treinamento.:"
+    m_Localized: "H\xE1 sobreviventes aos quais n\xE3o \xE9 atribu\xEDdo treinamento.:"
     m_Metadata:
       m_Items: []
   - m_Id: 2220600589873152
