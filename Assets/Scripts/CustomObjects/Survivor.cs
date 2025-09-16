@@ -2556,7 +2556,8 @@ public class Survivor : CustomObject
             Area area = target.GetCurrentArea();
             Vector2 destination;
             float atkRange = CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine > 0 ? CurrentWeaponAsRangedWeapon.AttackRange : attackRange;
-            if ((area.IsProhibited_Plan || area.IsProhibited) && target.currentWeapon.AttackRange <= atkRange)
+            float targetAtkRange = target.CurrentWeaponAsRangedWeapon != null ? CurrentWeaponAsRangedWeapon.AttackRange : target.attackRange;
+            if ((area.IsProhibited_Plan || area.IsProhibited) && targetAtkRange <= atkRange)
             {
                 float x, y;
                 float myX = transform.position.x;

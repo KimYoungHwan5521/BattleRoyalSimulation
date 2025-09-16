@@ -1630,7 +1630,7 @@ PrefabInstance:
     - target: {fileID: 2696446842607445563, guid: b16fe34432ec20748bcbdefbc2444600, type: 3}
       propertyPath: adjacentAreas.Array.data[0]
       value: 
-      objectReference: {fileID: 6174895812827717624}
+      objectReference: {fileID: 3201427961521306982}
     - target: {fileID: 2696446842607445563, guid: b16fe34432ec20748bcbdefbc2444600, type: 3}
       propertyPath: adjacentAreas.Array.data[1]
       value: 

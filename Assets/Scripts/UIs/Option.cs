@@ -1,3 +1,4 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -242,8 +243,26 @@ public class Option : MonoBehaviour
             PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
             PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
             PlayerPrefs.DeleteKey($"ETCData{slot}");
+
+            DeleteSteamCloudData($"SaveDataInfo{slot}");
+            DeleteSteamCloudData($"MySurvivorList{slot}");
+            DeleteSteamCloudData($"LeagueReserveData{slot}");
+            DeleteSteamCloudData($"ETCData{slot}");
+
             ReloadSavedata();
         });
+    }
+
+    void DeleteSteamCloudData(string fileName)
+    {
+        if (SteamRemoteStorage.FileExists(fileName))
+        {
+            bool success = SteamRemoteStorage.FileDelete(fileName);
+            if (success)
+                Debug.Log($"{fileName} 삭제 성공 (Steam Cloud)");
+            else
+                Debug.LogWarning($"{fileName} 삭제 실패");
+        }
     }
 
     public void SetSaveButtonInteractable(bool interactable)

@@ -33,6 +33,7 @@ public class Area : CustomObject
             markProhibitedArea_Plan.SetActive(value);
 
             navMeshModifierVolume.area = 3;
+            navMeshModifierVolume.GetComponent<NavMeshModifier>().area = 3;
         }
     }
     [SerializeField] bool isProhibited;
@@ -46,6 +47,7 @@ public class Area : CustomObject
             IsProhibited_Plan = !value;
 
             navMeshModifierVolume.area = 4;
+            navMeshModifierVolume.GetComponent<NavMeshModifier>().area = 4;
         }
     }
     public Area[] adjacentAreas;

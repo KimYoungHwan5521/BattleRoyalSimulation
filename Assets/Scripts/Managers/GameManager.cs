@@ -3,6 +3,7 @@ using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -176,19 +177,36 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"SaveDataInfo{slot}", json);
         PlayerPrefs.Save();
+
+        // Steam 클라우드에 업로드
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        bool success = SteamRemoteStorage.FileWrite($"SaveDataInfo{slot}.json", bytes, bytes.Length);
+        if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
     }
 
     IEnumerator LoadSaveDataInfo(int slot)
     {
-        string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
-        var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-        string loadedDataGameVersion = saveData.gameVersion;
-        if( loadedDataGameVersion != gameVersion )
+        if (SteamRemoteStorage.FileExists($"SaveDataInfo{slot}.json"))
         {
-            ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
+            Debug.Log("Steam Cloud 로드 성공!");
+            int fileSize = SteamRemoteStorage.GetFileSize($"SaveDataInfo{slot}.json");
+            byte[] bytes = new byte[fileSize];
+            SteamRemoteStorage.FileRead($"SaveDataInfo{slot}.json", bytes, fileSize);
+
+            string json = Encoding.UTF8.GetString(bytes);
+            var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+        }
+        else
+        {
+            string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+            var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+            string loadedDataGameVersion = saveData.gameVersion;
+            if( loadedDataGameVersion != gameVersion )
+            {
+                ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
+            }
         }
         yield return null;
-
     }
 
     void SaveMySurvivorList(List<SurvivorData> mySurvivors, int slot)
@@ -200,12 +218,30 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"MySurvivorList{slot}", json);
         PlayerPrefs.Save();
+        
+        // Steam 클라우드에 업로드
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        bool success = SteamRemoteStorage.FileWrite($"MySurvivorList{slot}.json", bytes, bytes.Length);
+        if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
     }
 
     List<SurvivorData> LoadMySurvivorList(int slot)
     {
-        string json = PlayerPrefs.GetString($"MySurvivorList{slot}", "{}");
-        var saveData = JsonUtility.FromJson<MySurvivorListSaveData>(json);
+        MySurvivorListSaveData saveData = null;
+        if (SteamRemoteStorage.FileExists($"MySurvivorList{slot}.json"))
+        {
+            int fileSize = SteamRemoteStorage.GetFileSize($"MySurvivorList{slot}.json");
+            byte[] bytes = new byte[fileSize];
+            SteamRemoteStorage.FileRead($"MySurvivorList{slot}.json", bytes, fileSize);
+
+            string json = Encoding.UTF8.GetString(bytes);
+            saveData = JsonUtility.FromJson<MySurvivorListSaveData>(json);
+        }
+        else
+        {
+            string json = PlayerPrefs.GetString($"MySurvivorList{slot}", "{}");
+            saveData = JsonUtility.FromJson<MySurvivorListSaveData>(json);
+        }
         return saveData.survivorSaveDatas.ConvertAll(SaveManager.FromSaveData);
     }
 
@@ -215,12 +251,30 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"LeagueReserveData{slot}", json);
         PlayerPrefs.Save();
+
+        // Steam 클라우드에 업로드
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        bool success = SteamRemoteStorage.FileWrite($"LeagueReserveData{slot}.json", bytes, bytes.Length);
+        if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
     }
 
     Dictionary<int, LeagueReserveData> LoadLeagueReserve(int slot)
     {
-        string json = PlayerPrefs.GetString($"LeagueReserveData{slot}", "{}");
-        var saveData = JsonUtility.FromJson<LeagueReserveDictionarySaveData>(json);
+        LeagueReserveDictionarySaveData saveData = null;
+        if (SteamRemoteStorage.FileExists($"LeagueReserveData{slot}.json"))
+        {
+            int fileSize = SteamRemoteStorage.GetFileSize($"LeagueReserveData{slot}.json");
+            byte[] bytes = new byte[fileSize];
+            SteamRemoteStorage.FileRead($"LeagueReserveData{slot}.json", bytes, fileSize);
+
+            string json = Encoding.UTF8.GetString(bytes);
+            saveData = JsonUtility.FromJson<LeagueReserveDictionarySaveData>(json);
+        }
+        else
+        {
+            string json = PlayerPrefs.GetString($"LeagueReserveData{slot}", "{}");
+            saveData = JsonUtility.FromJson<LeagueReserveDictionarySaveData>(json);
+        }
         return SaveManager.FromSaveData(saveData);
     }
 
@@ -257,13 +311,32 @@ public class GameManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"ETCData{slot}", json);
         PlayerPrefs.Save();
+
+        // Steam 클라우드에 업로드
+        byte[] bytes = Encoding.UTF8.GetBytes(json);
+        bool success = SteamRemoteStorage.FileWrite($"ETCData{slot}.json", bytes, bytes.Length);
+        if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
     }
 
     public IEnumerator LoadETCData(int slot)
     {
         GameManager.ClaimLoadInfo("Loading ETC data...", 2, 3);
-        string json = PlayerPrefs.GetString($"ETCData{slot}", "{}");
-        var saveData = JsonUtility.FromJson<ETCData>(json);
+        ETCData saveData = null;
+        if (SteamRemoteStorage.FileExists($"ETCData{slot}.json"))
+        {
+            int fileSize = SteamRemoteStorage.GetFileSize($"ETCData{slot}.json");
+            byte[] bytes = new byte[fileSize];
+            SteamRemoteStorage.FileRead($"ETCData{slot}.json", bytes, fileSize);
+
+            string json = Encoding.UTF8.GetString(bytes);
+            saveData = JsonUtility.FromJson<ETCData>(json);
+        }
+        else
+        {
+            string json = PlayerPrefs.GetString($"ETCData{slot}", "{}");
+            saveData = JsonUtility.FromJson<ETCData>(json);
+        }
+
         OutGameUIManager.LoadData(
         saveData.money,
         saveData.mySurvivorsId,
