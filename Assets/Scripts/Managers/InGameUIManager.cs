@@ -173,11 +173,11 @@ public class InGameUIManager : MonoBehaviour
     private void Start()
     {
         outGameUIManager = GetComponent<OutGameUIManager>();
-        selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentInChildren<Image>();
+        selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentWeaponText = selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>();
-        selectedObjectsCurrentHelmetImage = selectedObjectsCurrentHelmet.GetComponentInChildren<Image>();
+        selectedObjectsCurrentHelmetImage = selectedObjectsCurrentHelmet.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
-        selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentInChildren<Image>();
+        selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentVestText = selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>();
 
         selectedObjectsItems = new GameObject[selectedObjectsInventory.childCount];

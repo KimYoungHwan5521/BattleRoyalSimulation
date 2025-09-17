@@ -487,7 +487,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2207012504530944
-    m_Localized: "Strategieraum schlie\xDFen?\\n(Nicht gespeicherte Daten gehen verloren.)"
+    m_Localized: "Strategieraum schlie\xDFen?\n(Nicht gespeicherte Daten gehen verloren.)"
     m_Metadata:
       m_Items: []
   - m_Id: 2207013309837312
@@ -852,7 +852,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: "Zum Titelbildschirm zur\xFCckkehren?\\n<i>(Nicht gespeicherte Daten
+    m_Localized: "Zum Titelbildschirm zur\xFCckkehren?\n<i>(Nicht gespeicherte Daten
       gehen verloren.)</i>"
     m_Metadata:
       m_Items: []

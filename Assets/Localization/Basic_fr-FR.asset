@@ -487,7 +487,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2207012504530944
-    m_Localized: "Fermer la salle strat\xE9gique ?\\n(Les donn\xE9es non enregistr\xE9es
+    m_Localized: "Fermer la salle strat\xE9gique ?\n(Les donn\xE9es non enregistr\xE9es
       seront perdues.)"
     m_Metadata:
       m_Items: []
@@ -854,7 +854,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: "Revenir au menu principal ?\\n<i>(Les donn\xE9es non sauvegard\xE9es
+    m_Localized: "Revenir au menu principal ?\n<i>(Les donn\xE9es non sauvegard\xE9es
       seront perdues.)</i>"
     m_Metadata:
       m_Items: []

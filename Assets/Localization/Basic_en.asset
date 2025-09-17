@@ -485,7 +485,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2207012504530944
-    m_Localized: Close the strategy room?\n(Unsaved data will be lost.)
+    m_Localized: 'Close the strategy room?
+
+      (Unsaved data will be lost.)'
     m_Metadata:
       m_Items: []
   - m_Id: 2207013309837312
@@ -848,7 +850,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4785916574494720
-    m_Localized: Return to title?\n<i>(Unsaved data will be lost.)</i>
+    m_Localized: 'Return to title?
+
+      <i>(Unsaved data will be lost.)</i>'
     m_Metadata:
       m_Items: []
   - m_Id: 5085882547236864
