@@ -1262,6 +1262,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 39466490228436992
+    m_Localized: Aleatorio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39507876633964544
+    m_Localized: Has recibido 1000 $. (Se entrega todos los lunes.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

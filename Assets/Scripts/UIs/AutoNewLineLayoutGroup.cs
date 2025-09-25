@@ -79,7 +79,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
             width += child.rect.width;
         }
 
-        GetComponent<RectTransform>().sizeDelta = new(Rect.width, line * childHeight + wantSpacing * Mathf.Max(0, (line - 1)));
+        GetComponent<RectTransform>().sizeDelta = new(Rect.width, 3 * wantHeight + wantSpacing * 2);
     }
 
     void OnLocaleChanged(Locale newLocale)

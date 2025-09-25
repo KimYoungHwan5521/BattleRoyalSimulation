@@ -48,7 +48,7 @@ public static class CustomExtentions
     public static List<T> Shuffle<T>(this List<T> origin)
     {
         List<T> list = new();
-        List<T> copyOrigin = origin;
+        List<T> copyOrigin = origin.ToList();
         int length = origin.Count;
         for(int i=0; i<length; i++)
         {

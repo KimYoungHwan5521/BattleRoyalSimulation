@@ -28,6 +28,7 @@ public class Survivor : CustomObject
     [SerializeField] GameObject energyBarrier;
     Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
+    public Vector2 Velocity => ((Vector2)transform.position - lastPosition) / Time.deltaTime;
 
     [SerializeField] MeshFilter sightMeshFilter;
     Mesh sightMesh;
@@ -4409,7 +4410,7 @@ public class Survivor : CustomObject
         correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
         correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
         correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
-        aimErrorRange = 20f / Mathf.Pow(2, Mathf.Log(Mathf.Max(correctedShooting + characteristicCorrection_AimErrorRange, 1), 20));
+        aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
         reloadSpeed = characteristicCorrection_ReloadSpeed * characteristicCorrection_CraftingSpeed;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;

@@ -104,7 +104,7 @@ public class OutGameUIManager : MonoBehaviour
     public int AgilityTrainingLevel => runningLevel;
     public int WeightTrainingLevel => weightTrainingLevel;
     public int StudyLevel => studyingLevel;
-    readonly int[] facilityUpgradeCost = { 3000, 10000, 30000 };
+    readonly int[] facilityUpgradeCost = { 5000, 12000, 30000 };
     [SerializeField] GameObject fightTrainingUpgradeButtion;
     [SerializeField] GameObject shootingTrainingUpgradeButtion;
     [SerializeField] GameObject runningUpgradeButtion;
@@ -1883,6 +1883,18 @@ public class OutGameUIManager : MonoBehaviour
 
     }
 
+    public void RandomBetting()
+    {
+        List<SurvivorData> shuffledContestants = contestantsData.Shuffle();
+        for (int i=0; i<needPredictionNumber; i++)
+        {
+            predictRankingContestants[i].SetActive(true);
+            int originalIndex = contestantsData.FindIndex(x => x.SurvivorName == shuffledContestants[i].SurvivorName);
+            predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color = contestants[originalIndex].GetComponentsInChildren<Image>()[1].color;
+            predictRankingContestants[i].GetComponentInChildren<LocalizeStringEvent>().StringReference = shuffledContestants[i].localizedSurvivorName;
+        }
+    }
+
     public void EasyBet(int amount)
     {
         int curBet = int.Parse(bettingAmountInput.text);
@@ -2052,6 +2064,11 @@ public class OutGameUIManager : MonoBehaviour
         contestantsData = null;
         calendar.Today++;
         calendar.TurnPageCalendar(0);
+        if (calendar.Today % 7 == 0)
+        {
+            Money += 1000;
+            Alert("Alert:Money Recived");
+        }
 
         dailyResult.SetActive(true);
         int index = 0;
@@ -2147,8 +2164,13 @@ public class OutGameUIManager : MonoBehaviour
         contestantsData = null;
         calendar.Today++;
         calendar.TurnPageCalendar(0);
+        if (calendar.Today % 7 == 0)
+        {
+            Money += 1000;
+            Alert("Alert:Money Recived");
+        }
 
-        foreach(var survivor in mySurvivorsData)
+        foreach (var survivor in mySurvivorsData)
         {
             survivor.increaseComparedToPrevious_strength = -1;
             survivor.increaseComparedToPrevious_agility = -1;

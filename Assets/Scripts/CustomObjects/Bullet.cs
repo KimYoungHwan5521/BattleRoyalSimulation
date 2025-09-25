@@ -41,7 +41,7 @@ public class Bullet : CustomObject
 
         direction = targetPosition - spawnedPosition;
         direction.Normalize();
-        err = launcher.CurrentWeapon.itemType == ItemManager.Items.ShotGun?  7.5f : launcher.AimErrorRange;
+        err = launcher.CurrentWeapon.itemType == ItemManager.Items.ShotGun? 7.5f : launcher.AimErrorRange;
         float rand = Random.Range(-err, err);
         if (launcher.CurrentWeapon.itemType == ItemManager.Items.SniperRifle) rand *= 0.67f;
         direction = direction.Rotate(rand);
@@ -84,8 +84,6 @@ public class Bullet : CustomObject
         
     }
 
-    bool hitSurvivor;
-    Survivor beHitSurvivor;
     private void FixedUpdate()
     {
         if (!initiated) return;
@@ -95,41 +93,6 @@ public class Bullet : CustomObject
         }
         transform.position += Time.fixedDeltaTime * projectileSpeed * (Vector3)direction;
 
-        // 총알이 너무 빠르면 Collision Detection Mode가 Continious여도 충돌이 검출되지 않는 경우가 있어서 보조 계산
-        //RaycastHit2D[] hits = Physics2D.LinecastAll(transform.position, lastPosition);
-        //Debug.DrawLine(transform.position, lastPosition, Color.red);
-        //foreach (RaycastHit2D hit in hits)
-        //{
-        //    //if (hit.collider.CompareTag("Wall"))
-        //    //{
-        //    //    Debug.Log(hit.collider.transform.position);
-        //    //    if (Random.Range(0, 1f) < 0.5f)
-        //    //    {
-        //    //        PlaySFX("ricochet,10", launcher);
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        PlaySFX("ricochet2,10", launcher);
-        //    //    }
-        //    //    DelayedDespawn();
-        //    //    return;
-        //    //}
-        //    if(hit.collider.CompareTag("Survivor") && !hit.collider.isTrigger)
-        //    {
-        //        Survivor victim = hit.collider.GetComponent<Survivor>();
-        //        if (victim != launcher)
-        //        {
-        //            hitSurvivor = true;
-        //            beHitSurvivor = victim;
-        //        }
-        //    }
-        //}
-        //if(hitSurvivor)
-        //{
-        //    beHitSurvivor.TakeDamage(this);
-        //    DelayedDespawn();
-        //}
-        //lastPosition = transform.position;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

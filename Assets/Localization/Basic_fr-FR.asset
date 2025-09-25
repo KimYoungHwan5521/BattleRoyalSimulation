@@ -1271,6 +1271,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 39466490228436992
+    m_Localized: "Al\xE9atoire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39507876633964544
+    m_Localized: "1 000 $ ont \xE9t\xE9 vers\xE9s. (Vers\xE9s chaque lundi.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

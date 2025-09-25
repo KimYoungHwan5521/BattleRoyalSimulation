@@ -1191,6 +1191,14 @@ MonoBehaviour:
     m_Key: Alert:CharacteristicRemoved
     m_Metadata:
       m_Items: []
+  - m_Id: 39466490228436992
+    m_Key: Random
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39507876633964544
+    m_Key: Alert:Money Recived
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

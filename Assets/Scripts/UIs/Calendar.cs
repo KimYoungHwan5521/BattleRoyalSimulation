@@ -541,6 +541,7 @@ public class Calendar : CustomObject
             { ItemManager.Items.SniperRifle, 5 },
             { ItemManager.Items.AssaultRifle, 5 },
             { ItemManager.Items.Bazooka, 5 },
+            { ItemManager.Items.LASER, 1 },
             { ItemManager.Items.Bullet_Revolver, 25 },
             { ItemManager.Items.Bullet_Pistol, 25 },
             { ItemManager.Items.Bullet_SubMachineGun, 25 },
@@ -551,9 +552,11 @@ public class Calendar : CustomObject
             { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
             { ItemManager.Items.MiddleLevelBulletproofHelmet, 15 },
             { ItemManager.Items.HighLevelBulletproofHelmet, 5 },
+            { ItemManager.Items.LegendaryBulletproofHelmet, 1 },
             { ItemManager.Items.LowLevelBulletproofVest, 25 },
             { ItemManager.Items.MiddleLevelBulletproofVest, 15 },
             { ItemManager.Items.HighLevelBulletproofVest, 5 },
+            { ItemManager.Items.LegendaryBulletproofVest, 1 },
             { ItemManager.Items.BandageRoll, 100 },
         };
         itemPool.Add(6, items);

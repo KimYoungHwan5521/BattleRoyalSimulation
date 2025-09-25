@@ -26,16 +26,41 @@ public class ProjectileGenerator : CustomObject
         if (weapon.itemType == ItemManager.Items.ShotGun)
         {
             SpawnProjectile_ShotGun(weapon);
-            return;
         }
         else if(weapon.itemType == ItemManager.Items.Bazooka)
         {
             SpawnProjectile_Bazooka(weapon);
-            return;
         }
-        GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, spawnPos);
+        else SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
+    }
+
+    Vector2 GetDestination()
+    {
+        if (owner.TargetEnemy == null)
+        {
+            if(owner.TargetEnemiesLastPosition != Vector2.zero) return owner.TargetEnemiesLastPosition;
+            return muzzleTF.position + owner.transform.up;
+        }
+        else if (owner.LinkedSurvivorData.Shooting >= 100)
+        {
+            // ¿¹Ãø¼¦
+            Vector2 currentTargetPosition = owner.TargetEnemy.transform.position;
+            float distance = Vector2.Distance(muzzleTF.position, currentTargetPosition);
+            float time = distance / owner.CurrentWeaponAsRangedWeapon.ProjectileSpeed;
+            return currentTargetPosition + owner.TargetEnemy.Velocity * time;
+        }
+        else
+        {
+            return owner.TargetEnemy.transform.position;
+        }
+    }
+
+    void SpawnProjectile(RangedWeapon weapon, ResourceEnum.Prefab bulletPrefab)
+    {
+
+        GameObject prefab = PoolManager.Spawn(bulletPrefab, spawnPos);
         Bullet bullet = prefab.GetComponent<Bullet>();
-        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
+        Vector2 destination = GetDestination();
         bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
     
@@ -43,10 +68,7 @@ public class ProjectileGenerator : CustomObject
     {
         for(int i = 0; i < 12; i++)
         {
-            GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, spawnPos);
-            Bullet bullet = prefab.GetComponent<Bullet>();
-            Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
-            bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
+            SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
         }
     }
 
@@ -54,7 +76,7 @@ public class ProjectileGenerator : CustomObject
     {
         GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Rocket, spawnPos);
         Rocket rocket = prefab.GetComponent<Rocket>();
-        Vector2 destination = owner.TargetEnemy != null ? ((Vector2)owner.TargetEnemy.transform.position) : owner.transform.up;
+        Vector2 destination = GetDestination();
         rocket.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
     }
 
@@ -62,10 +84,7 @@ public class ProjectileGenerator : CustomObject
     {
         if(muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled ? owner.leftHandTF : owner.rightHandTF);
         PlaySFX("laser,10", owner, muzzleTF.position);
-        Vector2 destination;
-        if (owner.TargetEnemy != null) destination = (Vector2)owner.TargetEnemy.transform.position;
-        else if (owner.TargetEnemiesLastPosition != Vector2.zero) destination = owner.TargetEnemiesLastPosition;
-        else destination = transform.position + owner.transform.up;
+        Vector2 destination = GetDestination();
 
         float err = owner.AimErrorRange;
         float rand = Random.Range(-err, err);

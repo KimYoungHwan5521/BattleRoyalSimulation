@@ -1261,6 +1261,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 39466490228436992
+    m_Localized: "Zuf\xE4llig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39507876633964544
+    m_Localized: 1.000 $ wurden ausgezahlt. (Wird jeden Montag ausgezahlt.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

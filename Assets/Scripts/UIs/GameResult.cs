@@ -142,41 +142,41 @@ public class GameResult : MonoBehaviour
                 case League.BronzeLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 1000;
+                        winPrize = 5000;
                         AchievementManager.UnlockAchievement("Bronze Cup");
                     }
-                    else if (playerWin == 50) winPrize = 500;
-                    killPrize = playerSurvivor.KillCount * 100;
+                    else if (playerWin == 50) winPrize = 2500;
+                    killPrize = playerSurvivor.KillCount * 500;
                     break;
                 case League.SilverLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 3000;
+                        winPrize = 10000;
                         AchievementManager.UnlockAchievement("Silver Cup");
                     }
-                    else if (playerWin == 25) winPrize = 1500;
-                    else if (playerWin == 50) winPrize = 750;
-                    killPrize = playerSurvivor.KillCount * 200;
+                    else if (playerWin == 25) winPrize = 5000;
+                    else if (playerWin == 50) winPrize = 2500;
+                    killPrize = playerSurvivor.KillCount * 1000;
                     break;
                 case League.GoldLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 10000;
+                        winPrize = 20000;
                         AchievementManager.UnlockAchievement("Gold Cup");
                     }
-                    else if (playerWin == 25) winPrize = 5000;
-                    else if (playerWin == 50) winPrize = 2500;
-                    killPrize = playerSurvivor.KillCount * 500;
+                    else if (playerWin == 25) winPrize = 10000;
+                    else if (playerWin == 50) winPrize = 5000;
+                    killPrize = playerSurvivor.KillCount * 2000;
                     break;
                 case League.SeasonChampionship:
                     if (playerWin == 1)
                     {
-                        winPrize = 30000;
+                        winPrize = 50000;
                         AchievementManager.UnlockAchievement("Season Champion");
                     }
-                    else if (playerWin == 25) winPrize = 15000;
-                    else if (playerWin == 50) winPrize = 7500;
-                    killPrize = playerSurvivor.KillCount * 1000;
+                    else if (playerWin == 25) winPrize = 25000;
+                    else if (playerWin == 50) winPrize = 12500;
+                    killPrize = playerSurvivor.KillCount * 5000;
                     break;
                 case League.WorldChampionship:
                     if (playerWin == 1)
@@ -187,34 +187,37 @@ public class GameResult : MonoBehaviour
                     }
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
-                    killPrize = playerSurvivor.KillCount * 3000;
+                    killPrize = playerSurvivor.KillCount * 10000;
                     break;
                 case League.MeleeLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 30000;
+                        winPrize = 40000;
                         AchievementManager.UnlockAchievement("Melee Champion");
                     }
-                    else if (playerWin == 25) winPrize = 15000;
-                    else if (playerWin == 50) winPrize = 7500;
+                    else if (playerWin == 25) winPrize = 20000;
+                    else if (playerWin == 50) winPrize = 10000;
+                    killPrize = playerSurvivor.KillCount * 4000;
                     break;
                 case League.RangeLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 30000;
+                        winPrize = 40000;
                         AchievementManager.UnlockAchievement("Shooting Champion");
                     }
-                    else if (playerWin == 25) winPrize = 15000;
-                    else if (playerWin == 50) winPrize = 7500;
+                    else if (playerWin == 25) winPrize = 20000;
+                    else if (playerWin == 50) winPrize = 10000;
+                    killPrize = playerSurvivor.KillCount * 4000;
                     break;
                 case League.CraftingLeague:
                     if (playerWin == 1)
                     {
-                        winPrize = 30000;
+                        winPrize = 40000;
                         AchievementManager.UnlockAchievement("Crafting Champion");
                     }
-                    else if (playerWin == 25) winPrize = 15000;
-                    else if (playerWin == 50) winPrize = 7500;
+                    else if (playerWin == 25) winPrize = 20000;
+                    else if (playerWin == 50) winPrize = 10000;
+                    killPrize = playerSurvivor.KillCount * 4000;
                     break;
             }
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";

@@ -11,17 +11,18 @@ public class Area : CustomObject
     [SerializeField] NavMeshModifierVolume navMeshModifierVolume;
     Dictionary<Area, int> distances;
     public Dictionary<Area, int> Distances => distances;
-    //[Serializable]public class Temp
-    //{
-    //    public string area;
-    //    public int distance;
+    [Serializable]
+    public class Temp
+    {
+        public string area;
+        public int distance;
 
-    //    public Temp(string a, int b)
-    //    {
-    //        area = a; distance = b;
-    //    }
-    //}
-    //public List<Temp> temp;
+        public Temp(string a, int b)
+        {
+            area = a; distance = b;
+        }
+    }
+    public List<Temp> temp;
 
     [SerializeField] bool isProhibited_Plan;
     public bool IsProhibited_Plan
@@ -107,11 +108,11 @@ public class Area : CustomObject
             candidates = new();
             foreach (var tempc in tempCandidates) candidates.Add(tempc);
         }
-        //temp = new();
-        //foreach(KeyValuePair<Area, int> dist in distances)
-        //{
-        //    temp.Add(new(dist.Key.name, dist.Value));
-        //}
+        temp = new();
+        foreach (KeyValuePair<Area, int> dist in distances)
+        {
+            temp.Add(new(dist.Key.name, dist.Value));
+        }
     }
 
     public void ResetProhibitArea()
