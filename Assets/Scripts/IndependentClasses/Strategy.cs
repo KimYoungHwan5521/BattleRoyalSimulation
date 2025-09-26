@@ -123,7 +123,7 @@ public class Strategy : MonoBehaviour
             GameObject condition = conditions[i];
             TMP_Dropdown[] dropdowns = condition.GetComponentsInChildren<TMP_Dropdown>(true);
             andOrs[i] = dropdowns[0];
-            notValids[i] = condition.GetComponentInChildren<Image>().gameObject;
+            notValids[i] = condition.GetComponentsInChildren<Image>(true)[0].gameObject;
             variable1s[i] = dropdowns[1];
             operators[i] = dropdowns[2];
             variable2s[i] = dropdowns[3];

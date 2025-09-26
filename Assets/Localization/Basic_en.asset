@@ -1290,6 +1290,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 41065281599631360
+    m_Localized: Invalid Condition
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
