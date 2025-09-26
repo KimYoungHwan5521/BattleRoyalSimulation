@@ -2825,15 +2825,15 @@ public class Survivor : CustomObject
     {
         //Debug.Log(noiseMaker);
         heardSound = noiseMaker;
-        SoundsMemory sound = soundsMemories.Find(x => x.soundName == noiseMaker || Vector2.Distance(soundOrigin, x.soundOrigin) < 2f);
+        SoundsMemory sound = soundsMemories.Find(x => Vector2.Angle(soundOrigin - (Vector2)transform.position, x.soundOrigin - (Vector2)transform.position) < 30f);
         if (sound != null)
         {
-            if(sound.soundTime > 1)
+            if(sound.soundTime > 3)
             {
-                sound.soundTime = 1;
+                sound.soundTime = 3;
                 HeardDistinguishableSound(soundOrigin);
-                return;
             }
+            return;
         }
         else soundsMemories.Add(new(heardSound, soundOrigin));
 

@@ -1279,6 +1279,14 @@ MonoBehaviour:
     m_Localized: "1 000 $ ont \xE9t\xE9 vers\xE9s. (Vers\xE9s chaque lundi.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 40968955578871808
+    m_Localized: Statistiques
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40968966148517888
+    m_Localized: Blessure
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

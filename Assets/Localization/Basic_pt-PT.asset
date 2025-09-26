@@ -1267,6 +1267,14 @@ MonoBehaviour:
     m_Localized: Foram pagos 1000 $. (Pago todas as segundas-feiras.)
     m_Metadata:
       m_Items: []
+  - m_Id: 40968955578871808
+    m_Localized: "Estat\xEDstica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40968966148517888
+    m_Localized: "Les\xE3o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

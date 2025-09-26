@@ -1243,6 +1243,14 @@ MonoBehaviour:
     m_Localized: "\u5DF2\u53D1\u653E1000\u7F8E\u5143\u3002\uFF08\u6BCF\u5468\u4E00\u53D1\u653E\u3002\uFF09"
     m_Metadata:
       m_Items: []
+  - m_Id: 40968955578871808
+    m_Localized: "\u5C5E\u6027"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40968966148517888
+    m_Localized: "\u53D7\u4F24"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

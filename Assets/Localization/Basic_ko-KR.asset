@@ -1326,6 +1326,14 @@ MonoBehaviour:
       (\uB9E4\uC8FC \uC6D4\uC694\uC77C \uC9C0\uAE09\uB429\uB2C8\uB2E4.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 40968955578871808
+    m_Localized: "\uB2A5\uB825\uCE58"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40968966148517888
+    m_Localized: "\uBD80\uC0C1"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

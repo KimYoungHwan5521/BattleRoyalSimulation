@@ -101,6 +101,8 @@ public class Calendar : CustomObject
         {
             today = value;
             tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
+            outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
+            
             if (leagueReserveInfo.ContainsKey(value - 1) && leagueReserveInfo[value - 1].reserver != null)
             {
                 leagueReserveInfo[value - 1].reserver.isReserved = false;
@@ -156,6 +158,8 @@ public class Calendar : CustomObject
                 if (leagueReserveInfo.ContainsKey(i + 28 * (calendarPage - 1)))
                 {
                     datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 28 * (calendarPage - 1)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
+                    if (outGameUIManager.tutorial && i + 28 * (calendarPage - 1) == Today && datesAnimator[i].gameObject.activeInHierarchy) datesAnimator[i].SetBool("Tutorial", true);
+                    else if (datesAnimator[i] != null && datesAnimator[i].gameObject.activeInHierarchy) datesAnimator[i].SetBool("Tutorial", false);
                     if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
                     {
                         reserved[i].SetActive(true);
@@ -182,6 +186,7 @@ public class Calendar : CustomObject
     GameObject[] datesGone;
     Image[] datesEvent;
     GameObject[] reserved;
+    Animator[] datesAnimator;
 
     [Header("Global UI")]
     [SerializeField] TextMeshProUGUI todayText;
@@ -210,6 +215,7 @@ public class Calendar : CustomObject
         datesGone = new GameObject[28];
         datesEvent = new Image[28];
         reserved = new GameObject[28];
+        datesAnimator = new Animator[28];
         AddLeagueReserveInfo(3);
         LoadItemPool();
     }
@@ -237,64 +243,6 @@ public class Calendar : CustomObject
     {
         for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 336; i++)
         {
-            //if (i % 336 == 335)
-            //{
-            //    leagueReserveInfo[i] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01, 4);
-            //}
-            //else if (i % 336 == 48)
-            //{
-            //    leagueReserveInfo[i] = new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01, 5);
-            //}
-            //else if (i % 336 == 160)
-            //{
-            //    leagueReserveInfo[i] = new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01, 6);
-            //}
-            //else if (i % 336 == 272)
-            //{
-            //    leagueReserveInfo[i] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01, 7);
-            //}
-
-            //if (i % 112 == 83)
-            //{
-            //    leagueReserveInfo[i] = new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01, 3);
-            //}
-
-            //if (i % 28 == 27)
-            //{
-            //    if (!leagueReserveInfo.ContainsKey(i))
-            //    {
-            //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-            //        leagueReserveInfo[i] = new(League.GoldLeague, map, 2);               
-            //    }
-            //    else if (leagueReserveInfo[i].league != League.SeasonChampionship)
-            //    {
-            //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-            //        leagueReserveInfo[i - 1] = new(League.GoldLeague, map, 2);
-            //    }
-            //}
-
-            //if (i % 14 == 13)
-            //{
-            //    if (leagueReserveInfo.ContainsKey(i))
-            //    {
-            //        if (!leagueReserveInfo.ContainsKey(i - 1))
-            //        {
-            //            ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-            //            leagueReserveInfo[i - 1] = new(League.SilverLeague, map, 1);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-            //        leagueReserveInfo[i] = new(League.SilverLeague, map, 1);
-            //    }
-            //}
-
-            //if ((i - 1) % 7 == 5 && !leagueReserveInfo.ContainsKey(i - 1))
-            //{
-            //    ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
-            //    leagueReserveInfo[i - 1] = new(League.BronzeLeague, map, 0);
-            //}
             if (i % 7 == 5)
             {
                 ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
@@ -580,6 +528,7 @@ public class Calendar : CustomObject
             datesGone[i] = dates[i].transform.Find("Gone").gameObject;
             datesEvent[i] = dates[i].transform.Find("Event").GetComponent<Image>();
             reserved[i] = datesEvent[i].transform.GetChild(0).gameObject;
+            datesAnimator[i] = dates[i].GetComponentInChildren<Animator>(true);
             TextMeshProUGUI dateText = dates[i].GetComponentInChildren<TextMeshProUGUI>();
             dateText.text = $"{i + 1}";
             dateText.raycastTarget = false;

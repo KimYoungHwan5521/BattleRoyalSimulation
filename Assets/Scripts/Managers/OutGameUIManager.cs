@@ -239,6 +239,12 @@ public class OutGameUIManager : MonoBehaviour
     int bettingAmount;
     public int BettingAmount => bettingAmount;
     [SerializeField] LocalizedDropdown sortContestantsListDropdown;
+
+    [Header("Tutorial")]
+    public Animator trainingRoomAnim;
+    public Animator trainingRoomSurvivorAnim;
+    public Animator scheduleAnim;
+    public bool tutorial = false;
     #endregion
 
     private void Start()
@@ -315,6 +321,9 @@ public class OutGameUIManager : MonoBehaviour
         runningLevel = 1;
         weightTrainingLevel = 1;
         studyingLevel = 1;
+        
+        tutorial = true;
+        trainingRoomAnim.SetBool("Tutorial", true);
     }
 
     void RelocalizeTrainingRoom()
@@ -577,6 +586,7 @@ public class OutGameUIManager : MonoBehaviour
             AssignTraining();
             SetTrainingRoomSurvivorsInfo();
             RelocalizeTrainingRoom();
+            if (tutorial && MySurvivorsData[0].assignedTraining == Training.None) trainingRoomSurvivorAnim.SetBool("Tutorial", true);
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
     }
@@ -1755,6 +1765,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void StartBattleRoyale()
     {
+        tutorial = false;
         GameManager.Instance.Option.SetSaveButtonInteractable(false);
         mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
         if (mySurvivorDataInBattleRoyale == null) AchievementManager.UnlockAchievement("Spectator");
@@ -2688,6 +2699,8 @@ public class OutGameUIManager : MonoBehaviour
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;
         this.contestantsData = contestantsData;
+
+        tutorial = false;
     }
 
     void OnLocaleChanged(Locale newLocale)

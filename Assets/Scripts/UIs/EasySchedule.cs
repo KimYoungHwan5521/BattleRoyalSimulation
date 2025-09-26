@@ -12,5 +12,11 @@ public class EasySchedule : MonoBehaviour
         ownerCanvas.SetActive(false);
         GameManager.Instance.OutGameUIManager.AssignTraining();
         linkedSurvivor.SetInfo(linkedSurvivor.survivorData, false);
+
+        if(GameManager.Instance.OutGameUIManager.tutorial)
+        {
+            GameManager.Instance.OutGameUIManager.trainingRoomAnim.SetBool("Tutorial", false);
+            GameManager.Instance.OutGameUIManager.trainingRoomSurvivorAnim.SetBool("Tutorial", false);
+        }
     }
 }
