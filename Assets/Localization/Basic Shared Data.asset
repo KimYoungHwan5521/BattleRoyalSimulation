@@ -1207,6 +1207,18 @@ MonoBehaviour:
     m_Key: Injury
     m_Metadata:
       m_Items: []
+  - m_Id: 41018071012929536
+    m_Key: Simulation Tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41024498473431040
+    m_Key: Confirm:Participate Battle Royale Who Have Injury
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41024727797002240
+    m_Key: Alert:Participate Fail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -757,13 +757,18 @@ public class Calendar : CustomObject
     {
         outGameUIManager.OpenConfirmWindow("Confirm:Participate", () =>
         {
-            participationConfirmed = true;
-            leagueReserveInfo[Today].reserver = wantReserver;
-            outGameUIManager.contestantsData[0] = wantReserver;
-            outGameUIManager.OpenBettingRoom();
-            outGameUIManager.calendarObject.SetActive(false);
-            reserveForm.SetActive(false);
+            Participation();
         });
+    }
+
+    void Participation()
+    {
+        participationConfirmed = true;
+        leagueReserveInfo[Today].reserver = wantReserver;
+        outGameUIManager.contestantsData[0] = wantReserver;
+        outGameUIManager.OpenBettingRoom();
+        outGameUIManager.calendarObject.SetActive(false);
+        reserveForm.SetActive(false);
     }
 
     public void NotParticipateBattleRoyale()
@@ -829,7 +834,7 @@ public class Calendar : CustomObject
         else if (injured)
         {
             string askText = reserve ? "Confirm:Reserve Battle Royale Who Have Injury" : "Confirm:Participate Battle Royale Who Have Injury";
-            UnityAction action = reserve? () => Reserve() : () => Participate();
+            UnityAction action = reserve? () => Reserve() : () => Participation();
             outGameUIManager.OpenConfirmWindow(askText, action, wantReserver.localizedSurvivorName.GetLocalizedString());
         }
         else

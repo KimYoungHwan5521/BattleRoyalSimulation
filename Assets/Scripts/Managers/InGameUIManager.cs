@@ -57,6 +57,7 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] CustomObject selectedObject;
     public CustomObject SelectedObject;
     [SerializeField] GameObject selectedObjectInfo;
+    [SerializeField] GameObject simulationTip;
 
     [SerializeField] TextMeshProUGUI selectedObjectKillCount;
     [SerializeField] Image selectedObjectImage;
@@ -562,20 +563,6 @@ public class InGameUIManager : MonoBehaviour
     public void UpdateSelectedObjectInjury(Survivor survivor)
     {
         if (survivor != selectedObject) return;
-        //for (int i = 0; i < injuries.Length; i++)
-        //{
-        //    if (survivor.injuries.Count > i)
-        //    {
-        //        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{survivor.injuries[i].site} {survivor.injuries[i].type}";
-        //        injuries[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivor.injuries[i].degree:0.##}";
-        //        injuries[i].GetComponentInChildren<Help>().SetDescription(survivor.injuries[i].site);
-        //        injuries[i].SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        injuries[i].SetActive(false);
-        //    }
-        //}
         ResetInjuryInfo();
 
         foreach (var injury in survivor.injuries)
@@ -659,6 +646,7 @@ public class InGameUIManager : MonoBehaviour
         cheek.color = Color.white;
         nose.color = Color.white;
         jaw.color = Color.white;
+        neck.color = Color.white;
         chest.color = Color.white;
         ribs.color = Color.white;
         abdomen.color = Color.white;
@@ -747,21 +735,28 @@ public class InGameUIManager : MonoBehaviour
     public void UpdateSelectedObjectStatus(Survivor survivor)
     {
         if (survivor != selectedObject) return;
-        selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
+        if(survivor.IsDead)
         {
-            Survivor.Status.Farming or Survivor.Status.FarmingBox => new LocalizedString("Basic", "Looting").GetLocalizedString(),
-            Survivor.Status.InCombat => new LocalizedString("Basic", "In Battle").GetLocalizedString(),
-            Survivor.Status.InvestigateThreateningSound => new LocalizedString("Basic", "Investigating noise").GetLocalizedString(),
-            Survivor.Status.Maintain => new LocalizedString("Basic", "Preparing for combat").GetLocalizedString(),
-            Survivor.Status.Trapping => new LocalizedString("Basic", "Setting trap").GetLocalizedString(),
-            Survivor.Status.TraceEnemy => new LocalizedString("Basic", "Chasing enemy").GetLocalizedString(),
-            Survivor.Status.RunAway => new LocalizedString("Basic", "Fleeing").GetLocalizedString(),
-            Survivor.Status.TrapDisarming => new LocalizedString("Basic", "Disarming trap").GetLocalizedString(),
-            Survivor.Status.Crafting => new LocalizedString("Basic", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
-            Survivor.Status.Enchanting => new LocalizedString("Basic", "Enchanting").GetLocalizedString(),
-            Survivor.Status.FindingEnemy => new LocalizedString("Basic", "FindingEnemy").GetLocalizedString(),
-            _ => survivor.CurrentStatus.ToString()
-        };
+            selectedObjectCurrentStatus.text = "";
+        }
+        else
+        {
+            selectedObjectCurrentStatus.text = survivor.CurrentStatus switch
+            {
+                Survivor.Status.Farming or Survivor.Status.FarmingBox => new LocalizedString("Basic", "Looting").GetLocalizedString(),
+                Survivor.Status.InCombat => new LocalizedString("Basic", "In Battle").GetLocalizedString(),
+                Survivor.Status.InvestigateThreateningSound => new LocalizedString("Basic", "Investigating noise").GetLocalizedString(),
+                Survivor.Status.Maintain => new LocalizedString("Basic", "Preparing for combat").GetLocalizedString(),
+                Survivor.Status.Trapping => new LocalizedString("Basic", "Setting trap").GetLocalizedString(),
+                Survivor.Status.TraceEnemy => new LocalizedString("Basic", "Chasing enemy").GetLocalizedString(),
+                Survivor.Status.RunAway => new LocalizedString("Basic", "Fleeing").GetLocalizedString(),
+                Survivor.Status.TrapDisarming => new LocalizedString("Basic", "Disarming trap").GetLocalizedString(),
+                Survivor.Status.Crafting => new LocalizedString("Basic", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
+                Survivor.Status.Enchanting => new LocalizedString("Basic", "Enchanting").GetLocalizedString(),
+                Survivor.Status.FindingEnemy => new LocalizedString("Basic", "FindingEnemy").GetLocalizedString(),
+                _ => survivor.CurrentStatus.ToString()
+            };
+        }
         GameManager.Instance.FixLayout(selectedObjectCurrentStatus.GetComponent<RectTransform>());
     }
 
@@ -883,12 +878,14 @@ public class InGameUIManager : MonoBehaviour
         {
             seletedImage.SetActive(false);
             selectedObjectInfo.SetActive(false);
+            simulationTip.SetActive(true);
         }
         else
         {
             seletedImage.transform.position = selectedObject.transform.position;
             seletedImage.SetActive(true);
             selectedObjectInfo.SetActive(true);
+            simulationTip.SetActive(false);
             if (selectedObject is Survivor)
             {
                 Survivor selectedSurvivor = selectedObject as Survivor;

@@ -2970,9 +2970,6 @@ public class Survivor : CustomObject
 
         if (damagedPartIsArtifical > 0)
         {
-            if (alreadyHaveInjury == null)
-            {
-            }
             GetDamageArtificalPart(alreadyHaveInjury, damage, damagedPartIsArtifical);
         }
         else GetInjury(attacker, specificDamagePart, damageType, damage);

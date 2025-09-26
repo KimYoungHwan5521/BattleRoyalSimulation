@@ -2293,7 +2293,11 @@ public class OutGameUIManager : MonoBehaviour
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
             surgeryInjury.type = InjuryType.ArtificialPartsTransplanted;
             surgeryInjury.degree = 0;
-            //survivor.injuries.Add(new(survivor.surgerySite, InjuryType.RecoveringFromSurgery, 0.5f));
+            foreach(var subpart in Injury.GetSubparts(survivor.surgerySite))
+            {
+                Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
+                if (subpartInjury != null) survivor.injuries.Remove(subpartInjury);
+            }
         }
         else if(survivor.surgeryType == SurgeryType.AugmentedPartTransplant)
         {
@@ -2304,6 +2308,11 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.degree = 0;
             }
             else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.AugmentedPartsTransplanted, 0));
+            foreach (var subpart in Injury.GetSubparts(survivor.surgerySite))
+            {
+                Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
+                if (subpartInjury != null) survivor.injuries.Remove(subpartInjury);
+            }
             AchievementManager.UnlockAchievement("Augmented Prosthetic");
         }
         else if(survivor.surgeryType == SurgeryType.TrancendantPartTransplant)
@@ -2315,6 +2324,11 @@ public class OutGameUIManager : MonoBehaviour
                 surgeryInjury.degree = 0;
             }
             else survivor.injuries.Add(new(survivor.surgerySite, InjuryType.TranscendantPartsTransplanted, 0));
+            foreach (var subpart in Injury.GetSubparts(survivor.surgerySite))
+            {
+                Injury subpartInjury = survivor.injuries.Find(x => x.site == subpart);
+                if (subpartInjury != null) survivor.injuries.Remove(subpartInjury);
+            }
             AchievementManager.UnlockAchievement("Transcendent Prosthetic");
         }
         else if (survivor.surgeryType == SurgeryType.ChronicDisorderTreatment)

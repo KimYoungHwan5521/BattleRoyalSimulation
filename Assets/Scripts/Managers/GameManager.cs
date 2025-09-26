@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "1.1";
+    public static string gameVersion = "1.2";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
