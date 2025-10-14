@@ -1855,28 +1855,29 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
+    [SerializeField] List<SurvivorData> sortedContestantsData = new();
     public void SortContestantsList()
     {
-        List<SurvivorData> orderedContestantsData = new();
+        sortedContestantsData = new();
         switch(sortContestantsListDropdown.keys[sortContestantsListDropdown.dropdown.value].TableEntryReference.Key)
         {
             case "Strength":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.Strength).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.Strength).ToList();
                 break;
             case "Agility":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.Agility).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.Agility).ToList();
                 break;
             case "Fighting":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.Fighting).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.Fighting).ToList();
                 break;
             case "Shooting":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.Shooting).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.Shooting).ToList();
                 break;
             case "Knowledge":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.Knowledge).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.Knowledge).ToList();
                 break;
             case "Stat Total":
-                orderedContestantsData = contestantsData.OrderByDescending(x => x.StatTotal).ToList();
+                sortedContestantsData = contestantsData.OrderByDescending(x => x.StatTotal).ToList();
                 break;
             default:
                 Debug.LogWarning($"Wrong sort key : {sortContestantsListDropdown.keys[sortContestantsListDropdown.dropdown.value].TableEntryReference.Key}");
@@ -1884,9 +1885,9 @@ public class OutGameUIManager : MonoBehaviour
         }
 
         int thereIsPlayerSurvivor = mySurvivorDataInBattleRoyale == null ? 1 : 0;
-        for (int i = 0; i < orderedContestantsData.Count; i++)
+        for (int i = 0; i < sortedContestantsData.Count; i++)
         {
-            int originalDataIndex = contestantsData.FindIndex(x => x.localizedSurvivorName.TableEntryReference.Key == orderedContestantsData[i].localizedSurvivorName.TableEntryReference.Key);
+            int originalDataIndex = contestantsData.FindIndex(x => x.localizedSurvivorName.TableEntryReference.Key == sortedContestantsData[i].localizedSurvivorName.TableEntryReference.Key);
             Vector3 colorVector = BattleRoyaleManager.colorInfo[originalDataIndex + thereIsPlayerSurvivor];
             contestants[i].GetComponentsInChildren<Image>()[1].color = new(colorVector.x, colorVector.y, colorVector.z);
             contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[originalDataIndex].localizedSurvivorName.GetLocalizedString();
@@ -1900,7 +1901,7 @@ public class OutGameUIManager : MonoBehaviour
         for (int i=0; i<needPredictionNumber; i++)
         {
             predictRankingContestants[i].SetActive(true);
-            int originalIndex = contestantsData.FindIndex(x => x.SurvivorName == shuffledContestants[i].SurvivorName);
+            int originalIndex = sortedContestantsData.FindIndex(x => x.SurvivorName == shuffledContestants[i].SurvivorName);
             predictRankingContestants[i].GetComponentsInChildren<Image>()[1].color = contestants[originalIndex].GetComponentsInChildren<Image>()[1].color;
             predictRankingContestants[i].GetComponentInChildren<LocalizeStringEvent>().StringReference = shuffledContestants[i].localizedSurvivorName;
         }
