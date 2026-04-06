@@ -46,6 +46,7 @@ public class OutGameUIManager : MonoBehaviour
         get { return money; }
         set
         {
+            if (value > 99999999) value = 99999999;
             money = value;
             if(money < 0) moneyText.text = $"<color=red>{money:###,###,###,##0}</color>";
             else moneyText.text = $"{money:###,###,###,##0}";

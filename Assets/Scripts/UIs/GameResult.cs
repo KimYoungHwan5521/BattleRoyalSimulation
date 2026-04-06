@@ -311,9 +311,10 @@ public class GameResult : MonoBehaviour
             float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
             if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
             if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
-            int bettingRewards = (int)(outGameUIManager.BettingAmount * odds);
+            long bettingRewards = (long)(outGameUIManager.BettingAmount * odds);
+            if (bettingRewards > 99999999) bettingRewards = 99999999;
             bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
-            totalProfit += bettingRewards - outGameUIManager.BettingAmount;
+            totalProfit += (int)bettingRewards - outGameUIManager.BettingAmount;
         }
         else
         {

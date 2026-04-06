@@ -4538,7 +4538,7 @@ public class Survivor : CustomObject
     #endregion
 
     #region SightIn SightOut
-    public void SightIn(Survivor survivor, bool corpse)
+    public void SightIn(Survivor survivor, bool corpse, Vector2 collisionHitPoint)
     {
         if(!corpse)
         {
@@ -4548,6 +4548,7 @@ public class Survivor : CustomObject
                 keepEyesOnPosition = Vector2.zero;
                 inSightEnemies.Add(survivor);
                 sightMeshRenderer.material = m_SightAlert;
+                if(projectileGenerator != null) projectileGenerator.collisionHitPoint = collisionHitPoint;
                 if (survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
             }
         }
@@ -4584,7 +4585,7 @@ public class Survivor : CustomObject
             if (curSeeEnemy > 0.1f)
             {
                 curSeeEnemy = 0;
-                SightIn(survivor, survivor.IsDead);
+                SightIn(survivor, survivor.IsDead, collision.ClosestPoint(transform.position));
             }
         }
     }

@@ -34,6 +34,7 @@ public class ProjectileGenerator : CustomObject
         else SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
     }
 
+    public Vector2 collisionHitPoint;
     Vector2 GetDestination()
     {
         if (owner.TargetEnemy == null)
@@ -41,17 +42,34 @@ public class ProjectileGenerator : CustomObject
             if(owner.TargetEnemiesLastPosition != Vector2.zero) return owner.TargetEnemiesLastPosition;
             return muzzleTF.position + owner.transform.up;
         }
-        else if (owner.LinkedSurvivorData.Shooting >= 100)
-        {
-            // ¿¹Ãø¼¦
-            Vector2 currentTargetPosition = owner.TargetEnemy.transform.position;
-            float distance = Vector2.Distance(muzzleTF.position, currentTargetPosition);
-            float time = distance / owner.CurrentWeaponAsRangedWeapon.ProjectileSpeed;
-            return currentTargetPosition + owner.TargetEnemy.Velocity * time;
-        }
         else
         {
-            return owner.TargetEnemy.transform.position;
+            if(muzzleTF != null)
+            {
+                bool haveWall = false;
+                RaycastHit2D[] hits = Physics2D.RaycastAll(muzzleTF.position, owner.TargetEnemy.transform.position - muzzleTF.position, Vector2.Distance(muzzleTF.position, owner.TargetEnemy.transform.position));
+                foreach(var hit in hits)
+                {
+                    if(hit.collider.CompareTag("Wall"))
+                    {
+                        haveWall = true;
+                        break;
+                    }
+                }
+                if (haveWall) return collisionHitPoint;
+            }
+            if (owner.LinkedSurvivorData.Shooting >= 100)
+            {
+                // ¿¹Ãø¼¦
+                Vector2 currentTargetPosition = owner.TargetEnemy.transform.position;
+                float distance = Vector2.Distance(muzzleTF.position, currentTargetPosition);
+                float time = distance / owner.CurrentWeaponAsRangedWeapon.ProjectileSpeed;
+                return currentTargetPosition + owner.TargetEnemy.Velocity * time;
+            }
+            else
+            {
+                return owner.TargetEnemy.transform.position;
+            }
         }
     }
 
