@@ -56,7 +56,11 @@ public class ProjectileGenerator : CustomObject
                         break;
                     }
                 }
-                if (haveWall) return collisionHitPoint;
+                if (haveWall)
+                {
+                    Debug.Log("벽피해서 쏘기?");
+                    return collisionHitPoint;
+                }
             }
             if (owner.LinkedSurvivorData.Shooting >= 100)
             {

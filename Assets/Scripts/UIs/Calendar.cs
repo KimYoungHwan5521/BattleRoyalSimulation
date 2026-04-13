@@ -547,11 +547,11 @@ public class Calendar : CustomObject
                     {
                         bool exit = false;
                         SurvivorData targetSurvivorData = outGameUIManager.MySurvivorsData.Find(
-                            x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[i].text);
+                            x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[i].text.Split(" : ")[0]);
                         // 예외처리
                         if(targetSurvivorData == null)
                         {
-                            Debug.LogError($"Can't find survivor name : {survivorWhoParticipateInBattleRoyaleDropdown.options[i].text}");
+                            Debug.LogError($"Can't find survivor name : {survivorWhoParticipateInBattleRoyaleDropdown.options[i].text.Split(" : ")[0]}");
                             break;
                         }
 
@@ -609,7 +609,8 @@ public class Calendar : CustomObject
                     reserveText.StringReference = new LocalizedString("Basic", "Select the survivor to participate in the battle royale.");
                     reserveText.RefreshString();
                     SetLeagueInfo(wantReserveDate);
-                    SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+                    //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+                    SetBattleRoyaleReserveBox();
                     survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                     reserveButton.SetActive(false);
                     reserveCancelButton.SetActive(false);
@@ -632,7 +633,8 @@ public class Calendar : CustomObject
                         reserveText.StringReference = new LocalizedString("Basic", "Select a survivor to reserve.");
                         reserveText.RefreshString();
                         SetLeagueInfo(wantReserveDate);
-                        SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+                        //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+                        SetBattleRoyaleReserveBox();
                         survivorWhoParticipateInBattleRoyaleDropdown.gameObject.SetActive(true);
                         reserveButton.SetActive(true);
                         reserveCancelButton.SetActive(false);
@@ -677,6 +679,43 @@ public class Calendar : CustomObject
         farmableItemsScrollRect.verticalNormalizedPosition = 1;
     }
 
+    public void SetBattleRoyaleReserveBox()
+    {
+        survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
+        League wantLeague;
+        Sprite leagueSprite;
+        List<SurvivorData> allSurvivor = outGameUIManager.MySurvivorsData;
+        for (int i = 0; i < allSurvivor.Count; i++)
+        {
+            List<TMP_Dropdown.OptionData> options = new();
+            if (leagueReserveInfo[wantReserveDate].league == League.MeleeLeague) wantLeague = League.MeleeLeague;
+            else if (leagueReserveInfo[wantReserveDate].league == League.RangeLeague) wantLeague = League.RangeLeague;
+            else if (leagueReserveInfo[wantReserveDate].league == League.CraftingLeague) wantLeague = League.CraftingLeague;
+            else if (allSurvivor[i].haveQualifyToParticipateInSeasonChampionship) wantLeague = League.SeasonChampionship;
+            else if (allSurvivor[i].haveQualifyToParticipateInWorldChampionship) wantLeague = League.WorldChampionship;
+            else if (allSurvivor[i].tier == Tier.Gold) wantLeague = League.GoldLeague;
+            else if (allSurvivor[i].tier == Tier.Silver) wantLeague = League.SilverLeague;
+            else  wantLeague = League.BronzeLeague;
+
+            if (Enum.TryParse<ResourceEnum.Sprite>($"{wantLeague}Untagged", out var result)) leagueSprite = ResourceManager.Get(result);
+            else
+            {
+                Debug.LogWarning($"Can't find league sprite : {wantLeague}");
+                leagueSprite = null;
+            }
+
+            options.Add(new TMP_Dropdown.OptionData($"{allSurvivor[i].localizedSurvivorName.GetLocalizedString()} : {LocalizationSettings.StringDatabase.GetLocalizedString("Basic", wantLeague.ToString())}", leagueSprite));
+            survivorWhoParticipateInBattleRoyaleDropdown.AddOptions(options);
+        }
+        wantReserver = allSurvivor.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+        reserveButton.GetComponent<Button>().interactable = true;
+        participateButton.GetComponent<Button>().interactable = true;
+
+        survivorWhoParticipateInBattleRoyaleDropdown.captionText.text = survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text;
+        survivorWhoParticipateInBattleRoyaleDropdown.captionImage.sprite = survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].image;
+        OnSurvivorParticipatingInBattleRoyaleSelected();
+    }
+
     public void SetBattleRoyaleReserveBox(Tier tier)
     {
         survivorWhoParticipateInBattleRoyaleDropdown.ClearOptions();
@@ -708,7 +747,7 @@ public class Calendar : CustomObject
 
     public void OnSurvivorParticipatingInBattleRoyaleSelected()
     {
-        wantReserver = outGameUIManager.MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text);
+        wantReserver = outGameUIManager.MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorWhoParticipateInBattleRoyaleDropdown.options[survivorWhoParticipateInBattleRoyaleDropdown.value].text.Split(" : ")[0]);
     }
 
     public void ReserveBattleRoyale()
@@ -917,7 +956,8 @@ public class Calendar : CustomObject
         {
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
-        SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+        //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
+        SetBattleRoyaleReserveBox();
         CalendarPage = calendarPage;
         OpenScheduleByEachSurvivor();
     }
@@ -950,17 +990,25 @@ public class Calendar : CustomObject
             "ko-KR" => "KR",
             "pt-BR" or "pt-PT" => "PT",
             "ru-RU" => "RU",
-            "es-ES" => "ES",
+            "es-ES" or "es-MX" => "ES",
             _ => ""
         };
 
-        if (Enum.TryParse($"{league}{code}", out ResourceEnum.Sprite result))
+        string leagueType = league switch
+        { 
+            League.MeleeLeague => "MeleeLeague",
+            League.RangeLeague => "RangeLeague",
+            League.CraftingLeague => "CraftingLeague",
+            _ => "RegularLeague"
+        };
+
+        if (Enum.TryParse($"{leagueType}{code}", out ResourceEnum.Sprite result))
         {
             return ResourceManager.Get(result);
         }
         else
         {
-            Debug.LogWarning($"Can't find sprite : {league}");
+            Debug.LogWarning($"Can't find sprite : {leagueType}");
             return default;
         }
     }

@@ -181,6 +181,8 @@ public class SurvivorData
     public Tier tier;
     public bool isReserved;
     public int reservedDate = -1;
+    public bool haveQualifyToParticipateInSeasonChampionship;
+    public bool haveQualifyToParticipateInWorldChampionship;
     
     // Training
     public Training assignedTraining;

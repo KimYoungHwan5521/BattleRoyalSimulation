@@ -48,6 +48,8 @@ public class SurvivorSaveData
     public Tier tier;
     public bool isReserved;
     public int reservedDate;
+    public bool haveQualifyToParticipateInSeasonChampionship;
+    public bool haveQualifyToParticipateInWorldChampionship;
     public Training assignedTraining;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;

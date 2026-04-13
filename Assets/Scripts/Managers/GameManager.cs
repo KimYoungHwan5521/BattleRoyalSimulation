@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "1.2";
+    public static string gameVersion = "1.3";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Start()
     {
+        loadingCanvas.gameObject.SetActive(true);
+
         resourceManager = new ResourceManager();
         yield return resourceManager.Initiate();
         soundManager = new SoundManager();
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
 
+        title.title.SetActive(true);
         outGameUIManger = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
         inGameUICanvas.SetActive(false);

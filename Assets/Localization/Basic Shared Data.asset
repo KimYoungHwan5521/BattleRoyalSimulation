@@ -1223,6 +1223,14 @@ MonoBehaviour:
     m_Key: Not Valid Condition
     m_Metadata:
       m_Items: []
+  - m_Id: 113130481299025920
+    m_Key: Alert:Obtain Season Championship Ticket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113130486810341376
+    m_Key: Alert:Obtain World Championship Ticket
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

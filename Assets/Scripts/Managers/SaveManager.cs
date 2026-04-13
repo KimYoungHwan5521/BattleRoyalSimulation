@@ -22,6 +22,8 @@ public static class SaveManager
             tier = data.tier,
             isReserved = data.isReserved,
             reservedDate = data.reservedDate,
+            haveQualifyToParticipateInSeasonChampionship = data.haveQualifyToParticipateInSeasonChampionship,
+            haveQualifyToParticipateInWorldChampionship = data.haveQualifyToParticipateInWorldChampionship,
             assignedTraining = data.assignedTraining,
             increaseComparedToPrevious_strength = data.increaseComparedToPrevious_strength,
             increaseComparedToPrevious_agility = data.increaseComparedToPrevious_agility,

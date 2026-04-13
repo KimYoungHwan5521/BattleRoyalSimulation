@@ -177,6 +177,7 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 25000;
                     else if (playerWin == 50) winPrize = 12500;
                     killPrize = playerSurvivor.KillCount * 5000;
+                    playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
                     break;
                 case League.WorldChampionship:
                     if (playerWin == 1)
@@ -188,6 +189,7 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
                     killPrize = playerSurvivor.KillCount * 10000;
+                    playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
                 case League.MeleeLeague:
                     if (playerWin == 1)
@@ -338,11 +340,14 @@ public class GameResult : MonoBehaviour
                 survivor.tier = Tier.Gold;
                 break;
             case League.GoldLeague:
-                calendar.NeareastSeasonChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
+                //calendar.NeareastSeasonChampionship.reserver = survivor;
+                //notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
+                survivor.haveQualifyToParticipateInSeasonChampionship = true;
+                notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
-                calendar.NeareastWorldChampionship.reserver = survivor;
+                //calendar.NeareastWorldChampionship.reserver = survivor;
+                survivor.haveQualifyToParticipateInWorldChampionship = true;
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
                 if (characteristic != -1)
                 {
@@ -351,7 +356,8 @@ public class GameResult : MonoBehaviour
                     notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                     AchievementManager.UnlockAchievement("Overcome");
                 }
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
+                //notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
+                notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
         }
     }

@@ -138,6 +138,16 @@ public class ResourcesPath
         "Sprites/Leagues/MeleeLeague",
         "Sprites/Leagues/RangeLeague",
         "Sprites/Leagues/CraftingLeague",
+        "Sprites/Leagues/RegularLeague",
+
+        "Sprites/Leagues/BronzeLeagueUntagged",
+        "Sprites/Leagues/SilverLeagueUntagged",
+        "Sprites/Leagues/GoldLeagueUntagged",
+        "Sprites/Leagues/SeasonChampionshipUntagged",
+        "Sprites/Leagues/WorldChampionshipUntagged",
+        "Sprites/Leagues/MeleeLeagueUntagged",
+        "Sprites/Leagues/RangeLeagueUntagged",
+        "Sprites/Leagues/CraftingLeagueUntagged",
 
         "Sprites/Leagues/Localized/BronzeLeagueKR",
         "Sprites/Leagues/Localized/BronzeLeagueJP",
@@ -218,6 +228,16 @@ public class ResourcesPath
         "Sprites/Leagues/Localized/CraftingLeagueRU",
         "Sprites/Leagues/Localized/CraftingLeagueES",
         "Sprites/Leagues/Localized/CraftingLeaguePT",
+
+        "Sprites/Leagues/Localized/RegularLeagueKR",
+        "Sprites/Leagues/Localized/RegularLeagueJP",
+        "Sprites/Leagues/Localized/RegularLeagueTC",
+        "Sprites/Leagues/Localized/RegularLeagueSC",
+        "Sprites/Leagues/Localized/RegularLeagueFR",
+        "Sprites/Leagues/Localized/RegularLeagueDE",
+        "Sprites/Leagues/Localized/RegularLeagueRU",
+        "Sprites/Leagues/Localized/RegularLeagueES",
+        "Sprites/Leagues/Localized/RegularLeaguePT",
 
         // Tiers
         "Sprites/Leagues/Bronze",
