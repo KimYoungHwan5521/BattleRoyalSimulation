@@ -1231,6 +1231,10 @@ MonoBehaviour:
     m_Key: Alert:Obtain World Championship Ticket
     m_Metadata:
       m_Items: []
+  - m_Id: 113426657063792640
+    m_Key: Show Map Info
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

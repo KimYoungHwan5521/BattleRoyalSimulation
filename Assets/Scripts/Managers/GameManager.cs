@@ -407,6 +407,10 @@ public class GameManager : MonoBehaviour
         {
             calendar.CalendarUpdate();
         }
+        if(float.Parse(loadedDataGameVersion.Substring(0, 3)) < 1.3)
+        {
+            calendar.CancelAllReservation();
+        }
         yield return null;
     }
     #endregion

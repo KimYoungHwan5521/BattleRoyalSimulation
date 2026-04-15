@@ -241,6 +241,11 @@ public class OutGameUIManager : MonoBehaviour
     public int BettingAmount => bettingAmount;
     [SerializeField] LocalizedDropdown sortContestantsListDropdown;
 
+    [SerializeField] GameObject mapInfo;
+    [SerializeField] Image mapImage;
+    [SerializeField] TextMeshProUGUI farmableItemsText;
+    [SerializeField] ScrollRect farmableItemsScrollRect;
+
     [Header("Tutorial")]
     public Animator trainingRoomAnim;
     public Animator trainingRoomSurvivorAnim;
@@ -1894,6 +1899,25 @@ public class OutGameUIManager : MonoBehaviour
             contestants[i].GetComponentInChildren<TextMeshProUGUI>().text = contestantsData[originalDataIndex].localizedSurvivorName.GetLocalizedString();
         }
 
+    }
+
+    public void OpenMapInfo()
+    {
+        mapInfo.SetActive(true);
+        string minimapName = $"Minimap{calendar.LeagueReserveInfo[calendar.Today].map.ToString()[3..]}";
+        if (Enum.TryParse(minimapName, out ResourceEnum.Sprite sprite))
+        {
+            mapImage.sprite = ResourceManager.Get(sprite);
+        }
+        else Debug.LogWarning($"Minimap not found : {minimapName}");
+
+        farmableItemsText.text = string.Empty;
+        foreach (var item in calendar.itemPool[calendar.LeagueReserveInfo[calendar.Today].itemPool])
+        {
+            farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
+        }
+        GameManager.Instance.FixLayout(farmableItemsText.GetComponent<RectTransform>());
+        farmableItemsScrollRect.verticalNormalizedPosition = 1;
     }
 
     public void RandomBetting()

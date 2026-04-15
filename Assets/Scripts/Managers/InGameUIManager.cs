@@ -42,6 +42,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] predictionResultResults;
     int predictionLeft;
 
+    [Header("Middle Top")]
+    [SerializeField] TextMeshProUGUI currentBattleTimer;
+
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
     [SerializeField] GameObject exitBattleRoyale;
@@ -198,6 +201,8 @@ public class InGameUIManager : MonoBehaviour
         AutoCameraMove();
         ManualCameraMove();
         UpdateSelectedObjectInfo();
+        if (GameManager.Instance.BattleRoyaleManager == null || !GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
+        currentBattleTimer.text = $"{(int)GameManager.Instance.BattleRoyaleManager.battleTime / 60:00} : {(int)GameManager.Instance.BattleRoyaleManager.battleTime % 60:00}";
     }
 
     void AutoCameraMove()
@@ -208,7 +213,7 @@ public class InGameUIManager : MonoBehaviour
     void ManualCameraMove()
     {
         Vector3 cameraPos;
-        cameraPos = Camera.main.transform.position + (Vector3)navVector * Camera.main.orthographicSize * 0.1f;
+        cameraPos = Camera.main.transform.position + (Vector3)navVector * Camera.main.orthographicSize * 0.05f;
         if (!IsPointerOverUI() && isClicked)
         {
             cameraPos = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
@@ -243,7 +248,7 @@ public class InGameUIManager : MonoBehaviour
 
     void OnScrollWheel(InputValue value)
     {
-        if (!IsPointerOverUI()) Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.02f, 1, 100);
+        if (!IsPointerOverUI()) Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.05f, 1, 100);
     }
 
     void OnClick(InputValue value)

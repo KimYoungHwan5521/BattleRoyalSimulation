@@ -195,7 +195,7 @@ public class Option : MonoBehaviour
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-                string info = $"\n<i><size=12>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}</size></i>";
+                string info = $"\n<i><size=12>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}\nVersion {saveData.gameVersion}</size></i>";
                 if (i == 0) info += $"\n<i>{new LocalizedString("Basic", "Autosaved").GetLocalizedString()}</i>";
                 saveSlots[i].isEmpty = false;
                 saveSlots[i].SetInfo(info, i, saveData.ingameDate);

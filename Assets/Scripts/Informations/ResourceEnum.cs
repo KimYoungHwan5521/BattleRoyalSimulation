@@ -327,5 +327,8 @@ namespace ResourceEnum
         footstep_grass1,
         footstep_grass2,
         forest,
+        bow_load,
+        bow_release,
+        bow_hit,
     }
 }

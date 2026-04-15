@@ -325,6 +325,9 @@ public class ResourcesPath
         "Sounds/SFXs/footstep_grass1",
         "Sounds/SFXs/footstep_grass2",
         "Sounds/SFXs/forest",
+        "Sounds/SFXs/bow_load",
+        "Sounds/SFXs/bow_release",
+        "Sounds/SFXs/bow_hit",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

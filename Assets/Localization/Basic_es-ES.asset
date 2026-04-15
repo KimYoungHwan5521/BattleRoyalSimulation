@@ -1308,6 +1308,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
+  - m_Id: 113426657063792640
+    m_Localized: "Mostrar informaci\xF3n del mapa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -166,7 +166,8 @@ public class Survivor : CustomObject
     {
         get { return rightHandDisabled; }
         private set 
-        { 
+        {
+            if (value) Debug.Log($"Right hand disabled : {linkedSurvivorData.localizedSurvivorName}");
             rightHandDisabled = value;
             animator.SetBool("RightHandDisabled", value);
             rightHand.SetActive(!value);
@@ -941,6 +942,7 @@ public class Survivor : CustomObject
                 {
                     if (strategyConditions[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].TotalCondition.Invoke())
                     {
+                        if(playerSurvivor) Debug.Log(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action);
                         if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 0)
                         {
                             ApproachEnemy(TargetEnemy);
@@ -1102,7 +1104,7 @@ public class Survivor : CustomObject
         lookPosition = Vector2.zero;
         CurrentStatus = Status.Farming;
         sightMeshRenderer.material = m_SightNormal;
-        if (!(RightHandDisabled && leftHandDisabled))
+        if (!(RightHandDisabled && LeftHandDisabled))
         {
             // 파밍을 하는 경우:
             // 1. 막금구가 아님

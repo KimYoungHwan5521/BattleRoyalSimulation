@@ -117,8 +117,8 @@ public class ItemManager
         craftables.Add(new Craftable(Items.Revolver, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
         craftables.Add(new Craftable(Items.Pistol, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.ShotGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
+        craftables.Add(new Craftable(Items.ShotGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_Revolver, 40, 0, 0, 0, 1, 1, 4, 0, 7f));
