@@ -6,6 +6,7 @@ public class ResourcesPath
         "Prefabs/Survivor",
         "Prefabs/Bullet",
         "Prefabs/Rocket",
+        "Prefabs/Arrow",
         "Prefabs/Beam",
         "Prefabs/Blood",
         "Prefabs/Traps/BearTrap",

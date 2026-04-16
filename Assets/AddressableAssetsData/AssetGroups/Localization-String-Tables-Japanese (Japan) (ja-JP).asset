@@ -17,14 +17,14 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 5a7a9f0e262193f409544593eac40f41
   m_SerializeEntries:
-  - m_GUID: 8eaafbcceabe20b48a521764f8a4ff1e
-    m_Address: Basic_ja-JP
+  - m_GUID: 5e543a399dfca6e42b6b20e4a3134a83
+    m_Address: Characteristic_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5e543a399dfca6e42b6b20e4a3134a83
-    m_Address: Characteristic_ja-JP
+  - m_GUID: 61a1789c78bb8ee4996bb7268ab4d643
+    m_Address: Item_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP
@@ -35,8 +35,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 61a1789c78bb8ee4996bb7268ab4d643
-    m_Address: Item_ja-JP
+  - m_GUID: 8eaafbcceabe20b48a521764f8a4ff1e
+    m_Address: Basic_ja-JP
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja-JP

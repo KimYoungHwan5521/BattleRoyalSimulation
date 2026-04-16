@@ -350,6 +350,22 @@ MonoBehaviour:
     m_Localized: Acquired
     m_Metadata:
       m_Items: []
+  - m_Id: 111981782673977344
+    m_Localized: Bow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981784481722368
+    m_Localized: Advanced Bow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981786042003456
+    m_Localized: Arrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981787610673152
+    m_Localized: Arrow(Enchanted)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

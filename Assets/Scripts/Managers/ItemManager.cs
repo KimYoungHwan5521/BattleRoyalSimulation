@@ -24,6 +24,8 @@ public class ItemManager
         SniperRifle,
         Bazooka,
         LASER,
+        Bow,
+        AdvancedBow,
         // Enchanted Weapons
         Knife_Enchanted,
         Dagger_Enchanted,
@@ -36,6 +38,8 @@ public class ItemManager
         Bullet_ShotGun,
         Bullet_SniperRifle,
         Rocket_Bazooka,
+        Arrow,
+        Arrow_Enchanted,
         // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
@@ -113,11 +117,14 @@ public class ItemManager
     {
         // Crafting anim number - 0 : Crafting, 1 : Chemicals, 2 : Enchant
         craftables.Add(new Craftable(Items.WalkingAid, 5, 0, 1, 0, 2, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Bow, 7, 0, 0, 0, 2, 0, 1, 0, 7f));
+        craftables.Add(new Craftable(Items.Arrow, 7, 0, 0, 0, 1, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1, 3.5f));
         craftables.Add(new Craftable(Items.Revolver, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
         craftables.Add(new Craftable(Items.Pistol, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
+        craftables.Add(new Craftable(Items.AdvancedBow, 32, 0, 2, 0, 2, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.ShotGun, 35, 0, 4, 0, 4, 0, 1, 0, 14f));
         craftables.Add(new Craftable(Items.Bullet_Pistol, 40, 0, 0, 0, 1, 1, 2, 0, 7f));
         craftables.Add(new Craftable(Items.Bullet_SubMachineGun, 40, 0, 0, 0, 1, 1, 1, 0, 7f));
@@ -229,6 +236,14 @@ public class ItemManager
                     itemDictionary[wantItem].Add(laser);
                 }
                 break;
+            case Items.Bow:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1f, NeedHand.TwoHand, 20, 30f, 3f, 12f, 3f, 1, 1f, 3, 8, false));
+                break;
+            case Items.AdvancedBow:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, NeedHand.TwoHand, 60, 60f, 3f, 18f, 2f, 1, 1f, 3, 8, false));
+                break;
             // Bullets
             case Items.Bullet_Revolver:
                 for (int i = start; i < end; i++)
@@ -257,6 +272,14 @@ public class ItemManager
             case Items.Rocket_Bazooka:
                 for (int i = start; i < end; i++)
                     itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()), 5f, 1));
+                break;
+            case Items.Arrow:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.8f, 5));
+                break;
+            case Items.Arrow_Enchanted:
+                for (int i = start; i < end; i++)
+                    itemDictionary[wantItem].Add(new Item(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.8f));
                 break;
             // Helmets
             case Items.LowLevelBulletproofHelmet:

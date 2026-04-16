@@ -17,8 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 03540f445b261e4479e19db746d37122
   m_SerializeEntries:
-  - m_GUID: bb29ff58396a29e45949a9146d3df52d
-    m_Address: Assets/Localization/New Table Shared Data.asset
+  - m_GUID: 07068eb8a0742384bbdddccd8fcbbbbe
+    m_Address: Assets/Localization/Item Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,18 +27,18 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e7211a34fcf2f6245bcdbb87189f3d69
-    m_Address: Assets/Localization/Injury Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 07068eb8a0742384bbdddccd8fcbbbbe
-    m_Address: Assets/Localization/Item Shared Data.asset
-    m_ReadOnly: 1
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 99b160a8cd9d6d3469e3c804c3b21dfc
     m_Address: Assets/Localization/Name Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb29ff58396a29e45949a9146d3df52d
+    m_Address: Assets/Localization/New Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7211a34fcf2f6245bcdbb87189f3d69
+    m_Address: Assets/Localization/Injury Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

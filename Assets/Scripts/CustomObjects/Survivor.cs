@@ -307,15 +307,22 @@ public class Survivor : CustomObject
             if (CurrentWeaponAsRangedWeapon == null) return null;
             if (CurrentWeapon.itemType == ItemManager.Items.LASER) return null;
             string bulletName;
-            if (CurrentWeapon.itemType != ItemManager.Items.Bazooka) bulletName = $"Bullet_{currentWeapon.itemType}";
-            else bulletName = "Rocket_Bazooka";
+            if (CurrentWeapon.itemType == ItemManager.Items.Bazooka) bulletName = "Rocket_Bazooka";
+            else if (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow) bulletName = "Arrow";
+            else bulletName = $"Bullet_{currentWeapon.itemType}";
             if (!Enum.TryParse(bulletName, out ItemManager.Items bullet))
             {
                 Debug.LogWarning($"Wrong bullet name : {bulletName}");
                 return null;
             }
 
-            Item validBullet = inventory.Find(x => x.itemType == bullet);
+            Item validBullet;
+            if(bulletName == "Arrow")
+            {
+                validBullet = inventory.Find(x => x.itemType == ItemManager.Items.Arrow_Enchanted);
+                if(validBullet == null) validBullet = inventory.Find(x => x.itemType == ItemManager.Items.Arrow);
+            }
+            else validBullet = inventory.Find(x => x.itemType == bullet);
             return validBullet;
         }
     }
@@ -367,7 +374,6 @@ public class Survivor : CustomObject
             return item != null ? item.amount : 0;
         }
     }
-    Item curEnchanting;
     Item curDrinking;
     float curCraftingTime;
     float craftingSpeed = 1f;
@@ -1047,7 +1053,7 @@ public class Survivor : CustomObject
         }
         animator.SetBool("Drinking", false);
 
-        if (CurrentWeaponAsRangedWeapon != null)
+        if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.NeedPreload)
         {
             if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
             {
@@ -1083,7 +1089,7 @@ public class Survivor : CustomObject
                 Enchant();
                 return;
             }
-            else if (Enchanting())
+            else if (CheckEnchantables())
             {
                 curEnchantingTime = 0;
                 return;
@@ -1808,7 +1814,7 @@ public class Survivor : CustomObject
         {
             Transform weaponTF = null;
             Transform hand = rightHand.transform;
-            if (rightHandDisabled) hand = leftHand.transform;
+            if (rightHandDisabled || wantWeapon.itemType == ItemManager.Items.Bow || wantWeapon.itemType == ItemManager.Items.AdvancedBow) hand = leftHand.transform;
             // Active가 꺼져있는 오브젝트는 Find로 찾을 수 없다.
             foreach (Transform child in hand)
             {
@@ -1837,7 +1843,8 @@ public class Survivor : CustomObject
         if (IsValid(currentWeapon))
         {
             GetItem(currentWeapon);
-            Transform curWeaponTF = transform.Find("Right Hand").Find($"{currentWeapon.itemType}");
+            Transform hand = rightHandDisabled || currentWeapon.itemType == ItemManager.Items.Bow || currentWeapon.itemType == ItemManager.Items.AdvancedBow ? leftHandTF : rightHandTF;
+            Transform curWeaponTF = hand.Find($"{currentWeapon.itemType}");
             if (curWeaponTF != null)
             {
                 curWeaponTF.gameObject.SetActive(false);
@@ -2179,7 +2186,7 @@ public class Survivor : CustomObject
         return false;
     }
 
-    bool Enchanting()
+    bool CheckEnchantables()
     {
         Item poison = inventory.Find(x => x.itemType == ItemManager.Items.Poison);
         if(poison != null)
@@ -2196,6 +2203,12 @@ public class Survivor : CustomObject
             if(notEnchantedBearTrap != null)
             {
                 currentEnchanting = notEnchantedBearTrap;
+                return true;
+            }
+            Item notEnchantedArrow = inventory.Find(x => x.itemType == ItemManager.Items.Arrow);
+            if(notEnchantedArrow != null && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow))
+            {
+                currentEnchanting = notEnchantedArrow;
                 return true;
             }
         }
@@ -2271,12 +2284,25 @@ public class Survivor : CustomObject
         progressBar.fillAmount = curEnchantingTime / enchantingTime;
         if(curEnchantingTime > enchantingTime)
         {
-            if (curEnchanting is MeleeWeapon weapon) weapon.Enchant();
-            else if (curEnchanting is Buriable buriable)
+            if (currentEnchanting is MeleeWeapon weapon) weapon.Enchant();
+            else if (currentEnchanting is Buriable buriable)
             {
-                inventory.Remove(buriable);
+                ConsumptionItem(buriable, 1);
                 ItemManager.AddItems(ItemManager.Items.BearTrap_Enchanted, 1);
                 GetItem(ItemManager.itemDictionary[ItemManager.Items.BearTrap_Enchanted][^1]);
+            }
+            else
+            {
+                var arrow = inventory.Find(x => x.itemType == ItemManager.Items.Arrow);
+                if(arrow == null)
+                {
+                    currentEnchanting = null;
+                    return;
+                }
+                int amount = Math.Min(arrow.amount, 5);
+                ConsumptionItem(arrow, amount);
+                ItemManager.AddItems(ItemManager.Items.Arrow_Enchanted, amount);
+                for (int i = 0; i < amount; i++) GetItem(ItemManager.itemDictionary[ItemManager.Items.Arrow_Enchanted][^i]);
             }
         }
     }
@@ -2620,6 +2646,8 @@ public class Survivor : CustomObject
         animator.SetBool("Aim", true);
 
         curAimDelay += Time.deltaTime * aiCool;
+        // 적이 너무 가까우면 그냥 바로 사격
+        if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < 5f) curAimDelay = aimDelay;
         progressBar.fillAmount = curAimDelay / aimDelay;
         if(curAimDelay > aimDelay)
         {

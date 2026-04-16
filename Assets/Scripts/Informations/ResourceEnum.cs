@@ -6,6 +6,7 @@ namespace ResourceEnum
         Survivor,
         Bullet,
         Rocket,
+        Arrow,
         Beam,
         Blood,
         BearTrap,

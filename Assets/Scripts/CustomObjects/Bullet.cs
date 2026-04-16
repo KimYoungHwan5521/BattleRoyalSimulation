@@ -7,6 +7,7 @@ public class Bullet : CustomObject
     protected Survivor launcher;
     public Survivor Launcher => launcher;
     SpriteRenderer spriteRenderer;
+    public float spriteOffset;
     Collider2D col;
     TrailRenderer trailRenderer;
     protected float projectileSpeed;
@@ -75,7 +76,7 @@ public class Bullet : CustomObject
 
     IEnumerator Despawn()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(trailRenderer.time);
 
         PoolManager.Despawn(gameObject);
         spriteRenderer.enabled = true;
@@ -92,7 +93,12 @@ public class Bullet : CustomObject
             DelayedDespawn();
         }
         transform.position += Time.fixedDeltaTime * projectileSpeed * (Vector3)direction;
-
+        
+        // 방향 각도 계산
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                
+        // 회전 적용
+        transform.rotation = Quaternion.Euler(0, 0, angle + spriteOffset);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

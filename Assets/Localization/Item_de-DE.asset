@@ -351,6 +351,22 @@ MonoBehaviour:
     m_Localized: Nach Erhalt
     m_Metadata:
       m_Items: []
+  - m_Id: 111981782673977344
+    m_Localized: Bogen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981784481722368
+    m_Localized: Verbesserter Bogen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981786042003456
+    m_Localized: Pfeil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981787610673152
+    m_Localized: Pfeil(Verzaubert)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

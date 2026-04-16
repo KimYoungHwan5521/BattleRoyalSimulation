@@ -347,6 +347,22 @@ MonoBehaviour:
     m_Key: Acquired
     m_Metadata:
       m_Items: []
+  - m_Id: 111981782673977344
+    m_Key: Bow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981784481722368
+    m_Key: Advanced Bow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981786042003456
+    m_Key: Arrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981787610673152
+    m_Key: Arrow_Enchanted
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

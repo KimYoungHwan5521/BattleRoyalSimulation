@@ -350,6 +350,22 @@ MonoBehaviour:
     m_Localized: Par acquisition
     m_Metadata:
       m_Items: []
+  - m_Id: 111981782673977344
+    m_Localized: Arc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981784481722368
+    m_Localized: "Arc avanc\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981786042003456
+    m_Localized: "Fl\xE8che"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111981787610673152
+    m_Localized: "Fl\xE8che(Enchant\xE9)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

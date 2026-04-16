@@ -17,20 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b8d913426f84c2947bf8aed853d675f9
   m_SerializeEntries:
-  - m_GUID: e8d52f69d57c9ab49b35947cf8698101
-    m_Address: Basic_zh-Hant
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-zh-Hant
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16fa2c958b74d974c9e4bdec7fcba46f
     m_Address: Characteristic_zh-Hant
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-zh-Hant
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a619aa9a50594244fa3f71e997708d2a
-    m_Address: Injury_zh-Hant
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hant
@@ -41,8 +29,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hant
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a619aa9a50594244fa3f71e997708d2a
+    m_Address: Injury_zh-Hant
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hant
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b584c25a74f0017468e53ef2bf9e7c0e
     m_Address: Name_zh-Hant
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hant
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e8d52f69d57c9ab49b35947cf8698101
+    m_Address: Basic_zh-Hant
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hant

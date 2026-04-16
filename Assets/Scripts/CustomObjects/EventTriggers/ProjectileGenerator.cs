@@ -21,16 +21,17 @@ public class ProjectileGenerator : CustomObject
         weapon.Fire();
         owner.InGameUIManager.UpdateSelectedObjectInventory(owner);
 
-        if (muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled ? owner.leftHandTF : owner.rightHandTF);
+        if (muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled || owner.CurrentWeapon.itemType == ItemManager.Items.Bow || owner.CurrentWeapon.itemType == ItemManager.Items.AdvancedBow ? owner.leftHandTF : owner.rightHandTF);
         spawnPos = muzzleTF != null ? muzzleTF.position : owner.transform.position + owner.transform.up * 2;
         if (weapon.itemType == ItemManager.Items.ShotGun)
         {
             SpawnProjectile_ShotGun(weapon);
         }
-        else if(weapon.itemType == ItemManager.Items.Bazooka)
+        else if (weapon.itemType == ItemManager.Items.Bazooka)
         {
             SpawnProjectile_Bazooka(weapon);
         }
+        else if (weapon.itemType == ItemManager.Items.Bow || weapon.itemType == ItemManager.Items.AdvancedBow) SpawnProjectile(weapon, ResourceEnum.Prefab.Arrow);
         else SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
     }
 
@@ -104,7 +105,7 @@ public class ProjectileGenerator : CustomObject
 
     public void DrawBeam()
     {
-        if(muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled ? owner.leftHandTF : owner.rightHandTF);
+        if(muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled || owner.CurrentWeapon.itemType == ItemManager.Items.Bow || owner.CurrentWeapon.itemType == ItemManager.Items.AdvancedBow ? owner.leftHandTF : owner.rightHandTF);
         PlaySFX("laser,10", owner, muzzleTF.position);
         Vector2 destination = GetDestination();
 

@@ -19,7 +19,8 @@ public class Rocket : Bullet
                 splashedSurvivor.TakeDamage(this, damage, critical);
             }
         }
-        PoolManager.Despawn(gameObject);
+        //PoolManager.Despawn(gameObject);
+        DelayedDespawn();
         initiated = false;
     }
 
