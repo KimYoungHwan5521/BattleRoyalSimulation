@@ -1235,6 +1235,14 @@ MonoBehaviour:
     m_Key: Show Map Info
     m_Metadata:
       m_Items: []
+  - m_Id: 114511803972120576
+    m_Key: League you can spectate if you skip today
+    m_Metadata:
+      m_Items: []
+  - m_Id: 114528898273308672
+    m_Key: 'Wearing:'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

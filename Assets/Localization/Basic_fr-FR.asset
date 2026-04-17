@@ -1322,6 +1322,15 @@ MonoBehaviour:
     m_Localized: Afficher les infos de la carte
     m_Metadata:
       m_Items: []
+  - m_Id: 114511803972120576
+    m_Localized: "Ligue observable m\xEAme sans participation aujourd\u2019hui"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 114528898273308672
+    m_Localized: "\xC9quipement en cours : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
@@ -1370,3 +1379,4 @@ MonoBehaviour:
         - id: 41024727797002240
         - id: 113130486810341376
         - id: 113130481299025920
+        - id: 114528898273308672

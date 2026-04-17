@@ -13,7 +13,7 @@ public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, 
-        TrapDisarming, Crafting, Enchanting, FindingEnemy }
+        TrapDisarming, Crafting, Enchanting, FindingEnemy, Wearing }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -147,7 +147,7 @@ public class Survivor : CustomObject
     int increaseCrafting;
     public int IncreaseCrafting => increaseCrafting;
 
-    Vector3 lastVelocity;
+    //Vector3 lastVelocity;
     bool temporaryAllowProhibitArea;
     #endregion
     #region Characteristic
@@ -453,12 +453,19 @@ public class Survivor : CustomObject
     [SerializeField] Box targetFarmingBox;
     [SerializeField] Dictionary<Survivor, bool> farmingCorpses = new();
     [SerializeField] Survivor targetFarmingCorpse;
-    [SerializeField] float farmingTime = 3f;
+    float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
-    [SerializeField] float aimDelay = 1.5f;
+    float aimDelay = 1.5f;
     [SerializeField] float curAimDelay;
     [SerializeField] float curShotTime;
     [SerializeField] float reloadSpeed = 1;
+    float wearingTime = 1f;
+    float curWearingTime;
+    float wearingSpeed = 1f;
+    BulletproofHelmet currentWearingHelmet;
+    public BulletproofHelmet CurrentWearingHelmet => currentWearingHelmet;
+    BulletproofVest currentWearingVest;
+    public BulletproofVest CurrentWearingVest => currentWearingVest;
     #endregion
     #region Look
     [Header("Look")]
@@ -627,9 +634,10 @@ public class Survivor : CustomObject
             if (agent.velocity.magnitude > 0)
             {
                 Look((Vector2)(transform.position + agent.velocity));
-                lastVelocity = agent.velocity;
+                //lastVelocity = agent.velocity;
             }
-            else Look((Vector2)(transform.position + lastVelocity));
+            //else Look((Vector2)(transform.position + lastVelocity));
+            else Look((Vector2)(transform.forward));
         }
     }
 
@@ -805,176 +813,194 @@ public class Survivor : CustomObject
                 Aim();
             }
         }
-        else if (inSightEnemies.Count == 0)
-        {
-            animator.SetBool("Attack", false);
-            animator.SetBool("Aim", false);
-            curAimDelay = 0;
-
-            if(CurrentFarmingArea != null && (CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited))
-            {
-                CurrentFarmingArea = FindNearest(farmingAreas);
-            }
-
-            if(runAwayDestination != Vector2.zero)
-            {
-                if (Vector2.Distance(transform.position, runAwayDestination) < 1f)
-                {
-                    runAwayDestination = Vector2.zero;
-                    runAwayFrom = null;
-                    sightMeshRenderer.material = m_SightNormal;
-                }
-                else return;
-            }
-
-            if(keepEyesOnPosition != Vector2.zero)
-            {
-                agent.SetDestination(transform.position);
-                return;
-            }
-
-            if(!(rightHandDisabled && leftHandDisabled))
-            {
-                if(Maintain())
-                {
-                    CurrentStatus = Status.Maintain;
-                    return;
-                }
-
-                if(detectedTraps.Count > 0)
-                {
-                    DisarmTrap();
-                    return;
-                }
-            }
-
-            if(threateningSoundPosition != Vector2.zero)
-            {
-                InvestigateThreateningSound();
-            }
-            else if(targetEnemiesLastPosition != Vector2.zero)
-            {
-                TraceEnemy();
-            }
-            else
-            {
-                TryFarming();
-            }
-        }
         else
         {
-            CurrentStatus = Status.InCombat;
-            targetFarmingCorpse = null;
-            targetFarmingSection = null;
-            animator.SetBool("Crafting", false);
-            // 대상이 죽어버릴 경우
-            if (TargetEnemy.isDead)
+            // 적이 있든 없든 일단 방어구 우선 착용
+            if(!RightHandDisabled && !LeftHandDisabled)
             {
-                if (!farmingCorpses.ContainsKey(TargetEnemy))
+                if (currentWearingHelmet != null)
                 {
-                    farmingCorpses.Add(TargetEnemy, false);
-                    targetFarmingCorpse = TargetEnemy;
+                    Wearing(currentWearingHelmet);
+                    return;
                 }
-                else if (!farmingCorpses[TargetEnemy])
+                else if (currentWearingVest != null)
                 {
-                    targetFarmingCorpse = TargetEnemy;
+                    Wearing(currentWearingVest);
+                    return;
                 }
-                inSightEnemies.Remove(TargetEnemy);
-                targetEnemiesLastPosition = Vector2.zero;
-                lastTargetEnemy = null;
-
-                CurrentFarmingArea = FindNearest(farmingAreas);
-                targetFarmingSection = FindNearest(farmingSections);
-                targetFarmingBox = FindNearest(farmingBoxes);
-                targetFarmingCorpse = FindNearest(farmingCorpses);
             }
-            else
-            {
-                lookPosition = TargetEnemy.transform.position;
-                float distance = Vector2.Distance(transform.position, TargetEnemy.transform.position);
-                bool enemyInAttackRange = false;
-                if (IsValid(currentWeapon))
-                {
-                    if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0)
-                    {
-                        if (ValidBullet != null)
-                        {
-                            Reload();
-                            return;
-                        }
-                        // 원거린데 총알 없으면 attackRange
-                        if (distance < attackRange) enemyInAttackRange = true;
-                    }
-                    // 근거리거나 원거리+총알 있으면 weapon.AttackRange
-                    else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
-                }
-                else if (distance < attackRange) enemyInAttackRange = true;
 
-                if (enemyInAttackRange)
+            if (inSightEnemies.Count == 0)
+            {
+                animator.SetBool("Attack", false);
+                animator.SetBool("Aim", false);
+                curAimDelay = 0;
+
+                if (CurrentFarmingArea != null && (CurrentFarmingArea.IsProhibited_Plan || CurrentFarmingArea.IsProhibited))
                 {
-                    if(strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
+                    CurrentFarmingArea = FindNearest(farmingAreas);
+                }
+
+                if (runAwayDestination != Vector2.zero)
+                {
+                    if (Vector2.Distance(transform.position, runAwayDestination) < 1f)
                     {
-                        if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
-                        {
-                            if (runAwayFrom != null && TargetEnemy != runAwayFrom) Combat(distance);
-                            else if (!TryRunAway(TargetEnemy)) Combat(distance);
-                        }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
-                        {
-                            Combat(distance);
-                        }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
-                        {
-                            TryFarming();
-                        }
+                        runAwayDestination = Vector2.zero;
+                        runAwayFrom = null;
+                        sightMeshRenderer.material = m_SightNormal;
                     }
-                    else
+                    else return;
+                }
+
+                if (keepEyesOnPosition != Vector2.zero)
+                {
+                    agent.SetDestination(transform.position);
+                    return;
+                }
+
+                if (!(rightHandDisabled && leftHandDisabled))
+                {
+                    if (Maintain())
                     {
-                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 0)
-                        {
-                            Combat(distance);
-                        }
-                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
-                        {
-                            TryFarming();
-                        }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
-                        {
-                            if(!TryRunAway(TargetEnemy)) Combat(distance);
-                        }
+                        CurrentStatus = Status.Maintain;
+                        return;
                     }
+
+                    if (detectedTraps.Count > 0)
+                    {
+                        DisarmTrap();
+                        return;
+                    }
+                }
+
+                if (threateningSoundPosition != Vector2.zero)
+                {
+                    InvestigateThreateningSound();
+                }
+                else if (targetEnemiesLastPosition != Vector2.zero)
+                {
+                    TraceEnemy();
                 }
                 else
                 {
-                    if (strategyConditions[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].TotalCondition.Invoke())
+                    TryFarming();
+                }
+            }
+            else
+            {
+                CurrentStatus = Status.InCombat;
+                targetFarmingCorpse = null;
+                targetFarmingSection = null;
+                animator.SetBool("Crafting", false);
+                // 대상이 죽어버릴 경우
+                if (TargetEnemy.isDead)
+                {
+                    if (!farmingCorpses.ContainsKey(TargetEnemy))
                     {
-                        if(playerSurvivor) Debug.Log(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action);
-                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 0)
+                        farmingCorpses.Add(TargetEnemy, false);
+                        targetFarmingCorpse = TargetEnemy;
+                    }
+                    else if (!farmingCorpses[TargetEnemy])
+                    {
+                        targetFarmingCorpse = TargetEnemy;
+                    }
+                    inSightEnemies.Remove(TargetEnemy);
+                    targetEnemiesLastPosition = Vector2.zero;
+                    lastTargetEnemy = null;
+
+                    CurrentFarmingArea = FindNearest(farmingAreas);
+                    targetFarmingSection = FindNearest(farmingSections);
+                    targetFarmingBox = FindNearest(farmingBoxes);
+                    targetFarmingCorpse = FindNearest(farmingCorpses);
+                }
+                else
+                {
+                    lookPosition = TargetEnemy.transform.position;
+                    float distance = Vector2.Distance(transform.position, TargetEnemy.transform.position);
+                    bool enemyInAttackRange = false;
+                    if (IsValid(currentWeapon))
+                    {
+                        if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0)
                         {
-                            ApproachEnemy(TargetEnemy);
+                            if (ValidBullet != null)
+                            {
+                                Reload();
+                                return;
+                            }
+                            // 원거린데 총알 없으면 attackRange
+                            if (distance < attackRange) enemyInAttackRange = true;
                         }
-                        else if(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
+                        // 근거리거나 원거리+총알 있으면 weapon.AttackRange
+                        else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
+                    }
+                    else if (distance < attackRange) enemyInAttackRange = true;
+
+                    if (enemyInAttackRange)
+                    {
+                        if (strategyConditions[StrategyCase.SawAnEnemyAndItIsInAttackRange].TotalCondition.Invoke())
                         {
-                            TryFarming();
+                            if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 2)
+                            {
+                                if (runAwayFrom != null && TargetEnemy != runAwayFrom) Combat(distance);
+                                else if (!TryRunAway(TargetEnemy)) Combat(distance);
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 0)
+                            {
+                                Combat(distance);
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action == 1)
+                            {
+                                TryFarming();
+                            }
                         }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
+                        else
                         {
-                            if (!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
+                            if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 0)
+                            {
+                                Combat(distance);
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 1)
+                            {
+                                TryFarming();
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction == 2)
+                            {
+                                if (!TryRunAway(TargetEnemy)) Combat(distance);
+                            }
                         }
                     }
                     else
                     {
-                        if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 0)
+                        if (strategyConditions[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].TotalCondition.Invoke())
                         {
-                            ApproachEnemy(TargetEnemy);
+                            if (playerSurvivor) Debug.Log(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action);
+                            if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 0)
+                            {
+                                ApproachEnemy(TargetEnemy);
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 1)
+                            {
+                                TryFarming();
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 2)
+                            {
+                                if (!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
+                            }
                         }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
+                        else
                         {
-                            TryFarming();
-                        }
-                        else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
-                        {
-                            if(!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
+                            if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 0)
+                            {
+                                ApproachEnemy(TargetEnemy);
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 1)
+                            {
+                                TryFarming();
+                            }
+                            else if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction == 2)
+                            {
+                                if (!TryRunAway(TargetEnemy)) ApproachEnemy(TargetEnemy);
+                            }
                         }
                     }
                 }
@@ -1635,28 +1661,22 @@ public class Survivor : CustomObject
                 GetItem(item);
             }
         }
-        else if(item is BulletproofHelmet)
+        else if(item is BulletproofHelmet newBulletproofHelmet)
         {
-            BulletproofHelmet newBulletproofHelmet = item as BulletproofHelmet;
+            GetItem(item);
             if (CompareBulletproofHelmetValue(newBulletproofHelmet))
             {
-                Equip(newBulletproofHelmet);
-            }
-            else
-            {
-                GetItem(item);
+                //Equip(newBulletproofHelmet);
+                currentWearingHelmet = newBulletproofHelmet;
             }
         }
-        else if(item is BulletproofVest)
+        else if(item is BulletproofVest newBulletproofVest)
         {
-            BulletproofVest newBulletproofVest = item as BulletproofVest;
+            GetItem(item);
             if (CompareBulletproofVestValue(newBulletproofVest))
             {
-                Equip(newBulletproofVest);
-            }
-            else
-            {
-                GetItem(item);
+                //Equip(newBulletproofVest);
+                currentWearingVest = newBulletproofVest;
             }
         }
         else if(item.itemType.ToString().Contains("Bullet") || item.itemType.ToString().Contains("Rocket"))
@@ -1783,7 +1803,7 @@ public class Survivor : CustomObject
     {
         return wantWeapon switch
         {
-            ItemManager.Items.Pistol or ItemManager.Items.Revolver => 1,
+            ItemManager.Items.Pistol or ItemManager.Items.Revolver or ItemManager.Items.AdvancedBow => 1,
             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
             ItemManager.Items.Bazooka or ItemManager.Items.SniperRifle => 3,
             ItemManager.Items.AssaultRifle => 4,
@@ -1888,6 +1908,7 @@ public class Survivor : CustomObject
                 Debug.LogWarning($"Can't find helmet : {wantBulletproofHelmet.itemType}");
             }
             currentHelmet = wantBulletproofHelmet;
+            ConsumptionItem(wantBulletproofHelmet, 1);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -1919,6 +1940,7 @@ public class Survivor : CustomObject
         {
             currentVest = wantBulletproofVest;
         }
+        ConsumptionItem(wantBulletproofVest, 1);
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
@@ -1930,6 +1952,36 @@ public class Survivor : CustomObject
             currentVest = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
+    }
+
+    void Wearing(BulletproofHelmet helmet)
+    {
+        CurrentStatus = Status.Wearing;
+        lookPosition = Vector2.zero;
+        agent.SetDestination(transform.position);
+        curWearingTime += Time.deltaTime * aiCool * wearingSpeed;
+        progressBar.fillAmount = curWearingTime / wearingTime;
+        if (curWearingTime > wearingTime)
+        {
+            curWearingTime = 0;
+            Equip(helmet);
+            currentWearingHelmet = null;
+        }
+    }
+
+    void Wearing(BulletproofVest vest)
+    {
+        CurrentStatus = Status.Wearing;
+        lookPosition = Vector2.zero;
+        agent.SetDestination(transform.position);
+        curWearingTime += Time.deltaTime * aiCool * wearingSpeed;
+        progressBar.fillAmount = curWearingTime / wearingTime;
+        if(curWearingTime > wearingTime)
+        {
+            curWearingTime = 0;
+            Equip(vest);
+            currentWearingVest = null;
+        }
     }
     #endregion
 
@@ -2267,8 +2319,8 @@ public class Survivor : CustomObject
             currentCrafting = null;
             craftables.Clear();
             if (isEquipable == 0 && CompareWeaponValue((Weapon)item)) Equip((Weapon)item);
-            else if (isEquipable == 1) Equip((BulletproofHelmet)item);
-            else if (isEquipable == 2) Equip((BulletproofVest)item);
+            else if (isEquipable == 1) currentWearingHelmet = (BulletproofHelmet)item;
+            else if (isEquipable == 2) currentWearingVest = (BulletproofVest)item;
             CheckCraftables();
         }
     }
@@ -4110,6 +4162,7 @@ public class Survivor : CustomObject
     float injuryCorrection_LeftSightRange = 1;
     float injuryCorrection_RightSightRange = 1;
     float injuryCorrection_CraftingSpeed = 1;
+    float injuryCorrection_WearingSpeed = 1;
 
     bool augmentedRightArm;
     bool transcendantRightArm;
@@ -4138,6 +4191,8 @@ public class Survivor : CustomObject
         float penaltiedMoveSpeedByLeftToe = 1;
         float penaltiedCraftingSpeedByRightArm = 1;
         float penaltiedCraftingSpeedByLeftArm = 1;
+        float penaltiedWearingSpeedByLeftArm = 1;
+        float penaltiedWearingSpeedByRightArm = 1;
 
         foreach (Injury injury in injuries)
         {
@@ -4192,12 +4247,14 @@ public class Survivor : CustomObject
                     }
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightHand:
                     if ((augmentedRightArm || transcendantRightArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.5f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) RightHandDisabled = true;
                     break;
                 case InjurySite.RightThumb:
@@ -4208,6 +4265,7 @@ public class Survivor : CustomObject
                     if ((augmentedRightArm || transcendantRightArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByRightArm *= (1 - injury.degree * 0.1f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.LeftArm:
                     if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1)
@@ -4218,12 +4276,14 @@ public class Survivor : CustomObject
                     }
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.5f);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree * 0.5f);
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftHand:
                     if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.5f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree);
                     if (injury.degree >= 1) LeftHandDisabled = true;
                     break;
                 case InjurySite.LeftThumb:
@@ -4234,6 +4294,7 @@ public class Survivor : CustomObject
                     if ((augmentedLeftArm || transcendantLeftArm) && injury.degree < 1) break;
                     penaltiedAttackDamageByLeftArm *= (1 - injury.degree * 0.1f);
                     penaltiedCraftingSpeedByRightArm *= (1 - injury.degree * 0.3f);
+                    penaltiedWearingSpeedByRightArm *= (1 - injury.degree * 0.3f);
                     break;
                 case InjurySite.RightLeg:
                     if ((augmentedRightLeg || transcendantRightLeg) && injury.degree < 1)
@@ -4324,6 +4385,9 @@ public class Survivor : CustomObject
         if (RightHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByLeftArm;
         else if (LeftHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByRightArm;
         else injuryCorrection_CraftingSpeed = penaltiedCraftingSpeedByRightArm * penaltiedCraftingSpeedByLeftArm;
+        if (RightHandDisabled) injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByLeftArm;
+        else if (LeftHandDisabled) injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByRightArm;
+        else injuryCorrection_WearingSpeed = penaltiedWearingSpeedByRightArm * penaltiedWearingSpeedByLeftArm;
         ApplyCorrectionStats();
     }
     #endregion
@@ -4444,7 +4508,7 @@ public class Survivor : CustomObject
         correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
         aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
-        reloadSpeed = characteristicCorrection_ReloadSpeed * characteristicCorrection_CraftingSpeed;
+        reloadSpeed = characteristicCorrection_ReloadSpeed;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;
         hpRegeneration = characteristicCorrection_HpRegeneration;
@@ -4471,6 +4535,7 @@ public class Survivor : CustomObject
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
         craftingSpeed = Mathf.Max((1 + 0.01f * linkedSurvivorData.Crafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
+        wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
     }

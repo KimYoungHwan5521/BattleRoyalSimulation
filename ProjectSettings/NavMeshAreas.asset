@@ -14,7 +14,7 @@ NavMeshProjectSettings:
   - name: Prohibit_planned
     cost: 2
   - name: Prohibited
-    cost: 1000
+    cost: 4
   - name: 
     cost: 1
   - name: 

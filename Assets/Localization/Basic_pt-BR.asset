@@ -688,7 +688,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4009762284433408
-    m_Localized: 'Criando: {0}'
+    m_Localized: 'Criando : {0}'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
@@ -1308,6 +1308,15 @@ MonoBehaviour:
     m_Localized: "Exibir informa\xE7\xF5es do mapa"
     m_Metadata:
       m_Items: []
+  - m_Id: 114511803972120576
+    m_Localized: Liga que pode ser assistida mesmo sem participar hoje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 114528898273308672
+    m_Localized: 'Equipando : {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
   references:
     version: 2
     RefIds:
@@ -1356,3 +1365,4 @@ MonoBehaviour:
         - id: 41024727797002240
         - id: 113130486810341376
         - id: 113130481299025920
+        - id: 114528898273308672

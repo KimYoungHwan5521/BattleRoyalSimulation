@@ -1372,6 +1372,16 @@ MonoBehaviour:
     m_Localized: "\uC9C0\uB3C4 \uC815\uBCF4 \uD45C\uC2DC"
     m_Metadata:
       m_Items: []
+  - m_Id: 114511803972120576
+    m_Localized: "\uC624\uB298 \uBD88\uCC38\uC2DC \uAD00\uC804 \uAC00\uB2A5\uD55C
+      \uB9AC\uADF8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 114528898273308672
+    m_Localized: "\uC785\uB294 \uC911 : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
   references:
     version: 2
     RefIds:
@@ -1420,3 +1430,4 @@ MonoBehaviour:
         - id: 41024727797002240
         - id: 113130486810341376
         - id: 113130481299025920
+        - id: 114528898273308672

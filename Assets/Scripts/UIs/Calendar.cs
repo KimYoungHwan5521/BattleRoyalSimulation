@@ -200,6 +200,7 @@ public class Calendar : CustomObject
     [SerializeField] GameObject reserveForm;
     [SerializeField] LocalizeStringEvent reserveText;
     [SerializeField] TMP_Dropdown survivorWhoParticipateInBattleRoyaleDropdown;
+    [SerializeField] TextMeshProUGUI watchableLeagueTodayText;
     [SerializeField] GameObject reserveButton;
     [SerializeField] GameObject reserveCancelButton;
     [SerializeField] GameObject participateButton;
@@ -621,6 +622,7 @@ public class Calendar : CustomObject
         {
             if (today == wantReserveDate)
             {
+                watchableLeagueTodayText.text = $"{new LocalizedString("Basic", "League you can spectate if you skip today").GetLocalizedString()} : {new LocalizedString("Basic", leagueReserveInfo[wantReserveDate].league.ToString()).GetLocalizedString()}";
                 //if (leagueReserveInfo[Today].reserver != null || participationConfirmed || leagueReserveInfo[Today].league == League.SeasonChampionship || leagueReserveInfo[Today].league == League.WorldChampionship)
                 if (leagueReserveInfo[Today].reserver != null || participationConfirmed)
                 {
@@ -649,6 +651,7 @@ public class Calendar : CustomObject
             }
             else
             {
+                watchableLeagueTodayText.text = "";
                 if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
                 {
                     outGameUIManager.Alert("Alert:Reserve Championship");
@@ -996,6 +999,9 @@ public class Calendar : CustomObject
         {
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
+        if (leagueReserveInfo.ContainsKey(Today))
+            watchableLeagueTodayText.text = $"{new LocalizedString("Basic", "League you can spectate if you skip today").GetLocalizedString()} : {new LocalizedString("Basic", leagueReserveInfo[wantReserveDate].league.ToString()).GetLocalizedString()}";
+        else watchableLeagueTodayText.text = "";
         //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
         SetBattleRoyaleReserveBox();
         CalendarPage = calendarPage;

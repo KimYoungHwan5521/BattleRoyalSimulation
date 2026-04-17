@@ -757,6 +757,7 @@ public class InGameUIManager : MonoBehaviour
                 Survivor.Status.RunAway => new LocalizedString("Basic", "Fleeing").GetLocalizedString(),
                 Survivor.Status.TrapDisarming => new LocalizedString("Basic", "Disarming trap").GetLocalizedString(),
                 Survivor.Status.Crafting => new LocalizedString("Basic", "Crafting:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentCrafting.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
+                Survivor.Status.Wearing => survivor.CurrentWearingHelmet != null ? new LocalizedString("Basic", "Wearing:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentWearingHelmet.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString() : new LocalizedString("Basic", "Wearing:") { Arguments = new[] { new LocalizedString("Item", survivor.CurrentWearingVest.itemType.ToString()).GetLocalizedString() } }.GetLocalizedString(),
                 Survivor.Status.Enchanting => new LocalizedString("Basic", "Enchanting").GetLocalizedString(),
                 Survivor.Status.FindingEnemy => new LocalizedString("Basic", "FindingEnemy").GetLocalizedString(),
                 _ => survivor.CurrentStatus.ToString()
