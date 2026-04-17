@@ -272,7 +272,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173198887210656548}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -434,6 +434,7 @@ MonoBehaviour:
   - {fileID: 8728288949399671103}
   garbageObjects: []
   navMeshModifierVolume: {fileID: 8060533202223545894}
+  temp: []
   isProhibited_Plan: 0
   isProhibited: 0
   adjacentAreas: []

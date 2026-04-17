@@ -21,6 +21,11 @@ public class LeagueReserveData
     {
         this.league = league;
         this.map = map;
+        SetItemPool(league);
+    }
+
+    public void SetItemPool(League league)
+    {
         itemPool = league switch
         {
             League.BronzeLeague => 0,
@@ -299,6 +304,7 @@ public class Calendar : CustomObject
             League.GoldLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01),
             _ => ResourceEnum.Prefab.Map_5x5_01
         };
+        leagueReserveInfo[reserveDate].SetItemPool(league);
     }
 
     void LoadItemPool()
@@ -306,29 +312,27 @@ public class Calendar : CustomObject
         // Bronze League
         Dictionary<ItemManager.Items, int> items = new()
         {
-            //{ ItemManager.Items.Components, 20 },
-            //{ ItemManager.Items.Salvages, 40 },
-            //{ ItemManager.Items.Chemicals, 10 },
-            //{ ItemManager.Items.Gunpowder, 20 },
-            //{ ItemManager.Items.Knife, 3 },
-            //{ ItemManager.Items.Bat, 3 },
-            //{ ItemManager.Items.Revolver, 4 },
-            //{ ItemManager.Items.Pistol, 4 },
-            //{ ItemManager.Items.SubMachineGun, 2 },
-            //{ ItemManager.Items.ShotGun, 2 },
-            //{ ItemManager.Items.AssaultRifle, 1 },
-            //{ ItemManager.Items.SniperRifle, 1 },
-            //{ ItemManager.Items.Bullet_Revolver, 20 },
-            //{ ItemManager.Items.Bullet_Pistol, 20 },
-            //{ ItemManager.Items.Bullet_SubMachineGun, 20 },
-            //{ ItemManager.Items.Bullet_ShotGun, 20 },
-            //{ ItemManager.Items.Bullet_AssaultRifle, 10 },
-            //{ ItemManager.Items.Bullet_SniperRifle, 10 },
-            //{ ItemManager.Items.LowLevelBulletproofHelmet, 4 },
-            //{ ItemManager.Items.LowLevelBulletproofVest, 4 },
-            //{ ItemManager.Items.BandageRoll, 10 },
-            { ItemManager.Items.Bow, 10 },
-            { ItemManager.Items.Arrow, 10 },
+            { ItemManager.Items.Components, 20 },
+            { ItemManager.Items.Salvages, 40 },
+            { ItemManager.Items.Chemicals, 10 },
+            { ItemManager.Items.Gunpowder, 20 },
+            { ItemManager.Items.Knife, 3 },
+            { ItemManager.Items.Bat, 3 },
+            { ItemManager.Items.Revolver, 4 },
+            { ItemManager.Items.Pistol, 4 },
+            { ItemManager.Items.SubMachineGun, 2 },
+            { ItemManager.Items.ShotGun, 2 },
+            { ItemManager.Items.AssaultRifle, 1 },
+            { ItemManager.Items.SniperRifle, 1 },
+            { ItemManager.Items.Bullet_Revolver, 20 },
+            { ItemManager.Items.Bullet_Pistol, 20 },
+            { ItemManager.Items.Bullet_SubMachineGun, 20 },
+            { ItemManager.Items.Bullet_ShotGun, 20 },
+            { ItemManager.Items.Bullet_AssaultRifle, 10 },
+            { ItemManager.Items.Bullet_SniperRifle, 10 },
+            { ItemManager.Items.LowLevelBulletproofHelmet, 4 },
+            { ItemManager.Items.LowLevelBulletproofVest, 4 },
+            { ItemManager.Items.BandageRoll, 10 },
         };
         itemPool.Add(0, items);
         // Silver League
@@ -503,6 +507,8 @@ public class Calendar : CustomObject
         // Range League
         items = new()
         {
+            { ItemManager.Items.Bow, 50 },
+            { ItemManager.Items.AdvancedBow, 20 },
             { ItemManager.Items.Revolver, 25 },
             { ItemManager.Items.Pistol, 25 },
             { ItemManager.Items.SubMachineGun, 15 },
@@ -511,6 +517,7 @@ public class Calendar : CustomObject
             { ItemManager.Items.AssaultRifle, 5 },
             { ItemManager.Items.Bazooka, 5 },
             { ItemManager.Items.LASER, 1 },
+            { ItemManager.Items.Arrow, 100 },
             { ItemManager.Items.Bullet_Revolver, 25 },
             { ItemManager.Items.Bullet_Pistol, 25 },
             { ItemManager.Items.Bullet_SubMachineGun, 25 },

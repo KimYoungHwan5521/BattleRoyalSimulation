@@ -242,7 +242,7 @@ public class ItemManager
                 break;
             case Items.AdvancedBow:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, NeedHand.TwoHand, 60, 60f, 3f, 18f, 2f, 1, 1f, 3, 8, false));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, NeedHand.TwoHand, 60, 60f, 3f, 18f, 2f, 1, 1f, 3, 9, false));
                 break;
             // Bullets
             case Items.Bullet_Revolver:

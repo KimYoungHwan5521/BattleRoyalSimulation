@@ -2275,7 +2275,7 @@ public class Survivor : CustomObject
 
     void Enchant()
     {
-        CurrentStatus = Status.Crafting;
+        CurrentStatus = Status.Enchanting;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", 2);
         animator.SetBool("Crafting", true);
@@ -2302,8 +2302,13 @@ public class Survivor : CustomObject
                 int amount = Math.Min(arrow.amount, 5);
                 ConsumptionItem(arrow, amount);
                 ItemManager.AddItems(ItemManager.Items.Arrow_Enchanted, amount);
-                for (int i = 0; i < amount; i++) GetItem(ItemManager.itemDictionary[ItemManager.Items.Arrow_Enchanted][^i]);
+                for (int i = 0; i < amount; i++)
+                {
+                    GetItem(ItemManager.itemDictionary[ItemManager.Items.Arrow_Enchanted][^(i + 1)]);
+                }
             }
+            var poison = inventory.Find(x => x.itemType == ItemManager.Items.Poison);
+            if (poison != null) ConsumptionItem(poison, 1);
         }
     }
 

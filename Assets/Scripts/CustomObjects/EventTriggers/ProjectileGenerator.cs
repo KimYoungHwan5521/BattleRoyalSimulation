@@ -31,7 +31,7 @@ public class ProjectileGenerator : CustomObject
         {
             SpawnProjectile_Bazooka(weapon);
         }
-        else if (weapon.itemType == ItemManager.Items.Bow || weapon.itemType == ItemManager.Items.AdvancedBow) SpawnProjectile(weapon, ResourceEnum.Prefab.Arrow);
+        else if (weapon.itemType == ItemManager.Items.Bow || weapon.itemType == ItemManager.Items.AdvancedBow) SpawnProjectile(weapon, ResourceEnum.Prefab.Arrow, owner.ValidBullet.itemType == ItemManager.Items.Arrow_Enchanted);
         else SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
     }
 
@@ -78,13 +78,13 @@ public class ProjectileGenerator : CustomObject
         }
     }
 
-    void SpawnProjectile(RangedWeapon weapon, ResourceEnum.Prefab bulletPrefab)
+    void SpawnProjectile(RangedWeapon weapon, ResourceEnum.Prefab bulletPrefab, bool enchanted = false)
     {
 
         GameObject prefab = PoolManager.Spawn(bulletPrefab, spawnPos);
         Bullet bullet = prefab.GetComponent<Bullet>();
         Vector2 destination = GetDestination();
-        bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
+        bullet.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange, enchanted);
     }
     
     void SpawnProjectile_ShotGun(RangedWeapon weapon)

@@ -23,6 +23,7 @@ public class Bullet : CustomObject
     float err;
 
     protected bool initiated;
+    bool enchanted;
 
     protected override void Start()
     {
@@ -32,7 +33,7 @@ public class Bullet : CustomObject
         trailRenderer = GetComponent<TrailRenderer>();
     }
 
-    public void Initiate(Survivor launcher, float projectileSpeed, float damage, Vector2 spawnedPosition, Vector2 targetPosition, float maxRange)
+    public void Initiate(Survivor launcher, float projectileSpeed, float damage, Vector2 spawnedPosition, Vector2 targetPosition, float maxRange, bool enchanted = false)
     {
         this.launcher = launcher;
         this.projectileSpeed = projectileSpeed;
@@ -48,6 +49,7 @@ public class Bullet : CustomObject
         direction = direction.Rotate(rand);
 
         this.maxRange = maxRange;
+        this.enchanted = enchanted;
 
         initiated = true;
     }
@@ -109,7 +111,11 @@ public class Bullet : CustomObject
             if (collision.CompareTag("Survivor"))
             {
                 Survivor victim = collision.GetComponent<Survivor>();
-                if (victim != launcher) victim.TakeDamage(this);
+                if (victim != launcher)
+                {
+                    victim.TakeDamage(this);
+                    if (enchanted) victim.Poisoning(launcher);
+                }
                 else Debug.LogWarning("Launcer shot himself");
             }
             else

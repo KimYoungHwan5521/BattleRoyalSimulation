@@ -96,6 +96,8 @@ namespace ResourceEnum
         SniperRifle,
         Bazooka,
         LASER,
+        Bow,
+        AdvancedBow,
         // Bullets
         Bullet_Revolver,
         Bullet_Pistol,
@@ -104,6 +106,8 @@ namespace ResourceEnum
         Bullet_ShotGun,
         Bullet_SniperRifle,
         Rocket_Bazooka,
+        Arrow,
+        Arrow_Enchanted,
         // BulletproofHats
         LowLevelBulletproofHelmet,
         MiddleLevelBulletproofHelmet,
