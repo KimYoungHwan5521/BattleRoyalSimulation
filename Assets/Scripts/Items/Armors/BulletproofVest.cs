@@ -6,6 +6,15 @@ public class BulletproofVest : Item
 {
     float armor;
     public float Armor => armor;
+    float durability = 1f;
+    public float Durability
+    {
+        get { return durability; }
+        set
+        {
+            durability = Math.Clamp(value, 0f, 1f);
+        }
+    }
     public BulletproofVest(ItemManager.Items itemType, LocalizedString itemName, float weight, float armor, int amount = 1) 
         : base(itemType, itemName, weight, amount)
     {
@@ -13,5 +22,6 @@ public class BulletproofVest : Item
         this.weight = weight;
         this.amount = amount;
         this.armor = armor;
+        durability = 1f;
     }
 }

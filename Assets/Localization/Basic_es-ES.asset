@@ -895,9 +895,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7594255456989184
-    m_Localized: "Los supervivientes con ambas manos o ambos ojos incapacitados no
-      pueden ser programados para combates. En campeonatos, la participaci\xF3n depende
-      de su estado ese d\xEDa."
+    m_Localized: Los supervivientes con ambas manos o ambos ojos incapacitados no
+      pueden ser programados para combates.
     m_Metadata:
       m_Items: []
   - m_Id: 7594256941772800

@@ -897,8 +897,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7594255456989184
     m_Localized: "Les survivants avec les deux mains ou les deux yeux handicap\xE9s
-      ne peuvent pas \xEAtre inscrits aux matchs. Pour les championnats, la participation
-      d\xE9pend de leur \xE9tat le jour m\xEAme."
+      ne peuvent pas \xEAtre inscrits aux matchs."
     m_Metadata:
       m_Items: []
   - m_Id: 7594256941772800

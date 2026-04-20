@@ -893,8 +893,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7594255456989184
     m_Localized: Survivors with both hands or both eyes disabled cannot be scheduled
-      for matches. For championships, participation depends on their condition that
-      day.
+      for matches.
     m_Metadata:
       m_Items: []
   - m_Id: 7594256941772800

@@ -114,10 +114,12 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] GameObject selectedObjectsCurrentHelmet;
     Image selectedObjectsCurrentHelmetImage;
     TextMeshProUGUI selectedObjectsCurrentHelmetText;
+    [SerializeField] GameObject selectedObjectsCurrentHelmetDurability;
 
     [SerializeField] GameObject selectedObjectsCurrentVest;
     Image selectedObjectsCurrentVestImage;
     TextMeshProUGUI selectedObjectsCurrentVestText;
+    [SerializeField] GameObject selectedObjectsCurrentVestDurability;
 
     [SerializeField] TMP_Dropdown selectedObjectInventorySortDropdown;
     [SerializeField] Transform selectedObjectsInventory;
@@ -906,6 +908,27 @@ public class InGameUIManager : MonoBehaviour
 
                 bleedingAnim.SetBool("Bleeding", selectedSurvivor.BleedingAmount > 0);
 
+                if(selectedSurvivor.CurrentHelmet != null)
+                {
+                    selectedObjectsCurrentHelmetDurability.SetActive(true);
+                    selectedObjectsCurrentHelmetDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentHelmet.Durability;
+                    selectedObjectsCurrentHelmetDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentHelmet.Durability * 100:0}", $"{Math.Min(selectedSurvivor.CurrentHelmet.Durability * 100 + 50, 100):0}");
+                }
+                else
+                {
+                    selectedObjectsCurrentHelmetDurability.SetActive(false);
+                }
+
+                if (selectedSurvivor.CurrentVest != null)
+                {
+                    selectedObjectsCurrentVestDurability.SetActive(true);
+                    selectedObjectsCurrentVestDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentVest.Durability;
+                    selectedObjectsCurrentVestDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentVest.Durability * 100:0}", $"{Math.Min(selectedSurvivor.CurrentVest.Durability * 100 + 50, 100):0}");
+                }
+                else
+                {
+                    selectedObjectsCurrentVestDurability.SetActive(false);
+                }
             }
         }
     }

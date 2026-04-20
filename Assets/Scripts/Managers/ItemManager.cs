@@ -218,7 +218,7 @@ public class ItemManager
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.8f, NeedHand.TwoHand, 100, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
@@ -313,7 +313,7 @@ public class ItemManager
                 break;
             case Items.LegendaryBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, 70));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, 100));
                 break;
             // Consumables
             case Items.BandageRoll:

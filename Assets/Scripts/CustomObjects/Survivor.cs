@@ -3071,7 +3071,7 @@ public class Survivor : CustomObject
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
             if (specificDamagePart == InjurySite.Head)
             {
-                if (currentHelmet != null)
+                if (currentHelmet != null && UnityEngine.Random.Range(0f, 1f) < currentHelmet.Durability + 0.5f)
                 {
                     damage -= currentHelmet.Armor;
                     if (UnityEngine.Random.Range(0, 1f) < 0.5f)
@@ -3081,6 +3081,14 @@ public class Survivor : CustomObject
                     else
                     {
                         PlaySFX("ricochet2,5", this);
+                    }
+                    if(damage > currentHelmet.Armor)
+                    {
+                        currentHelmet.Durability -= damage / 1000;
+                    }
+                    else if (damage > currentHelmet.Armor * 0.8f)
+                    {
+                        currentHelmet.Durability -= damage / 2000;
                     }
                 }
             }
@@ -3313,7 +3321,18 @@ public class Survivor : CustomObject
         // 방탄 모자는 ApplyDamage에서 처리
         if (damagePart == InjurySiteMajor.Torso)
         {
-            if (currentVest != null) damage -= currentVest.Armor;
+            if (currentVest != null && UnityEngine.Random.Range(0f, 1f) < currentVest.Durability + 0.5f)
+            {
+                damage -= currentVest.Armor;
+                if(damage > currentVest.Armor)
+                {
+                    currentVest.Durability -= damage / 1000;
+                }
+                else if(damage > currentVest.Armor * 0.8f)
+                {
+                    currentVest.Durability -= damage / 2000;
+                }
+            }
         }
 
         ApplyDamage(launcher, damage, launcher.CurrentWeapon, damagePart, DamageType.GunShot);
@@ -4654,6 +4673,7 @@ public class Survivor : CustomObject
         }
         else
         {
+            Debug.Log($"Find corpse : {linkedSurvivorData.localizedSurvivorName} => {survivor.linkedSurvivorData.localizedSurvivorName}");
             if (!farmingCorpses.ContainsKey(survivor))
             {
                 farmingCorpses.Add(survivor, false);
