@@ -208,6 +208,7 @@ public class SurvivorData
     [SerializeField] public ItemManager.Craftable priority1Crafting = null;
     public int priority1CraftingToInt = -1;
     public bool[] craftingAllows;
+    public int repairCondition;
 
     // Stastics
     public int winCount;

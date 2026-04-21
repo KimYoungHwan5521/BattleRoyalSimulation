@@ -1320,6 +1320,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 115945406211878912
+    m_Localized: Durabilidad ({0})%\nTasa de defensa ({1})%\n<size=12>Tasa de defensa
+      = Durabilidad + 30
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 116043573494345728
+    m_Localized: 'Reparando : {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 116043574400315392
+    m_Localized: "Condici\xF3n de reparaci\xF3n de casco/chaleco"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043575365005312
+    m_Localized: Repara casco/chaleco cuando la durabilidad es inferior a (x)%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043576535216128
+    m_Localized: Por defecto, equipa la armadura con mayor durabilidad entre las
+      de mayor nivel.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1369,3 +1393,5 @@ MonoBehaviour:
         - id: 113130486810341376
         - id: 113130481299025920
         - id: 114528898273308672
+        - id: 115945406211878912
+        - id: 116043573494345728

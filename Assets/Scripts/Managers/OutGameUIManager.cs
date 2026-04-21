@@ -11,6 +11,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using NaughtyAttributes;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
@@ -173,6 +174,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] LocalizedDropdown craftingPriority1Dropdown;
 
     [SerializeField] Transform craftingAllow;
+    [SerializeField] TMP_InputField repairConditionInputBox;
     public List<GameObject> craftableAllows = new();
 
     [Serializable]
@@ -1663,7 +1665,14 @@ public class OutGameUIManager : MonoBehaviour
         {
             if(strategy.NoCondition)
             {
-                survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(strategy.ActionDropdown != null ? strategy.ActionDropdown.value : 0, strategy.ElseActionDropdown != null ? strategy.ElseActionDropdown.value : 0, 0);
+                if(strategy.strategyCase == StrategyCase.RepairCondition)
+                {
+                    survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.RepairCondition] = new(int.Parse(repairConditionInputBox.text), 0, 0);
+                }
+                else
+                {
+                    survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase] = new(strategy.ActionDropdown != null ? strategy.ActionDropdown.value : 0, strategy.ElseActionDropdown != null ? strategy.ElseActionDropdown.value : 0, 0);
+                }
             }
             else
             {

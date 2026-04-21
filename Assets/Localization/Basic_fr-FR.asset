@@ -1330,6 +1330,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 115945406211878912
+    m_Localized: "Durabilit\xE9 ({0})%\\nTaux de d\xE9fense ({1})%\\n<size=12>Taux
+      de d\xE9fense = Durabilit\xE9 + 30"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 116043573494345728
+    m_Localized: "R\xE9paration en cours : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 116043574400315392
+    m_Localized: "Condition de r\xE9paration casque/gilet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043575365005312
+    m_Localized: "R\xE9pare le casque/gilet lorsque la durabilit\xE9 est inf\xE9rieure
+      \xE0 (x) %."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043576535216128
+    m_Localized: "Par d\xE9faut, \xE9quipe l\u2019armure de plus haute durabilit\xE9
+      parmi celles de plus haut niveau."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1379,3 +1404,5 @@ MonoBehaviour:
         - id: 113130486810341376
         - id: 113130481299025920
         - id: 114528898273308672
+        - id: 115945406211878912
+        - id: 116043573494345728

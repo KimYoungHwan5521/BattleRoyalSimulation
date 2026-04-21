@@ -13,7 +13,7 @@ public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, 
-        TrapDisarming, Crafting, Enchanting, FindingEnemy, Wearing }
+        TrapDisarming, Crafting, Enchanting, FindingEnemy, Wearing, Reparing }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -466,6 +466,13 @@ public class Survivor : CustomObject
     public BulletproofHelmet CurrentWearingHelmet => currentWearingHelmet;
     BulletproofVest currentWearingVest;
     public BulletproofVest CurrentWearingVest => currentWearingVest;
+    // Current Reparing - 0 : None, 1 : Helmet, 2 : Vest
+    int currentRepairing;
+    public int CurrentRepairing;
+    float repairingTime;
+    float curRepairingTime;
+    int needComponentsToRepair;
+    int needSalvagesToRepair;
     #endregion
     #region Look
     [Header("Look")]
@@ -727,10 +734,195 @@ public class Survivor : CustomObject
         }
     }
 
+    bool CheckStopBleeding()
+    {
+        if (BleedingAmount >= 30 || (BleedingAmount > 0 && (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2))
+        {
+            if (inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll) != null || inventory.Find(x => x.itemType == ItemManager.Items.HemostaticBandageRoll) != null)
+            {
+                StopBleeding();
+                return true;
+            }
+        }
+        return false;
+    }
+
     void StopBleeding()
     {
         agent.SetDestination(transform.position);
         animator.SetBool("StopBleeding", true);
+    }
+
+    bool CheckDrinking()
+    {
+        if (curDrinking == null)
+        {
+            if (poisoned)
+            {
+                Item antidote = inventory.Find(x => x.itemType == ItemManager.Items.Antidote);
+                if (antidote != null)
+                {
+                    curDrinking = antidote;
+                    return true;
+                }
+            }
+            else
+            {
+                if (maxHP - curHP > 100)
+                {
+                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
+                    if (potion != null)
+                    {
+                        curDrinking = potion;
+                        return true;
+                    }
+                    else
+                    {
+                        potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
+                        if (potion != null)
+                        {
+                            curDrinking = potion;
+                            return true;
+                        }
+                    }
+                }
+                else if (maxHP - curHP > 50)
+                {
+                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
+                    if (potion != null)
+                    {
+                        curDrinking = potion;
+                        return true;
+                    }
+                    else
+                    {
+                        potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
+                        if (potion != null)
+                        {
+                            curDrinking = potion;
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            agent.destination = transform.position;
+            animator.SetBool("Drinking", true);
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckReload()
+    {
+        if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.NeedPreload)
+        {
+            if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
+            {
+                sightMeshRenderer.material = m_SightNormal;
+                Reload();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool CheckRepair()
+    {
+        // 헬멧 갈아쓰기
+        if (CurrentHelmet != null && CurrentHelmet.Durability < 1f)
+        {
+            BulletproofHelmet theMostDurable = CurrentHelmet;
+            foreach (var _ in inventory.FindAll(x => x.itemType == CurrentHelmet.itemType))
+            {
+                if (_ is BulletproofHelmet helmet)
+                {
+                    if (helmet.Durability > theMostDurable.Durability) theMostDurable = helmet;
+                }
+            }
+            if (theMostDurable != CurrentHelmet) currentWearingHelmet = theMostDurable;
+            else
+            {
+                // 수선
+                if (CurrentHelmet.Durability < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                {
+                    //재료체크
+                    int originalValue = CurrentHelmet.itemType switch
+                    {
+                        ItemManager.Items.LowLevelBulletproofHelmet => 0,
+                        ItemManager.Items.MiddleLevelBulletproofHelmet => 3,
+                        ItemManager.Items.HighLevelBulletproofHelmet => 6,
+                        ItemManager.Items.LegendaryBulletproofHelmet => 12,
+                        _ => 0
+                    };
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    originalValue = CurrentHelmet.itemType switch
+                    {
+                        ItemManager.Items.LowLevelBulletproofHelmet => 7,
+                        ItemManager.Items.MiddleLevelBulletproofHelmet => 8,
+                        ItemManager.Items.HighLevelBulletproofHelmet => 9,
+                        ItemManager.Items.LegendaryBulletproofHelmet => 18,
+                        _ => 0
+                    };
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
+                    {
+                        currentRepairing = 1;
+                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentHelmet.itemType).craftingTime * (1f - CurrentHelmet.Durability), 4f);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        // 조끼 갈아입기
+        if (CurrentVest != null && CurrentVest.Durability < 1f)
+        {
+            BulletproofVest theMostDurable = CurrentVest;
+            foreach (var _ in inventory.FindAll(x => x.itemType == CurrentVest.itemType))
+            {
+                if (_ is BulletproofVest vest)
+                {
+                    if (vest.Durability > theMostDurable.Durability) theMostDurable = vest;
+                }
+            }
+            if (theMostDurable != CurrentVest) currentWearingVest = theMostDurable;
+            else
+            {
+                // 수선
+                if (CurrentVest.Durability < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                {
+                    //재료체크
+                    int originalValue = CurrentHelmet.itemType switch
+                    {
+                        ItemManager.Items.LowLevelBulletproofHelmet => 0,
+                        ItemManager.Items.MiddleLevelBulletproofHelmet => 3,
+                        ItemManager.Items.HighLevelBulletproofHelmet => 6,
+                        ItemManager.Items.LegendaryBulletproofHelmet => 12,
+                        _ => 0
+                    };
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    originalValue = CurrentHelmet.itemType switch
+                    {
+                        ItemManager.Items.LowLevelBulletproofHelmet => 10,
+                        ItemManager.Items.MiddleLevelBulletproofHelmet => 11,
+                        ItemManager.Items.HighLevelBulletproofHelmet => 12,
+                        ItemManager.Items.LegendaryBulletproofHelmet => 24,
+                        _ => 0
+                    };
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
+                    {
+                        currentRepairing = 2;
+                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentVest.itemType).craftingTime * (1f - CurrentVest.Durability), 4f);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     void Regenerate()
@@ -820,12 +1012,12 @@ public class Survivor : CustomObject
             {
                 if (currentWearingHelmet != null)
                 {
-                    Wearing(currentWearingHelmet);
+                    WearHelmet(currentWearingHelmet);
                     return;
                 }
                 else if (currentWearingVest != null)
                 {
-                    Wearing(currentWearingVest);
+                    WearVest(currentWearingVest);
                     return;
                 }
             }
@@ -860,6 +1052,12 @@ public class Survivor : CustomObject
 
                 if (!(rightHandDisabled && leftHandDisabled))
                 {
+                    if(currentRepairing > 0)
+                    {
+                        Repair();
+                        return;
+                    }
+
                     if (Maintain())
                     {
                         CurrentStatus = Status.Maintain;
@@ -1010,85 +1208,16 @@ public class Survivor : CustomObject
 
     bool Maintain()
     {
-        if (BleedingAmount >= 30 || (BleedingAmount > 0 && (BleedingAmount) * (BleedingAmount - 1) / 2 + curBlood > maxBlood / 2))
-        {
-            if (inventory.Find(x => x.itemType == ItemManager.Items.BandageRoll) != null || inventory.Find(x => x.itemType == ItemManager.Items.HemostaticBandageRoll) != null)
-            {
-                StopBleeding();
-                return true;
-            }
-        }
+        if (CheckStopBleeding()) return true;
         animator.SetBool("StopBleeding", false);
 
-        if (curDrinking == null)
-        {
-            if (poisoned)
-            {
-                Item antidote = inventory.Find(x => x.itemType == ItemManager.Items.Antidote);
-                if (antidote != null)
-                {
-                    curDrinking = antidote;
-                    return true;
-                }
-            }
-            else
-            {
-                if (maxHP - curHP > 100)
-                {
-                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
-                    if (potion != null)
-                    {
-                        curDrinking = potion;
-                        return true;
-                    }
-                    else
-                    {
-                        potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion); 
-                        if (potion != null)
-                        {
-                            curDrinking = potion;
-                            return true;
-                        }
-                    }
-                }
-                else if (maxHP - curHP > 50)
-                {
-                    Item potion = inventory.Find(x => x.itemType == ItemManager.Items.Potion);
-                    if (potion != null)
-                    {
-                        curDrinking = potion;
-                        return true;
-                    }
-                    else
-                    {
-                        potion = inventory.Find(x => x.itemType == ItemManager.Items.AdvancedPotion);
-                        if (potion != null)
-                        {
-                            curDrinking = potion;
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            agent.destination = transform.position;
-            animator.SetBool("Drinking", true);
-            return true;
-        }
+        if(CheckDrinking()) return true;
         animator.SetBool("Drinking", false);
 
-        if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.NeedPreload)
-        {
-            if (CurrentWeaponAsRangedWeapon.CurrentMagazine < CurrentWeaponAsRangedWeapon.MagazineCapacity && ValidBullet != null)
-            {
-                sightMeshRenderer.material = m_SightNormal;
-                Reload();
-                return true;
-            }
-        }
+        if (CheckReload()) return true;
         animator.SetBool("Reload", false);
+
+        if (CheckRepair()) return true;
         return false;
     }
 
@@ -1815,13 +1944,17 @@ public class Survivor : CustomObject
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
     {
         if (!IsValid(currentHelmet)) return true;
-        return newBulletproofHelmet.Armor > currentHelmet.Armor;
+        if (newBulletproofHelmet.Armor > currentHelmet.Armor) return true;
+        else if (newBulletproofHelmet.Armor == currentHelmet.Armor && newBulletproofHelmet.Durability > currentHelmet.Durability) return true;
+        else return false;
     }
 
     bool CompareBulletproofVestValue(BulletproofVest newBulletproofVest)
     {
         if (!IsValid(currentVest)) return true;
-        return newBulletproofVest.Armor > currentVest.Armor;
+        if (newBulletproofVest.Armor > currentVest.Armor) return true;
+        else if (newBulletproofVest.Armor == currentVest.Armor && newBulletproofVest.Durability > currentVest.Durability) return true;
+        else return false;
     }
 
     void Equip(Weapon wantWeapon)
@@ -1954,7 +2087,7 @@ public class Survivor : CustomObject
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 
-    void Wearing(BulletproofHelmet helmet)
+    void WearHelmet(BulletproofHelmet helmet)
     {
         CurrentStatus = Status.Wearing;
         lookPosition = Vector2.zero;
@@ -1969,7 +2102,7 @@ public class Survivor : CustomObject
         }
     }
 
-    void Wearing(BulletproofVest vest)
+    void WearVest(BulletproofVest vest)
     {
         CurrentStatus = Status.Wearing;
         lookPosition = Vector2.zero;
@@ -1981,6 +2114,25 @@ public class Survivor : CustomObject
             curWearingTime = 0;
             Equip(vest);
             currentWearingVest = null;
+        }
+    }
+
+    void Repair()
+    {
+        CurrentStatus = Status.Reparing;
+        lookPosition = Vector2.zero;
+        agent.SetDestination(transform.position);
+        animator.SetInteger("CraftingAnimNumber", 0);
+        animator.SetBool("Crafting", true);
+        curRepairingTime += Time.deltaTime * aiCool * craftingSpeed;
+        progressBar.fillAmount = curRepairingTime / repairingTime;
+        if (curRepairingTime > repairingTime)
+        {
+            curRepairingTime = 0;
+            animator.SetBool("Crafting", false);
+            if (currentRepairing == 1) CurrentHelmet.Durability = 1f;
+            else CurrentVest.Durability = 1f;
+            currentRepairing = 0;
         }
     }
     #endregion
@@ -3071,7 +3223,7 @@ public class Survivor : CustomObject
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
             if (specificDamagePart == InjurySite.Head)
             {
-                if (currentHelmet != null && UnityEngine.Random.Range(0f, 1f) < currentHelmet.Durability + 0.5f)
+                if (currentHelmet != null && UnityEngine.Random.Range(0f, 1f) < currentHelmet.Durability + 0.3f)
                 {
                     damage -= currentHelmet.Armor;
                     if (UnityEngine.Random.Range(0, 1f) < 0.5f)
@@ -3090,6 +3242,7 @@ public class Survivor : CustomObject
                     {
                         currentHelmet.Durability -= damage / 2000;
                     }
+                    InGameUIManager.UpdateSelectedObjectInventory(this);
                 }
             }
             ApplyDamage(attacker, damage, weapon, damagePart, specificDamagePart, damageType);
@@ -3321,7 +3474,7 @@ public class Survivor : CustomObject
         // 방탄 모자는 ApplyDamage에서 처리
         if (damagePart == InjurySiteMajor.Torso)
         {
-            if (currentVest != null && UnityEngine.Random.Range(0f, 1f) < currentVest.Durability + 0.5f)
+            if (currentVest != null && UnityEngine.Random.Range(0f, 1f) < currentVest.Durability + 0.3f)
             {
                 damage -= currentVest.Armor;
                 if(damage > currentVest.Armor)
@@ -3332,6 +3485,7 @@ public class Survivor : CustomObject
                 {
                     currentVest.Durability -= damage / 2000;
                 }
+                InGameUIManager.UpdateSelectedObjectInventory(this);
             }
         }
 

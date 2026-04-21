@@ -1380,6 +1380,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
+  - m_Id: 115945406211878912
+    m_Localized: "\uB0B4\uAD6C\uB3C4({0})%\\n\uBC29\uC5B4\uC728({1})%\\n<size=12>\uBC29\uC5B4\uC728
+      = \uB0B4\uAD6C\uB3C4 + 30"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 116043573494345728
+    m_Localized: "\uC218\uC120 \uC911 : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 116043574400315392
+    m_Localized: "\uD5EC\uBA67/\uC870\uB07C \uC218\uC120 \uC870\uAC74"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043575365005312
+    m_Localized: "\uB0B4\uAD6C\uB3C4\uAC00 (x)% \uC774\uD558\uC77C \uB54C \uD5EC\uBA67/\uC870\uB07C\uB97C
+      \uC218\uC120\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043576535216128
+    m_Localized: "\uAE30\uBCF8\uC801\uC73C\uB85C \uAC00\uC7A5 \uB192\uC740 \uB4F1\uAE09
+      \uC911 \uAC00\uC7A5 \uB192\uC740 \uB0B4\uAD6C\uB3C4\uC758 \uBC29\uC5B4\uAD6C\uB97C
+      \uCC29\uC6A9\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1429,3 +1455,5 @@ MonoBehaviour:
         - id: 113130486810341376
         - id: 113130481299025920
         - id: 114528898273308672
+        - id: 115945406211878912
+        - id: 116043573494345728

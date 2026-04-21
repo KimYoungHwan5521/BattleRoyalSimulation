@@ -17,6 +17,7 @@ public enum StrategyCase
     WhenThereAreMultipleEnemiesInSightWhoIsTheTarget,
     CraftingPriority,
     CraftingAllow,
+    RepairCondition,
 }
 
 [Serializable]
@@ -260,6 +261,7 @@ public class Strategy : MonoBehaviour
         wantDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
         wantDictionary.Add(StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget, new(1, 0, 0));
+        wantDictionary.Add(StrategyCase.RepairCondition, new(70, 0, 0));
     }
 
     public void CopyStrategy()

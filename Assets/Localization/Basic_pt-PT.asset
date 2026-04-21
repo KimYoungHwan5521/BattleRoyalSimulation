@@ -1317,6 +1317,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
+  - m_Id: 115945406211878912
+    m_Localized: Durabilidade ({0})%\nTaxa de defesa ({1})%\n<size=12>Taxa de defesa
+      = Durabilidade + 30
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 116043573494345728
+    m_Localized: 'A reparar : {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 116043574400315392
+    m_Localized: "Condi\xE7\xE3o de repara\xE7\xE3o de capacete/colete"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043575365005312
+    m_Localized: Repara capacete/colete quando a durabilidade estiver abaixo de (x)%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043576535216128
+    m_Localized: "Por padr\xE3o, equipa a armadura com maior durabilidade entre as
+      de maior n\xEDvel."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1366,3 +1390,5 @@ MonoBehaviour:
         - id: 113130486810341376
         - id: 113130481299025920
         - id: 114528898273308672
+        - id: 115945406211878912
+        - id: 116043573494345728

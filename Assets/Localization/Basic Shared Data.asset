@@ -1243,6 +1243,26 @@ MonoBehaviour:
     m_Key: 'Wearing:'
     m_Metadata:
       m_Items: []
+  - m_Id: 115945406211878912
+    m_Key: Durability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043573494345728
+    m_Key: 'Repairing:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043574400315392
+    m_Key: Helmet/Vest Repair Condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043575365005312
+    m_Key: Repairs helmet/vest when durability is below (x)%.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 116043576535216128
+    m_Key: By default, equips the highest durability armor among the highest grade.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
