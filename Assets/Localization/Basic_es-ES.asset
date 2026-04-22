@@ -1321,8 +1321,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 115945406211878912
-    m_Localized: Durabilidad ({0})%\nTasa de defensa ({1})%\n<size=12>Tasa de defensa
-      = Durabilidad + 30
+    m_Localized: Durabilidad ({param0})%\nTasa de defensa ({param1})%\n<size=12>Tasa
+      de defensa = Durabilidad + 30</size>
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332

@@ -1295,8 +1295,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359337
   - m_Id: 115945406211878912
-    m_Localized: "\u8010\u4E45\u5EA6({0})%\\n\u9632\u5FA1\u7387({1})%\\n<size=12>\u9632\u5FA1\u7387
-      = \u8010\u4E45\u5EA6 + 30"
+    m_Localized: "\u8010\u4E45\u5EA6({param0})%\\n\u9632\u5FA1\u7387({param1})%\\n<size=12>\u9632\u5FA1\u7387
+      = \u8010\u4E45\u5EA6 + 30</size>"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359337

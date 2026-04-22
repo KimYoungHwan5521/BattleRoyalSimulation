@@ -1381,8 +1381,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359336
   - m_Id: 115945406211878912
-    m_Localized: "\uB0B4\uAD6C\uB3C4({0})%\\n\uBC29\uC5B4\uC728({1})%\\n<size=12>\uBC29\uC5B4\uC728
-      = \uB0B4\uAD6C\uB3C4 + 30"
+    m_Localized: "\uB0B4\uAD6C\uB3C4({param0})%\\n\uBC29\uC5B4\uC728({param1})%\\n<size=12>\uBC29\uC5B4\uC728
+      = \uB0B4\uAD6C\uB3C4 + 30</size>"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336

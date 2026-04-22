@@ -1317,8 +1317,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359340
   - m_Id: 115945406211878912
-    m_Localized: Durability ({0})%\nDefense Rate ({1})%\n<size=12>Defense Rate =
-      Durability + 30
+    m_Localized: Durability ({param0})%\nDefense Rate ({param1})%\n<size=12>Defense
+      Rate = Durability + 30</size>
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340

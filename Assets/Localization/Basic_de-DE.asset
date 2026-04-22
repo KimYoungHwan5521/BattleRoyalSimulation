@@ -1320,8 +1320,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 115945406211878912
-    m_Localized: Haltbarkeit ({0})%\nVerteidigungsrate ({1})%\n<size=12>Verteidigungsrate
-      = Haltbarkeit + 30
+    m_Localized: Haltbarkeit ({param0})%\nVerteidigungsrate ({param1})%\n<size=12>Verteidigungsrate
+      = Haltbarkeit + 30</size>
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338

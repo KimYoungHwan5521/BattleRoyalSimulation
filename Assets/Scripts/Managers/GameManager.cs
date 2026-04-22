@@ -140,7 +140,8 @@ public class GameManager : MonoBehaviour
 
     public void Test(int wantDate)
     {
-        calendar.Today = wantDate;
+        calendar.LeagueReserveInfo[calendar.Today] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01);
+        outGameUIManger.SetContestants();
     }
 
     public void Test2(int wantNumber)

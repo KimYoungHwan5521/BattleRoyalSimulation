@@ -108,16 +108,16 @@ public class InGameUIManager : MonoBehaviour
     [Header("Inventory")]
     [SerializeField] GameObject inventoryTab;
     [SerializeField] GameObject selectedObjectsCurrentWeapon;
-    Image selectedObjectsCurrentWeaponImage;
+    [SerializeField] Image selectedObjectsCurrentWeaponImage;
     TextMeshProUGUI selectedObjectsCurrentWeaponText;
 
     [SerializeField] GameObject selectedObjectsCurrentHelmet;
-    Image selectedObjectsCurrentHelmetImage;
+    [SerializeField] Image selectedObjectsCurrentHelmetImage;
     TextMeshProUGUI selectedObjectsCurrentHelmetText;
     [SerializeField] GameObject selectedObjectsCurrentHelmetDurability;
 
     [SerializeField] GameObject selectedObjectsCurrentVest;
-    Image selectedObjectsCurrentVestImage;
+    [SerializeField] Image selectedObjectsCurrentVestImage;
     TextMeshProUGUI selectedObjectsCurrentVestText;
     [SerializeField] GameObject selectedObjectsCurrentVestDurability;
 
@@ -179,11 +179,8 @@ public class InGameUIManager : MonoBehaviour
     private void Start()
     {
         outGameUIManager = GetComponent<OutGameUIManager>();
-        selectedObjectsCurrentWeaponImage = selectedObjectsCurrentWeapon.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentWeaponText = selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>();
-        selectedObjectsCurrentHelmetImage = selectedObjectsCurrentHelmet.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
-        selectedObjectsCurrentVestImage = selectedObjectsCurrentVest.GetComponentsInChildren<Image>()[^1];
         selectedObjectsCurrentVestText = selectedObjectsCurrentVest.GetComponentInChildren<TextMeshProUGUI>();
 
         selectedObjectsItems = new GameObject[selectedObjectsInventory.childCount];
@@ -909,7 +906,7 @@ public class InGameUIManager : MonoBehaviour
 
                 bleedingAnim.SetBool("Bleeding", selectedSurvivor.BleedingAmount > 0);
 
-                if(selectedSurvivor.CurrentHelmet != null)
+                if(selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet))
                 {
                     selectedObjectsCurrentHelmetDurability.SetActive(true);
                     selectedObjectsCurrentHelmetDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentHelmet.Durability;
@@ -920,7 +917,7 @@ public class InGameUIManager : MonoBehaviour
                     selectedObjectsCurrentHelmetDurability.SetActive(false);
                 }
 
-                if (selectedSurvivor.CurrentVest != null)
+                if (selectedSurvivor.IsValid(selectedSurvivor.CurrentVest))
                 {
                     selectedObjectsCurrentVestDurability.SetActive(true);
                     selectedObjectsCurrentVestDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentVest.Durability;

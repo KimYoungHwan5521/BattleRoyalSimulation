@@ -1331,8 +1331,8 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359339
   - m_Id: 115945406211878912
-    m_Localized: "Durabilit\xE9 ({0})%\\nTaux de d\xE9fense ({1})%\\n<size=12>Taux
-      de d\xE9fense = Durabilit\xE9 + 30"
+    m_Localized: "Durabilit\xE9 ({param0})%\\nTaux de d\xE9fense ({param1})%\\n<size=12>Taux
+      de d\xE9fense = Durabilit\xE9 + 30</size>"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339

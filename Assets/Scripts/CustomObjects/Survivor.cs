@@ -167,7 +167,7 @@ public class Survivor : CustomObject
         get { return rightHandDisabled; }
         private set 
         {
-            if (value) Debug.Log($"Right hand disabled : {linkedSurvivorData.localizedSurvivorName}");
+            if (value) Debug.Log($"Right hand disabled : {linkedSurvivorData.localizedSurvivorName.GetLocalizedString()}");
             rightHandDisabled = value;
             animator.SetBool("RightHandDisabled", value);
             rightHand.SetActive(!value);
@@ -832,7 +832,7 @@ public class Survivor : CustomObject
     bool CheckRepair()
     {
         // 헬멧 갈아쓰기
-        if (CurrentHelmet != null && CurrentHelmet.Durability < 1f)
+        if (IsValid(CurrentHelmet) && CurrentHelmet.Durability < 1f)
         {
             BulletproofHelmet theMostDurable = CurrentHelmet;
             foreach (var _ in inventory.FindAll(x => x.itemType == CurrentHelmet.itemType))
@@ -878,7 +878,7 @@ public class Survivor : CustomObject
         }
 
         // 조끼 갈아입기
-        if (CurrentVest != null && CurrentVest.Durability < 1f)
+        if (IsValid(CurrentVest) && CurrentVest.Durability < 1f)
         {
             BulletproofVest theMostDurable = CurrentVest;
             foreach (var _ in inventory.FindAll(x => x.itemType == CurrentVest.itemType))
@@ -2856,7 +2856,7 @@ public class Survivor : CustomObject
 
         curAimDelay += Time.deltaTime * aiCool;
         // 적이 너무 가까우면 그냥 바로 사격
-        if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < 5f) curAimDelay = aimDelay;
+        if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < 5f) curAimDelay = aimDelay + 1;
         progressBar.fillAmount = curAimDelay / aimDelay;
         if(curAimDelay > aimDelay)
         {
@@ -4827,7 +4827,6 @@ public class Survivor : CustomObject
         }
         else
         {
-            Debug.Log($"Find corpse : {linkedSurvivorData.localizedSurvivorName} => {survivor.linkedSurvivorData.localizedSurvivorName}");
             if (!farmingCorpses.ContainsKey(survivor))
             {
                 farmingCorpses.Add(survivor, false);
