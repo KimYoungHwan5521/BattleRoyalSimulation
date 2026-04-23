@@ -131,6 +131,19 @@ public class LeagueReserveDictionarySaveData
 }
 
 [Serializable]
+public class UnlockStatusDictionary
+{
+    public UnlockManager.UnlockCondition unlockCondition;
+    public bool isUnlocked;
+
+    public UnlockStatusDictionary(UnlockManager.UnlockCondition unlockCondition, bool isUnlocked)
+    {
+        this.unlockCondition = unlockCondition;
+        this.isUnlocked = isUnlocked;
+    }
+}
+
+[Serializable]
 public class ETCData
 {
     // out game ui manager
@@ -149,8 +162,11 @@ public class ETCData
     public int today;
     public int curMaxYear;
     public bool participationConfirmed;
+    // unlock
+    public List<UnlockStatusDictionary> unlockStatus = new();
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed)
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+        Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
@@ -164,5 +180,10 @@ public class ETCData
         this.today = today;
         this.curMaxYear = curMaxYear;
         this.participationConfirmed = participationConfirmed;
+
+        foreach (var kv in unlockStatus)
+        {
+            this.unlockStatus.Add(new(kv.Key, kv.Value));
+        }
     }
 }

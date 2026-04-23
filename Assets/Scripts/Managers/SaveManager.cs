@@ -70,7 +70,7 @@ public static class SaveManager
             wonRangedLeague = data.wonRangedLeague,
             wonCraftingLeague = data.wonCraftingLeague,
             craftingCount = data.craftingCount,
-};
+        };
 
         foreach (var kv in data.strategyDictionary)
         {

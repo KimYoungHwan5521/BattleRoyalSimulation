@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     public OutGameUIManager OutGameUIManager => outGameUIManger;
     Calendar calendar;
     public Calendar Calendar => calendar;
+    UnlockManager unlockManager;
+    public UnlockManager UnlockManager => unlockManager;
     [SerializeField] Option option;
     public Option Option => option;
     [SerializeField] Title title;
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
         title.title.SetActive(true);
         outGameUIManger = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
+        unlockManager = GetComponent<UnlockManager>();
+        yield return unlockManager.Initiate();
         inGameUICanvas.SetActive(false);
         foreach (var versionText in versionTexts) versionText.text = $"Version - {gameVersion}";
 
@@ -125,6 +129,7 @@ public class GameManager : MonoBehaviour
         OutGameUIManager.ResetData();
         calendar.ResetData();
         outGameUIManger.ChecklistBattleRoyale();
+        unlockManager.CheckAlreadyLocked(false);
     }
 
     public IEnumerator BattleRoyaleStart()
@@ -296,7 +301,8 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.contestantsData,
             calendar.Today,
             calendar.CurMaxYear,
-            calendar.participationConfirmed
+            calendar.participationConfirmed,
+            unlockManager.unlockStatus
             )
         {
             hireMarketSurvivorData =
@@ -359,6 +365,7 @@ public class GameManager : MonoBehaviour
         outGameUIManger.survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
         outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
         calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
+        unlockManager.LoadUnlockStatus(saveData.unlockStatus);
         yield return null;
     }
 
@@ -404,14 +411,16 @@ public class GameManager : MonoBehaviour
         string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
         var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
         string loadedDataGameVersion = saveData.gameVersion;
-        if(loadedDataGameVersion == "1.0")
+        float loadedDataGameVersionFloat = float.Parse(loadedDataGameVersion.Substring(0, 3));
+        if (loadedDataGameVersion == "1.0")
         {
             calendar.CalendarUpdate();
         }
-        if(float.Parse(loadedDataGameVersion.Substring(0, 3)) < 1.3)
+        if(loadedDataGameVersionFloat < 1.3)
         {
             calendar.CancelAllReservation();
         }
+        unlockManager.CheckAlreadyLocked(loadedDataGameVersionFloat < 1.3);
         yield return null;
     }
     #endregion
