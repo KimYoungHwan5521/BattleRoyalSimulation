@@ -3,7 +3,8 @@ using UnityEngine;
 public class Locked : MonoBehaviour
 {
     public UnlockManager.UnlockCondition unlockCondition;
-    Animator anim;
+    Animator anim => GetComponent<Animator>();
+    bool readyUnlockAnim;
     bool isUnlocked;
     public bool IsUnlocked
     {
@@ -12,17 +13,35 @@ public class Locked : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (readyUnlockAnim && gameObject.activeInHierarchy)
+        {
+            anim.SetBool("Unlock", true);
+        }
     }
 
     public void Unlock()
     {
-        anim.SetBool("Unlock", true);
+        if (isUnlocked == true) return;
+        readyUnlockAnim = true;
+        isUnlocked = true;
+    }
+
+    public void Lock()
+    {
+        gameObject.SetActive(true);
+        anim.SetBool("Unlock", false);
+        readyUnlockAnim = false;
+        isUnlocked = false;
     }
 
     public void AE_UnlockCompletely()
     {
-        isUnlocked = true;
+        readyUnlockAnim = false;
         gameObject.SetActive(false);
     }
 }

@@ -92,6 +92,7 @@ public class GameResult : MonoBehaviour
         playerWin = -1;
         if (didPlayerParticipate)
         {
+            GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.FirstParticipateInBattleRoyale);
             Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
             if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0) playerWin = 1;
             else
@@ -144,6 +145,7 @@ public class GameResult : MonoBehaviour
                     {
                         winPrize = 5000;
                         AchievementManager.UnlockAchievement("Bronze Cup");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinBronzeLeague);
                     }
                     else if (playerWin == 50) winPrize = 2500;
                     killPrize = playerSurvivor.KillCount * 500;
@@ -153,6 +155,7 @@ public class GameResult : MonoBehaviour
                     {
                         winPrize = 10000;
                         AchievementManager.UnlockAchievement("Silver Cup");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSilverLeague);
                     }
                     else if (playerWin == 25) winPrize = 5000;
                     else if (playerWin == 50) winPrize = 2500;
@@ -163,6 +166,7 @@ public class GameResult : MonoBehaviour
                     {
                         winPrize = 20000;
                         AchievementManager.UnlockAchievement("Gold Cup");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
                     }
                     else if (playerWin == 25) winPrize = 10000;
                     else if (playerWin == 50) winPrize = 5000;
@@ -173,6 +177,7 @@ public class GameResult : MonoBehaviour
                     {
                         winPrize = 50000;
                         AchievementManager.UnlockAchievement("Season Champion");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSeasonChampionship);
                     }
                     else if (playerWin == 25) winPrize = 25000;
                     else if (playerWin == 50) winPrize = 12500;
@@ -184,6 +189,7 @@ public class GameResult : MonoBehaviour
                     {
                         winPrize = 100000;
                         AchievementManager.UnlockAchievement("World Champion");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
                         if (playerSurvivor.LinkedSurvivorData.loseCount == 0) AchievementManager.UnlockAchievement("Royal Loader");
                     }
                     else if (playerWin == 25) winPrize = 50000;

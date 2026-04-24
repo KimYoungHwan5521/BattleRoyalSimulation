@@ -2302,7 +2302,7 @@ public class Survivor : CustomObject
                 if (craftables[^i].itemType == ItemManager.Items.Bullet_Revolver || craftables[^i].itemType == ItemManager.Items.Bullet_Pistol
                     || craftables[^i].itemType == ItemManager.Items.Bullet_SubMachineGun || craftables[^i].itemType == ItemManager.Items.Bullet_ShotGun
                     || craftables[^i].itemType == ItemManager.Items.Bullet_AssaultRifle || craftables[^i].itemType == ItemManager.Items.Bullet_SniperRifle
-                    || craftables[^i].itemType == ItemManager.Items.Rocket_Bazooka)
+                    || craftables[^i].itemType == ItemManager.Items.Rocket_Bazooka || craftables[^i].itemType == ItemManager.Items.Arrow)
                 {
                     // 총알 필요성 검사
                     if (linkedSurvivorData.priority1Weapon != ItemManager.Items.NotValid)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 #region Survivors
 [Serializable]
@@ -183,6 +184,7 @@ public class ETCData
 
         foreach (var kv in unlockStatus)
         {
+            Debug.Log(kv.Value);
             this.unlockStatus.Add(new(kv.Key, kv.Value));
         }
     }

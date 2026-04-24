@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         OutGameUIManager.ResetData();
         calendar.ResetData();
         outGameUIManger.ChecklistBattleRoyale();
-        unlockManager.CheckAlreadyLocked(false);
+        unlockManager.RelockAll();
     }
 
     public IEnumerator BattleRoyaleStart()

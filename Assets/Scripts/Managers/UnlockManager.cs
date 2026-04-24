@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UnlockManager : MonoBehaviour
@@ -9,28 +11,51 @@ public class UnlockManager : MonoBehaviour
     public enum UnlockCondition
     {
         FirstParticipateInBattleRoyale,
+        WinBronzeLeague,
+        WinSilverLeague,
+        WinGoldLeague,
+        WinSeasonChampionship,
+        WinWorldChampionship,
     }
     public Dictionary<UnlockCondition, bool> unlockStatus = new();
 
     public IEnumerator Initiate()
     {
-        unlockStatus.Add(UnlockCondition.FirstParticipateInBattleRoyale, false);
+        foreach (UnlockCondition condition in Enum.GetValues(typeof(UnlockCondition)))
+        {
+            unlockStatus.Add(condition, false);
+        }
         yield return null;
     }
 
     public void LoadUnlockStatus(List<UnlockStatusDictionary> unlockStatusD)
     {
+        RelockAll();
         foreach(var unlockS in unlockStatusD)
         {
             unlockStatus[unlockS.unlockCondition] = unlockS.isUnlocked;
+            if (unlockS.isUnlocked) Unlock(unlockS.unlockCondition);
         }
     }
 
-    public void Unlock(UnlockCondition Condition)
+    public void Unlock(UnlockCondition condition)
     {
+        unlockStatus[condition] = true;
         foreach(var locked in lockeds)
         {
-            if(locked.unlockCondition == Condition) locked.Unlock();
+            if(locked.unlockCondition == condition) locked.Unlock();
+        }
+    }
+
+    public void RelockAll()
+    {
+        foreach (UnlockCondition condition in Enum.GetValues(typeof(UnlockCondition)))
+        {
+            unlockStatus[condition] = false;
+        }
+        foreach (var locked in lockeds)
+        {
+            locked.Lock();
         }
     }
 
@@ -38,11 +63,53 @@ public class UnlockManager : MonoBehaviour
     {
         if(oldVersion)
         {
-
+            foreach(var survivor in GameManager.Instance.OutGameUIManager.MySurvivorsData)
+            {
+                if(survivor.wonWorldChampionship)
+                {
+                    unlockStatus[UnlockCondition.WinWorldChampionship] = true;
+                    unlockStatus[UnlockCondition.WinSeasonChampionship] = true;
+                    unlockStatus[UnlockCondition.WinGoldLeague] = true;
+                    unlockStatus[UnlockCondition.WinSilverLeague] = true;
+                    unlockStatus[UnlockCondition.WinBronzeLeague] = true;
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+                else if(survivor.wonSeasonChampionship)
+                {
+                    unlockStatus[UnlockCondition.WinSeasonChampionship] = true;
+                    unlockStatus[UnlockCondition.WinGoldLeague] = true;
+                    unlockStatus[UnlockCondition.WinSilverLeague] = true;
+                    unlockStatus[UnlockCondition.WinBronzeLeague] = true;
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+                else if(survivor.wonGoldLeague)
+                {
+                    unlockStatus[UnlockCondition.WinGoldLeague] = true;
+                    unlockStatus[UnlockCondition.WinSilverLeague] = true;
+                    unlockStatus[UnlockCondition.WinBronzeLeague] = true;
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+                else if(survivor.wonSilverLeague)
+                {
+                    unlockStatus[UnlockCondition.WinSilverLeague] = true;
+                    unlockStatus[UnlockCondition.WinBronzeLeague] = true;
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+                else if(survivor.wonBronzeLeague)
+                {
+                    unlockStatus[UnlockCondition.WinBronzeLeague] = true;
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+                else if(survivor.winCount + survivor.loseCount > 0)
+                {
+                    unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
+                }
+            }
         }
-        foreach(var locked in lockeds)
+        foreach (var key in unlockStatus.Keys.ToList())
         {
-            locked.gameObject.SetActive(!locked.IsUnlocked);
+            if (unlockStatus[key])
+                Unlock(key);
         }
     }
 }
