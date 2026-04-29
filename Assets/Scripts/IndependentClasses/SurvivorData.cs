@@ -203,10 +203,13 @@ public class SurvivorData
     public CharacteristicType surgeryCharacteristic;
 
     // Strategy
-    public ItemManager.Items priority1Weapon = ItemManager.Items.AssaultRifle;
+    public ItemManager.Items priority1Weapon = ItemManager.Items.LASER;
+    public ItemManager.Items priority2Weapon = ItemManager.Items.AssaultRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
     [SerializeField] public ItemManager.Craftable priority1Crafting = null;
+    [SerializeField] public ItemManager.Craftable priority2Crafting = null;
     public int priority1CraftingToInt = -1;
+    public int priority2CraftingToInt = -1;
     public bool[] craftingAllows;
     public int repairCondition;
 

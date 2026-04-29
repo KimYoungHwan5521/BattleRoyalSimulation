@@ -1343,6 +1343,34 @@ MonoBehaviour:
       unter der h\xF6chsten Stufe ausger\xFCstet."
     m_Metadata:
       m_Items: []
+  - m_Id: 118118340732973056
+    m_Localized: Freigeschaltet nach der ersten Battle-Royale-Teilnahme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118342322614272
+    m_Localized: Freigeschaltet durch den Sieg in der Bronze-Liga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118343929032704
+    m_Localized: Freigeschaltet durch den Sieg in der Silber-Liga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118345401233408
+    m_Localized: Freigeschaltet durch den Sieg in der Gold-Liga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118346722439168
+    m_Localized: Freigeschaltet durch den Sieg der Saisonmeisterschaft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118348089782272
+    m_Localized: Freigeschaltet durch den Sieg der Weltmeisterschaft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118901894194720768
+    m_Localized: "\rPriorit\xE4t 2"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

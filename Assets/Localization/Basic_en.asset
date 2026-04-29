@@ -1340,6 +1340,34 @@ MonoBehaviour:
       grade.
     m_Metadata:
       m_Items: []
+  - m_Id: 118118340732973056
+    m_Localized: Unlock after first Battle Royale participation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118342322614272
+    m_Localized: Unlock by winning Bronze League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118343929032704
+    m_Localized: Unlock by winning Silver League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118345401233408
+    m_Localized: Unlock by winning Gold League
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118346722439168
+    m_Localized: Unlock by winning Season Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118348089782272
+    m_Localized: Unlock by winning World Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118901894194720768
+    m_Localized: Priority 2
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

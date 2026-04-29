@@ -1263,6 +1263,34 @@ MonoBehaviour:
     m_Key: By default, equips the highest durability armor among the highest grade.
     m_Metadata:
       m_Items: []
+  - m_Id: 118118340732973056
+    m_Key: Unlock:FirstParticipate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118342322614272
+    m_Key: Unlock:WinBronzeLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118343929032704
+    m_Key: Unlock:WinSilverLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118345401233408
+    m_Key: Unlock:WinGoldLeague
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118346722439168
+    m_Key: Unlock:WinSeasonChampionship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118348089782272
+    m_Key: Unlock:WinWorldChampionship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118901894194720768
+    m_Key: Priority 2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

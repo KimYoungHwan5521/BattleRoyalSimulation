@@ -155,6 +155,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject deleteSearchText;
 
     [SerializeField] LocalizedDropdown weaponPriority1Dropdown;
+    [SerializeField] LocalizedDropdown weaponPriority2Dropdown;
     [SerializeField] Strategy[] strategies;
     
     [SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
@@ -172,6 +173,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TMP_Dropdown whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown;
 
     [SerializeField] LocalizedDropdown craftingPriority1Dropdown;
+    [SerializeField] LocalizedDropdown craftingPriority2Dropdown;
 
     [SerializeField] Transform craftingAllow;
     [SerializeField] TMP_InputField repairConditionInputBox;
@@ -1348,13 +1350,16 @@ public class OutGameUIManager : MonoBehaviour
     {
         search.onValueChanged.AddListener((value) => Search(value));
         weaponPriority1Dropdown.ClearOptions();
+        weaponPriority2Dropdown.ClearOptions();
         ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
         for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Knife_Enchanted;  i++)
         {
             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
             weaponPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
+            weaponPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
             Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
             weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
+            weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
         }
         GameManager.Instance.ObjectUpdate += () => 
         { 
@@ -1365,6 +1370,17 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Image image = dropdownSprites[i].GetComponent<Image>();
                     image.sprite = weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
+                    if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                }
+            }
+
+            if (weaponPriority2Dropdown.dropdown.IsExpanded)
+            {
+                var dropdownSprites = weaponPriority2Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                for (int i = 0; i < weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                {
+                    Image image = dropdownSprites[i].GetComponent<Image>();
+                    image.sprite = weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
                     if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
                 }
             }
@@ -1396,6 +1412,10 @@ public class OutGameUIManager : MonoBehaviour
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
         craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
+        craftingPriority2Dropdown.ClearOptions();
+        craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
+        craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+        craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         GameManager.Instance.ObjectUpdate += () =>
         {
             if (craftingPriority1Dropdown.dropdown.IsExpanded)
@@ -1406,6 +1426,16 @@ public class OutGameUIManager : MonoBehaviour
                     Image image = dropdownSprites[i].GetComponent<Image>();
                     image.sprite = craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
                     if(image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                }
+            }
+            if (craftingPriority2Dropdown.dropdown.IsExpanded)
+            {
+                var dropdownSprites = craftingPriority2Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                for (int i = 0; i < craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                {
+                    Image image = dropdownSprites[i].GetComponent<Image>();
+                    image.sprite = craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
+                    if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
                 }
             }
         };
@@ -1430,8 +1460,10 @@ public class OutGameUIManager : MonoBehaviour
         for (int i = 0; i < weaponPriority1Dropdown.dropdown.options.Count; i++)
         {
             weaponPriority1Dropdown.RelocalizeOptions();
+            weaponPriority2Dropdown.RelocalizeOptions();
         }
         weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
+        weaponPriority2Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority2Weapon - (int)ItemManager.Items.Knife;
         sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
         sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
         elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
@@ -1459,23 +1491,30 @@ public class OutGameUIManager : MonoBehaviour
         {
             if (i >= ItemManager.craftables.Count) break;
             craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
+            craftingPriority2Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
         }
     }
 
     public void SetDefault()
     {
-        weaponPriority1Dropdown.dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
+        weaponPriority1Dropdown.dropdown.value = (int)ItemManager.Items.LASER - (int)ItemManager.Items.Knife;
+        weaponPriority2Dropdown.dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
         Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
         selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
         selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
             = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
-        foreach(Strategy strategy in strategies) strategy.SetDefault();
+        selectedWeaponPriority1Image = weaponPriority2Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
+        selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
+            = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+        foreach (Strategy strategy in strategies) strategy.SetDefault();
         sawAnEnemyAndItIsInAttackRangeDropdown.value = 0;
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = 0;
         heardDistinguishableSoundDropdown.value = 0;
         heardIndistinguishableSoundDropdown.value = 1;
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = 1;
         craftingPriority1Dropdown.dropdown.value = 0;
+        craftingPriority2Dropdown.dropdown.value = 0;
         foreach(var craftableAllow in craftableAllows) craftableAllow.GetComponentsInChildren<Toggle>()[0].isOn = true;
     }
 
@@ -1522,18 +1561,27 @@ public class OutGameUIManager : MonoBehaviour
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
         craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
         craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
+        weaponPriority2Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority2Weapon - (int)ItemManager.Items.Knife;
+        craftingPriority2Dropdown.ClearOptions();
+        craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
+        craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+        craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         foreach (var craftable in ItemManager.craftables)
         {
             if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge)
             {
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
                 craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
+                craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
                 Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
                 craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
+                craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
             }
         }
         craftingPriority1Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
-        CraftingPriorityChanged();
+        CraftingPriority1Changed();
+        craftingPriority2Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1;
+        CraftingPriority2Changed();
 
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
@@ -1592,7 +1640,7 @@ public class OutGameUIManager : MonoBehaviour
         search.text = string.Empty;
     }
 
-    public void WeaponPriorityChanged()
+    public void WeaponPriority1Changed()
     {
         bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
         if (spriteNotNull)
@@ -1604,7 +1652,19 @@ public class OutGameUIManager : MonoBehaviour
         else Debug.Log($"Sprite not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
     }
 
-    public void CraftingPriorityChanged()
+    public void WeaponPriority2Changed()
+    {
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
+        if (spriteNotNull)
+        {
+            Image image = weaponPriority2Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+            image.sprite = ResourceManager.Get(itemSpriteEnum);
+            image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+        }
+        else Debug.Log($"Sprite not found : {weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+    }
+
+    public void CraftingPriority1Changed()
     {
         Image image = craftingPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
         bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
@@ -1623,13 +1683,36 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
+    public void CraftingPriority2Changed()
+    {
+        Image image = craftingPriority2Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
+        if (spriteNotNull)
+        {
+            image.sprite = ResourceManager.Get(itemSpriteEnum);
+            image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+        }
+        else if (craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key == "None")
+        {
+            image.sprite = null;
+        }
+        else
+        {
+            Debug.Log($"Sprite not found : {craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+        }
+    }
+
     public void SaveStrategy()
     {
         bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
         if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
         else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
 
-        if(craftingPriority1Dropdown.dropdown.value == 0)
+        itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum2);
+        if (itemNotNull) survivorWhoWantEstablishStrategy.priority2Weapon = itemEnum2;
+        else Debug.LogWarning($"Item enum not found : {weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+
+        if (craftingPriority1Dropdown.dropdown.value == 0)
         {
             survivorWhoWantEstablishStrategy.priority1Crafting = null;
             survivorWhoWantEstablishStrategy.priority1CraftingToInt = -1;
@@ -1654,6 +1737,33 @@ public class OutGameUIManager : MonoBehaviour
                 survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.dropdown.value - 1;
             }
             else Debug.LogWarning($"Craftable not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+
+            if(craftingPriority2Dropdown.dropdown.value == 0)
+            {
+                survivorWhoWantEstablishStrategy.priority2Crafting = null;
+                survivorWhoWantEstablishStrategy.priority2CraftingToInt = -1;
+            }
+            else
+            {
+                foreach (var craftableAllow in craftableAllows)
+                {
+                    if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value - 1].TableEntryReference.Key}"
+                    && craftableAllow.GetComponentsInChildren<Toggle>()[1].isOn)
+                    {
+                        Alert("Alert:Crafting Priority Not Valid");
+                        return;
+                    }
+                }
+
+                ItemManager.Craftable craftable2 = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+                itemNotNull = craftable2 != null;
+                if (itemNotNull)
+                {
+                    survivorWhoWantEstablishStrategy.priority2Crafting = craftable2;
+                    survivorWhoWantEstablishStrategy.priority2CraftingToInt = craftingPriority2Dropdown.dropdown.value - 1;
+                }
+                else Debug.LogWarning($"Craftable not found : {craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+            }
         }
 
         for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
@@ -2572,6 +2682,7 @@ public class OutGameUIManager : MonoBehaviour
             CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicCount);
 
             survivorData.priority1Weapon = ItemManager.Items.LASER;
+            survivorData.priority2Weapon = ItemManager.Items.AssaultRifle;
             return survivorData;
         }
         return new(GetRandomName(), 20, 20, 20, 20, 20, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));

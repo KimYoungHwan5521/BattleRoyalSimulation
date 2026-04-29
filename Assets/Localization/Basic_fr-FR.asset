@@ -1355,6 +1355,35 @@ MonoBehaviour:
       parmi celles de plus haut niveau."
     m_Metadata:
       m_Items: []
+  - m_Id: 118118340732973056
+    m_Localized: "D\xE9bloqu\xE9 apr\xE8s la premi\xE8re participation au Battle
+      Royale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118342322614272
+    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Bronze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118343929032704
+    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Argent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118345401233408
+    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Or"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118346722439168
+    m_Localized: "D\xE9bloqu\xE9 en remportant le championnat de saison"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118348089782272
+    m_Localized: "D\xE9bloqu\xE9 en remportant le championnat du monde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118901894194720768
+    m_Localized: "priorit\xE9 2"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -69,9 +69,12 @@ public class SurvivorSaveData
     //public bool recoverySerumAdministered;
     //public int recoverySerumMedicalEffectLeft;
     public ItemManager.Items priority1Weapon;
+    public ItemManager.Items priority2Weapon;
     public List<StrategyDictionaryEntry> strategyDictionaryEntries;
     public ItemManager.Craftable priority1Crafting;
+    public ItemManager.Craftable priority2Crafting;
     public int priority1CraftingToInt;
+    public int priority2CraftingToInt;
     public bool[] craftingAllows;
     public int repairCondition;
     public int winCount;

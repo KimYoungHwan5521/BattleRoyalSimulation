@@ -1859,17 +1859,37 @@ public class Survivor : CustomObject
         if(!IsValid(currentWeapon)) return true;
         if(newWeapon.itemName.TableEntryReference.Key == currentWeapon.itemName.TableEntryReference.Key) return false;
 
+        // 새무기 = p1
         if (newWeapon.itemType == linkedSurvivorData.priority1Weapon)
         {
             if (newWeapon is RangedWeapon rangedWeapon) return HaveBullet(rangedWeapon);
             else return true;
         }
-        else if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+        // 새무기 = p2
+        else if(newWeapon.itemType == linkedSurvivorData.priority2Weapon)
         {
-            if (currentWeapon is RangedWeapon rangedWeapon) return !HaveBullet(rangedWeapon);
-            else return false;
+            // 현무기 = p1
+            if(currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+            {
+                if (currentWeapon is RangedWeapon rangedWeapon)
+                {
+                    if (HaveBullet(rangedWeapon)) return false;
+                    else
+                    {
+                        if (newWeapon is RangedWeapon rangedNewWeapon) return HaveBullet(rangedNewWeapon);
+                        else return true;
+                    }
+                }
+                else return false;
+            }
+            // 새무기 p2, np
+            else
+            {
+                if (newWeapon is RangedWeapon rangedNewWeapon) return HaveBullet(rangedNewWeapon);
+                else return true;
+            }
         }
-
+        // 이하 새무기 np, 현무기 np
         if (currentWeapon is MeleeWeapon)
         {
             if (newWeapon is RangedWeapon rangedWeapon)
@@ -2157,7 +2177,7 @@ public class Survivor : CustomObject
                 }
             }
 
-            bool lockPriorityCraftingsMaterials = false;
+            int[] needLefts = new int[5];
             // 그 다음으로 Crafting Priority 체크
             if (linkedSurvivorData.priority1Crafting != null && linkedSurvivorData.priority1Crafting.itemType != ItemManager.Items.NotValid)
             {
@@ -2174,13 +2194,10 @@ public class Survivor : CustomObject
                         or ItemManager.Items.LegendaryBulletproofVest => 2,
                         _ => -1
                     };
-                    if(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority1Crafting.itemType
+                    // 이미 장비하고 있으면 재료 보존x
+                    if(!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority1Crafting.itemType
                         || check == 1 && currentHelmet != null && currentHelmet.itemType == linkedSurvivorData.priority1Crafting.itemType
-                        || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority1Crafting.itemType)
-                    {
-                        lockPriorityCraftingsMaterials = false;
-                    }
-                    else
+                        || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority1Crafting.itemType))
                     {
                         var priority1 = craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
                         if (priority1 != null)
@@ -2188,47 +2205,124 @@ public class Survivor : CustomObject
                             currentCrafting = priority1;
                             return true;
                         }
-                        else lockPriorityCraftingsMaterials = true;
+                        else
+                        {
+                            var original = ItemManager.craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
+                            needLefts = new int[] { original.needAdvancedComponentCount, original.needComponentsCount, original.needChemicalsCount, original.needGunpowderCount, original.needSalvagesCount };
+                        }
+                        
                     }
                 }
-                else lockPriorityCraftingsMaterials = false;
+                // cp2 체크
+                if (linkedSurvivorData.priority2Crafting != null && linkedSurvivorData.priority2Crafting.itemType != ItemManager.Items.NotValid)
+                {
+                    if (inventory.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType) == null)
+                    {
+                        // 0: weapon, 1: helmet, 2: vest
+                        int check = linkedSurvivorData.priority2Crafting.itemType switch
+                        {
+                            ItemManager.Items.Revolver or ItemManager.Items.Pistol or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun
+                            or ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER => 0,
+                            ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet
+                            or ItemManager.Items.LegendaryBulletproofHelmet => 1,
+                            ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest
+                            or ItemManager.Items.LegendaryBulletproofVest => 2,
+                            _ => -1
+                        };
+                        // 이미 장비하고 있으면 재료 보존x
+                        if (!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority2Crafting.itemType
+                            || check == 1 && currentHelmet != null && currentHelmet.itemType == linkedSurvivorData.priority2Crafting.itemType
+                            || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority2Crafting.itemType))
+                        {
+                            var priority2 = craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
+                            if (priority2 != null)
+                            {
+                                // cp1의 재료를 남기는 선에서 cp2 제작
+                                if (AdvancedComponentCount - priority2.needAdvancedComponentCount >= needLefts[0]
+                                    && ComponentsCount - priority2.needComponentsCount >= needLefts[1]
+                                    && ChemicalsCount - priority2.needChemicalsCount >= needLefts[2]
+                                    && GunpowderCount - priority2.needGunpowderCount >= needLefts[3]
+                                    && SalvagesCount - priority2.needSalvagesCount >= needLefts[4])
+                                currentCrafting = priority2;
+                                return true;
+                            }
+                            else
+                            {
+                                var original = ItemManager.craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
+                                needLefts[0] += original.needAdvancedComponentCount;
+                                needLefts[1] += original.needComponentsCount;
+                                needLefts[2] += original.needChemicalsCount;
+                                needLefts[3] += original.needGunpowderCount;
+                                needLefts[4] += original.needSalvagesCount;
+                            }
+                        }
+                    }
+                }
             }
-            else lockPriorityCraftingsMaterials = false;
 
             for(int i=1; i <= craftables.Count; i++)
             {
                 // craftingAllow = false면 continue
                 if (!linkedSurvivorData.craftingAllows[ItemManager.craftables.FindIndex(x => x.itemType == craftables[^i].itemType)]) continue;
-                if(lockPriorityCraftingsMaterials)
+                if(needLefts.Sum() > 0)
                 {
                     if (linkedSurvivorData.priority1Crafting != null && linkedSurvivorData.priority1Crafting.etcNeedItems != null && linkedSurvivorData.priority1Crafting.etcNeedItems.Count > 0)
                     {
-                        // 만약에 이 craftable이 craftingPriority1의 재료가 아니면
+                        // 만약에 이 craftable이 craftingPriority1의 하위재료가 아니면
                         if(!linkedSurvivorData.priority1Crafting.etcNeedItems.ContainsKey(craftables[^i].itemType))
                         {
                             // priority1 만들 재료를 남겨두고도 충분하면 만들고
                             // 그렇지 않으면 넘어가
-                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if (ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
-                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < needLefts[0]) continue;
+                            if (ComponentsCount - craftables[^i].needComponentsCount < needLefts[1]) continue;
+                            if (ChemicalsCount - craftables[^i].needChemicalsCount < needLefts[2]) continue;
+                            if (GunpowderCount - craftables[^i].needGunpowderCount < needLefts[3]) continue;
+                            if (SalvagesCount - craftables[^i].needSalvagesCount < needLefts[4]) continue;
                         }
                         else
                         {
-                            // 이 craftable이 craftingPriority1의 재료면
+                            // 이 craftable이 craftingPriority1의 하위재료면
                             // 이미 재료가 충분히 만들어져 있는지 체크
                             Item alreadyHave = inventory.Find(x => x.itemType == craftables[^i].itemType);
                             if(alreadyHave != null && alreadyHave.amount >= linkedSurvivorData.priority1Crafting.etcNeedItems[craftables[^i].itemType])
                             {
                                 // 재료가 충분하면 하위재료를 priority1 만들 수 있는 만큼만 남기고 충분하면 여분으로만 더 만들게
-                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                                if(ComponentsCount - craftables[^i].needComponentsCount < linkedSurvivorData.priority1Crafting.needComponentsCount) continue;
-                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
-                                if(AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < linkedSurvivorData.priority1Crafting.needAdvancedComponentCount) continue;
+                                if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < needLefts[0]) continue;
+                                if (ComponentsCount - craftables[^i].needComponentsCount < needLefts[1]) continue;
+                                if (ChemicalsCount - craftables[^i].needChemicalsCount < needLefts[2]) continue;
+                                if (GunpowderCount - craftables[^i].needGunpowderCount < needLefts[3]) continue;
+                                if (SalvagesCount - craftables[^i].needSalvagesCount < needLefts[4]) continue;
                             }
                             // 아니면(priority1의 재료가 부족하면) 만듦
+                            else
+                            {
+                                currentCrafting = craftables[^i];
+                                return true;
+                            }
+                        }
+                    }
+                    else if(linkedSurvivorData.priority2Crafting != null && linkedSurvivorData.priority2Crafting.etcNeedItems != null && linkedSurvivorData.priority2Crafting.etcNeedItems.Count > 0)
+                    {
+                        // craftingPriority2의 하위재료인지도 체크
+                        if (!linkedSurvivorData.priority2Crafting.etcNeedItems.ContainsKey(craftables[^i].itemType))
+                        {
+                            if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < needLefts[0]) continue;
+                            if (ComponentsCount - craftables[^i].needComponentsCount < needLefts[1]) continue;
+                            if (ChemicalsCount - craftables[^i].needChemicalsCount < needLefts[2]) continue;
+                            if (GunpowderCount - craftables[^i].needGunpowderCount < needLefts[3]) continue;
+                            if (SalvagesCount - craftables[^i].needSalvagesCount < needLefts[4]) continue;
+                        }
+                        else
+                        {
+                            Item alreadyHave = inventory.Find(x => x.itemType == craftables[^i].itemType);
+                            if (alreadyHave != null && alreadyHave.amount >= linkedSurvivorData.priority2Crafting.etcNeedItems[craftables[^i].itemType])
+                            {
+                                if (AdvancedComponentCount - craftables[^i].needAdvancedComponentCount < needLefts[0]) continue;
+                                if (ComponentsCount - craftables[^i].needComponentsCount < needLefts[1]) continue;
+                                if (ChemicalsCount - craftables[^i].needChemicalsCount < needLefts[2]) continue;
+                                if (GunpowderCount - craftables[^i].needGunpowderCount < needLefts[3]) continue;
+                                if (SalvagesCount - craftables[^i].needSalvagesCount < needLefts[4]) continue;
+                            }
                             else
                             {
                                 currentCrafting = craftables[^i];
@@ -2245,9 +2339,9 @@ public class Survivor : CustomObject
                 // 총 필요성 검사
                 if (IsValid(currentWeapon))
                 {
-                    if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon)
+                    if (currentWeapon.itemType == linkedSurvivorData.priority1Weapon || currentWeapon.itemType == linkedSurvivorData.priority2Weapon && craftables[^i].itemType != linkedSurvivorData.priority1Weapon)
                     {
-                        // 지금 무기가 priority1이면 패스
+                        // 지금 무기가 priority1 또는 p2 이면서 만드려는 무기가 p1이 아니면 패스
                         gunNeeds = false;
                     }
                     else if (currentWeapon is not RangedWeapon)
@@ -2267,8 +2361,8 @@ public class Survivor : CustomObject
                     else 
                     {
                         // 총이 있는 경우면
-                        // craftables[^i]가 priority1 무기면 만들고
-                        if (craftables[^i].itemType == linkedSurvivorData.priority1Weapon) gunNeeds = true;
+                        // craftables[^i]가 priority1 또는 p2 무기면 만들고
+                        if (craftables[^i].itemType == linkedSurvivorData.priority1Weapon || craftables[^i].itemType == linkedSurvivorData.priority2Weapon) gunNeeds = true;
                         else
                         {
                             bool needCompare = false;
@@ -2358,9 +2452,15 @@ public class Survivor : CustomObject
                     case ItemManager.Items.Bullet_AssaultRifle:
                     case ItemManager.Items.Bullet_SniperRifle:
                     case ItemManager.Items.Rocket_Bazooka:
+                    case ItemManager.Items.Arrow:
                         if (bulletNeeds)
                         {
-                            if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
+                            if(craftables[^i].itemType == ItemManager.Items.Arrow)
+                            {
+                                if (bestWeapon.itemType == ItemManager.Items.Bow || bestWeapon.itemType == ItemManager.Items.AdvancedBow) return true;
+                                else return false;
+                            }
+                            else if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
                             {
                                 currentCrafting = craftables[^i];
                                 return true;
@@ -2375,6 +2475,9 @@ public class Survivor : CustomObject
                     case ItemManager.Items.SniperRifle:
                     case ItemManager.Items.AssaultRifle:
                     case ItemManager.Items.Bazooka:
+                    case ItemManager.Items.LASER:
+                    case ItemManager.Items.Bow:
+                    case ItemManager.Items.AdvancedBow:
                         if (gunNeeds)
                         {
                             currentCrafting = craftables[^i];

@@ -1341,6 +1341,34 @@ MonoBehaviour:
       de maior n\xEDvel."
     m_Metadata:
       m_Items: []
+  - m_Id: 118118340732973056
+    m_Localized: "Desbloqueado ap\xF3s a primeira participa\xE7\xE3o no Battle Royale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118342322614272
+    m_Localized: Desbloqueado ao vencer a Liga Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118343929032704
+    m_Localized: Desbloqueado ao vencer a Liga Prata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118345401233408
+    m_Localized: Desbloqueado ao vencer a Liga Ouro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118346722439168
+    m_Localized: Desbloqueado ao vencer o Campeonato da Temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118118348089782272
+    m_Localized: Desbloqueado ao vencer o Campeonato Mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 118901894194720768
+    m_Localized: "\rprioridade 2"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
