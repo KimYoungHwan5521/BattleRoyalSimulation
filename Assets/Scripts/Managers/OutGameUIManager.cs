@@ -1487,11 +1487,13 @@ public class OutGameUIManager : MonoBehaviour
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "First seen person").GetLocalizedString(), new LocalizedString("Basic", "Nearest person").GetLocalizedString(), new LocalizedString("Basic", "Person with the longest range").GetLocalizedString() }));
 
-        for(int i=0; i< craftingPriority1Dropdown.keys.Count; i++)
+        craftingPriority1Dropdown.keys[0] = new LocalizedString("Basic", "None");
+        craftingPriority2Dropdown.keys[0] = new LocalizedString("Basic", "None");
+        for (int i=1; i< craftingPriority1Dropdown.keys.Count; i++)
         {
             if (i >= ItemManager.craftables.Count) break;
-            craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
-            craftingPriority2Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
+            craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i - 1].itemType.ToString());
+            craftingPriority2Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i - 1].itemType.ToString());
         }
     }
 
@@ -1676,11 +1678,15 @@ public class OutGameUIManager : MonoBehaviour
         else if(craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key == "None") 
         {
             image.sprite = null;
+            craftingPriority2Dropdown.dropdown.value = 0;
+            CraftingPriority2Changed();
         }
         else
         {
             Debug.Log($"Sprite not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
         }
+        craftingPriority2Dropdown.dropdown.interactable = craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key != "None";
+        GameManager.Instance.FixLayout(strategyRoom.GetComponent<RectTransform>());
     }
 
     public void CraftingPriority2Changed()
@@ -1716,6 +1722,8 @@ public class OutGameUIManager : MonoBehaviour
         {
             survivorWhoWantEstablishStrategy.priority1Crafting = null;
             survivorWhoWantEstablishStrategy.priority1CraftingToInt = -1;
+            survivorWhoWantEstablishStrategy.priority2Crafting = null;
+            survivorWhoWantEstablishStrategy.priority2CraftingToInt = -1;
         }
         else
         {
