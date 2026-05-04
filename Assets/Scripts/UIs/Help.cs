@@ -146,7 +146,7 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             ItemManager.Items.LowLevelBulletproofVest => $"\n{new LocalizedString("Item", "Vest").GetLocalizedString()}\n{new LocalizedString("Item", "Armor").GetLocalizedString()} : 10",
             ItemManager.Items.MiddleLevelBulletproofVest => $"\n{new LocalizedString("Item", "Vest").GetLocalizedString()}\n{new LocalizedString("Item", "Armor").GetLocalizedString()} : 30",
             ItemManager.Items.HighLevelBulletproofVest => $"\n{new LocalizedString("Item", "Vest").GetLocalizedString()}\n{new LocalizedString("Item", "Armor").GetLocalizedString()} : 50",
-            ItemManager.Items.LegendaryBulletproofVest => $"\n{new LocalizedString("Item", "Vest").GetLocalizedString()}\n{new LocalizedString("Item", "Armor").GetLocalizedString()} : 70",
+            ItemManager.Items.LegendaryBulletproofVest => $"\n{new LocalizedString("Item", "Vest").GetLocalizedString()}\n{new LocalizedString("Item", "Armor").GetLocalizedString()} : 100",
             ItemManager.Items.BandageRoll => $"\n{new LocalizedString("Item", "Consumable").GetLocalizedString()}\n{new LocalizedString("Item", "Bleeding Control").GetLocalizedString()} : 100",
             ItemManager.Items.HemostaticBandageRoll => $"\n{new LocalizedString("Item", "Consumable").GetLocalizedString()}\n{new LocalizedString("Item", "Bleeding Control").GetLocalizedString()} : 300",
             ItemManager.Items.Poison => $"\n{new LocalizedString("Item", "Consumable").GetLocalizedString()}\n{new LocalizedString("Item", $"Explain:{item}").GetLocalizedString()}",

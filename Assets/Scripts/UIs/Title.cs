@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
+    [SerializeField] string discordLink;
     public GameObject title;
     [SerializeField] GameObject credits;
     [SerializeField] RectTransform buttonsRect;
@@ -39,6 +40,11 @@ public class Title : MonoBehaviour
 #else
     Application.Quit();
 #endif
+    }
+
+    public void OpenDiscord()
+    {
+        Application.OpenURL(discordLink);
     }
 
     public void Credits()

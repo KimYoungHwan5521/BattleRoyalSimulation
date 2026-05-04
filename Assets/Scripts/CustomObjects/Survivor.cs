@@ -2541,7 +2541,23 @@ public class Survivor : CustomObject
             if (currentCrafting.needChemicalsCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Chemicals), currentCrafting.needChemicalsCount);
             if (currentCrafting.needSalvagesCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Salvages), currentCrafting.needSalvagesCount);
             if (currentCrafting.needGunpowderCount > 0) ConsumptionItem(inventory.Find(x => x.itemType == ItemManager.Items.Gunpowder), currentCrafting.needGunpowderCount);
-            foreach (var etcNeeds in currentCrafting.etcNeedItems) ConsumptionItem(inventory.Find(x => x.itemType == etcNeeds.Key), etcNeeds.Value);
+            int durabilityCount = 0;
+            float durabilitySum = 0;
+            foreach (var etcNeeds in currentCrafting.etcNeedItems)
+            {
+                var targetItem = inventory.Find(x => x.itemType == etcNeeds.Key);
+                if(targetItem is BulletproofHelmet bH)
+                {
+                    durabilityCount++;
+                    durabilitySum += bH.Durability;
+                }
+                else if(targetItem is BulletproofVest bV)
+                {
+                    durabilityCount++;
+                    durabilitySum += bV.Durability;
+                }
+                ConsumptionItem(targetItem, etcNeeds.Value);
+            }
 
             int amount = currentCrafting.outputAmount;
             ItemManager.AddItems(currentCrafting.itemType, amount);
@@ -2551,8 +2567,17 @@ public class Survivor : CustomObject
             {
                 item = ItemManager.itemDictionary[currentCrafting.itemType][^i];
                 if (item is Weapon) isEquipable = 0;
-                else if(item is BulletproofHelmet) isEquipable = 1;
-                else if (item is BulletproofVest) isEquipable = 2;
+                else if(item is BulletproofHelmet bH)
+                {
+                    isEquipable = 1;
+                    bH.Durability = durabilitySum / durabilityCount;
+                }
+                else if (item is BulletproofVest bV)
+                {
+                    isEquipable = 2;
+                    bV.Durability = durabilitySum / durabilityCount;
+                }
+
                 AcqireItem(item);
             }
             if(playerSurvivor)

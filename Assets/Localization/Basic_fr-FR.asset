@@ -1384,6 +1384,10 @@ MonoBehaviour:
     m_Localized: "priorit\xE9 2"
     m_Metadata:
       m_Items: []
+  - m_Id: 119618841412694016
+    m_Localized: Autres survivants
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -419,6 +419,7 @@ public class GameManager : MonoBehaviour
         if(loadedDataGameVersionFloat < 1.3)
         {
             calendar.CancelAllReservation();
+            foreach (var survivor in OutGameUIManager.MySurvivorsData) survivor.repairCondition = 70;
         }
         unlockManager.CheckAlreadyLocked(loadedDataGameVersionFloat < 1.3);
         yield return null;

@@ -176,7 +176,6 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] LocalizedDropdown craftingPriority2Dropdown;
 
     [SerializeField] Transform craftingAllow;
-    [SerializeField] TMP_InputField repairConditionInputBox;
     public List<GameObject> craftableAllows = new();
 
     [Serializable]
@@ -505,9 +504,6 @@ public class OutGameUIManager : MonoBehaviour
                         AchievementManager.UnlockAchievement("Full House");
                     }
                     survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
-                    survivorsDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
-                    selectSurvivorGetSurgeryDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
-                    selectSurvivorEstablishStrategyDropdown.template.sizeDelta = new(0, Mathf.Min(50 * survivorsDropdown.options.Count, 600));
                     survivorsInHireMarket[candidate].SoldOut = true;
 
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
@@ -1607,6 +1603,10 @@ public class OutGameUIManager : MonoBehaviour
             }
             if (strategy.ActionDropdown != null) strategy.ActionDropdown.value = strategyDictionary.Value.action;
             if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.value = strategyDictionary.Value.elseAction;
+            if (strategy.IntagerInput != null)
+            {
+                strategy.IntagerInput.text = strategyDictionary.Value.action.ToString();
+            }
             for (int j = 0; j < 5; j++)
             {
                 if (j < strategyDictionary.Value.conditionConut)
@@ -1686,7 +1686,6 @@ public class OutGameUIManager : MonoBehaviour
             Debug.Log($"Sprite not found : {craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
         }
         craftingPriority2Dropdown.dropdown.interactable = craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key != "None";
-        GameManager.Instance.FixLayout(strategyRoom.GetComponent<RectTransform>());
     }
 
     public void CraftingPriority2Changed()
@@ -1785,7 +1784,11 @@ public class OutGameUIManager : MonoBehaviour
             {
                 if(strategy.strategyCase == StrategyCase.RepairCondition)
                 {
-                    survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.RepairCondition] = new(int.Parse(repairConditionInputBox.text), 0, 0);
+                    if (int.TryParse(strategy.IntagerInput.text, out int intInput))
+                    {
+                        survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.RepairCondition] = new(intInput, 0, 0);
+                    }
+                    else strategy.IntagerInput.text = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.RepairCondition].action.ToString();
                 }
                 else
                 {

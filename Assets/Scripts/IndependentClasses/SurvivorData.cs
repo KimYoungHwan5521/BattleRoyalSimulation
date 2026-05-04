@@ -211,7 +211,7 @@ public class SurvivorData
     public int priority1CraftingToInt = -1;
     public int priority2CraftingToInt = -1;
     public bool[] craftingAllows;
-    public int repairCondition;
+    public int repairCondition = 70;
 
     // Stastics
     public int winCount;

@@ -41,6 +41,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image[] predictionResultBGs;
     [SerializeField] TextMeshProUGUI[] predictionResultResults;
     int predictionLeft;
+    [SerializeField] Image[] otherSurvivorsPortraits;
+    [SerializeField] Image[] otherSurvivorsResultBGs;
+    [SerializeField] TextMeshProUGUI[] otherSurvivorsResults;
 
     [Header("Middle Top")]
     [SerializeField] TextMeshProUGUI currentBattleTimer;

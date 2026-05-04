@@ -91,6 +91,8 @@ public class Strategy : MonoBehaviour
             else return elseAction.GetComponentInChildren<TMP_Dropdown>();
         }
     }
+    [SerializeField] TMP_InputField intagerInput;
+    public TMP_InputField IntagerInput => intagerInput;
 
     public StrategyCase strategyCase;
     [SerializeField] bool noCondition;
@@ -275,7 +277,11 @@ public class Strategy : MonoBehaviour
             copyStrategy = new(0, 0, 0);
             return;
         }
-        if (noCondition) copyStrategy = new(ActionDropdown.value, 0, 0);
+        if(strategyCase == StrategyCase.RepairCondition) copyStrategy = new(int.Parse(intagerInput.text), 0, 0);
+        else if (noCondition)
+        {
+            copyStrategy = new(ActionDropdown != null ? ActionDropdown.value : 0, ElseActionDropdown != null ? ElseActionDropdown.value : 0, 0);
+        }
         else
         {
             ConditionData[] conditions = new ConditionData[5];
@@ -301,6 +307,7 @@ public class Strategy : MonoBehaviour
             return;
         }
         if(ActionDropdown.options.Count > copyStrategy.action) ActionDropdown.value = copyStrategy.action;
+        if(ElseActionDropdown.options.Count > copyStrategy.action) ElseActionDropdown.value = copyStrategy.action;
         if(!noCondition)
         {
             SetDefault();
