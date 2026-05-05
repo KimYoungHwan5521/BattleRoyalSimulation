@@ -1355,13 +1355,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: "{0}\uC774/\uAC00 \uC2DC\uC98C \uCC54\uD53C\uC5B8\uC27D \uD2F0\uCF13\uC744
+    m_Localized: "{param0}\uC774/\uAC00 \uC2DC\uC98C \uCC54\uD53C\uC5B8\uC27D \uD2F0\uCF13\uC744
       \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359336
   - m_Id: 113130486810341376
-    m_Localized: "{0}\uC774/\uAC00 \uC6D4\uB4DC \uCC54\uD53C\uC5B8\uC27D \uD2F0\uCF13\uC744
+    m_Localized: "{param0}\uC774/\uAC00 \uC6D4\uB4DC \uCC54\uD53C\uC5B8\uC27D \uD2F0\uCF13\uC744
       \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items:

@@ -1508,13 +1508,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: "{0} \u043F\u043E\u043B\u0443\u0447\u0438\u043B \u0431\u0438\u043B\u0435\u0442
+    m_Localized: "{param0} \u043F\u043E\u043B\u0443\u0447\u0438\u043B \u0431\u0438\u043B\u0435\u0442
       \u043D\u0430 \u0441\u0435\u0437\u043E\u043D\u043D\u044B\u0439 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430\u0442."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359333
   - m_Id: 113130486810341376
-    m_Localized: "{0} \u043F\u043E\u043B\u0443\u0447\u0438\u043B \u0431\u0438\u043B\u0435\u0442
+    m_Localized: "{param0} \u043F\u043E\u043B\u0443\u0447\u0438\u043B \u0431\u0438\u043B\u0435\u0442
       \u043D\u0430 \u043C\u0438\u0440\u043E\u0432\u043E\u0439 \u0447\u0435\u043C\u043F\u0438\u043E\u043D\u0430\u0442."
     m_Metadata:
       m_Items:

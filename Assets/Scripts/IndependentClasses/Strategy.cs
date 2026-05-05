@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -88,7 +89,10 @@ public class Strategy : MonoBehaviour
         get
         {
             if (elseAction == null) return null;
-            else return elseAction.GetComponentInChildren<TMP_Dropdown>();
+            else
+            {
+                return elseAction.GetComponentInChildren<TMP_Dropdown>();
+            }
         }
     }
     [SerializeField] TMP_InputField intagerInput;
@@ -112,6 +116,7 @@ public class Strategy : MonoBehaviour
     public void Initialize()
     {
         if(strategyCase == StrategyCase.CraftingAllow) craftableAllows = new bool[ItemManager.craftables.Count];
+        if(intagerInput != null) intagerInput.onValueChanged.AddListener((value) => { ValidateInput(intagerInput, value, 0, 99); });
         if (noCondition) return;
         andOrs = new TMP_Dropdown[conditions.Length];
         notValids = new GameObject[conditions.Length];
@@ -137,7 +142,7 @@ public class Strategy : MonoBehaviour
             inputFields[i].characterLimit = 2;
             inputFields[i].text = "0";
             int index = i;
-            inputFields[index].onValueChanged.AddListener((value) => { ValidateInput(inputFields[index], value); });
+            inputFields[index].onValueChanged.AddListener((value) => { ValidateInput(inputFields[index], value, 0, 100); });
 
             andOrs[i].ClearOptions();
             andOrs[i].AddOptions(new List<string>(new string[] { "AND", "OR" }));
@@ -235,7 +240,7 @@ public class Strategy : MonoBehaviour
         }
     }
 
-    void ValidateInput(TMP_InputField inputField, string value)
+    void ValidateInput(TMP_InputField inputField, string value, int min, int max)
     {
         if (string.IsNullOrEmpty(value)) // 빈 문자열 체크
         {
@@ -245,7 +250,7 @@ public class Strategy : MonoBehaviour
 
         if (int.TryParse(value, out int number))
         {
-            number = Mathf.Clamp(number, 0, 100);
+            number = Mathf.Clamp(number, min, max);
             if (inputField.text != number.ToString()) // 무한 루프 방지
                 inputField.text = number.ToString();
         }
@@ -277,7 +282,11 @@ public class Strategy : MonoBehaviour
             copyStrategy = new(0, 0, 0);
             return;
         }
-        if(strategyCase == StrategyCase.RepairCondition) copyStrategy = new(int.Parse(intagerInput.text), 0, 0);
+        if(strategyCase == StrategyCase.RepairCondition)
+        {
+            if (int.TryParse(intagerInput.text, out int input)) copyStrategy = new(input, 0, 0);
+            else return;
+        }
         else if (noCondition)
         {
             copyStrategy = new(ActionDropdown != null ? ActionDropdown.value : 0, ElseActionDropdown != null ? ElseActionDropdown.value : 0, 0);
@@ -306,8 +315,9 @@ public class Strategy : MonoBehaviour
             }
             return;
         }
-        if(ActionDropdown.options.Count > copyStrategy.action) ActionDropdown.value = copyStrategy.action;
-        if(ElseActionDropdown.options.Count > copyStrategy.action) ElseActionDropdown.value = copyStrategy.action;
+        if(ActionDropdown != null && ActionDropdown.options.Count > copyStrategy.action) ActionDropdown.value = copyStrategy.action;
+        if(ElseActionDropdown != null && ElseActionDropdown.options.Count > copyStrategy.action) ElseActionDropdown.value = copyStrategy.elseAction;
+        if (intagerInput != null) intagerInput.text = copyStrategy.action.ToString();
         if(!noCondition)
         {
             SetDefault();

@@ -1271,12 +1271,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: "{0}\u7372\u5F97\u4E86\u8CFD\u5B63\u9326\u6A19\u8CFD\u9580\u7968\u3002"
+    m_Localized: "{param0}\u7372\u5F97\u4E86\u8CFD\u5B63\u9326\u6A19\u8CFD\u9580\u7968\u3002"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359341
   - m_Id: 113130486810341376
-    m_Localized: "{0}\u7372\u5F97\u4E86\u4E16\u754C\u9326\u6A19\u8CFD\u9580\u7968\u3002"
+    m_Localized: "{param0}\u7372\u5F97\u4E86\u4E16\u754C\u9326\u6A19\u8CFD\u9580\u7968\u3002"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359341

@@ -1295,12 +1295,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: '{0} obteve um bilhete para o Campeonato da Temporada.'
+    m_Localized: '{param0} obteve um bilhete para o Campeonato da Temporada.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
   - m_Id: 113130486810341376
-    m_Localized: '{0} obteve um bilhete para o Campeonato Mundial.'
+    m_Localized: '{param0} obteve um bilhete para o Campeonato Mundial.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334

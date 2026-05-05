@@ -1308,12 +1308,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: '{0} a obtenu un billet pour le championnat de saison.'
+    m_Localized: '{param0} a obtenu un billet pour le championnat de saison.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
   - m_Id: 113130486810341376
-    m_Localized: '{0} a obtenu un billet pour le championnat du monde.'
+    m_Localized: '{param0} a obtenu un billet pour le championnat du monde.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339

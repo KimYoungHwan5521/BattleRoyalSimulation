@@ -1570,6 +1570,7 @@ MonoBehaviour:
     surgeryType: 0
     surgeryCharacteristic: 0
     priority1Weapon: 0
+    priority2Weapon: 0
     priority1Crafting:
       itemType: 0
       requiredKnowledge: 0
@@ -1581,8 +1582,21 @@ MonoBehaviour:
       outputAmount: 0
       craftingAnimNumber: 0
       craftingTime: 0
+    priority2Crafting:
+      itemType: 0
+      requiredKnowledge: 0
+      needAdvancedComponentCount: 0
+      needComponentsCount: 0
+      needChemicalsCount: 0
+      needSalvagesCount: 0
+      needGunpowderCount: 0
+      outputAmount: 0
+      craftingAnimNumber: 0
+      craftingTime: 0
     priority1CraftingToInt: 0
+    priority2CraftingToInt: 0
     craftingAllows: 
+    repairCondition: 0
     winCount: 0
     rankDefenseCount: 0
     loseCount: 0
@@ -1709,12 +1723,11 @@ MonoBehaviour:
   targetFarmingSection: {fileID: 0}
   targetFarmingBox: {fileID: 0}
   targetFarmingCorpse: {fileID: 0}
-  farmingTime: 3
   curFarmingTime: 0
-  aimDelay: 1.5
   curAimDelay: 0
   curShotTime: 0
   reloadSpeed: 1
+  CurrentRepairing: 0
   lookPosition: {x: 0, y: 0}
   lookAroundTime: 0.3
   curLookAroundTime: 0
@@ -6015,7 +6028,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_TargetDisplay: 0
 --- !u!114 &6320962825307067771
 MonoBehaviour:

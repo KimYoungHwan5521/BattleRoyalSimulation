@@ -2570,12 +2570,12 @@ public class Survivor : CustomObject
                 else if(item is BulletproofHelmet bH)
                 {
                     isEquipable = 1;
-                    bH.Durability = durabilitySum / durabilityCount;
+                    bH.Durability = durabilityCount == 0 ? 1 : durabilitySum / durabilityCount;
                 }
                 else if (item is BulletproofVest bV)
                 {
                     isEquipable = 2;
-                    bV.Durability = durabilitySum / durabilityCount;
+                    bV.Durability = durabilityCount == 0 ? 1 : durabilitySum / durabilityCount;
                 }
 
                 AcqireItem(item);

@@ -11,7 +11,6 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using NaughtyAttributes;
 
 public enum Training { None, Weight, Running, Fighting, Shooting, Studying }
 
@@ -1482,6 +1481,19 @@ public class OutGameUIManager : MonoBehaviour
 
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
         whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "First seen person").GetLocalizedString(), new LocalizedString("Basic", "Nearest person").GetLocalizedString(), new LocalizedString("Basic", "Person with the longest range").GetLocalizedString() }));
+        
+        if(survivorWhoWantEstablishStrategy != null && survivorWhoWantEstablishStrategy.strategyDictionary != null)
+        {
+            sawAnEnemyAndItIsInAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action;
+            elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction;
+            sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action;
+            elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction;
+            heardDistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardDistinguishableSound].action;
+            elseActionHeardDistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction;
+            heardIndistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action;
+            elseActionHeardIndistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction;
+            whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action;
+        }
 
         craftingPriority1Dropdown.keys[0] = new LocalizedString("Basic", "None");
         craftingPriority2Dropdown.keys[0] = new LocalizedString("Basic", "None");

@@ -1298,12 +1298,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: '{0} obtuvo una entrada para el Campeonato de Temporada.'
+    m_Localized: '{param0} obtuvo una entrada para el Campeonato de Temporada.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 113130486810341376
-    m_Localized: '{0} obtuvo una entrada para el Campeonato Mundial.'
+    m_Localized: '{param0} obtuvo una entrada para el Campeonato Mundial.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332

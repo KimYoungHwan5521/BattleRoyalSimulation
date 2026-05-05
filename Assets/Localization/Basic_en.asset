@@ -1294,12 +1294,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 113130481299025920
-    m_Localized: '{0} has obtained a Season Championship ticket.'
+    m_Localized: '{param0} has obtained a Season Championship ticket.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
   - m_Id: 113130486810341376
-    m_Localized: '{0} has obtained a World Championship ticket.'
+    m_Localized: '{param0} has obtained a World Championship ticket.'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
