@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class AutoNewLineLayoutGroup : MonoBehaviour
 {
     Rect Rect => GetComponent<RectTransform>().rect;
-    [SerializeField] GameObject[] characteristicsBox;
+    public GameObject[] characteristicsBox;
     [SerializeField] float paddingTop;
     [SerializeField] float wantSpacing = 5f;
     TextMeshProUGUI[] characteristicsText;
@@ -52,6 +52,23 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         ArrangeChildren();
     }
 
+    public void ArrangeCharacteristics()
+    {
+        if (!Application.isPlaying) return;
+        if(characteristicsText == null || characteristicsText.Length == 0) characteristicsText = new TextMeshProUGUI[characteristicsBox.Length];
+        for (int i = 0; i < characteristicsBox.Length; i++)
+        {
+            characteristicsText[i] = characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>();
+            characteristicsText[i].text = CharacteristicManager.Characteristics[i].characteristicName.GetLocalizedString();
+            characteristicsBox[i].GetComponent<Help>().SetDescription(CharacteristicManager.Characteristics[i].characteristicName);
+            characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, wantHeight);
+            characteristicsText[i].ForceMeshUpdate();
+            Canvas.ForceUpdateCanvases();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(characteristicsText[i].GetComponent<RectTransform>());
+        }
+        ArrangeChildren();
+    }
+
     public void ArrangeChildren()
     {
         float width = 0;
@@ -80,6 +97,7 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         }
 
         GetComponent<RectTransform>().sizeDelta = new(Rect.width, 3 * wantHeight + wantSpacing * 2);
+        GameManager.Instance.FixLayout(GetComponent<RectTransform>());
     }
 
     void OnLocaleChanged(Locale newLocale)

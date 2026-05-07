@@ -1388,6 +1388,10 @@ MonoBehaviour:
     m_Localized: Autres survivants
     m_Metadata:
       m_Items: []
+  - m_Id: 121765247879540736
+    m_Localized: "Caract\xE9ristique"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

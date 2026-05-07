@@ -2,7 +2,6 @@ using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -30,9 +29,16 @@ public class Option : MonoBehaviour
 
     [Header("Encyclopedia")]
     [SerializeField] GameObject encyclopedia;
+    [SerializeField] GameObject tabItems;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
     List<GameObject> itemBoxes = new();
+
+    [SerializeField] GameObject tabCharacteristics;
+    [SerializeField] GameObject characteristicTable;
+    [SerializeField] TMP_Dropdown sortBy_Characteristic;
+    [SerializeField] AutoNewLineLayoutGroup characteristicAutoNewlineLG;
+    List<GameObject> characteristicBoxes = new();
 
     [Header("Buttons")]
     [SerializeField] GameObject resume;
@@ -75,6 +81,7 @@ public class Option : MonoBehaviour
         saveButton.gameObject.SetActive(false);
         goTitle.SetActive(false);
         encyclopedia.SetActive(true);
+        // Items
         for(int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
         {
             string itemName = ((ItemManager.Items)i).ToString();
@@ -94,7 +101,31 @@ public class Option : MonoBehaviour
         }
         sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
+
+        // Characteristics
+        for (int i = 0; i < CharacteristicManager.Characteristics.Count; i++)
+        {
+            GameObject characteristicBox = PoolManager.Spawn(ResourceEnum.Prefab.Characteristic, characteristicTable.transform);
+            characteristicAutoNewlineLG.characteristicsBox = characteristicAutoNewlineLG.characteristicsBox.Append(characteristicBox).ToArray();
+            characteristicBoxes.Add(characteristicBox);
+        }
+        characteristicAutoNewlineLG.ArrangeCharacteristics();
         encyclopedia.SetActive(false);
+    }
+
+    public void ChangeTab(int index)
+    {
+        if(index == 0)
+        {
+            tabCharacteristics.SetActive(false);
+            tabItems.SetActive(true);
+        }
+        else
+        {
+            tabItems.SetActive(false);
+            tabCharacteristics.SetActive(true);
+            characteristicAutoNewlineLG.ArrangeCharacteristics();
+        }
     }
 
     void Sorting(int sortBy)

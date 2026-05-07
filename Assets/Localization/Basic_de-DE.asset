@@ -1375,6 +1375,10 @@ MonoBehaviour:
     m_Localized: "Andere \xDCberlebende"
     m_Metadata:
       m_Items: []
+  - m_Id: 121765247879540736
+    m_Localized: Eigenschaft
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

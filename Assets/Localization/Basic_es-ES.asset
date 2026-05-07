@@ -1376,6 +1376,10 @@ MonoBehaviour:
     m_Localized: Otros supervivientes
     m_Metadata:
       m_Items: []
+  - m_Id: 121765247879540736
+    m_Localized: "Caracter\xEDstica"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

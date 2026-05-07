@@ -1295,6 +1295,10 @@ MonoBehaviour:
     m_Key: Other Survivors
     m_Metadata:
       m_Items: []
+  - m_Id: 121765247879540736
+    m_Key: Characteristic
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

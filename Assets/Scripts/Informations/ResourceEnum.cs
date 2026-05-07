@@ -45,6 +45,7 @@ namespace ResourceEnum
         SurvivorSchedule,
         CraftableAllow,
         ImageBox,
+        Characteristic,
 
         // In Game UI
         KillLog,
