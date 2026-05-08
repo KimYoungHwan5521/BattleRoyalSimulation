@@ -348,6 +348,18 @@ MonoBehaviour:
     m_Localized: "D\xE9lai de tir -, Temps de rechargement -"
     m_Metadata:
       m_Items: []
+  - m_Id: 120331058365919232
+    m_Localized: Commun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331059942977536
+    m_Localized: Peu commun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331061134159872
+    m_Localized: Rare
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

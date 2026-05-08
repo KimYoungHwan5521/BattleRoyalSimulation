@@ -350,6 +350,18 @@ MonoBehaviour:
     m_Localized: Retardo de disparo -, Tiempo de recarga -
     m_Metadata:
       m_Items: []
+  - m_Id: 120331058365919232
+    m_Localized: "Com\xFAn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331059942977536
+    m_Localized: "Poco com\xFAn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331061134159872
+    m_Localized: Raro
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

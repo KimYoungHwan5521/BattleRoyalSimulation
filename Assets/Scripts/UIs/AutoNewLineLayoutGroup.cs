@@ -60,16 +60,16 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         {
             characteristicsText[i] = characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>();
             characteristicsText[i].text = CharacteristicManager.Characteristics[i].characteristicName.GetLocalizedString();
-            characteristicsBox[i].GetComponent<Help>().SetDescription(CharacteristicManager.Characteristics[i].characteristicName);
+            characteristicsBox[i].GetComponent<Help>().SetDescription(CharacteristicManager.Characteristics[i].description);
             characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, wantHeight);
             characteristicsText[i].ForceMeshUpdate();
             Canvas.ForceUpdateCanvases();
             LayoutRebuilder.ForceRebuildLayoutImmediate(characteristicsText[i].GetComponent<RectTransform>());
         }
-        ArrangeChildren();
+        ArrangeChildren(true);
     }
 
-    public void ArrangeChildren()
+    public void ArrangeChildren(bool encyclopedia = false)
     {
         float width = 0;
         int line = 0;
@@ -96,7 +96,8 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
             width += child.rect.width;
         }
 
-        GetComponent<RectTransform>().sizeDelta = new(Rect.width, 3 * wantHeight + wantSpacing * 2);
+        if(!encyclopedia) GetComponent<RectTransform>().sizeDelta = new(Rect.width, 3 * wantHeight + wantSpacing * 2);
+        else GetComponent<RectTransform>().sizeDelta = new(Rect.width, line * wantHeight + wantSpacing * (line - 1));
         GameManager.Instance.FixLayout(GetComponent<RectTransform>());
     }
 

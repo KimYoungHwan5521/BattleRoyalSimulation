@@ -350,6 +350,18 @@ MonoBehaviour:
     m_Localized: "Schussverz\xF6gerung -, Nachladezeit -"
     m_Metadata:
       m_Items: []
+  - m_Id: 120331058365919232
+    m_Localized: "Gew\xF6hnlich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331059942977536
+    m_Localized: "Ungew\xF6hnlich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120331061134159872
+    m_Localized: Selten
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

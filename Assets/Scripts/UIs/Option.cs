@@ -29,11 +29,13 @@ public class Option : MonoBehaviour
 
     [Header("Encyclopedia")]
     [SerializeField] GameObject encyclopedia;
+    [SerializeField] Image itemTabBtn;
     [SerializeField] GameObject tabItems;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
     List<GameObject> itemBoxes = new();
 
+    [SerializeField] Image charTabBtn;
     [SerializeField] GameObject tabCharacteristics;
     [SerializeField] GameObject characteristicTable;
     [SerializeField] TMP_Dropdown sortBy_Characteristic;
@@ -54,11 +56,25 @@ public class Option : MonoBehaviour
     {
         public ItemManager.Items itemType;
         public int knowledgeRequiredForCrafting;
+        public LocalizedString localizeName;
 
         public void Set(ItemManager.Items itemType, int knowledgeRequiredForCrafting)
         {
             this.itemType = itemType;
             this.knowledgeRequiredForCrafting = knowledgeRequiredForCrafting;
+            localizeName = new LocalizedString("Item", itemType.ToString());
+        }
+    }
+
+    class CharacteristicDataForSort : MonoBehaviour
+    {
+        public LocalizedString localizeName;
+        public CharacteristicRarity rarity;
+
+        public void Set(LocalizedString localizeName, CharacteristicRarity rarity)
+        {
+            this.localizeName = localizeName;
+            this.rarity = rarity;
         }
     }
 
@@ -101,15 +117,27 @@ public class Option : MonoBehaviour
         }
         sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
+        sortBy.options[2].text = new LocalizedString("Basic", "Name").GetLocalizedString();
 
         // Characteristics
         for (int i = 0; i < CharacteristicManager.Characteristics.Count; i++)
         {
             GameObject characteristicBox = PoolManager.Spawn(ResourceEnum.Prefab.Characteristic, characteristicTable.transform);
-            characteristicAutoNewlineLG.characteristicsBox = characteristicAutoNewlineLG.characteristicsBox.Append(characteristicBox).ToArray();
             characteristicBoxes.Add(characteristicBox);
+            characteristicBox.GetComponent<Image>().color = CharacteristicManager.Characteristics[i].rarity switch
+            {
+                CharacteristicRarity.Common => new Color(0.2984f, 0.8483f, 0.9471f),
+                CharacteristicRarity.Uncommon => new Color(0.8050f, 0.2980f, 0.9490f),
+                CharacteristicRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
+                _ => new Color(1, 1, 1)
+            };
+            characteristicBox.AddComponent<CharacteristicDataForSort>().Set(CharacteristicManager.Characteristics[i].characteristicName, CharacteristicManager.Characteristics[i].rarity);
         }
-        characteristicAutoNewlineLG.ArrangeCharacteristics();
+        characteristicAutoNewlineLG.characteristicsBox = characteristicBoxes.ToArray();
+        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
+        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+
+        ChangeTab(0);
         encyclopedia.SetActive(false);
     }
 
@@ -119,20 +147,24 @@ public class Option : MonoBehaviour
         {
             tabCharacteristics.SetActive(false);
             tabItems.SetActive(true);
+            itemTabBtn.color = new Color(0.55f, 1, 1);
+            charTabBtn.color = new Color(1, 1, 1);
         }
         else
         {
             tabItems.SetActive(false);
             tabCharacteristics.SetActive(true);
-            characteristicAutoNewlineLG.ArrangeCharacteristics();
+            itemTabBtn.color = new Color(1, 1, 1);
+            charTabBtn.color = new Color(0.55f, 1, 1);
         }
+        characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 
-    void Sorting(int sortBy)
+    void SortTable(GameObject wantTable, int sortBy)
     {
-        var children = itemTable.transform.Cast<Transform>().ToList();
+        var children = wantTable.transform.Cast<Transform>().ToList();
         List<Transform> sorted = null;
-        // sort by - 0 : Item type, 1 : Knowledge required for crafting
+        // sort by - 0 : Item type, 1 : Knowledge required for crafting, 2 : Name, 3 : Rarity
         switch (sortBy)
         {
             case 0:
@@ -141,16 +173,36 @@ public class Option : MonoBehaviour
             case 1:
                 sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().knowledgeRequiredForCrafting).ToList();
                 break;
+            case 2:
+                if (wantTable == itemTable) sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().localizeName.GetLocalizedString()).ToList();
+                else sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().localizeName.GetLocalizedString()).ToList();
+                break;
+            case 3:
+                sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().rarity).ToList();
+                break;
         }
         for (int i = 0; i < sorted.Count; i++)
         {
             sorted[i].SetSiblingIndex(i);
         }
+        characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 
-    public void Sort()
+    public void Sort(int table)
     {
-        Sorting(sortBy.value);
+        GameObject wantTable;
+        int sortingOrder = 0;
+        if (table == 0)
+        {
+            wantTable = itemTable;
+            sortingOrder = sortBy.value;
+        }
+        else
+        {
+            wantTable = characteristicTable;
+            sortingOrder = sortBy_Characteristic.value == 1 ? 2 : 3;
+        }
+        SortTable(wantTable, sortingOrder);
     }
 
     public void ToggleBGM()
@@ -201,6 +253,7 @@ public class Option : MonoBehaviour
     public void OpenEncyclopedia()
     {
         encyclopedia.SetActive(true);
+        characteristicAutoNewlineLG.ArrangeCharacteristics();
         GameManager.Instance.openedWindows.Push(encyclopedia);
     }
 
@@ -342,6 +395,11 @@ public class Option : MonoBehaviour
         ReloadSavedata();
         sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
+        sortBy.options[2].text = new LocalizedString("Basic", "Name").GetLocalizedString();
         sortBy.captionText.text = sortBy.options[sortBy.value].text;
+        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
+        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Characteristic.captionText.text = sortBy_Characteristic.options[sortBy_Characteristic.value].text;
+        characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 }

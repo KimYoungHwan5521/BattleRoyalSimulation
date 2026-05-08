@@ -1377,6 +1377,14 @@ MonoBehaviour:
     m_Localized: "Caracter\xEDstica"
     m_Metadata:
       m_Items: []
+  - m_Id: 122098417921486848
+    m_Localized: "Padr\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122098419716648960
+    m_Localized: Raridade
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

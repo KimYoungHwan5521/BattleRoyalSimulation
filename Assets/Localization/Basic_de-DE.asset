@@ -1379,6 +1379,14 @@ MonoBehaviour:
     m_Localized: Eigenschaft
     m_Metadata:
       m_Items: []
+  - m_Id: 122098417921486848
+    m_Localized: Standard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122098419716648960
+    m_Localized: Seltenheit
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
