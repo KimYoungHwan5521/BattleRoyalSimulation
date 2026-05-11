@@ -362,6 +362,66 @@ MonoBehaviour:
     m_Localized: Raro
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: Mestre da Espada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: Ao equipar uma espada longa, tem 50% de chance de aparar ataques
+      corpo a corpo inimigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: Lutador de Facas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: "Ao equipar uma adaga, ataques cr\xEDticos s\xE3o garantidos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: Mestre Arqueiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: +20 de Tiro ao equipar um arco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: Sede de Sangue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: "Ao eliminar um inimigo, aumenta temporariamente Agilidade, regenera\xE7\xE3o
+      de vigor e regenera\xE7\xE3o de vida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: "M\xE9dico de Campo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: Tiro + 10, Conhecimento + 5, velocidade de estancamento +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: Especialista em Armadilhas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: "Pode fabricar todas as armadilhas e detectores independentemente
+      do Conhecimento. Velocidade de fabrica\xE7\xE3o+, instala\xE7\xE3o+ e desarme+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: Imunidade a Veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: "Imune a veneno. Fabrica\xE7\xE3o exclusiva: Veneno Mortal. Come\xE7a
+      com x1 Veneno Mortal"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

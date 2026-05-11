@@ -1400,6 +1400,12 @@ MonoBehaviour:
     m_Localized: "Raret\xE9"
     m_Metadata:
       m_Items: []
+  - m_Id: 122215989157359616
+    m_Localized: "La port\xE9e effective des armes \xE0 distance est g\xE9n\xE9ralement
+      la moiti\xE9 de leur port\xE9e maximale, et les d\xE9g\xE2ts diminuent au-del\xE0
+      de cette port\xE9e."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

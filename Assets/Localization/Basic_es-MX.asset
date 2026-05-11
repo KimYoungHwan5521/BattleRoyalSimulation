@@ -1388,6 +1388,12 @@ MonoBehaviour:
     m_Localized: Rareza
     m_Metadata:
       m_Items: []
+  - m_Id: 122215989157359616
+    m_Localized: "El alcance efectivo de la mayor\xEDa de las armas a distancia es
+      la mitad de su alcance m\xE1ximo, y el da\xF1o disminuye m\xE1s all\xE1 del
+      alcance efectivo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

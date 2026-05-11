@@ -365,6 +365,67 @@ MonoBehaviour:
     m_Localized: "\uD76C\uADC0\uD568"
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: "\uAC80\uC131"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: "\uC7A5\uAC80 \uC7A5\uCC29\uC2DC 50% \uD655\uB960\uB85C \uC801\uC758
+      \uADFC\uC811\uACF5\uACA9\uC744 \uD328\uB9C1\uD568"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: "\uCE7C\uC7A1\uC774"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: "\uB2E8\uAC80 \uC7A5\uCC29\uC2DC 100% \uD655\uB960\uB85C \uCE58\uBA85\uD0C0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: "\uBA85\uAD81"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: "\uD65C \uC7A5\uCC29\uC2DC \uC0AC\uACA9 20 \uC99D\uAC00"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: "\uD53C\uC758 \uB9DB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: "\uC801 \uCC98\uCE58\uC2DC \uC77C\uC2DC\uC801\uC73C\uB85C \uBBFC\uCCA9,
+      \uCCB4\uB825 \uC7AC\uC0DD, \uD53C \uC7AC\uC0DD \uC0C1\uC2B9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: "\uAD70\uC758\uAD00"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: "\uC0AC\uACA9 + 10, \uC9C0\uC2DD + 5, \uC9C0\uD608 \uC18D\uB3C4+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: "\uD568\uC815\uC804\uBB38\uAC00"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: "\uC9C0\uC2DD\uC5D0 \uC0C1\uAD00\uC5C6\uC774 \uBAA8\uB4E0 \uD2B8\uB7A9,
+      \uD568\uC815\uD0D0\uC9C0\uC7A5\uCE58 \uC81C\uC791 \uAC00\uB2A5. \uD2B8\uB7A9\uC81C\uC791\uC18D\uB3C4+
+      \uD2B8\uB7A9\uC124\uCE58\uC18D\uB3C4+, \uD2B8\uB7A9\uD574\uC81C\uC18D\uB3C4+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: "\uB9CC\uB3C5\uBD88\uCE68"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: "\uB3C5 \uBA74\uC5ED, \uACE0\uC720\uC81C\uC791 : \uB9F9\uB3C5, \uB9F9\uB3C5x1
+      \uAC00\uC9C0\uACE0 \uC2DC\uC791"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

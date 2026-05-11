@@ -48,6 +48,14 @@ public enum CharacteristicType
     Boxer,
     Luchador,
     QuickDrawer,
+    // 1.4
+    SwordSaint,
+    KnifeFighter,
+    MasterAcher,
+    TasteOfBlood,
+    FieldMedic,
+    TrapExpert,
+    PoisonImmunity,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -118,10 +126,18 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Dexterous, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyHand, CharacteristicType.Engineer));
         characteristics.Add(new(CharacteristicType.Engineer, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous));
         characteristics.Add(new(CharacteristicType.Fatty, CharacteristicRarity.Common, 0));
-        characteristics.Add(new(CharacteristicType.Soldier, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.Soldier, CharacteristicRarity.Uncommon, 0, CharacteristicType.FieldMedic));
         characteristics.Add(new(CharacteristicType.Boxer, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.Luchador, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.QuickDrawer, CharacteristicRarity.Uncommon, 0, CharacteristicType.CarefulShooter));
+        // 1.4
+        // characteristics.Add(new(CharacteristicType.SwordSaint, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.KnifeFighter, CharacteristicRarity.Common, 0));
+        characteristics.Add(new(CharacteristicType.MasterAcher, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.FieldMedic, CharacteristicRarity.Uncommon, 0, CharacteristicType.Soldier));
+        characteristics.Add(new(CharacteristicType.TrapExpert, CharacteristicRarity.Rare, 0));
+        // characteristics.Add(new(CharacteristicType.PoisonImmunity, CharacteristicRarity.Rare, 0));
         yield return null;
     }
 

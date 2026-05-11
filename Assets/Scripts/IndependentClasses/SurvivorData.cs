@@ -89,6 +89,7 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Sniper)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Sharpshooter)) result += 20;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 10;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
@@ -104,6 +105,7 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.Dunce)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Smart)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 5;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 

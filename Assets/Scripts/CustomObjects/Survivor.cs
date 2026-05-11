@@ -133,12 +133,33 @@ public class Survivor : CustomObject
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
     [SerializeField] float aimErrorRange = 7.5f;
-    public float AimErrorRange => aimErrorRange;
+    public float AimErrorRange
+    {
+        get
+        {
+            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterAcher) != -1 && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
+                ? aimErrorRange / 2 : aimErrorRange;
+        }
+    }
     float luck = 50;
     public float Luck => luck;
 
     float bloodRegeneration = 1;
+    public float BloodRegeneration
+    {
+        get
+        {
+            return curFuryTime > 0 ? bloodRegeneration * 2 : bloodRegeneration;
+        }
+    }
     float hpRegeneration = 1;
+    public float HpRegeneration
+    {
+        get
+        {
+            return curFuryTime > 0 ? hpRegeneration * 2 : hpRegeneration;
+        }
+    }
 
     int increaseFighting;
     public int IncreaseFighting => increaseFighting;
@@ -152,9 +173,10 @@ public class Survivor : CustomObject
     #endregion
     #region Characteristic
     [Header("Characteristic")]
-    [SerializeField] List<Characteristic> charicteristics;
-    public List<Characteristic> Characteristics => charicteristics;
+    [SerializeField] List<Characteristic> characteristics;
+    public List<Characteristic> Characteristics => characteristics;
     bool isAssassin;
+    float curFuryTime;
     #endregion
     #region Injury
     [Header("Injury")]
@@ -260,7 +282,7 @@ public class Survivor : CustomObject
         set
         {
             bleedingAmount = Mathf.Max(value, 0);
-            if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Avenger) > -1)
+            if (characteristics.FindIndex(x => x.type == CharacteristicType.Avenger) > -1)
             {
                 ApplyCorrectionStats();
                 if(bleedingAmount > 0)
@@ -271,9 +293,11 @@ public class Survivor : CustomObject
             }
         }
     }
-    public float naturalHemostasis = 1f;
+    float naturalHemostasis = 1f;
+    public float NaturalHemostasis => naturalHemostasis;
     float bleedingSprite;
     public List<GameObject> bloods = new();
+    float stopBleedingSpeed = 1f;
 
     bool poisoned;
     Survivor curPoisonOriginator;
@@ -384,6 +408,7 @@ public class Survivor : CustomObject
     public TrapPlace trapPlace;
     [SerializeField] float trappingTime = 3f;
     [SerializeField] float curTrappingTime;
+    float trappingSpeed = 1f;
     Buriable curBurying;
     Item curSettingBoobyTrap;
     Box curSettingBoobyTrapBox;
@@ -576,6 +601,11 @@ public class Survivor : CustomObject
         biometricRader.transform.position = new(transform.position.x, transform.position.y);
         
         survivedTime += Time.deltaTime;
+        if (curFuryTime > 0)
+        {
+            curFuryTime -= Time.deltaTime;
+            if(curFuryTime <= 0) ApplyCorrectionStats();
+        }
         CheckProhibitArea();
         Bleeding();
         if(isDead) return;
@@ -712,7 +742,7 @@ public class Survivor : CustomObject
     void Bleeding()
     {
         curBlood -= BleedingAmount * Time.deltaTime;
-        BleedingAmount -= naturalHemostasis * Time.deltaTime;
+        BleedingAmount -= NaturalHemostasis * Time.deltaTime;
         if(curBlood < bleedingSprite)
         {
             bloods.Add(PoolManager.Spawn(ResourceEnum.Prefab.Blood, transform.position));
@@ -751,6 +781,7 @@ public class Survivor : CustomObject
     {
         agent.SetDestination(transform.position);
         animator.SetBool("StopBleeding", true);
+        animator.SetFloat("StopBleedingSpeed", stopBleedingSpeed);
     }
 
     bool CheckDrinking()
@@ -2530,7 +2561,13 @@ public class Survivor : CustomObject
         animator.SetInteger("CraftingAnimNumber", currentCrafting.craftingAnimNumber);
         animator.SetBool("Crafting", true);
 
-        curCraftingTime += Time.deltaTime * aiCool * craftingSpeed;
+        float craftingSpeedCorrection = 1f;
+        if (characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (CurrentCrafting.itemType == ItemManager.Items.BearTrap || CurrentCrafting.itemType == ItemManager.Items.ShrapnelTrap || CurrentCrafting.itemType == ItemManager.Items.NoiseTrap || CurrentCrafting.itemType == ItemManager.Items.ChemicalTrap || CurrentCrafting.itemType == ItemManager.Items.ExplosiveTrap))
+        {
+            craftingSpeedCorrection = 1.3f;
+            animator.SetFloat("CraftingSpeed", craftingSpeed * craftingSpeedCorrection);
+        }
+        curCraftingTime += Time.deltaTime * aiCool * craftingSpeed * craftingSpeedCorrection;
         progressBar.fillAmount = curCraftingTime / currentCrafting.craftingTime;
         if(curCraftingTime > currentCrafting.craftingTime)
         {
@@ -2651,8 +2688,9 @@ public class Survivor : CustomObject
         int knowledge = linkedSurvivorData.Knowledge;
         foreach(var craftable in ItemManager.craftables)
         {
-            if(knowledge >= craftable.requiredKnowledge && AdvancedComponentCount >= craftable.needAdvancedComponentCount && ComponentsCount >= craftable.needComponentsCount
-                && ChemicalsCount >= craftable.needChemicalsCount && SalvagesCount >= craftable.needSalvagesCount && GunpowderCount >= craftable.needGunpowderCount)
+            bool trapExpertAndTrap = characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (craftable.itemType == ItemManager.Items.BearTrap || craftable.itemType == ItemManager.Items.NoiseTrap || craftable.itemType == ItemManager.Items.ShrapnelTrap || craftable.itemType == ItemManager.Items.ChemicalTrap || craftable.itemType == ItemManager.Items.ExplosiveTrap || craftable.itemType == ItemManager.Items.TrapDetectionDevice);
+            bool haveCraftingMaterials = AdvancedComponentCount >= craftable.needAdvancedComponentCount && ComponentsCount >= craftable.needComponentsCount && ChemicalsCount >= craftable.needChemicalsCount && SalvagesCount >= craftable.needSalvagesCount && GunpowderCount >= craftable.needGunpowderCount;
+            if ((knowledge >= craftable.requiredKnowledge && haveCraftingMaterials) || trapExpertAndTrap)
             {
                 bool haveETCNeeds = true;
                 foreach(var etcNeed in craftable.etcNeedItems)
@@ -2690,7 +2728,7 @@ public class Survivor : CustomObject
             agent.SetDestination(transform.position);
             lookPosition = trapPlace.transform.position;
 
-            curTrappingTime += Time.deltaTime * aiCool;
+            curTrappingTime += Time.deltaTime * aiCool * trappingSpeed;
             progressBar.fillAmount = curTrappingTime / trappingTime;
             if(curTrappingTime > trappingTime)
             {
@@ -2723,7 +2761,7 @@ public class Survivor : CustomObject
         agent.SetDestination(transform.position);
         lookPosition = curSettingBoobyTrapBox.transform.position;
         
-        curTrappingTime += Time.deltaTime * aiCool;
+        curTrappingTime += Time.deltaTime * aiCool * trappingSpeed;
         progressBar.fillAmount = curTrappingTime / trappingTime;
         if (curTrappingTime > trappingTime)
         {
@@ -2784,7 +2822,7 @@ public class Survivor : CustomObject
             reached = true;
             agent.SetDestination(transform.position);
             lookPosition = curDisarmTrap.transform.position;
-            curDisarmTime += Time.deltaTime * aiCool;
+            curDisarmTime += Time.deltaTime * aiCool * trappingSpeed;
             progressBar.fillAmount = curDisarmTime / curDisarmTrap.DisarmTime;
             if(curDisarmTime > curDisarmTrap.DisarmTime)
             {
@@ -3296,6 +3334,11 @@ public class Survivor : CustomObject
                 GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
                 headshot.transform.SetParent(canvas.transform);
             }
+            if(attacker.characteristics.FindIndex(x => x.type == CharacteristicType.TasteOfBlood) != -1)
+            {
+                attacker.curFuryTime = 10f;
+                attacker.ApplyCorrectionStats();
+            }
             if(attacker.playerSurvivor)
             {
                 if (weapon == null || !IsValid(weapon))
@@ -3531,7 +3574,7 @@ public class Survivor : CustomObject
                     increaseFighting++;
                 }
             }
-            else if (probability > 1 - criticalRate)
+            else if (probability > 1 - criticalRate || characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && currentWeapon.itemType == ItemManager.Items.Knife)
             {
                 // 치명타
                 damage *= 2;
@@ -3706,8 +3749,8 @@ public class Survivor : CustomObject
             case InjurySiteMajor.Head:
                 if (damageType == DamageType.Strike)
                 {
-                    if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) rand = UnityEngine.Random.Range(0, 4f);
-                    else if (linkedSurvivorData.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) rand = UnityEngine.Random.Range(0, 1f);
+                    if (characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) rand = UnityEngine.Random.Range(0, 4f);
+                    else if (characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) rand = UnityEngine.Random.Range(0, 1f);
                     else rand = UnityEngine.Random.Range(0, 2f);
                 }
                 else rand = UnityEngine.Random.Range(0, 1f);
@@ -4705,9 +4748,11 @@ public class Survivor : CustomObject
     int characteristicCorrection_AimErrorRange = 0;
     float characteristicCorrection_ReloadSpeed = 1;
     float characteristicCorrection_NatualHemostasis = 1;
+    float characteristicCorrection_StopBleeding = 1;
     float characteristicCorrection_BloodRegeneration = 1;
     float characteristicCorrection_HpRegeneration = 1;
     float characteristicCorrection_CraftingSpeed = 1;
+    float characteristicCorrection_TrappingSpeed = 1;
 
     int correctedStrength = 0;
     int correctedAgility = 0;
@@ -4798,6 +4843,12 @@ public class Survivor : CustomObject
                 case CharacteristicType.Assassin:
                     isAssassin = true;
                     break;
+                case CharacteristicType.FieldMedic:
+                    characteristicCorrection_StopBleeding *= 1.3f;
+                    break;
+                case CharacteristicType.TrapExpert:
+                    characteristicCorrection_TrappingSpeed *= 1.3f;
+                    break;
                 default:
                     break;
             }
@@ -4813,6 +4864,8 @@ public class Survivor : CustomObject
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;
         hpRegeneration = characteristicCorrection_HpRegeneration;
+        stopBleedingSpeed = characteristicCorrection_StopBleeding;
+        trappingSpeed = characteristicCorrection_TrappingSpeed;
     }
     #endregion
 
@@ -4829,6 +4882,8 @@ public class Survivor : CustomObject
         else if (isRightEyePermanentVisualImpairment) rightSightRange = 15 * injuryCorrection_RightSightRange * characteristicCorrection_SightRange;
         else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
+
+        correctedAgility = curFuryTime > 0 ? correctedAgility + 20 : correctedAgility;
 
         attackDamage = 5 * Mathf.Max(0.2f, (correctedStrength + correctedFighting) / 40f) * injuryCorrection_AttackDamage;
         attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
@@ -5040,7 +5095,7 @@ public class Survivor : CustomObject
         curBlood = maxBlood = maxHP * 80;
         bleedingSprite = curBlood - 100;
         luck = linkedSurvivorData.Luck;
-        charicteristics = survivorInfo.characteristics;
+        characteristics = survivorInfo.characteristics;
 
         injuries = survivorInfo.injuries;
         // game result 단계에서 돈을 걷지 않기 위해

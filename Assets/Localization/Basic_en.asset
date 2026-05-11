@@ -1384,6 +1384,11 @@ MonoBehaviour:
     m_Localized: Rarity
     m_Metadata:
       m_Items: []
+  - m_Id: 122215989157359616
+    m_Localized: The effective range of most ranged weapons is half of their maximum
+      range, and damage decreases beyond the effective range.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

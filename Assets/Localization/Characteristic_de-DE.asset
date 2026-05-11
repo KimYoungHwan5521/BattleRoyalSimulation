@@ -362,6 +362,66 @@ MonoBehaviour:
     m_Localized: Selten
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: Schwertmeister
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: Mit Langschwert besteht eine 50-%-Chance, feindliche Nahkampfangriffe
+      zu parieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: "Messerk\xE4mpfer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: Mit Dolch sind kritische Treffer garantiert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: "Meistersch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: "+20 Schusswaffenfertigkeit mit ausger\xFCstetem Bogen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: Blutrausch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: "Erh\xF6ht nach dem T\xF6ten eines Feindes vor\xFCbergehend Beweglichkeit,
+      Ausdauerregeneration und Lebensregeneration"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: Feldmediziner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: "Schie\xDFen + 10, Wissen + 5, Blutstillungsgeschwindigkeit +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: Fallenexperte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: "Kann unabh\xE4ngig vom Wissen alle Fallen und Fallendetektoren
+      herstellen. Fallenherstellung+, Aufstellgeschwindigkeit+, Entsch\xE4rfungsgeschwindigkeit+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: "Giftimmunit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: "Immun gegen Gift. Einzigartige Herstellung: T\xF6dliches Gift.
+      Startet mit x1 T\xF6dliches Gift"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

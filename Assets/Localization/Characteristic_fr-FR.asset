@@ -360,6 +360,69 @@ MonoBehaviour:
     m_Localized: Rare
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: "Ma\xEEtre de l\u2019\xE9p\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: "\xC9quip\xE9 d\u2019une \xE9p\xE9e longue, a 50 % de chances de
+      parer les attaques de m\xEAl\xE9e ennemies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: "Ma\xEEtre des lames"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: "Avec une dague \xE9quip\xE9e, les coups critiques sont garantis"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: "Archer l\xE9gendaire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: "+20 en tir avec un arc \xE9quip\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: "Go\xFBt du sang"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: "Augmente temporairement l\u2019agilit\xE9, la r\xE9g\xE9n\xE9ration
+      d\u2019endurance et la r\xE9g\xE9n\xE9ration de vie apr\xE8s avoir tu\xE9 un
+      ennemi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: "M\xE9decin militaire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: "Tir + 10, connaissance + 5, vitesse d\u2019arr\xEAt du saignement
+      +"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: "Expert en pi\xE8ges"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: "Permet de fabriquer tous les pi\xE8ges et d\xE9tecteurs de pi\xE8ges
+      sans condition de connaissance. Vitesse de fabrication+, vitesse d\u2019installation+,
+      vitesse de d\xE9samor\xE7age+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: "Immunit\xE9 au poison"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: "Immunis\xE9 contre le poison. Fabrication unique : Poison mortel.
+      Commence avec x1 Poison mortel"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

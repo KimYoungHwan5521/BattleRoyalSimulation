@@ -1596,6 +1596,8 @@ public class OutGameUIManager : MonoBehaviour
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
             craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge);
+            if (survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (ItemManager.craftables[i].itemType == ItemManager.Items.BearTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ShrapnelTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ChemicalTrap || ItemManager.craftables[i].itemType == ItemManager.Items.NoiseTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ExplosiveTrap || ItemManager.craftables[i].itemType == ItemManager.Items.TrapDetectionDevice))
+                craftableAllows[i].SetActive(true);
             if (survivorWhoWantEstablishStrategy.craftingAllows[i]) craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn = true;
             else craftableAllows[i].GetComponentsInChildren<Toggle>()[1].isOn = true;
         }

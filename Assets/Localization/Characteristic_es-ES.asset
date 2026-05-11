@@ -362,6 +362,67 @@ MonoBehaviour:
     m_Localized: Raro
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: Santo de la Espada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: Al equipar una espada larga, tiene un 50% de probabilidad de bloquear
+      ataques cuerpo a cuerpo enemigos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: Peleador con cuchillos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: "Al equipar una daga, los golpes cr\xEDticos son garantizados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: Arquero Maestro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: +20 de Disparo al equipar un arco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: Sabor a Sangre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: "Al eliminar un enemigo, aumenta temporalmente Agilidad, regeneraci\xF3n
+      de energ\xEDa y regeneraci\xF3n de vida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: "M\xE9dico de combate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: Disparo + 10, conocimiento + 5, velocidad para detener sangrado
+      +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: Experto en trampas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: "Puede fabricar todas las trampas y detectores sin importar el Conocimiento.
+      Velocidad de fabricaci\xF3n+, instalaci\xF3n+ y desactivaci\xF3n+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: Inmunidad al veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: "Inmune al veneno. Fabricaci\xF3n \xFAnica: Veneno mortal. Comienza
+      con x1 Veneno mortal"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

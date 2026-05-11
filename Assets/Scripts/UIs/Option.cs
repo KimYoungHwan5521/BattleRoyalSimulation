@@ -147,7 +147,7 @@ public class Option : MonoBehaviour
         {
             tabCharacteristics.SetActive(false);
             tabItems.SetActive(true);
-            itemTabBtn.color = new Color(0.55f, 1, 1);
+            itemTabBtn.color = new Color(0.75f, 1, 1);
             charTabBtn.color = new Color(1, 1, 1);
         }
         else
@@ -155,7 +155,7 @@ public class Option : MonoBehaviour
             tabItems.SetActive(false);
             tabCharacteristics.SetActive(true);
             itemTabBtn.color = new Color(1, 1, 1);
-            charTabBtn.color = new Color(0.55f, 1, 1);
+            charTabBtn.color = new Color(0.75f, 1, 1);
         }
         characteristicAutoNewlineLG.ArrangeCharacteristics();
     }

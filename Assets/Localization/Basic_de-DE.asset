@@ -1387,6 +1387,12 @@ MonoBehaviour:
     m_Localized: Seltenheit
     m_Metadata:
       m_Items: []
+  - m_Id: 122215989157359616
+    m_Localized: "Die effektive Reichweite der meisten Fernkampfwaffen betr\xE4gt
+      die H\xE4lfte ihrer maximalen Reichweite, und der Schaden nimmt au\xDFerhalb
+      der effektiven Reichweite ab."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -25,6 +25,7 @@ public class LoadingCanvas : MonoBehaviour
         new("Basic", "The more severe the injury, the slower the healing. The milder the injury, the faster the recovery."),
         new("Basic", "Theoretical max payout is 6,375,600x."),
         new("Basic", "If the injury is not completely lost, it will heal naturally."),
+        new("Basic", "The effective range of most ranged weapons is half of their maximum range, and damage decreases beyond the effective range."),
     };
 
     private void Start()

@@ -360,6 +360,66 @@ MonoBehaviour:
     m_Localized: Rare
     m_Metadata:
       m_Items: []
+  - m_Id: 120401639874555904
+    m_Localized: Sword Saint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401640914743296
+    m_Localized: When equipped with a longsword, has a 50% chance to parry enemy
+      melee attacks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642051399680
+    m_Localized: Knife Fighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401644316323840
+    m_Localized: Master Archer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401642982535168
+    m_Localized: Equipped with a dagger, critical hits are guaranteed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401659013165056
+    m_Localized: Gain +20 Shooting when equipped with a bow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401661521358848
+    m_Localized: Taste of Blood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401667288526848
+    m_Localized: Field Medic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401675190595584
+    m_Localized: Trap Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401680634802176
+    m_Localized: Poison Immunity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401664524480512
+    m_Localized: Temporarily increases Agility, Stamina Regen, and HP Regen when
+      killing an enemy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401673122803712
+    m_Localized: Shooting + 10, Knowledge + 5, Bleeding Recovery Speed +
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401678906748928
+    m_Localized: Can craft all traps and trap detectors regardless of Knowledge.
+      Trap crafting speed+, trap placement speed+, trap disarm speed+
+    m_Metadata:
+      m_Items: []
+  - m_Id: 120401682593542144
+    m_Localized: 'Immune to poison. Unique Craft: Deadly Poison. Start with x1 Deadly
+      Poison'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

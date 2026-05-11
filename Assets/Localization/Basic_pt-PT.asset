@@ -1385,6 +1385,11 @@ MonoBehaviour:
     m_Localized: Raridade
     m_Metadata:
       m_Items: []
+  - m_Id: 122215989157359616
+    m_Localized: "O alcance efetivo da maioria das armas de longo alcance \xE9 metade
+      do alcance m\xE1ximo, e o dano diminui al\xE9m do alcance efetivo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
