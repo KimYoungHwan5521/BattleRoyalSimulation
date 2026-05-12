@@ -423,6 +423,14 @@ MonoBehaviour:
       Commence avec x1 Poison mortel"
     m_Metadata:
       m_Items: []
+  - m_Id: 121750764805222400
+    m_Localized: "Immunis\xE9 au poison"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121750767061757952
+    m_Localized: "Immunis\xE9 contre le poison."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

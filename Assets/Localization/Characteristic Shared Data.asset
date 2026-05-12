@@ -411,6 +411,14 @@ MonoBehaviour:
     m_Key: Help:PoisonImmunity
     m_Metadata:
       m_Items: []
+  - m_Id: 121750764805222400
+    m_Key: PoisonImmune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121750767061757952
+    m_Key: Help:PoisonImmune
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -631,8 +631,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} est inscrit \xE0 un autre match. (Une seule r\xE9servation
-      \xE0 la fois, sauf pour les championnats.)"
+    m_Localized: "{param0} est inscrit \xE0 un autre match."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
@@ -1404,6 +1403,10 @@ MonoBehaviour:
     m_Localized: "La port\xE9e effective des armes \xE0 distance est g\xE9n\xE9ralement
       la moiti\xE9 de leur port\xE9e maximale, et les d\xE9g\xE2ts diminuent au-del\xE0
       de cette port\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123596001831874560
+    m_Localized: "Prochaine zone interdite annonc\xE9e :"
     m_Metadata:
       m_Items: []
   references:

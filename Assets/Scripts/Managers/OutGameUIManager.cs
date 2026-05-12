@@ -1495,14 +1495,8 @@ public class OutGameUIManager : MonoBehaviour
             whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action;
         }
 
-        craftingPriority1Dropdown.keys[0] = new LocalizedString("Basic", "None");
-        craftingPriority2Dropdown.keys[0] = new LocalizedString("Basic", "None");
-        for (int i=1; i< craftingPriority1Dropdown.keys.Count; i++)
-        {
-            if (i >= ItemManager.craftables.Count) break;
-            craftingPriority1Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i - 1].itemType.ToString());
-            craftingPriority2Dropdown.keys[i] = new LocalizedString("Item", ItemManager.craftables[i - 1].itemType.ToString());
-        }
+        craftingPriority1Dropdown.RelocalizeOptions();
+        craftingPriority2Dropdown.RelocalizeOptions();
     }
 
     public void SetDefault()
@@ -1578,7 +1572,8 @@ public class OutGameUIManager : MonoBehaviour
         craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
         foreach (var craftable in ItemManager.craftables)
         {
-            if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge)
+            bool trapExpertAndTraps = survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (craftable.itemType == ItemManager.Items.BearTrap || craftable.itemType == ItemManager.Items.NoiseTrap || craftable.itemType == ItemManager.Items.ShrapnelTrap || craftable.itemType == ItemManager.Items.ChemicalTrap || craftable.itemType == ItemManager.Items.ExplosiveTrap || craftable.itemType == ItemManager.Items.TrapDetectionDevice);
+            if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge || trapExpertAndTraps)
             {
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
                 craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });

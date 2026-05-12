@@ -423,6 +423,14 @@ MonoBehaviour:
       con x1 Veneno mortal"
     m_Metadata:
       m_Items: []
+  - m_Id: 121750764805222400
+    m_Localized: Inmune al veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121750767061757952
+    m_Localized: Inmune al veneno.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

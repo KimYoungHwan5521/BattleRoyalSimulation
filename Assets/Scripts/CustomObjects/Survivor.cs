@@ -137,7 +137,7 @@ public class Survivor : CustomObject
     {
         get
         {
-            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterAcher) != -1 && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
+            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterAcher) != -1 && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
                 ? aimErrorRange / 2 : aimErrorRange;
         }
     }
@@ -3510,6 +3510,17 @@ public class Survivor : CustomObject
     public void TakeDamage(Survivor attacker, float damage, Item weapon)
     {
         string hitSound;
+
+        // 패링
+        if(characteristics.FindIndex(x => x.type == CharacteristicType.SwordSaint) != -1 && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.LongSword || CurrentWeapon.itemType == ItemManager.Items.LongSword_Enchanted))
+        {
+            if(UnityEngine.Random.Range(0, 1f) < 0.5f)
+            {
+                animator.SetTrigger("Parrying");
+                return;
+            }
+        }
+
         DamageType damageType = DamageType.Strike;
         if (currentWeapon != null && IsValid(currentWeapon))
         {
@@ -3574,7 +3585,7 @@ public class Survivor : CustomObject
                     increaseFighting++;
                 }
             }
-            else if (probability > 1 - criticalRate || characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && currentWeapon.itemType == ItemManager.Items.Knife)
+            else if (probability > 1 - criticalRate || characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && IsValid(CurrentWeapon) && CurrentWeapon.itemType == ItemManager.Items.Knife)
             {
                 // 치명타
                 damage *= 2;
@@ -3734,6 +3745,7 @@ public class Survivor : CustomObject
 
     public void Poisoning(Survivor poisonOriginator)
     {
+        if (characteristics.FindIndex(x => x.type == CharacteristicType.PoisonImmune) != -1) return;
         curPoisonOriginator = poisonOriginator;
         poisoned = true;
     }

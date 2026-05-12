@@ -1649,7 +1649,7 @@ MonoBehaviour:
   soundsMemories: []
   farmingSpeed: 1
   aimErrorRange: 7.5
-  charicteristics: []
+  characteristics: []
   injuries: []
   rememberAlreadyHaveInjury: 
   rightHandDisabled: 0
@@ -1660,7 +1660,6 @@ MonoBehaviour:
   maxBlood: 0
   curBlood: 0
   bleedingAmount: 0
-  naturalHemostasis: 1
   bloods: []
   currentWeapon:
     itemType: 0

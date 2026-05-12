@@ -336,5 +336,6 @@ namespace ResourceEnum
         bow_load,
         bow_release,
         bow_hit,
+        parrying,
     }
 }

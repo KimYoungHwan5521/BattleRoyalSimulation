@@ -292,7 +292,9 @@ public class Calendar : CustomObject
     {
         leagueReserveInfo[reserveDate].reserver = wantReserver;
         League league = League.None;
-        if (reserver.haveQualifyToParticipateInSeasonChampionship) league = League.SeasonChampionship;
+        if (leagueReserveInfo[reserveDate].league == League.MeleeLeague || leagueReserveInfo[reserveDate].league == League.RangeLeague || leagueReserveInfo[reserveDate].league == League.CraftingLeague)
+            league = leagueReserveInfo[reserveDate].league;
+        else if (reserver.haveQualifyToParticipateInSeasonChampionship) league = League.SeasonChampionship;
         else if (reserver.haveQualifyToParticipateInWorldChampionship) league = League.WorldChampionship;
         else if (reserver.tier == Tier.Gold) league = League.GoldLeague;
         else if (reserver.tier == Tier.Silver) league = League.SilverLeague;

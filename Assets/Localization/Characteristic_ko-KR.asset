@@ -426,6 +426,14 @@ MonoBehaviour:
       \uAC00\uC9C0\uACE0 \uC2DC\uC791"
     m_Metadata:
       m_Items: []
+  - m_Id: 121750764805222400
+    m_Localized: "\uB3C5 \uBA74\uC5ED\uC790"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 121750767061757952
+    m_Localized: "\uB3C5 \uBA74\uC5ED"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

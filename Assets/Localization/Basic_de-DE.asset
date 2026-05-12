@@ -630,8 +630,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} ist f\xFCr ein anderes Match registriert. (Nur ein Match
-      gleichzeitig erlaubt, au\xDFer Meisterschaften.)"
+    m_Localized: "{param0} ist f\xFCr ein anderes Match registriert."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -1391,6 +1390,10 @@ MonoBehaviour:
     m_Localized: "Die effektive Reichweite der meisten Fernkampfwaffen betr\xE4gt
       die H\xE4lfte ihrer maximalen Reichweite, und der Schaden nimmt au\xDFerhalb
       der effektiven Reichweite ab."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123596001831874560
+    m_Localized: "N\xE4chstes Sperrgebiet angek\xFCndigt:"
     m_Metadata:
       m_Items: []
   references:

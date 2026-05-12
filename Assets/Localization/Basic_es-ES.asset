@@ -632,8 +632,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} est\xE1 registrado en otro combate. (Solo se puede reservar
-      un combate a la vez, salvo campeonatos.)"
+    m_Localized: "{param0} est\xE1 registrado en otro combate."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
@@ -1392,6 +1391,10 @@ MonoBehaviour:
     m_Localized: "El alcance efectivo de la mayor\xEDa de las armas a distancia es
       la mitad de su alcance m\xE1ximo, y el da\xF1o disminuye m\xE1s all\xE1 del
       alcance efectivo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123596001831874560
+    m_Localized: "Pr\xF3xima zona restrita anunciada:"
     m_Metadata:
       m_Items: []
   references:

@@ -1312,6 +1312,10 @@ MonoBehaviour:
       and damage decreases beyond the effective range.
     m_Metadata:
       m_Items: []
+  - m_Id: 123596001831874560
+    m_Key: 'Next Restricted Area Announcement:'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

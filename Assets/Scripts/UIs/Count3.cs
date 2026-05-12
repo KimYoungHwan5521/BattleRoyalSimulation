@@ -10,7 +10,6 @@ public class Count3 : MonoBehaviour
         {
             countText.text = "Battle!";
             GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart = true;
-            GameManager.Instance.BattleRoyaleManager.battleTime = 0;
             GameManager.Instance.GetComponent<InGameUIManager>().SetTimeScale(1);
         }
         else if(count == -1)

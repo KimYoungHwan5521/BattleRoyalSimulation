@@ -23,6 +23,15 @@ public class BattleRoyaleManager
     public float battleTime;
     float areaProhibitTime = 30;
     float curAreaProhibitTime;
+    bool noMoreProhibit;
+    public float NextProhibitTime
+    {
+        get
+        {
+            if (noMoreProhibit) return 0;
+            else return areaProhibitTime - curAreaProhibitTime;
+        }
+    }
     int prohibitAtOnce = 1;
 
     List<Survivor> survivors = new();
@@ -258,6 +267,7 @@ public class BattleRoyaleManager
         foreach (Area area in areas) if (!area.IsProhibited_Plan && !area.IsProhibited) count++;
         if (count == 1)
         {
+            noMoreProhibit = true;
             return;
         }
         if (number >= count) number = count;
@@ -373,6 +383,8 @@ public class BattleRoyaleManager
         InGameUIManager.SetPredictionUI();
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
+        battleTime = 0;
+        noMoreProhibit = false;
         count3Animator.SetTrigger("Count");
         yield return null;
         GameManager.CloseLoadInfo();

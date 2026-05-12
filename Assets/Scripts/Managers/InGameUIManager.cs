@@ -47,6 +47,7 @@ public class InGameUIManager : MonoBehaviour
 
     [Header("Middle Top")]
     [SerializeField] TextMeshProUGUI currentBattleTimer;
+    [SerializeField] TextMeshProUGUI nextProhibitTimer;
 
     [Header("Toolbar")]
     [SerializeField] TextMeshProUGUI currentTimeScaleText;
@@ -205,6 +206,7 @@ public class InGameUIManager : MonoBehaviour
         UpdateSelectedObjectInfo();
         if (GameManager.Instance.BattleRoyaleManager == null || !GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
         currentBattleTimer.text = $"{(int)GameManager.Instance.BattleRoyaleManager.battleTime / 60:00} : {(int)GameManager.Instance.BattleRoyaleManager.battleTime % 60:00}";
+        nextProhibitTimer.text = $"{(int)GameManager.Instance.BattleRoyaleManager.NextProhibitTime / 60:00} : {(int)GameManager.Instance.BattleRoyaleManager.NextProhibitTime % 60:00}";
     }
 
     void AutoCameraMove()

@@ -629,8 +629,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
-    m_Localized: "{param0} est\xE1 registrado em outra partida.\\n(Somente uma partida
-      pode ser reservada por vez, exceto campeonatos.)"
+    m_Localized: "{param0} est\xE1 registrado em outra partida."
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
@@ -1388,6 +1387,10 @@ MonoBehaviour:
   - m_Id: 122215989157359616
     m_Localized: "O alcance efetivo da maioria das armas de longo alcance \xE9 metade
       do alcance m\xE1ximo, e o dano diminui al\xE9m do alcance efetivo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123596001831874560
+    m_Localized: "Pr\xF3xima zona restringida anunciada:"
     m_Metadata:
       m_Items: []
   references:
