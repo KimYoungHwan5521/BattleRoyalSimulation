@@ -1392,6 +1392,23 @@ MonoBehaviour:
     m_Localized: "Pr\xF3xima zona restringida anunciada:"
     m_Metadata:
       m_Items: []
+  - m_Id: 123947613687443456
+    m_Localized: Clique na Sala de Treinamento e atribua sobreviventes ao treinamento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961875516420096
+    m_Localized: "Colar esta estrat\xE9gia em todos os outros sobreviventes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961881061289984
+    m_Localized: "Colar todas as estrat\xE9gias deste sobrevivente em todos os outros
+      sobreviventes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123965431116001280
+    m_Localized: "Estrat\xE9gia colada e salva."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

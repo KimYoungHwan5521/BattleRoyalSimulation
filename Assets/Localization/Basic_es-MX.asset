@@ -1397,6 +1397,24 @@ MonoBehaviour:
     m_Localized: "Pr\xF3xima zona restrita anunciada:"
     m_Metadata:
       m_Items: []
+  - m_Id: 123947613687443456
+    m_Localized: Haz clic en la Sala de Entrenamiento y asigna supervivientes al
+      entrenamiento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961875516420096
+    m_Localized: "Pegar esta estrategia a todos los dem\xE1s supervivientes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961881061289984
+    m_Localized: "Pegar todas las estrategias de este superviviente a todos los dem\xE1s
+      supervivientes"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123965431116001280
+    m_Localized: Estrategia pegada y guardada.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

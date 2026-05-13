@@ -51,7 +51,7 @@ public enum CharacteristicType
     // 1.4
     SwordSaint,
     KnifeFighter,
-    MasterAcher,
+    MasterArcher,
     TasteOfBlood,
     FieldMedic,
     TrapExpert,
@@ -134,7 +134,7 @@ public class CharacteristicManager
         // 1.4
         characteristics.Add(new(CharacteristicType.SwordSaint, CharacteristicRarity.Rare, 0));
         characteristics.Add(new(CharacteristicType.KnifeFighter, CharacteristicRarity.Common, 0));
-        characteristics.Add(new(CharacteristicType.MasterAcher, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.MasterArcher, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.FieldMedic, CharacteristicRarity.Uncommon, 0, CharacteristicType.Soldier));
         characteristics.Add(new(CharacteristicType.TrapExpert, CharacteristicRarity.Rare, 0));

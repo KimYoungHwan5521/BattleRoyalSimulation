@@ -107,6 +107,7 @@ public class Calendar : CustomObject
             today = value;
             tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
             outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
+            if (outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value)) outGameUIManager.Alert("Click today's league in the schedule to go to the Battle Royale.");
             
             if (leagueReserveInfo.ContainsKey(value - 1) && leagueReserveInfo[value - 1].reserver != null)
             {

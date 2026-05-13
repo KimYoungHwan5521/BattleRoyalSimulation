@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -332,6 +332,43 @@ public class Strategy : MonoBehaviour
             }
             ElseActionDropdown.value = copyStrategy.elseAction;
         }
+    }
+
+    public void PasteThisStrategyToAllOtherSurvivor(bool all)
+    {
+        foreach(var survivor in GameManager.Instance.OutGameUIManager.MySurvivorsData)
+        {
+            if (strategyCase == StrategyCase.CraftingAllow)
+            {
+                for (int i = 0; i < craftableAllows.Length; i++)
+                {
+                    survivor.craftingAllows[i] = GameManager.Instance.OutGameUIManager.craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn;
+                }
+            }
+            else if (!noCondition)
+            {
+                ConditionData[] conditionsData = null;
+                List<ConditionData> conditionsList = new();
+                for(int i = 0; i < activeConditionCount; i++)
+                {
+                    conditionsList.Add(new ConditionData(andOrs[i].value, variable1s[i].value, operators[i].value, variable2s[i].value, int.Parse(inputFields[i].text)));
+                }
+                conditionsData = conditionsList.ToArray();
+                survivor.strategyDictionary[strategyCase] = new(
+                    ActionDropdown != null ? ActionDropdown.value : 0,
+                    ElseActionDropdown != null ? ElseActionDropdown.value : 0,
+                    activeConditionCount,
+                    conditionsData
+                    );
+            }
+            else
+                survivor.strategyDictionary[strategyCase] = new(
+                    ActionDropdown != null ? ActionDropdown.value : (intagerInput != null ? int.Parse(intagerInput.text) : 0),
+                    ElseActionDropdown != null ? ElseActionDropdown.value : 0,
+                    0
+                    );
+        }
+        if(!all) GameManager.Instance.OutGameUIManager.Alert("Strategy pasted and saved.");
     }
 
     void OnLocaleChanged(Locale locale)

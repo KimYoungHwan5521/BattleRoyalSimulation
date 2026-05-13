@@ -331,7 +331,6 @@ public class OutGameUIManager : MonoBehaviour
         studyingLevel = 1;
         
         tutorial = true;
-        trainingRoomAnim.SetBool("Tutorial", true);
     }
 
     void RelocalizeTrainingRoom()
@@ -497,6 +496,8 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorsDropdown.ClearOptions();
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
+                        trainingRoomAnim.SetBool("Tutorial", true);
+                        Alert("Click the Training Room and assign survivors to training.");
                     }
                     else if (mySurvivorsData.Count >= 10)
                     {
@@ -591,7 +592,11 @@ public class OutGameUIManager : MonoBehaviour
             AssignTraining();
             SetTrainingRoomSurvivorsInfo();
             RelocalizeTrainingRoom();
-            if (tutorial && MySurvivorsData[0].assignedTraining == Training.None) trainingRoomSurvivorAnim.SetBool("Tutorial", true);
+            if (tutorial && MySurvivorsData[0].assignedTraining == Training.None)
+            {
+                trainingRoomSurvivorAnim.SetBool("Tutorial", true);
+                Alert("Click a survivor to assign them to a training.");
+            }
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
     }
@@ -1828,6 +1833,12 @@ public class OutGameUIManager : MonoBehaviour
     public void PasteAllStrategies()
     {
         foreach (Strategy strategy in strategies) strategy.PasteStrategy();
+    }
+
+    public void PasteAllStrategiesOfThisSurvivor()
+    {
+        foreach (Strategy strategy in strategies) strategy.PasteThisStrategyToAllOtherSurvivor(true);
+        Alert("Strategy pasted and saved.");
     }
     #endregion
 

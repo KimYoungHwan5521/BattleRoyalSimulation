@@ -137,7 +137,7 @@ public class Survivor : CustomObject
     {
         get
         {
-            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterAcher) != -1 && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
+            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterArcher) != -1 && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
                 ? aimErrorRange / 2 : aimErrorRange;
         }
     }
@@ -1151,13 +1151,13 @@ public class Survivor : CustomObject
                     {
                         if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0)
                         {
-                            if (ValidBullet != null)
+                            // 원거린데 총알 없으면 attackRange
+                            if (distance < attackRange) enemyInAttackRange = true;
+                            else if (ValidBullet != null)
                             {
                                 Reload();
                                 return;
                             }
-                            // 원거린데 총알 없으면 attackRange
-                            if (distance < attackRange) enemyInAttackRange = true;
                         }
                         // 근거리거나 원거리+총알 있으면 weapon.AttackRange
                         else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;

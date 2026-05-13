@@ -1409,6 +1409,24 @@ MonoBehaviour:
     m_Localized: "Prochaine zone interdite annonc\xE9e :"
     m_Metadata:
       m_Items: []
+  - m_Id: 123947613687443456
+    m_Localized: "Cliquez sur la salle d\u2019entra\xEEnement et assignez des survivants
+      \xE0 l\u2019entra\xEEnement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961875516420096
+    m_Localized: "Coller cette strat\xE9gie \xE0 tous les autres survivants"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961881061289984
+    m_Localized: "Coller toutes les strat\xE9gies de ce survivant \xE0 tous les autres
+      survivants"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123965431116001280
+    m_Localized: "Strat\xE9gie coll\xE9e et sauvegard\xE9e."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1316,6 +1316,22 @@ MonoBehaviour:
     m_Key: 'Next Restricted Area Announcement:'
     m_Metadata:
       m_Items: []
+  - m_Id: 123947613687443456
+    m_Key: Click the Training Room and assign survivors to training.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961875516420096
+    m_Key: Paste this strategy to all other survivors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961881061289984
+    m_Key: Paste all strategies of this survivor to all other survivors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123965431116001280
+    m_Key: Strategy pasted and saved.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

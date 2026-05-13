@@ -1396,6 +1396,24 @@ MonoBehaviour:
     m_Localized: "N\xE4chstes Sperrgebiet angek\xFCndigt:"
     m_Metadata:
       m_Items: []
+  - m_Id: 123947613687443456
+    m_Localized: "Klicke auf den Trainingsraum und weise \xDCberlebende dem Training
+      zu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961875516420096
+    m_Localized: "Diese Strategie auf alle anderen \xDCberlebenden anwenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123961881061289984
+    m_Localized: "Alle Strategien dieses \xDCberlebenden auf alle anderen \xDCberlebenden
+      anwenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 123965431116001280
+    m_Localized: "Strategie eingef\xFCgt und gespeichert."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
