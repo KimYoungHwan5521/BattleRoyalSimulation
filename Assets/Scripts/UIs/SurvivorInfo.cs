@@ -75,7 +75,7 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] Image rightLittleToe;
     [SerializeField] Image leftLittleToe;
 
-    [Header("Stastics")]
+    [Header("Statistics")]
     [SerializeField] GameObject trophyBronze;
     [SerializeField] GameObject trophySilver;
     [SerializeField] GameObject trophyGold;
@@ -92,6 +92,7 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalFee;
     [SerializeField] TextMeshProUGUI totalGiveDamage;
     [SerializeField] TextMeshProUGUI totalTakeDamage;
+    [SerializeField] TextMeshProUGUI mostKillsInASingleMatch;
 
     [SerializeField] GameObject soldOutImage;
     bool soldOut;
@@ -500,6 +501,12 @@ public class SurvivorInfo : MonoBehaviour
             Arguments = new[] { $"{(int)survivorData.totalTakeDamage}" }
         };
         totalTakeDamage.text = localizedString.GetLocalizedString();
+
+        localizedString = new("Basic", "Most Kills in a Single Match")
+        {
+            Arguments = new[] { $"{survivorData.mostKillsInASingleMatch}" }
+        };
+        mostKillsInASingleMatch.text = localizedString.GetLocalizedString();
     }
 
     void OnLocaleChanged(Locale newLocale)

@@ -41,6 +41,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image[] predictionResultBGs;
     [SerializeField] TextMeshProUGUI[] predictionResultResults;
     int predictionLeft;
+    [SerializeField] Button foldOtherSurvivors;
+    [SerializeField] GameObject[] otherSurvivorsResultRows;
+    [SerializeField] TextMeshProUGUI[] otherSurvivorsNames;
     [SerializeField] Image[] otherSurvivorsPortraits;
     [SerializeField] Image[] otherSurvivorsResultBGs;
     [SerializeField] TextMeshProUGUI[] otherSurvivorsResults;
@@ -310,35 +313,77 @@ public class InGameUIManager : MonoBehaviour
         {
             predictionResult.SetActive(true);
             predictionLeft = outGameUIManager.PredictionNumber;
-            for (int i = 0; i < predictionResultRows.Length; i++)
+            int j = 0;
+            for (int i=0; i < GameManager.Instance.BattleRoyaleManager.Survivors.Count; i++)
             {
-                if (i < outGameUIManager.PredictionNumber)
+                bool isPredictedOne = false;
+                if (j < outGameUIManager.PredictionNumber)
                 {
-                    predictionResultRows[i].SetActive(true);
-                    predictionResultPredictions[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
-                    Survivor survivor = GameManager.Instance.BattleRoyaleManager.Survivors.Find(x => x.LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[i]);
-                    predictionResultPortraits[i].color = survivor.GetComponent<SpriteRenderer>().color;
-                    predictionResultBGs[i].color = Color.white;
-                    predictionResultResults[i].text = "";
-                    predictionResultRows[i].GetComponent<PredictedSurvivor>().linkedSurvivor = survivor;
+                    for (int k = 0; k < outGameUIManager.PredictionNumber; k++)
+                    {
+                        if (GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[k])
+                        {
+                            predictionResultRows[k].SetActive(true);
+                            predictionResultPredictions[k].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
+                            predictionResultPortraits[k].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
+                            predictionResultBGs[k].color = Color.white;
+                            predictionResultResults[k].text = "";
+                            predictionResultRows[k].GetComponent<PredictedSurvivor>().linkedSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[i];
+                            j++;
+                            isPredictedOne = true;
+                            break;
+                        }
+                    }
                 }
-                else predictionResultRows[i].SetActive(false);
+                if(!isPredictedOne)
+                {
+                    otherSurvivorsResultRows[i - j].SetActive(true);
+                    otherSurvivorsNames[i - j].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
+                    otherSurvivorsPortraits[i - j].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
+                    otherSurvivorsResultBGs[i - j].color = Color.white;
+                    otherSurvivorsResults[i - j].text = "";
+                    otherSurvivorsResultRows[i - j].GetComponent<PredictedSurvivor>().linkedSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[i];
+                }
+            }
+            for(int i=outGameUIManager.PredictionNumber; i < predictionResultRows.Length; i++)
+            {
+                predictionResultRows[i].SetActive(false);
+            }
+            for(int i=outGameUIManager.contestantsData.Count - outGameUIManager.PredictionNumber; i<otherSurvivorsResultRows.Length; i++)
+            {
+                otherSurvivorsResultRows [i].SetActive(false);
             }
         }
         else
         {
             predictionResult.SetActive(false);
+            for(int i=0; i<otherSurvivorsResultRows.Length; i++)
+            {
+                if (i < outGameUIManager.contestantsData.Count)
+                {
+                    otherSurvivorsResultRows[i].SetActive(true);
+                    otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
+                    otherSurvivorsPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
+                    otherSurvivorsResultBGs[i].color = Color.white;
+                    otherSurvivorsResults[i].text = "";
+                    otherSurvivorsResultRows[i].GetComponent<PredictedSurvivor>().linkedSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[i];
+                }
+                else otherSurvivorsResultRows[i].SetActive(false);
+            }
             if (outGameUIManager.MySurvivorDataInBattleRoyale == null) exitBattleRoyale.SetActive(true);
         }
     }
 
     public void SetSurvivorRank(LocalizedString survivorName, int survivorRank)
     {
-        for (int i = 0; i < outGameUIManager.Predictions.Length; i++)
+        bool isPredictedOne = false;
+        int predictionNumber = outGameUIManager.BettingAmount == 0 ? 0 : outGameUIManager.PredictionNumber;
+        for (int i = 0; i < predictionNumber; i++)
         {
             if (outGameUIManager.Predictions[i] == null) break;
             if (outGameUIManager.Predictions[i].TableEntryReference.Key == survivorName.TableEntryReference.Key)
             {
+                isPredictedOne = true;
                 predictionLeft--;
                 predictionResultResults[i].text = survivorRank switch
                 {
@@ -354,7 +399,48 @@ public class InGameUIManager : MonoBehaviour
                 break;
             }
         }
+        if(!isPredictedOne)
+        {
+            for(int i = 0; i < outGameUIManager.contestantsData.Count - predictionNumber; i++)
+            {
+                if (otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference.Key == survivorName.TableEntryReference.Key)
+                {
+                    otherSurvivorsResults[i].text = survivorRank switch
+                    {
+                        0 => "1st",
+                        1 => "2nd",
+                        2 => "3rd",
+                        _ => $"{survivorRank + 1}th",
+                    };
+                    otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
+                    break;
+                }
+            }
+        }
         if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
+    }
+
+    bool otherSurvivorsFolded;
+    public void FoldOtherSurvivors()
+    {
+        int predictionNumber = outGameUIManager.BettingAmount == 0 ? 0 : outGameUIManager.PredictionNumber;
+        if(otherSurvivorsFolded)
+        {
+            for (int i = 0; i < outGameUIManager.contestantsData.Count - predictionNumber; i++)
+            {
+                otherSurvivorsResultRows[i].SetActive(true);
+            }
+            foldOtherSurvivors.GetComponentInChildren<TextMeshProUGUI>().text = "¡ã";
+        }
+        else
+        {
+            for(int i=0; i<otherSurvivorsResultRows.Length; i++)
+            {
+                otherSurvivorsResultRows[i].SetActive(false);
+            }
+            foldOtherSurvivors.GetComponentInChildren<TextMeshProUGUI>().text = "¡å";
+        }
+        otherSurvivorsFolded = !otherSurvivorsFolded;
     }
 
     public void ShowKillLog(string victim, string cause)

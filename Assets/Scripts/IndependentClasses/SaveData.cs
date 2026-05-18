@@ -91,6 +91,7 @@ public class SurvivorSaveData
     public int totalSurgeryFee;
     public float totalGiveDamage;
     public float totalTakeDamage;
+    public int mostKillsInASingleMatch;
     public bool wonBronzeLeague;
     public bool wonSilverLeague;
     public bool wonGoldLeague;

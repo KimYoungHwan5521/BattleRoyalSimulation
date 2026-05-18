@@ -1427,6 +1427,15 @@ MonoBehaviour:
     m_Localized: "Strat\xE9gie coll\xE9e et sauvegard\xE9e."
     m_Metadata:
       m_Items: []
+  - m_Id: 125717084672421888
+    m_Localized: Statistiques
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125727723826507776
+    m_Localized: "Plus grand nombre d\u2019\xE9liminations en une partie : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
@@ -1478,3 +1487,4 @@ MonoBehaviour:
         - id: 114528898273308672
         - id: 115945406211878912
         - id: 116043573494345728
+        - id: 125727723826507776

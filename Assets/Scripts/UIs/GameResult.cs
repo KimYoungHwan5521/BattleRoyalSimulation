@@ -230,6 +230,7 @@ public class GameResult : MonoBehaviour
             }
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
             killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
+            if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
             for (int i = 0; i < treatments.Length; i++)
             {
                 if (i < playerSurvivor.injuries.Count + 1)

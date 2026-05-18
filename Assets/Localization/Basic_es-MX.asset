@@ -1415,6 +1415,15 @@ MonoBehaviour:
     m_Localized: Estrategia pegada y guardada.
     m_Metadata:
       m_Items: []
+  - m_Id: 125717084672421888
+    m_Localized: "Estad\xEDsticas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125727723826507776
+    m_Localized: "M\xE1s asesinatos en una sola partida : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
   references:
     version: 2
     RefIds:
@@ -1466,3 +1475,4 @@ MonoBehaviour:
         - id: 114528898273308672
         - id: 115945406211878912
         - id: 116043573494345728
+        - id: 125727723826507776

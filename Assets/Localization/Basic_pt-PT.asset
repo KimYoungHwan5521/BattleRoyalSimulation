@@ -1410,6 +1410,15 @@ MonoBehaviour:
     m_Localized: "Estrat\xE9gia colada e guardada."
     m_Metadata:
       m_Items: []
+  - m_Id: 125717084672421888
+    m_Localized: "Estat\xEDsticas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 125727723826507776
+    m_Localized: "Maior n\xFAmero de elimina\xE7\xF5es numa \xFAnica partida : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
   references:
     version: 2
     RefIds:
@@ -1461,3 +1470,4 @@ MonoBehaviour:
         - id: 114528898273308672
         - id: 115945406211878912
         - id: 116043573494345728
+        - id: 125727723826507776

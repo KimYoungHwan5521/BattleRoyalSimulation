@@ -215,7 +215,7 @@ public class SurvivorData
     public bool[] craftingAllows;
     public int repairCondition = 70;
 
-    // Stastics
+    // Statistics
     public int winCount;
     public int rankDefenseCount;
     public int loseCount;
@@ -230,6 +230,7 @@ public class SurvivorData
     public int totalSurgeryFee;
     public float totalGiveDamage;
     public float totalTakeDamage;
+    public int mostKillsInASingleMatch;
     public bool wonBronzeLeague;
     public bool wonSilverLeague;
     public bool wonGoldLeague;
