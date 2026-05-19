@@ -131,6 +131,7 @@ public class Option : MonoBehaviour
                 CharacteristicRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
                 _ => new Color(1, 1, 1)
             };
+            if (!CharacteristicManager.UnlockCheck(CharacteristicManager.Characteristics[i].type)) characteristicBox.GetComponentInChildren<Locked>(true).gameObject.SetActive(true);
             characteristicBox.AddComponent<CharacteristicDataForSort>().Set(CharacteristicManager.Characteristics[i].characteristicName, CharacteristicManager.Characteristics[i].rarity);
         }
         characteristicAutoNewlineLG.characteristicsBox = characteristicBoxes.ToArray();

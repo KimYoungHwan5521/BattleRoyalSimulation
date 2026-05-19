@@ -40,7 +40,14 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
             {
                 characteristicsBox[i].SetActive(true);
                 characteristicsText[i].text = survivorData.characteristics[i].characteristicName.GetLocalizedString();
-                characteristicsBox[i].GetComponent<Help>().SetDescription(survivorData.characteristics[i].description);
+                characteristicsBox[i].GetComponent<Help>().SetDescription(survivorData.characteristics[i].type);
+                characteristicsBox[i].GetComponent<Image>().color = survivorData.characteristics[i].rarity switch
+                {
+                    CharacteristicRarity.Common => new Color(0.2984f, 0.8483f, 0.9471f),
+                    CharacteristicRarity.Uncommon => new Color(0.8050f, 0.2980f, 0.9490f),
+                    CharacteristicRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
+                    _ => new Color(1, 1, 1)
+                };
                 LayoutRebuilder.ForceRebuildLayoutImmediate(characteristicsText[i].rectTransform);
                 characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, wantHeight);
             }
@@ -60,7 +67,14 @@ public class AutoNewLineLayoutGroup : MonoBehaviour
         {
             characteristicsText[i] = characteristicsBox[i].GetComponentInChildren<TextMeshProUGUI>();
             characteristicsText[i].text = CharacteristicManager.Characteristics[i].characteristicName.GetLocalizedString();
-            characteristicsBox[i].GetComponent<Help>().SetDescription(CharacteristicManager.Characteristics[i].description);
+            characteristicsBox[i].GetComponent<Help>().SetDescription(CharacteristicManager.Characteristics[i].type);
+            characteristicsBox[i].GetComponent<Image>().color = CharacteristicManager.Characteristics[i].rarity switch
+            {
+                CharacteristicRarity.Common => new Color(0.2984f, 0.8483f, 0.9471f),
+                CharacteristicRarity.Uncommon => new Color(0.8050f, 0.2980f, 0.9490f),
+                CharacteristicRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
+                _ => new Color(1, 1, 1)
+            };
             characteristicsBox[i].GetComponent<RectTransform>().sizeDelta = new(characteristicsText[i].rectTransform.rect.width + 6, wantHeight);
             characteristicsText[i].ForceMeshUpdate();
             Canvas.ForceUpdateCanvases();

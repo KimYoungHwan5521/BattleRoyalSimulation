@@ -193,4 +193,15 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             description = description[..^3];
         }
     }
+
+    public void SetDescription(CharacteristicType type)
+    {
+        raw = true;
+        if(!CharacteristicManager.UnlockCheck(type)) description = "";
+        else
+        {
+            Characteristic charicteristic = CharacteristicManager.Characteristics.Find(x => x.type == type);
+            description = $"<b>{new LocalizedString("Characteristic", charicteristic.rarity.ToString()).GetLocalizedString()}</b>\n{charicteristic.description.GetLocalizedString()}";
+        }
+    }
 }

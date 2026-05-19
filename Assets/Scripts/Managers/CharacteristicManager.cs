@@ -1,9 +1,11 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.SocialPlatforms.Impl;
 
 public enum CharacteristicType
 {
@@ -145,7 +147,7 @@ public class CharacteristicManager
     public static bool AddCharaicteristic(SurvivorData survivor, CharacteristicType wantCharacteristic, int rarity = -1)
     {
         int hasAleady = survivor.characteristics.FindIndex(x => x.type  == wantCharacteristic);
-        if(hasAleady > -1) return false;
+        if(hasAleady > -1 || !UnlockCheck(wantCharacteristic)) return false;
         foreach(Characteristic survivorChar in survivor.characteristics)
         {
             if(survivorChar.notPossibleTogether.ToList().Contains(wantCharacteristic))
@@ -191,5 +193,31 @@ public class CharacteristicManager
                 else wantRarity = 2;
             }
         }
+    }
+
+    public static bool UnlockCheck(CharacteristicType characteristic)
+    {
+        bool result;
+        switch(characteristic)
+        {
+            case CharacteristicType.TrapExpert:
+                SteamUserStats.GetAchievement("Sun Tzu", out result);
+                break;
+            case CharacteristicType.SwordSaint:
+                SteamUserStats.GetAchievement("Sword Master", out result);
+                break;
+            case CharacteristicType.ClutchPerformance:
+                SteamUserStats.GetAchievement("Overcome", out result);
+                break;
+            case CharacteristicType.PoisonImmune:
+                SteamUserStats.GetAchievement("Viper", out result);
+                break;
+            case CharacteristicType.Assassin:
+                SteamUserStats.GetAchievement("Quick-Footed", out result);
+                break;
+            default:
+                return true;
+        };
+        return result;
     }
 }

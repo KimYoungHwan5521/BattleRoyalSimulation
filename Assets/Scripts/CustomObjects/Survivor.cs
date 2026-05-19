@@ -273,6 +273,7 @@ public class Survivor : CustomObject
     int timerSound = 9;
 
     Survivor survivorWhoCausedBleeding;
+    float rememberWhoCausedBleedingTime;
     public float maxBlood;
     public float curBlood;
     [SerializeField] float bleedingAmount = 0;
@@ -761,6 +762,14 @@ public class Survivor : CustomObject
             else cause = new LocalizedString("Injury", "Severe Bleeding").GetLocalizedString();
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), cause);
             if(playerSurvivor) AchievementManager.UnlockAchievement("Severe Bleeding");
+        }
+        if(rememberWhoCausedBleedingTime > 0)
+        {
+            rememberWhoCausedBleedingTime -= Time.deltaTime * aiCool;
+            if(rememberWhoCausedBleedingTime < 0)
+            {
+                survivorWhoCausedBleeding = null;
+            }
         }
     }
 
@@ -4459,6 +4468,7 @@ public class Survivor : CustomObject
         if (injuryType == InjuryType.Damage || injuryType == InjuryType.GunshotWound) amount *= 0.5f;
         else if (injuryType == InjuryType.Burn || injuryType == InjuryType.Fracture) amount *= 0.3f;
         survivorWhoCausedBleeding = attacker;
+        rememberWhoCausedBleedingTime = 10f;
         BleedingAmount += amount;
     }
 

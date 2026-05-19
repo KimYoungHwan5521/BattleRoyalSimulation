@@ -10,12 +10,13 @@ public class UnlockManager : MonoBehaviour
 
     public enum UnlockCondition
     {
-        FirstParticipateInBattleRoyale,
-        WinBronzeLeague,
-        WinSilverLeague,
-        WinGoldLeague,
-        WinSeasonChampionship,
-        WinWorldChampionship,
+        NoInfo =6,
+        FirstParticipateInBattleRoyale = 0,
+        WinBronzeLeague = 1,
+        WinSilverLeague = 2,
+        WinGoldLeague = 3,
+        WinSeasonChampionship = 4,
+        WinWorldChampionship = 5,
     }
     public Dictionary<UnlockCondition, bool> unlockStatus = new();
 
