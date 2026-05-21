@@ -17,11 +17,13 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
     [SerializeField] TextMeshProUGUI shootingText;
+    [SerializeField] TextMeshProUGUI craftingText;
     [SerializeField] TextMeshProUGUI knowledgeText;
     [SerializeField] Image strengthBar;
     [SerializeField] Image agilityBar;
     [SerializeField] Image fightingBar;
     [SerializeField] Image shootingBar;
+    [SerializeField] Image craftingBar;
     [SerializeField] Image knowledgeBar;
     [SerializeField] AutoNewLineLayoutGroup characteristicsLayout;
     [SerializeField] TextMeshProUGUI priceText;
@@ -113,10 +115,10 @@ public class SurvivorInfo : MonoBehaviour
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
-    public void SetInfo(LocalizedString survivorName, int strength, int agility, int fighting, int shooting,
+    public void SetInfo(LocalizedString survivorName, int strength, int agility, int fighting, int shooting, int crafting,
         int knowledge, int characteristicsCount, int price, Tier tier)
     {
-        survivorData = new(survivorName, strength, agility, fighting, shooting, knowledge, price, tier);
+        survivorData = new(survivorName, strength, agility, fighting, shooting, crafting, knowledge, price, tier);
 
         if (tierImage != null)
         {
@@ -131,6 +133,7 @@ public class SurvivorInfo : MonoBehaviour
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
         shootingText.text = $"{survivorData.Shooting}";
+        craftingText.text = $"{survivorData.Crafting}";
         knowledgeText.text = $"{survivorData.Knowledge}";
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
@@ -139,6 +142,7 @@ public class SurvivorInfo : MonoBehaviour
         agilityBar.fillAmount = survivorData.Agility / 100f;
         fightingBar.fillAmount = survivorData.Fighting / 100f;
         shootingBar.fillAmount = survivorData.Shooting / 100f;
+        craftingBar.fillAmount = survivorData.Crafting / 100f;
         knowledgeBar.fillAmount = survivorData.Knowledge / 100f;
 
         SetCharacteristic();
@@ -165,12 +169,14 @@ public class SurvivorInfo : MonoBehaviour
         agilityText.text = $"{wantSurvivorData.Agility}";
         fightingText.text = $"{wantSurvivorData.Fighting}";
         shootingText.text = $"{wantSurvivorData.Shooting}";
+        craftingText.text = $"{wantSurvivorData.Crafting}";
         knowledgeText.text = $"{wantSurvivorData.Knowledge}";
 
         strengthBar.fillAmount = wantSurvivorData.Strength / 100f;
         agilityBar.fillAmount = wantSurvivorData.Agility / 100f;
         fightingBar.fillAmount = wantSurvivorData.Fighting / 100f;
         shootingBar.fillAmount = wantSurvivorData.Shooting / 100f;
+        craftingBar.fillAmount = wantSurvivorData.Crafting / 100f;
         knowledgeBar.fillAmount = wantSurvivorData.Knowledge / 100f;
 
         if (showIncrease)
@@ -179,6 +185,7 @@ public class SurvivorInfo : MonoBehaviour
             if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_crafting > -1) craftingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_crafting})</color>";
             if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
         }
         SetInjury(wantSurvivorData.injuries);

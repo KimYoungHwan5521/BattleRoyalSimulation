@@ -2639,7 +2639,7 @@ public class Survivor : CustomObject
             float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
             if (chanceToIncreaseStat < currentCrafting.requiredKnowledge * 0.01f)
             {
-                linkedSurvivorData.Crafting++;
+                linkedSurvivorData.IncreaseStats(0, 0, 0, 0, 1, 0);
                 increaseCrafting++;
             }
             currentCrafting = null;
@@ -3044,7 +3044,7 @@ public class Survivor : CustomObject
                 float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
                 if (chanceToIncreaseStat < CurrentWeaponAsRangedWeapon.ShotCoolTime * 0.1f)
                 {
-                    linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0);
+                    linkedSurvivorData.IncreaseStats(0, 0, 0, 1, 0, 0);
                     increaseShooting++;
                 }
                 curShotTime = CurrentWeaponAsRangedWeapon.ShotCoolTime;
@@ -3577,7 +3577,7 @@ public class Survivor : CustomObject
 
                 if (chanceToIncreaseStat < 0.1f)
                 {
-                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
                     increaseFighting++;
                 }
             }
@@ -3590,7 +3590,7 @@ public class Survivor : CustomObject
 
 				if (chanceToIncreaseStat < 0.02f)
                 {
-                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
                     increaseFighting++;
                 }
             }
@@ -3604,7 +3604,7 @@ public class Survivor : CustomObject
 
 				if (chanceToIncreaseStat < 0.1f)
                 {
-                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
                     increaseFighting++;
                 }
             }
@@ -3614,7 +3614,7 @@ public class Survivor : CustomObject
 
 				if (chanceToIncreaseStat < 0.02f)
                 {
-                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0);
+                    attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
                     increaseFighting++;
                 }
             }

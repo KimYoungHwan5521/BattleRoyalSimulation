@@ -1197,8 +1197,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24796887023939584
-    m_Localized: "Afecta la velocidad de fabricaci\xF3n independientemente de la
-      estad\xEDstica de Conocimiento."
+    m_Localized: "Fabricaci\xF3n: Afecta la velocidad y calidad de fabricaci\xF3n."
     m_Metadata:
       m_Items: []
   - m_Id: 24801603418124288
@@ -1424,6 +1423,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 126924404182020096
+    m_Localized: "Entrenamiento de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Localized: "Calidad de fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Localized: Deficiente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Localized: "Com\xFAn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Localized: Bueno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Localized: Excelente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Localized: Obra maestra
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

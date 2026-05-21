@@ -1340,6 +1340,34 @@ MonoBehaviour:
     m_Key: Most Kills in a Single Match
     m_Metadata:
       m_Items: []
+  - m_Id: 126924404182020096
+    m_Key: Training:Crafting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Key: Craft Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Key: Poor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Key: Common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Key: Fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Key: Excellent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Key: Masterpiece
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

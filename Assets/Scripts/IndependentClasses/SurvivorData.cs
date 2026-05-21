@@ -192,6 +192,7 @@ public class SurvivorData
     public int increaseComparedToPrevious_agility = -1;
     public int increaseComparedToPrevious_fighting = -1;
     public int increaseComparedToPrevious_shooting = -1;
+    public int increaseComparedToPrevious_crafting = -1;
     public int increaseComparedToPrevious_knowledge = -1;
 
     // Injury, Surgery
@@ -241,7 +242,7 @@ public class SurvivorData
     public bool wonCraftingLeague;
     public int craftingCount;
 
-    public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int knowledge, int price, Tier tier)
+    public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int crafting, int knowledge, int price, Tier tier)
     {
         this.localizedSurvivorName = localizedSurvivorName;
         survivorName = localizedSurvivorName.TableEntryReference.Key;
@@ -249,9 +250,9 @@ public class SurvivorData
         _agility = agility;
         _fighting = fighting;
         _shooting = shooting;
+        _crafting = crafting;
         _knowledge = knowledge;
         _luck = 50;
-        _crafting = 0;
         this.price = price;
         this.tier = tier;
         Strategy.ResetStrategyDictionary(strategyDictionary);
@@ -267,6 +268,7 @@ public class SurvivorData
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;
         _shooting = survivorData._shooting;
+        _crafting = survivorData._crafting;
         _knowledge = survivorData._knowledge;
         _luck = survivorData._luck;
         price = survivorData.price;
@@ -276,19 +278,21 @@ public class SurvivorData
         for (int i = 0; i < craftingAllows.Length; i++) craftingAllows[i] = true;
     }
 
-    public void IncreaseStats(int strength, int agility, int fighting, int shooting, int knowledge)
+    public void IncreaseStats(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
     {
-        if (_strength + strength > 100 || _agility + agility > 100 || _fighting + fighting > 100 || _shooting + shooting > 100 || _knowledge + knowledge > 100) return;
+        if (_strength + strength > 100 || _agility + agility > 100 || _fighting + fighting > 100 || _shooting + shooting > 100 || _crafting + crafting > 100 || _knowledge + knowledge > 100) return;
         _strength += strength;
         _agility += agility;
         _fighting += fighting;
         _shooting += shooting;
+        _crafting += crafting;
         _knowledge += knowledge;
 
         increaseComparedToPrevious_strength += strength;
         increaseComparedToPrevious_agility += agility;
         increaseComparedToPrevious_fighting += fighting;
         increaseComparedToPrevious_shooting += shooting;
+        increaseComparedToPrevious_crafting += crafting;
         increaseComparedToPrevious_knowledge += knowledge;
     }
 }

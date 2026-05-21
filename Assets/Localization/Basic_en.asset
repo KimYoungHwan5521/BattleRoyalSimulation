@@ -1193,7 +1193,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24796887023939584
-    m_Localized: Affects crafting speed independently of the Knowledge stat.
+    m_Localized: 'Crafting: Affects crafting speed and crafting quality.'
     m_Metadata:
       m_Items: []
   - m_Id: 24801603418124288
@@ -1417,6 +1417,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 126924404182020096
+    m_Localized: Crafting Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Localized: Craft Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Localized: Poor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Localized: Common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Localized: Fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Localized: Excellent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Localized: Masterpiece
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

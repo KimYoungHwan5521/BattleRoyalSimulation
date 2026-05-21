@@ -295,6 +295,7 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.SurvivorHireLimit,
             OutGameUIManager.FightTrainingLevel,
             OutGameUIManager.ShootingTrainingLevel,
+            OutGameUIManager.CraftingTrainingLevel,
             OutGameUIManager.AgilityTrainingLevel,
             OutGameUIManager.WeightTrainingLevel,
             OutGameUIManager.StudyLevel,
@@ -353,6 +354,7 @@ public class GameManager : MonoBehaviour
         saveData.survivorHireLimit,
         saveData.fightTrainingLevel,
         saveData.shootingTrainingLevel,
+        saveData.craftingTrainingLevel,
         saveData.runningLevel,
         saveData.weightTrainingLevel,
         saveData.studyingLevel,
@@ -417,10 +419,17 @@ public class GameManager : MonoBehaviour
         {
             calendar.CalendarUpdate();
         }
-        if(loadedDataGameVersionInt1 <= 1 && loadedDataGameVersionInt2 <= 3)
+        if (loadedDataGameVersionInt1 <= 1)
         {
-            calendar.CancelAllReservation();
-            foreach (var survivor in OutGameUIManager.MySurvivorsData) survivor.repairCondition = 70;
+            if (loadedDataGameVersionInt2 <= 3)
+            {
+                calendar.CancelAllReservation();
+                foreach (var survivor in OutGameUIManager.MySurvivorsData) survivor.repairCondition = 70;
+            }
+            if (loadedDataGameVersionInt2 <= 4)
+            {
+                outGameUIManger.VersionCompatibleCraftingTrainingLevel();
+            }
         }
         unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 <= 1 && loadedDataGameVersionInt2 <= 3);
         yield return null;

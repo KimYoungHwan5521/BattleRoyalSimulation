@@ -1205,8 +1205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24796887023939584
-    m_Localized: "Affecte la vitesse de fabrication ind\xE9pendamment de la statistique
-      de Connaissance."
+    m_Localized: "Fabrication : affecte la vitesse et la qualit\xE9 de fabrication."
     m_Metadata:
       m_Items: []
   - m_Id: 24801603418124288
@@ -1436,6 +1435,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 126924404182020096
+    m_Localized: "Entra\xEEnement \xE0 la fabrication"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Localized: "Qualit\xE9 de fabrication"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Localized: "M\xE9diocre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Localized: Ordinaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Localized: Correct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Localized: Excellent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Localized: "Chef-d\u2019\u0153uvre"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

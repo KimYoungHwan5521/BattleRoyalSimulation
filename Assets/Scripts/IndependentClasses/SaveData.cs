@@ -56,6 +56,7 @@ public class SurvivorSaveData
     public int increaseComparedToPrevious_agility;
     public int increaseComparedToPrevious_fighting;
     public int increaseComparedToPrevious_shooting;
+    public int increaseComparedToPrevious_crafting;
     public int increaseComparedToPrevious_knowledge;
     public List<Injury> injuries;
     public bool surgeryScheduled;
@@ -157,6 +158,7 @@ public class ETCData
     public int survivorHireLimit;
     public int fightTrainingLevel;
     public int shootingTrainingLevel;
+    public int craftingTrainingLevel;
     public int runningLevel;
     public int weightTrainingLevel;
     public int studyingLevel;
@@ -170,7 +172,7 @@ public class ETCData
     // unlock
     public List<UnlockStatusDictionary> unlockStatus = new();
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int craftingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.money = money;
@@ -178,6 +180,7 @@ public class ETCData
         this.survivorHireLimit = survivorHireLimit;
         this.fightTrainingLevel = fightTrainingLevel;
         this.shootingTrainingLevel = shootingTrainingLevel;
+        this.craftingTrainingLevel = craftingTrainingLevel;
         this.runningLevel = runningLevel;
         this.weightTrainingLevel = weightTrainingLevel;
         this.studyingLevel = studyingLevel;

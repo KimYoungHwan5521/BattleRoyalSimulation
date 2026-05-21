@@ -1196,8 +1196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24796887023939584
-    m_Localized: "Afeta a velocidade de fabrica\xE7\xE3o independentemente do atributo
-      Conhecimento."
+    m_Localized: "Fabrica\xE7\xE3o: Afeta a velocidade e a qualidade de fabrico."
     m_Metadata:
       m_Items: []
   - m_Id: 24801603418124288
@@ -1419,6 +1418,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
+  - m_Id: 126924404182020096
+    m_Localized: "Treino de Fabrica\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Localized: Qualidade de Fabrico
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Localized: Fraco
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Localized: Comum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Localized: Bom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Localized: Excelente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Localized: Obra-prima
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

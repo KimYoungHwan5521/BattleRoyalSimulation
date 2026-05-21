@@ -1196,7 +1196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24796887023939584
-    m_Localized: "Beeinflusst die Herstellungsgeschwindigkeit unabh\xE4ngig vom Wissenswert."
+    m_Localized: "Herstellung: Beeinflusst Herstellungsgeschwindigkeit und Herstellungsqualit\xE4t."
     m_Metadata:
       m_Items: []
   - m_Id: 24801603418124288
@@ -1423,6 +1423,34 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 126924404182020096
+    m_Localized: Herstellungstraining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924941707243520
+    m_Localized: "Herstellungsqualit\xE4t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924945222070272
+    m_Localized: Miserabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924947440857088
+    m_Localized: "Gew\xF6hnlich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924949449928704
+    m_Localized: Solide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924951702269952
+    m_Localized: Hervorragend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 126924953916862464
+    m_Localized: Meisterwerk
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

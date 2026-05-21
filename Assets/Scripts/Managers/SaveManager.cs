@@ -29,6 +29,7 @@ public static class SaveManager
             increaseComparedToPrevious_agility = data.increaseComparedToPrevious_agility,
             increaseComparedToPrevious_fighting = data.increaseComparedToPrevious_fighting,
             increaseComparedToPrevious_shooting = data.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_crafting = data.increaseComparedToPrevious_crafting,
             increaseComparedToPrevious_knowledge = data.increaseComparedToPrevious_knowledge,
             injuries = data.injuries,
             surgeryScheduled = data.surgeryScheduled,
@@ -87,11 +88,10 @@ public static class SaveManager
     public static SurvivorData FromSaveData(SurvivorSaveData saveData)
     {
         SurvivorData survivor = new(new("Name", saveData.survivorName), saveData.strength, saveData.agility,
-            saveData.fighting, saveData.shooting, saveData.knowledge, saveData.price, saveData.tier)
+            saveData.fighting, saveData.shooting, saveData.crafting, saveData.knowledge, saveData.price, saveData.tier)
         {
             id = saveData.id,
             _luck = saveData.luck,
-            _crafting = saveData.crafting,
             characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,
             reservedDate = saveData.reservedDate,
@@ -100,6 +100,7 @@ public static class SaveManager
             increaseComparedToPrevious_agility = saveData.increaseComparedToPrevious_agility,
             increaseComparedToPrevious_fighting = saveData.increaseComparedToPrevious_fighting,
             increaseComparedToPrevious_shooting = saveData.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_crafting = saveData.increaseComparedToPrevious_crafting,
             increaseComparedToPrevious_knowledge = saveData.increaseComparedToPrevious_knowledge,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,
