@@ -161,7 +161,7 @@ public class ItemManager
         yield return null;
     }
 
-    public static void AddItems(Items wantItem, int count)
+    public static void AddItems(Items wantItem, int count, CraftingQuality quality = CraftingQuality.NotCrafted)
     {
         int start = 0;
         int end = count;
@@ -202,47 +202,315 @@ public class ItemManager
             // Ranged Weapons
             case Items.Pistol:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.625f, NeedHand.OneHand, 40, 20.1f, 2f, 38f, 0.7f, 17, 3f, 0, 1));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch(quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 60;
+                            attackRange = 25.1f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 50;
+                            attackRange = 22.6f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 30;
+                            attackRange = 17.6f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 20;
+                            attackRange = 15.1f;
+                            break;
+                        default:
+                            attackDamage = 40;
+                            attackRange = 20.1f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.625f, NeedHand.OneHand, attackDamage, attackRange, 2f, 38f, 0.7f, 17, 3f, 0, 1));
+                }
                 break;
             case Items.Revolver:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.1f, NeedHand.OneHand, 80, 20f, 2f, 27f, 1f, 7, 3f, 0, 0));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 110;
+                            attackRange = 25f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 95;
+                            attackRange = 22.5f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 65;
+                            attackRange = 17.5f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 50;
+                            attackRange = 15f;
+                            break;
+                        default:
+                            attackDamage = 80;
+                            attackRange = 20f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.1f, NeedHand.OneHand, attackDamage, attackRange, 2f, 27f, 1f, 7, 3f, 0, 0));
+                }
                 break;
             case Items.ShotGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.4f, NeedHand.TwoHand, 40, 20.2f, 2f, 40f, 1.8f, 4, 1f, 2, 4));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 60;
+                            attackRange = 25.2f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 50;
+                            attackRange = 22.7f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 30;
+                            attackRange = 17.7f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 20;
+                            attackRange = 15.2f;
+                            break;
+                        default:
+                            attackDamage = 40;
+                            attackRange = 20.2f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.4f, NeedHand.TwoHand, attackDamage, attackRange, 2f, 40f, 1.8f, 4, 1f, 2, 4));
+                }
                 break;
             case Items.SubMachineGun:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.0f, NeedHand.TwoHand, 40, 25f, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 60;
+                            attackRange = 31f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 50;
+                            attackRange = 28f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 30;
+                            attackRange = 22f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 20;
+                            attackRange = 19f;
+                            break;
+                        default:
+                            attackDamage = 40;
+                            attackRange = 25f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.0f, NeedHand.TwoHand, attackDamage, attackRange, 2f, 40f, 0.075f, 30, 3f, 2, 3));
+                }
                 break;
             case Items.AssaultRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.8f, NeedHand.TwoHand, 110, 50f, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 150;
+                            attackRange = 60f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 130;
+                            attackRange = 55f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 90;
+                            attackRange = 45f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 70;
+                            attackRange = 40f;
+                            break;
+                        default:
+                            attackDamage = 110;
+                            attackRange = 50f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.8f, NeedHand.TwoHand, attackDamage, attackRange, 2f, 71f, 0.1f, 30, 3f, 2, 2));
+                }
                 break;
             case Items.SniperRifle:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.7f, NeedHand.TwoHand, 200, 90f, 3f, 86f, 2.0f, 5, 4f, 2, 5));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 300;
+                            attackRange = 130f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 250;
+                            attackRange = 110f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 150;
+                            attackRange = 70f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 100;
+                            attackRange = 50f;
+                            break;
+                        default:
+                            attackDamage = 200;
+                            attackRange = 90f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.7f, NeedHand.TwoHand, attackDamage, attackRange, 3f, 86f, 2.0f, 5, 4f, 2, 5));
+                }
                 break;
             case Items.Bazooka:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 7.9f, NeedHand.TwoHand, 400, 40f, 3f, 20f, 3f, 1, 5f, 2, 6));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 600;
+                            attackRange = 50f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 500;
+                            attackRange = 45f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 300;
+                            attackRange = 35f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 200;
+                            attackRange = 30f;
+                            break;
+                        default:
+                            attackDamage = 400;
+                            attackRange = 40f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 7.9f, NeedHand.TwoHand, attackDamage, attackRange, 3f, 20f, 3f, 1, 5f, 2, 6));
+                }
                 break;
             case Items.LASER:
                 for (int i = start; i < end; i++)
                 {
-                    RangedWeapon laser = new(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.6f, NeedHand.OneHand, 100, 45f, 3f, 10f, 0.5f, 100, 3f, 0, 7);
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 150;
+                            attackRange = 55f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 120;
+                            attackRange = 50f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 90;
+                            attackRange = 40f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 80;
+                            attackRange = 35f;
+                            break;
+                        default:
+                            attackDamage = 100;
+                            attackRange = 45f;
+                            break;
+                    }
+                    RangedWeapon laser = new(wantItem, new LocalizedString("Item", wantItem.ToString()), 3.6f, NeedHand.OneHand, attackDamage, attackRange, 3f, 10f, 0.5f, 100, 3f, 0, 7);
                     laser.Reload(100);
                     itemDictionary[wantItem].Add(laser);
                 }
                 break;
             case Items.Bow:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1f, NeedHand.TwoHand, 20, 30f, 3f, 12f, 3f, 1, 1f, 3, 8, false));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 25;
+                            attackRange = 36f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 22.5f;
+                            attackRange = 33f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 17.5f;
+                            attackRange = 27f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 15;
+                            attackRange = 24f;
+                            break;
+                        default:
+                            attackDamage = 20;
+                            attackRange = 30f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1f, NeedHand.TwoHand, attackDamage, attackRange, 3f, 12f, 3f, 1, 1f, 3, 8, false));
+                }
                 break;
             case Items.AdvancedBow:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, NeedHand.TwoHand, 60, 60f, 3f, 18f, 2f, 1, 1f, 3, 9, false));
+                {
+                    float attackDamage;
+                    float attackRange;
+                    switch (quality)
+                    {
+                        case CraftingQuality.Masterpiece:
+                            attackDamage = 75;
+                            attackRange = 80f;
+                            break;
+                        case CraftingQuality.Excellent:
+                            attackDamage = 67.5f;
+                            attackRange = 70f;
+                            break;
+                        case CraftingQuality.Common:
+                            attackDamage = 52.5f;
+                            attackRange = 50f;
+                            break;
+                        case CraftingQuality.Poor:
+                            attackDamage = 45;
+                            attackRange = 40f;
+                            break;
+                        default:
+                            attackDamage = 60;
+                            attackRange = 60f;
+                            break;
+                    }
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, NeedHand.TwoHand, attackDamage, attackRange, 3f, 18f, 2f, 1, 1f, 3, 9, false));
+                }
                 break;
             // Bullets
             case Items.Bullet_Revolver:
@@ -284,36 +552,36 @@ public class ItemManager
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.7f, 20));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.7f, 20, 200));
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.2f, 40));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.2f, 40, 400));
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.6f, 60));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.6f, 60, 600));
                 break;
             case Items.LegendaryBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 200));
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 200, 2000));
                 break;
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, 10));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, 10, 100));
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 30));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 30, 300));
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 10f, 50));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 10f, 50, 500));
                 break;
             case Items.LegendaryBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, 100));
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, 100, 1000));
                 break;
             // Consumables
             case Items.BandageRoll:

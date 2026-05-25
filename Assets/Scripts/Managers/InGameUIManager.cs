@@ -104,11 +104,13 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image agilityBar;
     [SerializeField] Image fightingBar;
     [SerializeField] Image shootingBar;
+    [SerializeField] Image craftingBar;
     [SerializeField] Image knowledgeBar;
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
     [SerializeField] TextMeshProUGUI shootingText;
+    [SerializeField] TextMeshProUGUI craftingText;
     [SerializeField] TextMeshProUGUI knowledgeText;
     [SerializeField] AutoNewLineLayoutGroup characteristics;
 
@@ -457,6 +459,13 @@ public class InGameUIManager : MonoBehaviour
         logScrollView.verticalNormalizedPosition = 0;
     }
 
+    public void AddLog(string message)
+    {
+        log.text += "\n" + message;
+        GameManager.Instance.FixLayout(log.GetComponent<RectTransform>());
+        logScrollView.verticalNormalizedPosition = 0;
+    }
+
     public void ClearLog()
     {
         log.text = "";
@@ -465,6 +474,7 @@ public class InGameUIManager : MonoBehaviour
         fightingText.GetComponent<Help>().SetDescription("");
         knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
+        craftingText.GetComponent<Help>().SetDescription("");
     }
 
     void SelectObject()
@@ -538,12 +548,14 @@ public class InGameUIManager : MonoBehaviour
             agilityBar.fillAmount = selectedSurvivor.CorrectedAgility / 100f;
             fightingBar.fillAmount = selectedSurvivor.CorrectedFighting / 100f;
             shootingBar.fillAmount = selectedSurvivor.CorrectedShooting / 100f;
+            craftingBar.fillAmount = selectedSurvivor.CorrectedCrafting / 100f;
             knowledgeBar.fillAmount = selectedSurvivor.CorrectedKnowledge / 100f;
 
             strengthText.text = selectedSurvivor.CorrectedStrength.ToString();
             agilityText.text = selectedSurvivor.CorrectedAgility.ToString();
             fightingText.text = selectedSurvivor.CorrectedFighting.ToString();
             shootingText.text = selectedSurvivor.CorrectedShooting.ToString();
+            craftingText.text = selectedSurvivor.CorrectedCrafting.ToString();
             knowledgeText.text = selectedSurvivor.CorrectedKnowledge.ToString();
 
             characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
@@ -597,6 +609,7 @@ public class InGameUIManager : MonoBehaviour
         fightingText.GetComponent<Help>().SetDescription("");
         knowledgeText.GetComponent<Help>().SetDescription("");
         shootingText.GetComponent<Help>().SetDescription("");
+        craftingText.GetComponent<Help>().SetDescription("");
     }
 
     Image GetTargetImage(InjurySite site)
@@ -1000,8 +1013,8 @@ public class InGameUIManager : MonoBehaviour
                 if(selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet))
                 {
                     selectedObjectsCurrentHelmetDurability.SetActive(true);
-                    selectedObjectsCurrentHelmetDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentHelmet.Durability;
-                    selectedObjectsCurrentHelmetDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentHelmet.Durability * 100:0}", $"{Math.Min(selectedSurvivor.CurrentHelmet.Durability * 100 + 50, 100):0}");
+                    selectedObjectsCurrentHelmetDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentHelmet.DurabilityPercent;
+                    selectedObjectsCurrentHelmetDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentHelmet.DurabilityPercent * 100:0}", $"{Math.Min(selectedSurvivor.CurrentHelmet.DurabilityPercent * 100 + 50, 100):0}");
                 }
                 else
                 {
@@ -1011,8 +1024,8 @@ public class InGameUIManager : MonoBehaviour
                 if (selectedSurvivor.IsValid(selectedSurvivor.CurrentVest))
                 {
                     selectedObjectsCurrentVestDurability.SetActive(true);
-                    selectedObjectsCurrentVestDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentVest.Durability;
-                    selectedObjectsCurrentVestDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentVest.Durability * 100:0}", $"{Math.Min(selectedSurvivor.CurrentVest.Durability * 100 + 50, 100):0}");
+                    selectedObjectsCurrentVestDurability.GetComponentsInChildren<Image>()[1].fillAmount = selectedSurvivor.CurrentVest.DurabilityPercent;
+                    selectedObjectsCurrentVestDurability.GetComponent<Help>().SetDescriptionWithKey("Durability", $"{selectedSurvivor.CurrentVest.DurabilityPercent * 100:0}", $"{Math.Min(selectedSurvivor.CurrentVest.DurabilityPercent * 100 + 50, 100):0}");
                 }
                 else
                 {

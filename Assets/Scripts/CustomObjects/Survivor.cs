@@ -107,6 +107,7 @@ public class Survivor : CustomObject
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
     public float MoveSpeed => moveSpeed;
+    int crafting;
     [SerializeField] float leftSightRange = 45f;
     [SerializeField] float rightSightRange = 45f;
     float sightAngle = 120;
@@ -872,21 +873,21 @@ public class Survivor : CustomObject
     bool CheckRepair()
     {
         // 헬멧 갈아쓰기
-        if (IsValid(CurrentHelmet) && CurrentHelmet.Durability < 1f)
+        if (IsValid(CurrentHelmet) && CurrentHelmet.DurabilityPercent < 1f)
         {
             BulletproofHelmet theMostDurable = CurrentHelmet;
             foreach (var _ in inventory.FindAll(x => x.itemType == CurrentHelmet.itemType))
             {
                 if (_ is BulletproofHelmet helmet)
                 {
-                    if (helmet.Durability > theMostDurable.Durability) theMostDurable = helmet;
+                    if (helmet.DurabilityPercent > theMostDurable.DurabilityPercent) theMostDurable = helmet;
                 }
             }
             if (theMostDurable != CurrentHelmet) currentWearingHelmet = theMostDurable;
             else
             {
                 // 수선
-                if (CurrentHelmet.Durability < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                if (CurrentHelmet.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
                 {
                     //재료체크
                     int originalValue = CurrentHelmet.itemType switch
@@ -897,7 +898,7 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 12,
                         _ => 0
                     };
-                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
                     originalValue = CurrentHelmet.itemType switch
                     {
                         ItemManager.Items.LowLevelBulletproofHelmet => 7,
@@ -906,11 +907,11 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 18,
                         _ => 0
                     };
-                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
                     if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
                     {
                         currentRepairing = 1;
-                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentHelmet.itemType).craftingTime * (1f - CurrentHelmet.Durability), 4f);
+                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentHelmet.itemType).craftingTime * (1f - CurrentHelmet.DurabilityPercent), 4f);
                         return true;
                     }
                 }
@@ -918,21 +919,21 @@ public class Survivor : CustomObject
         }
 
         // 조끼 갈아입기
-        if (IsValid(CurrentVest) && CurrentVest.Durability < 1f)
+        if (IsValid(CurrentVest) && CurrentVest.DurabilityPercent < 1f)
         {
             BulletproofVest theMostDurable = CurrentVest;
             foreach (var _ in inventory.FindAll(x => x.itemType == CurrentVest.itemType))
             {
                 if (_ is BulletproofVest vest)
                 {
-                    if (vest.Durability > theMostDurable.Durability) theMostDurable = vest;
+                    if (vest.DurabilityPercent > theMostDurable.DurabilityPercent) theMostDurable = vest;
                 }
             }
             if (theMostDurable != CurrentVest) currentWearingVest = theMostDurable;
             else
             {
                 // 수선
-                if (CurrentVest.Durability < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                if (CurrentVest.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
                 {
                     //재료체크
                     int originalValue = CurrentHelmet.itemType switch
@@ -943,7 +944,7 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 12,
                         _ => 0
                     };
-                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
                     originalValue = CurrentHelmet.itemType switch
                     {
                         ItemManager.Items.LowLevelBulletproofHelmet => 10,
@@ -952,11 +953,11 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 24,
                         _ => 0
                     };
-                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.Durability);
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
                     if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
                     {
                         currentRepairing = 2;
-                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentVest.itemType).craftingTime * (1f - CurrentVest.Durability), 4f);
+                        repairingTime = Math.Max(ItemManager.craftables.Find(x => x.itemType == CurrentVest.itemType).craftingTime * (1f - CurrentVest.DurabilityPercent), 4f);
                         return true;
                     }
                 }
@@ -2004,16 +2005,16 @@ public class Survivor : CustomObject
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
     {
         if (!IsValid(currentHelmet)) return true;
-        if (newBulletproofHelmet.Armor > currentHelmet.Armor) return true;
-        else if (newBulletproofHelmet.Armor == currentHelmet.Armor && newBulletproofHelmet.Durability > currentHelmet.Durability) return true;
+        if (newBulletproofHelmet.Defense > currentHelmet.Defense) return true;
+        else if (newBulletproofHelmet.Defense == currentHelmet.Defense && newBulletproofHelmet.DurabilityPercent > currentHelmet.DurabilityPercent) return true;
         else return false;
     }
 
     bool CompareBulletproofVestValue(BulletproofVest newBulletproofVest)
     {
         if (!IsValid(currentVest)) return true;
-        if (newBulletproofVest.Armor > currentVest.Armor) return true;
-        else if (newBulletproofVest.Armor == currentVest.Armor && newBulletproofVest.Durability > currentVest.Durability) return true;
+        if (newBulletproofVest.Defense > currentVest.Defense) return true;
+        else if (newBulletproofVest.Defense == currentVest.Defense && newBulletproofVest.DurabilityPercent > currentVest.DurabilityPercent) return true;
         else return false;
     }
 
@@ -2190,8 +2191,8 @@ public class Survivor : CustomObject
         {
             curRepairingTime = 0;
             animator.SetBool("Crafting", false);
-            if (currentRepairing == 1) CurrentHelmet.Durability = 1f;
-            else CurrentVest.Durability = 1f;
+            if (currentRepairing == 1) CurrentHelmet.SetDurabilityPercent(1f);
+            else CurrentVest.SetDurabilityPercent(1f);
             currentRepairing = 0;
         }
     }
@@ -2574,8 +2575,8 @@ public class Survivor : CustomObject
         if (characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (CurrentCrafting.itemType == ItemManager.Items.BearTrap || CurrentCrafting.itemType == ItemManager.Items.ShrapnelTrap || CurrentCrafting.itemType == ItemManager.Items.NoiseTrap || CurrentCrafting.itemType == ItemManager.Items.ChemicalTrap || CurrentCrafting.itemType == ItemManager.Items.ExplosiveTrap))
         {
             craftingSpeedCorrection = 1.3f;
-            animator.SetFloat("CraftingSpeed", craftingSpeed * craftingSpeedCorrection);
         }
+        animator.SetFloat("CraftingSpeed", craftingSpeed * craftingSpeedCorrection);
         curCraftingTime += Time.deltaTime * aiCool * craftingSpeed * craftingSpeedCorrection;
         progressBar.fillAmount = curCraftingTime / currentCrafting.craftingTime;
         if(curCraftingTime > currentCrafting.craftingTime)
@@ -2595,18 +2596,29 @@ public class Survivor : CustomObject
                 if(targetItem is BulletproofHelmet bH)
                 {
                     durabilityCount++;
-                    durabilitySum += bH.Durability;
+                    durabilitySum += bH.DurabilityPercent;
                 }
                 else if(targetItem is BulletproofVest bV)
                 {
                     durabilityCount++;
-                    durabilitySum += bV.Durability;
+                    durabilitySum += bV.DurabilityPercent;
                 }
                 ConsumptionItem(targetItem, etcNeeds.Value);
             }
 
             int amount = currentCrafting.outputAmount;
-            ItemManager.AddItems(currentCrafting.itemType, amount);
+            float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
+            CraftingQuality craftingQuality;
+            float pMasterPiece = (crafting - 40) * 1.25f;
+            float pExcellent = (crafting - 20) * 1.25f;
+            float pFine = crafting * 1.25f;
+            float pCommon = (crafting + 20) * 1.25f;
+            if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
+            else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
+            else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Fine;
+            else if (craftingQualityChance < pMasterPiece + pExcellent + pFine + pCommon) craftingQuality = CraftingQuality.Common;
+            else craftingQuality = CraftingQuality.Poor;
+            ItemManager.AddItems(currentCrafting.itemType, amount, craftingQuality);
             int isEquipable = -1;
             Item item = null;
             for (int i = 1; i <= amount; i++)
@@ -2616,12 +2628,12 @@ public class Survivor : CustomObject
                 else if(item is BulletproofHelmet bH)
                 {
                     isEquipable = 1;
-                    bH.Durability = durabilityCount == 0 ? 1 : durabilitySum / durabilityCount;
+                    bH.SetDurabilityPercent(durabilityCount == 0 ? 1 : durabilitySum / durabilityCount);
                 }
                 else if (item is BulletproofVest bV)
                 {
                     isEquipable = 2;
-                    bV.Durability = durabilityCount == 0 ? 1 : durabilitySum / durabilityCount;
+                    bV.SetDurabilityPercent(durabilityCount == 0 ? 1 : durabilitySum / durabilityCount);
                 }
 
                 AcqireItem(item);
@@ -3403,9 +3415,8 @@ public class Survivor : CustomObject
             InjurySite specificDamagePart = GetSpecificDamagePart(damagePart, damageType);
             if (specificDamagePart == InjurySite.Head)
             {
-                if (currentHelmet != null && UnityEngine.Random.Range(0f, 1f) < currentHelmet.Durability + 0.3f)
+                if (currentHelmet != null && UnityEngine.Random.Range(0f, 1f) < currentHelmet.DurabilityPercent + 0.3f)
                 {
-                    damage -= currentHelmet.Armor;
                     if (UnityEngine.Random.Range(0, 1f) < 0.5f)
                     {
                         PlaySFX("ricochet,5", this);
@@ -3414,14 +3425,15 @@ public class Survivor : CustomObject
                     {
                         PlaySFX("ricochet2,5", this);
                     }
-                    if(damage > currentHelmet.Armor)
+                    if(damage > currentHelmet.Defense)
                     {
-                        currentHelmet.Durability -= damage / 1000;
+                        currentHelmet.CurDurability -= damage - currentHelmet.Defense + damage / 10;
                     }
-                    else if (damage > currentHelmet.Armor * 0.8f)
+                    else
                     {
-                        currentHelmet.Durability -= damage / 2000;
+                        currentHelmet.CurDurability -= damage / 10;
                     }
+                    damage -= currentHelmet.Defense;
                     InGameUIManager.UpdateSelectedObjectInventory(this);
                 }
             }
@@ -3620,7 +3632,7 @@ public class Survivor : CustomObject
             }
         }
 
-        if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Armor;
+        if (damagePart == InjurySiteMajor.Torso && currentVest != null) damage -= currentVest.Defense;
 
         PlaySFX(hitSound, this);
         ApplyDamage(attacker, damage, weapon, damagePart, damageType);
@@ -3665,17 +3677,17 @@ public class Survivor : CustomObject
         // 방탄 모자는 ApplyDamage에서 처리
         if (damagePart == InjurySiteMajor.Torso)
         {
-            if (currentVest != null && UnityEngine.Random.Range(0f, 1f) < currentVest.Durability + 0.3f)
+            if (currentVest != null && UnityEngine.Random.Range(0f, 1f) < currentVest.DurabilityPercent + 0.3f)
             {
-                damage -= currentVest.Armor;
-                if(damage > currentVest.Armor)
+                if(damage > currentVest.Defense)
                 {
-                    currentVest.Durability -= damage / 1000;
+                    currentVest.CurDurability -= damage - currentVest.Defense + damage / 10;
                 }
-                else if(damage > currentVest.Armor * 0.8f)
+                else
                 {
-                    currentVest.Durability -= damage / 2000;
+                    currentVest.CurDurability -= damage / 10;
                 }
+                damage -= currentVest.Defense;
                 InGameUIManager.UpdateSelectedObjectInventory(this);
             }
         }
@@ -4765,6 +4777,7 @@ public class Survivor : CustomObject
     int characteristicCorrection_Agility = 0;
     int characteristicCorrection_Fighting = 0;
     int characteristicCorrection_Shooting = 0;
+    int characteristicCorrection_Crafting = 0;
     int characteristicCorrection_Knowledge = 0;
     float characteristicCorrection_AimTime = 0;
     int characteristicCorrection_AimErrorRange = 0;
@@ -4780,11 +4793,13 @@ public class Survivor : CustomObject
     int correctedAgility = 0;
     int correctedFighting = 0;
     int correctedShooting = 0;
+    int correctedCrafting = 0;
     int correctedKnowledge = 0;
     public int CorrectedStrength => correctedStrength;
     public int CorrectedAgility => correctedAgility;
     public int CorrectedFighting => correctedFighting;
     public int CorrectedShooting => correctedShooting;
+    public int CorrectedCrafting => correctedCrafting;
     public int CorrectedKnowledge => correctedKnowledge;
 
     void ApplyCharacteristics()
@@ -4879,6 +4894,7 @@ public class Survivor : CustomObject
         correctedAgility = Mathf.Max(linkedSurvivorData.Agility + characteristicCorrection_Agility, 0);
         correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
         correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
+        correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
         correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
         aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
@@ -4912,7 +4928,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
-        craftingSpeed = Mathf.Max((1 + 0.01f * linkedSurvivorData.Crafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
+        craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
         wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
