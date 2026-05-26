@@ -55,12 +55,12 @@ public class Bullet : CustomObject
     }
 
     // Shrapnel Trap
-    public void Initiate(Survivor setter, Vector2 direction)
+    public void Initiate(Survivor setter, Vector2 direction, float damage)
     {
         launcher = setter;
         projectileSpeed = 20f;
         maxRange = 5f;
-        damage = 20f;
+        this.damage = damage;
         lastPosition = transform.position;
         this.direction = direction;
         direction.Normalize();

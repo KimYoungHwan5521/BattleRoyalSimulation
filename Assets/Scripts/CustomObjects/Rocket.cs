@@ -4,9 +4,15 @@ public class Rocket : Bullet
 {
     [SerializeField] float explosionRange = 3f;
 
+    public void SetExplosionRange(float explosionRange)
+    {
+        this.explosionRange = explosionRange;
+    }
+
     void Explosion()
     {
-        PoolManager.Spawn(ResourceEnum.Prefab.Explosion, transform.position);
+        GameObject explosion = PoolManager.Spawn(ResourceEnum.Prefab.Explosion, transform.position);
+        explosion.transform.localScale = new(explosionRange / 2f, explosionRange / 2f);
         var hits = Physics2D.OverlapCircleAll(transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {

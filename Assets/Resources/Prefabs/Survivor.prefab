@@ -1552,6 +1552,7 @@ MonoBehaviour:
     increaseComparedToPrevious_agility: 0
     increaseComparedToPrevious_fighting: 0
     increaseComparedToPrevious_shooting: 0
+    increaseComparedToPrevious_crafting: 0
     increaseComparedToPrevious_knowledge: 0
     injuries: []
     surgeryScheduled: 0
@@ -1611,6 +1612,7 @@ MonoBehaviour:
     totalSurgeryFee: 0
     totalGiveDamage: 0
     totalTakeDamage: 0
+    mostKillsInASingleMatch: 0
     wonBronzeLeague: 0
     wonSilverLeague: 0
     wonGoldLeague: 0
@@ -1674,6 +1676,7 @@ MonoBehaviour:
       m_LocalVariables: []
     amount: 0
     weight: 0
+    quality: 0
     needHand: 0
     attackDamage: 0
     attackRange: 0
@@ -1691,6 +1694,7 @@ MonoBehaviour:
       m_LocalVariables: []
     amount: 0
     weight: 0
+    quality: 0
   currentVest:
     itemType: 0
     itemName:
@@ -1704,6 +1708,7 @@ MonoBehaviour:
       m_LocalVariables: []
     amount: 0
     weight: 0
+    quality: 0
   inventory: []
   craftables: []
   trapPlace: {fileID: 0}

@@ -101,6 +101,15 @@ public class ProjectileGenerator : CustomObject
         Rocket rocket = prefab.GetComponent<Rocket>();
         Vector2 destination = GetDestination();
         rocket.Initiate(owner, weapon.ProjectileSpeed, weapon.AttackDamage, muzzleTF.position, destination, weapon.AttackRange);
+        float explosionRange = weapon.quality switch
+        { 
+            CraftingQuality.Masterpiece => 5f,
+            CraftingQuality.Excellent => 4f,
+            CraftingQuality.Common => 2.5f,
+            CraftingQuality.Poor => 2f,
+            _ => 3f
+        };
+        rocket.SetExplosionRange(explosionRange);
     }
 
     public void DrawBeam()

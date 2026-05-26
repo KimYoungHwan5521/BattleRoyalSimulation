@@ -133,9 +133,10 @@ MonoBehaviour:
       m_LocalVariables: []
     amount: 0
     weight: 0
+    quality: 0
   setter: {fileID: 0}
   ownerPlace: {fileID: 0}
-  itemType: 37
+  itemType: 49
   damage: 100
   damageType: 3
   isBuriedType: 1

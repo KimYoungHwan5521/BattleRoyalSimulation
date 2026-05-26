@@ -1451,6 +1451,11 @@ MonoBehaviour:
     m_Localized: Meisterwerk
     m_Metadata:
       m_Items: []
+  - m_Id: 128711725592145920
+    m_Localized: '{0} hat ein {1} der Meisterwerk-Stufe hergestellt!'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
   references:
     version: 2
     RefIds:
@@ -1503,3 +1508,4 @@ MonoBehaviour:
         - id: 115945406211878912
         - id: 116043573494345728
         - id: 125727723826507776
+        - id: 128711725592145920

@@ -8,74 +8,84 @@ public class ItemManager
 {
     public enum Items
     {
-        NotValid,
+        NotValid = 0,
+
         // Melee Weapons
-        Knife,
-        Dagger,
-        Bat,
-        LongSword,
-        Shovel,
+        Knife = 1,
+        Dagger = 2,
+        Bat = 3,
+        LongSword = 4,
+        Shovel = 5,
+
         // Ranged Weapons
-        Revolver,
-        Pistol,
-        AssaultRifle,
-        SubMachineGun,
-        ShotGun,
-        SniperRifle,
-        Bazooka,
-        LASER,
-        Bow,
-        AdvancedBow,
+        Revolver = 6,
+        Pistol = 7,
+        AssaultRifle = 8,
+        SubMachineGun = 9,
+        ShotGun = 10,
+        SniperRifle = 11,
+        Bazooka = 12,
+        LASER = 13,
+        Bow = 14,
+        AdvancedBow = 15,
+
         // Enchanted Weapons
-        Knife_Enchanted,
-        Dagger_Enchanted,
-        LongSword_Enchanted,
+        Knife_Enchanted = 16,
+        Dagger_Enchanted = 17,
+        LongSword_Enchanted = 18,
+
         // Bullets
-        Bullet_Revolver,
-        Bullet_Pistol,
-        Bullet_AssaultRifle,
-        Bullet_SubMachineGun,
-        Bullet_ShotGun,
-        Bullet_SniperRifle,
-        Rocket_Bazooka,
-        Arrow,
-        Arrow_Enchanted,
+        Bullet_Revolver = 19,
+        Bullet_Pistol = 20,
+        Bullet_AssaultRifle = 21,
+        Bullet_SubMachineGun = 22,
+        Bullet_ShotGun = 23,
+        Bullet_SniperRifle = 24,
+        Rocket_Bazooka = 25,
+        Arrow = 26,
+        Arrow_Enchanted = 27,
+
         // BulletproofHats
-        LowLevelBulletproofHelmet,
-        MiddleLevelBulletproofHelmet,
-        HighLevelBulletproofHelmet,
-        LegendaryBulletproofHelmet,
+        LowLevelBulletproofHelmet = 28,
+        MiddleLevelBulletproofHelmet = 29,
+        HighLevelBulletproofHelmet = 30,
+        LegendaryBulletproofHelmet = 31,
+
         // BulletproofVests
-        LowLevelBulletproofVest,
-        MiddleLevelBulletproofVest,
-        HighLevelBulletproofVest,
-        LegendaryBulletproofVest,
+        LowLevelBulletproofVest = 32,
+        MiddleLevelBulletproofVest = 33,
+        HighLevelBulletproofVest = 34,
+        LegendaryBulletproofVest = 35,
+
         // Consumables
-        BandageRoll,
-        HemostaticBandageRoll,
-        Poison,
-        Antidote,
-        Potion,
-        AdvancedPotion,
+        BandageRoll = 36,
+        HemostaticBandageRoll = 37,
+        Poison = 38,
+        Antidote = 39,
+        Potion = 40,
+        AdvancedPotion = 41,
+
         // Crafting Materials
-        Components,
-        AdvancedComponent,
-        Chemicals,
-        Gunpowder,
-        Salvages,
+        Components = 42,
+        AdvancedComponent = 43,
+        Chemicals = 44,
+        Gunpowder = 45,
+        Salvages = 46,
+
         // Traps
-        BearTrap,
-        BearTrap_Enchanted,
-        LandMine,
-        NoiseTrap,
-        ChemicalTrap,
-        ShrapnelTrap,
-        ExplosiveTrap,
+        BearTrap = 47,
+        BearTrap_Enchanted = 48,
+        LandMine = 49,
+        NoiseTrap = 50,
+        ChemicalTrap = 51,
+        ShrapnelTrap = 52,
+        ExplosiveTrap = 53,
+
         // ETC
-        WalkingAid,
-        TrapDetectionDevice,
-        BiometricRader,
-        EnergyBarrier,
+        WalkingAid = 54,
+        TrapDetectionDevice = 55,
+        BiometricRader = 56,
+        EnergyBarrier = 57,
     }
 
     public static Dictionary<Items, List<Item>> itemDictionary = new();
@@ -121,7 +131,7 @@ public class ItemManager
         craftables.Add(new Craftable(Items.Arrow, 7, 0, 0, 0, 1, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.Poison, 10, 0, 0, 2, 3, 0, 3, 1, 3.5f));
         craftables.Add(new Craftable(Items.Revolver, 15, 0, 2, 0, 4, 0, 1, 0, 7f));
-        craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 2, 1, 3.5f));
+        craftables.Add(new Craftable(Items.Antidote, 20, 0, 0, 2, 0, 0, 1, 1, 3.5f));
         craftables.Add(new Craftable(Items.Pistol, 25, 0, 2, 0, 4, 0, 1, 0, 7f));
         craftables.Add(new Craftable(Items.HemostaticBandageRoll, 30, 0, 0, 2, 0, 0, 1, 1, 3.5f, new KeyValuePair<Items, int>(Items.BandageRoll, 1)));
         craftables.Add(new Craftable(Items.AdvancedBow, 32, 0, 2, 0, 2, 0, 1, 0, 7f));
@@ -552,36 +562,116 @@ public class ItemManager
             // Helmets
             case Items.LowLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.7f, 20, 200));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 30,
+                        CraftingQuality.Excellent => 25,
+                        CraftingQuality.Common => 15,
+                        CraftingQuality.Poor => 10,
+                        _ => 20,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 0.7f, defense, defense * 10));
+                }
                 break;
             case Items.MiddleLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.2f, 40, 400));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 50,
+                        CraftingQuality.Excellent => 45,
+                        CraftingQuality.Common => 35,
+                        CraftingQuality.Poor => 30,
+                        _ => 40,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.2f, defense, defense * 10));
+                }
                 break;
             case Items.HighLevelBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.6f, 60, 600));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 100,
+                        CraftingQuality.Excellent => 80,
+                        CraftingQuality.Common => 55,
+                        CraftingQuality.Poor => 50,
+                        _ => 60,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1.6f, defense, defense * 10));
+                }
                 break;
             case Items.LegendaryBulletproofHelmet:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 200, 2000));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 300,
+                        CraftingQuality.Excellent => 250,
+                        CraftingQuality.Common => 150,
+                        CraftingQuality.Poor => 100,
+                        _ => 200,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, defense, defense * 10));
+                }
                 break;
             // Vests
             case Items.LowLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, 10, 100));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 20,
+                        CraftingQuality.Excellent => 15,
+                        CraftingQuality.Common => 7.5f,
+                        CraftingQuality.Poor => 5,
+                        _ => 10,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, defense, defense * 10));
+                }
                 break;
             case Items.MiddleLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, 30, 300));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 40,
+                        CraftingQuality.Excellent => 35,
+                        CraftingQuality.Common => 25,
+                        CraftingQuality.Poor => 20,
+                        _ => 30,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, defense, defense * 10));
+                }
                 break;
             case Items.HighLevelBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 10f, 50, 500));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 70,
+                        CraftingQuality.Excellent => 60,
+                        CraftingQuality.Common => 45,
+                        CraftingQuality.Poor => 40,
+                        _ => 50,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 10f, defense, defense * 10));
+                }
                 break;
             case Items.LegendaryBulletproofVest:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, 100, 1000));
+                {
+                    float defense = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 150,
+                        CraftingQuality.Excellent => 125,
+                        CraftingQuality.Common => 85,
+                        CraftingQuality.Poor => 70,
+                        _ => 100,
+                    };
+                    itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 36f, defense, defense * 100));
+                }
                 break;
             // Consumables
             case Items.BandageRoll:
@@ -632,23 +722,53 @@ public class ItemManager
             // Traps
             case Items.BearTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f));
+                {
+                    float damage = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 60,
+                        CraftingQuality.Excellent => 50,
+                        CraftingQuality.Common => 30,
+                        CraftingQuality.Poor => 20,
+                        _ => 40,
+                    };
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, damage));
+                }
                 break;
             case Items.BearTrap_Enchanted:
                 for (int i = start; i < end; i++)
                 {
-                    Buriable buriable = new(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f);
+                    Buriable buriable = new(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, 40);
                     buriable.Enchant();
                     itemDictionary[wantItem].Add(buriable);
                 }
                 break;
             case Items.LandMine:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f));
+                {
+                    float damage = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 140,
+                        CraftingQuality.Excellent => 120,
+                        CraftingQuality.Common => 80,
+                        CraftingQuality.Poor => 60,
+                        _ => 100,
+                    };
+                    itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3f, damage));
+                }
                 break;
             case Items.NoiseTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 2f));
+                {
+                    float noiseVolume = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 3600,
+                        CraftingQuality.Excellent => 2500,
+                        CraftingQuality.Common => 900,
+                        CraftingQuality.Poor => 400,
+                        _ => 1600,
+                    };
+                    itemDictionary[wantItem].Add(new NoiseTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 2f, noiseVolume));
+                }
                 break;
             case Items.ChemicalTrap:
                 for (int i = start; i < end; i++)
@@ -656,11 +776,39 @@ public class ItemManager
                 break;
             case Items.ShrapnelTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f));
+                    {
+                        float damage = quality switch
+                        {
+                            CraftingQuality.Masterpiece => 40,
+                            CraftingQuality.Excellent => 30,
+                            CraftingQuality.Common => 15,
+                            CraftingQuality.Poor => 10,
+                            _ => 20,
+                        };
+                        itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 7f, damage));
+                    }
                 break;
             case Items.ExplosiveTrap:
                 for (int i = start; i < end; i++)
-                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 5f));
+                {
+                    float damage = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 140,
+                        CraftingQuality.Excellent => 120,
+                        CraftingQuality.Common => 80,
+                        CraftingQuality.Poor => 60,
+                        _ => 100,
+                    };
+                    float explosionRange = quality switch
+                    {
+                        CraftingQuality.Masterpiece => 3f,
+                        CraftingQuality.Excellent => 2.5f,
+                        CraftingQuality.Common => 1.75f,
+                        CraftingQuality.Poor => 1.5f,
+                        _ => 2f,
+                    };
+                    itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 5f, damage, explosionRange));
+                }
                 break;
             // ETC
             case Items.WalkingAid:

@@ -1368,6 +1368,10 @@ MonoBehaviour:
     m_Key: Masterpiece
     m_Metadata:
       m_Items: []
+  - m_Id: 128711725592145920
+    m_Key: Masterpiece Crafted
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

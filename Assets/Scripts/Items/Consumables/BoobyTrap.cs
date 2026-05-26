@@ -25,14 +25,16 @@ public abstract class BoobyTrap : Consumable
 
 public class NoiseTrap : BoobyTrap
 {
-    public NoiseTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    float noiseVolume;
+    public NoiseTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float noiseVolume, int amount = 1) : base(itemType, itemName, weight, amount)
     {
+        this.noiseVolume = noiseVolume;
     }
 
     public override void Trigger(Survivor victim)
     {
         if (ownnerBox == null) return;
-        ownnerBox.PlaySFX("alarm_short,1500");
+        ownnerBox.PlaySFX($"alarm_short,{noiseVolume}");
     }
 }
 
@@ -59,8 +61,10 @@ public class ChemicalTrap : BoobyTrap
 
 public class ShrapnelTrap : BoobyTrap
 {
-    public ShrapnelTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    float damage;
+    public ShrapnelTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float damage, int amount = 1) : base(itemType, itemName, weight, amount)
     {
+        this.damage = damage;
     }
 
     public override void Trigger(Survivor victim)
@@ -71,23 +75,28 @@ public class ShrapnelTrap : BoobyTrap
         {
             GameObject prefab = PoolManager.Spawn(ResourceEnum.Prefab.Bullet, ownnerBox.transform.position);
             Bullet bullet = prefab.GetComponent<Bullet>();
-            bullet.Initiate(setter, Vector2.up.Rotate(i * 7.5f));
+            bullet.Initiate(setter, Vector2.up.Rotate(i * 7.5f), damage);
         }
     }
 }
 
 public class ExplosiveTrap : BoobyTrap
 {
-    public ExplosiveTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1) : base(itemType, itemName, weight, amount)
+    float damage;
+    float explosionRange;
+    public ExplosiveTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float damage, float explosionRange, int amount = 1) : base(itemType, itemName, weight, amount)
     {
+        this.damage = damage;
+        this.explosionRange = explosionRange;
     }
 
     public override void Trigger(Survivor victim)
     {
         if (ownnerBox == null) return;
-        PoolManager.Spawn(ResourceEnum.Prefab.Explosion, ownnerBox.transform.position);
-        victim.TakeDamage(this, 100);
-        var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, 2f, LayerMask.GetMask("Survivor"));
+        GameObject explosion = PoolManager.Spawn(ResourceEnum.Prefab.Explosion, ownnerBox.transform.position);
+        explosion.transform.localScale = new(explosionRange / 2f, explosionRange / 2f);
+        victim.TakeDamage(this, damage);
+        var hits = Physics2D.OverlapCircleAll(ownnerBox.transform.position, explosionRange, LayerMask.GetMask("Survivor"));
         foreach (var hit in hits)
         {
             if (!hit.isTrigger && hit.TryGetComponent(out Survivor splashedSurvivor))
@@ -95,7 +104,7 @@ public class ExplosiveTrap : BoobyTrap
                 if (splashedSurvivor == victim) continue;
                 Vector2 closestPoint = hit.ClosestPoint(ownnerBox.transform.position);
                 float distance = Mathf.Max(Vector2.Distance(ownnerBox.transform.position, closestPoint), 1);
-                splashedSurvivor.TakeDamage(this, 100 / (distance * distance));
+                splashedSurvivor.TakeDamage(this, damage / (distance * distance));
             }
         }
     }

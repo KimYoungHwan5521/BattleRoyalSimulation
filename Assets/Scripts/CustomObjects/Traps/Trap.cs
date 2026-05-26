@@ -29,6 +29,11 @@ public class Trap : CustomObject
         isEnchanted = true;
     }
 
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
+    }
+
     override protected void Start()
     {
         base.Start();

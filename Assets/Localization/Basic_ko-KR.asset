@@ -1517,6 +1517,11 @@ MonoBehaviour:
     m_Localized: "\uAC78\uC791"
     m_Metadata:
       m_Items: []
+  - m_Id: 128711725592145920
+    m_Localized: "{0}\uC774/\uAC00 \uAC78\uC791 \uB4F1\uAE09 {1}\uC744/\uB97C \uC81C\uC791\uD588\uC2B5\uB2C8\uB2E4!"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
   references:
     version: 2
     RefIds:
@@ -1569,3 +1574,4 @@ MonoBehaviour:
         - id: 115945406211878912
         - id: 116043573494345728
         - id: 125727723826507776
+        - id: 128711725592145920

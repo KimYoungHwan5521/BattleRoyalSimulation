@@ -1421,6 +1421,11 @@ MonoBehaviour:
     m_Localized: "\u6770\u4F5C"
     m_Metadata:
       m_Items: []
+  - m_Id: 128711725592145920
+    m_Localized: "{0}\u5236\u4F5C\u51FA\u4E86\u6770\u4F5C\u7EA7\u7684{1}\uFF01"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359342
   references:
     version: 2
     RefIds:
@@ -1473,3 +1478,4 @@ MonoBehaviour:
         - id: 115945406211878912
         - id: 116043573494345728
         - id: 125727723826507776
+        - id: 128711725592145920

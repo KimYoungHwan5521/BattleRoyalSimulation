@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Survivor : CustomObject
 {
@@ -1867,17 +1868,62 @@ public class Survivor : CustomObject
 
     void GetItem(Item item)
     {
-        Item alreadyHave = inventory.Find(x => x.itemType == item.itemType);
-        if(alreadyHave != null)
+        bool alreadyHave = item.itemType switch
         {
-            alreadyHave.amount += item.amount;
+            ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet
+            or ItemManager.Items.LegendaryBulletproofHelmet or ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest
+            or ItemManager.Items.HighLevelBulletproofVest or ItemManager.Items.LegendaryBulletproofVest => false,
+            _ => true
+        };
+        Item sameItem = inventory.Find(x => x.itemType == item.itemType && x.quality == item.quality);
+        if(sameItem == null) alreadyHave = false;
+        if(alreadyHave)
+        {
+            sameItem.amount += item.amount;
         }
         else
         {
             inventory.Add(item);
-            if (item.itemType == ItemManager.Items.TrapDetectionDevice) trapDetectionDevice.SetActive(true);
-            else if (item.itemType == ItemManager.Items.BiometricRader) biometricRader.SetActive(true);
-            else if (item.itemType == ItemManager.Items.EnergyBarrier) energyBarrier.SetActive(true);
+            if (item.itemType == ItemManager.Items.TrapDetectionDevice)
+            {
+                trapDetectionDevice.SetActive(true);
+                float detectionRange = item.quality switch
+                {
+                    CraftingQuality.Masterpiece => 2.5f,
+                    CraftingQuality.Excellent => 2f,
+                    CraftingQuality.Common => 1.25f,
+                    CraftingQuality.Poor => 1f,
+                    _ => 1.5f
+                };
+                trapDetectionDevice.GetComponent<CircleCollider2D>().radius = detectionRange;
+            }
+            else if (item.itemType == ItemManager.Items.BiometricRader)
+            {
+                biometricRader.SetActive(true);
+                float detectionRange = item.quality switch
+                {
+                    CraftingQuality.Masterpiece => 20f,
+                    CraftingQuality.Excellent => 17.5f,
+                    CraftingQuality.Common => 12.5f,
+                    CraftingQuality.Poor => 10f,
+                    _ => 15f
+                };
+                biometricRader.GetComponent<CircleCollider2D>().radius = detectionRange;
+                biometricRader.GetComponent<SpriteRenderer>().transform.localScale = new(detectionRange * 2, detectionRange * 2);
+            }
+            else if (item.itemType == ItemManager.Items.EnergyBarrier)
+            {
+                float obstructionRate = item.quality switch
+                {
+                    CraftingQuality.Masterpiece => 0.7f,
+                    CraftingQuality.Excellent => 0.6f,
+                    CraftingQuality.Common => 0.4f,
+                    CraftingQuality.Poor => 0.3f,
+                    _ => 0.5f
+                };
+                energyBarrier.SetActive(true);
+                energyBarrier.GetComponent<Obstacle>().SetObstructionRate(obstructionRate);
+            }
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -1962,7 +2008,7 @@ public class Survivor : CustomObject
                     // 둘 다 총알이 있는 경우
                     if (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0)
                     {
-                        return GetRangedWeaponTier(newWeaponAsRangedWeapon.itemType) > GetRangedWeaponTier(CurrentWeaponAsRangedWeapon.itemType);
+                        return GetRangedWeaponTier(newWeaponAsRangedWeapon.itemType, newWeaponAsRangedWeapon.quality) > GetRangedWeaponTier(CurrentWeaponAsRangedWeapon.itemType, CurrentWeaponAsRangedWeapon.quality);
                     }
                     else return true;
                 }
@@ -1972,7 +2018,7 @@ public class Survivor : CustomObject
                     else
                     {
                         // 둘 다 총알이 없는 경우
-                        return GetRangedWeaponTier(newWeaponAsRangedWeapon.itemType) > GetRangedWeaponTier(CurrentWeaponAsRangedWeapon.itemType);
+                        return GetRangedWeaponTier(newWeaponAsRangedWeapon.itemType, newWeaponAsRangedWeapon.quality) > GetRangedWeaponTier(CurrentWeaponAsRangedWeapon.itemType, CurrentWeaponAsRangedWeapon.quality);
                     }
                 }
             }
@@ -1989,9 +2035,9 @@ public class Survivor : CustomObject
         };
     }
 
-    int GetRangedWeaponTier(ItemManager.Items wantWeapon)
+    int GetRangedWeaponTier(ItemManager.Items wantWeapon, CraftingQuality quality)
     {
-        return wantWeapon switch
+        int value = wantWeapon switch
         {
             ItemManager.Items.Pistol or ItemManager.Items.Revolver or ItemManager.Items.AdvancedBow => 1,
             ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun => 2,
@@ -2000,13 +2046,22 @@ public class Survivor : CustomObject
             ItemManager.Items.LASER => 5,
             _ => 0
         };
+        value += quality switch
+        { 
+            CraftingQuality.Masterpiece => 2,
+            CraftingQuality.Excellent => 1,
+            CraftingQuality.Common => -1,
+            CraftingQuality.Poor => -2,
+            _ => 0
+        };
+        return value;
     }
 
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
     {
         if (!IsValid(currentHelmet)) return true;
         if (newBulletproofHelmet.Defense > currentHelmet.Defense) return true;
-        else if (newBulletproofHelmet.Defense == currentHelmet.Defense && newBulletproofHelmet.DurabilityPercent > currentHelmet.DurabilityPercent) return true;
+        else if (newBulletproofHelmet.Defense == currentHelmet.Defense && newBulletproofHelmet.CurDurability > currentHelmet.CurDurability) return true;
         else return false;
     }
 
@@ -2014,7 +2069,7 @@ public class Survivor : CustomObject
     {
         if (!IsValid(currentVest)) return true;
         if (newBulletproofVest.Defense > currentVest.Defense) return true;
-        else if (newBulletproofVest.Defense == currentVest.Defense && newBulletproofVest.DurabilityPercent > currentVest.DurabilityPercent) return true;
+        else if (newBulletproofVest.Defense == currentVest.Defense && newBulletproofVest.CurDurability > currentVest.CurDurability) return true;
         else return false;
     }
 
@@ -2425,7 +2480,7 @@ public class Survivor : CustomObject
                             }
                             if (needCompare)
                             {
-                                gunNeeds = GetRangedWeaponTier(craftables[^i].itemType) > GetRangedWeaponTier(currentWeapon.itemType);
+                                gunNeeds = GetRangedWeaponTier(craftables[^i].itemType, CraftingQuality.NotCrafted) > GetRangedWeaponTier(currentWeapon.itemType, CraftingQuality.NotCrafted);
                             }
                         }
                     }
@@ -2607,17 +2662,38 @@ public class Survivor : CustomObject
             }
 
             int amount = currentCrafting.outputAmount;
-            float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
-            CraftingQuality craftingQuality;
-            float pMasterPiece = (crafting - 40) * 1.25f;
-            float pExcellent = (crafting - 20) * 1.25f;
-            float pFine = crafting * 1.25f;
-            float pCommon = (crafting + 20) * 1.25f;
-            if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
-            else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
-            else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Fine;
-            else if (craftingQualityChance < pMasterPiece + pExcellent + pFine + pCommon) craftingQuality = CraftingQuality.Common;
-            else craftingQuality = CraftingQuality.Poor;
+            CraftingQuality craftingQuality = CraftingQuality.NotCrafted;
+            bool useQuality = currentCrafting.itemType switch
+            {
+                ItemManager.Items.Pistol or ItemManager.Items.Revolver or ItemManager.Items.ShotGun or ItemManager.Items.SubMachineGun or ItemManager.Items.AssaultRifle
+                or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER or ItemManager.Items.Bow or ItemManager.Items.AdvancedBow
+                or ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet or ItemManager.Items.LegendaryBulletproofHelmet
+                or ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest or ItemManager.Items.LegendaryBulletproofVest
+                or ItemManager.Items.Potion or ItemManager.Items.AdvancedPotion or ItemManager.Items.BearTrap or ItemManager.Items.LandMine or ItemManager.Items.NoiseTrap
+                or ItemManager.Items.ShrapnelTrap or ItemManager.Items.ExplosiveTrap or ItemManager.Items.TrapDetectionDevice or ItemManager.Items.BiometricRader
+                or ItemManager.Items.EnergyBarrier => true,
+                _ => false
+            };
+            if(useQuality)
+            {
+                float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
+                float pMasterPiece = (crafting - 40) * 1.25f;
+                float pExcellent = (crafting - 20) * 1.25f;
+                float pFine = crafting * 1.25f;
+                float pCommon = (crafting + 20) * 1.25f;
+                if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
+                else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
+                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Fine;
+                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine + pCommon) craftingQuality = CraftingQuality.Common;
+                else craftingQuality = CraftingQuality.Poor;
+            }
+            if(craftingQuality == CraftingQuality.Masterpiece)
+            {
+                InGameUIManager.AddLog(new LocalizedString("Basic", "Masterpiece Crafted") 
+                { 
+                    Arguments = { linkedSurvivorData.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Item", currentCrafting.itemType.ToString()) } 
+                }.GetLocalizedString());
+            }
             ItemManager.AddItems(currentCrafting.itemType, amount, craftingQuality);
             int isEquipable = -1;
             Item item = null;
@@ -2679,7 +2755,9 @@ public class Survivor : CustomObject
             {
                 ConsumptionItem(buriable, 1);
                 ItemManager.AddItems(ItemManager.Items.BearTrap_Enchanted, 1);
-                GetItem(ItemManager.itemDictionary[ItemManager.Items.BearTrap_Enchanted][^1]);
+                Item item = ItemManager.itemDictionary[ItemManager.Items.BearTrap_Enchanted][^1];
+                ((Buriable)item).SetDamage(buriable.Damage);
+                GetItem(item);
             }
             else
             {
@@ -2761,7 +2839,7 @@ public class Survivor : CustomObject
                     settedTrap.GetComponent<Animator>().SetTrigger("Reset");
                     if (curBurying.IsEnchanted) settedTrap.Enchant();
                     settedTrap.setter = this;
-                    settedTrap.linkedItem = new Buriable(curBurying.itemType, curBurying.itemName, 10);
+                    settedTrap.linkedItem = new Buriable(curBurying.itemType, curBurying.itemName, 10, curBurying.Damage);
                     trapPlace.SetTrap(settedTrap);
                     ConsumptionItem(Inventory.Find(x => x.itemType == curBurying.itemType), 1);
                     curBurying = null;
@@ -3332,7 +3410,7 @@ public class Survivor : CustomObject
         float maxDamage = specificDamagePart switch
         {
             InjurySite.RightArm or InjurySite.LeftArm or InjurySite.RightLeg or InjurySite.LeftLeg => Mathf.Min(damage, 80),
-            InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Max(damage, 50),
+            InjurySite.RightKnee or InjurySite.LeftKnee => Mathf.Min(damage, 50),
             InjurySite.RightHand or InjurySite.LeftHand or InjurySite.RightFoot or InjurySite.LeftFoot => Mathf.Min(damage, 30),
             InjurySite.RightThumb or InjurySite.LeftThumb or InjurySite.RightIndexFinger or InjurySite.LeftIndexFinger or InjurySite.RightMiddleFinger or InjurySite.LeftMiddleFinger
             or InjurySite.RightRingFinger or InjurySite.LeftRingFinger or InjurySite.RightLittleFinger or InjurySite.LeftLittleFinger or InjurySite.RightBigToe or InjurySite.LeftBigToe
@@ -5017,10 +5095,26 @@ public class Survivor : CustomObject
                 poisoned = false;
                 break;
             case ItemManager.Items.Potion:
-                curHP = Mathf.Min(curHP + 50, maxHP);
+                float recoveryRate = curDrinking.quality switch
+                {
+                    CraftingQuality.Masterpiece => 70,
+                    CraftingQuality.Excellent => 60,
+                    CraftingQuality.Common => 40,
+                    CraftingQuality.Poor => 30,
+                    _ => 50
+                };
+                curHP = Mathf.Min(curHP + recoveryRate, maxHP);
                 break;
             case ItemManager.Items.AdvancedPotion:
-                curHP = Mathf.Min(curHP + 100, maxHP);
+                recoveryRate = curDrinking.quality switch
+                {
+                    CraftingQuality.Masterpiece => 150,
+                    CraftingQuality.Excellent => 125,
+                    CraftingQuality.Common => 85,
+                    CraftingQuality.Poor => 70,
+                    _ => 100
+                };
+                curHP = Mathf.Min(curHP + recoveryRate, maxHP);
                 break;
             default:
                 Debug.LogWarning($"Try to drink wrong item : {curDrinking.itemType}.");
