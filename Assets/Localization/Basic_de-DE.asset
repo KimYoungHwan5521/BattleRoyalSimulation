@@ -1452,10 +1452,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
-    m_Localized: '{0} hat ein {1} der Meisterwerk-Stufe hergestellt!'
+    m_Localized: '{0} hat ein {1} der <color=#F09310>Meisterwerk</color>-Stufe hergestellt!'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 129131194323890176
+    m_Localized: Erkennungsreichweite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129131196488151040
+    m_Localized: Verteidigungsrate
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

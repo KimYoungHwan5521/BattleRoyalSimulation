@@ -8,7 +8,6 @@ using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class Survivor : CustomObject
 {
@@ -761,7 +760,7 @@ public class Survivor : CustomObject
                 cause = survivorWhoCausedBleeding.survivorName.GetLocalizedString();
                 survivorWhoCausedBleeding = null;
             }
-            else cause = new LocalizedString("Injury", "Severe Bleeding").GetLocalizedString();
+            else cause = new LocalizedString("Basic", "Severe Bleeding").GetLocalizedString();
             InGameUIManager.ShowKillLog(survivorName.GetLocalizedString(), cause);
             if(playerSurvivor) AchievementManager.UnlockAchievement("Severe Bleeding");
         }
@@ -2502,18 +2501,17 @@ public class Survivor : CustomObject
                     }
                     if (bestWeapon == null)
                     {
-                        float maxRange = 0;
+                        int bestWeaponValue = 0;
                         if (CurrentWeaponAsRangedWeapon != null)
                         {
                             bestWeapon = CurrentWeaponAsRangedWeapon;
-                            maxRange = CurrentWeaponAsRangedWeapon.AttackRange;
+                            bestWeaponValue = GetRangedWeaponTier(CurrentWeaponAsRangedWeapon.itemType, CurrentWeaponAsRangedWeapon.quality);
                         }
                         foreach (var item in inventory)
                         {
-                            if (item is RangedWeapon rangedWeapon && rangedWeapon.AttackRange > maxRange)
+                            if (item is RangedWeapon rangedWeapon && GetRangedWeaponTier(rangedWeapon.itemType, CraftingQuality.NotCrafted) > bestWeaponValue)
                             {
                                 bestWeapon = item;
-                                maxRange = rangedWeapon.AttackRange;
                             }
                         }
                     }
@@ -2663,18 +2661,7 @@ public class Survivor : CustomObject
 
             int amount = currentCrafting.outputAmount;
             CraftingQuality craftingQuality = CraftingQuality.NotCrafted;
-            bool useQuality = currentCrafting.itemType switch
-            {
-                ItemManager.Items.Pistol or ItemManager.Items.Revolver or ItemManager.Items.ShotGun or ItemManager.Items.SubMachineGun or ItemManager.Items.AssaultRifle
-                or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER or ItemManager.Items.Bow or ItemManager.Items.AdvancedBow
-                or ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet or ItemManager.Items.LegendaryBulletproofHelmet
-                or ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest or ItemManager.Items.LegendaryBulletproofVest
-                or ItemManager.Items.Potion or ItemManager.Items.AdvancedPotion or ItemManager.Items.BearTrap or ItemManager.Items.LandMine or ItemManager.Items.NoiseTrap
-                or ItemManager.Items.ShrapnelTrap or ItemManager.Items.ExplosiveTrap or ItemManager.Items.TrapDetectionDevice or ItemManager.Items.BiometricRader
-                or ItemManager.Items.EnergyBarrier => true,
-                _ => false
-            };
-            if(useQuality)
+            if(ItemManager.CheckUseQuality(currentCrafting.itemType))
             {
                 float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
                 float pMasterPiece = (crafting - 40) * 1.25f;
@@ -2689,10 +2676,11 @@ public class Survivor : CustomObject
             }
             if(craftingQuality == CraftingQuality.Masterpiece)
             {
-                InGameUIManager.AddLog(new LocalizedString("Basic", "Masterpiece Crafted") 
-                { 
-                    Arguments = { linkedSurvivorData.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Item", currentCrafting.itemType.ToString()) } 
-                }.GetLocalizedString());
+                var message = new LocalizedString("Basic", "Masterpiece Crafted");
+                string crafter = linkedSurvivorData.localizedSurvivorName.GetLocalizedString();
+                string crafted = currentCrafting.itemType.ToString();
+                message.Arguments = new[] { crafter, crafted };
+                InGameUIManager.AddLog(message.GetLocalizedString());
             }
             ItemManager.AddItems(currentCrafting.itemType, amount, craftingQuality);
             int isEquipable = -1;
@@ -5006,6 +4994,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
+        crafting = correctedCrafting;
         craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
         wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);

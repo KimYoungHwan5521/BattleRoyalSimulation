@@ -33,6 +33,8 @@ public class Option : MonoBehaviour
     [SerializeField] GameObject tabItems;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
+    [SerializeField] GameObject viewCraftQuality;
+    [SerializeField] TMP_Dropdown craftQualityDropdown;
     List<GameObject> itemBoxes = new();
 
     [SerializeField] Image charTabBtn;
@@ -107,7 +109,8 @@ public class Option : MonoBehaviour
             if (Enum.TryParse(itemName, out ResourceEnum.Sprite sprite))
             {
                 Sprite sprt = ResourceManager.Get(sprite);
-                itemImageBox.GetComponentsInChildren<Image>()[1].sprite = sprt;
+                itemImageBox.GetComponentsInChildren<Image>()[^1].sprite = sprt;
+                itemImageBox.GetComponentsInChildren<Image>()[0].sprite = GameManager.Instance.GetComponent<InGameUIManager>().craftingQualityOutlines[0];
                 itemImageBox.GetComponent<Help>().SetDescription((ItemManager.Items)i);
                 itemImageBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = sprt.rect.width / sprt.rect.height;
                 ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType == (ItemManager.Items)i);
@@ -118,6 +121,13 @@ public class Option : MonoBehaviour
         sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
         sortBy.options[2].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+
+        craftQualityDropdown.options[0].text = new LocalizedString("Basic", "Default").GetLocalizedString();
+        craftQualityDropdown.options[1].text = new LocalizedString("Basic", "Poor").GetLocalizedString();
+        craftQualityDropdown.options[2].text = new LocalizedString("Basic", "Common").GetLocalizedString();
+        craftQualityDropdown.options[3].text = new LocalizedString("Basic", "Fine").GetLocalizedString();
+        craftQualityDropdown.options[4].text = new LocalizedString("Basic", "Excellent").GetLocalizedString();
+        craftQualityDropdown.options[5].text = new LocalizedString("Basic", "Masterpiece").GetLocalizedString();
 
         // Characteristics
         for (int i = 0; i < CharacteristicManager.Characteristics.Count; i++)
@@ -148,12 +158,14 @@ public class Option : MonoBehaviour
         {
             tabCharacteristics.SetActive(false);
             tabItems.SetActive(true);
+            viewCraftQuality.SetActive(true);
             itemTabBtn.color = new Color(0.75f, 1, 1);
             charTabBtn.color = new Color(1, 1, 1);
         }
         else
         {
             tabItems.SetActive(false);
+            viewCraftQuality.SetActive(false);
             tabCharacteristics.SetActive(true);
             itemTabBtn.color = new Color(1, 1, 1);
             charTabBtn.color = new Color(0.75f, 1, 1);
@@ -187,6 +199,18 @@ public class Option : MonoBehaviour
             sorted[i].SetSiblingIndex(i);
         }
         characteristicAutoNewlineLG.ArrangeCharacteristics();
+    }
+
+    public void ChangeViewCraftableQuality()
+    {
+        foreach(var itemBox in itemBoxes)
+        {
+            if(ItemManager.CheckUseQuality(itemBox.GetComponent<ItemDataForSort>().itemType))
+            {
+                itemBox.GetComponentsInChildren<Image>()[0].sprite = GameManager.Instance.GetComponent<InGameUIManager>().craftingQualityOutlines[craftQualityDropdown.value];
+                itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType, (CraftingQuality)craftQualityDropdown.value);
+            }
+        }
     }
 
     public void Sort(int table)

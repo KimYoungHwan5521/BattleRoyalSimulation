@@ -65,7 +65,6 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] GameObject seletedImage;
 
     [SerializeField] CustomObject selectedObject;
-    public CustomObject SelectedObject;
     [SerializeField] GameObject selectedObjectInfo;
     [SerializeField] GameObject simulationTip;
 
@@ -115,17 +114,21 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] AutoNewLineLayoutGroup characteristics;
 
     [Header("Inventory")]
+    public Sprite[] craftingQualityOutlines;
     [SerializeField] GameObject inventoryTab;
     [SerializeField] GameObject selectedObjectsCurrentWeapon;
+    [SerializeField] Image selectedObjectsCurrentWeaponOutline;
     [SerializeField] Image selectedObjectsCurrentWeaponImage;
     TextMeshProUGUI selectedObjectsCurrentWeaponText;
 
     [SerializeField] GameObject selectedObjectsCurrentHelmet;
+    [SerializeField] Image selectedObjectsCurrentHelmetOutline;
     [SerializeField] Image selectedObjectsCurrentHelmetImage;
     TextMeshProUGUI selectedObjectsCurrentHelmetText;
     [SerializeField] GameObject selectedObjectsCurrentHelmetDurability;
 
     [SerializeField] GameObject selectedObjectsCurrentVest;
+    [SerializeField] Image selectedObjectsCurrentVestOutline;
     [SerializeField] Image selectedObjectsCurrentVestImage;
     TextMeshProUGUI selectedObjectsCurrentVestText;
     [SerializeField] GameObject selectedObjectsCurrentVestDurability;
@@ -886,8 +889,15 @@ public class InGameUIManager : MonoBehaviour
                 selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(weaponSpriteEnum);
                 selectedObjectsCurrentWeaponImage.GetComponent<AspectRatioFitter>().aspectRatio
                     = selectedObjectsCurrentWeaponImage.sprite.rect.width / selectedObjectsCurrentWeaponImage.sprite.rect.height;
+                selectedObjectsCurrentWeaponOutline.sprite = craftingQualityOutlines[(int)selectedSurvivor.CurrentWeapon.quality];
+                selectedObjectsCurrentWeapon.GetComponent<Help>().SetDescription(selectedSurvivor.CurrentWeapon.itemType, selectedSurvivor.CurrentWeapon.quality);
             }
-            else selectedObjectsCurrentWeaponImage.sprite = null;
+            else
+            {
+                selectedObjectsCurrentWeaponImage.sprite = null;
+                selectedObjectsCurrentWeaponOutline.sprite = craftingQualityOutlines[0];
+                selectedObjectsCurrentWeapon.GetComponent<Help>().SetDescription("");
+            }
             if (selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon))
             {
                 if (selectedSurvivor.CurrentWeapon is RangedWeapon)
@@ -911,13 +921,31 @@ public class InGameUIManager : MonoBehaviour
             }
 
             if (selectedSurvivor.CurrentHelmet != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentHelmet.itemType}", out var helmetSpriteEnum))
+            {
                 selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(helmetSpriteEnum);
-            else selectedObjectsCurrentHelmetImage.sprite = null;
+                selectedObjectsCurrentHelmetOutline.sprite = craftingQualityOutlines[(int)selectedSurvivor.CurrentHelmet.quality];
+                selectedObjectsCurrentHelmet.GetComponent<Help>().SetDescription(selectedSurvivor.CurrentHelmet.itemType, selectedSurvivor.CurrentHelmet.quality);
+            }
+            else
+            {
+                selectedObjectsCurrentHelmetImage.sprite = null;
+                selectedObjectsCurrentHelmetOutline.sprite = craftingQualityOutlines[0];
+                selectedObjectsCurrentHelmet.GetComponent<Help>().SetDescription("");
+            }
             selectedObjectsCurrentHelmetText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentHelmet) ? selectedSurvivor.CurrentHelmet.itemName.GetLocalizedString() : new LocalizedString("Basic", "None").GetLocalizedString();
 
             if (selectedSurvivor.CurrentVest != null && Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivor.CurrentVest.itemType}", out var vestSpriteEnum))
+            {
                 selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(vestSpriteEnum);
-            else selectedObjectsCurrentVestImage.sprite = null;
+                selectedObjectsCurrentVestOutline.sprite = craftingQualityOutlines[(int)selectedSurvivor.CurrentVest.quality];
+                selectedObjectsCurrentVest.GetComponent<Help>().SetDescription(selectedSurvivor.CurrentVest.itemType, selectedSurvivor.CurrentVest.quality);
+            }
+            else
+            {
+                selectedObjectsCurrentVestImage.sprite = null;
+                selectedObjectsCurrentVestOutline.sprite = craftingQualityOutlines[0];
+                selectedObjectsCurrentVest.GetComponent<Help>().SetDescription("");
+            } 
             selectedObjectsCurrentVestText.text = selectedSurvivor.IsValid(selectedSurvivor.CurrentVest) ? selectedSurvivor.CurrentVest.itemName.GetLocalizedString() : new LocalizedString("Basic", "None").GetLocalizedString();
 
             selectedObjectsCurrentWeapon.SetActive(true);
@@ -932,16 +960,18 @@ public class InGameUIManager : MonoBehaviour
                 {
                     if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedSurvivorsInventory[i].itemType}", out var spriteEnum))
                     {
-                        Image itemImage = selectedObjectsItems[i].GetComponentInChildren<Image>();
+                        Image itemImage = selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1];
                         itemImage.sprite = ResourceManager.Get(spriteEnum);
                         selectedObjectsItems[i].GetComponentInChildren<AspectRatioFitter>().aspectRatio
                             = itemImage.sprite.rect.width / itemImage.sprite.rect.height;
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[0].sprite = selectedSurvivorsInventory[i].quality == CraftingQuality.NotCrafted ? null : craftingQualityOutlines[(int)(selectedSurvivorsInventory[i].quality)];
                     }
                     else
                     {
-                        selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = null;
                     }
                     selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivorsInventory[i].itemName.GetLocalizedString()} x {selectedSurvivorsInventory[i].amount}";
+                    selectedObjectsItems[i].GetComponent<Help>().SetDescription(selectedSurvivorsInventory[i].itemType, selectedSurvivorsInventory[i].quality);
                     selectedObjectsItems[i].SetActive(true);
                 }
                 else

@@ -13,11 +13,12 @@ public class Item
     [SerializeField] protected float weight;
     public CraftingQuality quality;
 
-    public Item(ItemManager.Items itemType, LocalizedString itemName, float weight, int amount = 1)
+    public Item(ItemManager.Items itemType, LocalizedString itemName, float weight, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1)
     {
         this.itemType = itemType;
         this.itemName = itemName;
         this.weight = weight;
+        this.quality = quality;
         this.amount = amount;
     }
 

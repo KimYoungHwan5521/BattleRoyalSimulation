@@ -1452,10 +1452,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
-    m_Localized: "\xA1{0} fabric\xF3 un(a) {1} de calidad Obra maestra!"
+    m_Localized: "\xA1{0} fabric\xF3 un(a) {1} de calidad <color=#F09310>Obra maestra</color>!"
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 129131194323890176
+    m_Localized: "Rango de detecci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129131196488151040
+    m_Localized: Tasa de defensa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

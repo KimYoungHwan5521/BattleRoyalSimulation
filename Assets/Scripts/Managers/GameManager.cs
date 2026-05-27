@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "1.4.1";
+    public static string gameVersion = "1.5";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
 
     public void Test(int wantDate)
     {
-        calendar.LeagueReserveInfo[calendar.Today] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01);
+        calendar.LeagueReserveInfo[calendar.Today] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01);
         outGameUIManger.SetContestants();
     }
 

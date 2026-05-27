@@ -1372,6 +1372,14 @@ MonoBehaviour:
     m_Key: Masterpiece Crafted
     m_Metadata:
       m_Items: []
+  - m_Id: 129131194323890176
+    m_Key: Detection Range
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129131196488151040
+    m_Key: Defense Rate
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

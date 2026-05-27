@@ -1447,10 +1447,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
-    m_Localized: "{0} fabricou um(a) {1} de n\xEDvel Obra-prima!"
+    m_Localized: "{0} fabricou um(a) {1} de n\xEDvel <color=#F09310>Obra-prima</color>!"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359335
+  - m_Id: 129131194323890176
+    m_Localized: "Alcance de Detec\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129131196488151040
+    m_Localized: Taxa de Defesa
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

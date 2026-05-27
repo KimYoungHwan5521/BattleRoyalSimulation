@@ -1446,10 +1446,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
-    m_Localized: '{0} crafted a Masterpiece-grade {1}!'
+    m_Localized: '{0} crafted a <color=#F09310>Masterpiece</color>-grade {1}!'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 129131196488151040
+    m_Localized: Defense Rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 129131194323890176
+    m_Localized: Detection Range
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
