@@ -289,15 +289,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2169490042843136
-    m_Localized: Crafting Speed - 30%
+    m_Localized: Crafting - 10
     m_Metadata:
       m_Items: []
   - m_Id: 2169491749924864
-    m_Localized: Crafting Speed + 30%
+    m_Localized: Crafting + 10
     m_Metadata:
       m_Items: []
   - m_Id: 2169493243097088
-    m_Localized: Crafting Speed + 60%
+    m_Localized: Crafting + 20
     m_Metadata:
       m_Items: []
   - m_Id: 13383792842043392

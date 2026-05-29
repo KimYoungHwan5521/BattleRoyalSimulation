@@ -97,6 +97,23 @@ public class SurvivorData
             return Mathf.Max(result, 0);
         }
     }
+    public int Crafting
+    {
+        get
+        {
+            int result = _crafting;
+            if (HaveCharacteristic(CharacteristicType.ClumsyHand)) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Dexterous)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Engineer)) result += 20;
+            if (ClutchThePerformance) result += 10;
+            else if (ChockingUnderPressure) result -= 10;
+            return Mathf.Max(result, 0); 
+        }
+        set
+        {
+            _crafting = Math.Min(value, 100);
+        }
+    }
     public int Knowledge
     {
         get
@@ -106,8 +123,6 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Smart)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
             if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 5;
-            if (ClutchThePerformance) result += 10;
-            else if (ChockingUnderPressure) result -= 10;
 
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);
@@ -115,6 +130,7 @@ public class SurvivorData
     }
 
     public int StatTotal => Strength + Agility + Fighting + Shooting + Knowledge;
+
 
     public int Luck
     {
@@ -125,15 +141,6 @@ public class SurvivorData
             else if(HaveCharacteristic(CharacteristicType.Cursed)) result -= 25;
             else if(HaveCharacteristic(CharacteristicType.Blessed)) result += 50;
             return result;
-        }
-    }
-
-    public int Crafting
-    {
-        get { return _crafting; }
-        set
-        {
-            _crafting = Math.Min(value, 100);
         }
     }
 

@@ -552,14 +552,14 @@ public class InGameUIManager : MonoBehaviour
             fightingBar.fillAmount = selectedSurvivor.CorrectedFighting / 100f;
             shootingBar.fillAmount = selectedSurvivor.CorrectedShooting / 100f;
             craftingBar.fillAmount = selectedSurvivor.CorrectedCrafting / 100f;
-            knowledgeBar.fillAmount = selectedSurvivor.CorrectedKnowledge / 100f;
+            knowledgeBar.fillAmount = selectedSurvivor.LinkedSurvivorData._knowledge / 100f;
 
             strengthText.text = selectedSurvivor.CorrectedStrength.ToString();
             agilityText.text = selectedSurvivor.CorrectedAgility.ToString();
             fightingText.text = selectedSurvivor.CorrectedFighting.ToString();
             shootingText.text = selectedSurvivor.CorrectedShooting.ToString();
             craftingText.text = selectedSurvivor.CorrectedCrafting.ToString();
-            knowledgeText.text = selectedSurvivor.CorrectedKnowledge.ToString();
+            knowledgeText.text = selectedSurvivor.LinkedSurvivorData.Knowledge.ToString();
 
             characteristics.ArrangeCharacteristics(selectedSurvivor.LinkedSurvivorData);
 

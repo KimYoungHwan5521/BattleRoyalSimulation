@@ -138,12 +138,12 @@ public class SurvivorInfo : MonoBehaviour
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
 
-        strengthBar.fillAmount = survivorData.Strength / 100f;
-        agilityBar.fillAmount = survivorData.Agility / 100f;
-        fightingBar.fillAmount = survivorData.Fighting / 100f;
-        shootingBar.fillAmount = survivorData.Shooting / 100f;
-        craftingBar.fillAmount = survivorData.Crafting / 100f;
-        knowledgeBar.fillAmount = survivorData.Knowledge / 100f;
+        strengthBar.fillAmount = survivorData._strength / 100f;
+        agilityBar.fillAmount = survivorData._agility / 100f;
+        fightingBar.fillAmount = survivorData._fighting / 100f;
+        shootingBar.fillAmount = survivorData._shooting / 100f;
+        craftingBar.fillAmount = survivorData._crafting / 100f;
+        knowledgeBar.fillAmount = survivorData._knowledge / 100f;
 
         SetCharacteristic();
     }

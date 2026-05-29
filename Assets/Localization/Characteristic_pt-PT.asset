@@ -290,15 +290,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2169490042843136
-    m_Localized: "Velocidade de cria\xE7\xE3o - 30%"
+    m_Localized: "Fabrica\xE7\xE3o - 10"
     m_Metadata:
       m_Items: []
   - m_Id: 2169491749924864
-    m_Localized: "Velocidade de cria\xE7\xE3o + 30%"
+    m_Localized: "Fabrica\xE7\xE3o + 10"
     m_Metadata:
       m_Items: []
   - m_Id: 2169493243097088
-    m_Localized: "Velocidade de cria\xE7\xE3o + 60%"
+    m_Localized: "Fabrica\xE7\xE3o + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 13383792842043392

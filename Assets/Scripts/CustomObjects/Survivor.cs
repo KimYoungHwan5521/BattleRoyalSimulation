@@ -2676,6 +2676,10 @@ public class Survivor : CustomObject
             }
             if(craftingQuality == CraftingQuality.Masterpiece)
             {
+                if(playerSurvivor)
+                {
+                    AchievementManager.UnlockAchievement("Masterpiece");
+                }
                 var message = new LocalizedString("Basic", "Masterpiece Crafted");
                 string crafter = linkedSurvivorData.localizedSurvivorName.GetLocalizedString();
                 string crafted = currentCrafting.itemType.ToString();
@@ -4605,6 +4609,7 @@ public class Survivor : CustomObject
     bool isRightEyePermanentVisualImpairment;
     float injuryCorrection_LeftSightRange = 1;
     float injuryCorrection_RightSightRange = 1;
+    int injuryCorrection_Crafting = 0;
     float injuryCorrection_CraftingSpeed = 1;
     float injuryCorrection_WearingSpeed = 1;
 
@@ -4826,12 +4831,24 @@ public class Survivor : CustomObject
         injuryCorrection_MoveSpeed = penaltiedMoveSpeedByOrgan * penaltiedMoveSpeedByRightLeg * penaltiedMoveSpeedByLeftLeg;
 
         injuryCorrection_AttackDamage = Mathf.Max(penaltiedAttackDamageByLeftArm, penaltiedAttackDamageByRightArm);
-        if (RightHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByLeftArm;
-        else if (LeftHandDisabled) injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByRightArm;
-        else injuryCorrection_CraftingSpeed = penaltiedCraftingSpeedByRightArm * penaltiedCraftingSpeedByLeftArm;
-        if (RightHandDisabled) injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByLeftArm;
-        else if (LeftHandDisabled) injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByRightArm;
-        else injuryCorrection_WearingSpeed = penaltiedWearingSpeedByRightArm * penaltiedWearingSpeedByLeftArm;
+        if (RightHandDisabled)
+        {
+            injuryCorrection_Crafting -= (int)((1 - penaltiedCraftingSpeedByLeftArm) * 20) + 20;
+            injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByLeftArm;
+            injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByLeftArm;
+        }
+        else if (LeftHandDisabled)
+        {
+            injuryCorrection_Crafting -= (int)((1 - penaltiedCraftingSpeedByRightArm) * 20) + 20;
+            injuryCorrection_CraftingSpeed = 0.5f * penaltiedCraftingSpeedByRightArm;
+            injuryCorrection_WearingSpeed = 0.5f * penaltiedWearingSpeedByRightArm;
+        }
+        else
+        {
+            injuryCorrection_Crafting -= (int)((1 - penaltiedCraftingSpeedByRightArm * penaltiedCraftingSpeedByLeftArm) * 40);
+            injuryCorrection_CraftingSpeed = penaltiedCraftingSpeedByRightArm * penaltiedCraftingSpeedByLeftArm;
+            injuryCorrection_WearingSpeed = penaltiedWearingSpeedByRightArm * penaltiedWearingSpeedByLeftArm;
+        }
         ApplyCorrectionStats();
     }
     #endregion
@@ -4843,8 +4860,8 @@ public class Survivor : CustomObject
     int characteristicCorrection_Agility = 0;
     int characteristicCorrection_Fighting = 0;
     int characteristicCorrection_Shooting = 0;
+    //int characteristicCorrection_Crafting = 0;
     int characteristicCorrection_Crafting = 0;
-    int characteristicCorrection_Knowledge = 0;
     float characteristicCorrection_AimTime = 0;
     int characteristicCorrection_AimErrorRange = 0;
     float characteristicCorrection_ReloadSpeed = 1;
@@ -4852,7 +4869,6 @@ public class Survivor : CustomObject
     float characteristicCorrection_StopBleeding = 1;
     float characteristicCorrection_BloodRegeneration = 1;
     float characteristicCorrection_HpRegeneration = 1;
-    float characteristicCorrection_CraftingSpeed = 1;
     float characteristicCorrection_TrappingSpeed = 1;
 
     int correctedStrength = 0;
@@ -4860,13 +4876,11 @@ public class Survivor : CustomObject
     int correctedFighting = 0;
     int correctedShooting = 0;
     int correctedCrafting = 0;
-    int correctedKnowledge = 0;
     public int CorrectedStrength => correctedStrength;
     public int CorrectedAgility => correctedAgility;
     public int CorrectedFighting => correctedFighting;
     public int CorrectedShooting => correctedShooting;
     public int CorrectedCrafting => correctedCrafting;
-    public int CorrectedKnowledge => correctedKnowledge;
 
     void ApplyCharacteristics()
     {
@@ -4932,16 +4946,7 @@ public class Survivor : CustomObject
                     characteristicCorrection_Agility += condition;
                     characteristicCorrection_Fighting += condition;
                     characteristicCorrection_Shooting += condition;
-                    characteristicCorrection_Knowledge += condition;
-                    break;
-                case CharacteristicType.ClumsyHand:
-                    characteristicCorrection_CraftingSpeed *= 0.7f;
-                    break;
-                case CharacteristicType.Dexterous:
-                    characteristicCorrection_CraftingSpeed *= 1.3f;
-                    break;
-                case CharacteristicType.Engineer:
-                    characteristicCorrection_CraftingSpeed *= 1.6f;
+                    characteristicCorrection_Crafting += condition;
                     break;
                 case CharacteristicType.Assassin:
                     isAssassin = true;
@@ -4961,7 +4966,6 @@ public class Survivor : CustomObject
         correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
         correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
         correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
-        correctedKnowledge = Mathf.Max(linkedSurvivorData.Knowledge + characteristicCorrection_Knowledge, 0);
         aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
         reloadSpeed = characteristicCorrection_ReloadSpeed;
@@ -4994,8 +4998,8 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
-        crafting = correctedCrafting;
-        craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed * characteristicCorrection_CraftingSpeed, 0.1f);
+        crafting = Mathf.Max(correctedCrafting + injuryCorrection_Crafting, 0);
+        craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed, 0.1f);
         wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
         InGameUIManager.UpdateSelectedObjectStat(this);
