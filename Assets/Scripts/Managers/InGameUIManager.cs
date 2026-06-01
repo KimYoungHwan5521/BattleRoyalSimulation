@@ -965,6 +965,11 @@ public class InGameUIManager : MonoBehaviour
                         selectedObjectsItems[i].GetComponentInChildren<AspectRatioFitter>().aspectRatio
                             = itemImage.sprite.rect.width / itemImage.sprite.rect.height;
                         selectedObjectsItems[i].GetComponentsInChildren<Image>()[0].sprite = selectedSurvivorsInventory[i].quality == CraftingQuality.NotCrafted ? null : craftingQualityOutlines[(int)(selectedSurvivorsInventory[i].quality)];
+                        
+                        Image outline = selectedObjectsItems[i].GetComponentsInChildren<Image>()[0];
+                        Color color = outline.color;
+                        color.a = selectedSurvivorsInventory[i].quality == CraftingQuality.NotCrafted ? 0f : 1f;
+                        outline.color = color;
                     }
                     else
                     {
@@ -994,13 +999,18 @@ public class InGameUIManager : MonoBehaviour
                     if (selectedBox.items[i] == null) break;
                     if (Enum.TryParse<ResourceEnum.Sprite>($"{selectedBox.items[i].itemType}", out var spriteEnum))
                     {
-                        selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = ResourceManager.Get(spriteEnum);
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = ResourceManager.Get(spriteEnum);
                     }
                     else
                     {
-                        selectedObjectsItems[i].GetComponentInChildren<Image>().sprite = null;
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = null;
                     }
                     selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName.GetLocalizedString()} x {selectedBox.items[i].amount}";
+                    Image outline = selectedObjectsItems[i].GetComponentsInChildren<Image>()[0];
+
+                    Color color = outline.color;
+                    color.a = selectedBox.items[i].quality == CraftingQuality.NotCrafted ? 0f : 1f;
+                    outline.color = color;
                     selectedObjectsItems[i].SetActive(true);
                 }
                 else

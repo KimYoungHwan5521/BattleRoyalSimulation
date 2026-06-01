@@ -265,7 +265,8 @@ public class OutGameUIManager : MonoBehaviour
     {
         calendar = GetComponent<Calendar>();
         mySurvivorsData = new();
-        SetHireMarketFirst();
+        //SetHireMarketFirst();
+        hireClose.SetActive(false);
         Money = 1000;
 
         resultTexts = new TextMeshProUGUI[survivorTrainingResults.Length][];
@@ -328,7 +329,8 @@ public class OutGameUIManager : MonoBehaviour
     public void ResetData()
     {
         mySurvivorsData = new();
-        SetHireMarketFirst();
+        //SetHireMarketFirst();
+        ResetHireMarket();
         Money = 1000;
         survivorHireLimit = 10;
         fightTrainingLevel = 1;
@@ -441,7 +443,7 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 80f || totalRand > value * 120f) && check < 1000)
+            if ((totalRand < 120 || totalRand > 140) && check < 1000)
             {
                 i--;
                 check++;
@@ -452,11 +454,14 @@ public class OutGameUIManager : MonoBehaviour
 
             int characteristicCount;
             float randCharCount = UnityEngine.Random.Range(0, 1f);
-            if (randCharCount < 0.33f) characteristicCount = 0;
-            else if (randCharCount < 0.66f) characteristicCount = 1;
-            else if (randCharCount < 0.9f) characteristicCount = 2;
+            //if (randCharCount < 0.33f) characteristicCount = 0;
+            //else if (randCharCount < 0.66f) characteristicCount = 1;
+            //else if (randCharCount < 0.9f) characteristicCount = 2;
+            //else characteristicCount = 3;
+            if (randCharCount < 0.25f) characteristicCount = 1;
+            else if (randCharCount < 0.75f) characteristicCount = 2;
             else characteristicCount = 3;
-            
+
             survivorsInHireMarket[i].SetInfo(GetRandomName(),
                 randStrength,
                 randAgility,
@@ -465,7 +470,8 @@ public class OutGameUIManager : MonoBehaviour
                 randCrafting,
                 randKnowledge,
                 characteristicCount,
-                (int)(value * value * totalRand),
+                //(int)(value * value * totalRand),
+                0,
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
