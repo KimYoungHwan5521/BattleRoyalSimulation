@@ -66,6 +66,7 @@ public class OutGameUIManager : MonoBehaviour
     [Header("Survivors / Hire Market")]
     int mySurvivorsId = 0;
     public int MySurvivorsId => mySurvivorsId;
+    public Sprite[] rankSprites;
     [SerializeField] GameObject hireSurvivor;
     [SerializeField] GameObject hireClose;
     public SurvivorInfo[] survivorsInHireMarket;
@@ -329,6 +330,7 @@ public class OutGameUIManager : MonoBehaviour
     public void ResetData()
     {
         mySurvivorsData = new();
+        hireSurvivor.SetActive(true);
         //SetHireMarketFirst();
         ResetHireMarket();
         Money = 1000;

@@ -1531,6 +1531,11 @@ MonoBehaviour:
     m_Localized: "\uBC29\uC5B4\uC728"
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: "\uD2B9\uC131\uC758 \uB808\uC5B4\uB3C4\uB294 \uB4F1\uC7A5 \uBE48\uB3C4\uB9CC
+      \uB098\uD0C0\uB0BC \uBFD0 \uC131\uB2A5\uACFC\uB294 \uBB34\uAD00\uD569\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

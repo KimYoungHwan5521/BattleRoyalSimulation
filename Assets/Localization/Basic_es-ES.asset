@@ -1464,6 +1464,11 @@ MonoBehaviour:
     m_Localized: Tasa de defensa
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: "La rareza de una Caracter\xEDstica solo indica su frecuencia de
+      aparici\xF3n y no est\xE1 relacionada con su rendimiento."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

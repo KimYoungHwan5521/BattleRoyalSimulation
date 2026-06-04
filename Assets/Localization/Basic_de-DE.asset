@@ -1464,6 +1464,11 @@ MonoBehaviour:
     m_Localized: Verteidigungsrate
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: "Die Seltenheit einer Eigenschaft gibt lediglich ihre Auftretensh\xE4ufigkeit
+      an und hat keinen Einfluss auf ihre Leistung."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

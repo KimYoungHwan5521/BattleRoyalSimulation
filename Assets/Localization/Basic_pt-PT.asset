@@ -1459,6 +1459,11 @@ MonoBehaviour:
     m_Localized: Taxa de Defesa
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: "A raridade de uma Caracter\xEDstica indica apenas a sua frequ\xEAncia
+      de aparecimento e n\xE3o est\xE1 relacionada com o seu desempenho."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

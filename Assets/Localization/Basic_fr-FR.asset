@@ -1477,6 +1477,11 @@ MonoBehaviour:
     m_Localized: "Taux de d\xE9fense"
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: "La raret\xE9 d\u2019une caract\xE9ristique indique uniquement sa
+      fr\xE9quence d\u2019apparition et n\u2019est pas li\xE9e \xE0 sa puissance."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

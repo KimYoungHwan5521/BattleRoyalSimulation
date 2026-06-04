@@ -26,6 +26,7 @@ public class LoadingCanvas : MonoBehaviour
         new("Basic", "Theoretical max payout is 6,375,600x."),
         new("Basic", "If the injury is not completely lost, it will heal naturally."),
         new("Basic", "The effective range of most ranged weapons is half of their maximum range, and damage decreases beyond the effective range."),
+        new("Basic", "A Characteristic's rarity only indicates how often it appears and is not related to its effectiveness."),
     };
 
     private void Start()

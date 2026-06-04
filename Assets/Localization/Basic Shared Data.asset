@@ -1380,6 +1380,11 @@ MonoBehaviour:
     m_Key: Defense Rate
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Key: A Characteristic's rarity only indicates how often it appears and is not
+      related to its effectiveness.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

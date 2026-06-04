@@ -25,6 +25,12 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] Image shootingBar;
     [SerializeField] Image craftingBar;
     [SerializeField] Image knowledgeBar;
+    [SerializeField] Image strenthRank;
+    [SerializeField] Image agilityRank;
+    [SerializeField] Image fightingRank;
+    [SerializeField] Image shootingRank;
+    [SerializeField] Image craftingRank;
+    [SerializeField] Image knowledgeRank;
     [SerializeField] AutoNewLineLayoutGroup characteristicsLayout;
     [SerializeField] TextMeshProUGUI priceText;
 
@@ -129,13 +135,13 @@ public class SurvivorInfo : MonoBehaviour
         
         survivorNameText.StringReference = survivorName;
         if (scheduledTrainingText != null) scheduledTrainingText.StringReference = new("Basic", $"{survivorData.assignedTraining}");
+        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
         shootingText.text = $"{survivorData.Shooting}";
         craftingText.text = $"{survivorData.Crafting}";
         knowledgeText.text = $"{survivorData.Knowledge}";
-        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         priceText.text = $"$ {price}";
 
         strengthBar.fillAmount = survivorData._strength / 100f;
@@ -144,6 +150,13 @@ public class SurvivorInfo : MonoBehaviour
         shootingBar.fillAmount = survivorData._shooting / 100f;
         craftingBar.fillAmount = survivorData._crafting / 100f;
         knowledgeBar.fillAmount = survivorData._knowledge / 100f;
+
+        strenthRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Strength + 19) / 20, 6)];
+        agilityRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Agility + 19) / 20, 6)];
+        fightingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Fighting + 19) / 20, 6)];
+        shootingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Shooting + 19) / 20, 6)];
+        craftingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Crafting + 19) / 20, 6)];
+        knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Knowledge + 19) / 20, 6)];
 
         SetCharacteristic();
     }
@@ -178,6 +191,16 @@ public class SurvivorInfo : MonoBehaviour
         shootingBar.fillAmount = wantSurvivorData.Shooting / 100f;
         craftingBar.fillAmount = wantSurvivorData.Crafting / 100f;
         knowledgeBar.fillAmount = wantSurvivorData.Knowledge / 100f;
+
+        if(strenthRank != null)
+        {
+            strenthRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Strength + 19) / 20, 6)];
+            agilityRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Agility + 19) / 20, 6)];
+            fightingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Fighting + 19) / 20, 6)];
+            shootingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Shooting + 19) / 20, 6)];
+            craftingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Crafting + 19) / 20, 6)];
+            knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Knowledge + 19) / 20, 6)];
+        }
 
         if (showIncrease)
         {

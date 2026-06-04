@@ -1458,6 +1458,11 @@ MonoBehaviour:
     m_Localized: Detection Range
     m_Metadata:
       m_Items: []
+  - m_Id: 130937475338661888
+    m_Localized: A Characteristic's rarity only indicates how often it appears and
+      is not related to its effectiveness.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
