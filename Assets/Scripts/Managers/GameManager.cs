@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour
     BattleRoyaleManager battleRoyaleManager;
     public BattleRoyaleManager BattleRoyaleManager => battleRoyaleManager;
 
+    TrainingManager trainingManager;
+    public TrainingManager TrainingManager => trainingManager;
+
     OutGameUIManager outGameUIManger;
     public OutGameUIManager OutGameUIManager => outGameUIManger;
     Calendar calendar;
@@ -96,6 +99,8 @@ public class GameManager : MonoBehaviour
         yield return characteristicManager.Initiate();
         itemManager = new ItemManager();
         yield return itemManager.Initiate();
+        trainingManager = new TrainingManager();
+        yield return trainingManager.Initiate();
 
         title.title.SetActive(true);
         outGameUIManger = GetComponent<OutGameUIManager>();
@@ -128,7 +133,6 @@ public class GameManager : MonoBehaviour
     {
         OutGameUIManager.ResetData();
         calendar.ResetData();
-        outGameUIManger.ChecklistBattleRoyale();
         unlockManager.RelockAll();
     }
 
@@ -293,12 +297,6 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.Money,
             OutGameUIManager.MySurvivorsId,
             OutGameUIManager.SurvivorHireLimit,
-            OutGameUIManager.FightTrainingLevel,
-            OutGameUIManager.ShootingTrainingLevel,
-            OutGameUIManager.CraftingTrainingLevel,
-            OutGameUIManager.AgilityTrainingLevel,
-            OutGameUIManager.WeightTrainingLevel,
-            OutGameUIManager.StudyLevel,
             OutGameUIManager.contestantsData,
             calendar.Today,
             calendar.CurMaxYear,
@@ -352,12 +350,6 @@ public class GameManager : MonoBehaviour
         saveData.money,
         saveData.mySurvivorsId,
         saveData.survivorHireLimit,
-        saveData.fightTrainingLevel,
-        saveData.shootingTrainingLevel,
-        saveData.craftingTrainingLevel,
-        saveData.runningLevel,
-        saveData.weightTrainingLevel,
-        saveData.studyingLevel,
         saveData.contestantsData
             );
         outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
@@ -403,8 +395,6 @@ public class GameManager : MonoBehaviour
         title.title.SetActive(false);
         option.SetSaveButtonInteractable(true);
 
-        outGameUIManger.ChecklistTraining();
-        outGameUIManger.ChecklistBattleRoyale();
         OutGameUIManager.Alert("Alert:Load Successful");
     }
 

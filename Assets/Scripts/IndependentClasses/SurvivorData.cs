@@ -194,7 +194,6 @@ public class SurvivorData
     public bool haveQualifyToParticipateInWorldChampionship;
     
     // Training
-    public Training assignedTraining;
     public int increaseComparedToPrevious_strength = -1;
     public int increaseComparedToPrevious_agility = -1;
     public int increaseComparedToPrevious_fighting = -1;

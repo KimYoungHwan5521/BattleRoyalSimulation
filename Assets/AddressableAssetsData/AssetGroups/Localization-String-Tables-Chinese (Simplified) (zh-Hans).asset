@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6f3152f72131b74eba40eb5dfc22914
+    m_Address: Training_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bbf2869b5f5221f448fee8a5b4a01a8b
     m_Address: Injury_zh-Hans
     m_ReadOnly: 1

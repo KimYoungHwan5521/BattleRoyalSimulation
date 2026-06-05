@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Training Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Training
+  m_TableCollectionNameGuidString: 8a99bdd66717b404ab7dd54b0ec9f6c6
+  m_Entries:
+  - m_Id: 43328794624
+    m_Key: Strength Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50110984192
+    m_Key: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53936189440
+    m_Key: Ammo Crate Carry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57199357952
+    m_Key: Loaded Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60995203072
+    m_Key: Target Shooting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63788609536
+    m_Key: CQC Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68645613568
+    m_Key: CQB Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70012956672
+    m_Key: Machining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70994423808
+    m_Key: Mechanical Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72063971328
+    m_Key: Military Logistics Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74697994240
+    m_Key: Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3775009452032
+    m_Key: Judo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3776087388160
+    m_Key: Special Operations Tactics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3776892694528
+    m_Key: Boxing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3777664446464
+    m_Key: Wrestling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3778402643968
+    m_Key: MMA Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3779111481344
+    m_Key: Taekwondo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3779916787712
+    m_Key: Individual Combat Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3780885671936
+    m_Key: Powerlifting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3782630502400
+    m_Key: Combat Engineering Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3784845094912
+    m_Key: Ranger Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3786589925376
+    m_Key: Electronic Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3788468973568
+    m_Key: MMA Sparring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3790276718592
+    m_Key: Battle Royale Simulation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3792126406656
+    m_Key: Tactical Shooting Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3794441662464
+    m_Key: Engineering Society
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15539046510592
+    m_Key: Invite Local Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15540531294208
+    m_Key: Visit Hidden Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15541642784768
+    m_Key: Invite Strongman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15542511005696
+    m_Key: Invite MMA Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15546864693248
+    m_Key: Crafting Workshop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15549725208576
+    m_Key: Invite Melee League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15552266956800
+    m_Key: Invite Shooting League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15554330554368
+    m_Key: Invite Crafting League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15556213796864
+    m_Key: Invite Season Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15559221112832
+    m_Key: Invite World Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15563780321280
+    m_Key: Veteran Battle Royale Player Visit
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5302915013094146048
+  references:
+    version: 2
+    RefIds:
+    - rid: 5302915013094146048
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1780640100080

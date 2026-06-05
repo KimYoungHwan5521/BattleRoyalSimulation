@@ -134,7 +134,6 @@ public class SurvivorInfo : MonoBehaviour
         }
         
         survivorNameText.StringReference = survivorName;
-        if (scheduledTrainingText != null) scheduledTrainingText.StringReference = new("Basic", $"{survivorData.assignedTraining}");
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
@@ -171,12 +170,6 @@ public class SurvivorInfo : MonoBehaviour
         }
 
         survivorData = wantSurvivorData;
-        if (scheduledTrainingText != null)
-        {
-            if(survivorData.assignedTraining == Training.None) scheduledTrainingText.StringReference = new("Basic", $"None");
-            else scheduledTrainingText.StringReference = new("Basic", $"Training:{survivorData.assignedTraining}");
-
-        }
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";

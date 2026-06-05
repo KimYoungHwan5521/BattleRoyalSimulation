@@ -1,0 +1,171 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Training_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8a99bdd66717b404ab7dd54b0ec9f6c6, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 43328794624
+    m_Localized: Strength Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50110984192
+    m_Localized: Running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53936189440
+    m_Localized: Ammo Crate Carry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57199357952
+    m_Localized: Loaded Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60995203072
+    m_Localized: Target Shooting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 63788609536
+    m_Localized: CQC Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 68645613568
+    m_Localized: CQB Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70012956672
+    m_Localized: Machining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70994423808
+    m_Localized: Mechanical Design
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72063971328
+    m_Localized: Military Logistics Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74697994240
+    m_Localized: Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3775009452032
+    m_Localized: Judo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3779111481344
+    m_Localized: Taekwondo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3776087388160
+    m_Localized: Special Operations Tactics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3776892694528
+    m_Localized: Boxing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3777664446464
+    m_Localized: Wrestling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3778402643968
+    m_Localized: MMA Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3779916787712
+    m_Localized: Individual Combat Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3780885671936
+    m_Localized: Powerlifting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3782630502400
+    m_Localized: Combat Engineering Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3784845094912
+    m_Localized: Ranger Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3786589925376
+    m_Localized: Electronic Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3788468973568
+    m_Localized: MMA Sparring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3790276718592
+    m_Localized: Battle Royale Simulation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3792126406656
+    m_Localized: Tactical Shooting Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3794441662464
+    m_Localized: Engineering Society
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15539046510592
+    m_Localized: Invite Local Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15540531294208
+    m_Localized: Visit Hidden Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15541642784768
+    m_Localized: Invite Strongman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15542511005696
+    m_Localized: Invite MMA Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15546864693248
+    m_Localized: Crafting Workshop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15549725208576
+    m_Localized: Invite Melee League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15552266956800
+    m_Localized: Invite Shooting League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15554330554368
+    m_Localized: Invite Crafting League Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15556213796864
+    m_Localized: Invite Season Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15559221112832
+    m_Localized: Invite World Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15563780321280
+    m_Localized: Veteran Battle Royale Player Visit
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

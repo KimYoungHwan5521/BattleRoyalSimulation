@@ -51,7 +51,6 @@ public class SurvivorSaveData
     public int reservedDate;
     public bool haveQualifyToParticipateInSeasonChampionship;
     public bool haveQualifyToParticipateInWorldChampionship;
-    public Training assignedTraining;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
     public int increaseComparedToPrevious_fighting;
@@ -156,12 +155,6 @@ public class ETCData
     public int money;
     public int mySurvivorsId;
     public int survivorHireLimit;
-    public int fightTrainingLevel;
-    public int shootingTrainingLevel;
-    public int craftingTrainingLevel;
-    public int runningLevel;
-    public int weightTrainingLevel;
-    public int studyingLevel;
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];
     public List<SurvivorData> contestantsData = new List<SurvivorData>();
@@ -172,18 +165,12 @@ public class ETCData
     // unlock
     public List<UnlockStatusDictionary> unlockStatus = new();
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int craftingTrainingLevel, int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.survivorHireLimit = survivorHireLimit;
-        this.fightTrainingLevel = fightTrainingLevel;
-        this.shootingTrainingLevel = shootingTrainingLevel;
-        this.craftingTrainingLevel = craftingTrainingLevel;
-        this.runningLevel = runningLevel;
-        this.weightTrainingLevel = weightTrainingLevel;
-        this.studyingLevel = studyingLevel;
         this.contestantsData = contestantsData;
         this.today = today;
         this.curMaxYear = curMaxYear;

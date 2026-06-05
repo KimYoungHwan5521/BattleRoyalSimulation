@@ -395,7 +395,6 @@ public class GameResult : MonoBehaviour
         if(!goTitle)
         {
             GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
-            GameManager.Instance.OutGameUIManager.CheckTrainable(GameManager.Instance.BattleRoyaleManager.Survivors[0].LinkedSurvivorData);
             GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
             notification?.Invoke();
             // Auto save

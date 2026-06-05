@@ -131,7 +131,6 @@ public class Calendar : CustomObject
                 if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
 
-            if (value % 7 == 0) outGameUIManager.ChecklistBattleRoyale();
             if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
         }
     }
@@ -825,7 +824,6 @@ public class Calendar : CustomObject
         wantReserver.reservedDate = wantReserveDate;
         TurnPageCalendar(0);
         outGameUIManager.Alert("Alert:Battle royale reserved.");
-        outGameUIManager.ChecklistBattleRoyale();
     }
 
     void Participate()
@@ -935,7 +933,6 @@ public class Calendar : CustomObject
         leagueReserveInfo[wantReserveDate].reserver.isReserved = false;
         leagueReserveInfo[wantReserveDate].reserver = null;
         TurnPageCalendar(0);
-        outGameUIManager.ChecklistBattleRoyale();
     }
 
     public void CancelAllReservation()

@@ -12,8 +12,6 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
-public enum Training { None, Weight, Running, Fighting, Shooting, Crafting, Studying }
-
 public enum SurgeryType 
 { 
     ArtificialPartTransplant,
@@ -82,56 +80,7 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Training Room")]
     [SerializeField] GameObject trainingRoom;
-    [SerializeField] GameObject trainingAssignForm;
-    [SerializeField] GameObject scheduledTrainingByEachSurvivor;
-    [SerializeField] GameObject[] scheduledTrainings;
-    [SerializeField] TextMeshProUGUI weightTrainingNameText;
-    [SerializeField] TextMeshProUGUI runningNameText;
-    [SerializeField] TextMeshProUGUI fightTrainingNameText;
-    [SerializeField] TextMeshProUGUI shootingTraningNameText;
-    [SerializeField] TextMeshProUGUI craftingTraningNameText;
-    [SerializeField] TextMeshProUGUI studyingNameText;
-    [SerializeField] TextMeshProUGUI weightTrainingExplain;
-    [SerializeField] TextMeshProUGUI runningExplain;
-    [SerializeField] TextMeshProUGUI fightingTrainingExplain;
-    [SerializeField] TextMeshProUGUI shootingTrainingExplain;
-    [SerializeField] TextMeshProUGUI craftingTrainingExplain;
-    [SerializeField] TextMeshProUGUI studyExplain;
-    [SerializeField] int fightTrainingLevel = 1;
-    [SerializeField] int shootingTrainingLevel = 1;
-    [SerializeField] int craftingTrainingLevel = 1;
-    [SerializeField] int runningLevel = 1;
-    [SerializeField] int weightTrainingLevel = 1;
-    [SerializeField] int studyingLevel = 1;
-
-    public int FightTrainingLevel => fightTrainingLevel;
-    public int ShootingTrainingLevel => shootingTrainingLevel;
-    public int CraftingTrainingLevel => craftingTrainingLevel;
-    public int AgilityTrainingLevel => runningLevel;
-    public int WeightTrainingLevel => weightTrainingLevel;
-    public int StudyLevel => studyingLevel;
-    readonly int[] facilityUpgradeCost = { 5000, 12000, 30000 };
-    [SerializeField] GameObject fightTrainingUpgradeButtion;
-    [SerializeField] GameObject shootingTrainingUpgradeButtion;
-    [SerializeField] GameObject craftingTrainingUpgradeButtion;
-    [SerializeField] GameObject runningUpgradeButtion;
-    [SerializeField] GameObject weightTrainingUpgradeButtion;
-    [SerializeField] GameObject studyingUpgradeButtion;
-    [SerializeField] ScrollRect[] bookedTodayScrollRects;
-    [SerializeField] TextMeshProUGUI weightTrainingBookers;
-    [SerializeField] TextMeshProUGUI runningBookers;
-    [SerializeField] TextMeshProUGUI fightTrainingBookers;
-    [SerializeField] TextMeshProUGUI shootingTrainingBookers;
-    [SerializeField] TextMeshProUGUI craftingTrainingBookers;
-    [SerializeField] TextMeshProUGUI studyingBookers;
-
-    [SerializeField] TextMeshProUGUI assignTrainingNameText;
-    [SerializeField] Transform survivorsAssignedThis;
-    [SerializeField] Transform survivorsWithoutSchedule; 
-    [SerializeField] Transform survivorsWithOtherSchedule;
-    List<SurvivorSchedule> survivorSchedules = new();
-    bool autoAssign = true;
-    [SerializeField] GameObject autoAssignCheckBox;
+    [SerializeField] TrainingCard[] trainingCards;
 
     [Header("Operating Room")]
     [SerializeField] GameObject operatingRoom;
@@ -333,71 +282,15 @@ public class OutGameUIManager : MonoBehaviour
         hireSurvivor.SetActive(true);
         //SetHireMarketFirst();
         ResetHireMarket();
+        ResetTrainingRoom();
         Money = 1000;
         survivorHireLimit = 10;
-        fightTrainingLevel = 1;
-        shootingTrainingLevel = 1;
-        craftingTrainingLevel = 1;
-        runningLevel = 1;
-        weightTrainingLevel = 1;
-        studyingLevel = 1;
         
         tutorial = true;
     }
 
     void RelocalizeTrainingRoom()
     {
-        var trainingType = new LocalizedString("Basic", "Training:Weight");
-        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments 
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
-        trainingType = new LocalizedString("Basic", "Training:Running");
-        runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
-        trainingType = new LocalizedString("Basic", "Training:Fighting");
-        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
-        trainingType = new LocalizedString("Basic", "Training:Shooting");
-        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
-        trainingType = new LocalizedString("Basic", "Training:Crafting");
-        craftingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = craftingTrainingLevel } };
-        trainingType = new LocalizedString("Basic", "Training:Studying");
-        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
-
-        weightTrainingUpgradeButtion.SetActive(weightTrainingLevel < facilityUpgradeCost.Length + 1);
-        runningUpgradeButtion.SetActive(runningLevel < facilityUpgradeCost.Length + 1);
-        fightTrainingUpgradeButtion.SetActive(fightTrainingLevel < facilityUpgradeCost.Length + 1);
-        shootingTrainingUpgradeButtion.SetActive(shootingTrainingLevel < facilityUpgradeCost.Length + 1);
-        craftingTrainingUpgradeButtion.SetActive(craftingTrainingLevel < facilityUpgradeCost.Length + 1);
-        studyingUpgradeButtion.SetActive(studyingLevel < facilityUpgradeCost.Length + 1);
-        if (weightTrainingLevel < facilityUpgradeCost.Length + 1) weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
-        if (runningLevel < facilityUpgradeCost.Length + 1) runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
-        if (fightTrainingLevel < facilityUpgradeCost.Length + 1) fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
-        if (shootingTrainingLevel < facilityUpgradeCost.Length + 1) shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
-        if (craftingTrainingLevel < facilityUpgradeCost.Length + 1) craftingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[craftingTrainingLevel - 1] } };
-        if (studyingLevel < facilityUpgradeCost.Length + 1) studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
-
-        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        craftingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        craftingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-        studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-        weightTrainingExplain.text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()}+";
-        runningExplain.text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()}+";
-        fightingTrainingExplain.text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()}+";
-        shootingTrainingExplain.text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()}+";
-        craftingTrainingExplain.text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()}+";
-        studyExplain.text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()}+";
     }
 
     private void Update()
@@ -434,7 +327,6 @@ public class OutGameUIManager : MonoBehaviour
 
     public void ResetHireMarket()
     {
-        float value = (fightTrainingLevel + shootingTrainingLevel + craftingTrainingLevel + runningLevel + weightTrainingLevel + studyingLevel) / 6f;
         int check = 0;
         for (int i = 0; i < 3; i++)
         {
@@ -512,7 +404,6 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     Money -= survivorsInHireMarket[candidate].survivorData.price;
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
-                    ChecklistTraining();
                     mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
                     //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
@@ -585,7 +476,6 @@ public class OutGameUIManager : MonoBehaviour
             OpenConfirmWindow("Confirm:Release", () =>
                 {
                     mySurvivorsData.Remove(wantDismiss);
-                    ChecklistTraining();
                     ResetSurvivorsDropdown();
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
                     Alert("Alert:Survivor has been released.");
@@ -608,510 +498,25 @@ public class OutGameUIManager : MonoBehaviour
     #region Training
     public void OpenTrainingRoom()
     {
-        if(calendar.Today % 7 > 4)
+        trainingRoom.SetActive(true);
+        RelocalizeTrainingRoom();
+        GameManager.Instance.openedWindows.Push(trainingRoom);
+    }
+
+    public void ResetTrainingRoom()
+    {
+        List<TrainingInfo> checkDup = new();
+        foreach(var trainingCard in trainingCards)
         {
-            Alert("Alert:Training room is closed on weekends.");
-        }
-        else
-        {
-            trainingRoom.SetActive(true);
-            AssignTraining();
-            SetTrainingRoomSurvivorsInfo();
-            RelocalizeTrainingRoom();
-            if (tutorial && MySurvivorsData[0].assignedTraining == Training.None)
+            TrainingInfo training = null;
+            for (int i = 0; i < 1000; i++)
             {
-                trainingRoomSurvivorAnim.SetBool("Tutorial", true);
-                Alert("Click a survivor to assign them to a training.");
+                training = TrainingManager.GetRandomTraining();
+                if (checkDup.FindIndex(x => x.trainingName.TableEntryReference.Key == training.trainingName.TableEntryReference.Key) == -1) break;
             }
-            GameManager.Instance.openedWindows.Push(trainingRoom);
-        }
-    }
-
-    public void OpenAssignTraining(int trainingIndex)
-    {
-        trainingAssignForm.SetActive(true);
-        GameManager.Instance.openedWindows.Push(trainingAssignForm);
-        Training training = (Training)trainingIndex;
-        survivorSchedules = new();
-        assignTrainingNameText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", $"Training:{training}");
-        
-        for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
-        {
-            PoolManager.Despawn(survivorsAssignedThis.GetChild(i).gameObject);
-        }
-        for (int i=survivorsWithoutSchedule.childCount - 1; i>=0; i--)
-        {
-            PoolManager.Despawn(survivorsWithoutSchedule.GetChild(i).gameObject);
-        }
-        for (int i = survivorsWithOtherSchedule.childCount - 1; i >= 0; i--)
-        {
-            PoolManager.Despawn(survivorsWithOtherSchedule.GetChild(i).gameObject);
-        }
-
-        foreach(SurvivorData survivor in mySurvivorsData)
-        {
-            Transform fitParent;
-            Transform targetParent;
-            SurvivorSchedule survivorSchedule;
-            string description = "";
-            string cause = "";
-            LocalizedString targetTraining = new();
-            
-            bool assignable = true;
-            bool alreadyAssigned = false;
-            if (survivor.assignedTraining == training)
-            {
-                fitParent = survivorsAssignedThis;
-                targetParent = survivorsWithoutSchedule;
-            }
-            else if (survivor.assignedTraining == Training.None)
-            {
-                fitParent = survivorsWithoutSchedule;
-                targetParent = survivorsAssignedThis;
-                if (!Trainable(survivor, training, out cause))
-                {
-                    assignable = false;
-                    description = "Help:Cannot Assign Training";
-                }
-            }
-            else
-            {
-                alreadyAssigned = true;
-                fitParent = survivorsWithOtherSchedule;
-                targetParent = survivorsAssignedThis;
-                description = "Help:Training Already Assigned";
-                targetTraining = new("Basic", $"Training:{survivor.assignedTraining}");
-            }
-            survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
-            survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
-            if(!assignable) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), cause);
-            else if(alreadyAssigned) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), targetTraining.GetLocalizedString());
-            survivorSchedule.GetComponent<Button>().enabled = assignable;
-            survivorSchedules.Add(survivorSchedule);
-        }
-    }
-
-    public void SetTrainingRoomSurvivorsInfo()
-    {
-        for (int i = 0; i < scheduledTrainings.Length; i++)
-        {
-            if (i < mySurvivorsData.Count)
-            {
-                scheduledTrainings[i].SetActive(true);
-                scheduledTrainings[i].GetComponent<SurvivorInfo>().SetInfo(mySurvivorsData[i], false);
-            }
-            else scheduledTrainings[i].SetActive(false);
-        }
-    }
-
-    public void ConfirmAssignTraining()
-    {
-        foreach(var survivorSchedule in survivorSchedules)
-        {
-            survivorSchedule.survivor.assignedTraining = survivorSchedule.whereAmI;
-        }
-        AssignTraining();
-    }
-
-    public void AssignTraining()
-    {
-        weightTrainingBookers.text = "";
-        runningBookers.text = "";
-        fightTrainingBookers.text = "";
-        shootingTrainingBookers.text = "";
-        craftingTrainingBookers.text = "";
-        studyingBookers.text = "";
-        foreach (SurvivorData survivor in mySurvivorsData)
-        {
-            TextMeshProUGUI targetText;
-            switch (survivor.assignedTraining)
-            {
-                case Training.Fighting:
-                    targetText = fightTrainingBookers;
-                    break;
-                case Training.Shooting:
-                    targetText = shootingTrainingBookers;
-                    break;
-                case Training.Crafting:
-                    targetText = craftingTrainingBookers;
-                    break;
-                case Training.Running:
-                    targetText = runningBookers;
-                    break;
-                case Training.Weight:
-                    targetText = weightTrainingBookers;
-                    break;
-                case Training.Studying:
-                    targetText = studyingBookers;
-                    break;
-                default:
-                    targetText = null;
-                    break;
-            }
-
-            if (targetText != null)
-            {
-                if (targetText.text != "") targetText.text += $"\n";
-                targetText.text += $"{survivor.localizedSurvivorName.GetLocalizedString()}";
-            }
-        }
-        foreach (var scrollRect in bookedTodayScrollRects)
-        {
-            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.GetComponent<RectTransform>());
-        }
-        ChecklistTraining();
-    }
-
-    public void CheckTrainable(SurvivorData survivor)
-    {
-        if (Trainable(survivor, survivor.assignedTraining, out string cause)) return;
-        else
-        {
-            survivor.assignedTraining = Training.None;
-            AssignTraining();
-            Alert("Alert:Training Assignment Cancelled", survivor.localizedSurvivorName.GetLocalizedString(), cause);
-        }
-    }
-
-    bool TrainableAnything(SurvivorData survivor)
-    {
-        if (Trainable(survivor, Training.Fighting)) return true;
-        if (Trainable(survivor, Training.Shooting)) return true;
-        if (Trainable(survivor, Training.Crafting)) return true;
-        if (Trainable(survivor, Training.Running)) return true;
-        if (Trainable(survivor, Training.Weight)) return true;
-        return false;
-    }
-
-    public bool Trainable(SurvivorData survivor, Training training)
-    {
-        return Trainable(survivor, training, out string cause);
-    }
-
-    bool Trainable(SurvivorData survivor, Training training, out string cause)
-    {
-        if(survivor.surgeryScheduled)
-        {
-            cause = new LocalizedString("Basic", "Surgery scheduled").GetLocalizedString();
-            return false;
-        }
-
-        int eyeInjury = 0;
-        foreach(Injury injury in survivor.injuries)
-        {
-            if (injury.type == InjuryType.ArtificialPartsTransplanted || (injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1)) continue;
-            if (injury.type == InjuryType.AugmentedPartsTransplanted || (injury.type == InjuryType.AugmentedPartsDamaged && injury.degree < 1)) continue;
-            if (injury.type == InjuryType.TranscendantPartsTransplanted || (injury.type == InjuryType.TranscendantPartsDamaged && injury.degree < 1)) continue;
-            if (injury.degree < 0.1f) continue;
-            switch(training)
-            {
-                case Training.Fighting:
-                    switch(injury.site)
-                    {
-                        case InjurySite.Organ:
-                        case InjurySite.RightArm:
-                        case InjurySite.LeftArm:
-                        case InjurySite.RightHand:
-                        case InjurySite.LeftHand:
-                        case InjurySite.RightLeg:
-                        case InjurySite.LeftLeg:
-                        case InjurySite.RightKnee:
-                        case InjurySite.LeftKnee:
-                        case InjurySite.RightFoot:
-                        case InjurySite.LeftFoot:
-                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                            return false;
-                        default:
-                            if (injury.degree < 1)
-                            {
-                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                                return false;
-                            }
-                            break;
-                    }
-                    break;
-                case Training.Shooting:
-                    switch(injury.site)
-                    {
-                        case InjurySite.Brain:
-                        case InjurySite.RightArm:
-                        case InjurySite.LeftArm:
-                        case InjurySite.RightHand:
-                        case InjurySite.LeftHand:
-                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                            return false;
-                        case InjurySite.Organ:
-                            if(injury.degree >= 1)
-                            {
-                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                                return false;
-                            }
-                            break;
-                        case InjurySite.RightEye:
-                        case InjurySite.LeftEye:
-                            eyeInjury++;
-                            if (eyeInjury >= 2)
-                            {
-                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
-                                return false;
-                            }
-                            break;
-                    }
-                    break;
-                case Training.Crafting:
-                    switch(injury.site)
-                    {
-                        case InjurySite.Brain:
-                        case InjurySite.Organ:
-                        case InjurySite.RightArm:
-                        case InjurySite.RightHand:
-                        case InjurySite.LeftArm:
-                        case InjurySite.LeftHand:
-                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                            return false;
-                        case InjurySite.RightEye:
-                        case InjurySite.LeftEye:
-                            eyeInjury++;
-                            if (eyeInjury >= 2)
-                            {
-                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
-                                return false;
-                            }
-                            break;
-                    }
-                    break;
-                case Training.Running:
-                    switch (injury.site)
-                    {
-                        case InjurySite.Brain:
-                        case InjurySite.Chest:
-                        case InjurySite.Ribs:
-                        case InjurySite.Abdomen:
-                        case InjurySite.Organ:
-                        case InjurySite.RightArm:
-                        case InjurySite.LeftArm:
-                        case InjurySite.RightHand:
-                        case InjurySite.LeftHand:
-                        case InjurySite.RightLeg:
-                        case InjurySite.LeftLeg:
-                        case InjurySite.RightKnee:
-                        case InjurySite.LeftKnee:
-                        case InjurySite.RightFoot:
-                        case InjurySite.LeftFoot:
-                        case InjurySite.RightBigToe:
-                        case InjurySite.LeftBigToe:
-                        case InjurySite.RightIndexToe:
-                        case InjurySite.LeftIndexToe:
-                        case InjurySite.RightMiddleToe:
-                        case InjurySite.LeftMiddleToe:
-                        case InjurySite.RightRingToe:
-                        case InjurySite.LeftRingToe:
-                        case InjurySite.RightLittleToe:
-                        case InjurySite.LeftLittleToe:
-                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                            return false;
-                        case InjurySite.RightEye:
-                        case InjurySite.LeftEye:
-                            eyeInjury++;
-                            if (eyeInjury >= 2)
-                            {
-                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
-                                return false;
-                            }
-                            break;
-                    }
-                    break;
-                case Training.Weight:
-                    switch(injury.site)
-                    {
-                        case InjurySite.Brain:
-                        case InjurySite.Chest:
-                        case InjurySite.Ribs:
-                        case InjurySite.Abdomen:
-                        case InjurySite.Organ:
-                        case InjurySite.RightArm:
-                        case InjurySite.LeftArm:
-                        case InjurySite.RightHand:
-                        case InjurySite.LeftHand:
-                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
-                            return false;
-                    }
-                    break;
-                default:
-                    break;
-
-            }
-        }
-        cause = null;
-        return true;
-    }
-
-    public void ToggleAutoAssign()
-    {
-        autoAssign = !autoAssign;
-        autoAssignCheckBox.SetActive(autoAssign);
-    }
-
-    public void UpgradeTrainingRoom(int trainingRoomIndex)
-    {
-        switch (trainingRoomIndex)
-        {
-            case 0:
-                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-                {
-                    if (money < facilityUpgradeCost[weightTrainingLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[weightTrainingLevel - 1];
-                        weightTrainingLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = weightTrainingLevel } };
-                        weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (weightTrainingLevel > facilityUpgradeCost.Length) weightTrainingUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[weightTrainingLevel - 1] } };
-                            weightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
-            case 1:
-                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-                {
-                    if (money < facilityUpgradeCost[runningLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[runningLevel - 1];
-                        runningLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        runningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = runningLevel } };
-                        runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (runningLevel > facilityUpgradeCost.Length) runningUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[runningLevel - 1] } };
-                            runningUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
-            case 2:
-                OpenConfirmWindow("Confirm:Upgrade Facility", ()=>
-                {
-                    if(money < facilityUpgradeCost[fightTrainingLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[fightTrainingLevel - 1];
-                        fightTrainingLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = fightTrainingLevel } };
-                        fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (fightTrainingLevel > facilityUpgradeCost.Length) fightTrainingUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[fightTrainingLevel - 1] } };
-                            fightTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
-            case 3:
-                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-                {
-                    if (money < facilityUpgradeCost[shootingTrainingLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[shootingTrainingLevel - 1];
-                        shootingTrainingLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = shootingTrainingLevel } };
-                        shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (shootingTrainingLevel > facilityUpgradeCost.Length) shootingTrainingUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[shootingTrainingLevel - 1] } };
-                            shootingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
-            case 4:
-                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-                {
-                    if (money < facilityUpgradeCost[craftingTrainingLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[craftingTrainingLevel - 1];
-                        craftingTrainingLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        craftingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = craftingTrainingLevel } };
-                        craftingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (craftingTrainingLevel > facilityUpgradeCost.Length) craftingTrainingUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            craftingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[craftingTrainingLevel - 1] } };
-                            craftingTrainingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
-            case 5:
-                OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-                {
-                    if (money < facilityUpgradeCost[studyingLevel - 1])
-                    {
-                        Alert("Alert:Not enough money.");
-                    }
-                    else
-                    {
-                        Money -= facilityUpgradeCost[studyingLevel - 1];
-                        studyingLevel++;
-
-                        var trainingType = new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}");
-                        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments
-                            = new[] { new { trainingType = trainingType.GetLocalizedString(), level = studyingLevel } };
-                        studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-
-                        if (studyingLevel > facilityUpgradeCost.Length) studyingUpgradeButtion.SetActive(false);
-                        else
-                        {
-                            studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new[] { new { cost = facilityUpgradeCost[studyingLevel - 1] } };
-                            studyingUpgradeButtion.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
-                        }
-                    }
-                }, $"{new LocalizedString("Basic", $"Training:{(Training)(trainingRoomIndex + 1)}").GetLocalizedString()}");
-                break;
+            // A ?? B: A가 null이면 B 아니면 A
+            trainingCard.SetCard(training ?? TrainingManager.Trainings[0]);
+            checkDup.Add(training);
         }
     }
     #endregion
@@ -1397,12 +802,6 @@ public class OutGameUIManager : MonoBehaviour
             }
             else
             {
-                if (survivorWhoWantSurgery.assignedTraining != Training.None)
-                {
-                    AssignTraining();
-                    Alert("Alert:Training Canceled", $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}");
-                }
-                survivorWhoWantSurgery.assignedTraining = Training.None;
                 survivorWhoWantSurgery.surgeryScheduled = true;
                 Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
                 SelectSurvivorToSurgery();
@@ -2344,30 +1743,21 @@ public class OutGameUIManager : MonoBehaviour
         foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
         foreach (SurvivorData survivor in mySurvivorsData)
         {
-            ApplyTraining(survivor, survivor.assignedTraining, week);
-            if (survivor.assignedTraining != Training.None)
-            {
-                survivorTrainingResults[index].SetActive(true);
-                resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
-                resultTexts[index][1].text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
-                resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
-                resultTexts[index][2].text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
-                resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
-                resultTexts[index][3].text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
-                resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
-                resultTexts[index][4].text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
-                resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
-                resultTexts[index][5].text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_crafting}";
-                resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_crafting > -1);
-                resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
-                resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
-                index++;
-            }
-            if (!autoAssign)
-            {
-                survivor.assignedTraining = Training.None;
-                AssignTraining();
-            }
+            survivorTrainingResults[index].SetActive(true);
+            resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
+            resultTexts[index][1].text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
+            resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
+            resultTexts[index][2].text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
+            resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
+            resultTexts[index][3].text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
+            resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
+            resultTexts[index][4].text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
+            resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
+            resultTexts[index][5].text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_crafting}";
+            resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_crafting > -1);
+            resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
+            resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
+            index++;
             Surgery(survivor);
         }
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
@@ -2382,19 +1772,6 @@ public class OutGameUIManager : MonoBehaviour
         string warning = "";
         if(calendar.Today % 7 < 5)
         {
-            bool thereAreUnassignedSurvivors = false;
-            warning = $"\n<color=red><i>{new LocalizedString("Basic", "There are unassigned survivors:").GetLocalizedString()} ";
-            foreach (SurvivorData survivor in mySurvivorsData)
-            {
-                if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
-                {
-                    thereAreUnassignedSurvivors = true;
-                    warning += $"{survivor.localizedSurvivorName.GetLocalizedString()}, ";
-                }
-            }
-            warning = warning[..^2];
-            warning += "</i></color>";
-            if (!thereAreUnassignedSurvivors) warning = "";
         }
         else
         {
@@ -2453,52 +1830,13 @@ public class OutGameUIManager : MonoBehaviour
         Alert("Alert:A day has passed.");
     }
 
-    public void EndTheWeek()
-    {
-        string warning;
-        bool thereAreUnassignedSurvivors = false;
-        warning = $"\n<color=red><i>{new LocalizedString("Basic", "There are unassigned survivors:").GetLocalizedString()} ";
-        foreach (SurvivorData survivor in mySurvivorsData)
-        {
-            if (survivor.assignedTraining == Training.None && TrainableAnything(survivor))
-            {
-                thereAreUnassignedSurvivors = true;
-                warning += $"{survivor.localizedSurvivorName.GetLocalizedString()}, ";
-            }
-        }
-        warning = warning[..^2];
-        warning += "</i></color>";
-        if (!thereAreUnassignedSurvivors) warning = "";
-        OpenConfirmWindow("Confirm:End the Week", () =>
-        {
-            int week = 0;
-            while(calendar.Today % 7 < 5)
-            {
-                DayEnd(week);
-                if (week++ > 5)
-                {
-                    Debug.LogWarning("Loop error"); 
-                    break;
-                }
-            }
-            ShowSurgeryResult();
-        }, warning);
-    }
-
     public void HideEndTheWeekend(bool hide)
     {
         buttonEndTheWeek.SetActive(!hide);
     }
 
-    void ApplyTraining(SurvivorData survivor, Training training, int week = 0)
+    void ApplyTraining(SurvivorData survivor, TrainingInfo training, int week = 0)
     {
-        int survivorStrengthLv = survivor._strength / 20;
-        int survivorAgilityLv = survivor._agility / 20;
-        int survivorFightingLv = survivor._fighting / 20;
-        int survivorShtLv = survivor._shooting / 20;
-        int survivorCrfLv = survivor._crafting / 20;
-        int survivorKnowledgeLv = survivor._knowledge / 20;
-        
         if(week == 0)
         {
             survivor.increaseComparedToPrevious_strength = -1;
@@ -2509,41 +1847,6 @@ public class OutGameUIManager : MonoBehaviour
             survivor.increaseComparedToPrevious_knowledge = -1;
         }
 
-        switch (training)
-        {
-            case Training.Weight:
-                int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
-                if(week == 0) survivor.increaseComparedToPrevious_strength = 0;
-                survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0, 0);
-                break;
-            case Training.Running:
-                int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_agility = 0;
-                survivor.IncreaseStats(0, increseAgility, 0, 0, 0, 0);
-                break;
-            case Training.Fighting:
-                int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_fighting = 0;
-                survivor.IncreaseStats(0, 0, increseFighting, 0, 0, 0);
-                break;
-            case Training.Shooting:
-                int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_shooting = 0;
-                survivor.IncreaseStats(0, 0, 0, increseShooting, 0, 0);
-                break;
-            case Training.Crafting:
-                int increseCrafting = Mathf.Max(craftingTrainingLevel + 1 - survivorCrfLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_crafting = 0;
-                survivor.IncreaseStats(0, 0, 0, 0, increseCrafting, 0);
-                break;
-            case Training.Studying:
-                int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_knowledge = 0;
-                survivor.IncreaseStats(0, 0, 0, 0, 0, increseKnowledge);
-                break;
-            default:
-                break;
-        }
     }
 
     void Surgery(SurvivorData survivor)
@@ -2687,75 +1990,6 @@ public class OutGameUIManager : MonoBehaviour
     public void CloseDailyResult()
     {
         hadSurgery = false;
-    }
-    #endregion
-
-    #region Checklist
-    public void ChecklistTraining()
-    {
-        string unassigned = "";
-        foreach(var survivor in mySurvivorsData)
-        {
-            if(survivor.assignedTraining == Training.None)
-            {
-                if(Trainable(survivor, Training.Weight) || Trainable(survivor, Training.Running) || Trainable(survivor, Training.Fighting) || Trainable(survivor, Training.Shooting) || Trainable(survivor, Training.Crafting) || Trainable(survivor, Training.Studying))
-                {
-                    unassigned += survivor.localizedSurvivorName.GetLocalizedString();
-                    unassigned += ", ";
-                }
-            }
-        }
-        if (unassigned != "")
-        {
-            unassigned = unassigned[..^2];
-            checkTrainingTrue.SetActive(false);
-            checkTrainingFalse.SetActive(true);
-            LocalizedString localizedString = new("Basic", "Survivors without training:");
-            localizedString.Arguments = new[] { unassigned };
-            checkTrainingText.StringReference = localizedString;
-        }
-        else
-        {
-            checkTrainingTrue.SetActive(true);
-            checkTrainingFalse.SetActive(false);
-            checkTrainingText.StringReference = new("Basic", "All survivors assigned to training.");
-        }
-        GameManager.Instance.FixLayout(checkTrainingText.GetComponent<RectTransform>());
-    }
-
-    public void ChecklistBattleRoyale()
-    {
-        bool thereAreNotReservedRoyale = false;
-        int monday = calendar.Today - calendar.Today % 7;
-        if (calendar.Today < monday + 5 && calendar.LeagueReserveInfo.ContainsKey(monday + 5))
-        {
-            if (calendar.LeagueReserveInfo[monday + 5].reserver == null)
-            {
-                thereAreNotReservedRoyale = true;
-            }
-        }
-        if (calendar.Today < monday + 6 && calendar.LeagueReserveInfo.ContainsKey(monday + 6))
-        {
-            if (calendar.LeagueReserveInfo[monday + 6].reserver == null)
-            {
-                thereAreNotReservedRoyale = true;
-            }
-        }
-
-        if(thereAreNotReservedRoyale)
-        {
-            checkBattleRoyaleTrue.SetActive(false);
-            checkBattleRoyaleFalse.SetActive(true);
-            checkBattleRoyaleText.StringReference = new("Basic", "Some battle royales this week are not reserved.");
-        }
-        else
-        {
-            checkBattleRoyaleTrue.SetActive(true);
-            checkBattleRoyaleFalse.SetActive(false);
-            checkBattleRoyaleText.StringReference = new("Basic", "All battle royales reserved for this week.");
-        }
-        checkBattleRoyaleText.RefreshString();
-        GameManager.Instance.FixLayout(checkBattleRoyaleText.GetComponent<RectTransform>());
     }
     #endregion
 
@@ -2968,22 +2202,14 @@ public class OutGameUIManager : MonoBehaviour
         GameManager.ClaimLoadInfo("Loading survivors...", 0, 3);
         mySurvivorsData.Clear();
         mySurvivorsData = data;
-        AssignTraining();
         yield return null;
     }
 
-    public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, int fightTrainingLevel, int shootingTrainingLevel, int craftingTrainingLevel,
-        int runningLevel, int weightTrainingLevel, int studyingLevel, List<SurvivorData> contestantsData)
+    public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, List<SurvivorData> contestantsData)
     {
         Money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.survivorHireLimit = survivorHireLimit;
-        this.fightTrainingLevel = fightTrainingLevel;
-        this.shootingTrainingLevel = shootingTrainingLevel;
-        this.craftingTrainingLevel = craftingTrainingLevel;
-        this.runningLevel = runningLevel;
-        this.weightTrainingLevel = weightTrainingLevel;
-        this.studyingLevel = studyingLevel;
         this.contestantsData = contestantsData;
 
         tutorial = false;
@@ -2991,7 +2217,6 @@ public class OutGameUIManager : MonoBehaviour
 
     public void VersionCompatibleCraftingTrainingLevel()
     {
-        craftingTrainingLevel = 1;
         foreach(var survivor in mySurvivorsData)
         {
             survivor.increaseComparedToPrevious_crafting = -1;
@@ -3000,13 +2225,11 @@ public class OutGameUIManager : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
-        ChecklistTraining();
         if (survivorsDropdown.options.Count == 0) return;
         RelocalizeTrainingRoom();
         RelocalizeStrategyRoom();
         ResetSurvivorsDropdown();
         if (survivorsDropdown.options.Count == 0) return;
-        AssignTraining();
         SetOperatingRoom();
         SetStrategyRoom();
         sortContestantsListDropdown.RelocalizeOptions();
