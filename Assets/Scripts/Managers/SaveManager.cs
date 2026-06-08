@@ -10,6 +10,7 @@ public static class SaveManager
         {
             id = data.id,
             survivorName = data.SurvivorName,
+            stamina = data.Stamina,
             strength = data._strength,
             agility = data._agility,
             fighting = data._fighting,
@@ -90,10 +91,13 @@ public static class SaveManager
             saveData.fighting, saveData.shooting, saveData.crafting, saveData.knowledge, saveData.price, saveData.tier)
         {
             id = saveData.id,
+            Stamina = saveData.stamina,
             _luck = saveData.luck,
             characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,
             reservedDate = saveData.reservedDate,
+            haveQualifyToParticipateInSeasonChampionship = saveData.haveQualifyToParticipateInSeasonChampionship,
+            haveQualifyToParticipateInWorldChampionship = saveData.haveQualifyToParticipateInWorldChampionship,
             increaseComparedToPrevious_strength = saveData.increaseComparedToPrevious_strength,
             increaseComparedToPrevious_agility = saveData.increaseComparedToPrevious_agility,
             increaseComparedToPrevious_fighting = saveData.increaseComparedToPrevious_fighting,

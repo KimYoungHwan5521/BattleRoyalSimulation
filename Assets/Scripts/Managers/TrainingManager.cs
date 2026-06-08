@@ -12,11 +12,15 @@ public class TrainingInfo
     public LocalizedString trainingName;
     public List<(int, int)> increaseStats;
     public TrainingRarity rarity;
+    public int staminaConsumtion;
+    public int trainingDifficulty;
 
-    public TrainingInfo(string trainingKey, TrainingRarity rarity, params (int, int)[] increaseStats)
+    public TrainingInfo(string trainingKey, TrainingRarity rarity, int staminaConsumtion, int trainingDifficulty, params (int, int)[] increaseStats)
     {
         trainingName = new("Training", trainingKey);
         this.rarity = rarity;
+        this.staminaConsumtion = staminaConsumtion;
+        this.trainingDifficulty = trainingDifficulty;
         this.increaseStats = increaseStats.ToList();
     }
 }
@@ -31,48 +35,59 @@ public class TrainingManager
     public IEnumerator Initiate()
     {
         GameManager.ClaimLoadInfo("Loading trainings...");
+        // ##스태미나 소비량, 난이도 공식
+        // #레어 (나누기 8)
+        // 스태미나 소비량
+        // 힘, 민첩, 격투, 사격, 제작, 지식
+        // 40, 37,   34,   31,   24,   -4
+        // #언커먼 (나누기 5)
+        // 30, 27,    24,   21,   15,  -8
+        // #커먼 (나누기 3)
+        // 25, 22     19,   16,   9,  -12
+        // 난이도 (난이도는 그냥 평균값)
+        // +20, +12, +16,  +8,   +4,   =16
         trainings = new()
         {
-            new("Strength Training", TrainingRarity.Common, (0, 3)),
-            new("Running", TrainingRarity.Common, (1, 3)),
-            new("Ammo Crate Carry", TrainingRarity.Common, (0, 2), (1, 1)),
-            new("Loaded Run", TrainingRarity.Common, (1, 2), (0, 1)),
-            new("Target Shooting", TrainingRarity.Common, (3, 3)),
-            new("CQC Training", TrainingRarity.Common, (2, 2), (3, 1)),
-            new("CQB Training", TrainingRarity.Common, (3, 2), (2, 1)),
-            new("Machining", TrainingRarity.Common, (4, 3)),
-            new("Mechanical Design", TrainingRarity.Common, (4, 2), (5, 1)),
-            new("Military Logistics Engineering", TrainingRarity.Common, (5, 2), (4, 1)),
-            new("Engineering", TrainingRarity.Common, (5, 3)),
-            new("Judo", TrainingRarity.Common, (2, 1), (0, 1), (1, 1)),
-            new("Special Operations Tactics", TrainingRarity.Common, (3, 1), (4, 1), (5, 1)),
-            new("Boxing", TrainingRarity.Common, (2, 2), (1, 1)),
-            new("Wrestling", TrainingRarity.Common, (0, 2), (2, 1)),
-            new("MMA Training", TrainingRarity.Common, (2, 2), (0, 1)),
-            new("Taekwondo", TrainingRarity.Common, (1, 2), (2, 1)),
-            new("Individual Combat Training", TrainingRarity.Common, (1, 2), (3, 1)),
+            new("Strength Training", TrainingRarity.Common, 25, 45, (0, 3)),
+            new("Running", TrainingRarity.Common, 22, 34, (1, 3)),
+            new("Ammo Crate Carry", TrainingRarity.Common, 24, 41, (0, 2), (1, 1)),
+            new("Loaded Run", TrainingRarity.Common, 23, 38, (1, 2), (0, 1)),
+            new("Target Shooting", TrainingRarity.Common, 16, 24, (3, 3)),
+            new("CQC Training", TrainingRarity.Common, 18, 41, (2, 2), (3, 1)),
+            new("CQB Training", TrainingRarity.Common, 17, 28, (3, 2), (2, 1)),
+            new("Machining", TrainingRarity.Common, 9, 16, (4, 3)),
+            new("Mechanical Design", TrainingRarity.Common, 2, 16, (4, 2), (5, 1)),
+            new("Military Logistics Engineering", TrainingRarity.Common, -5, 16, (5, 2), (4, 1)),
+            new("Engineering", TrainingRarity.Common, -12, 16, (5, 3)),
+            new("Judo", TrainingRarity.Common, 23, 39, (2, 1), (0, 1), (1, 1)),
+            new("Special Operations Tactics", TrainingRarity.Common, 4, 16, (3, 1), (4, 1), (5, 1)),
+            new("Boxing", TrainingRarity.Common, 21, 36, (2, 2), (1, 1)),
+            new("Wrestling", TrainingRarity.Common, 23, 42, (0, 2), (2, 1)),
+            new("MMA Training", TrainingRarity.Common, 22, 39, (2, 2), (0, 1)),
+            new("Taekwondo", TrainingRarity.Common, 22, 35, (1, 2), (2, 1)),
+            new("Individual Combat Training", TrainingRarity.Common, 21, 32, (1, 2), (3, 1)),
 
-            new("Powerlifting", TrainingRarity.Uncommon, (0, 5)),
-            new("Combat Engineering Training", TrainingRarity.Uncommon, (0, 3), (4, 2)),
-            new("Ranger Training", TrainingRarity.Uncommon, (1, 3), (0, 2)),
-            new("Electronic Engineering", TrainingRarity.Uncommon, (5, 4), (4, 1)),
-            new("MMA Sparring", TrainingRarity.Uncommon, (2, 5)),
+            new("Powerlifting", TrainingRarity.Uncommon, 30, 50, (0, 5)),
+            new("Combat Engineering Training", TrainingRarity.Uncommon, 24, 38, (0, 3), (4, 2)),
+            new("Ranger Training", TrainingRarity.Uncommon, 28, 45, (1, 3), (0, 2)),
+            new("Electronic Engineering", TrainingRarity.Uncommon, -3, 16, (5, 4), (4, 1)),
+            new("MMA Sparring", TrainingRarity.Uncommon, 24, 40, (2, 5)),
 
-            new("Battle Royale Simulation", TrainingRarity.Rare, (3, 4), (2, 2), (4, 2)),
-            new("Tactical Shooting Training", TrainingRarity.Rare, (3, 6), (1, 2)),
-            new("Engineering Society", TrainingRarity.Rare, (5, 8)),
+            new("Battle Royale Simulation", TrainingRarity.Rare, 40, 60, (3, 4), (2, 2), (4, 2)),
+            new("Tactical Shooting Training", TrainingRarity.Rare, 14, 20, (3, 6), (1, 2)),
+            new("Engineering Society", TrainingRarity.Rare, -4, 16, (5, 8)),
 
-            new("Invite Local Expert", TrainingRarity.Common, (6, 5)),
-            new("Visit Hidden Master", TrainingRarity.Uncommon, (6, 10)),
-            new("Invite Strongman", TrainingRarity.Rare, (0, 8)),
-            new("Invite MMA Champion", TrainingRarity.Rare, (2, 8)),
-            new("Crafting Workshop", TrainingRarity.Rare, (4, 8)),
-            new("Invite Melee League Champion", TrainingRarity.Uncommon, (2, 2), (0, 2), (1, 2)),
-            new("Invite Shooting League Champion", TrainingRarity.Uncommon, (3, 6)),
-            new("Invite Crafting League Champion", TrainingRarity.Uncommon, (4, 3), (5, 3)),
-            new("Invite Season Champion", TrainingRarity.Uncommon, (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)),
-            new("Invite World Champion", TrainingRarity.Rare, (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2)),
-            new("Veteran Battle Royale Player Visit", TrainingRarity.Rare, (6, 15))
+            new("Invite Local Expert", TrainingRarity.Common, 25, 45, (6, 5)),
+            new("Visit Hidden Master", TrainingRarity.Uncommon, 30, 50, (6, 10)),
+            new("Invite Strongman", TrainingRarity.Rare, 40, 60, (0, 8)),
+            new("Invite MMA Champion", TrainingRarity.Rare, 34, 50, (2, 8)),
+            new("Crafting Workshop", TrainingRarity.Rare, 24, 32, (4, 8)),
+            new("Invite Melee League Champion", TrainingRarity.Uncommon, 32, 48, (2, 2), (0, 2), (1, 2)),
+            new("Invite Shooting League Champion", TrainingRarity.Uncommon, 25, 33, (3, 6)),
+            new("Invite Crafting League Champion", TrainingRarity.Uncommon, 1, 16, (4, 3), (5, 3)),
+            new("Invite Season Champion", TrainingRarity.Uncommon, 22, 34, (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1)),
+            new("Invite World Champion", TrainingRarity.Rare, 40, 52, (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2)),
+            new("Veteran Battle Royale Player Visit", TrainingRarity.Rare, 40, 60, (6, 15))
         };
         yield return null;
     }

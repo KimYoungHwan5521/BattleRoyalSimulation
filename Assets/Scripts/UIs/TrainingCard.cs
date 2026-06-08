@@ -13,6 +13,7 @@ public class TrainingCard : MonoBehaviour
     [SerializeField] Image trainingImage;
     [SerializeField] TextMeshProUGUI trainingExplain;
     TrainingInfo linkedTraining;
+    public TrainingInfo LinkedTraining => linkedTraining;
 
     public void SetCard(TrainingInfo training)
     {

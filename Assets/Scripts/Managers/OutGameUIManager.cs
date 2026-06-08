@@ -79,6 +79,17 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
+    const float rareTrainingAppearanceRate = 0.01f;
+    const float uncommonTrainingAppearanceRate = 0.1f;
+    const float trainingGreatSuccessRate = 0.1f;
+    int Stamina
+    {
+        get => mySurvivorsData[0].Stamina;
+        set
+        {
+            mySurvivorsData[0].Stamina = value;
+        }
+    }
     [SerializeField] GameObject trainingRoom;
     [SerializeField] TrainingCard[] trainingCards;
 
@@ -517,6 +528,34 @@ public class OutGameUIManager : MonoBehaviour
             // A ?? B: A가 null이면 B 아니면 A
             trainingCard.SetCard(training ?? TrainingManager.Trainings[0]);
             checkDup.Add(training);
+        }
+    }
+
+    int focusedTraining;
+    public void FocusTraining(int index)
+    {
+        focusedTraining = index;
+    }
+
+    public void SelectTraining()
+    {
+        TrainingInfo training = trainingCards[focusedTraining].LinkedTraining;
+        float failRate = 0;
+        if (Stamina < training.staminaConsumtion) failRate = 1f;
+        else if (Stamina < training.trainingDifficulty) failRate = 1f - Stamina / training.trainingDifficulty;
+        Stamina -= training.staminaConsumtion;
+        float rand = UnityEngine.Random.Range(0, 1f);
+        if(rand < failRate)
+        {
+            // 실패
+        }
+        else if (rand > 1f - trainingGreatSuccessRate)
+        {
+            // 대성공
+        }
+        else
+        {
+            // 성공
         }
     }
     #endregion

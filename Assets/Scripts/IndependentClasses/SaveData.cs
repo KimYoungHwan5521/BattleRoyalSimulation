@@ -37,6 +37,7 @@ public class SurvivorSaveData
 {
     public int id;
     public string survivorName;
+    public int stamina;
     public int strength;
     public int agility;
     public int fighting;

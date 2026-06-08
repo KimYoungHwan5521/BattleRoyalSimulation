@@ -14,6 +14,15 @@ public class SurvivorData
     [SerializeField] string survivorName;
     public string SurvivorName => survivorName;
     public LocalizedString localizedSurvivorName;
+    int _stamina;
+    public int Stamina
+    {
+        get => _stamina;
+        set
+        {
+            _stamina = Mathf.Clamp(value, 0, 100);
+        }
+    }
     public int _strength;
     public int _agility;
     public int _fighting;
@@ -252,6 +261,7 @@ public class SurvivorData
     {
         this.localizedSurvivorName = localizedSurvivorName;
         survivorName = localizedSurvivorName.TableEntryReference.Key;
+        _stamina = 100;
         _strength = strength;
         _agility = agility;
         _fighting = fighting;
@@ -270,6 +280,7 @@ public class SurvivorData
     {
         survivorName = survivorData.survivorName;
         localizedSurvivorName = new LocalizedString("Name", survivorName);
+        _stamina = 100;
         _strength = survivorData._strength;
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;

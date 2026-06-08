@@ -13,6 +13,8 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] Image tierImage;
     [SerializeField] LocalizeStringEvent survivorNameText;
     [SerializeField] LocalizeStringEvent scheduledTrainingText;
+    [SerializeField] TextMeshProUGUI staminaText;
+    [SerializeField] Image staminaBar;
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
@@ -171,6 +173,11 @@ public class SurvivorInfo : MonoBehaviour
 
         survivorData = wantSurvivorData;
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
+        if(staminaText != null)
+        {
+            staminaText.text = $"{wantSurvivorData.Stamina} / 100";
+            staminaBar.fillAmount = wantSurvivorData.Stamina / 100;
+        }
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";
         fightingText.text = $"{wantSurvivorData.Fighting}";
