@@ -79,6 +79,7 @@ public class ResourcesPath
 
     public static string[] SpritePathArray =
     {
+        "Sprites/Unknown",
         "Sprites/Icons/Survivor",
         "Sprites/Icons/Box",
         "Sprites/Icons/Knife",

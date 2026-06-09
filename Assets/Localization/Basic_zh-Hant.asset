@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "\u8A2D\u65BD\u5347\u7D1A\\n$ {cost}"
+    m_Localized: "\u8A2D\u65BD\u5347\u7D1A\\n$ {0}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359341
@@ -1438,6 +1438,53 @@ MonoBehaviour:
     m_Localized: "\u7279\u6027\u7684\u7A00\u6709\u5EA6\u50C5\u8868\u793A\u51FA\u73FE\u983B\u7387\uFF0C\u8207\u6027\u80FD\u7121\u95DC\u3002"
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: "\u5347\u7D1A\u8A13\u7DF4\u8A2D\u65BD\u53EF\u63D0\u9AD8\u9AD8\u7A00\u6709\u5EA6\u8A13\u7DF4\u7684\u51FA\u73FE\u6A5F\u7387\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: "\u751F\u547D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: "\u9AD4\u529B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: "\u7576\u524D\u8A2D\u65BD\u7B49\u7D1A\uFF1A{0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359341
+  - m_Id: 133809079345278976
+    m_Localized: "\u6210\u529F\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: "\u5931\u6557"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: "\u5927\u6210\u529F\uFF01"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: "\u8A2D\u65BD\u5DF2\u5347\u7D1A\u3002"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: "\u5931\u6557\u6A5F\u7387\uFF1A{0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359341
+  - m_Id: 133839376401100800
+    m_Localized: "\u9AD4\u529B\u904E\u4F4E\u6642\uFF0C\u8A13\u7DF4\u6709\u6A5F\u7387\u5931\u6557\u3002\u8ACB\u900F\u904E\u4F11\u606F\u6062\u5FA9\u9AD4\u529B\u3002\uFF08\u4E0D\u6703\u5F71\u97FF\u6230\u9B25\u3002\uFF09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: "\u6D88\u8017\u9AD4\u529B\uFF1A{0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359341
   references:
     version: 2
     RefIds:
@@ -1491,3 +1538,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936

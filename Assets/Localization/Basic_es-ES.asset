@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Mejora de instalaciones\n$ {cost}
+    m_Localized: Mejora de instalaciones\n$ {0}
     m_Metadata:
       m_Items:
       - rid: 7835753295874359332
@@ -1469,6 +1469,55 @@ MonoBehaviour:
       aparici\xF3n y no est\xE1 relacionada con su rendimiento."
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: Mejorar las instalaciones de entrenamiento aumenta la probabilidad
+      de que aparezcan entrenamientos de mayor rareza.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: Salud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: Resistencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: "Nivel Actual de la Instalaci\xF3n: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 133809079345278976
+    m_Localized: "\xA1\xC9xito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: Fallo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: "\xA1Gran \xC9xito!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: "Instalaci\xF3n mejorada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: 'Probabilidad de Fallo: {0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 133839376401100800
+    m_Localized: Una Resistencia baja aumenta la probabilidad de fallar el entrenamiento.
+      Recupera Resistencia descansando. (No afecta el combate.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: 'Coste de Resistencia: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
   references:
     version: 2
     RefIds:
@@ -1522,3 +1571,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936

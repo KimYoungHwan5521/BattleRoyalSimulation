@@ -1385,6 +1385,50 @@ MonoBehaviour:
       related to its effectiveness.
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Key: Help:UpgradeFacility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Key: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Key: Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Key: Current Facility Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809079345278976
+    m_Key: Success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Key: Failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Key: Great Success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Key: Alert:Facility upgraded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Key: FailRate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133839376401100800
+    m_Key: Help:Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Key: Stamina Cost
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

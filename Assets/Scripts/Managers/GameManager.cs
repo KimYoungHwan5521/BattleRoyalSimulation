@@ -296,6 +296,7 @@ public class GameManager : MonoBehaviour
         ETCData saveData = new(
             OutGameUIManager.Money,
             OutGameUIManager.MySurvivorsId,
+            OutGameUIManager.trainingLevel,
             OutGameUIManager.SurvivorHireLimit,
             OutGameUIManager.contestantsData,
             calendar.Today,
@@ -349,6 +350,7 @@ public class GameManager : MonoBehaviour
         OutGameUIManager.LoadData(
         saveData.money,
         saveData.mySurvivorsId,
+        saveData.trainingLevel,
         saveData.survivorHireLimit,
         saveData.contestantsData
             );

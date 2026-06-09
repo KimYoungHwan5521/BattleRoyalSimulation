@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,6 +13,7 @@ public class TrainingCard : MonoBehaviour
     [SerializeField] LocalizeStringEvent trainingName;
     [SerializeField] Image trainingImage;
     [SerializeField] TextMeshProUGUI trainingExplain;
+    [SerializeField] TextMeshProUGUI failRateText;
     TrainingInfo linkedTraining;
     public TrainingInfo LinkedTraining => linkedTraining;
 
@@ -26,44 +28,43 @@ public class TrainingCard : MonoBehaviour
             _ => new(1, 1, 1)
         };
         trainingName.StringReference = training.trainingName;
-        // trainingImage
-        trainingExplain.text = "";
-        foreach(var value in training.increaseStats)
+        string spriteName = training.trainingName.TableEntryReference.Key.Replace(" ", "");
+        if(Enum.TryParse(spriteName, out ResourceEnum.Sprite sprite))
         {
-            if (!string.IsNullOrEmpty(trainingExplain.text)) trainingExplain.text += ", ";
-            trainingExplain.text += value.Item1 switch
-            {
-                0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
-                1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
-                2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
-                3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
-                4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
-                5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
-                6 => new LocalizedString("Basic", "Random").GetLocalizedString(),
-                _ => new LocalizedString("Basic", "Strength").GetLocalizedString()
-            };
-            trainingExplain.text += $" + {value.Item2}";
+            trainingImage.sprite = ResourceManager.Get(sprite);
         }
+        else trainingImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+        trainingExplain.text = training.GetTrainingExplain(false);
+        int stamina = GameManager.Instance.OutGameUIManager.Stamina;
+        float failRate = stamina < training.staminaConsumtion ? 1f : stamina < training.trainingDifficulty ? 1f - (float)stamina / training.trainingDifficulty : 0;
+        failRateText.text = new LocalizedString("Basic", "FailRate")
+        {
+            Arguments = new[] { $"{failRate * 100:0}" }
+        }.GetLocalizedString();
+    }
+
+    public void Select(bool selected)
+    {
+        Color c = linkedTraining.rarity switch
+        {
+            TrainingRarity.Common => new Color(0.2984f, 0.8483f, 0.9471f),
+            TrainingRarity.Uncommon => new Color(0.8050f, 0.2980f, 0.9490f),
+            TrainingRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
+            _ => new(1, 1, 1)
+        };
+        c = selected ? c * new Color(0.78f, 0.78f, 0.78f, 1f) : c;
+        cardBody.color = c;
     }
 
     void OnLocaleChanged(Locale newLocale)
     {
         if (linkedTraining == null) return;
-        foreach (var value in linkedTraining.increaseStats)
+        trainingExplain.text = linkedTraining.GetTrainingExplain(false);
+        int stamina = GameManager.Instance.OutGameUIManager.Stamina;
+        float failRate = stamina < linkedTraining.staminaConsumtion ? 1f : stamina < linkedTraining.trainingDifficulty ? stamina / linkedTraining.trainingDifficulty : 0;
+        failRateText.text = new LocalizedString("Basic", "FailRate")
         {
-            if (!string.IsNullOrEmpty(trainingExplain.text)) trainingExplain.text += ", ";
-            trainingExplain.text += value.Item1 switch
-            {
-                0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
-                1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
-                2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
-                3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
-                4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
-                5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
-                6 => new LocalizedString("Basic", "Random").GetLocalizedString(),
-                _ => new LocalizedString("Basic", "Strength").GetLocalizedString()
-            };
-            trainingExplain.text += $" + {value.Item2}";
-        }
+            Arguments = new[] { $"{failRate * 100:0}" }
+        }.GetLocalizedString();
     }
 }

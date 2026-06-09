@@ -80,6 +80,7 @@ namespace ResourceEnum
 
     public enum Sprite
     {
+        Unknown,
         Survivor,
         Box,
         // Melee Weapons

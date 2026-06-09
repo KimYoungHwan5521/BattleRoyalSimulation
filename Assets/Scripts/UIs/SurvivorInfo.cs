@@ -176,7 +176,7 @@ public class SurvivorInfo : MonoBehaviour
         if(staminaText != null)
         {
             staminaText.text = $"{wantSurvivorData.Stamina} / 100";
-            staminaBar.fillAmount = wantSurvivorData.Stamina / 100;
+            staminaBar.fillAmount = wantSurvivorData.Stamina / 100f;
         }
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";

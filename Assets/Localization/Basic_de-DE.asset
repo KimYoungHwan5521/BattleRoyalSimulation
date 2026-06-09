@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Anlagen-Upgrade\n$ {cost}
+    m_Localized: Anlagen-Upgrade\n$ {0}
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
@@ -1469,6 +1469,56 @@ MonoBehaviour:
       an und hat keinen Einfluss auf ihre Leistung."
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: Durch das Aufwerten von Trainingseinrichtungen steigt die Wahrscheinlichkeit,
+      seltene Trainings zu erhalten.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: Leben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: Ausdauer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: 'Aktuelle Einrichtungsstufe: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 133809079345278976
+    m_Localized: Erfolg!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: Fehlgeschlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: "Gro\xDFer Erfolg!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: Einrichtung aufgewertet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: 'Fehlschlagschance: {0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 133839376401100800
+    m_Localized: "Niedrige Ausdauer erh\xF6ht die Wahrscheinlichkeit, ein Training
+      zu scheitern. Stelle Ausdauer durch Ruhe wieder her. (Hat keinen Einfluss auf
+      den Kampf.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: 'Ausdauerkosten: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
   references:
     version: 2
     RefIds:
@@ -1522,3 +1572,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936

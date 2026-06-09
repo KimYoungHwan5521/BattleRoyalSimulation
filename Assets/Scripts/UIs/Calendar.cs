@@ -735,7 +735,7 @@ public class Calendar : CustomObject
             else
             {
                 Debug.LogWarning($"Can't find league sprite : {wantLeague}");
-                leagueSprite = null;
+                leagueSprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
             }
 
             options.Add(new TMP_Dropdown.OptionData($"{allSurvivor[i].localizedSurvivorName.GetLocalizedString()} : {LocalizationSettings.StringDatabase.GetLocalizedString("Basic", wantLeague.ToString())}", leagueSprite));

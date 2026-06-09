@@ -79,19 +79,28 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
-    const float rareTrainingAppearanceRate = 0.01f;
-    const float uncommonTrainingAppearanceRate = 0.1f;
     const float trainingGreatSuccessRate = 0.1f;
-    int Stamina
+    public int trainingLevel = 1;
+    readonly int[] facilityUpgradeCost = new[]{ 5000, 10000, 15000, 20000, 25000, 30000 };
+    [SerializeField] GameObject trainingResult;
+    [SerializeField] TextMeshProUGUI trainingResultText;
+    [SerializeField] TextMeshProUGUI trainingResultDetailText;
+    public int Stamina
     {
-        get => mySurvivorsData[0].Stamina;
+        get
+        {
+            return mySurvivorsData.Count == 0 ? 0 : mySurvivorsData[0].Stamina;
+        }
         set
         {
             mySurvivorsData[0].Stamina = value;
+            selectedSurvivor.SetInfo(mySurvivorsData[0], true);
         }
     }
     [SerializeField] GameObject trainingRoom;
     [SerializeField] TrainingCard[] trainingCards;
+    [SerializeField] TextMeshProUGUI currentFacilityLevelText;
+    [SerializeField] Button upgradeFacilityButton;
 
     [Header("Operating Room")]
     [SerializeField] GameObject operatingRoom;
@@ -292,8 +301,8 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorsData = new();
         hireSurvivor.SetActive(true);
         //SetHireMarketFirst();
+        trainingLevel = 1;
         ResetHireMarket();
-        ResetTrainingRoom();
         Money = 1000;
         survivorHireLimit = 10;
         
@@ -302,6 +311,14 @@ public class OutGameUIManager : MonoBehaviour
 
     void RelocalizeTrainingRoom()
     {
+        currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
+        {
+            Arguments = new[] { $"{trainingLevel}" }
+        }.GetLocalizedString();
+        upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
+        {
+            Arguments = new[] { trainingLevel > facilityUpgradeCost.Length || trainingLevel <= 0 ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
+        }.GetLocalizedString();
     }
 
     private void Update()
@@ -436,6 +453,7 @@ public class OutGameUIManager : MonoBehaviour
 
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
                     hireSurvivor.SetActive(false);
+                    ResetTrainingRoom();
                 }
             },  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
         
@@ -522,7 +540,7 @@ public class OutGameUIManager : MonoBehaviour
             TrainingInfo training = null;
             for (int i = 0; i < 1000; i++)
             {
-                training = TrainingManager.GetRandomTraining();
+                training = TrainingManager.GetRandomTraining(trainingLevel);
                 if (checkDup.FindIndex(x => x.trainingName.TableEntryReference.Key == training.trainingName.TableEntryReference.Key) == -1) break;
             }
             // A ?? B: A가 null이면 B 아니면 A
@@ -535,6 +553,10 @@ public class OutGameUIManager : MonoBehaviour
     public void FocusTraining(int index)
     {
         focusedTraining = index;
+        for (int i = 0; i < trainingCards.Length; i++)
+        {
+            trainingCards[i].Select(i == index);
+        }
     }
 
     public void SelectTraining()
@@ -542,20 +564,101 @@ public class OutGameUIManager : MonoBehaviour
         TrainingInfo training = trainingCards[focusedTraining].LinkedTraining;
         float failRate = 0;
         if (Stamina < training.staminaConsumtion) failRate = 1f;
-        else if (Stamina < training.trainingDifficulty) failRate = 1f - Stamina / training.trainingDifficulty;
+        else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
         Stamina -= training.staminaConsumtion;
         float rand = UnityEngine.Random.Range(0, 1f);
+        trainingResult.SetActive(true);
         if(rand < failRate)
         {
             // 실패
+            trainingResultText.text = new LocalizedString("Basic", "Failed").GetLocalizedString();
+            trainingResultDetailText.text = "";
         }
         else if (rand > 1f - trainingGreatSuccessRate)
         {
             // 대성공
+            trainingResultText.text = new LocalizedString("Basic", "Great Success").GetLocalizedString();
+            trainingResultDetailText.text = training.GetTrainingExplain(true);
+            ApplyTrainingResult(training, true);
         }
         else
         {
             // 성공
+            trainingResultText.text = new LocalizedString("Basic", "Success").GetLocalizedString();
+            trainingResultDetailText.text = training.GetTrainingExplain(false);
+            ApplyTrainingResult(training, false);
+        }
+        //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
+        ResetTrainingRoom();
+    }
+
+    void ApplyTrainingResult(TrainingInfo training, bool greatSuccess)
+    {
+        foreach(var value in training.increaseStats)
+        {
+            switch(value.Item1)
+            {
+                case 0:
+                    mySurvivorsData[0].IncreaseStats(value.Item2, 0, 0, 0, 0, 0);
+                    break;
+                case 1:
+                    mySurvivorsData[0].IncreaseStats(0, value.Item2, 0, 0, 0, 0);
+                    break;
+                case 2:
+                    mySurvivorsData[0].IncreaseStats(0, 0, value.Item2, 0, 0, 0);
+                    break;
+                case 3:
+                    mySurvivorsData[0].IncreaseStats(0, 0, 0, value.Item2, 0, 0);
+                    break;
+                case 4:
+                    mySurvivorsData[0].IncreaseStats(0, 0, 0, 0, value.Item2, 0);
+                    break;
+                case 5:
+                    mySurvivorsData[0].IncreaseStats(0, 0, 0, 0, 0, value.Item2);
+                    break;
+                case 6:
+                    int[] randStat = new int[6];
+                    for(int i = 0; i < value.Item2; i++)
+                    {
+                        randStat[UnityEngine.Random.Range(0, 6)]++;
+                    }
+                    mySurvivorsData[0].IncreaseStats(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                    break;
+                default:
+                    Debug.LogError("Wrong increase stat index!");
+                    break;
+            }
+        }
+    }
+
+    public void ConfirmTrainingResult()
+    {
+        trainingResult.SetActive(false);
+    }
+
+    public void RequestUpgradeFacility()
+    {
+        if(Money < facilityUpgradeCost[trainingLevel - 1])
+        {
+            Alert("Alert:Not enough money.");
+        }
+        else
+        {
+            OpenConfirmWindow("Confirm:Upgrade Facility", () =>
+            {
+                Money -= facilityUpgradeCost[trainingLevel - 1];
+                trainingLevel++;
+                upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
+                {
+                    Arguments = new[] { trainingLevel > facilityUpgradeCost.Length ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
+                }.GetLocalizedString();
+                currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
+                {
+                    Arguments = new[] { $"{trainingLevel}" }
+                }.GetLocalizedString();
+                if (trainingLevel > facilityUpgradeCost.Length) upgradeFacilityButton.gameObject.SetActive(false);
+                Alert("Alert:Facility upgraded.");
+            }, "");
         }
     }
     #endregion
@@ -874,7 +977,7 @@ public class OutGameUIManager : MonoBehaviour
             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
             weaponPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
             weaponPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
-            Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
+            Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
             weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
             weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
         }
@@ -1100,7 +1203,7 @@ public class OutGameUIManager : MonoBehaviour
                 bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
                 craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
                 craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
-                Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : null;
+                Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                 craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
                 craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
             }
@@ -1874,20 +1977,6 @@ public class OutGameUIManager : MonoBehaviour
         buttonEndTheWeek.SetActive(!hide);
     }
 
-    void ApplyTraining(SurvivorData survivor, TrainingInfo training, int week = 0)
-    {
-        if(week == 0)
-        {
-            survivor.increaseComparedToPrevious_strength = -1;
-            survivor.increaseComparedToPrevious_agility = -1;
-            survivor.increaseComparedToPrevious_fighting = -1;
-            survivor.increaseComparedToPrevious_shooting = -1;
-            survivor.increaseComparedToPrevious_crafting = -1;
-            survivor.increaseComparedToPrevious_knowledge = -1;
-        }
-
-    }
-
     void Surgery(SurvivorData survivor)
     {
         if (!survivor.surgeryScheduled)
@@ -2244,10 +2333,11 @@ public class OutGameUIManager : MonoBehaviour
         yield return null;
     }
 
-    public void LoadData(int money, int mySurvivorsId, int survivorHireLimit, List<SurvivorData> contestantsData)
+    public void LoadData(int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData)
     {
         Money = money;
         this.mySurvivorsId = mySurvivorsId;
+        this.trainingLevel = trainingLevel;
         this.survivorHireLimit = survivorHireLimit;
         this.contestantsData = contestantsData;
 

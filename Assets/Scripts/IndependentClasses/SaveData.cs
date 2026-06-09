@@ -155,6 +155,7 @@ public class ETCData
     // out game ui manager
     public int money;
     public int mySurvivorsId;
+    public int trainingLevel;
     public int survivorHireLimit;
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];
@@ -166,11 +167,12 @@ public class ETCData
     // unlock
     public List<UnlockStatusDictionary> unlockStatus = new();
 
-    public ETCData(int money, int mySurvivorsId, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
+        this.trainingLevel = trainingLevel;
         this.survivorHireLimit = survivorHireLimit;
         this.contestantsData = contestantsData;
         this.today = today;

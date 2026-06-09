@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: Facility Upgrade\n$ {cost}
+    m_Localized: Facility Upgrade\n$ {0}
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
@@ -1463,6 +1463,55 @@ MonoBehaviour:
       is not related to its effectiveness.
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: Upgrading training facilities increases the chance of higher-rarity
+      training appearing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: Health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: 'Current Facility Level: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 133809079345278976
+    m_Localized: Success!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: Great Success!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: Failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: Facility upgraded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: 'Failure Chance: {0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 133839376401100800
+    m_Localized: Low Stamina increases the chance of failing training. Recover Stamina
+      through resting. (Does not affect combat.)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: 'Stamina Cost: {0}'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
   references:
     version: 2
     RefIds:
@@ -1516,3 +1565,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936

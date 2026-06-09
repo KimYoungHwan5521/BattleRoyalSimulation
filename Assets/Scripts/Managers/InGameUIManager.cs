@@ -894,7 +894,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentWeaponImage.sprite = null;
+                selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                 selectedObjectsCurrentWeaponOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentWeapon.GetComponent<Help>().SetDescription("");
             }
@@ -928,7 +928,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentHelmetImage.sprite = null;
+                selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                 selectedObjectsCurrentHelmetOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentHelmet.GetComponent<Help>().SetDescription("");
             }
@@ -942,7 +942,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentVestImage.sprite = null;
+                selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                 selectedObjectsCurrentVestOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentVest.GetComponent<Help>().SetDescription("");
             } 
@@ -973,7 +973,7 @@ public class InGameUIManager : MonoBehaviour
                     }
                     else
                     {
-                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = null;
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                     }
                     selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedSurvivorsInventory[i].itemName.GetLocalizedString()} x {selectedSurvivorsInventory[i].amount}";
                     selectedObjectsItems[i].GetComponent<Help>().SetDescription(selectedSurvivorsInventory[i].itemType, selectedSurvivorsInventory[i].quality);
@@ -1003,7 +1003,7 @@ public class InGameUIManager : MonoBehaviour
                     }
                     else
                     {
-                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = null;
+                        selectedObjectsItems[i].GetComponentsInChildren<Image>()[^1].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                     }
                     selectedObjectsItems[i].GetComponentInChildren<TextMeshProUGUI>().text = $"{selectedBox.items[i].itemName.GetLocalizedString()} x {selectedBox.items[i].amount}";
                     Image outline = selectedObjectsItems[i].GetComponentsInChildren<Image>()[0];

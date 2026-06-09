@@ -14,6 +14,35 @@ public class TrainingInfo
     public TrainingRarity rarity;
     public int staminaConsumtion;
     public int trainingDifficulty;
+    public string GetTrainingExplain(bool greatSuccess)
+    {
+        string result = "";
+        bool first = true;
+        foreach (var value in increaseStats)
+        {
+            if (!string.IsNullOrEmpty(result)) result += ", ";
+            result += value.Item1 switch
+            {
+                0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
+                1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
+                2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
+                3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
+                4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
+                5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
+                6 => new LocalizedString("Basic", "Random").GetLocalizedString(),
+                _ => new LocalizedString("Basic", "Strength").GetLocalizedString()
+            };
+            if (greatSuccess && first) 
+            {
+                int bonus = rarity == TrainingRarity.Common ? 1 : rarity == TrainingRarity.Uncommon ? 2 : 4;
+                result += $" + {value.Item2 + bonus}";
+            }
+            else result += $" + {value.Item2}";
+            first = false;
+        }
+        result += $"\n{new LocalizedString("Basic", "Stamina Cost") { Arguments = new[] { staminaConsumtion > 0 ? $"<color=red>-{staminaConsumtion}</color>" : $"<color=#367D38>+{-staminaConsumtion}</color>"} }.GetLocalizedString()}";
+        return result;
+    }
 
     public TrainingInfo(string trainingKey, TrainingRarity rarity, int staminaConsumtion, int trainingDifficulty, params (int, int)[] increaseStats)
     {
@@ -27,8 +56,8 @@ public class TrainingInfo
 
 public class TrainingManager
 {
-    const float rareProbability = 1 / 16f;
-    const float uncommonProbability = 1 / 4f;
+    const float rareProbability = 0.01f;
+    const float uncommonProbability = 0.1f;
 
     static List<TrainingInfo> trainings;
     public static List<TrainingInfo> Trainings => trainings;
@@ -92,12 +121,12 @@ public class TrainingManager
         yield return null;
     }
 
-    public static TrainingInfo GetRandomTraining()
+    public static TrainingInfo GetRandomTraining(int traiingLevel)
     {
         float rand = Random.Range(0, 1f);
         List<TrainingInfo> pool = new();
-        if (rand < rareProbability) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Rare);
-        else if (rand < rareProbability + uncommonProbability) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Uncommon);
+        if (rand < rareProbability * traiingLevel) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Rare);
+        else if (rand < (rareProbability + uncommonProbability) * traiingLevel) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Uncommon);
         else pool = trainings.FindAll(x => x.rarity == TrainingRarity.Common);
 
         TrainingInfo training;

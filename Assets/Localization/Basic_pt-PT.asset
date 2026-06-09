@@ -144,7 +144,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n$ {cost}"
+    m_Localized: "Atualiza\xE7\xE3o de instala\xE7\xE3o\\n$ {0}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
@@ -1464,6 +1464,55 @@ MonoBehaviour:
       de aparecimento e n\xE3o est\xE1 relacionada com o seu desempenho."
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: "Melhorar as instala\xE7\xF5es de treino aumenta a probabilidade
+      de surgirem treinos de maior raridade."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: "Sa\xFAde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: "Resist\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: "N\xEDvel Atual da Instala\xE7\xE3o: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 133809079345278976
+    m_Localized: Sucesso!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: Falha
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: Grande Sucesso!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: "Instala\xE7\xE3o melhorada."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: 'Probabilidade de Falha: {0}%'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 133839376401100800
+    m_Localized: "Baixo Vigor aumenta a probabilidade de falhar no treino. Recupere
+      Vigor atrav\xE9s do descanso. (N\xE3o afeta o combate.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: "Custo de Resist\xEAncia: {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
   references:
     version: 2
     RefIds:
@@ -1517,3 +1566,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936

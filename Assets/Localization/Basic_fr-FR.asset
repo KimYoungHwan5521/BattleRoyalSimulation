@@ -145,7 +145,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 78461974147072
-    m_Localized: "Am\xE9lioration des installations\\n$ {cost}"
+    m_Localized: "Am\xE9lioration des installations\\n$ {0}"
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
@@ -1482,6 +1482,56 @@ MonoBehaviour:
       fr\xE9quence d\u2019apparition et n\u2019est pas li\xE9e \xE0 sa puissance."
     m_Metadata:
       m_Items: []
+  - m_Id: 133790929065144320
+    m_Localized: "Am\xE9liorer les installations d\u2019entra\xEEnement augmente
+      les chances d\u2019obtenir des entra\xEEnements de raret\xE9 \xE9lev\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763304923136
+    m_Localized: "Sant\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133794763837599744
+    m_Localized: Endurance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133796478154502144
+    m_Localized: "Niveau actuel de l\u2019installation : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 133809079345278976
+    m_Localized: "Succ\xE8s !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809081316601856
+    m_Localized: "\xC9chec"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133809242319155200
+    m_Localized: "Grand succ\xE8s !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133819973634682880
+    m_Localized: "Installation am\xE9lior\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133832066710695936
+    m_Localized: "Chance d'\xE9chec : {0}%"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 133839376401100800
+    m_Localized: "Une faible endurance augmente les risques d\u2019\xE9chec \xE0
+      l\u2019entra\xEEnement. R\xE9cup\xE9rez de l\u2019endurance en vous reposant.
+      (N\u2019affecte pas le combat.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 133840372594438144
+    m_Localized: "Co\xFBt en endurance : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
@@ -1535,3 +1585,6 @@ MonoBehaviour:
         - id: 116043573494345728
         - id: 125727723826507776
         - id: 128711725592145920
+        - id: 133796478154502144
+        - id: 133840372594438144
+        - id: 133832066710695936
