@@ -607,7 +607,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Proceed to battle royale?
+    m_Localized: Enter the Battle Royale?
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
@@ -1520,6 +1520,35 @@ MonoBehaviour:
     m_Localized: Rest?
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Localized: 'Only leagues or event leagues matching the corresponding tier can
+      be entered.\n({param0}''s Tier: {param1})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 134191858008518656
+    m_Localized: Make a reservation?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Localized: Reservation completed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Localized: Today is your scheduled Battle Royale match. Resting or training
+      will cancel the reservation.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Localized: Cancel the reservation?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Localized: '{param0} is already reserved for another match. Cancel the existing
+      reservation and reschedule it for this day?'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
   references:
     version: 2
     RefIds:
@@ -1576,3 +1605,5 @@ MonoBehaviour:
         - id: 133796478154502144
         - id: 133840372594438144
         - id: 133832066710695936
+        - id: 134191856368545792
+        - id: 134207427822809088

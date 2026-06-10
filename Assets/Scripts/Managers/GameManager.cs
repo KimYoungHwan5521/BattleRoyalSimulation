@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "1.5.1";
+    public static string gameVersion = "2.0";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -407,21 +407,10 @@ public class GameManager : MonoBehaviour
         string loadedDataGameVersion = saveData.gameVersion;
         int loadedDataGameVersionInt1 = int.Parse(loadedDataGameVersion.Split('.')[0]);
         int loadedDataGameVersionInt2 = int.Parse(loadedDataGameVersion.Split('.')[1]);
-        if (loadedDataGameVersion == "1.0")
-        {
-            calendar.CalendarUpdate();
-        }
+        
         if (loadedDataGameVersionInt1 <= 1)
         {
-            if (loadedDataGameVersionInt2 <= 3)
-            {
-                calendar.CancelAllReservation();
-                foreach (var survivor in OutGameUIManager.MySurvivorsData) survivor.repairCondition = 70;
-            }
-            if (loadedDataGameVersionInt2 <= 4)
-            {
-                outGameUIManger.VersionCompatibleCraftingTrainingLevel();
-            }
+
         }
         unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 <= 1 && loadedDataGameVersionInt2 <= 3);
         yield return null;

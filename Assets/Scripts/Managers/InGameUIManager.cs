@@ -894,7 +894,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentWeaponImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+                selectedObjectsCurrentWeaponImage.sprite = null;
                 selectedObjectsCurrentWeaponOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentWeapon.GetComponent<Help>().SetDescription("");
             }
@@ -928,7 +928,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentHelmetImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+                selectedObjectsCurrentHelmetImage.sprite = null;
                 selectedObjectsCurrentHelmetOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentHelmet.GetComponent<Help>().SetDescription("");
             }
@@ -942,7 +942,7 @@ public class InGameUIManager : MonoBehaviour
             }
             else
             {
-                selectedObjectsCurrentVestImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+                selectedObjectsCurrentVestImage.sprite = null;
                 selectedObjectsCurrentVestOutline.sprite = craftingQualityOutlines[0];
                 selectedObjectsCurrentVest.GetComponent<Help>().SetDescription("");
             } 

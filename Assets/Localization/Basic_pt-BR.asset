@@ -606,7 +606,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Ir para o battle royale?
+    m_Localized: Participar do Battle Royale?
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
@@ -1521,6 +1521,35 @@ MonoBehaviour:
     m_Localized: Deseja descansar?
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Localized: 'Apenas ligas ou ligas de evento do tier correspondente podem ser
+      disputadas.\n(Tier de {param0}: {param1})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 134191858008518656
+    m_Localized: Fazer uma reserva?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Localized: "Reserva conclu\xEDda."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Localized: "Hoje \xE9 o dia da sua Battle Royale agendada. Descansar ou treinar
+      cancelar\xE1 a reserva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Localized: Cancelar a reserva?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Localized: "{param0} j\xE1 est\xE1 reservado para outra partida. Deseja cancelar
+      a reserva atual e remarcar para este dia?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
   references:
     version: 2
     RefIds:
@@ -1577,3 +1606,5 @@ MonoBehaviour:
         - id: 133796478154502144
         - id: 133840372594438144
         - id: 133832066710695936
+        - id: 134191856368545792
+        - id: 134207427822809088

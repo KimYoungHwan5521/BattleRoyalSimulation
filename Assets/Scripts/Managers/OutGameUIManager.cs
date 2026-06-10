@@ -190,7 +190,7 @@ public class OutGameUIManager : MonoBehaviour
     }
 
     [Header("Daily Result")]
-    [SerializeField] GameObject buttonEndTheWeek;
+    //[SerializeField] GameObject buttonEndTheWeek;
     [SerializeField] GameObject dailyResult;
     [SerializeField] GameObject[] survivorTrainingResults;
     TextMeshProUGUI[][] resultTexts;
@@ -1769,12 +1769,12 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SkipBetting()
     {
-        OpenConfirmWindow("Confirm:Skip Bet", () => 
-        {
+        //OpenConfirmWindow("Confirm:Skip Bet", () => 
+        //{
             bettingAmount = 0;
             bettingRoom.SetActive(false);
             StartBattleRoyale();
-        });
+        //});
     }
 
     bool IsValidPrediction(out string reason)
@@ -1989,7 +1989,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HideEndTheWeekend(bool hide)
     {
-        buttonEndTheWeek.SetActive(!hide);
+        //buttonEndTheWeek.SetActive(!hide);
     }
 
     void Surgery(SurvivorData survivor)
@@ -2357,14 +2357,6 @@ public class OutGameUIManager : MonoBehaviour
         this.contestantsData = contestantsData;
 
         tutorial = false;
-    }
-
-    public void VersionCompatibleCraftingTrainingLevel()
-    {
-        //foreach(var survivor in mySurvivorsData)
-        //{
-        //    survivor.increaseComparedToPrevious_crafting = -1;
-        //}
     }
 
     void OnLocaleChanged(Locale newLocale)

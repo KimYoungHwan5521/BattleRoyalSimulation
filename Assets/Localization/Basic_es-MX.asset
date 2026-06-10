@@ -609,7 +609,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: "\xBFIr al battle royale?"
+    m_Localized: "\xBFParticipar en Battle Royale?"
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
@@ -1526,6 +1526,35 @@ MonoBehaviour:
     m_Localized: "\xBFDescansar?"
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Localized: 'Solo puedes participar en ligas o ligas de evento del nivel correspondiente.\n(Tier
+      de {param0}: {param1})'
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 134191858008518656
+    m_Localized: "\xBFHacer una reserva?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Localized: Reserva realizada.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Localized: "Hoy es el d\xEDa programado para tu Battle Royale. Descansar o
+      entrenar cancelar\xE1 la reserva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Localized: "\xBFCancelar la reserva?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Localized: "{param0} ya est\xE1 reservado para otro combate. \xBFDeseas cancelar
+      la reserva actual y reprogramarla para este d\xEDa?"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
   references:
     version: 2
     RefIds:
@@ -1582,3 +1611,5 @@ MonoBehaviour:
         - id: 133796478154502144
         - id: 133840372594438144
         - id: 133832066710695936
+        - id: 134191856368545792
+        - id: 134207427822809088

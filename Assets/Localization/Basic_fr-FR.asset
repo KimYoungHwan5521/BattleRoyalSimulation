@@ -608,7 +608,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Passer au battle royale ?
+    m_Localized: Participer au Battle Royale ?
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
@@ -1540,6 +1540,35 @@ MonoBehaviour:
     m_Localized: Voulez-vous vous reposer ?
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Localized: "Seules les ligues ou ligues \xE9v\xE9nementielles correspondant
+      au niveau peuvent \xEAtre rejointes.\\n(Niveau de {param0} : {param1})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 134191858008518656
+    m_Localized: "Effectuer une r\xE9servation ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Localized: "R\xE9servation effectu\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Localized: "Aujourd\u2019hui est le jour pr\xE9vu pour votre Battle Royale.
+      Se reposer ou s\u2019entra\xEEner annulera la r\xE9servation."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Localized: "Annuler la r\xE9servation ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Localized: "{param0} est d\xE9j\xE0 r\xE9serv\xE9 pour un autre match. Annuler
+      la r\xE9servation actuelle et la reprogrammer pour cette date ?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
@@ -1596,3 +1625,5 @@ MonoBehaviour:
         - id: 133796478154502144
         - id: 133840372594438144
         - id: 133832066710695936
+        - id: 134191856368545792
+        - id: 134207427822809088

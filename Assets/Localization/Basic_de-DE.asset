@@ -607,7 +607,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2479575478628352
-    m_Localized: Zum Battle Royale gehen?
+    m_Localized: Am Battle Royale teilnehmen?
     m_Metadata:
       m_Items: []
   - m_Id: 2479576816611328
@@ -1527,6 +1527,35 @@ MonoBehaviour:
     m_Localized: "M\xF6chten Sie sich ausruhen?"
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Localized: "Seules les ligues ou ligues \xE9v\xE9nementielles correspondant
+      au niveau peuvent \xEAtre rejointes.\\n(Niveau de {param0} : {param1})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 134191858008518656
+    m_Localized: "Effectuer une r\xE9servation ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Localized: "R\xE9servation effectu\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Localized: "Heute ist der geplante Tag f\xFCr dein Battle Royale. Ausruhen
+      oder Training f\xFChren zur Stornierung der Reservierung."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Localized: Reservierung stornieren?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Localized: "{param0} ist bereits f\xFCr ein anderes Spiel reserviert. Die aktuelle
+      Reservierung stornieren und auf diesen Tag verschieben?"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
   references:
     version: 2
     RefIds:
@@ -1583,3 +1612,5 @@ MonoBehaviour:
         - id: 133796478154502144
         - id: 133840372594438144
         - id: 133832066710695936
+        - id: 134191856368545792
+        - id: 134207427822809088

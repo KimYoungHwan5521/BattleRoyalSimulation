@@ -1437,6 +1437,30 @@ MonoBehaviour:
     m_Key: Confirm:Rest
     m_Metadata:
       m_Items: []
+  - m_Id: 134191856368545792
+    m_Key: Alert:Tier Not Match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191858008518656
+    m_Key: Confirm:Reserve Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134191899481796608
+    m_Key: Alert:Battle Royale Reserved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134197775227744256
+    m_Key: Alert:Reserve Reminder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134204342455037952
+    m_Key: Confirm:Cancel Reservation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134207427822809088
+    m_Key: Confirm:Rebook
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
