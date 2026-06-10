@@ -1513,6 +1513,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
+  - m_Id: 134123275761020928
+    m_Localized: Descansar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134123278667673600
+    m_Localized: Deseja descansar?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1518,6 +1518,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 134123275761020928
+    m_Localized: Descansar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134123278667673600
+    m_Localized: "\xBFDescansar?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

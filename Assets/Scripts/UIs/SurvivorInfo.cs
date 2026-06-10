@@ -118,9 +118,51 @@ public class SurvivorInfo : MonoBehaviour
 
     public SurvivorData survivorData;
 
+    bool statIncreaseProduction;
+    const float statIncreaseWait = 0.3f;
+    float curStatIncreaseWait;
+    const float statIncreaseTerm = 0.1f;
+    float curStatIncreaseTerm;
+
     private void Start()
     {
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+    }
+
+    private void Update()
+    {
+        if(statIncreaseProduction && staminaText != null)
+        {
+            curStatIncreaseWait += Time.deltaTime;
+            if(curStatIncreaseWait > statIncreaseWait)
+            {
+                curStatIncreaseTerm += Time.deltaTime;
+                if(curStatIncreaseTerm > statIncreaseTerm)
+                {
+                    if (survivorData.increaseComparedToPrevious_strength > 0) { survivorData.Strength = survivorData._strength + 1; survivorData.increaseComparedToPrevious_strength--; }
+                    if (survivorData.increaseComparedToPrevious_agility > 0) { survivorData.Agility = survivorData._agility + 1; survivorData.increaseComparedToPrevious_agility--; }
+                    if (survivorData.increaseComparedToPrevious_fighting > 0) { survivorData.Fighting = survivorData._fighting + 1; survivorData.increaseComparedToPrevious_fighting--; }
+                    if (survivorData.increaseComparedToPrevious_shooting > 0) { survivorData.Shooting = survivorData._shooting + 1; survivorData.increaseComparedToPrevious_shooting--; }
+                    if (survivorData.increaseComparedToPrevious_crafting > 0) { survivorData.Crafting = survivorData._crafting + 1; survivorData.increaseComparedToPrevious_crafting--; }
+                    if (survivorData.increaseComparedToPrevious_knowledge > 0) { survivorData.Knowledge = survivorData._knowledge + 1; survivorData.increaseComparedToPrevious_knowledge--; }
+                    if (survivorData.increaseComparedToPrevious_stamina > 0) { survivorData.Stamina += Mathf.Min(survivorData.increaseComparedToPrevious_stamina, 3); survivorData.increaseComparedToPrevious_stamina -= Mathf.Min(survivorData.increaseComparedToPrevious_stamina, 3); }
+                    if (survivorData.increaseComparedToPrevious_stamina < 0) { survivorData.Stamina += Mathf.Max(survivorData.increaseComparedToPrevious_stamina, -3); survivorData.increaseComparedToPrevious_stamina -= Mathf.Max(survivorData.increaseComparedToPrevious_stamina, -3); }
+                    SetInfo(survivorData, false);
+                    if(survivorData.increaseComparedToPrevious_strength + survivorData.increaseComparedToPrevious_agility + survivorData.increaseComparedToPrevious_fighting + survivorData.increaseComparedToPrevious_shooting
+                        +survivorData.increaseComparedToPrevious_crafting + survivorData.increaseComparedToPrevious_knowledge == 0 && survivorData.increaseComparedToPrevious_stamina == 0)
+                    {
+                        ResetInfo();
+                    }
+                }
+            }
+        }
+    }
+
+    public void ResetInfo()
+    {
+        statIncreaseProduction = false;
+        curStatIncreaseWait = 0f;
+        curStatIncreaseTerm = 0f;
     }
 
     public void SetInfo(LocalizedString survivorName, int strength, int agility, int fighting, int shooting, int crafting,
@@ -175,7 +217,7 @@ public class SurvivorInfo : MonoBehaviour
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
         if(staminaText != null)
         {
-            staminaText.text = $"{wantSurvivorData.Stamina} / 100";
+            staminaText.text = $"{wantSurvivorData.Stamina} / {wantSurvivorData.maxStamina}";
             staminaBar.fillAmount = wantSurvivorData.Stamina / 100f;
         }
         strengthText.text = $"{wantSurvivorData.Strength}";
@@ -185,12 +227,12 @@ public class SurvivorInfo : MonoBehaviour
         craftingText.text = $"{wantSurvivorData.Crafting}";
         knowledgeText.text = $"{wantSurvivorData.Knowledge}";
 
-        strengthBar.fillAmount = wantSurvivorData.Strength / 100f;
-        agilityBar.fillAmount = wantSurvivorData.Agility / 100f;
-        fightingBar.fillAmount = wantSurvivorData.Fighting / 100f;
-        shootingBar.fillAmount = wantSurvivorData.Shooting / 100f;
-        craftingBar.fillAmount = wantSurvivorData.Crafting / 100f;
-        knowledgeBar.fillAmount = wantSurvivorData.Knowledge / 100f;
+        strengthBar.fillAmount = wantSurvivorData._strength / 100f;
+        agilityBar.fillAmount = wantSurvivorData._agility / 100f;
+        fightingBar.fillAmount = wantSurvivorData._fighting / 100f;
+        shootingBar.fillAmount = wantSurvivorData._shooting / 100f;
+        craftingBar.fillAmount = wantSurvivorData._crafting / 100f;
+        knowledgeBar.fillAmount = wantSurvivorData._knowledge / 100f;
 
         if(strenthRank != null)
         {
@@ -202,18 +244,23 @@ public class SurvivorInfo : MonoBehaviour
             knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Knowledge + 19) / 20, 6)];
         }
 
-        if (showIncrease)
-        {
-            if (wantSurvivorData.increaseComparedToPrevious_strength > -1) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_crafting > -1) craftingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_crafting})</color>";
-            if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
-        }
+        //if (showIncrease)
+        //{
+        //    if (wantSurvivorData.increaseComparedToPrevious_strength > -1) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
+        //    if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
+        //    if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
+        //    if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
+        //    if (wantSurvivorData.increaseComparedToPrevious_crafting > -1) craftingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_crafting})</color>";
+        //    if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
+        //}
         SetInjury(wantSurvivorData.injuries);
         SetCharacteristic();
         SetStastics();
+    }
+
+    public void StatIncreaseProduction()
+    {
+        statIncreaseProduction = true;
     }
 
     Image GetTargetImage(InjurySite site)

@@ -1040,13 +1040,14 @@ public class Calendar : CustomObject
             _ => ""
         };
 
-        string leagueType = league switch
-        { 
-            League.MeleeLeague => "MeleeLeague",
-            League.RangeLeague => "RangeLeague",
-            League.CraftingLeague => "CraftingLeague",
-            _ => "RegularLeague"
-        };
+        string leagueType = league.ToString();
+        //string leagueType = league switch
+        //{ 
+        //    League.MeleeLeague => "MeleeLeague",
+        //    League.RangeLeague => "RangeLeague",
+        //    League.CraftingLeague => "CraftingLeague",
+        //    _ => "RegularLeague"
+        //};
 
         if (Enum.TryParse($"{leagueType}{code}", out ResourceEnum.Sprite result))
         {

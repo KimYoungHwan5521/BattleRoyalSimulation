@@ -14,13 +14,14 @@ public class SurvivorData
     [SerializeField] string survivorName;
     public string SurvivorName => survivorName;
     public LocalizedString localizedSurvivorName;
+    public int maxStamina;
     int _stamina;
     public int Stamina
     {
         get => _stamina;
         set
         {
-            _stamina = Mathf.Clamp(value, 0, 100);
+            _stamina = Mathf.Clamp(value, 0, maxStamina);
         }
     }
     public int _strength;
@@ -52,6 +53,10 @@ public class SurvivorData
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Powerhouse");
             return Mathf.Max(result, 0);
         }
+        set
+        {
+            _strength = Mathf.Clamp(value, 0, 100);
+        }
     }
     public int Agility
     {
@@ -69,6 +74,10 @@ public class SurvivorData
 
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Quick-Footed");
             return Mathf.Max(result, 0);
+        }
+        set
+        {
+            _agility = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Fighting
@@ -88,6 +97,10 @@ public class SurvivorData
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Martial Artist");
             return Mathf.Max(result, 0);
         }
+        set
+        {
+            _fighting = Mathf.Clamp(value, 0, 100);
+        }
     }
     public int Shooting
     {
@@ -105,6 +118,10 @@ public class SurvivorData
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Sharpshooter");
             return Mathf.Max(result, 0);
         }
+        set
+        {
+            _shooting = Mathf.Clamp(value, 0, 100);
+        }
     }
     public int Crafting
     {
@@ -116,11 +133,11 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Engineer)) result += 20;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
-            return Mathf.Max(result, 0); 
+            return Mathf.Max(result, 0);
         }
         set
         {
-            _crafting = Math.Min(value, 100);
+            _crafting = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Knowledge
@@ -136,9 +153,13 @@ public class SurvivorData
             if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);
         }
+        set
+        {
+            _knowledge = Mathf.Clamp(value, 0, 100);
+        }
     }
 
-    public int StatTotal => Strength + Agility + Fighting + Shooting + Knowledge;
+    public int StatTotal => _strength + _agility + _fighting + _shooting + _crafting + _knowledge;
 
 
     public int Luck
@@ -201,14 +222,15 @@ public class SurvivorData
     public int reservedDate = -1;
     public bool haveQualifyToParticipateInSeasonChampionship;
     public bool haveQualifyToParticipateInWorldChampionship;
-    
+
     // Training
-    public int increaseComparedToPrevious_strength = -1;
-    public int increaseComparedToPrevious_agility = -1;
-    public int increaseComparedToPrevious_fighting = -1;
-    public int increaseComparedToPrevious_shooting = -1;
-    public int increaseComparedToPrevious_crafting = -1;
-    public int increaseComparedToPrevious_knowledge = -1;
+    public int increaseComparedToPrevious_strength = 0;
+    public int increaseComparedToPrevious_agility = 0;
+    public int increaseComparedToPrevious_fighting = 0;
+    public int increaseComparedToPrevious_shooting = 0;
+    public int increaseComparedToPrevious_crafting = 0;
+    public int increaseComparedToPrevious_knowledge = 0;
+    public int increaseComparedToPrevious_stamina = 0;
 
     // Injury, Surgery
     public List<Injury> injuries = new();
@@ -261,7 +283,7 @@ public class SurvivorData
     {
         this.localizedSurvivorName = localizedSurvivorName;
         survivorName = localizedSurvivorName.TableEntryReference.Key;
-        _stamina = 100;
+        maxStamina = _stamina = 100;
         _strength = strength;
         _agility = agility;
         _fighting = fighting;
@@ -280,7 +302,7 @@ public class SurvivorData
     {
         survivorName = survivorData.survivorName;
         localizedSurvivorName = new LocalizedString("Name", survivorName);
-        _stamina = 100;
+        maxStamina = _stamina = 100;
         _strength = survivorData._strength;
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;
@@ -297,19 +319,33 @@ public class SurvivorData
 
     public void IncreaseStats(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
     {
-        if (_strength + strength > 100 || _agility + agility > 100 || _fighting + fighting > 100 || _shooting + shooting > 100 || _crafting + crafting > 100 || _knowledge + knowledge > 100) return;
-        _strength += strength;
-        _agility += agility;
-        _fighting += fighting;
-        _shooting += shooting;
-        _crafting += crafting;
-        _knowledge += knowledge;
+        Strength = _strength + strength;
+        Agility = _agility + agility;
+        Fighting = _fighting + fighting;
+        Shooting = _shooting + shooting;
+        Crafting = _crafting + crafting;
+        Knowledge = _knowledge + knowledge;
 
+        //increaseComparedToPrevious_strength += strength;
+        //increaseComparedToPrevious_agility += agility;
+        //increaseComparedToPrevious_fighting += fighting;
+        //increaseComparedToPrevious_shooting += shooting;
+        //increaseComparedToPrevious_crafting += crafting;
+        //increaseComparedToPrevious_knowledge += knowledge;
+    }
+
+    public void IncreaseStatsReserve(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
+    {
         increaseComparedToPrevious_strength += strength;
         increaseComparedToPrevious_agility += agility;
         increaseComparedToPrevious_fighting += fighting;
         increaseComparedToPrevious_shooting += shooting;
         increaseComparedToPrevious_crafting += crafting;
         increaseComparedToPrevious_knowledge += knowledge;
+    }
+
+    public void StaminaConsomtionReserve(int value)
+    {
+        increaseComparedToPrevious_stamina += value;
     }
 }

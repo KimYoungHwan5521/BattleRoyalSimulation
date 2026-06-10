@@ -300,11 +300,11 @@ public class OutGameUIManager : MonoBehaviour
     {
         mySurvivorsData = new();
         hireSurvivor.SetActive(true);
-        //SetHireMarketFirst();
         trainingLevel = 1;
         ResetHireMarket();
         Money = 1000;
         survivorHireLimit = 10;
+        selectedSurvivor.ResetInfo();
         
         tutorial = true;
     }
@@ -344,15 +344,6 @@ public class OutGameUIManager : MonoBehaviour
     }
 
     #region Hire
-    public void SetHireMarketFirst()
-    {
-        foreach(var hireMarket in survivorsInHireMarket) hireMarket.SoldOut = false;
-        survivorsInHireMarket[0].SetInfo(GetRandomName(), 25, 25, 20, 20, 20, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[1].SetInfo(GetRandomName(), 20, 20, 25, 25, 20, 20, 0, 100, Tier.Bronze);
-        survivorsInHireMarket[2].SetInfo(GetRandomName(), 20, 20, 20, 20, 25, 25, 0, 100, Tier.Bronze);
-        hireClose.SetActive(false);
-    }
-
     public void ResetHireMarket()
     {
         int check = 0;
@@ -376,10 +367,6 @@ public class OutGameUIManager : MonoBehaviour
 
             int characteristicCount;
             float randCharCount = UnityEngine.Random.Range(0, 1f);
-            //if (randCharCount < 0.33f) characteristicCount = 0;
-            //else if (randCharCount < 0.66f) characteristicCount = 1;
-            //else if (randCharCount < 0.9f) characteristicCount = 2;
-            //else characteristicCount = 3;
             if (randCharCount < 0.25f) characteristicCount = 1;
             else if (randCharCount < 0.75f) characteristicCount = 2;
             else characteristicCount = 3;
@@ -418,19 +405,19 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HireSurvivor(int candidate)
     {
-        OpenConfirmWindow($"Confirm:Purchase",
-            () => {
-                if(mySurvivorsData.Count >= survivorHireLimit)
-                {
-                    Alert("Alert:Survivor limit reached.");
-                }
-                else if(money < survivorsInHireMarket[candidate].survivorData.price)
-                {
-                    Alert("Alert:Not enough money.");
-                }
-                else
-                {
-                    Money -= survivorsInHireMarket[candidate].survivorData.price;
+        //OpenConfirmWindow($"Confirm:Purchase",
+        //    () => {
+        //        if(mySurvivorsData.Count >= survivorHireLimit)
+        //        {
+        //            Alert("Alert:Survivor limit reached.");
+        //        }
+        //        else if(money < survivorsInHireMarket[candidate].survivorData.price)
+        //        {
+        //            Alert("Alert:Not enough money.");
+        //        }
+        //        else
+        //        {
+        //            Money -= survivorsInHireMarket[candidate].survivorData.price;
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
                     mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
@@ -454,8 +441,8 @@ public class OutGameUIManager : MonoBehaviour
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
                     hireSurvivor.SetActive(false);
                     ResetTrainingRoom();
-                }
-            },  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
+            //    }
+            //},  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
         
     }
 
@@ -524,6 +511,24 @@ public class OutGameUIManager : MonoBehaviour
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
     }
 
+    public void Rest()
+    {
+        OpenConfirmWindow("Confirm:Rest", () =>
+        {
+            int value;
+            float rand = UnityEngine.Random.Range(0, 1f);
+            if (rand < 0.2f) value = 30;
+            else if (rand < 0.8f) value = 50;
+            else value = 70;
+            value = Mathf.Min(value, 100 - mySurvivorsData[0].Stamina);
+            mySurvivorsData[0].StaminaConsomtionReserve(-value);
+            trainingResult.SetActive(true);
+            trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
+            trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+            selectedSurvivor.StatIncreaseProduction();
+        });
+    }
+
     #region Training
     public void OpenTrainingRoom()
     {
@@ -565,7 +570,6 @@ public class OutGameUIManager : MonoBehaviour
         float failRate = 0;
         if (Stamina < training.staminaConsumtion) failRate = 1f;
         else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
-        Stamina -= training.staminaConsumtion;
         float rand = UnityEngine.Random.Range(0, 1f);
         trainingResult.SetActive(true);
         if(rand < failRate)
@@ -589,51 +593,61 @@ public class OutGameUIManager : MonoBehaviour
             ApplyTrainingResult(training, false);
         }
         //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
-        ResetTrainingRoom();
+        trainingRoom.SetActive(false);
     }
 
     void ApplyTrainingResult(TrainingInfo training, bool greatSuccess)
     {
+        bool first = true;
+        mySurvivorsData[0].StaminaConsomtionReserve(-training.staminaConsumtion);
         foreach(var value in training.increaseStats)
         {
+            int total = value.Item2;
+            if(first)
+            {
+                first = false;
+                if (greatSuccess) total += training.rarity == TrainingRarity.Common ? 1 : training.rarity == TrainingRarity.Uncommon ? 2 : 4;
+            }
             switch(value.Item1)
             {
                 case 0:
-                    mySurvivorsData[0].IncreaseStats(value.Item2, 0, 0, 0, 0, 0);
+                    mySurvivorsData[0].IncreaseStatsReserve(total, 0, 0, 0, 0, 0);
                     break;
                 case 1:
-                    mySurvivorsData[0].IncreaseStats(0, value.Item2, 0, 0, 0, 0);
+                    mySurvivorsData[0].IncreaseStatsReserve(0, total, 0, 0, 0, 0);
                     break;
                 case 2:
-                    mySurvivorsData[0].IncreaseStats(0, 0, value.Item2, 0, 0, 0);
+                    mySurvivorsData[0].IncreaseStatsReserve(0, 0, total, 0, 0, 0);
                     break;
                 case 3:
-                    mySurvivorsData[0].IncreaseStats(0, 0, 0, value.Item2, 0, 0);
+                    mySurvivorsData[0].IncreaseStatsReserve(0, 0, 0, total, 0, 0);
                     break;
                 case 4:
-                    mySurvivorsData[0].IncreaseStats(0, 0, 0, 0, value.Item2, 0);
+                    mySurvivorsData[0].IncreaseStatsReserve(0, 0, 0, 0, total, 0);
                     break;
                 case 5:
-                    mySurvivorsData[0].IncreaseStats(0, 0, 0, 0, 0, value.Item2);
+                    mySurvivorsData[0].IncreaseStatsReserve(0, 0, 0, 0, 0, total);
                     break;
                 case 6:
                     int[] randStat = new int[6];
-                    for(int i = 0; i < value.Item2; i++)
+                    for(int i = 0; i < total; i++)
                     {
                         randStat[UnityEngine.Random.Range(0, 6)]++;
                     }
-                    mySurvivorsData[0].IncreaseStats(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                    mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
                     break;
                 default:
                     Debug.LogError("Wrong increase stat index!");
                     break;
             }
         }
+        selectedSurvivor.StatIncreaseProduction();
     }
 
     public void ConfirmTrainingResult()
     {
         trainingResult.SetActive(false);
+        DayEnd();
     }
 
     public void RequestUpgradeFacility()
@@ -1879,30 +1893,31 @@ public class OutGameUIManager : MonoBehaviour
             Money += 1000;
             Alert("Alert:Money Recived");
         }
+        ResetTrainingRoom();
 
-        dailyResult.SetActive(true);
+        //dailyResult.SetActive(true);
         int index = 0;
-        foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
+        //foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
         foreach (SurvivorData survivor in mySurvivorsData)
         {
-            survivorTrainingResults[index].SetActive(true);
-            resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
-            resultTexts[index][1].text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
-            resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
-            resultTexts[index][2].text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
-            resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
-            resultTexts[index][3].text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
-            resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
-            resultTexts[index][4].text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
-            resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
-            resultTexts[index][5].text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_crafting}";
-            resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_crafting > -1);
-            resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
-            resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
+            //survivorTrainingResults[index].SetActive(true);
+            //resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
+            //resultTexts[index][1].text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
+            //resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
+            //resultTexts[index][2].text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
+            //resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
+            //resultTexts[index][3].text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
+            //resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
+            //resultTexts[index][4].text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
+            //resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
+            //resultTexts[index][5].text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_crafting}";
+            //resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_crafting > -1);
+            //resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
+            //resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
             index++;
             Surgery(survivor);
         }
-        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
+        //selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 
         GameManager.Instance.FixLayout(dailyResult.GetComponent<RectTransform>());
         GameManager.Instance.openedWindows.Push(dailyResult);
@@ -1960,15 +1975,15 @@ public class OutGameUIManager : MonoBehaviour
             Alert("Alert:Money Recived");
         }
 
-        foreach (var survivor in mySurvivorsData)
-        {
-            survivor.increaseComparedToPrevious_strength = -1;
-            survivor.increaseComparedToPrevious_agility = -1;
-            survivor.increaseComparedToPrevious_fighting = -1;
-            survivor.increaseComparedToPrevious_shooting = -1;
-            survivor.increaseComparedToPrevious_crafting = -1;
-            survivor.increaseComparedToPrevious_knowledge = -1;
-        }
+        //foreach (var survivor in mySurvivorsData)
+        //{
+        //    survivor.increaseComparedToPrevious_strength = -1;
+        //    survivor.increaseComparedToPrevious_agility = -1;
+        //    survivor.increaseComparedToPrevious_fighting = -1;
+        //    survivor.increaseComparedToPrevious_shooting = -1;
+        //    survivor.increaseComparedToPrevious_crafting = -1;
+        //    survivor.increaseComparedToPrevious_knowledge = -1;
+        //}
         Alert("Alert:A day has passed.");
     }
 
@@ -2346,10 +2361,10 @@ public class OutGameUIManager : MonoBehaviour
 
     public void VersionCompatibleCraftingTrainingLevel()
     {
-        foreach(var survivor in mySurvivorsData)
-        {
-            survivor.increaseComparedToPrevious_crafting = -1;
-        }
+        //foreach(var survivor in mySurvivorsData)
+        //{
+        //    survivor.increaseComparedToPrevious_crafting = -1;
+        //}
     }
 
     void OnLocaleChanged(Locale newLocale)
