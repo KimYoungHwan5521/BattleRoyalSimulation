@@ -619,10 +619,17 @@ public class Calendar : CustomObject
             {
                 if(wantReserveDate == Today)
                 {
-                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                    if(outGameUIManager.CheckHaveInjury(out int expectedDateOfFullyRecovery))
                     {
-                        outGameUIManager.SkipBetting();
-                    });
+                        outGameUIManager.Alert("Alert:Can't Battle Royale", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+                    }
+                    else
+                    {
+                        outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                        {
+                            outGameUIManager.SkipBetting();
+                        });
+                    }
                 }
                 else if (leagueReserveInfo[wantReserveDate].reserver == null)
                 {

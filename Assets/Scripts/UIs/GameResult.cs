@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -42,6 +43,8 @@ public class GameResult : MonoBehaviour
     readonly float resultDelay = 2f;
     [SerializeField] float curResultDelay;
     int lastTimeScale;
+    bool gameOver;
+    [SerializeField] SurvivorInfo gameOverSurvivorInfo;
 
     ReserveNotification notification;
 
@@ -78,6 +81,7 @@ public class GameResult : MonoBehaviour
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
         SetText(didPlayerParticipate, out int totalProfit);
         outGameUIManager.Money += totalProfit;
+        gameOver = outGameUIManager.Money < 0;
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
@@ -86,6 +90,7 @@ public class GameResult : MonoBehaviour
     int winPrize = 0;
     int killPrize = 0;
     int totalTreatmentCost = 0;
+    List<Injury> injuryNeedSurgery = new();
     void SetText(bool didPlayerParticipate, out int totalProfit)
     {
         totalProfit = 0;
@@ -231,6 +236,8 @@ public class GameResult : MonoBehaviour
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
             killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
             if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
+            
+            injuryNeedSurgery = new();
             for (int i = 0; i < treatments.Length; i++)
             {
                 if (i < playerSurvivor.injuries.Count + 1)
@@ -242,12 +249,17 @@ public class GameResult : MonoBehaviour
                             treatments[i].SetActive(false);
                             continue;
                         }
+                        treatments[i].SetActive(true);
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                         int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
                         treatments[i].GetComponentInChildren<Help>().SetDescription("");
                         totalTreatmentCost += cost;
-                        treatments[i].SetActive(true);
+                        // 이제 의체 수술할거 다 기록해놨다가 Exit 누르면 한 번에 함
+                        if (playerSurvivor.injuries[i].degree == 1)
+                        {
+                            injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
+                        }
                     }
                     else
                     {
@@ -388,21 +400,38 @@ public class GameResult : MonoBehaviour
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
             foreach (GameObject buried in survivor.burieds) PoolManager.Despawn(buried);
         }
-        if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
-        GameManager.Instance.inGameUICanvas.SetActive(false);
-        GameManager.Instance.outCanvas.SetActive(true);
-        GameManager.Instance.globalCanvas.SetActive(true);
-        if(!goTitle)
+
+        if(gameOver)
         {
-            GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
-            GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
-            notification?.Invoke();
-            // Auto save
-            GameManager.Instance.Save(0);
-            GameManager.Instance.Option.SetSaveButtonInteractable(true);
+            // 생존자 통계 보여주기
+            gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
         }
-        notification = null;
-        GameManager.Instance.DestroyBattleRoyaleManager();
+        else
+        {
+            // 여기서 수술
+            foreach (var injury in injuryNeedSurgery)
+            {
+                injury.type = InjuryType.AugmentedPartsTransplanted;
+                injury.degree = 0;
+            }
+
+            if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
+            GameManager.Instance.inGameUICanvas.SetActive(false);
+            GameManager.Instance.outCanvas.SetActive(true);
+            GameManager.Instance.globalCanvas.SetActive(true);
+            if(!goTitle)
+            {
+                GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+                GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
+                notification?.Invoke();
+                // Auto save
+                GameManager.Instance.Save(0);
+                GameManager.Instance.Option.SetSaveButtonInteractable(true);
+            }
+            notification = null;
+            GameManager.Instance.DestroyBattleRoyaleManager();
+        }
+
     }
 
     void LinkStastics()

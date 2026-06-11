@@ -1569,6 +1569,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359339
+  - m_Id: 134517934328967168
+    m_Localized: "Fin du d\xE9fi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Localized: "{param0} ne peut pas s'entra\xEEner en raison d'une blessure. Reposez-vous
+      ou administrez un S\xE9rum de r\xE9cup\xE9ration.\\n(R\xE9cup\xE9ration estim\xE9e
+      par le repos : {param1} jour(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 134541262687105024
+    m_Localized: "{param0} ne peut pas participer au Battle Royale en raison d'une
+      blessure. Reposez-vous ou administrez un S\xE9rum de r\xE9cup\xE9ration.\\n(R\xE9cup\xE9ration
+      estim\xE9e par le repos : {param1} jour(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 134541266474561536
+    m_Localized: "La blessure est compl\xE8tement gu\xE9rie."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1627,3 +1649,5 @@ MonoBehaviour:
         - id: 133832066710695936
         - id: 134191856368545792
         - id: 134207427822809088
+        - id: 134541259566542848
+        - id: 134541262687105024

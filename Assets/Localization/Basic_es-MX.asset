@@ -1555,6 +1555,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 4743152768665780226
+  - m_Id: 134517934328967168
+    m_Localized: "Finalizar Desaf\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Localized: "{param0} no puede entrenar debido a una lesi\xF3n. Descansa o administra
+      un Suero de Recuperaci\xF3n.\\n(Recuperaci\xF3n estimada con descanso: {param1}
+      d\xEDa(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 134541262687105024
+    m_Localized: "{param0} no puede participar en Battle Royale debido a una lesi\xF3n.
+      Descansa o administra un Suero de Recuperaci\xF3n.\\n(Recuperaci\xF3n estimada
+      con descanso: {param1} d\xEDa(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 134541266474561536
+    m_Localized: "La lesi\xF3n se ha recuperado por completo."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1613,3 +1635,5 @@ MonoBehaviour:
         - id: 133832066710695936
         - id: 134191856368545792
         - id: 134207427822809088
+        - id: 134541259566542848
+        - id: 134541262687105024

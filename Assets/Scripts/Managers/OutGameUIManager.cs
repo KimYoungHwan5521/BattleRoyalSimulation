@@ -532,9 +532,41 @@ public class OutGameUIManager : MonoBehaviour
     #region Training
     public void OpenTrainingRoom()
     {
-        trainingRoom.SetActive(true);
-        RelocalizeTrainingRoom();
-        GameManager.Instance.openedWindows.Push(trainingRoom);
+        if(CheckHaveInjury(out int expectedDateOfFullyRecovery))
+        {
+            Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+        }
+        else
+        {
+            trainingRoom.SetActive(true);
+            RelocalizeTrainingRoom();
+            GameManager.Instance.openedWindows.Push(trainingRoom);
+        }
+    }
+
+    public bool CheckHaveInjury(out int expectedDateOfFullyRecovery)
+    {
+        expectedDateOfFullyRecovery = 0;
+        float mostDegree = 0;
+        foreach(var injury in mySurvivorsData[0].injuries)
+        {
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged || injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged
+                || injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged)
+                continue;
+            if(injury.degree > mostDegree)
+            {
+                mostDegree = injury.degree;
+            }
+        }
+        if (mostDegree == 0) return false;
+
+        float recovery = 0;
+        float recoveryRate = 1;
+        if (mySurvivorsData[0].characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
+        else if (mySurvivorsData[0].characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
+        recovery = 0.2f * recoveryRate;
+        expectedDateOfFullyRecovery = (int)(mostDegree / recovery) + 1;
+        return true;
     }
 
     public void ResetTrainingRoom()
@@ -1487,15 +1519,21 @@ public class OutGameUIManager : MonoBehaviour
                 cost = injury.degree * 300;
                 break;
             case InjurySite.Head:
-            case InjurySite.RightEye:
-            case InjurySite.LeftEye:
-            case InjurySite.RightEar:
-            case InjurySite.LeftEar:
             case InjurySite.Cheek:
             case InjurySite.Neck:
             case InjurySite.Nose:
             case InjurySite.Jaw:
                 cost = injury.degree * 50;
+                break;
+            case InjurySite.RightEar:
+            case InjurySite.LeftEar:
+                cost = injury.degree * 50;
+                if (injury.degree == 1) cost += 100;
+                break;
+            case InjurySite.RightEye:
+            case InjurySite.LeftEye:
+                cost = injury.degree * 50;
+                if (injury.degree == 1) cost += 400;
                 break;
             case InjurySite.Chest:
             case InjurySite.Ribs:
@@ -1504,22 +1542,26 @@ public class OutGameUIManager : MonoBehaviour
                 break;
             case InjurySite.Organ:
                 cost = injury.degree * 300;
+                if (injury.degree == 1) cost += 600;
                 break;
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
                 cost = injury.degree * 100;
+                if (injury.degree == 1) cost += 500;
                 break;
             case InjurySite.RightArm:
             case InjurySite.LeftArm:
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
                 cost = injury.degree * 50;
+                if (injury.degree == 1) cost += 250;
                 break;
             case InjurySite.RightHand:
             case InjurySite.LeftHand:
             case InjurySite.RightFoot:
             case InjurySite.LeftFoot:
                 cost = injury.degree * 25;
+                if (injury.degree == 1) cost += 100;
                 break;
             case InjurySite.RightThumb:
             case InjurySite.RightIndexFinger:
@@ -1542,6 +1584,7 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.RightLittleToe:
             case InjurySite.LeftLittleToe:
                 cost = injury.degree * 10;
+                if (injury.degree == 1) cost += 10;
                 break;
             case InjurySite.None:
                 break;
@@ -2091,6 +2134,7 @@ public class OutGameUIManager : MonoBehaviour
     {
         foreach(SurvivorData survivor in mySurvivorsData)
         {
+            bool checkFullRecover = true;
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {
@@ -2102,18 +2146,21 @@ public class OutGameUIManager : MonoBehaviour
                     float recoveryRate = 1;
                     if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Sturdy) > -1) recoveryRate *= 1.5f;
                     else if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.Fragile) > -1) recoveryRate *= 0.7f;
-                    
-                    if (injury.degree > 0.9) recovery = (1 - injury.degree) * recoveryRate;
-                    else recovery = (0.1f + (1 - injury.degree) * 0.1f) * recoveryRate;
+
+                    //if (injury.degree > 0.9) recovery = (1 - injury.degree) * recoveryRate;
+                    //else recovery = (0.1f + (1 - injury.degree) * 0.1f) * recoveryRate;
+                    recovery = 0.2f * recoveryRate;
                     injury.degree -= recovery;
 
-                    if(injury.degree <= 0) fullyRecovered.Add(injury);
+                    if (injury.degree <= 0) fullyRecovered.Add(injury);
+                    else checkFullRecover = false;
                 }
             }
             foreach(Injury recovered in fullyRecovered)
             {
                 survivor.injuries.Remove(recovered);
             }
+            if (checkFullRecover) Alert("Alert:Fully Recovery");
         }
         ResetSelectedSurvivorInfo();
     }
@@ -2158,7 +2205,7 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 80 || totalRand > value * 120) && check < 1000)
+            if ((totalRand < value * 60 || totalRand > (value + 1) * 60) && check < 1000)
             {
                 check++;
                 continue;

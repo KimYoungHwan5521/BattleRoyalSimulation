@@ -1550,6 +1550,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359334
+  - m_Id: 134517934328967168
+    m_Localized: Encerrar Desafio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Localized: "{param0} n\xE3o pode treinar devido a uma les\xE3o. Descanse ou
+      administre um Soro de Recupera\xE7\xE3o.\\n(Recupera\xE7\xE3o estimada atrav\xE9s
+      do descanso: {param1} dia(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 134541262687105024
+    m_Localized: "{param0} n\xE3o pode participar no Battle Royale devido a uma les\xE3o.
+      Descanse ou administre um Soro de Recupera\xE7\xE3o.\\n(Recupera\xE7\xE3o estimada
+      atrav\xE9s do descanso: {param1} dia(s))"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359334
+  - m_Id: 134541266474561536
+    m_Localized: "A les\xE3o foi totalmente recuperada."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1608,3 +1630,5 @@ MonoBehaviour:
         - id: 133832066710695936
         - id: 134191856368545792
         - id: 134207427822809088
+        - id: 134541259566542848
+        - id: 134541262687105024

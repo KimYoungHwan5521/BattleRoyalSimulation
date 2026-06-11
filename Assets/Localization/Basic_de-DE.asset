@@ -1556,6 +1556,28 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359338
+  - m_Id: 134517934328967168
+    m_Localized: Herausforderung beenden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Localized: '{param0} kann aufgrund einer Verletzung nicht trainieren. Ruhe
+      dich aus oder verabreiche ein Genesungsserum.\n(Voraussichtliche Erholung durch
+      Ruhe: {param1} Tag(e))'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 134541262687105024
+    m_Localized: '{param0} kann aufgrund einer Verletzung nicht am Battle Royale
+      teilnehmen. Ruhe dich aus oder verabreiche ein Genesungsserum.\n(Voraussichtliche
+      Erholung durch Ruhe: {param1} Tag(e))'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 134541266474561536
+    m_Localized: "Die Verletzung ist vollst\xE4ndig verheilt."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1614,3 +1636,5 @@ MonoBehaviour:
         - id: 133832066710695936
         - id: 134191856368545792
         - id: 134207427822809088
+        - id: 134541259566542848
+        - id: 134541262687105024

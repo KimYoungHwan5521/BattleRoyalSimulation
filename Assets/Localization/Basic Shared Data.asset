@@ -1461,6 +1461,22 @@ MonoBehaviour:
     m_Key: Confirm:Rebook
     m_Metadata:
       m_Items: []
+  - m_Id: 134517934328967168
+    m_Key: End Challenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Key: Alert:Can't Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541262687105024
+    m_Key: Alert:Can't Battle Royale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541266474561536
+    m_Key: Alert:Fully Recovery
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

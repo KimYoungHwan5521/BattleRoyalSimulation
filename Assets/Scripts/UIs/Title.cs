@@ -19,6 +19,7 @@ public class Title : MonoBehaviour
     {
         GameManager.Instance.ResetData();
         title.SetActive(false);
+        GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.Option.SetSaveButtonInteractable(true);
     }
 

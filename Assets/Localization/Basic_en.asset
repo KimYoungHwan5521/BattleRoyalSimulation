@@ -1549,6 +1549,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 134517934328967168
+    m_Localized: End Challenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134541259566542848
+    m_Localized: '{param0} cannot train due to an injury. Rest or administer a Recovery
+      Serum.\n(Estimated recovery through rest: {param1} day(s))'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 134541262687105024
+    m_Localized: '{param0} cannot participate in the Battle Royale due to an injury.
+      Rest or administer a Recovery Serum.\n(Estimated recovery through rest: {param1}
+      day(s))'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 134541266474561536
+    m_Localized: Injury fully recovered.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1607,3 +1628,5 @@ MonoBehaviour:
         - id: 133832066710695936
         - id: 134191856368545792
         - id: 134207427822809088
+        - id: 134541259566542848
+        - id: 134541262687105024

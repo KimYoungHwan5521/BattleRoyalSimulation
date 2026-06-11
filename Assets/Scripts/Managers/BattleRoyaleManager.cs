@@ -367,6 +367,10 @@ public class BattleRoyaleManager
                 InGameUIManager.SetSurvivorRank(rankings[0], 0);
                 isBattleRoyaleStart = false;
             }
+            else if (survivor.playerSurvivor)
+            {
+                GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
+            }
         }
     }
 
