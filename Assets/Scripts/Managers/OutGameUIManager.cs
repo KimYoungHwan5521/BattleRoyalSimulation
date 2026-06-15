@@ -82,6 +82,7 @@ public class OutGameUIManager : MonoBehaviour
     const float trainingGreatSuccessRate = 0.1f;
     public int trainingLevel = 1;
     readonly int[] facilityUpgradeCost = new[]{ 5000, 10000, 15000, 20000, 25000, 30000 };
+    [SerializeField] TextMeshProUGUI resultText;
     [SerializeField] GameObject trainingResult;
     [SerializeField] TextMeshProUGUI trainingResultText;
     [SerializeField] TextMeshProUGUI trainingResultDetailText;
@@ -523,6 +524,7 @@ public class OutGameUIManager : MonoBehaviour
             value = Mathf.Min(value, 100 - mySurvivorsData[0].Stamina);
             mySurvivorsData[0].StaminaConsomtionReserve(-value);
             trainingResult.SetActive(true);
+            resultText.gameObject.SetActive(false);
             trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
             trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
             selectedSurvivor.StatIncreaseProduction();
@@ -604,6 +606,8 @@ public class OutGameUIManager : MonoBehaviour
         else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
         float rand = UnityEngine.Random.Range(0, 1f);
         trainingResult.SetActive(true);
+        resultText.gameObject.SetActive(true);
+        resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Training Results");
         if(rand < failRate)
         {
             // ½ÇÆÐ
@@ -957,6 +961,17 @@ public class OutGameUIManager : MonoBehaviour
         return false;
     }
 
+    void Surgery()
+    {
+        trainingResult.SetActive(true);
+        resultText.gameObject.SetActive(true);
+        resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Surgery Result");
+        trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
+        trainingResultDetailText.text = new LocalizedString("Injury", mySurvivorsData[0].localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", mySurvivorsData[0].surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
+        Surgery(mySurvivorsData[0]);
+        operatingRoom.SetActive(false);
+    }
+
     public void ScheduleSurgery()
     {
         if (surgeryList.Count == 0) return;
@@ -982,7 +997,7 @@ public class OutGameUIManager : MonoBehaviour
         survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
         survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
         survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
-        OpenConfirmWindow("Confirm:Schedule Surgery", ()=>
+        OpenConfirmWindow("Confirm:Surgery", ()=>
         {
             if(money < survivorWhoWantSurgery.scheduledSurgeryCost)
             {
@@ -993,7 +1008,8 @@ public class OutGameUIManager : MonoBehaviour
                 survivorWhoWantSurgery.surgeryScheduled = true;
                 Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
                 SelectSurvivorToSurgery();
-                Alert("Alert:Surgery has been scheduled.");
+                //Alert("Alert:Surgery has been scheduled.");
+                Surgery();
             }
         }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
     }
@@ -1958,7 +1974,7 @@ public class OutGameUIManager : MonoBehaviour
             //resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
             //resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
             index++;
-            Surgery(survivor);
+            //Surgery(survivor);
         }
         //selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
 

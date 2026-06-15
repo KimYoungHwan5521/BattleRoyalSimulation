@@ -1488,15 +1488,15 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359332
   - m_Id: 133809079345278976
-    m_Localized: "\xA1\xC9xito!"
+    m_Localized: "<color=#6DB21D>\xA1\xC9xito!"
     m_Metadata:
       m_Items: []
   - m_Id: 133809081316601856
-    m_Localized: Fallo
+    m_Localized: <color=#CD4135>Fallo
     m_Metadata:
       m_Items: []
   - m_Id: 133809242319155200
-    m_Localized: "\xA1Gran \xC9xito!"
+    m_Localized: "<color=#199845>\xA1Gran \xC9xito!"
     m_Metadata:
       m_Items: []
   - m_Id: 133819973634682880
@@ -1577,6 +1577,15 @@ MonoBehaviour:
     m_Localized: "La lesi\xF3n se ha recuperado por completo."
     m_Metadata:
       m_Items: []
+  - m_Id: 135927656617668608
+    m_Localized: "\xBFRealizar la cirug\xEDa?\\n{param0}: {param1} ($ {param2})"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 135927653132201984
+    m_Localized: "Realizar Cirug\xEDa"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1637,3 +1646,4 @@ MonoBehaviour:
         - id: 134207427822809088
         - id: 134541259566542848
         - id: 134541262687105024
+        - id: 135927656617668608

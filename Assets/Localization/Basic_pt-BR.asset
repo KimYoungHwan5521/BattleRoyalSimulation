@@ -1483,15 +1483,15 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359335
   - m_Id: 133809079345278976
-    m_Localized: Sucesso!
+    m_Localized: <color=#6DB21D>Sucesso!
     m_Metadata:
       m_Items: []
   - m_Id: 133809081316601856
-    m_Localized: Falha
+    m_Localized: <color=#CD4135>Falha
     m_Metadata:
       m_Items: []
   - m_Id: 133809242319155200
-    m_Localized: Grande Sucesso!
+    m_Localized: <color=#199845>Grande Sucesso!
     m_Metadata:
       m_Items: []
   - m_Id: 133819973634682880
@@ -1572,6 +1572,15 @@ MonoBehaviour:
     m_Localized: O ferimento foi totalmente recuperado.
     m_Metadata:
       m_Items: []
+  - m_Id: 135927656617668608
+    m_Localized: 'Realizar cirurgia?\n{param0}: {param1} ($ {param2})'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 135927653132201984
+    m_Localized: Realizar Cirurgia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1632,3 +1641,4 @@ MonoBehaviour:
         - id: 134207427822809088
         - id: 134541259566542848
         - id: 134541262687105024
+        - id: 135927656617668608

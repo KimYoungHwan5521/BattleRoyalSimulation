@@ -1488,15 +1488,15 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 133809079345278976
-    m_Localized: Erfolg!
+    m_Localized: <color=#6DB21D>Erfolg!
     m_Metadata:
       m_Items: []
   - m_Id: 133809081316601856
-    m_Localized: Fehlgeschlagen
+    m_Localized: <color=#CD4135>Fehlgeschlagen
     m_Metadata:
       m_Items: []
   - m_Id: 133809242319155200
-    m_Localized: "Gro\xDFer Erfolg!"
+    m_Localized: "<color=#199845>Gro\xDFer Erfolg!"
     m_Metadata:
       m_Items: []
   - m_Id: 133819973634682880
@@ -1578,6 +1578,15 @@ MonoBehaviour:
     m_Localized: "Die Verletzung ist vollst\xE4ndig verheilt."
     m_Metadata:
       m_Items: []
+  - m_Id: 135927656617668608
+    m_Localized: "Operation durchf\xFChren?\\n{param0}: {param1} ({param2} $)"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
+  - m_Id: 135927653132201984
+    m_Localized: "Operation durchf\xFChren"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1638,3 +1647,4 @@ MonoBehaviour:
         - id: 134207427822809088
         - id: 134541259566542848
         - id: 134541262687105024
+        - id: 135927656617668608
