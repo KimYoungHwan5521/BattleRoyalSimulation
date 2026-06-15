@@ -138,7 +138,7 @@ public class TrainingManager
         return trainings[0];
     }
     
-    static bool UnlockCheck(TrainingInfo training)
+    public static bool UnlockCheck(TrainingInfo training)
     {
         bool result;
         switch(training.trainingName.TableEntryReference.Key)

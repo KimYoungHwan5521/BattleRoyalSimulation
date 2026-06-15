@@ -522,7 +522,7 @@ public class OutGameUIManager : MonoBehaviour
             else if (rand < 0.8f) value = 50;
             else value = 70;
             value = Mathf.Min(value, 100 - mySurvivorsData[0].Stamina);
-            mySurvivorsData[0].StaminaConsomtionReserve(-value);
+            mySurvivorsData[0].StaminaConsomtionReserve(value);
             trainingResult.SetActive(true);
             resultText.gameObject.SetActive(false);
             trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
@@ -2150,7 +2150,9 @@ public class OutGameUIManager : MonoBehaviour
     {
         foreach(SurvivorData survivor in mySurvivorsData)
         {
-            bool checkFullRecover = true;
+            bool checkFullRecover = survivor.injuries.FindIndex(injury => injury.degree < 1 && injury.type != InjuryType.ArtificialPartsTransplanted && injury.type != InjuryType.ArtificialPartsDamaged
+                    && injury.type != InjuryType.AugmentedPartsTransplanted && injury.type != InjuryType.AugmentedPartsDamaged
+                    && injury.type != InjuryType.TranscendantPartsTransplanted && injury.type != InjuryType.TranscendantPartsDamaged) > -1;
             List<Injury> fullyRecovered = new();
             foreach(Injury injury in survivor.injuries)
             {

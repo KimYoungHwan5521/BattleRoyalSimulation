@@ -34,6 +34,7 @@ public class TrainingCard : MonoBehaviour
             trainingImage.sprite = ResourceManager.Get(sprite);
         }
         else trainingImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+        trainingImage.GetComponentInChildren<AspectRatioFitter>().aspectRatio = trainingImage.sprite.rect.width / trainingImage.sprite.rect.height;
         trainingExplain.text = training.GetTrainingExplain(false);
         int stamina = GameManager.Instance.OutGameUIManager.Stamina;
         float failRate = stamina < training.staminaConsumtion ? 1f : stamina < training.trainingDifficulty ? 1f - (float)stamina / training.trainingDifficulty : 0;

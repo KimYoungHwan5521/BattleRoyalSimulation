@@ -46,6 +46,7 @@ namespace ResourceEnum
         CraftableAllow,
         ImageBox,
         Characteristic,
+        Training,
 
         // In Game UI
         KillLog,

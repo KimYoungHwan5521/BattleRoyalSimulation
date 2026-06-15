@@ -9,6 +9,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Option : MonoBehaviour
 {
@@ -44,6 +45,12 @@ public class Option : MonoBehaviour
     [SerializeField] AutoNewLineLayoutGroup characteristicAutoNewlineLG;
     List<GameObject> characteristicBoxes = new();
 
+    [SerializeField] Image trainingTabBtn;
+    [SerializeField] GameObject tabTrainings;
+    [SerializeField] GameObject trainingTable;
+    [SerializeField] TMP_Dropdown sortBy_Training;
+    [SerializeField] List<GameObject> trainingBoxes = new();
+
     [Header("Buttons")]
     [SerializeField] GameObject resume;
     [SerializeField] Button saveButton;
@@ -77,6 +84,16 @@ public class Option : MonoBehaviour
         {
             this.localizeName = localizeName;
             this.rarity = rarity;
+        }
+    }
+
+    class TrainingDataForSort : MonoBehaviour
+    {
+        public TrainingInfo linkedTrainingInfo;
+
+        public void Set(TrainingInfo training)
+        {
+            linkedTrainingInfo = training;
         }
     }
 
@@ -145,8 +162,45 @@ public class Option : MonoBehaviour
             characteristicBox.AddComponent<CharacteristicDataForSort>().Set(CharacteristicManager.Characteristics[i].characteristicName, CharacteristicManager.Characteristics[i].rarity);
         }
         characteristicAutoNewlineLG.characteristicsBox = characteristicBoxes.ToArray();
-        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
-        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
+
+        // Trainings
+        for(int i=0; i < TrainingManager.Trainings.Count; i++)
+        {
+            GameObject trainingBox = PoolManager.Spawn(ResourceEnum.Prefab.Training, trainingTable.transform);
+            trainingBoxes.Add(trainingBox);
+            trainingBox.GetComponent<Image>().color = TrainingManager.Trainings[i].rarity switch
+            {
+                TrainingRarity.Common => new Color(0.2984f, 0.8483f, 0.9471f),
+                TrainingRarity.Uncommon => new Color(0.8050f, 0.2980f, 0.9490f),
+                TrainingRarity.Rare => new Color(0.9490f, 0.8036f, 0.2980f),
+                _ => new Color(1, 1, 1)
+            };
+            if (!TrainingManager.UnlockCheck(TrainingManager.Trainings[i])) trainingBox.GetComponentInChildren<Locked>(true).gameObject.SetActive(true);
+            trainingBox.AddComponent<TrainingDataForSort>().Set(TrainingManager.Trainings[i]);
+            TrainingInfo training = TrainingManager.Trainings[i];
+            trainingBox.GetComponentInChildren<LocalizeStringEvent>().StringReference = training.trainingName;
+            if(Enum.TryParse(training.trainingName.TableEntryReference.Key.Replace(" ", ""), out ResourceEnum.Sprite sprite))
+            {
+                trainingBox.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(sprite);
+            }
+            else
+            {
+                trainingBox.GetComponentsInChildren<Image>()[1].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+            }
+            trainingBox.GetComponentInChildren<AspectRatioFitter>().aspectRatio = trainingBox.GetComponentsInChildren<Image>()[1].sprite.rect.width / trainingBox.GetComponentsInChildren<Image>()[1].sprite.rect.height;
+            trainingBox.GetComponent<Help>().SetDescription(training.GetTrainingExplain(false));
+        }
+        sortBy_Training.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Training.options[1].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
+        sortBy_Training.options[2].text = new LocalizedString("Basic", "Strength").GetLocalizedString();
+        sortBy_Training.options[3].text = new LocalizedString("Basic", "Agility").GetLocalizedString();
+        sortBy_Training.options[4].text = new LocalizedString("Basic", "Fighting").GetLocalizedString();
+        sortBy_Training.options[5].text = new LocalizedString("Basic", "Shooting").GetLocalizedString();
+        sortBy_Training.options[6].text = new LocalizedString("Basic", "Crafting").GetLocalizedString();
+        sortBy_Training.options[7].text = new LocalizedString("Basic", "Knowledge").GetLocalizedString();
+        sortBy_Training.options[8].text = new LocalizedString("Basic", "Stat Total").GetLocalizedString();
 
         ChangeTab(0);
         encyclopedia.SetActive(false);
@@ -158,17 +212,31 @@ public class Option : MonoBehaviour
         {
             tabCharacteristics.SetActive(false);
             tabItems.SetActive(true);
+            tabTrainings.SetActive(false);
             viewCraftQuality.SetActive(true);
             itemTabBtn.color = new Color(0.75f, 1, 1);
             charTabBtn.color = new Color(1, 1, 1);
+            trainingTabBtn.color = new Color(1, 1, 1);
+        }
+        else if(index == 1)
+        {
+            tabItems.SetActive(false);
+            tabCharacteristics.SetActive(true);
+            tabTrainings.SetActive(false);
+            viewCraftQuality.SetActive(false);
+            itemTabBtn.color = new Color(1, 1, 1);
+            charTabBtn.color = new Color(0.75f, 1, 1);
+            trainingTabBtn.color = new Color(1, 1, 1);
         }
         else
         {
             tabItems.SetActive(false);
-            viewCraftQuality.SetActive(false);
-            tabCharacteristics.SetActive(true);
+            tabCharacteristics.SetActive(false);
+            tabTrainings.SetActive(true);
+            viewCraftQuality.SetActive(true);
             itemTabBtn.color = new Color(1, 1, 1);
-            charTabBtn.color = new Color(0.75f, 1, 1);
+            charTabBtn.color = new Color(1, 1, 1);
+            trainingTabBtn.color = new Color(0.75f, 1, 1);
         }
         characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
@@ -178,6 +246,7 @@ public class Option : MonoBehaviour
         var children = wantTable.transform.Cast<Transform>().ToList();
         List<Transform> sorted = null;
         // sort by - 0 : Item type, 1 : Knowledge required for crafting, 2 : Name, 3 : Rarity
+        // 4~9 : Strength, Agility, Fighting, Shooting, Crafting, Knowledge, 10: Stat total
         switch (sortBy)
         {
             case 0:
@@ -188,10 +257,63 @@ public class Option : MonoBehaviour
                 break;
             case 2:
                 if (wantTable == itemTable) sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().localizeName.GetLocalizedString()).ToList();
-                else sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().localizeName.GetLocalizedString()).ToList();
+                else if(wantTable == characteristicTable) sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().localizeName.GetLocalizedString()).ToList();
+                else sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.trainingName.GetLocalizedString()).ToList();
                 break;
             case 3:
-                sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().rarity).ToList();
+                if (wantTable == characteristicTable) sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().rarity).ToList();
+                else sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.rarity).ToList();
+                break;
+            case 4:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 0) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 0).Item2;
+                }).ToList();
+                break;
+            case 5:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 1) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 1).Item2;
+                }).ToList();
+                break;
+            case 6:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 2) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 2).Item2;
+                }).ToList();
+                break;
+            case 7:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 3) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 3).Item2;
+                }).ToList();
+                break;
+            case 8:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 4) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 4).Item2;
+                }).ToList();
+                break;
+            case 9:
+                sorted = children.OrderByDescending(x =>
+                {
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    return training.increaseStats.FindIndex(y => y.Item1 == 5) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 5).Item2;
+                }).ToList();
+                break;
+            case 10:
+                sorted = children.OrderByDescending(x =>
+                {
+                    int total = 0;
+                    TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
+                    foreach(var stat in training.increaseStats) total += stat.Item2;
+                    return total;
+                }).ToList();
                 break;
         }
         for (int i = 0; i < sorted.Count; i++)
@@ -222,10 +344,15 @@ public class Option : MonoBehaviour
             wantTable = itemTable;
             sortingOrder = sortBy.value;
         }
-        else
+        else if (table == 1)
         {
             wantTable = characteristicTable;
-            sortingOrder = sortBy_Characteristic.value == 1 ? 2 : 3;
+            sortingOrder = sortBy_Characteristic.value + 1;
+        }
+        else
+        {
+            wantTable = trainingTable;
+            sortingOrder = sortBy_Training.value + 2;
         }
         SortTable(wantTable, sortingOrder);
     }
@@ -279,6 +406,8 @@ public class Option : MonoBehaviour
     {
         encyclopedia.SetActive(true);
         characteristicAutoNewlineLG.ArrangeCharacteristics();
+        for(int i=0; i<characteristicBoxes.Count; i++) characteristicBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!CharacteristicManager.UnlockCheck(CharacteristicManager.Characteristics[i].type));
+        for(int i=0; i<trainingBoxes.Count; i++) trainingBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!TrainingManager.UnlockCheck(TrainingManager.Trainings[i]));
         GameManager.Instance.openedWindows.Push(encyclopedia);
     }
 
@@ -422,9 +551,19 @@ public class Option : MonoBehaviour
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
         sortBy.options[2].text = new LocalizedString("Basic", "Name").GetLocalizedString();
         sortBy.captionText.text = sortBy.options[sortBy.value].text;
-        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
-        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Characteristic.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Characteristic.options[1].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
         sortBy_Characteristic.captionText.text = sortBy_Characteristic.options[sortBy_Characteristic.value].text;
+        sortBy_Training.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Training.options[1].text = new LocalizedString("Basic", "Rarity").GetLocalizedString();
+        sortBy_Training.options[2].text = new LocalizedString("Basic", "Strength").GetLocalizedString();
+        sortBy_Training.options[3].text = new LocalizedString("Basic", "Agility").GetLocalizedString();
+        sortBy_Training.options[4].text = new LocalizedString("Basic", "Fighting").GetLocalizedString();
+        sortBy_Training.options[5].text = new LocalizedString("Basic", "Shooting").GetLocalizedString();
+        sortBy_Training.options[6].text = new LocalizedString("Basic", "Crafting").GetLocalizedString();
+        sortBy_Training.options[7].text = new LocalizedString("Basic", "Knowledge").GetLocalizedString();
+        sortBy_Training.options[8].text = new LocalizedString("Basic", "Stat Total").GetLocalizedString();
+        sortBy_Training.captionText.text = sortBy_Training.options[sortBy_Training.value].text;
         characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 }

@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (!gameReady) return;
-        //SteamAPI.RunCallbacks(); // 필수!
+        SteamAPI.RunCallbacks(); // 필수!
 
         ManagerStart?.Invoke();
         ManagerStart = null;

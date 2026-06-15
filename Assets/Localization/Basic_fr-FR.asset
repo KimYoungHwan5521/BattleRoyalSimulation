@@ -1601,6 +1601,10 @@ MonoBehaviour:
     m_Localized: "Effectuer une op\xE9ration"
     m_Metadata:
       m_Items: []
+  - m_Id: 135930480466391040
+    m_Localized: "Entra\xEEnement"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -45,6 +45,7 @@ public class ResourcesPath
         "Prefabs/UIs/CraftableAllow",
         "Prefabs/UIs/ImageBox",
         "Prefabs/UIs/Characteristic",
+        "Prefabs/UIs/Training",
 
         // In Game UI
         "Prefabs/UIs/KillLog",

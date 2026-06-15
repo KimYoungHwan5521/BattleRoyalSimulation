@@ -1579,6 +1579,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
+  - m_Id: 135930480466391040
+    m_Localized: Training
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
