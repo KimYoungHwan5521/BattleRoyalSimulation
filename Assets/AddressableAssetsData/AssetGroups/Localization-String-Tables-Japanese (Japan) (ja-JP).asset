@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja-JP
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 811bc7bdb322a7b43a9c4582d97c3bac
+    m_Address: Achievement_ja-JP
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja-JP
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 827765644af417248843cc32c72a38c0
     m_Address: Injury_ja-JP
     m_ReadOnly: 1

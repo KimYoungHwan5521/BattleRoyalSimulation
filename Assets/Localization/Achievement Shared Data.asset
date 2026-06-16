@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Achievement Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Achievement
+  m_TableCollectionNameGuidString: 95543fac3d246164885b7d70a7826d96
+  m_Entries:
+  - m_Id: 46055092224
+    m_Key: Hundred-Thousandaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48479399936
+    m_Key: Royal Loader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50731741184
+    m_Key: Bronze Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53319626752
+    m_Key: Silver Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55504859136
+    m_Key: Gold Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826906238976
+    m_Key: Help:Hundred-Thousandaire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1830492368896
+    m_Key: Help:Royal Loader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1832136536064
+    m_Key: Help:Bronze Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833239638016
+    m_Key: Help:Silver Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834317574144
+    m_Key: Help:Gold Cup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2840312999936
+    m_Key: Season Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2841386741760
+    m_Key: World Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2842225602560
+    m_Key: Melee Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2843232235520
+    m_Key: Shooting Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2844385669120
+    m_Key: Crafting Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188945313792
+    m_Key: Help:Season Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190153273344
+    m_Key: Help:World Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4191231209472
+    m_Key: Help:Melee Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4192405614592
+    m_Key: Help:Shooting Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4193655517184
+    m_Key: Help:Crafting Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5308426022912
+    m_Key: Bloody Hands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5310162464768
+    m_Key: Help:Bloody Hands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311609499648
+    m_Key: Bloody Arms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5313132032000
+    m_Key: Help:Bloody Arms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5314604232704
+    m_Key: Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6856858202112
+    m_Key: Help:Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6860943454208
+    m_Key: Notorious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6862390489088
+    m_Key: Help:Notorious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8018785267712
+    m_Key: Tactician
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8020324577280
+    m_Key: Help:Tactician
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8024611155968
+    m_Key: Legend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8026930606080
+    m_Key: Help:Legend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9203399323648
+    m_Key: Vulture Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9205437755392
+    m_Key: Help:Vulture Victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9208088555520
+    m_Key: Experience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9210408005632
+    m_Key: Help:Experience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10529038462976
+    m_Key: Powerhouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10530586161152
+    m_Key: Help:Powerhouse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10531458576384
+    m_Key: Quick-Footed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10532230328320
+    m_Key: Help:Quick-Footed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16080581488640
+    m_Key: Martial Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081755893760
+    m_Key: Help:Martial Artist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16082661863424
+    m_Key: Sharpshooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16083366506496
+    m_Key: Help:Sharpshooter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17130667438080
+    m_Key: Genius
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17131795705856
+    m_Key: Help:Genius
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17132873641984
+    m_Key: Foreman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17133788000256
+    m_Key: Help:Foreman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18239918239744
+    m_Key: Craftsman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18240689991680
+    m_Key: Help:Craftsman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18241625321472
+    m_Key: Sun Tzu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18242409656320
+    m_Key: Help:Sun Tzu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19936086388736
+    m_Key: Overcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937025912832
+    m_Key: Help:Overcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937827024896
+    m_Key: 1 hour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19938804297728
+    m_Key: Help:1 hour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349541670912
+    m_Key: Viper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21350401503232
+    m_Key: Help:Viper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351089369088
+    m_Key: Bruce Lee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351961784320
+    m_Key: Help:Bruce Lee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22635024543744
+    m_Key: Lethal Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22636740014080
+    m_Key: Help:Lethal Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22638623256576
+    m_Key: Gunslinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22640833654784
+    m_Key: Help:Gunslinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22643543175168
+    m_Key: Sword Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23546367111168
+    m_Key: Help:Sword Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23548950802432
+    m_Key: Sniper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23550058098688
+    m_Key: Help:Sniper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24240528617472
+    m_Key: Ace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24241740771328
+    m_Key: Help:Ace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24546255630336
+    m_Key: Severe Bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547207737344
+    m_Key: Help:Severe Bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547862048768
+    m_Key: Masterpiece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24548642189312
+    m_Key: Help:Masterpiece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28851666743296
+    m_Key: Augmented Prosthetic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28853348659200
+    m_Key: Help:Augmented Prosthetic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28854762139648
+    m_Key: Transcendent Prosthetic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28855332564992
+    m_Key: Help:Transcendent Prosthetic
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5302915262523637762
+  references:
+    version: 2
+    RefIds:
+    - rid: 5302915262523637762
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1781614267584

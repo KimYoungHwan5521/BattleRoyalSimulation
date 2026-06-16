@@ -46,6 +46,7 @@ public class ResourcesPath
         "Prefabs/UIs/ImageBox",
         "Prefabs/UIs/Characteristic",
         "Prefabs/UIs/Training",
+        "Prefabs/UIs/Achievement",
 
         // In Game UI
         "Prefabs/UIs/KillLog",

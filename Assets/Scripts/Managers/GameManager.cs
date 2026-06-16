@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour
     TrainingManager trainingManager;
     public TrainingManager TrainingManager => trainingManager;
 
+    AchievementUIManager achievementUIManager;
+    public AchievementUIManager AchievementUIManager => achievementUIManager;
+
     OutGameUIManager outGameUIManger;
     public OutGameUIManager OutGameUIManager => outGameUIManger;
     Calendar calendar;
@@ -101,6 +104,8 @@ public class GameManager : MonoBehaviour
         yield return itemManager.Initiate();
         trainingManager = new TrainingManager();
         yield return trainingManager.Initiate();
+        achievementUIManager = new AchievementUIManager();
+        yield return achievementUIManager.Initiate();
 
         title.title.SetActive(true);
         outGameUIManger = GetComponent<OutGameUIManager>();

@@ -34,9 +34,9 @@ public class Help : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         GameManager.Instance.description.SetActive(false);
     }
 
-    public void SetDescription(string description)
+    public void SetDescription(string description, bool raw = true)
     {
-        raw = true;
+        this.raw = raw;
         this.description = description;
     }
 

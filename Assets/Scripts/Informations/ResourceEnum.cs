@@ -47,6 +47,7 @@ namespace ResourceEnum
         ImageBox,
         Characteristic,
         Training,
+        Achievement,
 
         // In Game UI
         KillLog,

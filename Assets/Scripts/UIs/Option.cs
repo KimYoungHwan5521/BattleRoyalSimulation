@@ -8,6 +8,8 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
@@ -34,10 +36,10 @@ public class Option : MonoBehaviour
     [SerializeField] GameObject tabItems;
     [SerializeField] GameObject itemTable;
     [SerializeField] TMP_Dropdown sortBy;
-    [SerializeField] GameObject viewCraftQuality;
     [SerializeField] TMP_Dropdown craftQualityDropdown;
     List<GameObject> itemBoxes = new();
 
+    [Space(10)]
     [SerializeField] Image charTabBtn;
     [SerializeField] GameObject tabCharacteristics;
     [SerializeField] GameObject characteristicTable;
@@ -45,11 +47,19 @@ public class Option : MonoBehaviour
     [SerializeField] AutoNewLineLayoutGroup characteristicAutoNewlineLG;
     List<GameObject> characteristicBoxes = new();
 
+    [Space(10)]
     [SerializeField] Image trainingTabBtn;
     [SerializeField] GameObject tabTrainings;
     [SerializeField] GameObject trainingTable;
     [SerializeField] TMP_Dropdown sortBy_Training;
     [SerializeField] List<GameObject> trainingBoxes = new();
+
+    [Space(10)]
+    [SerializeField] Image achievementsTabBtn;
+    [SerializeField] GameObject tabAchievements;
+    [SerializeField] GameObject achievementsTable;
+    [SerializeField] TMP_Dropdown sortBy_Achievement;
+    [SerializeField] List<GameObject> achievementsBoxes;
 
     [Header("Buttons")]
     [SerializeField] GameObject resume;
@@ -94,6 +104,16 @@ public class Option : MonoBehaviour
         public void Set(TrainingInfo training)
         {
             linkedTrainingInfo = training;
+        }
+    }
+
+    class AchievementDataForSort : MonoBehaviour
+    {
+        public AchievementUIManager.AchievementInfo linkedAchievementInfo;
+
+        public void Set(AchievementUIManager.AchievementInfo achievementInfo)
+        {
+            this.linkedAchievementInfo = achievementInfo;
         }
     }
 
@@ -202,42 +222,66 @@ public class Option : MonoBehaviour
         sortBy_Training.options[7].text = new LocalizedString("Basic", "Knowledge").GetLocalizedString();
         sortBy_Training.options[8].text = new LocalizedString("Basic", "Stat Total").GetLocalizedString();
 
+        // Achievements
+        for(int i=0; i<AchievementUIManager.AchievementInfos.Count; i++)
+        {
+            GameObject achievementBox = PoolManager.Spawn(ResourceEnum.Prefab.Achievement, achievementsTable.transform);
+            achievementsBoxes.Add(achievementBox);
+            achievementBox.AddComponent<AchievementDataForSort>().Set(AchievementUIManager.AchievementInfos[i]);
+            AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos[i];
+            achievementBox.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString("Achievement", achievement.achievementKey);
+            if(!achievement.statsKey.Equals(""))
+            {
+                // 진척도
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStat()} / {achievement.goalStat})";
+                achievementBox.GetComponentsInChildren<Image>()[^1].fillAmount = (float)achievement.GetCurrentStat() / achievement.goalStat;
+            }
+            else
+            {
+                achievementBox.GetComponentsInChildren<Image>()[3].gameObject.SetActive(false);
+            }
+            // 해금요소
+            if(!achievement.unlockElementName.Equals(""))
+            {
+                string unlockElement = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Basic", "Characteristic").GetLocalizedString() : new LocalizedString("Basic", "Training").GetLocalizedString();
+                string unlockElementDetail = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Characteristic", achievement.unlockElementName).GetLocalizedString() : new LocalizedString("Training", achievement.unlockElementName).GetLocalizedString();
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[2].text = $"{new LocalizedString("Basic", "Unlock").GetLocalizedString()} : {unlockElement} - {unlockElementDetail}";
+            }
+            else
+            {
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[2].gameObject.SetActive(false);
+            }
+            // 해금일
+            if(SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achievedTime) && achived)
+            {
+                DateTime date = DateTimeOffset.FromUnixTimeSeconds(achievedTime).LocalDateTime;
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"{new LocalizedString("Basic", "Unlock Date").GetLocalizedString()} : {date:yyyy-mm-dd}";
+            }
+            else
+            {
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"({new LocalizedString("Basic", "Locked").GetLocalizedString()})";
+            }
+            achievementBox.GetComponent<Help>().SetDescription(new LocalizedString("Achievement", $"Help:{achievement.achievementKey}").GetLocalizedString());
+            sortBy_Achievement.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+            sortBy_Achievement.options[1].text = new LocalizedString("Basic", "Unlock Date").GetLocalizedString();
+        }
+        
         ChangeTab(0);
         encyclopedia.SetActive(false);
     }
 
     public void ChangeTab(int index)
     {
-        if(index == 0)
-        {
-            tabCharacteristics.SetActive(false);
-            tabItems.SetActive(true);
-            tabTrainings.SetActive(false);
-            viewCraftQuality.SetActive(true);
-            itemTabBtn.color = new Color(0.75f, 1, 1);
-            charTabBtn.color = new Color(1, 1, 1);
-            trainingTabBtn.color = new Color(1, 1, 1);
-        }
-        else if(index == 1)
-        {
-            tabItems.SetActive(false);
-            tabCharacteristics.SetActive(true);
-            tabTrainings.SetActive(false);
-            viewCraftQuality.SetActive(false);
-            itemTabBtn.color = new Color(1, 1, 1);
-            charTabBtn.color = new Color(0.75f, 1, 1);
-            trainingTabBtn.color = new Color(1, 1, 1);
-        }
-        else
-        {
-            tabItems.SetActive(false);
-            tabCharacteristics.SetActive(false);
-            tabTrainings.SetActive(true);
-            viewCraftQuality.SetActive(true);
-            itemTabBtn.color = new Color(1, 1, 1);
-            charTabBtn.color = new Color(1, 1, 1);
-            trainingTabBtn.color = new Color(0.75f, 1, 1);
-        }
+        tabItems.SetActive(index == 0);
+        tabCharacteristics.SetActive(index == 1);
+        tabTrainings.SetActive(index == 2);
+        tabAchievements.SetActive(index == 3);
+
+        itemTabBtn.color = new Color(index == 0 ? 0.75f : 1, 1, 1);
+        charTabBtn.color = new Color(index == 1 ? 0.75f : 1, 1, 1);
+        trainingTabBtn.color = new Color(index == 2 ? 0.75f : 1, 1, 1);
+        achievementsTabBtn.color = new Color(index == 3 ? 0.75f : 1, 1, 1);
+
         characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 
@@ -247,6 +291,7 @@ public class Option : MonoBehaviour
         List<Transform> sorted = null;
         // sort by - 0 : Item type, 1 : Knowledge required for crafting, 2 : Name, 3 : Rarity
         // 4~9 : Strength, Agility, Fighting, Shooting, Crafting, Knowledge, 10: Stat total
+        // 11 : Unlock date
         switch (sortBy)
         {
             case 0:
@@ -258,7 +303,8 @@ public class Option : MonoBehaviour
             case 2:
                 if (wantTable == itemTable) sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().localizeName.GetLocalizedString()).ToList();
                 else if(wantTable == characteristicTable) sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().localizeName.GetLocalizedString()).ToList();
-                else sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.trainingName.GetLocalizedString()).ToList();
+                else if(wantTable == achievementsTable) sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.trainingName.GetLocalizedString()).ToList();
+                else sorted = children.OrderBy(x => new LocalizedString("Achievement", x.GetComponent<AchievementDataForSort>().linkedAchievementInfo.achievementKey).GetLocalizedString()).ToList();
                 break;
             case 3:
                 if (wantTable == characteristicTable) sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().rarity).ToList();
@@ -315,6 +361,17 @@ public class Option : MonoBehaviour
                     return total;
                 }).ToList();
                 break;
+            case 11:
+                sorted = children.OrderBy(x => 
+                {
+                    var achievement = x.GetComponent<AchievementDataForSort>().linkedAchievementInfo;
+                    if (SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achievedTime) && achived)
+                    {
+                        return (int)achievedTime;
+                    }
+                    else return -1;
+                }).ToList();
+                break;
         }
         for (int i = 0; i < sorted.Count; i++)
         {
@@ -349,10 +406,15 @@ public class Option : MonoBehaviour
             wantTable = characteristicTable;
             sortingOrder = sortBy_Characteristic.value + 1;
         }
-        else
+        else if (table == 2)
         {
             wantTable = trainingTable;
             sortingOrder = sortBy_Training.value + 2;
+        }
+        else
+        {
+            wantTable = achievementsTable;
+            sortingOrder = sortBy_Achievement.value == 0 ? 2 : 11;
         }
         SortTable(wantTable, sortingOrder);
     }
@@ -546,6 +608,33 @@ public class Option : MonoBehaviour
         {
             itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType);
         }
+        foreach (var achievementBox in achievementsBoxes)
+        {
+            var achievement = achievementBox.GetComponent<AchievementDataForSort>().linkedAchievementInfo;
+            // 해금요소
+            if (!achievement.unlockElementName.Equals(""))
+            {
+                string unlockElement = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Basic", "Characteristic").GetLocalizedString() : new LocalizedString("Basic", "Training").GetLocalizedString();
+                string unlockElementDetail = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Characteristic", achievement.unlockElementName).GetLocalizedString() : new LocalizedString("Training", achievement.unlockElementName).GetLocalizedString();
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[2].text = $"{new LocalizedString("Basic", "Unlock").GetLocalizedString()} : {unlockElement} - {unlockElementDetail}";
+            }
+            else
+            {
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[2].gameObject.SetActive(false);
+            }
+            // 해금일
+            if (SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achivedTime) && achived)
+            {
+                DateTime date = DateTimeOffset.FromUnixTimeSeconds(achivedTime).LocalDateTime;
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"{new LocalizedString("Basic", "Unlock Date").GetLocalizedString()} : {date:yyyy-mm-dd}";
+
+            }
+            else
+            {
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"({new LocalizedString("Basic", "Locked").GetLocalizedString()})";
+            }
+            achievementBox.GetComponent<Help>().SetDescription(new LocalizedString("Achievement", $"Help:{achievement.achievementKey}").GetLocalizedString());
+        }
         ReloadSavedata();
         sortBy.options[0].text = new LocalizedString("Basic", "Item Type").GetLocalizedString();
         sortBy.options[1].text = new LocalizedString("Item", "Required Knowledge").GetLocalizedString();
@@ -564,6 +653,9 @@ public class Option : MonoBehaviour
         sortBy_Training.options[7].text = new LocalizedString("Basic", "Knowledge").GetLocalizedString();
         sortBy_Training.options[8].text = new LocalizedString("Basic", "Stat Total").GetLocalizedString();
         sortBy_Training.captionText.text = sortBy_Training.options[sortBy_Training.value].text;
+        sortBy_Achievement.options[0].text = new LocalizedString("Basic", "Name").GetLocalizedString();
+        sortBy_Achievement.options[1].text = new LocalizedString("Basic", "Unlock Date").GetLocalizedString();
+        sortBy_Achievement.captionText.text = sortBy_Achievement.options[sortBy_Achievement.value].text;
         characteristicAutoNewlineLG.ArrangeCharacteristics();
     }
 }

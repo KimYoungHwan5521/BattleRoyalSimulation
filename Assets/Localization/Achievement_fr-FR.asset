@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Achievement_fr-FR
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr-FR
+  m_SharedData: {fileID: 11400000, guid: 95543fac3d246164885b7d70a7826d96, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 46055092224
+    m_Localized: "Cent-milli\xE8me"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48479399936
+    m_Localized: Parcours royal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50731741184
+    m_Localized: Coupe de bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53319626752
+    m_Localized: "Coupe d\u2019argent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55504859136
+    m_Localized: "Coupe d\u2019or"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826906238976
+    m_Localized: "D\xE9tenir 100 000 $"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1830492368896
+    m_Localized: "Gagner le championnat du monde sans d\xE9faite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1832136536064
+    m_Localized: Gagner la ligue de bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833239638016
+    m_Localized: "Gagner la ligue d\u2019argent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834317574144
+    m_Localized: "Gagner la ligue d\u2019or"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2840312999936
+    m_Localized: Champion de la saison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2841386741760
+    m_Localized: Champion du monde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2842225602560
+    m_Localized: "Champion de m\xEAl\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2843232235520
+    m_Localized: Champion de tir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2844385669120
+    m_Localized: Champion de fabrication
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188945313792
+    m_Localized: Gagner le championnat de la saison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190153273344
+    m_Localized: Gagner le championnat du monde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4191231209472
+    m_Localized: "Gagner la ligue de m\xEAl\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4192405614592
+    m_Localized: Gagner la ligue de tir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4193655517184
+    m_Localized: "Gagner la ligue d\u2019artisanat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5308426022912
+    m_Localized: "Mains ensanglant\xE9es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5310162464768
+    m_Localized: "10 \xE9lim."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311609499648
+    m_Localized: "Bras ensanglant\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5313132032000
+    m_Localized: "100 \xE9lim."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5314604232704
+    m_Localized: Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6856858202112
+    m_Localized: "5 \xE9lim. en un match"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6862390489088
+    m_Localized: "30 \xE9lim. avec un survivant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6860943454208
+    m_Localized: Notoire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8018785267712
+    m_Localized: Tacticien
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8020324577280
+    m_Localized: 10 victoires
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8024611155968
+    m_Localized: "L\xE9gende"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8026930606080
+    m_Localized: Gagnez toutes les ligues avec un seul survivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9203399323648
+    m_Localized: Opportuniste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9205437755392
+    m_Localized: Gagner sans tuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9208088555520
+    m_Localized: "Exp\xE9rience"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9210408005632
+    m_Localized: "10 d\xE9faites"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10529038462976
+    m_Localized: Colosse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10530586161152
+    m_Localized: Atteindre 100 en force
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10531458576384
+    m_Localized: Pied rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10532230328320
+    m_Localized: "Atteindre 100 en Agilit\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16080581488640
+    m_Localized: Artiste martial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081755893760
+    m_Localized: "Atteindre 100 en Combat rapproch\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16082661863424
+    m_Localized: "Tireur d\u2019\xE9lite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16083366506496
+    m_Localized: Atteindre 100 en Tir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17131795705856
+    m_Localized: Atteindre 100 en Connaissance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17130667438080
+    m_Localized: "G\xE9nie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17132873641984
+    m_Localized: "Contrema\xEEtre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17133788000256
+    m_Localized: "100 objets cr\xE9\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18239918239744
+    m_Localized: Artisan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18241625321472
+    m_Localized: Sun Tzu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18240689991680
+    m_Localized: 10 objets (1 survivant)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18242409656320
+    m_Localized: "Tuez les ennemis avec des pi\xE8ges"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19936086388736
+    m_Localized: Surmonter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937827024896
+    m_Localized: 1 heure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19938804297728
+    m_Localized: "Dur\xE9e totale de survie 1 heure \xE9coul\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937025912832
+    m_Localized: "Victoire avec traits \"Maudit en comp\xE8t\u2019\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349541670912
+    m_Localized: "Vip\xE8re"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21350401503232
+    m_Localized: Tuer un ennemi avec du poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351089369088
+    m_Localized: Jean-Claude Van Damme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351961784320
+    m_Localized: "30 \xE9liminations \xE0 mains nues"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22635024543744
+    m_Localized: Arme fatale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22636740014080
+    m_Localized: "30 \xE9liminations avec des armes de m\xEAl\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22638623256576
+    m_Localized: "Tireur d\u2019\xE9lite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22640833654784
+    m_Localized: "30 \xE9liminations avec des armes \xE0 distance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22643543175168
+    m_Localized: "Ma\xEEtre d\u2019\xE9p\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23546367111168
+    m_Localized: "10 \xE9liminations avec une \xE9p\xE9e longue"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23548950802432
+    m_Localized: "Tireur d\u2019\xE9lite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23550058098688
+    m_Localized: "10 \xE9liminations avec un fusil de sniper"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24240528617472
+    m_Localized: As
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24241740771328
+    m_Localized: "\xC9liminer tous les ennemis seul"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24546255630336
+    m_Localized: "H\xE9morragie grave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547207737344
+    m_Localized: "Hors de combat \xE0 cause d'une h\xE9morragie grave"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547862048768
+    m_Localized: "Chef-d\u2019\u0153uvre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24548642189312
+    m_Localized: "Fabriquer un objet de qualit\xE9 Chef-d\u2019\u0153uvre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28851666743296
+    m_Localized: "Proth\xE8se augment\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28853348659200
+    m_Localized: "Greffe de proth\xE8se augment\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28854762139648
+    m_Localized: "Proth\xE8se transcendante"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28855332564992
+    m_Localized: "Greffe de proth\xE8se transcendante"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

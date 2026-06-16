@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-es-MX
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e69460973cd28f4986ff36feaf8b58a
+    m_Address: Achievement_es-MX
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es-MX
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: af89134f6e79ac04299463fac9063487
     m_Address: Characteristic_es-MX
     m_ReadOnly: 1

@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Achievement_pt-PT
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: pt-PT
+  m_SharedData: {fileID: 11400000, guid: 95543fac3d246164885b7d70a7826d96, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 46055092224
+    m_Localized: Centena de milhar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48479399936
+    m_Localized: Caminho Real
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50731741184
+    m_Localized: "Ta\xE7a de Bronze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53319626752
+    m_Localized: "Ta\xE7a de Prata"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55504859136
+    m_Localized: "Ta\xE7a de Ouro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826906238976
+    m_Localized: Segure $ 100.000
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1830492368896
+    m_Localized: Vencer o Campeonato Mundial sem derrotas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1832136536064
+    m_Localized: Vencer a Liga de Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833239638016
+    m_Localized: Vencer a Liga de Prata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834317574144
+    m_Localized: Vencer a Liga de Ouro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2840312999936
+    m_Localized: "Campe\xE3o da Temporada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2841386741760
+    m_Localized: "Campe\xE3o Mundial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2842225602560
+    m_Localized: "Campe\xE3o de Combate Corpo a Corpo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2843232235520
+    m_Localized: "Campe\xE3o de Tiro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2844385669120
+    m_Localized: "Campe\xE3o de Cria\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188945313792
+    m_Localized: Vencer o Campeonato da Temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190153273344
+    m_Localized: Vencer o Campeonato Mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4191231209472
+    m_Localized: Vencer a liga de combate corpo a corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4192405614592
+    m_Localized: Vencer a liga de tiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4193655517184
+    m_Localized: "Vencer a liga de cria\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5310162464768
+    m_Localized: 10 abates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5308426022912
+    m_Localized: "M\xE3os Ensanguentadas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311609499648
+    m_Localized: "Bra\xE7os Ensanguentados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5313132032000
+    m_Localized: 100 abates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5314604232704
+    m_Localized: Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6860943454208
+    m_Localized: "Not\xF3rio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6862390489088
+    m_Localized: 30 abates com 1 sobrevivente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6856858202112
+    m_Localized: 5 abates numa partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8018785267712
+    m_Localized: "T\xE1tico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8020324577280
+    m_Localized: "10 vit\xF3rias totais"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8024611155968
+    m_Localized: Lenda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8026930606080
+    m_Localized: "Ganha todas as ligas com um \xFAnico sobrevivente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9203399323648
+    m_Localized: "Vit\xF3ria Oportuna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9205437755392
+    m_Localized: sem abates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9208088555520
+    m_Localized: "Experi\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9210408005632
+    m_Localized: 10 derrotas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10529038462976
+    m_Localized: Brutamontes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10530586161152
+    m_Localized: "Alcan\xE7ar 100 for\xE7a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10531458576384
+    m_Localized: "P\xE9 leve"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10532230328320
+    m_Localized: "Alcan\xE7ar 100 Agilidade"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16080581488640
+    m_Localized: Artista marcial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081755893760
+    m_Localized: "Alcan\xE7ar 100 Combate corpo a corpo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16082661863424
+    m_Localized: "Atirador ex\xEDmio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16083366506496
+    m_Localized: "Alcan\xE7ar 100 Tiro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17130667438080
+    m_Localized: "G\xEAnio"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17131795705856
+    m_Localized: "Alcan\xE7ar 100 Conhecimento"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17132873641984
+    m_Localized: "Chefe de F\xE1brica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17133788000256
+    m_Localized: "100 cria\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18239918239744
+    m_Localized: "Artes\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18241625321472
+    m_Localized: Sun Tzu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18240689991680
+    m_Localized: "10 cria\xE7\xF5es (1 sobrevivente)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18242409656320
+    m_Localized: Mate os inimigos com armadilhas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937827024896
+    m_Localized: 1 hora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19938804297728
+    m_Localized: "Tempo total de sobreviv\xEAncia decorrido 1 hora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19936086388736
+    m_Localized: Superar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937025912832
+    m_Localized: "Vencer com tra\xE7os \"Azar em campeonatos\""
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351089369088
+    m_Localized: "V\xEDtor Norte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349541670912
+    m_Localized: "V\xEDbora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21350401503232
+    m_Localized: Matar um inimigo com veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351961784320
+    m_Localized: "30 elimina\xE7\xF5es \xE0 m\xE3o nua"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22635024543744
+    m_Localized: Arma letal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22636740014080
+    m_Localized: "30 elimina\xE7\xF5es com armas de combate corpo a corpo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22638623256576
+    m_Localized: Pistoleiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22640833654784
+    m_Localized: "30 elimina\xE7\xF5es com armas de longo alcance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22643543175168
+    m_Localized: Mestre da espada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23546367111168
+    m_Localized: "10 elimina\xE7\xF5es com espada longa"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23548950802432
+    m_Localized: Atirador furtivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23550058098688
+    m_Localized: "10 elimina\xE7\xF5es com rifle de precis\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24240528617472
+    m_Localized: "\xC1s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24241740771328
+    m_Localized: Eliminar todos os inimigos sozinho
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24546255630336
+    m_Localized: Hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547207737344
+    m_Localized: Incapacitado devido a hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547862048768
+    m_Localized: Obra-prima
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24548642189312
+    m_Localized: "Fabricar um item de n\xEDvel Obra-prima"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28851666743296
+    m_Localized: "Pr\xF3tese aumentada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28853348659200
+    m_Localized: "Implante de pr\xF3tese aumentada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28854762139648
+    m_Localized: "Pr\xF3tese transcendente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28855332564992
+    m_Localized: "Implante de pr\xF3tese transcendente"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

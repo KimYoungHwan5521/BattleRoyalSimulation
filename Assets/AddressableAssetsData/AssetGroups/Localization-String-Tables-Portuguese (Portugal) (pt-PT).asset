@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-pt-PT
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42b07ac159ea82944a8a3161bda97adf
+    m_Address: Achievement_pt-PT
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-pt-PT
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d5378844a4257840adfddd86d62737e
     m_Address: Basic_pt-PT
     m_ReadOnly: 1

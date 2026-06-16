@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Achievement_es-MX
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-MX
+  m_SharedData: {fileID: 11400000, guid: 95543fac3d246164885b7d70a7826d96, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 46055092224
+    m_Localized: Centomilionario
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48479399936
+    m_Localized: Camino Real
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50731741184
+    m_Localized: Copa de Bronce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53319626752
+    m_Localized: Copa de Plata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55504859136
+    m_Localized: Copa de Oro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826906238976
+    m_Localized: Tener 100,000 de oro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1830492368896
+    m_Localized: Ganar el campeonato mundial sin derrotas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1832136536064
+    m_Localized: Ganar la liga de bronce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833239638016
+    m_Localized: Ganar la liga de plata
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834317574144
+    m_Localized: Ganar la liga de oro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2840312999936
+    m_Localized: "Campe\xF3n de temporada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2841386741760
+    m_Localized: "Campe\xF3n del mundo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2842225602560
+    m_Localized: "Campe\xF3n de combate cuerpo a cuerpo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2843232235520
+    m_Localized: "Campe\xF3n de tiro"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2844385669120
+    m_Localized: "Campe\xF3n de creaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188945313792
+    m_Localized: Ganar el campeonato de temporada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190153273344
+    m_Localized: Ganar el campeonato mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4191231209472
+    m_Localized: Ganar la liga cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4192405614592
+    m_Localized: Ganar la liga de tiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4193655517184
+    m_Localized: "Ganar la liga de creaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5308426022912
+    m_Localized: Manos ensangrentadas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5310162464768
+    m_Localized: 10 bajas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311609499648
+    m_Localized: Brazos ensangrentados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5313132032000
+    m_Localized: 100 bajas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5314604232704
+    m_Localized: Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6860943454208
+    m_Localized: Notorio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6862390489088
+    m_Localized: 30 bajas con 1 sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6856858202112
+    m_Localized: 5 bajas en una partida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8018785267712
+    m_Localized: "T\xE1ctico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8020324577280
+    m_Localized: 10 victorias totales
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8024611155968
+    m_Localized: Leyenda
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8026930606080
+    m_Localized: Gana todas las ligas con un solo sobreviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9203399323648
+    m_Localized: Victoria oportunista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9205437755392
+    m_Localized: sin matar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9208088555520
+    m_Localized: Experiencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9210408005632
+    m_Localized: 10 derrotas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10529038462976
+    m_Localized: Bestia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10530586161152
+    m_Localized: Alcanzar 100 fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10531458576384
+    m_Localized: "R\xE1pido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10532230328320
+    m_Localized: Alcanzar 100 Agilidad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16080581488640
+    m_Localized: Artista marcial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081755893760
+    m_Localized: Alcanzar 100 Combate cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16082661863424
+    m_Localized: Francotirador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16083366506496
+    m_Localized: Alcanzar 100 Disparo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17130667438080
+    m_Localized: Genio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17131795705856
+    m_Localized: Alcanzar 100 Conocimiento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17132873641984
+    m_Localized: Capataz
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17133788000256
+    m_Localized: Crear 100 objetos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18239918239744
+    m_Localized: Artesano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18241625321472
+    m_Localized: Sun Tzu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18240689991680
+    m_Localized: 10 objetos (1 sobreviviente)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18242409656320
+    m_Localized: Mata a los enemigos con trampas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19936086388736
+    m_Localized: Superar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937827024896
+    m_Localized: 1 hora
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19938804297728
+    m_Localized: 'Tiempo total de supervivencia: 1 hora transcurrida'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937025912832
+    m_Localized: Ganar con rasgos "Maldito en campeonatos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349541670912
+    m_Localized: "V\xEDbora"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21350401503232
+    m_Localized: Matar a un enemigo con veneno
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351089369088
+    m_Localized: El Santo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351961784320
+    m_Localized: 30 muertes a mano limpia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22635024543744
+    m_Localized: Arma letal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22636740014080
+    m_Localized: 30 muertes con armas cuerpo a cuerpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22638623256576
+    m_Localized: Pistolero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22640833654784
+    m_Localized: 30 muertes con armas a distancia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22643543175168
+    m_Localized: Maestro de espada
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23546367111168
+    m_Localized: 10 muertes con espada larga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23548950802432
+    m_Localized: Francotirador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23550058098688
+    m_Localized: 10 muertes con rifle francotirador
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24240528617472
+    m_Localized: As
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24241740771328
+    m_Localized: Eliminar a todos los enemigos solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24546255630336
+    m_Localized: Hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547207737344
+    m_Localized: Incapacitado por hemorragia grave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547862048768
+    m_Localized: Obra maestra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24548642189312
+    m_Localized: Fabricar un objeto de calidad Obra maestra
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28851666743296
+    m_Localized: "Pr\xF3tesis aumentada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28853348659200
+    m_Localized: "Implante de pr\xF3tesis aumentada"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28854762139648
+    m_Localized: "Pr\xF3tesis trascendente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28855332564992
+    m_Localized: "Implante de pr\xF3tesis trascendente"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

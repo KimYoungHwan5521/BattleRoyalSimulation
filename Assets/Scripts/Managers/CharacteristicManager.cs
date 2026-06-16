@@ -214,6 +214,51 @@ public class CharacteristicManager
             case CharacteristicType.Assassin:
                 SteamUserStats.GetAchievement("Quick-Footed", out result);
                 break;
+            case CharacteristicType.Avenger:
+                SteamUserStats.GetAchievement("Bloody Hands", out result);
+                break;
+            case CharacteristicType.TasteOfBlood:
+                SteamUserStats.GetAchievement("Notorious", out result);
+                break;
+            case CharacteristicType.QuickDrawer:
+                SteamUserStats.GetAchievement("Sharpshooter", out result);
+                break;
+            case CharacteristicType.Dexterous:
+                SteamUserStats.GetAchievement("Craftsman", out result);
+                break;
+            case CharacteristicType.Sharpshooter:
+                SteamUserStats.GetAchievement("Gunslinger", out result);
+                break;
+            case CharacteristicType.Sniper:
+                SteamUserStats.GetAchievement("Sniper", out result);
+                break;
+            case CharacteristicType.Fighter:
+                SteamUserStats.GetAchievement("Bruce Lee", out result);
+                break;
+            case CharacteristicType.Regenerator:
+                SteamUserStats.GetAchievement("Severe Bleeding", out result);
+                break;
+            case CharacteristicType.Genius:
+                SteamUserStats.GetAchievement("Genius", out result);
+                break;
+            case CharacteristicType.UpsAndDowns:
+                SteamUserStats.GetAchievement("Experience", out result);
+                break;
+            case CharacteristicType.Giant:
+                SteamUserStats.GetAchievement("Gold Cup", out result);
+                break;
+            case CharacteristicType.Powerhouse:
+                SteamUserStats.GetAchievement("Silver Cup", out result);
+                break;
+            case CharacteristicType.BigMan:
+                SteamUserStats.GetAchievement("Bronze Cup", out result);
+                break;
+            case CharacteristicType.LuckGuy:
+                SteamUserStats.GetAchievement("1 hour", out result);
+                break;
+            case CharacteristicType.Blessed:
+                SteamUserStats.GetAchievement("Royal Loader", out result);
+                break;
             default:
                 return true;
         };

@@ -1,0 +1,335 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Achievement_de-DE
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: de-DE
+  m_SharedData: {fileID: 11400000, guid: 95543fac3d246164885b7d70a7826d96, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 46055092224
+    m_Localized: Hunderttausender
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48479399936
+    m_Localized: "K\xF6niglicher Sieger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50731741184
+    m_Localized: Bronzepokal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53319626752
+    m_Localized: Silberpokal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55504859136
+    m_Localized: Goldpokal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1826906238976
+    m_Localized: Halten Sie 100.000 $
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1830492368896
+    m_Localized: Weltmeisterschaft ohne Niederlage gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1832136536064
+    m_Localized: Bronze-Liga gewonnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1833239638016
+    m_Localized: Silber-Liga gewonnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1834317574144
+    m_Localized: Gold-Liga gewonnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2840312999936
+    m_Localized: Saisonsieger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2841386741760
+    m_Localized: Weltmeister
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2842225602560
+    m_Localized: Nahkampf-Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2843232235520
+    m_Localized: "Schie\xDF-Champion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2844385669120
+    m_Localized: Handwerks-Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4188945313792
+    m_Localized: Saisonmeisterschaft gewonnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4190153273344
+    m_Localized: Weltmeisterschaft gewonnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4191231209472
+    m_Localized: Die Nahkampfliga gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4192405614592
+    m_Localized: Die Schussliga gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4193655517184
+    m_Localized: Die Handwerksliga gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5308426022912
+    m_Localized: "Blutige H\xE4nde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5310162464768
+    m_Localized: "10 Absch\xFCsse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5311609499648
+    m_Localized: Blutige Arme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5313132032000
+    m_Localized: "100 Absch\xFCsse"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5314604232704
+    m_Localized: Pentakill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6862390489088
+    m_Localized: "30 Kills mit einem \xDCberlebenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6860943454208
+    m_Localized: "Ber\xFCchtigt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6856858202112
+    m_Localized: 5 Kills in einem Spiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8018785267712
+    m_Localized: Taktiker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8020324577280
+    m_Localized: 10 Siege
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8024611155968
+    m_Localized: Legende
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8026930606080
+    m_Localized: "Gewinne jede Liga mit einem einzigen \xDCberlebenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9203399323648
+    m_Localized: "Gl\xFCckssieg"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9205437755392
+    m_Localized: Sieg ohne Kills
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9208088555520
+    m_Localized: Erfahrung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9210408005632
+    m_Localized: 10 Niederlagen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10529038462976
+    m_Localized: Kraftpaket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10530586161152
+    m_Localized: "Erreiche st\xE4rke 100"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10531458576384
+    m_Localized: "Schneller Fu\xDF"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10532230328320
+    m_Localized: Erreiche Beweglichkeit 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16080581488640
+    m_Localized: "Kampfk\xFCnstler"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16081755893760
+    m_Localized: Erreiche Nahkampf 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16082661863424
+    m_Localized: "Scharfsch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 16083366506496
+    m_Localized: "Erreiche Schie\xDFen 100"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17130667438080
+    m_Localized: Genie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17131795705856
+    m_Localized: Erreiche Wissen 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17132873641984
+    m_Localized: Vorarbeiter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17133788000256
+    m_Localized: 100 Items herstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18239918239744
+    m_Localized: Handwerker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18241625321472
+    m_Localized: 'Sun Tzu '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18240689991680
+    m_Localized: "10 Crafts mit 1 \xDCberlebenden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18242409656320
+    m_Localized: "T\xF6te Feinde mit Fallen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19936086388736
+    m_Localized: "\xDCberwinden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937827024896
+    m_Localized: 1 Stunde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19938804297728
+    m_Localized: "Gesamt\xFCberlebenszeit 1 Stunde verstrichen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19937025912832
+    m_Localized: Sieg mit "Turnier-Verfluchter"-Eigenschaften
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21349541670912
+    m_Localized: Viper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21350401503232
+    m_Localized: "Einen Feind mit Gift t\xF6ten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351089369088
+    m_Localized: Max Schmeling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21351961784320
+    m_Localized: "30 Kills mit blo\xDFen H\xE4nden"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22635024543744
+    m_Localized: "T\xF6dliche Waffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22636740014080
+    m_Localized: 30 Kills mit Nahkampfwaffen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22638623256576
+    m_Localized: Revolverheld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22640833654784
+    m_Localized: 30 Kills mit Fernkampfwaffen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22643543175168
+    m_Localized: Schwertmeister
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23546367111168
+    m_Localized: 10 Kills mit einem Langschwert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23548950802432
+    m_Localized: "Scharfsch\xFCtze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23550058098688
+    m_Localized: "10 Kills mit einem Scharfsch\xFCtzengewehr"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24240528617472
+    m_Localized: Ass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24241740771328
+    m_Localized: Alle Gegner alleine eliminieren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24546255630336
+    m_Localized: Schwere Blutung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547207737344
+    m_Localized: "Kampfunf\xE4hig durch starke Blutung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24547862048768
+    m_Localized: Meisterwerk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24548642189312
+    m_Localized: Einen Gegenstand der Meisterwerk-Stufe herstellen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28851666743296
+    m_Localized: Augmentierte Prothese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28853348659200
+    m_Localized: "Implantat f\xFCr augmentierte Prothese"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28854762139648
+    m_Localized: Transzendente Prothese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 28855332564992
+    m_Localized: "Implantat/Ersatz f\xFCr transzendente Prothese"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

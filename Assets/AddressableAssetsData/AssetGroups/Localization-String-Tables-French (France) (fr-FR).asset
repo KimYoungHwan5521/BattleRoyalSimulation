@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-fr-FR
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3460ce673a344684c9bf0af9506673eb
+    m_Address: Achievement_fr-FR
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr-FR
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3c40d63a108c8a44cbd46ff1ee52b068
     m_Address: Name_fr-FR
     m_ReadOnly: 1

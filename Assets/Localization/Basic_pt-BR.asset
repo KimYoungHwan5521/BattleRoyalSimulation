@@ -1585,6 +1585,22 @@ MonoBehaviour:
     m_Localized: Treinamento
     m_Metadata:
       m_Items: []
+  - m_Id: 136265031063498752
+    m_Localized: Conquistas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136335391662338048
+    m_Localized: Desbloqueio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136338255331782656
+    m_Localized: Bloqueado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136339582451511296
+    m_Localized: Data de Desbloqueio
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
