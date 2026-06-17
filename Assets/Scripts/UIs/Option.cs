@@ -230,7 +230,19 @@ public class Option : MonoBehaviour
             achievementBox.AddComponent<AchievementDataForSort>().Set(AchievementUIManager.AchievementInfos[i]);
             AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos[i];
             achievementBox.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString("Achievement", achievement.achievementKey);
-            if(!achievement.statsKey.Equals(""))
+            string parseString = achievement.achievementKey.Replace(" ", "").Replace("-", "");
+            if (char.IsDigit(parseString[0])) parseString = "_" + parseString;
+            if (Enum.TryParse(parseString, out ResourceEnum.Sprite spriteE))
+            {
+                if (achievement.Unlocked) achievementBox.GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(spriteE);
+                else if(Enum.TryParse(parseString + "_unlock", out ResourceEnum.Sprite spriteE_unlock))
+                {
+                    achievementBox.GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(spriteE_unlock);
+                }
+                else achievementBox.GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+            }
+            else achievementBox.GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+            if (!achievement.statsKey.Equals(""))
             {
                 // ÁøÃ´µµ
                 achievementBox.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStat()} / {achievement.goalStat})";
@@ -255,7 +267,7 @@ public class Option : MonoBehaviour
             if(SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achievedTime) && achived)
             {
                 DateTime date = DateTimeOffset.FromUnixTimeSeconds(achievedTime).LocalDateTime;
-                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"{new LocalizedString("Basic", "Unlock Date").GetLocalizedString()} : {date:yyyy-mm-dd}";
+                achievementBox.GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"{new LocalizedString("Basic", "Unlock Date").GetLocalizedString()} : {date:yyyy-MM-dd}";
             }
             else
             {
@@ -303,7 +315,7 @@ public class Option : MonoBehaviour
             case 2:
                 if (wantTable == itemTable) sorted = children.OrderBy(x => x.GetComponent<ItemDataForSort>().localizeName.GetLocalizedString()).ToList();
                 else if(wantTable == characteristicTable) sorted = children.OrderBy(x => x.GetComponent<CharacteristicDataForSort>().localizeName.GetLocalizedString()).ToList();
-                else if(wantTable == achievementsTable) sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.trainingName.GetLocalizedString()).ToList();
+                else if(wantTable == trainingTable) sorted = children.OrderBy(x => x.GetComponent<TrainingDataForSort>().linkedTrainingInfo.trainingName.GetLocalizedString()).ToList();
                 else sorted = children.OrderBy(x => new LocalizedString("Achievement", x.GetComponent<AchievementDataForSort>().linkedAchievementInfo.achievementKey).GetLocalizedString()).ToList();
                 break;
             case 3:
@@ -362,7 +374,7 @@ public class Option : MonoBehaviour
                 }).ToList();
                 break;
             case 11:
-                sorted = children.OrderBy(x => 
+                sorted = children.OrderByDescending(x => 
                 {
                     var achievement = x.GetComponent<AchievementDataForSort>().linkedAchievementInfo;
                     if (SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achievedTime) && achived)

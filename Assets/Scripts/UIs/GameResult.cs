@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public delegate void ReserveNotification();
@@ -44,7 +46,15 @@ public class GameResult : MonoBehaviour
     [SerializeField] float curResultDelay;
     int lastTimeScale;
     bool gameOver;
+    [SerializeField] GameObject gameOverCanvas;
     [SerializeField] SurvivorInfo gameOverSurvivorInfo;
+    [SerializeField] GameObject earnedAchievementsBox;
+    [SerializeField] Button earnedAchievementsPrevious;
+    [SerializeField] Button earnedAchievementsNext;
+    [SerializeField] LocalizeStringEvent earnedAchievemetName;
+    [SerializeField] Image earnedAchievementImage;
+    [SerializeField] TextMeshProUGUI earnedAchievemetUnlockElementText;
+    int earnAchievementsCurrentPage;
 
     ReserveNotification notification;
 
@@ -403,8 +413,11 @@ public class GameResult : MonoBehaviour
 
         if(gameOver)
         {
+            gameOverCanvas.SetActive(true);
             // 생존자 통계 보여주기
             gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
+
+            SetEarnedAchievements();
         }
         else
         {
@@ -503,6 +516,49 @@ public class GameResult : MonoBehaviour
     {
         gameResult.SetActive(false);
         Time.timeScale = lastTimeScale;
+    }
+
+    void SetEarnedAchievements()
+    {
+        if(AchievementManager.earnedAchievementsInThisRun.Count == 0)
+        {
+            earnedAchievementsBox.SetActive(false);
+        }
+        else
+        {
+            earnedAchievementsBox.SetActive(true);
+            earnAchievementsCurrentPage = 0;
+            SetEarnedAchievements(0);
+        }
+    }
+
+    void SetEarnedAchievements(int index)
+    {
+        earnedAchievementsPrevious.interactable = index > 0;
+        earnedAchievementsNext.interactable = index < AchievementManager.earnedAchievementsInThisRun.Count - 1;
+        earnedAchievemetName.StringReference = new("Achievement", AchievementManager.earnedAchievementsInThisRun[index]);
+        string key = AchievementManager.earnedAchievementsInThisRun[index].Replace(" ", "").Replace("-", "");
+        if (char.IsDigit(key[0])) key = "_" + key;
+        if (Enum.TryParse(key, out ResourceEnum.Sprite spriteE)) earnedAchievementImage.sprite = ResourceManager.Get(spriteE);
+        else earnedAchievementImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+        AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == key);
+        if (achievement != null && !achievement.unlockElementName.Equals(""))
+        {
+            string unlockElement = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Basic", "Characteristic").GetLocalizedString() : new LocalizedString("Basic", "Training").GetLocalizedString();
+            string unlockElementDetail = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Characteristic", achievement.unlockElementName).GetLocalizedString() : new LocalizedString("Training", achievement.unlockElementName).GetLocalizedString();
+            earnedAchievemetUnlockElementText.text = $"{new LocalizedString("Basic", "Unlock").GetLocalizedString()} : {unlockElement} - {unlockElementDetail}";
+        }
+        else
+        {
+            earnedAchievemetUnlockElementText.text = "";
+        }
+    }
+
+    public void TurnPageEarnedAchievements(int value)
+    {
+        if (AchievementManager.earnedAchievementsInThisRun.Count == 0) return;
+        earnAchievementsCurrentPage = Mathf.Clamp(earnAchievementsCurrentPage + value, 0, AchievementManager.earnedAchievementsInThisRun.Count - 1);
+        SetEarnedAchievements(earnAchievementsCurrentPage);
     }
 
     void OnLocaleChanged(Locale newLocale)

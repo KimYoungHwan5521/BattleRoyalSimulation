@@ -1621,6 +1621,14 @@ MonoBehaviour:
     m_Localized: "Date de d\xE9verrouillage"
     m_Metadata:
       m_Items: []
+  - m_Id: 136658975832207360
+    m_Localized: "Succ\xE8s obtenus"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136658977618980864
+    m_Localized: "Succ\xE8s obtenus pendant ce d\xE9fi"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -367,6 +367,8 @@ public class GameManager : MonoBehaviour
         outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
         calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
         unlockManager.LoadUnlockStatus(saveData.unlockStatus);
+
+        AchievementManager.earnedAchievementsInThisRun = saveData.earnedAchievements;
         yield return null;
     }
 

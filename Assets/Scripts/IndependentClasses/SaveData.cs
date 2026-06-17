@@ -167,6 +167,8 @@ public class ETCData
     // unlock
     public List<UnlockStatusDictionary> unlockStatus = new();
 
+    public List<string> earnedAchievements = new();
+
     public ETCData(int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
@@ -178,6 +180,7 @@ public class ETCData
         this.today = today;
         this.curMaxYear = curMaxYear;
         this.participationConfirmed = participationConfirmed;
+        earnedAchievements = AchievementManager.earnedAchievementsInThisRun;
 
         foreach (var kv in unlockStatus)
         {

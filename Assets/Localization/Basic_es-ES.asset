@@ -1606,6 +1606,14 @@ MonoBehaviour:
     m_Localized: Fecha de desbloqueo
     m_Metadata:
       m_Items: []
+  - m_Id: 136658975832207360
+    m_Localized: Logros Obtenidos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136658977618980864
+    m_Localized: "Logros obtenidos durante este desaf\xEDo"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

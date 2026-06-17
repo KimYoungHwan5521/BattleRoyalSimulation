@@ -2,10 +2,11 @@ using Steamworks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public static class AchievementManager
 {
+    public static List<string> earnedAchievementsInThisRun;
+
     public static void UnlockAchievement(string achievementId)
     {
         if (!SteamManager.Initialized) return;
@@ -17,6 +18,7 @@ public static class AchievementManager
         {
             SteamUserStats.SetAchievement(achievementId);
             SteamUserStats.StoreStats();
+            earnedAchievementsInThisRun.Add(achievementId);
             Debug.Log($"업적 {achievementId} 달성!");
         }
     }

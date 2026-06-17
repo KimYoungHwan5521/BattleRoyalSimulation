@@ -1601,6 +1601,14 @@ MonoBehaviour:
     m_Localized: Data de Desbloqueio
     m_Metadata:
       m_Items: []
+  - m_Id: 136658975832207360
+    m_Localized: Conquistas Obtidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136658977618980864
+    m_Localized: Conquistas obtidas durante este desafio
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
