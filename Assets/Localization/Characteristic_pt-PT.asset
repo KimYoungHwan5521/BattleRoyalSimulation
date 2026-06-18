@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "For\xE7a - 10, Agilidade + 20"
+    m_Localized: Agilidade + 20
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2151649654665216
-    m_Localized: "Varia\xE7\xE3o di\xE1ria de stats"
+    m_Localized: Os atributos mudam a cada partida (-20 ~ +20)
     m_Metadata:
       m_Items: []
   - m_Id: 2151659720994816
@@ -392,8 +392,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 120401664524480512
-    m_Localized: "Ao eliminar um inimigo, aumenta temporariamente Agilidade, regenera\xE7\xE3o
-      de vigor e regenera\xE7\xE3o de vida"
+    m_Localized: "Aumenta temporariamente Agilidade, Regenera\xE7\xE3o de Vida e
+      Regenera\xE7\xE3o de Sangue ao eliminar um inimigo"
     m_Metadata:
       m_Items: []
   - m_Id: 120401667288526848
@@ -428,6 +428,146 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 121750767061757952
     m_Localized: Imune a veneno.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918652466622464
+    m_Localized: Os atributos mudam a cada partida (-10 ~ +20)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918651761979392
+    m_Localized: Homem Dado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656392491008
+    m_Localized: Covarde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656992276480
+    m_Localized: +30% de Velocidade de Movimento ao fugir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920556412203008
+    m_Localized: Arma letal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920557414641664
+    m_Localized: Luta +20 ao equipar uma arma corpo a corpo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920558496772096
+    m_Localized: Lutador de Rua
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920559146889216
+    m_Localized: Luta +20 quando desarmado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386213306368
+    m_Localized: Vampiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386796314624
+    m_Localized: "Aumenta a regenera\xE7\xE3o de Vida e Sangue por cada inimigo eliminado"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387517734912
+    m_Localized: Defensor dos Aprimoramentos Corporais
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387991691264
+    m_Localized: Todos os atributos aumentam por cada implante melhorado (Aprimorado
+      +1, Transcendente +3)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922628440322048
+    m_Localized: "Fan\xE1tico por Aprimoramentos Corporais"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922629279182848
+    m_Localized: Todos os atributos aumentam por cada implante melhorado (Aprimorado
+      +2, Transcendente +4)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922630797520896
+    m_Localized: Cansa-se Facilmente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922632164864000
+    m_Localized: "Consumo de Resist\xEAncia +5%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597075755008
+    m_Localized: "Incans\xE1vel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597981724672
+    m_Localized: "Consumo de Resist\xEAncia -10%, Recupera\xE7\xE3o de Resist\xEAncia
+      +10%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927599294541824
+    m_Localized: Homem de Ferro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927981257224192
+    m_Localized: "Consumo de Resist\xEAncia -20%, Recupera\xE7\xE3o de Resist\xEAncia
+      +20%"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929246372556800
+    m_Localized: "Dois Cora\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929248142553088
+    m_Localized: "Resist\xEAncia M\xE1xima +30"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929250935959552
+    m_Localized: "Tr\xEAs Cora\xE7\xF5es"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929253318324224
+    m_Localized: "Resist\xEAncia M\xE1xima +100"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134930999205752832
+    m_Localized: "Motiva\xE7\xE3o Excessiva"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931004222140416
+    m_Localized: "Consumo de Resist\xEAncia +20%, B\xF3nus de atributos ao treinar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931006231212032
+    m_Localized: "Recarga R\xE1pida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931017337729024
+    m_Localized: "Recupera sempre toda a Resist\xEAncia ao descansar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931979443957760
+    m_Localized: "Aprendiz R\xE1pido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931980396064768
+    m_Localized: "Chance de ganhar b\xF3nus de atributos ao treinar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981054570496
+    m_Localized: Talentoso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981801156608
+    m_Localized: "B\xF3nus de atributos ao treinar"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935330667687936
+    m_Localized: Potencial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935331884036096
+    m_Localized: "Todos os atributos t\xEAm limite m\xE1ximo de 120"
     m_Metadata:
       m_Items: []
   references:

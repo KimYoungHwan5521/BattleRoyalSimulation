@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Localization;
@@ -134,14 +135,7 @@ public class Survivor : CustomObject
     [SerializeField] float farmingSpeed = 1f;
     public float FarmingSpeed => farmingSpeed;
     [SerializeField] float aimErrorRange = 7.5f;
-    public float AimErrorRange
-    {
-        get
-        {
-            return (characteristics.FindIndex(x => x.type == CharacteristicType.MasterArcher) != -1 && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow)) 
-                ? aimErrorRange / 2 : aimErrorRange;
-        }
-    }
+    public float AimErrorRange => aimErrorRange;
     float luck = 50;
     public float Luck => luck;
 
@@ -150,7 +144,14 @@ public class Survivor : CustomObject
     {
         get
         {
-            return curFuryTime > 0 ? bloodRegeneration * 2 : bloodRegeneration;
+            if (curFuryTime > 0)
+            {
+                return bloodRegeneration * 2;
+            }
+            else
+            {
+                return bloodRegeneration + 0.2f * vampireStack;
+            }
         }
     }
     float hpRegeneration = 1;
@@ -158,7 +159,14 @@ public class Survivor : CustomObject
     {
         get
         {
-            return curFuryTime > 0 ? hpRegeneration * 2 : hpRegeneration;
+            if (curFuryTime > 0)
+            {
+                return hpRegeneration * 2;
+            }
+            else
+            {
+                return hpRegeneration + 0.2f * vampireStack;
+            }
         }
     }
 
@@ -178,6 +186,7 @@ public class Survivor : CustomObject
     public List<Characteristic> Characteristics => characteristics;
     bool isAssassin;
     float curFuryTime;
+    int vampireStack;
     #endregion
     #region Injury
     [Header("Injury")]
@@ -537,7 +546,13 @@ public class Survivor : CustomObject
         get { return killCount; }
         set
         {
-            if(playerSurvivor)
+            if (characteristics.FindIndex(x => x.type == CharacteristicType.TasteOfBlood) != -1)
+            {
+                curFuryTime = 10f;
+                ApplyCorrectionStats();
+            }
+            
+            if (playerSurvivor)
             {
                 if(value > killCount)
                 {
@@ -1080,9 +1095,14 @@ public class Survivor : CustomObject
                     {
                         runAwayDestination = Vector2.zero;
                         runAwayFrom = null;
+                        agent.speed = moveSpeed;
                         sightMeshRenderer.material = m_SightNormal;
                     }
-                    else return;
+                    else
+                    {
+                        if(characteristics.FindIndex(x => x.type == CharacteristicType.Coward) != -1) agent.speed = moveSpeed * 1.3f;
+                        return;
+                    } 
                 }
 
                 if (keepEyesOnPosition != Vector2.zero)
@@ -2102,6 +2122,7 @@ public class Survivor : CustomObject
             currentWeapon = wantWeapon;
             animator.SetInteger("AnimNumber", currentWeapon.AttackAnimNumber);
             if(currentWeapon is RangedWeapon) animator.SetInteger("ShotAnimNumber", CurrentWeaponAsRangedWeapon.ShotAnimNumber);
+            ApplyCorrectionStatByItem(wantWeapon, true);
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
@@ -2128,6 +2149,7 @@ public class Survivor : CustomObject
                 curWeaponTF.gameObject.SetActive(false);
                 projectileGenerator.muzzleTF = null;
             }
+            ApplyCorrectionStatByItem(currentWeapon, false);
             currentWeapon = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
@@ -3425,18 +3447,13 @@ public class Survivor : CustomObject
                 GameObject headshot = PoolManager.Spawn(ResourceEnum.Prefab.Headshot, transform.position);
                 headshot.transform.SetParent(canvas.transform);
             }
-            if(attacker.characteristics.FindIndex(x => x.type == CharacteristicType.TasteOfBlood) != -1)
-            {
-                attacker.curFuryTime = 10f;
-                attacker.ApplyCorrectionStats();
-            }
-            if(attacker.playerSurvivor)
+            if (attacker.playerSurvivor)
             {
                 if (weapon == null || !IsValid(weapon))
                 {
                     PlayerPrefs.SetInt($"Bare Knuckle Kill", PlayerPrefs.GetInt($"Bare Knuckle Kill") + 1);
                     AchievementManager.SetStat("Total_BareHandKill", PlayerPrefs.GetInt($"Bare Knuckle Kill"));
-                    if(PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AchievementManager.UnlockAchievement("Bruce Lee");
+                    if (PlayerPrefs.GetInt($"Bare Knuckle Kill") >= 30) AchievementManager.UnlockAchievement("Bruce Lee");
                 }
                 else if (weapon is MeleeWeapon)
                 {
@@ -3450,19 +3467,19 @@ public class Survivor : CustomObject
                     AchievementManager.SetStat("Total_RangedKill", PlayerPrefs.GetInt($"Ranged Weapon Kill"));
                     if (PlayerPrefs.GetInt($"Ranged Weapon Kill") >= 30) AchievementManager.UnlockAchievement("Gunslinger");
                 }
-                if(IsValid(weapon))
+                if (IsValid(weapon))
                 {
                     PlayerPrefs.SetInt($"{weapon.itemType} Kill", PlayerPrefs.GetInt($"{weapon.itemType} Kill") + 1);
                     int count = PlayerPrefs.GetInt($"{weapon.itemType} Kill");
                     if (weapon.itemType == ItemManager.Items.LongSword || weapon.itemType == ItemManager.Items.LongSword_Enchanted)
                     {
                         AchievementManager.SetStat("Total_SowrdKill", count);
-                        if(count >= 10) AchievementManager.UnlockAchievement("Sword Master");
+                        if (count >= 10) AchievementManager.UnlockAchievement("Sword Master");
                     }
                     if (weapon.itemType == ItemManager.Items.SniperRifle)
                     {
                         AchievementManager.SetStat("Total_SniperKill", count);
-                        if(count >= 10) AchievementManager.UnlockAchievement("Sniper");
+                        if (count >= 10) AchievementManager.UnlockAchievement("Sniper");
                     }
                 }
             }
@@ -4941,7 +4958,15 @@ public class Survivor : CustomObject
                     characteristicCorrection_HpRegeneration *= 5f;
                     break;
                 case CharacteristicType.UpsAndDowns:
-                    int condition = UnityEngine.Random.Range(-10, 11);
+                    int condition = UnityEngine.Random.Range(-20, 21);
+                    characteristicCorrection_Strength += condition;
+                    characteristicCorrection_Agility += condition;
+                    characteristicCorrection_Fighting += condition;
+                    characteristicCorrection_Shooting += condition;
+                    characteristicCorrection_Crafting += condition;
+                    break;
+                case CharacteristicType.DiceMan:
+                    condition = UnityEngine.Random.Range(-10, 21);
                     characteristicCorrection_Strength += condition;
                     characteristicCorrection_Agility += condition;
                     characteristicCorrection_Fighting += condition;
@@ -4957,25 +4982,46 @@ public class Survivor : CustomObject
                 case CharacteristicType.TrapExpert:
                     characteristicCorrection_TrappingSpeed *= 1.3f;
                     break;
+                case CharacteristicType.StreetFighter:
+                    itemCorrectionFighting = 20;
+                    break;
+                case CharacteristicType.BodyEnhancementAdvocate:
+                    condition = 0;
+                    condition += injuries.FindAll(x => x.type == InjuryType.AugmentedPartsTransplanted || x.type == InjuryType.AugmentedPartsDamaged).Count * 1;
+                    condition += injuries.FindAll(x => x.type == InjuryType.TranscendantPartsTransplanted || x.type == InjuryType.TranscendantPartsDamaged).Count * 3;
+                    characteristicCorrection_Strength += condition;
+                    characteristicCorrection_Agility += condition;
+                    characteristicCorrection_Fighting += condition;
+                    characteristicCorrection_Shooting += condition;
+                    characteristicCorrection_Crafting += condition;
+                    break;
+                case CharacteristicType.AugmentationFanatic:
+                    condition = 0;
+                    condition += injuries.FindAll(x => x.type == InjuryType.AugmentedPartsTransplanted || x.type == InjuryType.AugmentedPartsDamaged).Count * 2;
+                    condition += injuries.FindAll(x => x.type == InjuryType.TranscendantPartsTransplanted || x.type == InjuryType.TranscendantPartsDamaged).Count * 4;
+                    characteristicCorrection_Strength += condition;
+                    characteristicCorrection_Agility += condition;
+                    characteristicCorrection_Fighting += condition;
+                    characteristicCorrection_Shooting += condition;
+                    characteristicCorrection_Crafting += condition;
+                    break;
                 default:
                     break;
             }
         }
-        correctedStrength = Mathf.Max(linkedSurvivorData.Strength + characteristicCorrection_Strength, 0);
-        correctedAgility = Mathf.Max(linkedSurvivorData.Agility + characteristicCorrection_Agility, 0);
-        correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting, 0);
-        correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting, 0);
-        correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
-        aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
-        aimDelay = 1.5f * characteristicCorrection_AimTime;
-        reloadSpeed = characteristicCorrection_ReloadSpeed;
-        naturalHemostasis = characteristicCorrection_NatualHemostasis;
-        bloodRegeneration = characteristicCorrection_BloodRegeneration;
-        hpRegeneration = characteristicCorrection_HpRegeneration;
-        stopBleedingSpeed = characteristicCorrection_StopBleeding;
-        trappingSpeed = characteristicCorrection_TrappingSpeed;
+        ApplyCorrectionStats();
     }
     #endregion
+
+    int itemCorrectionFighting;
+    int itemCorrectionShooting;
+    void ApplyCorrectionStatByItem(Item item, bool equip)
+    {
+        if ((item.itemType == ItemManager.Items.Bow || item.itemType == ItemManager.Items.AdvancedBow) && characteristics.FindIndex(x => x.type == CharacteristicType.MasterArcher) != -1) itemCorrectionShooting = equip ? 20 : 0;
+        if (item is MeleeWeapon && characteristics.FindIndex(x => x.type == CharacteristicType.LethalWeapon) != -1) itemCorrectionFighting = equip ? 20 : 0;
+        if (characteristics.FindIndex(x => x.type == CharacteristicType.StreetFighter) != -1) itemCorrectionFighting = equip ? 0 : 20;
+        ApplyCorrectionStats();
+    }
 
     void ApplyCorrectionStats()
     {
@@ -4991,17 +5037,32 @@ public class Survivor : CustomObject
         else rightSightRange = 45 * characteristicCorrection_SightRange * injuryCorrection_RightSightRange;
         hearingAbility = 10 * injuryCorrection_HearingAbility * characteristicCorrection_HearingAbility;
 
-        correctedAgility = curFuryTime > 0 ? correctedAgility + 20 : correctedAgility;
+        int fury = curFuryTime > 0 ? 20 : 0;
+
+        correctedStrength = Mathf.Max(linkedSurvivorData.Strength + characteristicCorrection_Strength, 0);
+        correctedAgility = Mathf.Max(linkedSurvivorData.Agility + characteristicCorrection_Agility + fury, 0);
+        correctedFighting = Mathf.Max(linkedSurvivorData.Fighting + characteristicCorrection_Fighting + itemCorrectionFighting, 0);
+        correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting + itemCorrectionShooting, 0);
+        correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
+        aimDelay = 1.5f * characteristicCorrection_AimTime;
+        aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
+        reloadSpeed = characteristicCorrection_ReloadSpeed;
+        naturalHemostasis = characteristicCorrection_NatualHemostasis;
+        bloodRegeneration = characteristicCorrection_BloodRegeneration;
+        hpRegeneration = characteristicCorrection_HpRegeneration;
+        stopBleedingSpeed = characteristicCorrection_StopBleeding;
+        trappingSpeed = characteristicCorrection_TrappingSpeed;
 
         attackDamage = 5 * Mathf.Max(0.2f, (correctedStrength + correctedFighting) / 40f) * injuryCorrection_AttackDamage;
         attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
-        moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_AttackSpeed, 0.1f);
+        moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_MoveSpeed, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
         crafting = Mathf.Max(correctedCrafting + injuryCorrection_Crafting, 0);
         craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed, 0.1f);
         wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
+
         InGameUIManager.UpdateSelectedObjectStat(this);
     }
 

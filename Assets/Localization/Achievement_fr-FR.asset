@@ -330,6 +330,46 @@ MonoBehaviour:
     m_Localized: "Greffe de proth\xE8se transcendante"
     m_Metadata:
       m_Items: []
+  - m_Id: 358069978066944
+    m_Localized: "ing\xE9nieur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358074201731072
+    m_Localized: Atteindre 100 en Fabrication
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048106602496
+    m_Localized: "Entra\xEEnement Intensif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048974823424
+    m_Localized: "D\xE9penser 1000 d'endurance avec un seul survivant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599052439318528
+    m_Localized: Discipline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599053911519232
+    m_Localized: "D\xE9penser un total de 1000 d'endurance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599729718751232
+    m_Localized: "Asc\xE8se"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599730670858240
+    m_Localized: "D\xE9penser un total de 5000 d'endurance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599731534884864
+    m_Localized: Repos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599732310831104
+    m_Localized: "R\xE9cup\xE9rer un total de 1000 d'endurance"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

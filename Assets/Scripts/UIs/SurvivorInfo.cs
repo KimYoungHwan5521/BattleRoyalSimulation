@@ -217,8 +217,8 @@ public class SurvivorInfo : MonoBehaviour
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
         if(staminaText != null)
         {
-            staminaText.text = $"{wantSurvivorData.Stamina} / {wantSurvivorData.maxStamina}";
-            staminaBar.fillAmount = wantSurvivorData.Stamina / 100f;
+            staminaText.text = $"{wantSurvivorData.Stamina} / {wantSurvivorData.MaxStamina}";
+            staminaBar.fillAmount = (float)wantSurvivorData.Stamina / wantSurvivorData.MaxStamina;
         }
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";

@@ -205,7 +205,7 @@ public class GameResult : MonoBehaviour
                         winPrize = 100000;
                         AchievementManager.UnlockAchievement("World Champion");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
-                        if (playerSurvivor.LinkedSurvivorData.loseCount == 0) AchievementManager.UnlockAchievement("Royal Loader");
+                        if (playerSurvivor.LinkedSurvivorData.royalLoader) AchievementManager.UnlockAchievement("Royal Loader");
                     }
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
@@ -241,6 +241,18 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 20000;
                     else if (playerWin == 50) winPrize = 10000;
                     killPrize = playerSurvivor.KillCount * 4000;
+                    break;
+            }
+            switch(calendar.LeagueReserveInfo[calendar.Today].league)
+            {
+                case League.BronzeLeague:
+                case League.SilverLeague:
+                case League.GoldLeague:
+                case League.SeasonChampionship:
+                    if(playerWin != 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                    }
                     break;
             }
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";

@@ -330,6 +330,46 @@ MonoBehaviour:
     m_Localized: "Implantat/Ersatz f\xFCr transzendente Prothese"
     m_Metadata:
       m_Items: []
+  - m_Id: 358069978066944
+    m_Localized: Ingenieur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358074201731072
+    m_Localized: "\u88FD\u4F5C100\u9054\u6210"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048106602496
+    m_Localized: Intensives Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048974823424
+    m_Localized: "1000 Ausdauer mit einem einzelnen \xDCberlebenden verbrauchen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599052439318528
+    m_Localized: "\xDCbung"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599053911519232
+    m_Localized: Insgesamt 1000 Ausdauer verbrauchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599729718751232
+    m_Localized: Askese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599730670858240
+    m_Localized: Insgesamt 5000 Ausdauer verbrauchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599731534884864
+    m_Localized: Ausruhen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599732310831104
+    m_Localized: Insgesamt 1000 Ausdauer wiederherstellen
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

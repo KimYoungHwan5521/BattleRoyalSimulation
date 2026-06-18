@@ -50,8 +50,8 @@ public class SurvivorSaveData
     public Tier tier;
     public bool isReserved;
     public int reservedDate;
-    public bool haveQualifyToParticipateInSeasonChampionship;
-    public bool haveQualifyToParticipateInWorldChampionship;
+    //public bool haveQualifyToParticipateInSeasonChampionship;
+    //public bool haveQualifyToParticipateInWorldChampionship;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
     public int increaseComparedToPrevious_fighting;
@@ -102,6 +102,7 @@ public class SurvivorSaveData
     public bool wonRangedLeague;
     public bool wonCraftingLeague;
     public int craftingCount;
+    public bool royalLoader;
 }
 
 [Serializable]

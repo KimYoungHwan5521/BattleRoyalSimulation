@@ -330,6 +330,46 @@ MonoBehaviour:
     m_Localized: "Implante de pr\xF3tese transcendente"
     m_Metadata:
       m_Items: []
+  - m_Id: 358069978066944
+    m_Localized: engenheiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358074201731072
+    m_Localized: "Alcan\xE7ar 100 de Fabrico"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048106602496
+    m_Localized: Treino Intenso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048974823424
+    m_Localized: "Gaste 1000 de Resist\xEAncia com um \xFAnico sobrevivente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599052439318528
+    m_Localized: Disciplina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599053911519232
+    m_Localized: "Gaste um total de 1000 de Resist\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599729718751232
+    m_Localized: Ascetismo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599730670858240
+    m_Localized: "Gaste um total de 5000 de Resist\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599731534884864
+    m_Localized: Descanso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599732310831104
+    m_Localized: "Recupere um total de 1000 de Resist\xEAncia"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

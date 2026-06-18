@@ -327,6 +327,46 @@ MonoBehaviour:
     m_Key: Help:Transcendent Prosthetic
     m_Metadata:
       m_Items: []
+  - m_Id: 358069978066944
+    m_Key: Engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358074201731072
+    m_Key: Help:Engineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048106602496
+    m_Key: Training Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048974823424
+    m_Key: Help:Training Master
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599052439318528
+    m_Key: Discipline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599053911519232
+    m_Key: Help:Discipline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599729718751232
+    m_Key: Asceticism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599730670858240
+    m_Key: Help:Asceticism
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599731534884864
+    m_Key: Rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599732310831104
+    m_Key: Help:Rest
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

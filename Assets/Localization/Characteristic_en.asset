@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: Strength - 10, Agility + 20
+    m_Localized: Agility + 20
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2151649654665216
-    m_Localized: Daily Stat Variance
+    m_Localized: Stats change every match (-20 ~ +20)
     m_Metadata:
       m_Items: []
   - m_Id: 2151659720994816
@@ -402,8 +402,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 120401664524480512
-    m_Localized: Temporarily increases Agility, Stamina Regen, and HP Regen when
-      killing an enemy
+    m_Localized: Temporarily increases Agility, Health Regeneration, and Blood Regeneration
+      after killing an enemy
     m_Metadata:
       m_Items: []
   - m_Id: 120401673122803712
@@ -426,6 +426,145 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 121750767061757952
     m_Localized: Immune to poison.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918652466622464
+    m_Localized: Stats change every match (-10 ~ +20)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918651761979392
+    m_Localized: Dice Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656392491008
+    m_Localized: Coward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656992276480
+    m_Localized: +30% Movement Speed while fleeing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920556412203008
+    m_Localized: Lethal Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920558496772096
+    m_Localized: Street Fighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920557414641664
+    m_Localized: Fighting +20 when equipped with a melee weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920559146889216
+    m_Localized: Fighting +20 while unarmed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386213306368
+    m_Localized: Vampire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386796314624
+    m_Localized: Increases Health Regeneration and Blood Regeneration for each enemy
+      killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387517734912
+    m_Localized: Body Enhancement Advocate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387991691264
+    m_Localized: All stats increased for each implanted augmented body part (Augmented
+      +1, Transcendent +3)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922628440322048
+    m_Localized: Augmentation Fanatic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922629279182848
+    m_Localized: All stats increased for each implanted augmented body part (Augmented
+      +2, Transcendent +4)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922630797520896
+    m_Localized: Easily Exhausted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922632164864000
+    m_Localized: Stamina Cost +5%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597075755008
+    m_Localized: Tireless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597981724672
+    m_Localized: Stamina Cost -10%, Stamina Recovery +10%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927599294541824
+    m_Localized: Iron Man
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927981257224192
+    m_Localized: Stamina Cost -20%, Stamina Recovery +20%
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929246372556800
+    m_Localized: Two Hearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929248142553088
+    m_Localized: Max Stamina +30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929250935959552
+    m_Localized: Three Hearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929253318324224
+    m_Localized: Max Stamina +100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134930999205752832
+    m_Localized: Overzealous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931004222140416
+    m_Localized: Stamina Cost +20%, Bonus stat gains from training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931006231212032
+    m_Localized: Fast Recharge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931017337729024
+    m_Localized: Always recover to full Stamina when resting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931979443957760
+    m_Localized: Fast Learner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931980396064768
+    m_Localized: Chance to gain bonus stats when training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981054570496
+    m_Localized: Gifted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981801156608
+    m_Localized: Bonus stat gains from training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935330667687936
+    m_Localized: Potential
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935331884036096
+    m_Localized: Maximum value of all stats is fixed at 120
     m_Metadata:
       m_Items: []
   references:

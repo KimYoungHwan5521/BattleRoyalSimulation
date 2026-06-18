@@ -358,6 +358,10 @@ namespace ResourceEnum
         Masterpiece,
         Overcome,
         Craftsman,
+        TrainingMaster,
+        Discipline,
+        Asceticism,
+        Rest,
 
         HundredThousandaire_unlock,
         RoyalLoader_unlock,
@@ -398,6 +402,10 @@ namespace ResourceEnum
         Masterpiece_unlock,
         Overcome_unlock,
         Craftsman_unlock,
+        TrainingMaster_unlock,
+        Discipline_unlock,
+        Asceticism_unlock,
+        Rest_unlock,
     }
 
     public enum Material

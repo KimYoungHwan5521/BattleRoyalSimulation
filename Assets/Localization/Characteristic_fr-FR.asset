@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "Force - 10, Agilit\xE9 + 20"
+    m_Localized: "Agilit\xE9 + 20"
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2151649654665216
-    m_Localized: Variation quotidienne des stats
+    m_Localized: "Les statistiques changent \xE0 chaque match (-20 ~ +20)"
     m_Metadata:
       m_Items: []
   - m_Id: 2151659720994816
@@ -390,9 +390,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 120401664524480512
-    m_Localized: "Augmente temporairement l\u2019agilit\xE9, la r\xE9g\xE9n\xE9ration
-      d\u2019endurance et la r\xE9g\xE9n\xE9ration de vie apr\xE8s avoir tu\xE9 un
-      ennemi"
+    m_Localized: "Augmente temporairement l\u2019Agilit\xE9, la r\xE9g\xE9n\xE9ration
+      de sant\xE9 et la r\xE9g\xE9n\xE9ration sanguine apr\xE8s avoir \xE9limin\xE9
+      un ennemi"
     m_Metadata:
       m_Items: []
   - m_Id: 120401667288526848
@@ -429,6 +429,148 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 121750767061757952
     m_Localized: "Immunis\xE9 contre le poison."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918652466622464
+    m_Localized: "Les statistiques changent \xE0 chaque match (-10 ~ +20)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918651761979392
+    m_Localized: "Homme D\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656392491008
+    m_Localized: "L\xE2che"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656992276480
+    m_Localized: "+30 % de vitesse de d\xE9placement en fuite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920556412203008
+    m_Localized: Arme fatale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920557414641664
+    m_Localized: "+20 en combat avec une arme de m\xEAl\xE9e \xE9quip\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920558496772096
+    m_Localized: Combattant de rue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920559146889216
+    m_Localized: "+20 en combat \xE0 mains nues"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386213306368
+    m_Localized: Vampire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386796314624
+    m_Localized: "Augmente la r\xE9g\xE9n\xE9ration de sant\xE9 et de sang \xE0 chaque
+      ennemi \xE9limin\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387517734912
+    m_Localized: Partisan des augmentations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387991691264
+    m_Localized: "Toutes les statistiques augmentent pour chaque augmentation corporelle
+      implant\xE9e (Augment\xE9 +1, Transcendant +3)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922628440322048
+    m_Localized: Fanatique des augmentations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922629279182848
+    m_Localized: "Toutes les statistiques augmentent pour chaque augmentation corporelle
+      implant\xE9e (Augment\xE9 +2, Transcendant +4)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922630797520896
+    m_Localized: Se fatigue rapidement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922632164864000
+    m_Localized: "Consommation d\u2019endurance +5 %"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597075755008
+    m_Localized: Infatigable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597981724672
+    m_Localized: "Consommation d\u2019endurance -10 %, r\xE9cup\xE9ration d\u2019endurance
+      +10 %"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927599294541824
+    m_Localized: Homme de fer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927981257224192
+    m_Localized: "Consommation d\u2019endurance -20 %, r\xE9cup\xE9ration d\u2019endurance
+      +20 %"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929246372556800
+    m_Localized: "Deux c\u0153urs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929248142553088
+    m_Localized: Endurance maximale +30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929250935959552
+    m_Localized: "Trois c\u0153urs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929253318324224
+    m_Localized: Endurance maximale +100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134930999205752832
+    m_Localized: Motivation excessive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931004222140416
+    m_Localized: "Consommation d\u2019endurance +20 %, bonus de statistiques \xE0
+      l\u2019entra\xEEnement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931006231212032
+    m_Localized: Recharge rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931017337729024
+    m_Localized: "R\xE9cup\xE8re toujours toute son endurance en se reposant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931979443957760
+    m_Localized: Apprentissage rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931980396064768
+    m_Localized: "Chance d\u2019obtenir un bonus de statistiques \xE0 l\u2019entra\xEEnement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981054570496
+    m_Localized: "Surdou\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981801156608
+    m_Localized: "Bonus de statistiques \xE0 l\u2019entra\xEEnement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935330667687936
+    m_Localized: Potentiel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935331884036096
+    m_Localized: Toutes les statistiques ont une limite maximale de 120
     m_Metadata:
       m_Items: []
   references:

@@ -245,8 +245,16 @@ public class Option : MonoBehaviour
             if (!achievement.statsKey.Equals(""))
             {
                 // ÁøÃ´µµ
-                achievementBox.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStat()} / {achievement.goalStat})";
-                achievementBox.GetComponentsInChildren<Image>()[^1].fillAmount = (float)achievement.GetCurrentStat() / achievement.goalStat;
+                if(achievement.statIsInt)
+                {
+                    achievementBox.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStat()} / {achievement.goalStat})";
+                    achievementBox.GetComponentsInChildren<Image>()[^1].fillAmount = (float)achievement.GetCurrentStat() / achievement.goalStat;
+                }
+                else
+                {
+                    achievementBox.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStatF()} / {achievement.goalStat})";
+                    achievementBox.GetComponentsInChildren<Image>()[^1].fillAmount = achievement.GetCurrentStatF() / achievement.goalStat;
+                }
             }
             else
             {
@@ -482,6 +490,24 @@ public class Option : MonoBehaviour
         characteristicAutoNewlineLG.ArrangeCharacteristics();
         for(int i=0; i<characteristicBoxes.Count; i++) characteristicBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!CharacteristicManager.UnlockCheck(CharacteristicManager.Characteristics[i].type));
         for(int i=0; i<trainingBoxes.Count; i++) trainingBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!TrainingManager.UnlockCheck(TrainingManager.Trainings[i]));
+        // ÁøÃ´µµ °»½Å
+        for(int i=0; i<achievementsBoxes.Count; i++)
+        {
+            var achievement = achievementsBoxes[i].GetComponent<AchievementDataForSort>().linkedAchievementInfo;
+            if (!achievement.statsKey.Equals(""))
+            {
+                if (achievement.statIsInt)
+                {
+                    achievementsBoxes[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStat()} / {achievement.goalStat})";
+                    achievementsBoxes[i].GetComponentsInChildren<Image>()[^1].fillAmount = (float)achievement.GetCurrentStat() / achievement.goalStat;
+                }
+                else
+                {
+                    achievementsBoxes[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"({achievement.GetCurrentStatF()} / {achievement.goalStat})";
+                    achievementsBoxes[i].GetComponentsInChildren<Image>()[^1].fillAmount = achievement.GetCurrentStatF() / achievement.goalStat;
+                }
+            }
+        }
         GameManager.Instance.openedWindows.Push(encyclopedia);
     }
 

@@ -23,8 +23,8 @@ public static class SaveManager
             tier = data.tier,
             isReserved = data.isReserved,
             reservedDate = data.reservedDate,
-            haveQualifyToParticipateInSeasonChampionship = data.haveQualifyToParticipateInSeasonChampionship,
-            haveQualifyToParticipateInWorldChampionship = data.haveQualifyToParticipateInWorldChampionship,
+            //haveQualifyToParticipateInSeasonChampionship = data.haveQualifyToParticipateInSeasonChampionship,
+            //haveQualifyToParticipateInWorldChampionship = data.haveQualifyToParticipateInWorldChampionship,
             injuries = data.injuries,
             surgeryScheduled = data.surgeryScheduled,
             //scheduledSurgeryName = data.scheduledSurgeryName,
@@ -69,6 +69,7 @@ public static class SaveManager
             wonRangedLeague = data.wonRangedLeague,
             wonCraftingLeague = data.wonCraftingLeague,
             craftingCount = data.craftingCount,
+            royalLoader = data.royalLoader,
         };
 
         foreach (var kv in data.strategyDictionary)
@@ -90,8 +91,8 @@ public static class SaveManager
             characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,
             reservedDate = saveData.reservedDate,
-            haveQualifyToParticipateInSeasonChampionship = saveData.haveQualifyToParticipateInSeasonChampionship,
-            haveQualifyToParticipateInWorldChampionship = saveData.haveQualifyToParticipateInWorldChampionship,
+            //haveQualifyToParticipateInSeasonChampionship = saveData.haveQualifyToParticipateInSeasonChampionship,
+            //haveQualifyToParticipateInWorldChampionship = saveData.haveQualifyToParticipateInWorldChampionship,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,
             localizedScheduledSurgeryName = !string.IsNullOrEmpty(saveData.localizedScheduledSurgeryEntry) ? new(saveData.localizedScheduledSurgeryTable, saveData.localizedScheduledSurgeryEntry) : null,
@@ -134,6 +135,7 @@ public static class SaveManager
             wonRangedLeague = saveData.wonRangedLeague,
             wonCraftingLeague = saveData.wonCraftingLeague,
             craftingCount = saveData.craftingCount,
+            royalLoader = saveData.royalLoader,
 };
 
         survivor.strategyDictionary.Clear();

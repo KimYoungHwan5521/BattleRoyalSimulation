@@ -8,56 +8,75 @@ using UnityEngine.Localization;
 
 public enum CharacteristicType
 {
-    HawkEye,
-    BadEye,
-    KeenHearing,
-    BadHearing,
-    ClutchPerformance,
-    ChokingUnderPressure,
-    MuscleDeficiency,
-    Strongman,
-    Powerhouse,
-    Heavyfooted,
-    Lightfooted,
-    Assassin,
-    ClumsyFighter,
-    Brawler,
-    Fighter,
-    PoorAim,
-    Sniper,
-    Sharpshooter,
-    Dunce,
-    Smart,
-    Genius,
-    Giant,
-    Dwarf,
-    BigMan,
-    CarefulShooter,
-    Fragile,
-    Sturdy,
-    Avenger,
-    Regenerator,
-    UpsAndDowns,
-    LuckGuy,
-    Cursed,
-    Blessed,
-    ClumsyHand,
-    Dexterous,
-    Engineer,
-    Fatty,
-    Soldier,
-    Boxer,
-    Luchador,
-    QuickDrawer,
+    HawkEye = 0,
+    BadEye = 1,
+    KeenHearing = 2,
+    BadHearing = 3,
+    ClutchPerformance = 4,
+    ChokingUnderPressure = 5,
+    MuscleDeficiency = 6,
+    Strongman = 7,
+    Powerhouse = 8,
+    Heavyfooted = 9,
+    Lightfooted = 10,
+    Assassin = 11,
+    ClumsyFighter = 12,
+    Brawler = 13,
+    Fighter = 14,
+    PoorAim = 15,
+    Sniper = 16,
+    Sharpshooter = 17,
+    Dunce = 18,
+    Smart = 19,
+    Genius = 20,
+    Giant = 21,
+    Dwarf = 22,
+    BigMan = 23,
+    CarefulShooter = 24,
+    Fragile = 25,
+    Sturdy = 26,
+    Avenger = 27,
+    Regenerator = 28,
+    UpsAndDowns = 29,
+    LuckGuy = 30,
+    Cursed = 31,
+    Blessed = 32,
+    ClumsyHand = 33,
+    Dexterous = 34,
+    Engineer = 35,
+    Fatty = 36,
+    Soldier = 37,
+    Boxer = 38,
+    Luchador = 39,
+    QuickDrawer = 40,
+
     // 1.4
-    SwordSaint,
-    KnifeFighter,
-    MasterArcher,
-    TasteOfBlood,
-    FieldMedic,
-    TrapExpert,
-    PoisonImmune,
-    //PoisonImmunity,
+    SwordSaint = 41,
+    KnifeFighter = 42,
+    MasterArcher = 43,
+    TasteOfBlood = 44,
+    FieldMedic = 45,
+    TrapExpert = 46,
+    PoisonImmune = 47,
+
+    // 2.0
+    DiceMan = 48,
+    Coward = 49, 
+    LethalWeapon = 50,
+    StreetFighter = 51,
+    Vampire = 52,
+    BodyEnhancementAdvocate = 53,
+    AugmentationFanatic = 54,
+    EasilyExhausted = 55,
+    Tireless = 56,
+    IronMan = 57,
+    TwoHearts = 58,
+    ThreeHearts = 59,
+    Overzealous = 60,
+    FastRecharge = 61,
+    FastLearner = 62,
+    Gifted = 63,
+    Potential = 64,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -113,14 +132,14 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Sniper, CharacteristicRarity.Common, 0, CharacteristicType.PoorAim, CharacteristicType.Sharpshooter));
         characteristics.Add(new(CharacteristicType.Sharpshooter, CharacteristicRarity.Uncommon, 0, CharacteristicType.PoorAim, CharacteristicType.Sniper));
         characteristics.Add(new(CharacteristicType.Dunce, CharacteristicRarity.Common, 0, CharacteristicType.Smart, CharacteristicType.Genius));
-        characteristics.Add(new(CharacteristicType.Smart, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dunce, CharacteristicType.Genius));
-        characteristics.Add(new(CharacteristicType.Genius, CharacteristicRarity.Rare, 0, CharacteristicType.Dunce, CharacteristicType.Smart));
+        characteristics.Add(new(CharacteristicType.Smart, CharacteristicRarity.Common, 0, CharacteristicType.Dunce, CharacteristicType.Genius));
+        characteristics.Add(new(CharacteristicType.Genius, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dunce, CharacteristicType.Smart));
         characteristics.Add(new(CharacteristicType.CarefulShooter, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.Fragile, CharacteristicRarity.Uncommon, 0, CharacteristicType.Sturdy));
         characteristics.Add(new(CharacteristicType.Sturdy, CharacteristicRarity.Rare, 0, CharacteristicType.Fragile));
         characteristics.Add(new(CharacteristicType.Avenger, CharacteristicRarity.Uncommon, 0));
-        characteristics.Add(new(CharacteristicType.Regenerator, CharacteristicRarity.Uncommon, 0));
-        characteristics.Add(new(CharacteristicType.UpsAndDowns, CharacteristicRarity.Common, 0));
+        characteristics.Add(new(CharacteristicType.Regenerator, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.UpsAndDowns, CharacteristicRarity.Common, 0, CharacteristicType.DiceMan));
         characteristics.Add(new(CharacteristicType.LuckGuy, CharacteristicRarity.Uncommon, 0, CharacteristicType.Cursed, CharacteristicType.Blessed));
         characteristics.Add(new(CharacteristicType.Cursed, CharacteristicRarity.Uncommon, 0, CharacteristicType.LuckGuy, CharacteristicType.Blessed));
         characteristics.Add(new(CharacteristicType.Blessed, CharacteristicRarity.Rare, 0, CharacteristicType.LuckGuy, CharacteristicType.Cursed));
@@ -136,10 +155,28 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.SwordSaint, CharacteristicRarity.Rare, 0));
         characteristics.Add(new(CharacteristicType.KnifeFighter, CharacteristicRarity.Common, 0));
         characteristics.Add(new(CharacteristicType.MasterArcher, CharacteristicRarity.Uncommon, 0));
-        characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0, CharacteristicType.Vampire));
         characteristics.Add(new(CharacteristicType.FieldMedic, CharacteristicRarity.Uncommon, 0, CharacteristicType.Soldier));
         characteristics.Add(new(CharacteristicType.TrapExpert, CharacteristicRarity.Rare, 0));
         characteristics.Add(new(CharacteristicType.PoisonImmune, CharacteristicRarity.Rare, 0));
+        // 2.0
+        characteristics.Add(new(CharacteristicType.DiceMan, CharacteristicRarity.Uncommon, 0, CharacteristicType.UpsAndDowns));
+        characteristics.Add(new(CharacteristicType.Coward, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.LethalWeapon, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.StreetFighter, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.Vampire, CharacteristicRarity.Rare, 0, CharacteristicType.TasteOfBlood));
+        characteristics.Add(new(CharacteristicType.BodyEnhancementAdvocate, CharacteristicRarity.Uncommon, 0, CharacteristicType.AugmentationFanatic));
+        characteristics.Add(new(CharacteristicType.AugmentationFanatic, CharacteristicRarity.Rare, 0, CharacteristicType.BodyEnhancementAdvocate));
+        characteristics.Add(new(CharacteristicType.EasilyExhausted, CharacteristicRarity.Common, 0, CharacteristicType.Tireless, CharacteristicType.IronMan, CharacteristicType.Overzealous));
+        characteristics.Add(new(CharacteristicType.Tireless, CharacteristicRarity.Uncommon, 0, CharacteristicType.EasilyExhausted, CharacteristicType.IronMan, CharacteristicType.Overzealous));
+        characteristics.Add(new(CharacteristicType.IronMan, CharacteristicRarity.Rare, 0, CharacteristicType.Tireless, CharacteristicType.EasilyExhausted, CharacteristicType.Overzealous));
+        characteristics.Add(new(CharacteristicType.TwoHearts, CharacteristicRarity.Common, 0, CharacteristicType.ThreeHearts));
+        characteristics.Add(new(CharacteristicType.ThreeHearts, CharacteristicRarity.Rare, 0, CharacteristicType.TwoHearts));
+        characteristics.Add(new(CharacteristicType.Overzealous, CharacteristicRarity.Common, 0, CharacteristicType.EasilyExhausted, CharacteristicType.Tireless, CharacteristicType.IronMan, CharacteristicType.Gifted, CharacteristicType.FastLearner));
+        characteristics.Add(new(CharacteristicType.FastRecharge, CharacteristicRarity.Uncommon, 0));
+        characteristics.Add(new(CharacteristicType.FastLearner, CharacteristicRarity.Uncommon, 0, CharacteristicType.Gifted, CharacteristicType.Overzealous));
+        characteristics.Add(new(CharacteristicType.Gifted, CharacteristicRarity.Rare, 0, CharacteristicType.FastLearner, CharacteristicType.Overzealous));
+        characteristics.Add(new(CharacteristicType.Potential, CharacteristicRarity.Uncommon, 0));
         yield return null;
     }
 

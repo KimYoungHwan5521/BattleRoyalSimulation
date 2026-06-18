@@ -330,6 +330,46 @@ MonoBehaviour:
     m_Localized: "Implante de pr\xF3tesis trascendente"
     m_Metadata:
       m_Items: []
+  - m_Id: 358069978066944
+    m_Localized: ingeniero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 358074201731072
+    m_Localized: "Alcanzar 100 de Fabricaci\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048106602496
+    m_Localized: Entrenamiento Intensivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599048974823424
+    m_Localized: Gasta 1000 de Resistencia con un solo superviviente
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599052439318528
+    m_Localized: Disciplina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599053911519232
+    m_Localized: Gasta un total de 1000 de Resistencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599729718751232
+    m_Localized: Ascetismo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599730670858240
+    m_Localized: Gasta un total de 5000 de Resistencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599731534884864
+    m_Localized: Descanso
+    m_Metadata:
+      m_Items: []
+  - m_Id: 599732310831104
+    m_Localized: Recupera un total de 1000 de Resistencia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

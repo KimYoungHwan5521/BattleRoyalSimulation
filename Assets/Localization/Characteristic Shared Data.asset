@@ -419,6 +419,142 @@ MonoBehaviour:
     m_Key: Help:PoisonImmune
     m_Metadata:
       m_Items: []
+  - m_Id: 134918651761979392
+    m_Key: DiceMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918652466622464
+    m_Key: Help:DiceMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656392491008
+    m_Key: Coward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656992276480
+    m_Key: Help:Coward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920556412203008
+    m_Key: LethalWeapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920557414641664
+    m_Key: Help:LethalWeapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920558496772096
+    m_Key: StreetFighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920559146889216
+    m_Key: Help:StreetFighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386213306368
+    m_Key: Vampire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386796314624
+    m_Key: Help:Vampire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387517734912
+    m_Key: BodyEnhancementAdvocate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387991691264
+    m_Key: Help:BodyEnhancementAdvocate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922628440322048
+    m_Key: AugmentationFanatic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922629279182848
+    m_Key: Help:AugmentationFanatic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922630797520896
+    m_Key: EasilyExhausted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922632164864000
+    m_Key: Help:EasilyExhausted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597075755008
+    m_Key: Tireless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597981724672
+    m_Key: Help:Tireless
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927599294541824
+    m_Key: IronMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927981257224192
+    m_Key: Help:IronMan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929246372556800
+    m_Key: TwoHearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929248142553088
+    m_Key: Help:TwoHearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929250935959552
+    m_Key: ThreeHearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929253318324224
+    m_Key: Help:ThreeHearts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134930999205752832
+    m_Key: Overzealous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931004222140416
+    m_Key: Help:Overzealous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931006231212032
+    m_Key: FastRecharge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931017337729024
+    m_Key: Help:FastRecharge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931979443957760
+    m_Key: FastLearner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931980396064768
+    m_Key: Help:FastLearner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981054570496
+    m_Key: Gifted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981801156608
+    m_Key: Help:Gifted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935330667687936
+    m_Key: Potential
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935331884036096
+    m_Key: Help:Potential
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

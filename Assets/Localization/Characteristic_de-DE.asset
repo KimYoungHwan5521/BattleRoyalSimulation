@@ -211,7 +211,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2128822692016128
-    m_Localized: "St\xE4rke - 10, Beweglichkeit + 20"
+    m_Localized: Beweglichkeit + 20
     m_Metadata:
       m_Items: []
   - m_Id: 2130467601575936
@@ -255,7 +255,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2151649654665216
-    m_Localized: "T\xE4gliche Werteabweichung"
+    m_Localized: "Werte \xE4ndern sich in jedem Match (-20 ~ +20)"
     m_Metadata:
       m_Items: []
   - m_Id: 2151659720994816
@@ -392,8 +392,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 120401664524480512
-    m_Localized: "Erh\xF6ht nach dem T\xF6ten eines Feindes vor\xFCbergehend Beweglichkeit,
-      Ausdauerregeneration und Lebensregeneration"
+    m_Localized: "Erh\xF6ht nach dem Besiegen eines Feindes vor\xFCbergehend Beweglichkeit,
+      Lebensregeneration und Blutregeneration"
     m_Metadata:
       m_Items: []
   - m_Id: 120401667288526848
@@ -428,6 +428,145 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 121750767061757952
     m_Localized: Immun gegen Gift.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918652466622464
+    m_Localized: "Werte \xE4ndern sich in jedem Match (-10 ~ +20)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918651761979392
+    m_Localized: "W\xFCrfelmensch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656392491008
+    m_Localized: Feigling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134918656992276480
+    m_Localized: +30 % Bewegungsgeschwindigkeit beim Fliehen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920556412203008
+    m_Localized: "T\xF6dliche Waffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920557414641664
+    m_Localized: "Kampf +20 mit ausger\xFCsteter Nahkampfwaffe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920558496772096
+    m_Localized: "Stra\xDFenk\xE4mpfer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134920559146889216
+    m_Localized: Kampf +20 im unbewaffneten Zustand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386213306368
+    m_Localized: Vampir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921386796314624
+    m_Localized: "Erh\xF6ht die Lebens- und Blutregeneration f\xFCr jeden besiegten
+      Feind"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387517734912
+    m_Localized: "Bef\xFCrworter von K\xF6rperaugmentierungen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134921387991691264
+    m_Localized: "Alle Werte steigen f\xFCr jede implantierte K\xF6rperaugmentierung
+      (Verbessert +1, Transzendent +3)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922628440322048
+    m_Localized: Augmentierungsfanatiker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922629279182848
+    m_Localized: "Alle Werte steigen f\xFCr jede implantierte K\xF6rperaugmentierung
+      (Verbessert +2, Transzendent +4)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922630797520896
+    m_Localized: "Schnell ersch\xF6pft"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134922632164864000
+    m_Localized: Ausdauerverbrauch +5 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597075755008
+    m_Localized: "Unerm\xFCdlich"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927597981724672
+    m_Localized: Ausdauerverbrauch -10 %, Ausdauerregeneration +10 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927599294541824
+    m_Localized: Eisenmann
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134927981257224192
+    m_Localized: Ausdauerverbrauch -20 %, Ausdauerregeneration +20 %
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929246372556800
+    m_Localized: Zwei Herzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929248142553088
+    m_Localized: Maximale Ausdauer +30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929250935959552
+    m_Localized: Drei Herzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134929253318324224
+    m_Localized: Maximale Ausdauer +100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134930999205752832
+    m_Localized: "\xDCbermotiviert"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931004222140416
+    m_Localized: Ausdauerverbrauch +20 %, Bonus auf Attributssteigerungen durch Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931006231212032
+    m_Localized: Schnellladung
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931017337729024
+    m_Localized: Stellt beim Ausruhen immer die volle Ausdauer wieder her
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931979443957760
+    m_Localized: Schneller Lerner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931980396064768
+    m_Localized: "Chance auf zus\xE4tzliche Attributssteigerungen durch Training"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981054570496
+    m_Localized: Naturtalent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134931981801156608
+    m_Localized: Bonus auf Attributssteigerungen durch Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935330667687936
+    m_Localized: Potenzial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 134935331884036096
+    m_Localized: Der Maximalwert aller Attribute wird auf 120 festgelegt
     m_Metadata:
       m_Items: []
   references:

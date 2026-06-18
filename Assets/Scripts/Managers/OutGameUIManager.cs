@@ -521,6 +521,11 @@ public class OutGameUIManager : MonoBehaviour
             if (rand < 0.2f) value = 30;
             else if (rand < 0.8f) value = 50;
             else value = 70;
+
+            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.FastRecharge)) value = mySurvivorsData[0].MaxStamina;
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) value = (int)(value * 1.1f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) value = (int)(value * 1.2f);
+            
             value = Mathf.Min(value, 100 - mySurvivorsData[0].Stamina);
             mySurvivorsData[0].StaminaConsomtionReserve(value);
             trainingResult.SetActive(true);
@@ -635,7 +640,20 @@ public class OutGameUIManager : MonoBehaviour
     void ApplyTrainingResult(TrainingInfo training, bool greatSuccess)
     {
         bool first = true;
-        mySurvivorsData[0].StaminaConsomtionReserve(-training.staminaConsumtion);
+        int staminaConsumtion = training.staminaConsumtion;
+        if(staminaConsumtion > 0)
+        {
+            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.EasilyExhausted)) staminaConsumtion = (int)(staminaConsumtion * 1.05f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 0.9f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 0.8f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Overzealous)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
+        }
+        else
+        {
+            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 1.1f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
+        }
+        mySurvivorsData[0].StaminaConsomtionReserve(-staminaConsumtion);
         foreach(var value in training.increaseStats)
         {
             int total = value.Item2;
@@ -643,6 +661,8 @@ public class OutGameUIManager : MonoBehaviour
             {
                 first = false;
                 if (greatSuccess) total += training.rarity == TrainingRarity.Common ? 1 : training.rarity == TrainingRarity.Uncommon ? 2 : 4;
+                if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Overzealous) || mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Gifted) 
+                    || mySurvivorsData[0].HaveCharacteristic(CharacteristicType.FastLearner) && UnityEngine.Random.Range(0, 1f) < 0.5f) total += training.rarity == TrainingRarity.Common ? 1 : training.rarity == TrainingRarity.Uncommon ? 2 : 4;
             }
             switch(value.Item1)
             {

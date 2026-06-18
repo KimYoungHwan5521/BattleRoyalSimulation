@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Localization.SmartFormat.Core.Parsing;
 
 public class ResourcesPath
@@ -358,6 +359,10 @@ public class ResourcesPath
         "Sprites/Achievements/Masterpiece",
         "Sprites/Achievements/Overcome",
         "Sprites/Achievements/Craftsman",
+        "Sprites/Achievements/TrainingMaster",
+        "Sprites/Achievements/Discipline",
+        "Sprites/Achievements/Asceticism",
+        "Sprites/Achievements/Rest",
 
         "Sprites/Achievements/HundredThousandaire_unlock",
         "Sprites/Achievements/RoyalLoader_unlock",
@@ -398,6 +403,10 @@ public class ResourcesPath
         "Sprites/Achievements/Masterpiece_unlock",
         "Sprites/Achievements/Overcome_unlock",
         "Sprites/Achievements/Craftsman_unlock",
+        "Sprites/Achievements/TrainingMaster_unlock",
+        "Sprites/Achievements/Discipline_unlock",
+        "Sprites/Achievements/Asceticism_unlock",
+        "Sprites/Achievements/Rest_unlock",
     };
 
     public static string[] MaterialPathArray =

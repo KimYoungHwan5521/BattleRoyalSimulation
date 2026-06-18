@@ -26,7 +26,8 @@ public static class AchievementManager
     public static void SetStat(string achievementId, int value)
     {
         if(!SteamManager.Initialized) return;
-        SteamUserStats.SetStat(achievementId, value);
+        bool success = SteamUserStats.SetStat(achievementId, value);
+        Debug.Log($"Set Stat {achievementId} : {success}");
         SteamUserStats.StoreStats();
     }
 
@@ -70,6 +71,7 @@ public class AchievementUIManager
         public string unlockElementName;
         public string statsKey;
         public int goalStat;
+        public bool statIsInt;
 
         public bool Unlocked
         {
@@ -88,13 +90,21 @@ public class AchievementUIManager
             return curStat;
         }
 
-        public AchievementInfo(string achievementKey, UnlockElement unlockElement = UnlockElement.None, string unlockElementName = "", string statsKey = "", int goalStat = -1)
+        public float GetCurrentStatF()
+        {
+            if (statsKey.Equals("") || !SteamManager.Initialized) return -1;
+            SteamUserStats.GetStat(statsKey, out float curStat);
+            return curStat;
+        }
+
+        public AchievementInfo(string achievementKey, UnlockElement unlockElement = UnlockElement.None, string unlockElementName = "", string statsKey = "", int goalStat = -1, bool statIsInt = true)
         {
             this.achievementKey = achievementKey;
             this.unlockElement = unlockElement;
             this.unlockElementName = unlockElementName;
             this.statsKey = statsKey;
             this.goalStat = goalStat;
+            this.statIsInt = statIsInt;
         }
     }
 
@@ -130,9 +140,9 @@ public class AchievementUIManager
         achivementInfos.Add(new("Craftsman", UnlockElement.Characteristic, "Dexterous"));
         achivementInfos.Add(new("Sun Tzu", UnlockElement.Characteristic, "TrapExpert"));
         achivementInfos.Add(new("Overcome", UnlockElement.Characteristic, "ClutchPerformance"));
-        achivementInfos.Add(new("1 hour", UnlockElement.Characteristic, "LuckGuy", "Total_SurvivalTime", 3600));
+        achivementInfos.Add(new("1 hour", UnlockElement.Characteristic, "LuckGuy", "Total_SurvivalTime", 3600, false));
         achivementInfos.Add(new("Viper", UnlockElement.Characteristic, "PoisonImmune"));
-        achivementInfos.Add(new("Bruce Lee", UnlockElement.Characteristic, "Fighter", "Total_BareHandKill", 30));
+        achivementInfos.Add(new("Bruce Lee", UnlockElement.Characteristic, "StreetFighter", "Total_BareHandKill", 30));
         achivementInfos.Add(new("Lethal Weapon", UnlockElement.Characteristic, "", "Total_MeleeKill", 30));
         achivementInfos.Add(new("Gunslinger", UnlockElement.Characteristic, "Sharpshooter", "Total_RangedKill", 30));
         achivementInfos.Add(new("Sword Master", UnlockElement.Characteristic, "SwordSaint", "Total_SowrdKill", 10));
@@ -142,6 +152,13 @@ public class AchievementUIManager
         achivementInfos.Add(new("Augmented Prosthetic"));
         achivementInfos.Add(new("Transcendent Prosthetic"));
         achivementInfos.Add(new("Masterpiece"));
+        // 2.0
+        achivementInfos.Add(new("Engineer", UnlockElement.Characteristic, "Engineer"));
+        achivementInfos.Add(new("Training Master", UnlockElement.Characteristic, "IronMan"));
+        achivementInfos.Add(new("Discipline", UnlockElement.Characteristic, "TwoHearts", "Total_StaminaConsumption", 1000));
+        achivementInfos.Add(new("Asceticism", UnlockElement.Characteristic, "ThreeHearts", "Total_StaminaConsumption", 5000));
+        achivementInfos.Add(new("Rest", UnlockElement.Characteristic, "FastRecharge", "Total_StaminaRecovery", 1000));
+
         yield return null;
     }
 }

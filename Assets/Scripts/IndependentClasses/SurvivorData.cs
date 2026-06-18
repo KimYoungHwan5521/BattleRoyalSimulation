@@ -14,16 +14,43 @@ public class SurvivorData
     [SerializeField] string survivorName;
     public string SurvivorName => survivorName;
     public LocalizedString localizedSurvivorName;
-    public int maxStamina;
+    int _maxStamina;
+    public int MaxStamina
+    {
+        get
+        {
+            if (HaveCharacteristic(CharacteristicType.TwoHearts)) return _maxStamina + 30;
+            else if (HaveCharacteristic(CharacteristicType.ThreeHearts)) return _maxStamina + 100;
+            return _maxStamina;
+        }
+    }
     int _stamina;
     public int Stamina
     {
         get => _stamina;
         set
         {
-            _stamina = Mathf.Clamp(value, 0, maxStamina);
+            int before = _stamina;
+            _stamina = Mathf.Clamp(value, 0, MaxStamina);
+            if(_stamina - before > 0)
+            {
+                int changed = _stamina - before;
+                // 회복
+                PlayerPrefs.SetInt("Total Stamina Recovery", PlayerPrefs.GetInt("Total Stamina Recovery") + changed);
+                AchievementManager.GetStat("Total_StaminaRecovery", out int original);
+                AchievementManager.SetStat("Total_StaminaRecovery", original + changed);
+            }
+            else
+            {
+                // 소모
+                int changed = before - _stamina;
+                PlayerPrefs.SetInt("Total Stamina Consumption", PlayerPrefs.GetInt("Total Stamina Consumption") + changed);
+                AchievementManager.GetStat("Total_StaminaConsumption", out int original);
+                AchievementManager.SetStat("Total_StaminaConsumption", original + changed);
+            }
         }
     }
+    public int staminaConsumption;
     public int _strength;
     public int _agility;
     public int _fighting;
@@ -40,7 +67,6 @@ public class SurvivorData
             if (HaveCharacteristic(CharacteristicType.MuscleDeficiency)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Strongman)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.Powerhouse)) result += 20;
-            if (HaveCharacteristic(CharacteristicType.Assassin)) result -= 10;
             if (HaveCharacteristic(CharacteristicType.Fatty)) result += 10;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 5;
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 10;
@@ -50,12 +76,18 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if(ChockingUnderPressure) result -= 10;
 
-            if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Powerhouse");
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Powerhouse");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _strength = Mathf.Clamp(value, 0, 100);
+            if(HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _strength + Strength > 120) _strength = _strength + 120 - Strength;
+                else _strength = Mathf.Max(0, value);
+            }
+            else
+                _strength = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Agility
@@ -72,12 +104,18 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Quick-Footed");
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Quick-Footed");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _agility = Mathf.Clamp(value, 0, 100);
+            if (HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _agility + Agility > 120) _agility = _agility + 120 - Agility;
+                else _agility = Mathf.Max(0, value);
+            }
+            else
+                _agility = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Fighting
@@ -94,12 +132,18 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Martial Artist");
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Martial Artist");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _fighting = Mathf.Clamp(value, 0, 100);
+            if (HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _fighting + Fighting > 120) _fighting = _fighting + 120 - Fighting;
+                else _fighting = Mathf.Max(0, value);
+            }
+            else
+                _fighting = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Shooting
@@ -115,12 +159,18 @@ public class SurvivorData
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
 
-            if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Sharpshooter");
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Sharpshooter");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _shooting = Mathf.Clamp(value, 0, 100);
+            if (HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _shooting + Shooting > 120) _shooting = _shooting + 120 - Shooting;
+                else _shooting = Mathf.Max(0, value);
+            }
+            else
+                _shooting = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Crafting
@@ -133,11 +183,19 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Engineer)) result += 20;
             if (ClutchThePerformance) result += 10;
             else if (ChockingUnderPressure) result -= 10;
+
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Engineer");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _crafting = Mathf.Clamp(value, 0, 100);
+            if (HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _crafting + Crafting > 120) _crafting = _crafting + 120 - Crafting;
+                else _crafting = Mathf.Max(0, value);
+            }
+            else
+                _crafting = Mathf.Clamp(value, 0, 100);
         }
     }
     public int Knowledge
@@ -150,12 +208,18 @@ public class SurvivorData
             else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
             if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 5;
 
-            if (id > 0 && result >= 100) AchievementManager.UnlockAchievement("Genius");
+            if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);
         }
         set
         {
-            _knowledge = Mathf.Clamp(value, 0, 100);
+            if (HaveCharacteristic(CharacteristicType.Potential))
+            {
+                if (value - _knowledge + Knowledge > 120) _knowledge = _knowledge + 120 - Knowledge;
+                else _knowledge = Mathf.Max(0, value);
+            }
+            else
+                _knowledge = Mathf.Clamp(value, 0, 100);
         }
     }
 
@@ -177,7 +241,7 @@ public class SurvivorData
     public List<Characteristic> characteristics = new();
     public int price;
 
-    bool HaveCharacteristic(CharacteristicType characteristic)
+    public bool HaveCharacteristic(CharacteristicType characteristic)
     {
         return characteristics.FindIndex(x => x.type == characteristic) > -1;
     }
@@ -278,12 +342,13 @@ public class SurvivorData
     public bool wonRangedLeague;
     public bool wonCraftingLeague;
     public int craftingCount;
+    public bool royalLoader = true;
 
     public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int crafting, int knowledge, int price, Tier tier)
     {
         this.localizedSurvivorName = localizedSurvivorName;
         survivorName = localizedSurvivorName.TableEntryReference.Key;
-        maxStamina = _stamina = 100;
+        _maxStamina = _stamina = 100;
         _strength = strength;
         _agility = agility;
         _fighting = fighting;
@@ -302,7 +367,7 @@ public class SurvivorData
     {
         survivorName = survivorData.survivorName;
         localizedSurvivorName = new LocalizedString("Name", survivorName);
-        maxStamina = _stamina = 100;
+        _maxStamina = _stamina = 100;
         _strength = survivorData._strength;
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;
