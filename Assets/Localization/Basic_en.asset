@@ -813,7 +813,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: Bleeding Amount
+    m_Localized: Blood Loss
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
@@ -1605,6 +1605,90 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 136658977618980864
     m_Localized: Achievements Earned During This Challenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088768809693184
+    m_Localized: It is the final week of the challenge. The Regular League has been
+      automatically scheduled.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088770546135040
+    m_Localized: It is the final week of the challenge. Participate in the Regular
+      League.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088771183669248
+    m_Localized: Today is the scheduled Championship day. Participate in the Championship.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348072804511744
+    m_Localized: Failed to pay the survivor's medical expenses.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348074721308672
+    m_Localized: You became the World Champion!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348076164149248
+    m_Localized: You failed to become the World Champion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348077372108800
+    m_Localized: You gave up the challenge.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348919479300096
+    m_Localized: Give Up Challenge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348920628539392
+    m_Localized: Are you sure you want to give up this challenge?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348921765195776
+    m_Localized: 'Health: If enough damage is accumulated during a battle royale,
+      the survivor becomes incapacitated.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348922738274304
+    m_Localized: 'Blood Loss: If too much blood is lost, the survivor becomes incapacitated.
+      (Total blood volume is proportional to Health.)'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137357908795518976
+    m_Localized: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452494092038144
+    m_Localized: Select Difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452498491863040
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452500173778944
+    m_Localized: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452501545316352
+    m_Localized: Very Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452505068531712
+    m_Localized: Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452510303023104
+    m_Localized: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452512886714368
+    m_Localized: Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452515168415744
+    m_Localized: Hell
     m_Metadata:
       m_Items: []
   references:

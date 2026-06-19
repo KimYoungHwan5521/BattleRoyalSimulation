@@ -133,6 +133,21 @@ public class Calendar : CustomObject
             }
 
             if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
+
+            if(today == 77 && NeareastSeasonChampionship.reserver == null && NeareastWorldChampionship.reserver == null)
+            {
+                int targetDate = outGameUIManager.MySurvivorsData[0].tier switch
+                {
+                    Tier.Bronze => 79,
+                    Tier.Silver => 80,
+                    Tier.Gold or _ => 81,
+                };
+                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], targetDate);
+                outGameUIManager.Alert("Alert:Last Week Auto Reserve");
+            }
+
+            // Auto save
+            if(Today > 0) GameManager.Instance.Save(0);
         }
     }
     public int Month { get { return 1 + today / 28; } }
@@ -280,7 +295,7 @@ public class Calendar : CustomObject
         curMaxYear += howManyYears;
     }
 
-    void SetLeagueInfo(SurvivorData reserver, int reserveDate)
+    public void SetLeagueInfo(SurvivorData reserver, int reserveDate)
     {
         leagueReserveInfo[reserveDate].reserver = reserver;
         //League league = League.None;
@@ -312,8 +327,9 @@ public class Calendar : CustomObject
             { ItemManager.Items.Salvages, 40 },
             { ItemManager.Items.Chemicals, 10 },
             { ItemManager.Items.Gunpowder, 20 },
-            { ItemManager.Items.Knife, 3 },
-            { ItemManager.Items.Bat, 3 },
+            { ItemManager.Items.Knife, 4 },
+            { ItemManager.Items.Bat, 2 },
+            { ItemManager.Items.LongSword, 1 },
             { ItemManager.Items.Revolver, 4 },
             { ItemManager.Items.Pistol, 4 },
             { ItemManager.Items.SubMachineGun, 2 },
@@ -334,11 +350,11 @@ public class Calendar : CustomObject
         // Silver League
         items = new()
         {
-            { ItemManager.Items.Components, 40 },
+            { ItemManager.Items.Components, 50 },
             { ItemManager.Items.Salvages, 80 },
-            { ItemManager.Items.Chemicals, 20 },
+            { ItemManager.Items.Chemicals, 30 },
             { ItemManager.Items.Gunpowder, 40 },
-            { ItemManager.Items.Knife, 3 },
+            { ItemManager.Items.Knife, 9 },
             { ItemManager.Items.Dagger, 3 },
             { ItemManager.Items.Bat, 3 },
             { ItemManager.Items.LongSword, 3 },
@@ -367,14 +383,14 @@ public class Calendar : CustomObject
         items = new()
         {
             { ItemManager.Items.AdvancedComponent, 16 },
-            { ItemManager.Items.Components, 60 },
-            { ItemManager.Items.Salvages, 120 },
-            { ItemManager.Items.Chemicals, 30 },
-            { ItemManager.Items.Gunpowder, 60 },
-            { ItemManager.Items.Knife, 5 },
+            { ItemManager.Items.Components, 100 },
+            { ItemManager.Items.Salvages, 160 },
+            { ItemManager.Items.Chemicals, 50 },
+            { ItemManager.Items.Gunpowder, 100 },
+            { ItemManager.Items.Knife, 16 },
             { ItemManager.Items.Dagger, 5 },
             { ItemManager.Items.Bat, 5 },
-            { ItemManager.Items.LongSword, 5 },
+            { ItemManager.Items.LongSword, 8 },
             { ItemManager.Items.Shovel, 5 },
             { ItemManager.Items.Revolver, 12 },
             { ItemManager.Items.Pistol, 12 },
@@ -409,11 +425,11 @@ public class Calendar : CustomObject
         items = new()
         {
             { ItemManager.Items.AdvancedComponent, 25 },
-            { ItemManager.Items.Components, 80 },
-            { ItemManager.Items.Salvages, 160 },
-            { ItemManager.Items.Chemicals, 40 },
-            { ItemManager.Items.Gunpowder, 80 },
-            { ItemManager.Items.Knife, 10 },
+            { ItemManager.Items.Components, 160 },
+            { ItemManager.Items.Salvages, 250 },
+            { ItemManager.Items.Chemicals, 100 },
+            { ItemManager.Items.Gunpowder, 160 },
+            { ItemManager.Items.Knife, 25 },
             { ItemManager.Items.Dagger, 10 },
             { ItemManager.Items.Bat, 10 },
             { ItemManager.Items.LongSword, 10 },
@@ -450,12 +466,12 @@ public class Calendar : CustomObject
         // World Championship
         items = new()
         {
-            { ItemManager.Items.AdvancedComponent, 36 },
-            { ItemManager.Items.Components, 100 },
-            { ItemManager.Items.Salvages, 200 },
-            { ItemManager.Items.Chemicals, 50 },
-            { ItemManager.Items.Gunpowder, 100 },
-            { ItemManager.Items.Knife, 10 },
+            { ItemManager.Items.AdvancedComponent, 37 },
+            { ItemManager.Items.Components, 200 },
+            { ItemManager.Items.Salvages, 300 },
+            { ItemManager.Items.Chemicals, 125 },
+            { ItemManager.Items.Gunpowder, 175 },
+            { ItemManager.Items.Knife, 25 },
             { ItemManager.Items.Dagger, 10 },
             { ItemManager.Items.Bat, 10 },
             { ItemManager.Items.LongSword, 10 },
@@ -475,10 +491,10 @@ public class Calendar : CustomObject
             { ItemManager.Items.Bullet_SniperRifle, 12 },
             { ItemManager.Items.Rocket_Bazooka, 25 },
             { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
-            { ItemManager.Items.MiddleLevelBulletproofHelmet, 15 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 12 },
             { ItemManager.Items.HighLevelBulletproofHelmet, 5 },
             { ItemManager.Items.LowLevelBulletproofVest, 25 },
-            { ItemManager.Items.MiddleLevelBulletproofVest, 15 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 12 },
             { ItemManager.Items.HighLevelBulletproofVest, 5 },
             { ItemManager.Items.BandageRoll, 100 },
             { ItemManager.Items.BearTrap, 50 },
@@ -504,7 +520,7 @@ public class Calendar : CustomObject
         items = new()
         {
             { ItemManager.Items.Bow, 50 },
-            { ItemManager.Items.AdvancedBow, 20 },
+            { ItemManager.Items.AdvancedBow, 25 },
             { ItemManager.Items.Revolver, 25 },
             { ItemManager.Items.Pistol, 25 },
             { ItemManager.Items.SubMachineGun, 15 },
@@ -522,11 +538,11 @@ public class Calendar : CustomObject
             { ItemManager.Items.Bullet_SniperRifle, 12 },
             { ItemManager.Items.Rocket_Bazooka, 25 },
             { ItemManager.Items.LowLevelBulletproofHelmet, 25 },
-            { ItemManager.Items.MiddleLevelBulletproofHelmet, 15 },
+            { ItemManager.Items.MiddleLevelBulletproofHelmet, 12 },
             { ItemManager.Items.HighLevelBulletproofHelmet, 5 },
             { ItemManager.Items.LegendaryBulletproofHelmet, 1 },
             { ItemManager.Items.LowLevelBulletproofVest, 25 },
-            { ItemManager.Items.MiddleLevelBulletproofVest, 15 },
+            { ItemManager.Items.MiddleLevelBulletproofVest, 12 },
             { ItemManager.Items.HighLevelBulletproofVest, 5 },
             { ItemManager.Items.LegendaryBulletproofVest, 1 },
             { ItemManager.Items.BandageRoll, 100 },
@@ -536,9 +552,9 @@ public class Calendar : CustomObject
         items = new()
         {
             { ItemManager.Items.AdvancedComponent, 50 },
-            { ItemManager.Items.Components, 200 },
+            { ItemManager.Items.Components, 250 },
             { ItemManager.Items.Salvages, 400 },
-            { ItemManager.Items.Chemicals, 100 },
+            { ItemManager.Items.Chemicals, 150 },
             { ItemManager.Items.Gunpowder, 400 },
             { ItemManager.Items.BandageRoll, 100 },
         };
@@ -651,6 +667,7 @@ public class Calendar : CustomObject
                 }
                 else
                 {
+                    if (wantReserveDate >= 77 && Today >= 77) return;
                     outGameUIManager.OpenConfirmWindow("Confirm:Cancel Reservation", () =>
                     {
                         CancelReservation();
@@ -660,7 +677,7 @@ public class Calendar : CustomObject
             }
             else if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
             {
-                outGameUIManager.Alert("Alert:Reserve Championship");
+                if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
             }
             else
             {
@@ -787,8 +804,8 @@ public class Calendar : CustomObject
             if (leagueReserveInfo[wantReserveDate].league == League.MeleeLeague) wantLeague = League.MeleeLeague;
             else if (leagueReserveInfo[wantReserveDate].league == League.RangeLeague) wantLeague = League.RangeLeague;
             else if (leagueReserveInfo[wantReserveDate].league == League.CraftingLeague) wantLeague = League.CraftingLeague;
-            else if (allSurvivor[i].haveQualifyToParticipateInSeasonChampionship) wantLeague = League.SeasonChampionship;
-            else if (allSurvivor[i].haveQualifyToParticipateInWorldChampionship) wantLeague = League.WorldChampionship;
+            //else if (allSurvivor[i].haveQualifyToParticipateInSeasonChampionship) wantLeague = League.SeasonChampionship;
+            //else if (allSurvivor[i].haveQualifyToParticipateInWorldChampionship) wantLeague = League.WorldChampionship;
             else if (allSurvivor[i].tier == Tier.Gold) wantLeague = League.GoldLeague;
             else if (allSurvivor[i].tier == Tier.Silver) wantLeague = League.SilverLeague;
             else  wantLeague = League.BronzeLeague;
@@ -1070,7 +1087,7 @@ public class Calendar : CustomObject
             watchableLeagueTodayText.text = $"{new LocalizedString("Basic", "League you can spectate if you skip today").GetLocalizedString()} : {new LocalizedString("Basic", leagueReserveInfo[wantReserveDate].league.ToString()).GetLocalizedString()}";
         else watchableLeagueTodayText.text = "";
         //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
-        SetBattleRoyaleReserveBox();
+        //SetBattleRoyaleReserveBox();
         CalendarPage = calendarPage;
         OpenScheduleByEachSurvivor();
     }

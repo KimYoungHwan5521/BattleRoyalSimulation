@@ -97,19 +97,10 @@ public class SoundManager
 
     public static void Play(ResourceEnum.SFX wantSFX, Vector3 soundOrigin, bool loop = false)
     {
-        SoundManager soundManager = GameManager.Instance.SoundManager;
-        AudioClip clip = ResourceManager.Get(wantSFX);
-        if (soundManager.sfxQueue.TryDequeue(out AudioSource currentSource))
-        {
-            currentSource.clip = clip;
-            currentSource.loop = loop;
-            currentSource.transform.position = soundOrigin;
-            currentSource.Play();
-            soundManager.sfxQueue.Enqueue(currentSource);
-        }
+        Play(wantSFX, soundOrigin, loop, out AudioSource _);
     }
 
-    public static void Play(ResourceEnum.SFX wantSFX, Vector3 soundOrigin, bool loop, out AudioSource source)
+    public static void Play(ResourceEnum.SFX wantSFX, Vector3 soundOrigin, bool loop, out AudioSource source, bool is2D = false)
     {
         SoundManager soundManager = GameManager.Instance.SoundManager;
         AudioClip clip = ResourceManager.Get(wantSFX);
@@ -117,12 +108,18 @@ public class SoundManager
         {
             currentSource.clip = clip;
             currentSource.loop = loop;
+            currentSource.spatialBlend = is2D ? 0 : 1;
             currentSource.transform.position = soundOrigin;
             currentSource.Play();
             source = currentSource;
             if (!loop) soundManager.sfxQueue.Enqueue(currentSource);
         }
         else source = null;
+    }
+
+    public static void PlayUISFX(ResourceEnum.SFX wantSFX)
+    {
+        Play(wantSFX, Vector3.zero, false, out AudioSource _, true);
     }
 
     public void Enqueue(AudioSource audioSource)

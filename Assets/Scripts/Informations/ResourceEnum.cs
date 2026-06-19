@@ -467,5 +467,10 @@ namespace ResourceEnum
         bow_release,
         bow_hit,
         parrying,
+
+        // UI
+        Fanfare1,
+        Fanfare2,
+        Fail,
     }
 }

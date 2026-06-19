@@ -8,10 +8,7 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class Option : MonoBehaviour
 {
@@ -63,7 +60,7 @@ public class Option : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] GameObject resume;
-    [SerializeField] Button saveButton;
+    //[SerializeField] Button saveButton;
     [SerializeField] GameObject goTitle;
 
     [Header("Save")]
@@ -133,7 +130,7 @@ public class Option : MonoBehaviour
     void OptionSetting()
     {
         resume.SetActive(false);
-        saveButton.gameObject.SetActive(false);
+        //saveButton.gameObject.SetActive(false);
         goTitle.SetActive(false);
         encyclopedia.SetActive(true);
         // Items
@@ -532,7 +529,14 @@ public class Option : MonoBehaviour
             string json = PlayerPrefs.GetString($"SaveDataInfo{i}", "{}");
             if (json != "{}")
             {
+                if(i > 0)
+                {
+                    DeleteSaveData(i);
+                    continue;
+                }
+
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+                if (saveData.gameVersion.Split('.')[0] == "1") DeleteSaveData(0);
                 string info = $"\n<i><size=12>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}\nVersion {saveData.gameVersion}</size></i>";
                 if (i == 0) info += $"\n<i>{new LocalizedString("Basic", "Autosaved").GetLocalizedString()}</i>";
                 saveSlots[i].isEmpty = false;
@@ -575,8 +579,8 @@ public class Option : MonoBehaviour
 
     public void DeleteSaveData(int slot)
     {
-        GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Delete Save Data", () =>
-        {
+        //GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Delete Save Data", () =>
+        //{
             PlayerPrefs.DeleteKey($"SaveDataInfo{slot}");
             PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
             PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
@@ -588,7 +592,7 @@ public class Option : MonoBehaviour
             DeleteSteamCloudData($"ETCData{slot}");
 
             ReloadSavedata();
-        });
+        //});
     }
 
     void DeleteSteamCloudData(string fileName)
@@ -608,15 +612,15 @@ public class Option : MonoBehaviour
         if(interactable)
         {
             resume.SetActive(true);
-            saveButton.gameObject.SetActive(true);
+            //saveButton.gameObject.SetActive(true);
             goTitle.SetActive(true);
         }
-        saveButton.interactable = interactable;
+        //saveButton.interactable = interactable;
     }
 
-    public void GoTitle()
+    public void GoTitle(bool ask)
     {
-        if(lastSaveTime > 10)
+        if(ask)
         {
             GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
             {
@@ -633,11 +637,21 @@ public class Option : MonoBehaviour
     {
         if(GameManager.Instance.BattleRoyaleManager != null) GameManager.Instance.GetComponent<GameResult>().ExitBattle(true);
         resume.SetActive(false);
-        saveButton.gameObject.SetActive(false);
+        //saveButton.gameObject.SetActive(false);
         goTitle.SetActive(false);
+        GameManager.Instance.CheckSaveData();
         GameManager.Instance.optionCanvas.SetActive(false);
         GameManager.Instance.Title.title.SetActive(true);
+    }
 
+    public void GiveUp()
+    {
+        GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Give Up Challenge", () =>
+        {
+            GameManager.Instance.GetComponent<GameResult>().gameOverMessage.StringReference = new("Basic", "GameOver:Give Up");
+            GameManager.Instance.GetComponent<GameResult>().GameOver();
+            option.SetActive(false);
+        });
     }
 
     void OnLocaleChanged(Locale newLocale)

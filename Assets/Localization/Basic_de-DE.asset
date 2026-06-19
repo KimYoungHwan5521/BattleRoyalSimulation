@@ -1615,6 +1615,92 @@ MonoBehaviour:
     m_Localized: "W\xE4hrend dieser Herausforderung erreichte Erfolge"
     m_Metadata:
       m_Items: []
+  - m_Id: 137088768809693184
+    m_Localized: "Dies ist die letzte Woche der Herausforderung. Die regul\xE4re
+      Liga wurde automatisch eingeplant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088770546135040
+    m_Localized: "Dies ist die letzte Woche der Herausforderung. Nimm an der regul\xE4ren
+      Liga teil."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088771183669248
+    m_Localized: Heute ist der angesetzte Tag der Meisterschaft. Nimm an der Meisterschaft
+      teil.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348072804511744
+    m_Localized: "Die Behandlungskosten des \xDCberlebenden konnten nicht bezahlt
+      werden."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348074721308672
+    m_Localized: Du bist Weltmeister geworden!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348076164149248
+    m_Localized: Du konntest nicht Weltmeister werden.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348077372108800
+    m_Localized: Du hast die Herausforderung aufgegeben.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348919479300096
+    m_Localized: Herausforderung aufgeben
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348920628539392
+    m_Localized: "M\xF6chtest du diese Herausforderung wirklich aufgeben?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348922738274304
+    m_Localized: "Blutverlust: Bei zu hohem Blutverlust wird der \xDCberlebende kampfunf\xE4hig.
+      (Das gesamte Blutvolumen ist proportional zur Gesundheit.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348921765195776
+    m_Localized: "Gesundheit: Wenn im Battle Royale gen\xFCgend Schaden erlitten
+      wird, wird der \xDCberlebende kampfunf\xE4hig."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137357908795518976
+    m_Localized: Fortsetzen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452498491863040
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452494092038144
+    m_Localized: "Schwierigkeitsgrad w\xE4hlen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452500173778944
+    m_Localized: Schwer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452501545316352
+    m_Localized: Sehr schwer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452505068531712
+    m_Localized: Experte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452510303023104
+    m_Localized: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452512886714368
+    m_Localized: Albtraum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452515168415744
+    m_Localized: "H\xF6lle"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

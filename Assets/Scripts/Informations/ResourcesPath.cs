@@ -469,6 +469,10 @@ public class ResourcesPath
         "Sounds/SFXs/bow_release",
         "Sounds/SFXs/bow_hit",
         "Sounds/SFXs/parrying",
+        // UI
+        "Sounds/SFXs/UI/Fanfare1",
+        "Sounds/SFXs/UI/Fanfare2",
+        "Sounds/SFXs/UI/Fail",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

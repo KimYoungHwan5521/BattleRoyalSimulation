@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -11,6 +12,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public enum SurgeryType 
 { 
@@ -52,6 +54,37 @@ public class OutGameUIManager : MonoBehaviour
             if (value >= 100000) AchievementManager.UnlockAchievement("Hundred-Thousandaire");
         }
     }
+    int difficulty;
+    public int Difficulty
+    {
+        get => difficulty;
+        set
+        {
+            difficulty = value;
+            string text = value switch
+            {
+                0 => "Normal",
+                1 => "Hard",
+                2 => "Very Hard",
+                3 => "Expert",
+                4 => "Hardcore",
+                5 => "Nightmare",
+                6 or _ => "Hell",
+            };
+            difficultyText.StringReference = new("Basic", text);
+            difficultyText.GetComponent<TextMeshProUGUI>().color = value switch
+            {
+                0 => new(0, 1, 0),
+                1 => new(1, 1, 0),
+                2 => new(1, 0.75f, 0),
+                3 => new(1, 0.5f, 0),
+                4 => new(1, 0.25f, 0),
+                5 => new(1, 0, 0),
+                6 or _ => new(0.75f, 0, 0)
+            };
+        }
+    }
+    [SerializeField] LocalizeStringEvent difficultyText;
 
     [Header("Checklist")]
     [SerializeField] GameObject checkTrainingTrue;
@@ -297,7 +330,7 @@ public class OutGameUIManager : MonoBehaviour
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
-    public void ResetData()
+    public void ResetData(int difficulty)
     {
         mySurvivorsData = new();
         hireSurvivor.SetActive(true);
@@ -306,7 +339,8 @@ public class OutGameUIManager : MonoBehaviour
         Money = 1000;
         survivorHireLimit = 10;
         selectedSurvivor.ResetInfo();
-        
+        Difficulty = difficulty;
+
         tutorial = true;
     }
 
@@ -442,9 +476,10 @@ public class OutGameUIManager : MonoBehaviour
                     if (mySurvivorsData.Count == 1) ResetHireMarket();
                     hireSurvivor.SetActive(false);
                     ResetTrainingRoom();
-            //    }
-            //},  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
-        
+                    GameManager.Instance.Save(0);
+        //    }
+        //},  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
+
     }
 
     LocalizedString GetRandomName(int depth = 0)
@@ -514,6 +549,20 @@ public class OutGameUIManager : MonoBehaviour
 
     public void Rest()
     {
+        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        {
+            if((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join Championship");
+                return;
+            }
+            if(calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join League");
+                return;
+            }
+        }
+
         OpenConfirmWindow("Confirm:Rest", () =>
         {
             int value;
@@ -539,7 +588,21 @@ public class OutGameUIManager : MonoBehaviour
     #region Training
     public void OpenTrainingRoom()
     {
-        if(CheckHaveInjury(out int expectedDateOfFullyRecovery))
+        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        {
+            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join Championship");
+                return;
+            }
+            if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join League");
+                return;
+            }
+        }
+
+        if (CheckHaveInjury(out int expectedDateOfFullyRecovery))
         {
             Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
         }
@@ -618,6 +681,8 @@ public class OutGameUIManager : MonoBehaviour
             // ½ÇÆÐ
             trainingResultText.text = new LocalizedString("Basic", "Failed").GetLocalizedString();
             trainingResultDetailText.text = "";
+            StaminaConsume(training);
+            SoundManager.PlayUISFX(ResourceEnum.SFX.Fail);
         }
         else if (rand > 1f - trainingGreatSuccessRate)
         {
@@ -625,6 +690,7 @@ public class OutGameUIManager : MonoBehaviour
             trainingResultText.text = new LocalizedString("Basic", "Great Success").GetLocalizedString();
             trainingResultDetailText.text = training.GetTrainingExplain(true);
             ApplyTrainingResult(training, true);
+            SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare2);
         }
         else
         {
@@ -632,6 +698,7 @@ public class OutGameUIManager : MonoBehaviour
             trainingResultText.text = new LocalizedString("Basic", "Success").GetLocalizedString();
             trainingResultDetailText.text = training.GetTrainingExplain(false);
             ApplyTrainingResult(training, false);
+            SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare1);
         }
         //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
         trainingRoom.SetActive(false);
@@ -640,20 +707,7 @@ public class OutGameUIManager : MonoBehaviour
     void ApplyTrainingResult(TrainingInfo training, bool greatSuccess)
     {
         bool first = true;
-        int staminaConsumtion = training.staminaConsumtion;
-        if(staminaConsumtion > 0)
-        {
-            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.EasilyExhausted)) staminaConsumtion = (int)(staminaConsumtion * 1.05f);
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 0.9f);
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 0.8f);
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Overzealous)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
-        }
-        else
-        {
-            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 1.1f);
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
-        }
-        mySurvivorsData[0].StaminaConsomtionReserve(-staminaConsumtion);
+        StaminaConsume(training);
         foreach(var value in training.increaseStats)
         {
             int total = value.Item2;
@@ -700,6 +754,24 @@ public class OutGameUIManager : MonoBehaviour
         selectedSurvivor.StatIncreaseProduction();
     }
 
+    void StaminaConsume(TrainingInfo training)
+    {
+        int staminaConsumtion = training.staminaConsumtion;
+        if (staminaConsumtion > 0)
+        {
+            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.EasilyExhausted)) staminaConsumtion = (int)(staminaConsumtion * 1.05f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 0.9f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 0.8f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Overzealous)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
+        }
+        else
+        {
+            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) staminaConsumtion = (int)(staminaConsumtion * 1.1f);
+            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) staminaConsumtion = (int)(staminaConsumtion * 1.2f);
+        }
+        mySurvivorsData[0].StaminaConsomtionReserve(-staminaConsumtion);
+    }
+
     public void ConfirmTrainingResult()
     {
         trainingResult.SetActive(false);
@@ -736,16 +808,23 @@ public class OutGameUIManager : MonoBehaviour
     #region Operating Room
     public void OpenOperatingRoom()
     {
-        if (calendar.Today % 7 > 4)
+        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
         {
-            Alert("Alert:The operating room is closed on weekends.");
+            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join Championship");
+                return;
+            }
+            if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Week Join League");
+                return;
+            }
         }
-        else
-        {
-            SetOperatingRoom();
-            operatingRoom.SetActive(true);
-            GameManager.Instance.openedWindows.Push(operatingRoom);
-        }
+
+        operatingRoom.SetActive(true);
+        SetOperatingRoom();
+        GameManager.Instance.openedWindows.Push(operatingRoom);
     }
 
     public void SetOperatingRoom()
@@ -2243,7 +2322,7 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 60 || totalRand > (value + 1) * 60) && check < 1000)
+            if ((totalRand < value * 60 + difficulty * (value * value + 10) || totalRand > (value + 1) * 60 + difficulty * (value * value + 10)) && check < 1000)
             {
                 check++;
                 continue;
@@ -2433,8 +2512,9 @@ public class OutGameUIManager : MonoBehaviour
         yield return null;
     }
 
-    public void LoadData(int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData)
+    public void LoadData(int difficulty, int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData)
     {
+        Difficulty = difficulty;
         Money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.trainingLevel = trainingLevel;

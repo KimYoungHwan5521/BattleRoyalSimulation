@@ -154,6 +154,7 @@ public class UnlockStatusDictionary
 public class ETCData
 {
     // out game ui manager
+    public int difficulty;
     public int money;
     public int mySurvivorsId;
     public int trainingLevel;
@@ -170,9 +171,10 @@ public class ETCData
 
     public List<string> earnedAchievements = new();
 
-    public ETCData(int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(int difficulty, int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
+        this.difficulty = difficulty;
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;
         this.trainingLevel = trainingLevel;

@@ -115,13 +115,13 @@ public class BattleRoyaleManager
             case League.BronzeLeague:
                 survivorNumber = 4;
                 prohibitAtOnce = 1;
-                areaProhibitTime = 30;
+                areaProhibitTime = 40;
                 InGameUIManager.SetCameraLimit(75, 75);
                 break;
             case League.SilverLeague:
                 survivorNumber = 9;
                 prohibitAtOnce = 2;
-                areaProhibitTime = 40;
+                areaProhibitTime = 45;
                 InGameUIManager.SetCameraLimit(125, 125);
                 break;
             case League.GoldLeague:

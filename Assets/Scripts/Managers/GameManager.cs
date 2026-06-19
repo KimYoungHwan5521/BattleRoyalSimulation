@@ -115,6 +115,8 @@ public class GameManager : MonoBehaviour
         inGameUICanvas.SetActive(false);
         foreach (var versionText in versionTexts) versionText.text = $"Version - {gameVersion}";
 
+        CheckSaveData();
+
         Application.logMessageReceived += (log, stack, type) =>
         {
             if (type == LogType.Error || type == LogType.Exception)
@@ -134,10 +136,18 @@ public class GameManager : MonoBehaviour
         SoundManager.Play(ResourceEnum.BGM.the_birth_of_hip_hop);
     }
 
-    public void ResetData()
+    public void CheckSaveData()
     {
-        OutGameUIManager.ResetData();
+        string json = PlayerPrefs.GetString($"SaveDataInfo0", "{}");
+        Debug.Log(json);
+        title.CheckSaveData(json != "{}");
+    }
+
+    public void ResetData(int difficulty)
+    {
+        OutGameUIManager.ResetData(difficulty);
         calendar.ResetData();
+        GetComponent<GameResult>().ResetData();
         unlockManager.RelockAll();
     }
 
@@ -299,6 +309,7 @@ public class GameManager : MonoBehaviour
     void SaveETCData(int slot)
     {
         ETCData saveData = new(
+            OutGameUIManager.Difficulty,
             OutGameUIManager.Money,
             OutGameUIManager.MySurvivorsId,
             OutGameUIManager.trainingLevel,
@@ -353,6 +364,7 @@ public class GameManager : MonoBehaviour
         }
 
         OutGameUIManager.LoadData(
+        saveData.difficulty,
         saveData.money,
         saveData.mySurvivorsId,
         saveData.trainingLevel,
@@ -378,9 +390,9 @@ public class GameManager : MonoBehaviour
         SaveMySurvivorList(outGameUIManger.MySurvivorsData, slot);
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
-        Option.ReloadSavedata();
-        string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
-        OutGameUIManager.Alert(message);
+        //Option.ReloadSavedata();
+        //string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
+        //OutGameUIManager.Alert(message);
     }
 
     public IEnumerator Load(int slot)

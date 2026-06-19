@@ -814,7 +814,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: Quantidade de sangramento
+    m_Localized: Perda de Sangue
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
@@ -1608,6 +1608,89 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 136658977618980864
     m_Localized: Conquistas obtidas durante este desafio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088768809693184
+    m_Localized: "Esta \xE9 a \xFAltima semana do desafio. A Liga Regular foi agendada
+      automaticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088770546135040
+    m_Localized: "Esta \xE9 a \xFAltima semana do desafio. Participe na Liga Regular."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088771183669248
+    m_Localized: "Hoje \xE9 o dia agendado para o Campeonato. Participe no Campeonato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348072804511744
+    m_Localized: "N\xE3o foi poss\xEDvel pagar as despesas m\xE9dicas do sobrevivente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348074721308672
+    m_Localized: "Tornaste-te Campe\xE3o do Mundo!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348076164149248
+    m_Localized: "N\xE3o conseguiste tornar-te Campe\xE3o do Mundo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348077372108800
+    m_Localized: Desististe do desafio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348919479300096
+    m_Localized: Desistir do Desafio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348920628539392
+    m_Localized: Tens a certeza de que queres desistir deste desafio?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348922738274304
+    m_Localized: "Perda de Sangue: Se muito sangue for perdido, o sobrevivente ficar\xE1
+      incapacitado. (O volume total de sangue \xE9 proporcional \xE0 Vida.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348921765195776
+    m_Localized: "Vida: Se dano suficiente for acumulado durante um battle royale,
+      o sobrevivente ficar\xE1 incapacitado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137357908795518976
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452494092038144
+    m_Localized: Selecionar Dificuldade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452498491863040
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452500173778944
+    m_Localized: "Dif\xEDcil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452501545316352
+    m_Localized: "Muito Dif\xEDcil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452505068531712
+    m_Localized: Especialista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452510303023104
+    m_Localized: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452512886714368
+    m_Localized: Pesadelo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452515168415744
+    m_Localized: Inferno
     m_Metadata:
       m_Items: []
   references:

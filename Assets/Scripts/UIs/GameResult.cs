@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public delegate void ReserveNotification();
@@ -46,7 +45,9 @@ public class GameResult : MonoBehaviour
     [SerializeField] float curResultDelay;
     int lastTimeScale;
     bool gameOver;
+    bool winWC;
     [SerializeField] GameObject gameOverCanvas;
+    public LocalizeStringEvent gameOverMessage;
     [SerializeField] SurvivorInfo gameOverSurvivorInfo;
     [SerializeField] GameObject earnedAchievementsBox;
     [SerializeField] Button earnedAchievementsPrevious;
@@ -79,6 +80,12 @@ public class GameResult : MonoBehaviour
         }
     }
 
+    public void ResetData()
+    {
+        gameOver = false;
+        winWC = false;
+    }
+
     public void ShowGameResult(bool isBattleEnd = true)
     {
         lastTimeScale = (int)Time.timeScale;
@@ -92,6 +99,7 @@ public class GameResult : MonoBehaviour
         SetText(didPlayerParticipate, out int totalProfit);
         outGameUIManager.Money += totalProfit;
         gameOver = outGameUIManager.Money < 0;
+        if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
@@ -197,7 +205,7 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 25000;
                     else if (playerWin == 50) winPrize = 12500;
                     killPrize = playerSurvivor.KillCount * 5000;
-                    playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
+                    //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
                     break;
                 case League.WorldChampionship:
                     if (playerWin == 1)
@@ -206,11 +214,14 @@ public class GameResult : MonoBehaviour
                         AchievementManager.UnlockAchievement("World Champion");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
                         if (playerSurvivor.LinkedSurvivorData.royalLoader) AchievementManager.UnlockAchievement("Royal Loader");
+                        winWC = true;
                     }
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
+                    gameOver = true;
+                    gameOverMessage.StringReference = new("Basic", "GameOver:Win World Champion");
                     killPrize = playerSurvivor.KillCount * 10000;
-                    playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
+                    //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
                 case League.MeleeLeague:
                     if (playerWin == 1)
@@ -248,10 +259,21 @@ public class GameResult : MonoBehaviour
                 case League.BronzeLeague:
                 case League.SilverLeague:
                 case League.GoldLeague:
-                case League.SeasonChampionship:
-                    if(playerWin != 1)
+                    if (playerWin != 1)
                     {
                         playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                        if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null) gameOver = true;
+                    }
+                    break;
+                case League.SeasonChampionship:
+                    if (playerWin != 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                        if (calendar.Today > 77)
+                        {
+                            gameOver = true;
+                            gameOverMessage.StringReference = new("Basic", "GameOver:Lose");
+                        }
                     }
                     break;
             }
@@ -381,24 +403,24 @@ public class GameResult : MonoBehaviour
                 survivor.tier = Tier.Gold;
                 break;
             case League.GoldLeague:
-                //calendar.NeareastSeasonChampionship.reserver = survivor;
-                //notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
-                survivor.haveQualifyToParticipateInSeasonChampionship = true;
-                notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
+                calendar.NeareastSeasonChampionship.reserver = survivor;
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
+                //survivor.haveQualifyToParticipateInSeasonChampionship = true;
+                //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
-                //calendar.NeareastWorldChampionship.reserver = survivor;
-                survivor.haveQualifyToParticipateInWorldChampionship = true;
+                calendar.NeareastWorldChampionship.reserver = survivor;
+                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
+                //survivor.haveQualifyToParticipateInWorldChampionship = true;
+                //notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
                 if (characteristic != -1)
                 {
                     survivor.characteristics.RemoveAt(characteristic);
                     CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
-                    notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
+                    notification += () => { outGameUIManager.Alert("Alert:Overcame", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                     AchievementManager.UnlockAchievement("Overcome");
                 }
-                //notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
-                notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
         }
     }
@@ -425,11 +447,7 @@ public class GameResult : MonoBehaviour
 
         if(gameOver)
         {
-            gameOverCanvas.SetActive(true);
-            // 생존자 통계 보여주기
-            gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
-
-            SetEarnedAchievements();
+            GameOver();
         }
         else
         {
@@ -450,13 +468,24 @@ public class GameResult : MonoBehaviour
                 GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
                 notification?.Invoke();
                 // Auto save
-                GameManager.Instance.Save(0);
-                GameManager.Instance.Option.SetSaveButtonInteractable(true);
+                //GameManager.Instance.Save(0);
+                //GameManager.Instance.Option.SetSaveButtonInteractable(true);
             }
             notification = null;
             GameManager.Instance.DestroyBattleRoyaleManager();
         }
 
+    }
+
+    public void GameOver()
+    {
+        gameOverCanvas.SetActive(true);
+        // 생존자 통계 보여주기
+        gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
+
+        SetEarnedAchievements();
+        if (winWC) SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare2);
+        GameManager.Instance.Option.DeleteSaveData(0);
     }
 
     void LinkStastics()

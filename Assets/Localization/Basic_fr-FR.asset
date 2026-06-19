@@ -817,7 +817,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: "Quantit\xE9 de saignement"
+    m_Localized: Perte de sang
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
@@ -1627,6 +1627,92 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 136658977618980864
     m_Localized: "Succ\xE8s obtenus pendant ce d\xE9fi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088768809693184
+    m_Localized: "C'est la derni\xE8re semaine du d\xE9fi. La ligue r\xE9guli\xE8re
+      a \xE9t\xE9 automatiquement programm\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088770546135040
+    m_Localized: "C'est la derni\xE8re semaine du d\xE9fi. Participez \xE0 la ligue
+      r\xE9guli\xE8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088771183669248
+    m_Localized: "Aujourd'hui est le jour pr\xE9vu du championnat. Participez au
+      championnat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348072804511744
+    m_Localized: "Impossible de payer les frais m\xE9dicaux du survivant."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348074721308672
+    m_Localized: "Vous \xEAtes devenu Champion du Monde !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348076164149248
+    m_Localized: "Vous n'avez pas r\xE9ussi \xE0 devenir Champion du Monde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348077372108800
+    m_Localized: "Vous avez abandonn\xE9 le d\xE9fi."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348919479300096
+    m_Localized: "Abandonner le d\xE9fi"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348920628539392
+    m_Localized: "\xCAtes-vous s\xFBr de vouloir abandonner ce d\xE9fi ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348922738274304
+    m_Localized: "Perte de sang : Si une quantit\xE9 excessive de sang est perdue,
+      le survivant devient hors de combat. (Le volume sanguin total est proportionnel
+      \xE0 la sant\xE9.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348921765195776
+    m_Localized: "Sant\xE9 : Si suffisamment de d\xE9g\xE2ts sont subis pendant un
+      battle royale, le survivant devient hors de combat."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137357908795518976
+    m_Localized: Continuer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452494092038144
+    m_Localized: "S\xE9lection de la difficult\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452498491863040
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452500173778944
+    m_Localized: Difficile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452501545316352
+    m_Localized: "Tr\xE8s difficile"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452505068531712
+    m_Localized: Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452510303023104
+    m_Localized: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452512886714368
+    m_Localized: Cauchemar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452515168415744
+    m_Localized: Enfer
     m_Metadata:
       m_Items: []
   references:

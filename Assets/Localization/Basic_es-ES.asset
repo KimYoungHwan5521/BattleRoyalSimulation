@@ -817,7 +817,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4350414859857920
-    m_Localized: Cantidad de sangrado
+    m_Localized: "P\xE9rdida de Sangre"
     m_Metadata:
       m_Items: []
   - m_Id: 4782425135181824
@@ -1612,6 +1612,90 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 136658977618980864
     m_Localized: "Logros obtenidos durante este desaf\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088768809693184
+    m_Localized: "Es la \xFAltima semana del desaf\xEDo. La Liga Regular ha sido
+      programada autom\xE1ticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088770546135040
+    m_Localized: "Es la \xFAltima semana del desaf\xEDo. Participa en la Liga Regular."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137088771183669248
+    m_Localized: "Hoy es el d\xEDa programado para el Campeonato. Participa en el
+      Campeonato."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348072804511744
+    m_Localized: "No se pudieron pagar los gastos m\xE9dicos del superviviente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348074721308672
+    m_Localized: "\xA1Te has convertido en Campe\xF3n Mundial!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348076164149248
+    m_Localized: "No lograste convertirte en Campe\xF3n Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348077372108800
+    m_Localized: "Abandonaste el desaf\xEDo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348919479300096
+    m_Localized: "Abandonar Desaf\xEDo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348920628539392
+    m_Localized: "\xBFSeguro que quieres abandonar este desaf\xEDo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348922738274304
+    m_Localized: "P\xE9rdida de Sangre: Si se pierde demasiada sangre, el superviviente
+      quedar\xE1 incapacitado. (El volumen total de sangre es proporcional a la Salud.)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137348921765195776
+    m_Localized: "Salud: Si se acumula suficiente da\xF1o durante un battle royale,
+      el superviviente quedar\xE1 incapacitado."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137357908795518976
+    m_Localized: Continuar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452494092038144
+    m_Localized: Seleccionar Dificultad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452498491863040
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452500173778944
+    m_Localized: "Dif\xEDcil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452501545316352
+    m_Localized: "Muy Dif\xEDcil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452505068531712
+    m_Localized: Experto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452510303023104
+    m_Localized: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452512886714368
+    m_Localized: Pesadilla
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137452515168415744
+    m_Localized: Infierno
     m_Metadata:
       m_Items: []
   references:
