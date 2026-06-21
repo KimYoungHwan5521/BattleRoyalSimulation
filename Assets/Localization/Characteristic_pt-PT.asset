@@ -570,6 +570,170 @@ MonoBehaviour:
     m_Localized: "Todos os atributos t\xEAm limite m\xE1ximo de 120"
     m_Metadata:
       m_Items: []
+  - m_Id: 136003291184689152
+    m_Localized: Physical 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003293365727232
+    m_Localized: "For\xE7a +20, Agilidade +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003294972145664
+    m_Localized: "Campe\xE3o de MMA de Pesos-Pesados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003295915864064
+    m_Localized: "For\xE7a +20, Luta +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004626592362496
+    m_Localized: Fuzileiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004627297005568
+    m_Localized: "For\xE7a +20, Tiro +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004628140060672
+    m_Localized: Ferreiro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004629851336704
+    m_Localized: "For\xE7a +20, Fabrico +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226079375360
+    m_Localized: "Mago da For\xE7a"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226851127296
+    m_Localized: "For\xE7a +20, Conhecimento +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007227820011520
+    m_Localized: "Campe\xE3o de MMA de Pesos-Leves"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007228562403328
+    m_Localized: Agilidade +20, Luta +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991138967552
+    m_Localized: "For\xE7a de Ataque M\xF3vel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991935885312
+    m_Localized: Agilidade +20, Tiro +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008992644722688
+    m_Localized: "Especialista em Sobreviv\xEAncia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009460305424384
+    m_Localized: Agilidade +20, Fabrico +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009718791991296
+    m_Localized: MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009720566181888
+    m_Localized: Agilidade +20, Conhecimento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009722684305408
+    m_Localized: Commando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009725943279616
+    m_Localized: Luta +20, Tiro +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010211316527104
+    m_Localized: Alquimista do Estado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010213954744320
+    m_Localized: "Luta +20, Fabrica\xE7\xE3o +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010215649243136
+    m_Localized: Lutador Astuto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010216420995072
+    m_Localized: Luta +20, Conhecimento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011477203611648
+    m_Localized: Engenheiro de Armamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011478650646528
+    m_Localized: Tiro +20, Fabrico +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011480223510528
+    m_Localized: "Especialista em Bal\xEDstica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011481033011200
+    m_Localized: Tiro +20, Conhecimento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012099961286656
+    m_Localized: Engenheiro Genial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012101643202560
+    m_Localized: Fabrico +20, Conhecimento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290814796558336
+    m_Localized: Jovem Promessa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290818214916096
+    m_Localized: "For\xE7a +5, Agilidade +5, Luta +5, Tiro +5, Fabrico +5, Conhecimento
+      +5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290819737448448
+    m_Localized: Candidato-surpresa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290820395954176
+    m_Localized: "For\xE7a +10, Agilidade +10, Luta +10, Tiro +10, Fabrico +10, Conhecimento
+      +10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291611546546176
+    m_Localized: Zombie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291612687396864
+    m_Localized: "N\xE3o fica incapacitado quando a Vida chega a 0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291613899550720
+    m_Localized: Cheiro a Sangue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291614700662784
+    m_Localized: "Hemostase natural extremamente r\xE1pida; recebe 300 de Sangue
+      ao eliminar um inimigo (pode exceder o m\xE1ximo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292240679563264
+    m_Localized: Desafiante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292241753305088
+    m_Localized: "For\xE7a -10, Agilidade -10, Luta -10, Tiro -10, Fabrico -10, Conhecimento
+      -10"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -66,15 +66,18 @@ public class SurvivorData
             int result = _strength;
             if (HaveCharacteristic(CharacteristicType.MuscleDeficiency)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Strongman)) result += 10;
-            else if (HaveCharacteristic(CharacteristicType.Powerhouse)) result += 20;
+            else if (HaveCharacteristic(CharacteristicType.Powerhouse) || HaveCharacteristic(CharacteristicType.Physical100) || HaveCharacteristic(CharacteristicType.MMAHeavyweightChampion) 
+                || HaveCharacteristic(CharacteristicType.Marine) || HaveCharacteristic(CharacteristicType.Blacksmith) || HaveCharacteristic(CharacteristicType.StrengthMage)) result += 20;
             if (HaveCharacteristic(CharacteristicType.Fatty)) result += 10;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 5;
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 10;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
+
             if (HaveCharacteristic(CharacteristicType.Giant)) result = (int)(result * 1.3f);
             else if (HaveCharacteristic(CharacteristicType.Dwarf)) result = (int)(result * 0.7f);
             else if (HaveCharacteristic(CharacteristicType.BigMan)) result = (int)(result * 1.15f);
-            if (ClutchThePerformance) result += 10;
-            else if(ChockingUnderPressure) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Powerhouse");
             return Mathf.Max(result, 0);
@@ -97,12 +100,14 @@ public class SurvivorData
             int result = _agility;
             if (HaveCharacteristic(CharacteristicType.Heavyfooted)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Lightfooted)) result += 10;
-            if (HaveCharacteristic(CharacteristicType.Assassin)) result += 20;
+            else if (HaveCharacteristic(CharacteristicType.Assassin) || HaveCharacteristic(CharacteristicType.MMALightweightChampion) || HaveCharacteristic(CharacteristicType.MobileStrikeForce)
+                 || HaveCharacteristic(CharacteristicType.MacGyver) || HaveCharacteristic(CharacteristicType.SurvivalExpert) || HaveCharacteristic(CharacteristicType.Physical100)) result += 20;
             if (HaveCharacteristic(CharacteristicType.Fatty)) result -= 10;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 5;
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
-            if (ClutchThePerformance) result += 10;
-            else if (ChockingUnderPressure) result -= 10;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Quick-Footed");
             return Mathf.Max(result, 0);
@@ -125,12 +130,14 @@ public class SurvivorData
             int result = _fighting;
             if (HaveCharacteristic(CharacteristicType.ClumsyFighter)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Brawler)) result += 10;
-            else if (HaveCharacteristic(CharacteristicType.Fighter)) result += 20;
+            else if (HaveCharacteristic(CharacteristicType.Fighter) || HaveCharacteristic(CharacteristicType.MMAHeavyweightChampion) || HaveCharacteristic(CharacteristicType.MMALightweightChampion)
+                 || HaveCharacteristic(CharacteristicType.Commando) || HaveCharacteristic(CharacteristicType.StateAlchemist) || HaveCharacteristic(CharacteristicType.CleverFighter)) result += 20;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
             if (HaveCharacteristic(CharacteristicType.Boxer)) result += 10;
             if (HaveCharacteristic(CharacteristicType.Luchador)) result += 5;
-            if (ClutchThePerformance) result += 10;
-            else if (ChockingUnderPressure) result -= 10;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Martial Artist");
             return Mathf.Max(result, 0);
@@ -153,11 +160,13 @@ public class SurvivorData
             int result = _shooting;
             if (HaveCharacteristic(CharacteristicType.PoorAim)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Sniper)) result += 10;
-            else if (HaveCharacteristic(CharacteristicType.Sharpshooter)) result += 20;
+            else if (HaveCharacteristic(CharacteristicType.Sharpshooter) || HaveCharacteristic(CharacteristicType.Marine) || HaveCharacteristic(CharacteristicType.MobileStrikeForce)
+                 || HaveCharacteristic(CharacteristicType.Commando) || HaveCharacteristic(CharacteristicType.WeaponsEngineer) || HaveCharacteristic(CharacteristicType.BallisticsMajor)) result += 20;
             if (HaveCharacteristic(CharacteristicType.Soldier)) result += 10;
             else if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 10;
-            if (ClutchThePerformance) result += 10;
-            else if (ChockingUnderPressure) result -= 10;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Sharpshooter");
             return Mathf.Max(result, 0);
@@ -180,9 +189,11 @@ public class SurvivorData
             int result = _crafting;
             if (HaveCharacteristic(CharacteristicType.ClumsyHand)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Dexterous)) result += 10;
-            else if (HaveCharacteristic(CharacteristicType.Engineer)) result += 20;
-            if (ClutchThePerformance) result += 10;
-            else if (ChockingUnderPressure) result -= 10;
+            else if (HaveCharacteristic(CharacteristicType.Engineer) || HaveCharacteristic(CharacteristicType.Blacksmith) || HaveCharacteristic(CharacteristicType.MacGyver)
+                 || HaveCharacteristic(CharacteristicType.StateAlchemist) || HaveCharacteristic(CharacteristicType.WeaponsEngineer) || HaveCharacteristic(CharacteristicType.GeniusEngineer)) result += 20;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Engineer");
             return Mathf.Max(result, 0);
@@ -205,8 +216,12 @@ public class SurvivorData
             int result = _knowledge;
             if (HaveCharacteristic(CharacteristicType.Dunce)) result -= 10;
             else if (HaveCharacteristic(CharacteristicType.Smart)) result += 10;
-            else if (HaveCharacteristic(CharacteristicType.Genius)) result += 20;
+            else if (HaveCharacteristic(CharacteristicType.Genius) || HaveCharacteristic(CharacteristicType.StrengthMage) || HaveCharacteristic(CharacteristicType.SurvivalExpert)
+                 || HaveCharacteristic(CharacteristicType.CleverFighter) || HaveCharacteristic(CharacteristicType.BallisticsMajor) || HaveCharacteristic(CharacteristicType.GeniusEngineer)) result += 20;
             if (HaveCharacteristic(CharacteristicType.FieldMedic)) result += 5;
+            if (HaveCharacteristic(CharacteristicType.Prospect)) result += 5;
+            else if (HaveCharacteristic(CharacteristicType.DarkHorse)) result += 10;
+            else if (HaveCharacteristic(CharacteristicType.Challenger)) result -= 10;
 
             if (id >= 0 && result >= 100) AchievementManager.UnlockAchievement("Genius");
             return Mathf.Max(result, 0);

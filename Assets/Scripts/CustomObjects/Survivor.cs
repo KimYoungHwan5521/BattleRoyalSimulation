@@ -550,7 +550,11 @@ public class Survivor : CustomObject
                 curFuryTime = 10f;
                 ApplyCorrectionStats();
             }
-            
+            if (characteristics.FindIndex(x => x.type == CharacteristicType.Vampire) != -1)
+            {
+                curBlood += 300;
+            }
+
             if (playerSurvivor)
             {
                 if(value > killCount)
@@ -3434,7 +3438,7 @@ public class Survivor : CustomObject
         maxDamage = Mathf.Max(maxDamage, 0);
         if (!(damagedPartIsArtifical > 0 && noPain)) curHP -= maxDamage;
         attacker.totalDamage += maxDamage;
-        if (curHP <= 0)
+        if (curHP <= 0 && characteristics.FindIndex(x => x.type == CharacteristicType.Zombie) == -1)
         {
             curHP = 0;
             attacker.KillCount++;
@@ -4916,6 +4920,28 @@ public class Survivor : CustomObject
                 case CharacteristicType.BadHearing:
                     characteristicCorrection_HearingAbility *= 0.7f;
                     break;
+                case CharacteristicType.ChokingUnderPressure:
+                    var todayLeague = GameManager.Instance.Calendar.LeagueReserveInfo[GameManager.Instance.Calendar.Today].league;
+                    if (todayLeague == League.SeasonChampionship || todayLeague == League.WorldChampionship)
+                    {
+                        characteristicCorrection_Strength -= 10;
+                        characteristicCorrection_Agility -= 10;
+                        characteristicCorrection_Fighting -= 10;
+                        characteristicCorrection_Shooting -= 10;
+                        characteristicCorrection_Crafting -= 10;
+                    }
+                    break;
+                case CharacteristicType.ClutchPerformance:
+                    todayLeague = GameManager.Instance.Calendar.LeagueReserveInfo[GameManager.Instance.Calendar.Today].league;
+                    if (todayLeague == League.SeasonChampionship || todayLeague == League.WorldChampionship)
+                    {
+                        characteristicCorrection_Strength += 20;
+                        characteristicCorrection_Agility += 20;
+                        characteristicCorrection_Fighting += 20;
+                        characteristicCorrection_Shooting += 20;
+                        characteristicCorrection_Crafting += 20;
+                    }
+                    break;
                 case CharacteristicType.Giant:
                     transform.localScale = new(1.3f, 1.3f);
                     foreach(Transform child in rightHand.transform) child.localScale = new(0.77f, 0.77f);
@@ -4950,6 +4976,9 @@ public class Survivor : CustomObject
                     break;
                 case CharacteristicType.Avenger:
                     characteristicCorrection_NatualHemostasis *= 0.5f;
+                    break;
+                case CharacteristicType.Vampire:
+                    characteristicCorrection_NatualHemostasis *= 100f;
                     break;
                 case CharacteristicType.Regenerator:
                     characteristicCorrection_NatualHemostasis *= 5f;

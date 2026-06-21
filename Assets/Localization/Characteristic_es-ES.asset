@@ -569,6 +569,170 @@ MonoBehaviour:
     m_Localized: "El valor m\xE1ximo de todos los atributos se fija en 120"
     m_Metadata:
       m_Items: []
+  - m_Id: 136003291184689152
+    m_Localized: "Habilidad f\xEDsica 100"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003293365727232
+    m_Localized: Fuerza +20, Agilidad +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003294972145664
+    m_Localized: "Campe\xF3n de peso pesado de MMA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003295915864064
+    m_Localized: Fuerza +20, Combate +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004626592362496
+    m_Localized: Infante de Marina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004627297005568
+    m_Localized: Fuerza +20, Disparo +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004628140060672
+    m_Localized: Herrero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004629851336704
+    m_Localized: "Fuerza +20, Fabricaci\xF3n +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226079375360
+    m_Localized: Mago de Fuerza
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226851127296
+    m_Localized: Fuerza +20, Conocimiento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007227820011520
+    m_Localized: "Campe\xF3n de peso ligero de MMA"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007228562403328
+    m_Localized: Agilidad +20, Combate +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991138967552
+    m_Localized: "Fuerza de Ataque M\xF3vil"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991935885312
+    m_Localized: Agilidad +20, Disparo +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008992644722688
+    m_Localized: Experto en Supervivencia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009460305424384
+    m_Localized: "Agilidad +20, Fabricaci\xF3n +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009718791991296
+    m_Localized: MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009720566181888
+    m_Localized: Agilidad +20, Conocimiento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009722684305408
+    m_Localized: Commando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009725943279616
+    m_Localized: Combate +20, Disparo +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010211316527104
+    m_Localized: Alquimista Estatal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010213954744320
+    m_Localized: "Combate +20, Fabricaci\xF3n +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010215649243136
+    m_Localized: Luchador Astuto
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010216420995072
+    m_Localized: Combate +20, Conocimiento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011477203611648
+    m_Localized: Ingeniero de Armamento
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011478650646528
+    m_Localized: "Disparo +20, Fabricaci\xF3n +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011480223510528
+    m_Localized: "Especialista en Bal\xEDstica"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011481033011200
+    m_Localized: Disparo +20, Conocimiento +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012099961286656
+    m_Localized: Ingeniero Genial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012101643202560
+    m_Localized: "Fabricaci\xF3n +20, Conocimiento +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290814796558336
+    m_Localized: Joven Promesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290818214916096
+    m_Localized: "Fuerza +5, Agilidad +5, Combate +5, Disparo +5, Fabricaci\xF3n
+      +5, Conocimiento +5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290819737448448
+    m_Localized: Candidato Sorpresa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290820395954176
+    m_Localized: "Fuerza +10, Agilidad +10, Combate +10, Disparo +10, Fabricaci\xF3n
+      +10, Conocimiento +10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291611546546176
+    m_Localized: Zombi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291612687396864
+    m_Localized: No queda incapacitado cuando la Salud llega a 0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291613899550720
+    m_Localized: Olor a Sangre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291614700662784
+    m_Localized: "Hemostasia natural extremadamente r\xE1pida; obtiene 300 de Sangre
+      al eliminar a un enemigo (puede superar el m\xE1ximo)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292240679563264
+    m_Localized: Aspirante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292241753305088
+    m_Localized: "Fuerza -10, Agilidad -10, Combate -10, Disparo -10, Fabricaci\xF3n
+      -10, Conocimiento -10"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

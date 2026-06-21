@@ -367,6 +367,54 @@ MonoBehaviour:
     m_Key: Help:Rest
     m_Metadata:
       m_Items: []
+  - m_Id: 1760501450731520
+    m_Key: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1760503614992384
+    m_Key: Very Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1760511638695936
+    m_Key: Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1760513685516288
+    m_Key: Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1760516076269568
+    m_Key: Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1760518651572224
+    m_Key: Hell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761456732827648
+    m_Key: Help:Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761458708344832
+    m_Key: Help:Very Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761460692250624
+    m_Key: Help:Expert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761461665329152
+    m_Key: Help:Hardcore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761463275941888
+    m_Key: Help:Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1761463913476096
+    m_Key: Help:Hell
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

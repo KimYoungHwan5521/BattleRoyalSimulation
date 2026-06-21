@@ -1,5 +1,7 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Localization.SmartFormat.Core.Parsing;
+using UnityEngine.XR;
 
 public class ResourcesPath
 {
@@ -357,12 +359,19 @@ public class ResourcesPath
         "Sprites/Achievements/AugmentedProsthetic",
         "Sprites/Achievements/TranscendentProsthetic",
         "Sprites/Achievements/Masterpiece",
+        "Sprites/Achievements/Engineer",
         "Sprites/Achievements/Overcome",
         "Sprites/Achievements/Craftsman",
         "Sprites/Achievements/TrainingMaster",
         "Sprites/Achievements/Discipline",
         "Sprites/Achievements/Asceticism",
         "Sprites/Achievements/Rest",
+        "Sprites/Achievements/Hard",
+        "Sprites/Achievements/VeryHard",
+        "Sprites/Achievements/Expert",
+        "Sprites/Achievements/Hardcore",
+        "Sprites/Achievements/Nightmare",
+        "Sprites/Achievements/Hell",
 
         "Sprites/Achievements/HundredThousandaire_unlock",
         "Sprites/Achievements/RoyalLoader_unlock",
@@ -401,12 +410,19 @@ public class ResourcesPath
         "Sprites/Achievements/AugmentedProsthetic_unlock",
         "Sprites/Achievements/TranscendentProsthetic_unlock",
         "Sprites/Achievements/Masterpiece_unlock",
+        "Sprites/Achievements/Engineer_unlock",
         "Sprites/Achievements/Overcome_unlock",
         "Sprites/Achievements/Craftsman_unlock",
         "Sprites/Achievements/TrainingMaster_unlock",
         "Sprites/Achievements/Discipline_unlock",
         "Sprites/Achievements/Asceticism_unlock",
         "Sprites/Achievements/Rest_unlock",
+        "Sprites/Achievements/Hard_unlock",
+        "Sprites/Achievements/VeryHard_unlock",
+        "Sprites/Achievements/Expert_unlock",
+        "Sprites/Achievements/Hardcore_unlock",
+        "Sprites/Achievements/Nightmare_unlock",
+        "Sprites/Achievements/Hell_unlock",
     };
 
     public static string[] MaterialPathArray =

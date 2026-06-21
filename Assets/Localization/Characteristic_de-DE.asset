@@ -569,6 +569,170 @@ MonoBehaviour:
     m_Localized: Der Maximalwert aller Attribute wird auf 120 festgelegt
     m_Metadata:
       m_Items: []
+  - m_Id: 136003291184689152
+    m_Localized: Physical 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003293365727232
+    m_Localized: "St\xE4rke +20, Beweglichkeit +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003294972145664
+    m_Localized: MMA-Schwergewichts-Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003295915864064
+    m_Localized: "St\xE4rke +20, Kampf +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004626592362496
+    m_Localized: Marineinfanterist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004627297005568
+    m_Localized: "St\xE4rke +20, Schie\xDFen +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004628140060672
+    m_Localized: Schmied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004629851336704
+    m_Localized: "St\xE4rke +20, Herstellung +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226079375360
+    m_Localized: Kraftmagier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226851127296
+    m_Localized: "St\xE4rke +20, Wissen +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007227820011520
+    m_Localized: MMA-Leichtgewichts-Champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007228562403328
+    m_Localized: Beweglichkeit +20, Kampf +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991138967552
+    m_Localized: Mobile Eingreiftruppe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991935885312
+    m_Localized: "Beweglichkeit +20, Schie\xDFen +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008992644722688
+    m_Localized: "\xDCberlebensexperte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009460305424384
+    m_Localized: Beweglichkeit +20, Herstellung +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009718791991296
+    m_Localized: MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009720566181888
+    m_Localized: Beweglichkeit +20, Wissen +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009722684305408
+    m_Localized: Kommando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009725943279616
+    m_Localized: "Kampf +20, Schie\xDFen +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010211316527104
+    m_Localized: Staatsalchemist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010213954744320
+    m_Localized: Kampf +20, Herstellung +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010215649243136
+    m_Localized: "Gewiefter K\xE4mpfer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010216420995072
+    m_Localized: Kampf +20, Wissen +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011477203611648
+    m_Localized: Waffentechniker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011478650646528
+    m_Localized: "Schie\xDFen +20, Herstellung +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011480223510528
+    m_Localized: Ballistikexperte
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011481033011200
+    m_Localized: "Schie\xDFen +20, Wissen +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012099961286656
+    m_Localized: Genialer Ingenieur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012101643202560
+    m_Localized: Herstellung +20, Wissen +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290814796558336
+    m_Localized: Nachwuchstalent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290818214916096
+    m_Localized: "St\xE4rke +5, Beweglichkeit +5, Kampf +5, Schie\xDFen +5, Herstellung
+      +5, Wissen +5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290819737448448
+    m_Localized: Geheimfavorit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290820395954176
+    m_Localized: "St\xE4rke +10, Beweglichkeit +10, Kampf +10, Schie\xDFen +10, Herstellung
+      +10, Wissen +10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291611546546176
+    m_Localized: Zombie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291612687396864
+    m_Localized: "Wird nicht kampfunf\xE4hig, wenn das Leben 0 erreicht"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291613899550720
+    m_Localized: Blutgeruch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291614700662784
+    m_Localized: "Extrem schnelle nat\xFCrliche Blutstillung; erh\xE4lt beim Besiegen
+      eines Feindes 300 Blut (kann das Maximum \xFCberschreiten)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292240679563264
+    m_Localized: Herausforderer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292241753305088
+    m_Localized: "St\xE4rke -10, Beweglichkeit -10, Kampf -10, Schie\xDFen -10, Herstellung
+      -10, Wissen -10"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

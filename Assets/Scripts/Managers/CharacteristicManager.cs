@@ -64,7 +64,7 @@ public enum CharacteristicType
     Coward = 49, 
     LethalWeapon = 50,
     StreetFighter = 51,
-    Vampire = 52,
+    ScentofBlood = 52,
     BodyEnhancementAdvocate = 53,
     AugmentationFanatic = 54,
     EasilyExhausted = 55,
@@ -77,6 +77,28 @@ public enum CharacteristicType
     FastLearner = 62,
     Gifted = 63,
     Potential = 64,
+
+    Physical100 = 65,
+    MMAHeavyweightChampion = 66,
+    Marine = 67,
+    Blacksmith = 68,
+    StrengthMage = 69,
+    MMALightweightChampion = 70,
+    MobileStrikeForce = 71,
+    MacGyver = 72,
+    SurvivalExpert = 73,
+    Commando = 74,
+    StateAlchemist = 75,
+    CleverFighter = 76,
+    WeaponsEngineer = 77,
+    BallisticsMajor = 78,
+    GeniusEngineer = 79,
+
+    Prospect = 80,
+    DarkHorse = 81,
+    Zombie = 82,
+    Vampire = 83,
+    Challenger = 84,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -119,21 +141,42 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Giant, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dwarf, CharacteristicType.BigMan));
         characteristics.Add(new(CharacteristicType.Dwarf, CharacteristicRarity.Uncommon, 0, CharacteristicType.Giant, CharacteristicType.BigMan));
         characteristics.Add(new(CharacteristicType.BigMan, CharacteristicRarity.Common, 0, CharacteristicType.Giant, CharacteristicType.Dwarf));
-        characteristics.Add(new(CharacteristicType.MuscleDeficiency, CharacteristicRarity.Common, 0, CharacteristicType.Strongman, CharacteristicType.Powerhouse));
-        characteristics.Add(new(CharacteristicType.Strongman, CharacteristicRarity.Common, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Powerhouse));
-        characteristics.Add(new(CharacteristicType.Powerhouse, CharacteristicRarity.Uncommon, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman));
-        characteristics.Add(new(CharacteristicType.Heavyfooted, CharacteristicRarity.Common, 0, CharacteristicType.Lightfooted));
-        characteristics.Add(new(CharacteristicType.Lightfooted, CharacteristicRarity.Common, 0, CharacteristicType.Heavyfooted));
-        characteristics.Add(new(CharacteristicType.Assassin, CharacteristicRarity.Rare, 0));
-        characteristics.Add(new(CharacteristicType.ClumsyFighter, CharacteristicRarity.Common, 0, CharacteristicType.Brawler, CharacteristicType.Fighter));
-        characteristics.Add(new(CharacteristicType.Brawler, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Fighter));
-        characteristics.Add(new(CharacteristicType.Fighter, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler));
-        characteristics.Add(new(CharacteristicType.PoorAim, CharacteristicRarity.Common, 0, CharacteristicType.Sniper, CharacteristicType.Sharpshooter));
-        characteristics.Add(new(CharacteristicType.Sniper, CharacteristicRarity.Common, 0, CharacteristicType.PoorAim, CharacteristicType.Sharpshooter));
-        characteristics.Add(new(CharacteristicType.Sharpshooter, CharacteristicRarity.Uncommon, 0, CharacteristicType.PoorAim, CharacteristicType.Sniper));
-        characteristics.Add(new(CharacteristicType.Dunce, CharacteristicRarity.Common, 0, CharacteristicType.Smart, CharacteristicType.Genius));
-        characteristics.Add(new(CharacteristicType.Smart, CharacteristicRarity.Common, 0, CharacteristicType.Dunce, CharacteristicType.Genius));
-        characteristics.Add(new(CharacteristicType.Genius, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dunce, CharacteristicType.Smart));
+        characteristics.Add(new(CharacteristicType.MuscleDeficiency, CharacteristicRarity.Common, 0, CharacteristicType.Strongman, CharacteristicType.Powerhouse, 
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage));
+        characteristics.Add(new(CharacteristicType.Strongman, CharacteristicRarity.Common, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Powerhouse, 
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage));
+        characteristics.Add(new(CharacteristicType.Powerhouse, CharacteristicRarity.Uncommon, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, 
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage));
+        characteristics.Add(new(CharacteristicType.Heavyfooted, CharacteristicRarity.Common, 0, CharacteristicType.Lightfooted, CharacteristicType.Assassin, 
+            CharacteristicType.Physical100, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert));
+        characteristics.Add(new(CharacteristicType.Lightfooted, CharacteristicRarity.Common, 0, CharacteristicType.Heavyfooted, CharacteristicType.Assassin, 
+            CharacteristicType.Physical100, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert));
+        characteristics.Add(new(CharacteristicType.Assassin, CharacteristicRarity.Uncommon, 0, CharacteristicType.Lightfooted, CharacteristicType.Heavyfooted, 
+            CharacteristicType.Physical100, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert));
+        characteristics.Add(new(CharacteristicType.ClumsyFighter, CharacteristicRarity.Common, 0, CharacteristicType.Brawler, CharacteristicType.Fighter, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.MMALightweightChampion, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter));
+        characteristics.Add(new(CharacteristicType.Brawler, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Fighter, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.MMALightweightChampion, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter));
+        characteristics.Add(new(CharacteristicType.Fighter, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.MMALightweightChampion, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter));
+        characteristics.Add(new(CharacteristicType.PoorAim, CharacteristicRarity.Common, 0, CharacteristicType.Sniper, CharacteristicType.Sharpshooter, 
+            CharacteristicType.Marine, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.Sniper, CharacteristicRarity.Common, 0, CharacteristicType.PoorAim, CharacteristicType.Sharpshooter, 
+            CharacteristicType.Marine, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.Sharpshooter, CharacteristicRarity.Uncommon, 0, CharacteristicType.PoorAim, CharacteristicType.Sniper, 
+            CharacteristicType.Marine, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.ClumsyHand, CharacteristicRarity.Common, 0, CharacteristicType.Dexterous, CharacteristicType.Engineer, 
+            CharacteristicType.Blacksmith, CharacteristicType.MacGyver, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Dexterous, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyHand, CharacteristicType.Engineer, 
+            CharacteristicType.Blacksmith, CharacteristicType.MacGyver, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Engineer, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, 
+            CharacteristicType.Blacksmith, CharacteristicType.MacGyver, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Dunce, CharacteristicRarity.Common, 0, CharacteristicType.Smart, CharacteristicType.Genius, 
+            CharacteristicType.StrengthMage, CharacteristicType.SurvivalExpert, CharacteristicType.CleverFighter, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Smart, CharacteristicRarity.Common, 0, CharacteristicType.Dunce, CharacteristicType.Genius, 
+            CharacteristicType.StrengthMage, CharacteristicType.SurvivalExpert, CharacteristicType.CleverFighter, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Genius, CharacteristicRarity.Uncommon, 0, CharacteristicType.Dunce, CharacteristicType.Smart, 
+            CharacteristicType.StrengthMage, CharacteristicType.SurvivalExpert, CharacteristicType.CleverFighter, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
         characteristics.Add(new(CharacteristicType.CarefulShooter, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.Fragile, CharacteristicRarity.Uncommon, 0, CharacteristicType.Sturdy));
         characteristics.Add(new(CharacteristicType.Sturdy, CharacteristicRarity.Rare, 0, CharacteristicType.Fragile));
@@ -143,11 +186,8 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.LuckGuy, CharacteristicRarity.Uncommon, 0, CharacteristicType.Cursed, CharacteristicType.Blessed));
         characteristics.Add(new(CharacteristicType.Cursed, CharacteristicRarity.Uncommon, 0, CharacteristicType.LuckGuy, CharacteristicType.Blessed));
         characteristics.Add(new(CharacteristicType.Blessed, CharacteristicRarity.Rare, 0, CharacteristicType.LuckGuy, CharacteristicType.Cursed));
-        characteristics.Add(new(CharacteristicType.ClumsyHand, CharacteristicRarity.Common, 0, CharacteristicType.Dexterous, CharacteristicType.Engineer));
-        characteristics.Add(new(CharacteristicType.Dexterous, CharacteristicRarity.Common, 0, CharacteristicType.ClumsyHand, CharacteristicType.Engineer));
-        characteristics.Add(new(CharacteristicType.Engineer, CharacteristicRarity.Uncommon, 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous));
         characteristics.Add(new(CharacteristicType.Fatty, CharacteristicRarity.Common, 0));
-        characteristics.Add(new(CharacteristicType.Soldier, CharacteristicRarity.Uncommon, 0, CharacteristicType.FieldMedic));
+        characteristics.Add(new(CharacteristicType.Soldier, CharacteristicRarity.Uncommon, 0, CharacteristicType.FieldMedic, CharacteristicType.Marine, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando));
         characteristics.Add(new(CharacteristicType.Boxer, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.Luchador, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.QuickDrawer, CharacteristicRarity.Uncommon, 0, CharacteristicType.CarefulShooter));
@@ -155,8 +195,8 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.SwordSaint, CharacteristicRarity.Rare, 0));
         characteristics.Add(new(CharacteristicType.KnifeFighter, CharacteristicRarity.Common, 0));
         characteristics.Add(new(CharacteristicType.MasterArcher, CharacteristicRarity.Uncommon, 0));
-        characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0, CharacteristicType.Vampire));
-        characteristics.Add(new(CharacteristicType.FieldMedic, CharacteristicRarity.Uncommon, 0, CharacteristicType.Soldier));
+        characteristics.Add(new(CharacteristicType.TasteOfBlood, CharacteristicRarity.Uncommon, 0, CharacteristicType.ScentofBlood));
+        characteristics.Add(new(CharacteristicType.FieldMedic, CharacteristicRarity.Uncommon, 0, CharacteristicType.Soldier, CharacteristicType.Marine, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando));
         characteristics.Add(new(CharacteristicType.TrapExpert, CharacteristicRarity.Rare, 0));
         characteristics.Add(new(CharacteristicType.PoisonImmune, CharacteristicRarity.Rare, 0));
         // 2.0
@@ -164,7 +204,7 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Coward, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.LethalWeapon, CharacteristicRarity.Uncommon, 0));
         characteristics.Add(new(CharacteristicType.StreetFighter, CharacteristicRarity.Uncommon, 0));
-        characteristics.Add(new(CharacteristicType.Vampire, CharacteristicRarity.Rare, 0, CharacteristicType.TasteOfBlood));
+        characteristics.Add(new(CharacteristicType.ScentofBlood, CharacteristicRarity.Rare, 0, CharacteristicType.TasteOfBlood));
         characteristics.Add(new(CharacteristicType.BodyEnhancementAdvocate, CharacteristicRarity.Uncommon, 0, CharacteristicType.AugmentationFanatic));
         characteristics.Add(new(CharacteristicType.AugmentationFanatic, CharacteristicRarity.Rare, 0, CharacteristicType.BodyEnhancementAdvocate));
         characteristics.Add(new(CharacteristicType.EasilyExhausted, CharacteristicRarity.Common, 0, CharacteristicType.Tireless, CharacteristicType.IronMan, CharacteristicType.Overzealous));
@@ -177,6 +217,43 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.FastLearner, CharacteristicRarity.Uncommon, 0, CharacteristicType.Gifted, CharacteristicType.Overzealous));
         characteristics.Add(new(CharacteristicType.Gifted, CharacteristicRarity.Rare, 0, CharacteristicType.FastLearner, CharacteristicType.Overzealous));
         characteristics.Add(new(CharacteristicType.Potential, CharacteristicRarity.Uncommon, 0));
+
+        characteristics.Add(new(CharacteristicType.Physical100, CharacteristicRarity.Rare, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, CharacteristicType.Powerhouse, CharacteristicType.Heavyfooted, CharacteristicType.Lightfooted, CharacteristicType.Assassin, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert));
+        characteristics.Add(new(CharacteristicType.MMAHeavyweightChampion, CharacteristicRarity.Rare, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, CharacteristicType.Powerhouse, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, CharacteristicType.Fighter, 
+            CharacteristicType.Physical100, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage, CharacteristicType.Commando, CharacteristicType.MMALightweightChampion, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter));
+        characteristics.Add(new(CharacteristicType.Marine, CharacteristicRarity.Rare, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, CharacteristicType.Powerhouse, CharacteristicType.PoorAim, CharacteristicType.Sniper, CharacteristicType.Sharpshooter, CharacteristicType.Soldier, CharacteristicType.FieldMedic,
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Blacksmith, CharacteristicType.StrengthMage, CharacteristicType.WeaponsEngineer, CharacteristicType.MobileStrikeForce, CharacteristicType.Commando, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.Blacksmith, CharacteristicRarity.Rare, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, CharacteristicType.Powerhouse, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, CharacteristicType.Engineer,
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.StrengthMage, CharacteristicType.WeaponsEngineer, CharacteristicType.MacGyver, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.StrengthMage, CharacteristicRarity.Rare, 0, CharacteristicType.MuscleDeficiency, CharacteristicType.Strongman, CharacteristicType.Powerhouse, CharacteristicType.Dunce, CharacteristicType.Smart, CharacteristicType.Genius,
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.GeniusEngineer, CharacteristicType.SurvivalExpert, CharacteristicType.CleverFighter, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.MMALightweightChampion, CharacteristicRarity.Rare, 0, CharacteristicType.Heavyfooted, CharacteristicType.Lightfooted, CharacteristicType.Assassin, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, CharacteristicType.Fighter, 
+            CharacteristicType.Physical100, CharacteristicType.MMAHeavyweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter));
+        characteristics.Add(new(CharacteristicType.MobileStrikeForce, CharacteristicRarity.Rare, 0, CharacteristicType.Heavyfooted, CharacteristicType.Lightfooted, CharacteristicType.Assassin, CharacteristicType.PoorAim, CharacteristicType.Sniper, CharacteristicType.Sharpshooter, CharacteristicType.Soldier, CharacteristicType.FieldMedic, 
+            CharacteristicType.Physical100, CharacteristicType.Marine, CharacteristicType.MMALightweightChampion, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert, CharacteristicType.Commando, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.MacGyver, CharacteristicRarity.Rare, 0, CharacteristicType.Heavyfooted, CharacteristicType.Lightfooted, CharacteristicType.Assassin, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, CharacteristicType.Engineer, 
+            CharacteristicType.Physical100, CharacteristicType.Blacksmith, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.SurvivalExpert, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.SurvivalExpert, CharacteristicRarity.Rare, 0, CharacteristicType.Heavyfooted, CharacteristicType.Lightfooted, CharacteristicType.Assassin, CharacteristicType.Dunce, CharacteristicType.Smart, CharacteristicType.Genius, 
+            CharacteristicType.Physical100, CharacteristicType.StrengthMage, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.CleverFighter, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.Commando, CharacteristicRarity.Rare, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, CharacteristicType.Fighter, CharacteristicType.PoorAim, CharacteristicType.Sniper, CharacteristicType.Sharpshooter,  CharacteristicType.Soldier, CharacteristicType.FieldMedic, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Marine, CharacteristicType.MMALightweightChampion, CharacteristicType.MobileStrikeForce, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+        characteristics.Add(new(CharacteristicType.StateAlchemist, CharacteristicRarity.Rare, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, CharacteristicType.Fighter, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, CharacteristicType.Engineer, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.Blacksmith, CharacteristicType.MMALightweightChampion, CharacteristicType.MacGyver, CharacteristicType.Commando, CharacteristicType.CleverFighter, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.CleverFighter, CharacteristicRarity.Rare, 0, CharacteristicType.ClumsyFighter, CharacteristicType.Brawler, CharacteristicType.Fighter, CharacteristicType.Dunce, CharacteristicType.Smart, CharacteristicType.Genius, 
+            CharacteristicType.MMAHeavyweightChampion, CharacteristicType.StrengthMage, CharacteristicType.MMALightweightChampion, CharacteristicType.SurvivalExpert, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.WeaponsEngineer, CharacteristicRarity.Rare, 0, CharacteristicType.PoorAim, CharacteristicType.Sniper, CharacteristicType.Sharpshooter, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, CharacteristicType.Engineer,
+            CharacteristicType.Marine, CharacteristicType.Blacksmith, CharacteristicType.MobileStrikeForce, CharacteristicType.MacGyver, CharacteristicType.Commando, CharacteristicType.StateAlchemist, CharacteristicType.BallisticsMajor, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.BallisticsMajor, CharacteristicRarity.Rare, 0, CharacteristicType.PoorAim, CharacteristicType.Sniper, CharacteristicType.Sharpshooter, CharacteristicType.Dunce, CharacteristicType.Smart, CharacteristicType.Genius,
+            CharacteristicType.Marine, CharacteristicType.StrengthMage, CharacteristicType.MobileStrikeForce, CharacteristicType.SurvivalExpert, CharacteristicType.Commando, CharacteristicType.CleverFighter, CharacteristicType.WeaponsEngineer, CharacteristicType.GeniusEngineer));
+        characteristics.Add(new(CharacteristicType.GeniusEngineer, CharacteristicRarity.Rare, 0, CharacteristicType.ClumsyHand, CharacteristicType.Dexterous, CharacteristicType.Engineer, CharacteristicType.Dunce, CharacteristicType.Smart, CharacteristicType.Genius,
+            CharacteristicType.Blacksmith, CharacteristicType.StrengthMage, CharacteristicType.MacGyver, CharacteristicType.SurvivalExpert, CharacteristicType.StateAlchemist, CharacteristicType.CleverFighter, CharacteristicType.WeaponsEngineer, CharacteristicType.BallisticsMajor));
+
+        characteristics.Add(new(CharacteristicType.Prospect, CharacteristicRarity.Common, 0, CharacteristicType.DarkHorse, CharacteristicType.Challenger));
+        characteristics.Add(new(CharacteristicType.DarkHorse, CharacteristicRarity.Uncommon, 0, CharacteristicType.Prospect, CharacteristicType.Challenger));
+        characteristics.Add(new(CharacteristicType.Zombie, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.Vampire, CharacteristicRarity.Rare, 0));
+        characteristics.Add(new(CharacteristicType.Challenger, CharacteristicRarity.Common, 0, CharacteristicType.Prospect, CharacteristicType.DarkHorse));
         yield return null;
     }
 
@@ -203,8 +280,8 @@ public class CharacteristicManager
 
         int wantRarity;
         float rand = UnityEngine.Random.Range(0, 1f);
-        if (rand < 0.8f) wantRarity = 0;
-        else if (rand < 0.97f) wantRarity = 1;
+        if (rand < 0.7f) wantRarity = 0;
+        else if (rand < 0.9f) wantRarity = 1;
         else wantRarity = 2;
 
         for(int i = 0; i < howMany; i++)

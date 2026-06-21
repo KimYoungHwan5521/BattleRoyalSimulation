@@ -456,7 +456,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 134921386796314624
-    m_Key: Help:Vampire
+    m_Key: Help:ScentofBlood
     m_Metadata:
       m_Items: []
   - m_Id: 134921387517734912
@@ -553,6 +553,166 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 134935331884036096
     m_Key: Help:Potential
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003291184689152
+    m_Key: Physical 100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003293365727232
+    m_Key: Help:Physical100
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003294972145664
+    m_Key: MMAHeavyweightChampion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003295915864064
+    m_Key: Help:MMAHeavyweightChampion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004626592362496
+    m_Key: Marine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004627297005568
+    m_Key: Help:Marine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004628140060672
+    m_Key: Blacksmith
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004629851336704
+    m_Key: Help:Blacksmith
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226079375360
+    m_Key: StrengthMage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226851127296
+    m_Key: Help:StrengthMage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007227820011520
+    m_Key: MMALightweightChampion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007228562403328
+    m_Key: Help:MMALightweightChampion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991138967552
+    m_Key: MobileStrikeForce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991935885312
+    m_Key: Help:MobileStrikeForce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008992644722688
+    m_Key: SurvivalExpert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009460305424384
+    m_Key: Help:MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009718791991296
+    m_Key: MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009720566181888
+    m_Key: Help:SurvivalExpert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009722684305408
+    m_Key: Commando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009725943279616
+    m_Key: Help:Commando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010211316527104
+    m_Key: StateAlchemist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010213954744320
+    m_Key: Help:StateAlchemist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010215649243136
+    m_Key: CleverFighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010216420995072
+    m_Key: Help:CleverFighter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011477203611648
+    m_Key: WeaponsEngineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011478650646528
+    m_Key: Help:WeaponsEngineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011480223510528
+    m_Key: BallisticsMajor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011481033011200
+    m_Key: Help:BallisticsMajor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012099961286656
+    m_Key: GeniusEngineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012101643202560
+    m_Key: Help:GeniusEngineer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290814796558336
+    m_Key: Prospect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290818214916096
+    m_Key: Help:Prospect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290819737448448
+    m_Key: DarkHorse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290820395954176
+    m_Key: Help:DarkHorse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291611546546176
+    m_Key: Zombie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291612687396864
+    m_Key: Help:Zombie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291613899550720
+    m_Key: ScentofBlood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291614700662784
+    m_Key: Help:Vampire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292240679563264
+    m_Key: Challenger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292241753305088
+    m_Key: Help:Challenger
     m_Metadata:
       m_Items: []
   m_Metadata:

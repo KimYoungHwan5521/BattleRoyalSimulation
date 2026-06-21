@@ -113,6 +113,7 @@ public class AchievementUIManager
 
     public IEnumerator Initiate()
     {
+        // ※ Achievement / Training은 띄어쓰기 까지 일치 해야하고, Characterisstic은 띄어쓰기 붙여야함!!
         GameManager.ClaimLoadInfo("Loading Achievements...");
         achivementInfos.Add(new("Hundred-Thousandaire"));
         achivementInfos.Add(new("Royal Loader", UnlockElement.Characteristic, "Blessed"));
@@ -125,32 +126,32 @@ public class AchievementUIManager
         achivementInfos.Add(new("Shooting Champion", UnlockElement.Training, "Invite Shooting League Champion"));
         achivementInfos.Add(new("Crafting Champion", UnlockElement.Training, "Invite Crafting League Champion"));
         achivementInfos.Add(new("Bloody Hands", UnlockElement.Characteristic, "Avenger", "Total_Kill", 10));
-        achivementInfos.Add(new("Bloody Arms"));
+        achivementInfos.Add(new("Bloody Arms", UnlockElement.Characteristic, "ScentofBlood", "Total_Kill", 100));
         achivementInfos.Add(new("Notorious", UnlockElement.Characteristic, "TasteOfBlood"));
-        achivementInfos.Add(new("Tactician"));
+        achivementInfos.Add(new("Tactician", UnlockElement.Characteristic, "DiceMan"));
         achivementInfos.Add(new("Legend", UnlockElement.Training, "Veteran Battle Royale Player Visit"));
-        achivementInfos.Add(new("Vulture Victory"));
+        achivementInfos.Add(new("Vulture Victory", UnlockElement.Characteristic, "Coward"));
         achivementInfos.Add(new("Experience", UnlockElement.Characteristic, "UpsAndDowns"));
         achivementInfos.Add(new("Powerhouse", UnlockElement.Training, "Invite Strongman"));
         achivementInfos.Add(new("Quick-Footed", UnlockElement.Characteristic, "Assassin"));
         achivementInfos.Add(new("Martial Artist", UnlockElement.Training, "Invite MMA Champion"));
         achivementInfos.Add(new("Sharpshooter", UnlockElement.Characteristic, "QuickDrawer"));
         achivementInfos.Add(new("Genius", UnlockElement.Characteristic, "Genius"));
-        achivementInfos.Add(new("Foreman", UnlockElement.Characteristic, "", "Total_Crafting", 100));
+        achivementInfos.Add(new("Foreman", UnlockElement.Training, "Crafting Workshop", "Total_Crafting", 100));
         achivementInfos.Add(new("Craftsman", UnlockElement.Characteristic, "Dexterous"));
         achivementInfos.Add(new("Sun Tzu", UnlockElement.Characteristic, "TrapExpert"));
         achivementInfos.Add(new("Overcome", UnlockElement.Characteristic, "ClutchPerformance"));
         achivementInfos.Add(new("1 hour", UnlockElement.Characteristic, "LuckGuy", "Total_SurvivalTime", 3600, false));
         achivementInfos.Add(new("Viper", UnlockElement.Characteristic, "PoisonImmune"));
         achivementInfos.Add(new("Bruce Lee", UnlockElement.Characteristic, "StreetFighter", "Total_BareHandKill", 30));
-        achivementInfos.Add(new("Lethal Weapon", UnlockElement.Characteristic, "", "Total_MeleeKill", 30));
+        achivementInfos.Add(new("Lethal Weapon", UnlockElement.Characteristic, "LethalWeapon", "Total_MeleeKill", 30));
         achivementInfos.Add(new("Gunslinger", UnlockElement.Characteristic, "Sharpshooter", "Total_RangedKill", 30));
         achivementInfos.Add(new("Sword Master", UnlockElement.Characteristic, "SwordSaint", "Total_SowrdKill", 10));
         achivementInfos.Add(new("Sniper", UnlockElement.Characteristic, "Sniper", "Total_SniperKill", 10));
         achivementInfos.Add(new("Ace", UnlockElement.Training, "Invite Local Expert"));
         achivementInfos.Add(new("Severe Bleeding", UnlockElement.Characteristic, "Regenerator"));
-        achivementInfos.Add(new("Augmented Prosthetic"));
-        achivementInfos.Add(new("Transcendent Prosthetic"));
+        achivementInfos.Add(new("Augmented Prosthetic", UnlockElement.Characteristic, "BodyEnhancementAdvocate"));
+        achivementInfos.Add(new("Transcendent Prosthetic", UnlockElement.Characteristic, "AugmentationFanatic"));
         achivementInfos.Add(new("Masterpiece"));
         // 2.0
         achivementInfos.Add(new("Engineer", UnlockElement.Characteristic, "Engineer"));
@@ -158,6 +159,12 @@ public class AchievementUIManager
         achivementInfos.Add(new("Discipline", UnlockElement.Characteristic, "TwoHearts", "Total_StaminaConsumption", 1000));
         achivementInfos.Add(new("Asceticism", UnlockElement.Characteristic, "ThreeHearts", "Total_StaminaConsumption", 5000));
         achivementInfos.Add(new("Rest", UnlockElement.Characteristic, "FastRecharge", "Total_StaminaRecovery", 1000));
+        achivementInfos.Add(new("Hard", UnlockElement.Characteristic, "Prospect"));
+        achivementInfos.Add(new("Very Hard", UnlockElement.Characteristic, "DarkHorse"));
+        achivementInfos.Add(new("Expert", UnlockElement.Characteristic, "Potential"));
+        achivementInfos.Add(new("Hardcore", UnlockElement.Characteristic, "Zombie"));
+        achivementInfos.Add(new("Nightmare", UnlockElement.Characteristic, "ScentofBlood"));
+        achivementInfos.Add(new("Hell", UnlockElement.Characteristic, "Challenger"));
 
         yield return null;
     }

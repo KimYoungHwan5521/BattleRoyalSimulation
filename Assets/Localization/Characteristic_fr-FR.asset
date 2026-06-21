@@ -573,6 +573,170 @@ MonoBehaviour:
     m_Localized: Toutes les statistiques ont une limite maximale de 120
     m_Metadata:
       m_Items: []
+  - m_Id: 136003291184689152
+    m_Localized: 100 % physique !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003293365727232
+    m_Localized: "Force +20, Agilit\xE9 +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003294972145664
+    m_Localized: Champion de MMA poids lourd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136003295915864064
+    m_Localized: Force +20, Combat +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004626592362496
+    m_Localized: Marine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004627297005568
+    m_Localized: Force +20, Tir +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004628140060672
+    m_Localized: Forgeron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136004629851336704
+    m_Localized: Force +20, Fabrication +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226079375360
+    m_Localized: Mage de force
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007226851127296
+    m_Localized: Force +20, Connaissance +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007227820011520
+    m_Localized: "Champion de MMA poids l\xE9ger"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136007228562403328
+    m_Localized: "Agilit\xE9 +20, Combat +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991138967552
+    m_Localized: Force de frappe mobile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008991935885312
+    m_Localized: "Agilit\xE9 +20, Tir +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136008992644722688
+    m_Localized: Expert en survie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009460305424384
+    m_Localized: "Agilit\xE9 +20, Fabrication +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009718791991296
+    m_Localized: MacGyver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009720566181888
+    m_Localized: "Agilit\xE9 +20, Connaissance +20"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009722684305408
+    m_Localized: Commando
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136009725943279616
+    m_Localized: Combat +20, Tir +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010211316527104
+    m_Localized: "Alchimiste d\u2019\xC9tat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010213954744320
+    m_Localized: Combat +20, Fabrication +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010215649243136
+    m_Localized: Combattant astucieux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136010216420995072
+    m_Localized: Combat +20, Connaissance +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011477203611648
+    m_Localized: "Ing\xE9nieur en armement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011478650646528
+    m_Localized: Tir +20, Fabrication +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011480223510528
+    m_Localized: "Sp\xE9cialiste en balistique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136011481033011200
+    m_Localized: Tir +20, Connaissance +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012099961286656
+    m_Localized: "Ing\xE9nieur de g\xE9nie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136012101643202560
+    m_Localized: Fabrication +20, Connaissance +20
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290814796558336
+    m_Localized: Espoir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290818214916096
+    m_Localized: "Force +5, Agilit\xE9 +5, Combat +5, Tir +5, Fabrication +5, Connaissance
+      +5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290819737448448
+    m_Localized: Outsider
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136290820395954176
+    m_Localized: "Force +10, Agilit\xE9 +10, Combat +10, Tir +10, Fabrication +10,
+      Connaissance +10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291611546546176
+    m_Localized: Zombie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291612687396864
+    m_Localized: "Ne devient pas hors combat lorsque la Sant\xE9 atteint 0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291613899550720
+    m_Localized: Odeur du sang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136291614700662784
+    m_Localized: "H\xE9mostase naturelle extr\xEAmement rapide ; gagne 300 de Sang
+      en \xE9liminant un ennemi (peut d\xE9passer le maximum)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292240679563264
+    m_Localized: Challenger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 136292241753305088
+    m_Localized: "Force -10, Agilit\xE9 -10, Combat -10, Tir -10, Fabrication -10,
+      Connaissance -10"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
