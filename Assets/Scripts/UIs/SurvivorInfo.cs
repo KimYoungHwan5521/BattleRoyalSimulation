@@ -178,7 +178,7 @@ public class SurvivorInfo : MonoBehaviour
         }
         
         survivorNameText.StringReference = survivorName;
-        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount);
+        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount, true);
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
@@ -187,19 +187,19 @@ public class SurvivorInfo : MonoBehaviour
         knowledgeText.text = $"{survivorData.Knowledge}";
         priceText.text = $"$ {price}";
 
-        strengthBar.fillAmount = survivorData._strength / 100f;
-        agilityBar.fillAmount = survivorData._agility / 100f;
-        fightingBar.fillAmount = survivorData._fighting / 100f;
-        shootingBar.fillAmount = survivorData._shooting / 100f;
-        craftingBar.fillAmount = survivorData._crafting / 100f;
-        knowledgeBar.fillAmount = survivorData._knowledge / 100f;
+        strengthBar.fillAmount = (float)survivorData.Strength / survivorData.MaxStrength;
+        agilityBar.fillAmount = (float)survivorData.Agility / survivorData.MaxAgility;
+        fightingBar.fillAmount = (float)survivorData.Fighting / survivorData.MaxFighting;
+        shootingBar.fillAmount = (float)survivorData.Shooting / survivorData.MaxShooting;
+        craftingBar.fillAmount = (float)survivorData.Crafting / survivorData.MaxCrafting;
+        knowledgeBar.fillAmount = (float)survivorData.Knowledge / survivorData.MaxKnowledge;
 
-        strenthRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Strength + 19) / 20, 6)];
-        agilityRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Agility + 19) / 20, 6)];
-        fightingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Fighting + 19) / 20, 6)];
-        shootingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Shooting + 19) / 20, 6)];
-        craftingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Crafting + 19) / 20, 6)];
-        knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Knowledge + 19) / 20, 6)];
+        strenthRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Strength + 19) / 20, 7)];
+        agilityRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Agility + 19) / 20, 7)];
+        fightingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Fighting + 19) / 20, 7)];
+        shootingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Shooting + 19) / 20, 7)];
+        craftingRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Crafting + 19) / 20, 7)];
+        knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((survivorData.Knowledge + 19) / 20, 7)];
 
         SetCharacteristic();
     }
@@ -227,14 +227,14 @@ public class SurvivorInfo : MonoBehaviour
         craftingText.text = $"{wantSurvivorData.Crafting}";
         knowledgeText.text = $"{wantSurvivorData.Knowledge}";
 
-        strengthBar.fillAmount = wantSurvivorData._strength / 100f;
-        agilityBar.fillAmount = wantSurvivorData._agility / 100f;
-        fightingBar.fillAmount = wantSurvivorData._fighting / 100f;
-        shootingBar.fillAmount = wantSurvivorData._shooting / 100f;
-        craftingBar.fillAmount = wantSurvivorData._crafting / 100f;
-        knowledgeBar.fillAmount = wantSurvivorData._knowledge / 100f;
+        strengthBar.fillAmount = (float)wantSurvivorData.Strength / survivorData.MaxStrength;
+        agilityBar.fillAmount = (float)wantSurvivorData.Agility / survivorData.MaxAgility;
+        fightingBar.fillAmount = (float)wantSurvivorData.Fighting / survivorData.MaxFighting;
+        shootingBar.fillAmount = (float)wantSurvivorData.Shooting / survivorData.MaxShooting;
+        craftingBar.fillAmount = (float)wantSurvivorData.Crafting / survivorData.MaxCrafting;
+        knowledgeBar.fillAmount = (float)wantSurvivorData.Knowledge / survivorData.MaxKnowledge;
 
-        if(strenthRank != null)
+        if (strenthRank != null)
         {
             strenthRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Strength + 19) / 20, 6)];
             agilityRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Agility + 19) / 20, 6)];

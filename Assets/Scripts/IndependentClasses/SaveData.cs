@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 #region Survivors
@@ -158,6 +159,7 @@ public class ETCData
     public int money;
     public int mySurvivorsId;
     public int trainingLevel;
+    public List<TrainingInfo> trainings = new();
     public int survivorHireLimit;
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];
@@ -171,7 +173,7 @@ public class ETCData
 
     public List<string> earnedAchievements = new();
 
-    public ETCData(int difficulty, int money, int mySurvivorsId, int trainingLevel, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.difficulty = difficulty;
@@ -185,10 +187,16 @@ public class ETCData
         this.participationConfirmed = participationConfirmed;
         earnedAchievements = AchievementManager.earnedAchievementsInThisRun;
 
+        this.unlockStatus = new();
         foreach (var kv in unlockStatus)
         {
-            Debug.Log(kv.Value);
             this.unlockStatus.Add(new(kv.Key, kv.Value));
+        }
+
+        trainings = new();
+        foreach (var trainingCard in trainingCards)
+        {
+            trainings.Add(trainingCard.LinkedTraining);
         }
     }
 }

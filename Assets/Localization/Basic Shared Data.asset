@@ -1593,6 +1593,18 @@ MonoBehaviour:
     m_Key: Hell
     m_Metadata:
       m_Items: []
+  - m_Id: 138535246379937792
+    m_Key: Win in the Regular League to increase the Training Room level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138535249391448064
+    m_Key: Training Room Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138535253589946368
+    m_Key: Keep Watching
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

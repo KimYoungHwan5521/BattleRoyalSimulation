@@ -398,26 +398,30 @@ public class GameResult : MonoBehaviour
         {
             case League.BronzeLeague:
                 survivor.tier = Tier.Silver;
+                outGameUIManager.UpgradeFacility();
                 break;
             case League.SilverLeague:
                 survivor.tier = Tier.Gold;
+                outGameUIManager.UpgradeFacility();
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
+                if (outGameUIManager.trainingLevel < 4) outGameUIManager.UpgradeFacility();
                 //survivor.haveQualifyToParticipateInSeasonChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
+                if (outGameUIManager.trainingLevel < 5) outGameUIManager.UpgradeFacility();
                 //survivor.haveQualifyToParticipateInWorldChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
                 if (characteristic != -1)
                 {
                     survivor.characteristics.RemoveAt(characteristic);
-                    CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance);
+                    CharacteristicManager.AddCharaicteristic(survivor, CharacteristicType.ClutchPerformance, true);
                     notification += () => { outGameUIManager.Alert("Alert:Overcame", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                     AchievementManager.UnlockAchievement("Overcome");
                 }
@@ -454,7 +458,7 @@ public class GameResult : MonoBehaviour
             // 여기서 수술
             foreach (var injury in injuryNeedSurgery)
             {
-                injury.type = InjuryType.AugmentedPartsTransplanted;
+                injury.type = InjuryType.ArtificialPartsTransplanted;
                 injury.degree = 0;
             }
 

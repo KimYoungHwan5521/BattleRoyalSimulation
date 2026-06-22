@@ -1655,6 +1655,19 @@ MonoBehaviour:
     m_Localized: "\u5730\u7344"
     m_Metadata:
       m_Items: []
+  - m_Id: 138535246379937792
+    m_Localized: "\u5728\u5E38\u898F\u806F\u8CFD\u4E2D\u7372\u52DD\uFF0C\u63D0\u5347\u8A13\u7DF4\u5BA4\u7B49\u7D1A\u5427"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138535249391448064
+    m_Localized: "\u8A13\u7DF4\u5BA4\u7B49\u7D1A\uFF1A{0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359341
+  - m_Id: 138535253589946368
+    m_Localized: "\u7E7C\u7E8C\u89C0\u6230"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1716,3 +1729,4 @@ MonoBehaviour:
         - id: 134541259566542848
         - id: 134541262687105024
         - id: 135927656617668608
+        - id: 138535249391448064

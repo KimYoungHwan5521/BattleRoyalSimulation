@@ -1,4 +1,5 @@
 using Steamworks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,25 @@ using UnityEngine.Localization;
 
 public enum Stat { Strength = 0, Agility = 1, Fighting = 2, Shooting = 3, Crafting = 4, Knowledge = 5, Random = 6 }
 public enum TrainingRarity { Common = 0, Uncommon = 1, Rare = 2 }
+
+[Serializable]
+public struct StatIncrease
+{
+    public int statType;
+    public int value;
+
+    public StatIncrease(int statType, int value)
+    {
+        this.statType = statType;
+        this.value = value;
+    }
+}
+
+[Serializable]
 public class TrainingInfo
 {
     public LocalizedString trainingName;
-    public List<(int, int)> increaseStats;
+    public List<StatIncrease> increaseStats;
     public TrainingRarity rarity;
     public int staminaConsumtion;
     public int trainingDifficulty;
@@ -21,7 +37,7 @@ public class TrainingInfo
         foreach (var value in increaseStats)
         {
             if (!string.IsNullOrEmpty(result)) result += ", ";
-            result += value.Item1 switch
+            result += value.statType switch
             {
                 0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
                 1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
@@ -35,9 +51,9 @@ public class TrainingInfo
             if (greatSuccess && first) 
             {
                 int bonus = rarity == TrainingRarity.Common ? 1 : rarity == TrainingRarity.Uncommon ? 2 : 4;
-                result += $" + {value.Item2 + bonus}";
+                result += $" + {value.value + bonus}";
             }
-            else result += $" + {value.Item2}";
+            else result += $" + {value.value}";
             first = false;
         }
         result += $"\n{new LocalizedString("Basic", "Stamina Cost") { Arguments = new[] { staminaConsumtion > 0 ? $"<color=red>-{staminaConsumtion}</color>" : $"<color=#367D38>+{-staminaConsumtion}</color>"} }.GetLocalizedString()}";
@@ -50,7 +66,8 @@ public class TrainingInfo
         this.rarity = rarity;
         this.staminaConsumtion = staminaConsumtion;
         this.trainingDifficulty = trainingDifficulty;
-        this.increaseStats = increaseStats.ToList();
+        this.increaseStats = new();
+        foreach (var increaseStat in increaseStats) this.increaseStats.Add(new(increaseStat.Item1, increaseStat.Item2));
     }
 }
 
@@ -123,7 +140,7 @@ public class TrainingManager
 
     public static TrainingInfo GetRandomTraining(int traiingLevel)
     {
-        float rand = Random.Range(0, 1f);
+        float rand = UnityEngine.Random.Range(0, 1f);
         List<TrainingInfo> pool = new();
         if (rand < rareProbability * traiingLevel) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Rare);
         else if (rand < (rareProbability + uncommonProbability) * traiingLevel) pool = trainings.FindAll(x => x.rarity == TrainingRarity.Uncommon);
@@ -132,7 +149,7 @@ public class TrainingManager
         TrainingInfo training;
         for (int i = 0; i < 1000; i++)
         {
-            training = pool[Random.Range(0, pool.Count)];
+            training = pool[UnityEngine.Random.Range(0, pool.Count)];
             if (UnlockCheck(training)) return training;
         }
         return trainings[0];
@@ -141,21 +158,10 @@ public class TrainingManager
     public static bool UnlockCheck(TrainingInfo training)
     {
         bool result;
-        switch(training.trainingName.TableEntryReference.Key)
-        {
-            case "Invite Local Expert": SteamUserStats.GetAchievement("Ace", out result); break;
-            case "Visit Hidden Master": SteamUserStats.GetAchievement("Pentakill", out result); break;
-            case "Invite Strongman": SteamUserStats.GetAchievement("Powerhouse", out result); break;
-            case "Invite MMA Champion": SteamUserStats.GetAchievement("Martial Artist", out result); break;
-            case "Crafting Workshop": SteamUserStats.GetAchievement("Foreman", out result); break;
-            case "Invite Melee League Champion": SteamUserStats.GetAchievement("Melee Champion", out result); break;
-            case "Invite Shooting League Champion": SteamUserStats.GetAchievement("Shooting Champion", out result); break;
-            case "Invite Crafting League Champion": SteamUserStats.GetAchievement("Crafting Champion", out result); break;
-            case "Invite Season Champion": SteamUserStats.GetAchievement("Season Champion", out result); break;
-            case "Invite World Champion": SteamUserStats.GetAchievement("World Champion", out result); break;
-            case "Veteran Battle Royale Player Visit": SteamUserStats.GetAchievement("Legend", out result); break;
-            default: result = true; break;
-        };
+        var achievement = AchievementUIManager.AchievementInfos.Find(x => x.unlockElement == AchievementUIManager.UnlockElement.Training && x.unlockElementName.Equals(training.ToString()));
+        if (achievement == null) return true;
+        if (!SteamManager.Initialized) return false;
+        if (!SteamUserStats.GetAchievement(achievement.achievementKey, out result)) return false;
         return result;
     }
 }

@@ -1715,6 +1715,20 @@ MonoBehaviour:
     m_Localized: Enfer
     m_Metadata:
       m_Items: []
+  - m_Id: 138535246379937792
+    m_Localized: "Remportez des victoires dans la ligue r\xE9guli\xE8re pour augmenter
+      le niveau de la salle d\u2019entra\xEEnement"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138535249391448064
+    m_Localized: "Niveau de la salle d\u2019entra\xEEnement : {0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 138535253589946368
+    m_Localized: "Continuer \xE0 regarder"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1776,3 +1790,4 @@ MonoBehaviour:
         - id: 134541259566542848
         - id: 134541262687105024
         - id: 135927656617668608
+        - id: 138535249391448064

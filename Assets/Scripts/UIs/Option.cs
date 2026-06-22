@@ -62,6 +62,7 @@ public class Option : MonoBehaviour
     [SerializeField] GameObject resume;
     //[SerializeField] Button saveButton;
     [SerializeField] GameObject goTitle;
+    [SerializeField] Button quitBtn;
 
     [Header("Save")]
     [SerializeField] TextMeshProUGUI saveOrLoadText;
@@ -133,8 +134,13 @@ public class Option : MonoBehaviour
         //saveButton.gameObject.SetActive(false);
         goTitle.SetActive(false);
         encyclopedia.SetActive(true);
+        quitBtn.gameObject.SetActive(false);
+
+        bgmSlider.value = PlayerPrefs.GetFloat("BGM Volume Slider Value", bgmSlider.value);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFX Volume Slider Value", sfxSlider.value);
+
         // Items
-        for(int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
+        for (int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
         {
             string itemName = ((ItemManager.Items)i).ToString();
             if (itemName.Contains("Enchanted")) continue;
@@ -331,42 +337,42 @@ public class Option : MonoBehaviour
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 0) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 0).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 0) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 0).value;
                 }).ToList();
                 break;
             case 5:
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 1) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 1).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 1) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 1).value;
                 }).ToList();
                 break;
             case 6:
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 2) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 2).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 2) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 2).value;
                 }).ToList();
                 break;
             case 7:
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 3) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 3).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 3) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 3).value;
                 }).ToList();
                 break;
             case 8:
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 4) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 4).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 4) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 4).value;
                 }).ToList();
                 break;
             case 9:
                 sorted = children.OrderByDescending(x =>
                 {
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    return training.increaseStats.FindIndex(y => y.Item1 == 5) == -1 ? 0 : training.increaseStats.Find(y => y.Item1 == 5).Item2;
+                    return training.increaseStats.FindIndex(y => y.statType == 5) == -1 ? 0 : training.increaseStats.Find(y => y.statType == 5).value;
                 }).ToList();
                 break;
             case 10:
@@ -374,7 +380,7 @@ public class Option : MonoBehaviour
                 {
                     int total = 0;
                     TrainingInfo training = x.GetComponent<TrainingDataForSort>().linkedTrainingInfo;
-                    foreach(var stat in training.increaseStats) total += stat.Item2;
+                    foreach(var stat in training.increaseStats) total += stat.value;
                     return total;
                 }).ToList();
                 break;
@@ -421,7 +427,7 @@ public class Option : MonoBehaviour
         else if (table == 1)
         {
             wantTable = characteristicTable;
-            sortingOrder = sortBy_Characteristic.value + 1;
+            sortingOrder = sortBy_Characteristic.value + 2;
         }
         else if (table == 2)
         {
@@ -614,6 +620,7 @@ public class Option : MonoBehaviour
             resume.SetActive(true);
             //saveButton.gameObject.SetActive(true);
             goTitle.SetActive(true);
+            quitBtn.gameObject.SetActive(true);
         }
         //saveButton.interactable = interactable;
     }
@@ -709,5 +716,11 @@ public class Option : MonoBehaviour
         sortBy_Achievement.options[1].text = new LocalizedString("Basic", "Unlock Date").GetLocalizedString();
         sortBy_Achievement.captionText.text = sortBy_Achievement.options[sortBy_Achievement.value].text;
         characteristicAutoNewlineLG.ArrangeCharacteristics();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetFloat("BGM Volume Slider Value", bgmSlider.value);
+        PlayerPrefs.SetFloat("SFX Volume Slider Value", sfxSlider.value);
     }
 }

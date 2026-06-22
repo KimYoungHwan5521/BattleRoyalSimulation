@@ -98,14 +98,14 @@ public class GameManager : MonoBehaviour
         yield return soundManager.Initiate();
         poolManager = new PoolManager();
         yield return poolManager.Initiate();
-        characteristicManager = new CharacteristicManager();
-        yield return characteristicManager.Initiate();
-        itemManager = new ItemManager();
-        yield return itemManager.Initiate();
-        trainingManager = new TrainingManager();
-        yield return trainingManager.Initiate();
         achievementUIManager = new AchievementUIManager();
         yield return achievementUIManager.Initiate();
+        characteristicManager = new CharacteristicManager();
+        yield return characteristicManager.Initiate();
+        trainingManager = new TrainingManager();
+        yield return trainingManager.Initiate();
+        itemManager = new ItemManager();
+        yield return itemManager.Initiate();
 
         title.title.SetActive(true);
         outGameUIManger = GetComponent<OutGameUIManager>();
@@ -313,6 +313,7 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.Money,
             OutGameUIManager.MySurvivorsId,
             OutGameUIManager.trainingLevel,
+            OutGameUIManager.trainingCards,
             OutGameUIManager.SurvivorHireLimit,
             OutGameUIManager.contestantsData,
             calendar.Today,
@@ -368,6 +369,7 @@ public class GameManager : MonoBehaviour
         saveData.money,
         saveData.mySurvivorsId,
         saveData.trainingLevel,
+        saveData.trainings,
         saveData.survivorHireLimit,
         saveData.contestantsData
             );

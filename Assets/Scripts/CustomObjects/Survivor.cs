@@ -110,7 +110,7 @@ public class Survivor : CustomObject
     int crafting;
     [SerializeField] float leftSightRange = 45f;
     [SerializeField] float rightSightRange = 45f;
-    float sightAngle = 120;
+    float sightAngle = 90;
     public LayerMask sightObstacleMask;
     [SerializeField] int sightEdgeCount = 12;
     [SerializeField] float hearingAbility = 10f;
@@ -3251,7 +3251,8 @@ public class Survivor : CustomObject
 
     void CalculateSightMesh()
     {
-        sightEdgeCount = (int)((35 - GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) * 1.5f);
+        sightEdgeCount = (int)(sightAngle / 3);
+        //sightEdgeCount = (int)((35 - GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) * 1.5f);
         sightVertices = new Vector3[sightEdgeCount + 1 + 1];  // +1은 원점을 포함
         sightTriangles = new int[(sightEdgeCount + 1) * 3];     // 삼각형 그리기
         sightColliderPoints = new Vector2[sightVertices.Length];
