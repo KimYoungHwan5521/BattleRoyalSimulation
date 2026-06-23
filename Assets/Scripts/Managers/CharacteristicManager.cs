@@ -99,6 +99,9 @@ public enum CharacteristicType
     Zombie = 82,
     Vampire = 83,
     Challenger = 84,
+    WideVision = 85,
+    NarrowVision = 86,
+    Flounder = 87,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -256,6 +259,9 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Zombie, CharacteristicRarity.Rare, 0, false));
         characteristics.Add(new(CharacteristicType.Vampire, CharacteristicRarity.Rare, 0, false));
         characteristics.Add(new(CharacteristicType.Challenger, CharacteristicRarity.Common, 0, true, CharacteristicType.Prospect, CharacteristicType.DarkHorse));
+        characteristics.Add(new(CharacteristicType.WideVision, CharacteristicRarity.Common, 0, true, CharacteristicType.NarrowVision, CharacteristicType.Flounder));
+        characteristics.Add(new(CharacteristicType.NarrowVision, CharacteristicRarity.Common, 0, true, CharacteristicType.WideVision, CharacteristicType.Flounder));
+        characteristics.Add(new(CharacteristicType.Flounder, CharacteristicRarity.Common, 0, true, CharacteristicType.WideVision, CharacteristicType.NarrowVision));
         yield return null;
     }
 

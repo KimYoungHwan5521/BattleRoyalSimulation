@@ -737,6 +737,30 @@ MonoBehaviour:
       Connaissance -10"
     m_Metadata:
       m_Items: []
+  - m_Id: 137122256074108928
+    m_Localized: Vision large
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122256854249472
+    m_Localized: "Angle de vision +30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122257835716608
+    m_Localized: "Vision \xE9troite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122258603274240
+    m_Localized: "Angle de vision -30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122575944314880
+    m_Localized: Flet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122582386765824
+    m_Localized: "Angle de vision = 180\xB0"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

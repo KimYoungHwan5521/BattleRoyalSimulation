@@ -745,6 +745,30 @@ MonoBehaviour:
       \uC81C\uC791 -10, \uC9C0\uC2DD -10"
     m_Metadata:
       m_Items: []
+  - m_Id: 137122256074108928
+    m_Localized: "\uB113\uC740 \uC2DC\uC57C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122256854249472
+    m_Localized: "\uC2DC\uC57C\uAC01 +30\uB3C4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122257835716608
+    m_Localized: "\uC881\uC740 \uC2DC\uC57C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122258603274240
+    m_Localized: "\uC2DC\uC57C\uAC01 -30\uB3C4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122575944314880
+    m_Localized: "\uB119\uCE58"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122582386765824
+    m_Localized: "\uC2DC\uC57C\uAC01 = 180\uB3C4"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

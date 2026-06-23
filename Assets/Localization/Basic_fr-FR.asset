@@ -1767,6 +1767,26 @@ MonoBehaviour:
     m_Localized: "L\u2019objectif n\u2019a pas \xE9t\xE9 atteint."
     m_Metadata:
       m_Items: []
+  - m_Id: 138930314924322816
+    m_Localized: "Mode d\u2019affichage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930316501381120
+    m_Localized: "Plein \xE9cran exclusif"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930317940027392
+    m_Localized: "Plein \xE9cran sans bordure"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930319345119232
+    m_Localized: "Mode fen\xEAtr\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930320263671808
+    m_Localized: "R\xE9solution"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

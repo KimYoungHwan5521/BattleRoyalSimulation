@@ -90,6 +90,11 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator Start()
     {
+        if(PlayerPrefs.GetInt("ResolutionWidth") > 0)
+        {
+            Screen.SetResolution(PlayerPrefs.GetInt("ResolutionWidth"), PlayerPrefs.GetInt("ResolutionHeight"), (FullScreenMode)PlayerPrefs.GetInt("FullScreenMode"));
+        }
+
         loadingCanvas.gameObject.SetActive(true);
 
         resourceManager = new ResourceManager();

@@ -1743,6 +1743,26 @@ MonoBehaviour:
     m_Localized: "O objetivo n\xE3o foi cumprido."
     m_Metadata:
       m_Items: []
+  - m_Id: 138930314924322816
+    m_Localized: "Modo de Ecr\xE3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930316501381120
+    m_Localized: "Ecr\xE3 Inteiro Exclusivo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930317940027392
+    m_Localized: "Ecr\xE3 Inteiro sem Bordas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930319345119232
+    m_Localized: Modo de Janela
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930320263671808
+    m_Localized: "Resolu\xE7\xE3o"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

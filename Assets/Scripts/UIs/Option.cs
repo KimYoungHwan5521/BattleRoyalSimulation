@@ -24,6 +24,10 @@ public class Option : MonoBehaviour
     bool bgmOn = true;
     bool sfxOn = true;
 
+    [Header("Resolution")]
+    [SerializeField] LocalizedDropdown displayModeDropdown;
+    [SerializeField] TMP_Dropdown resolutionDropdown;
+
     [Header("Language")]
     [SerializeField] GameObject languageWindow;
 
@@ -138,6 +142,32 @@ public class Option : MonoBehaviour
 
         bgmSlider.value = PlayerPrefs.GetFloat("BGM Volume Slider Value", bgmSlider.value);
         sfxSlider.value = PlayerPrefs.GetFloat("SFX Volume Slider Value", sfxSlider.value);
+
+        displayModeDropdown.RelocalizeOptions();
+        resolutionDropdown.ClearOptions();
+        Resolution[] resolutions = Screen.resolutions;
+        List<string> options = new();
+        int currentIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            Resolution resolution = resolutions[i];
+
+            string option =
+                $"{resolution.width} x {resolution.height}";
+
+            options.Add(option);
+
+            if (resolution.width == Screen.width &&
+                resolution.height == Screen.height)
+            {
+                currentIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+        resolutionDropdown.SetValueWithoutNotify(currentIndex);
+        resolutionDropdown.RefreshShownValue();
 
         // Items
         for (int i = 1; i < Enum.GetValues(typeof(ItemManager.Items)).Length; i++)
@@ -468,6 +498,30 @@ public class Option : MonoBehaviour
         GameManager.Instance.SoundManager.ToggleAudioMixerGroup(SoundManager.AudioMixerGroupType.SFX, true, sfxSlider.value);
     }
 
+    public void ChangeDisplayMode()
+    {
+        if (displayModeDropdown.dropdown.value == 0) Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        else if (displayModeDropdown.dropdown.value == 1) Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        else Screen.fullScreenMode = FullScreenMode.Windowed;
+        PlayerPrefs.SetInt("FullScreenMode", (int)Screen.fullScreenMode);
+        PlayerPrefs.Save();
+    }
+
+    public void ChangeResolution()
+    {
+        Resolution[] resolutions = Screen.resolutions;
+        Resolution resolution = resolutions[resolutionDropdown.value];
+
+        Screen.SetResolution(
+            resolution.width,
+            resolution.height,
+            Screen.fullScreenMode
+        );
+        PlayerPrefs.SetInt("ResolutionWidth", resolution.width);
+        PlayerPrefs.SetInt("ResolutionHeight", resolution.height);
+        PlayerPrefs.Save();
+    }
+
     public void Resume()
     {
         option.SetActive(false);
@@ -522,6 +576,9 @@ public class Option : MonoBehaviour
                 }
             }
         }
+        sortBy_Characteristic.onValueChanged?.Invoke(0);
+        sortBy_Training.onValueChanged?.Invoke(0);
+        sortBy_Achievement.onValueChanged?.Invoke(0);
         GameManager.Instance.openedWindows.Push(encyclopedia);
     }
 
@@ -670,6 +727,7 @@ public class Option : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
+        displayModeDropdown.RelocalizeOptions();
         foreach (var itemBox in itemBoxes)
         {
             itemBox.GetComponent<Help>().SetDescription(itemBox.GetComponent<ItemDataForSort>().itemType);

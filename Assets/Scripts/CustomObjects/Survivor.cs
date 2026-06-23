@@ -5034,6 +5034,15 @@ public class Survivor : CustomObject
                     characteristicCorrection_Shooting += condition;
                     characteristicCorrection_Crafting += condition;
                     break;
+                case CharacteristicType.WideVision:
+                    sightAngle = 120;
+                    break;
+                case CharacteristicType.NarrowVision:
+                    sightAngle = 60;
+                    break;
+                case CharacteristicType.Flounder:
+                    sightAngle = 180;
+                    break;
                 default:
                     break;
             }

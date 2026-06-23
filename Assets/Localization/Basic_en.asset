@@ -1741,6 +1741,26 @@ MonoBehaviour:
     m_Localized: Failed to achieve the objective.
     m_Metadata:
       m_Items: []
+  - m_Id: 138930314924322816
+    m_Localized: Display Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930316501381120
+    m_Localized: Exclusive Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930317940027392
+    m_Localized: Borderless Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930319345119232
+    m_Localized: Windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138930320263671808
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -33,12 +33,12 @@ public class Title : MonoBehaviour
     public void CheckUnlockDifficulty()
     {
         if(!SteamManager.Initialized) return;
-        if (SteamUserStats.GetAchievement("World Champion", out bool normal)) difficulties[1].GetComponentInChildren<Animator>().SetBool("Unlock", normal);
-        if (SteamUserStats.GetAchievement("Hard", out bool hard)) difficulties[2].GetComponentInChildren<Animator>().SetBool("Unlock", hard);
-        if (SteamUserStats.GetAchievement("Very Hard", out bool veryHard)) difficulties[3].GetComponentInChildren<Animator>().SetBool("Unlock", veryHard);
-        if (SteamUserStats.GetAchievement("Expert", out bool expert)) difficulties[4].GetComponentInChildren<Animator>().SetBool("Unlock", expert);
-        if (SteamUserStats.GetAchievement("Hardcore", out bool hardcore)) difficulties[5].GetComponentInChildren<Animator>().SetBool("Unlock", hardcore);
-        if (SteamUserStats.GetAchievement("Nightmare", out bool nightmare)) difficulties[6].GetComponentInChildren<Animator>().SetBool("Unlock", nightmare);
+        if (SteamUserStats.GetAchievement("World Champion", out bool normal)) difficulties[1].GetComponentInChildren<Animator>(true).SetBool("Unlock", normal);
+        if (SteamUserStats.GetAchievement("Hard", out bool hard)) difficulties[2].GetComponentInChildren<Animator>(true).SetBool("Unlock", hard);
+        if (SteamUserStats.GetAchievement("Very Hard", out bool veryHard)) difficulties[3].GetComponentInChildren<Animator>(true).SetBool("Unlock", veryHard);
+        if (SteamUserStats.GetAchievement("Expert", out bool expert)) difficulties[4].GetComponentInChildren<Animator>(true).SetBool("Unlock", expert);
+        if (SteamUserStats.GetAchievement("Hardcore", out bool hardcore)) difficulties[5].GetComponentInChildren<Animator>(true).SetBool("Unlock", hardcore);
+        if (SteamUserStats.GetAchievement("Nightmare", out bool nightmare)) difficulties[6].GetComponentInChildren<Animator>(true).SetBool("Unlock", nightmare);
     }
 
     int wantDifficulty;

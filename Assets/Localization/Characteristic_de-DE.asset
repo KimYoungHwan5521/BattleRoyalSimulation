@@ -733,6 +733,30 @@ MonoBehaviour:
       -10, Wissen -10"
     m_Metadata:
       m_Items: []
+  - m_Id: 137122256074108928
+    m_Localized: Weites Sichtfeld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122256854249472
+    m_Localized: "Sichtwinkel +30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122257835716608
+    m_Localized: Enges Sichtfeld
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122258603274240
+    m_Localized: "Sichtwinkel -30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122575944314880
+    m_Localized: Flunder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122582386765824
+    m_Localized: "Sichtwinkel = 180\xB0"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

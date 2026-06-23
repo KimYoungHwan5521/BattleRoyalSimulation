@@ -733,6 +733,30 @@ MonoBehaviour:
       -10, Conocimiento -10"
     m_Metadata:
       m_Items: []
+  - m_Id: 137122256074108928
+    m_Localized: "Visi\xF3n Amplia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122256854249472
+    m_Localized: "\xC1ngulo de Visi\xF3n +30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122257835716608
+    m_Localized: "Visi\xF3n Estrecha"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122258603274240
+    m_Localized: "\xC1ngulo de Visi\xF3n -30\xB0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122575944314880
+    m_Localized: Lenguado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 137122582386765824
+    m_Localized: "\xC1ngulo de Visi\xF3n = 180\xB0"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
