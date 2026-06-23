@@ -283,8 +283,8 @@ public class CharacteristicManager
 
         int wantRarity;
         float rand = UnityEngine.Random.Range(0, 1f);
-        if (rand < 0.7f) wantRarity = 0;
-        else if (rand < 0.9f) wantRarity = 1;
+        if (rand < 0.58f) wantRarity = 0;
+        else if (rand < 0.86f) wantRarity = 1;
         else wantRarity = 2;
 
         for(int i = 0; i < howMany; i++)
@@ -304,8 +304,8 @@ public class CharacteristicManager
             {
                 // 추가 했으면 새로운 rarity
                 rand = UnityEngine.Random.Range(0, 1f);
-                if (rand < 0.9f) wantRarity = 0;
-                else if (rand < 0.99f) wantRarity = 1;
+                if (rand < 0.58f) wantRarity = 0;
+                else if (rand < 0.86f) wantRarity = 1;
                 else wantRarity = 2;
             }
         }

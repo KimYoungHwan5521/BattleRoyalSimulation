@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -12,7 +11,6 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 public enum SurgeryType 
 { 
@@ -85,6 +83,8 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
     [SerializeField] LocalizeStringEvent difficultyText;
+    [SerializeField] GameObject objective;
+    public TextMeshProUGUI objectiveText;
 
     [Header("Checklist")]
     [SerializeField] GameObject checkTrainingTrue;
@@ -341,6 +341,8 @@ public class OutGameUIManager : MonoBehaviour
         survivorHireLimit = 10;
         selectedSurvivor.ResetInfo();
         Difficulty = difficulty;
+        objective.SetActive(false);
+        objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}";
 
         tutorial = true;
     }
@@ -393,13 +395,13 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < 120 || totalRand > 140) && check < 1000)
+            if ((totalRand < 120 || totalRand > 140) && check < 10000)
             {
                 i--;
                 check++;
+                if (check >= 10000) Debug.LogWarning("Infinite loop detected");
                 continue;
             }
-            if (check >= 1000) Debug.LogWarning("Infinite loop detected");
             check = 0;
 
             int characteristicCount;
@@ -467,6 +469,7 @@ public class OutGameUIManager : MonoBehaviour
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
                         trainingRoomAnim.SetBool("Tutorial", true);
                         Alert("Click the Training Room and assign survivors to training.");
+                        objective.SetActive(true);
                     }
                     else if (mySurvivorsData.Count >= 10)
                     {
@@ -479,6 +482,7 @@ public class OutGameUIManager : MonoBehaviour
                     hireSurvivor.SetActive(false);
                     ResetTrainingRoom();
                     GameManager.Instance.Save(0);
+                    GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
         //    }
         //},  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
 
@@ -576,15 +580,78 @@ public class OutGameUIManager : MonoBehaviour
             if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.FastRecharge)) value = mySurvivorsData[0].MaxStamina;
             else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) value = (int)(value * 1.1f);
             else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) value = (int)(value * 1.2f);
-            
-            value = Mathf.Min(value, 100 - mySurvivorsData[0].Stamina);
+
+            bool overRest = value > mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina;
+            value = Mathf.Min(value, mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina);
             mySurvivorsData[0].StaminaConsomtionReserve(value);
             trainingResult.SetActive(true);
-            GameManager.Instance.openedWindows.Push(trainingResult);
             resultText.gameObject.SetActive(false);
             trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
-            trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+
+            if(overRest)
+            {
+                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:OverRest").GetLocalizedString()}\n";
+
+                int[] randStat = new int[6];
+                randStat[UnityEngine.Random.Range(0, 6)]++;
+                mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                for (int i = 0; i < 5; i++)
+                {
+                    if (randStat[i] > 0)
+                    {
+                        trainingResultDetailText.text += i switch
+                        {
+                            0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
+                            1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
+                            2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
+                            3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
+                            4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
+                            5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
+                            _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
+                        };
+                        trainingResultDetailText.text += $" + {randStat[i]}";
+                    }
+                }
+                trainingResultDetailText.text += $"\n{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+            }
+            else if (value == 30)
+            {
+                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:Rest30").GetLocalizedString()}\n";
+
+                int[] randStat = new int[6];
+                for (int i = 0; i < 2; i++)
+                {
+                    randStat[UnityEngine.Random.Range(0, 6)]++;
+                }
+                mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                bool first = true;
+                for (int i = 0; i < 5; i++)
+                {
+                    if (randStat[i] > 0)
+                    {
+                        if (!first) trainingResultDetailText.text += ", ";
+                        trainingResultDetailText.text += i switch
+                        {
+                            0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
+                            1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
+                            2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
+                            3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
+                            4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
+                            5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
+                            _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
+                        };
+                        trainingResultDetailText.text += $" + {randStat[i]}";
+                        first = false;
+                    }
+                }
+            }
+            else
+            {
+                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+            }
             selectedSurvivor.StatIncreaseProduction();
+            GameManager.Instance.openedWindows.Push(trainingResult);
+            DayEnd();
         });
     }
 
@@ -677,7 +744,6 @@ public class OutGameUIManager : MonoBehaviour
         else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
         float rand = UnityEngine.Random.Range(0, 1f);
         trainingResult.SetActive(true);
-        GameManager.Instance.openedWindows.Push(trainingResult);
         resultText.gameObject.SetActive(true);
         resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Training Results");
         if(rand < failRate)
@@ -706,6 +772,9 @@ public class OutGameUIManager : MonoBehaviour
         }
         //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
         trainingRoom.SetActive(false);
+
+        GameManager.Instance.openedWindows.Push(trainingResult);
+        DayEnd();
     }
 
     void ApplyTrainingResult(TrainingInfo training, bool greatSuccess)
@@ -795,12 +864,6 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorsData[0].StaminaConsomtionReserve(-staminaConsumtion);
     }
 
-    public void ConfirmTrainingResult()
-    {
-        trainingResult.SetActive(false);
-        DayEnd();
-    }
-
     public void RequestUpgradeFacility()
     {
         if(Money < facilityUpgradeCost[trainingLevel - 1])
@@ -829,7 +892,7 @@ public class OutGameUIManager : MonoBehaviour
         //    Arguments = new[] { $"{trainingLevel}" }
         //}.GetLocalizedString();
         //if (trainingLevel > facilityUpgradeCost.Length) upgradeFacilityButton.gameObject.SetActive(false);
-        Alert("Alert:Facility upgraded.");
+        //Alert("Alert:Facility upgraded.");
     }
     #endregion
 
@@ -1742,7 +1805,7 @@ public class OutGameUIManager : MonoBehaviour
     public void StartBattleRoyale()
     {
         tutorial = false;
-        GameManager.Instance.Option.SetSaveButtonInteractable(false);
+        GameManager.Instance.Option.SetSaveButtonInteractable(false, true);
         mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
         if (mySurvivorDataInBattleRoyale == null) AchievementManager.UnlockAchievement("Spectator");
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
@@ -1796,8 +1859,9 @@ public class OutGameUIManager : MonoBehaviour
     {
         contestantsData = new();
         int index = 0;
-        if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        //if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
         {
+            calendar.LeagueReserveInfo[calendar.Today].reserver = mySurvivorsData[0];
             contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
             index++;
         }
@@ -1959,6 +2023,11 @@ public class OutGameUIManager : MonoBehaviour
         //{
             bettingAmount = 0;
             bettingRoom.SetActive(false);
+
+        // 2.0
+        mySurvivorDataInBattleRoyale = mySurvivorsData[0];
+        SetContestants();
+
             StartBattleRoyale();
         //});
     }
@@ -2317,7 +2386,7 @@ public class OutGameUIManager : MonoBehaviour
             _ => 4
         };
         int check = 0;
-        while (check < 1000)
+        while (true)
         {
             int randStrength = UnityEngine.Random.Range(0, 101);
             int randAgility = UnityEngine.Random.Range(0, 101);
@@ -2326,12 +2395,16 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 60 + difficulty * (value * value + 10) || totalRand > (value + 1) * 60 + difficulty * (value * value + 10)) && check < 1000)
+            if ((totalRand < value * 60 + difficulty * (value * value + 15) - 30 || totalRand > (value + 1) * 60 + difficulty * (value * value + 15) - 30))
             {
                 check++;
+                if (check >= 10000)
+                {
+                    Debug.LogWarning("Infinite roof has detected");
+                    break;
+                }
                 continue;
             }
-            if (check >= 1000) Debug.LogWarning("Infinite roof has detected");
             SurvivorData survivorData = new(
                 GetRandomName(),
                 randStrength,
@@ -2530,6 +2603,13 @@ public class OutGameUIManager : MonoBehaviour
             trainingCards[i].SetCard(trainingInfos[i]);
         }
         tutorial = false;
+
+        objectiveText.text = mySurvivorsData[0].tier switch
+        {
+            Tier.Bronze => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}",
+            Tier.Silver => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}",
+            _ => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}",
+        };
     }
 
     void OnLocaleChanged(Locale newLocale)
@@ -2542,5 +2622,12 @@ public class OutGameUIManager : MonoBehaviour
         SetOperatingRoom();
         SetStrategyRoom();
         sortContestantsListDropdown.RelocalizeOptions();
+
+        objectiveText.text = mySurvivorsData[0].tier switch
+        {
+            Tier.Bronze => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}",
+            Tier.Silver => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}",
+            _ => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}",
+        };
     }
 }

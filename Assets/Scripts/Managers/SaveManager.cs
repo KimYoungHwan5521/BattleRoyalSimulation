@@ -86,7 +86,7 @@ public static class SaveManager
             saveData.fighting, saveData.shooting, saveData.crafting, saveData.knowledge, saveData.price, saveData.tier)
         {
             id = saveData.id,
-            Stamina = saveData.stamina,
+            _stamina = saveData.stamina,
             _luck = saveData.luck,
             characteristics = saveData.characteristics,
             isReserved = saveData.isReserved,

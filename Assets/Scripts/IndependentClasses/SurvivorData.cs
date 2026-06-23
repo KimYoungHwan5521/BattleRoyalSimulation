@@ -24,7 +24,7 @@ public class SurvivorData
             return _maxStamina;
         }
     }
-    int _stamina;
+    public int _stamina;
     public int Stamina
     {
         get => _stamina;
@@ -491,7 +491,7 @@ public class SurvivorData
     {
         this.localizedSurvivorName = localizedSurvivorName;
         survivorName = localizedSurvivorName.TableEntryReference.Key;
-        _maxStamina = _stamina = 100;
+        _maxStamina = 100;
         _strength = strength;
         _agility = agility;
         _fighting = fighting;
@@ -510,7 +510,7 @@ public class SurvivorData
     {
         survivorName = survivorData.survivorName;
         localizedSurvivorName = new LocalizedString("Name", survivorName);
-        _maxStamina = _stamina = 100;
+        _maxStamina = 100;
         _strength = survivorData._strength;
         _agility = survivorData._agility;
         _fighting = survivorData._fighting;

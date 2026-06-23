@@ -3747,7 +3747,7 @@ public class Survivor : CustomObject
         InjurySiteMajor damagePart;
         float correctionProbability = Mathf.Pow(2, Mathf.Log(Mathf.Max(launcher.correctedShooting, 1), 20));
         float headShotProbability = 0.01f * launcher.luck / luck * correctionProbability;
-        float bodyShotProbability = 1 - 0.01f * (64 / correctionProbability * luck / launcher.luck);
+        float bodyShotProbability = 1 - 0.01f * (128f / correctionProbability * luck / launcher.luck);
         // Çìµå¼¦
         if (probability < headShotProbability)
         {

@@ -96,6 +96,7 @@ public class GameResult : MonoBehaviour
         bool didPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
         mySurvivorResult.SetActive(didPlayerParticipate);
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
+        GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
         SetText(didPlayerParticipate, out int totalProfit);
         outGameUIManager.Money += totalProfit;
         gameOver = outGameUIManager.Money < 0;
@@ -219,7 +220,7 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
                     gameOver = true;
-                    gameOverMessage.StringReference = new("Basic", "GameOver:Win World Champion");
+                    gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
                     killPrize = playerSurvivor.KillCount * 10000;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
@@ -257,12 +258,36 @@ public class GameResult : MonoBehaviour
             switch(calendar.LeagueReserveInfo[calendar.Today].league)
             {
                 case League.BronzeLeague:
+                    if (playerWin != 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                        if (calendar.Today == 24)
+                        {
+                            gameOver = true;
+                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+                        }
+                    }
+                    break;
                 case League.SilverLeague:
+                    if (playerWin != 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                        if (calendar.Today == 53)
+                        {
+                            gameOver = true;
+                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+                        }
+                    }
+                    break;
                 case League.GoldLeague:
                     if (playerWin != 1)
                     {
                         playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                        if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null) gameOver = true;
+                        if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null)
+                        {
+                            gameOver = true;
+                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+                        }
                     }
                     break;
                 case League.SeasonChampionship:
@@ -399,22 +424,34 @@ public class GameResult : MonoBehaviour
             case League.BronzeLeague:
                 survivor.tier = Tier.Silver;
                 outGameUIManager.UpgradeFacility();
+                outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}";
+                notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 break;
             case League.SilverLeague:
                 survivor.tier = Tier.Gold;
                 outGameUIManager.UpgradeFacility();
+                outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}";
+                notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 break;
             case League.GoldLeague:
                 calendar.NeareastSeasonChampionship.reserver = survivor;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
-                if (outGameUIManager.trainingLevel < 4) outGameUIManager.UpgradeFacility();
+                if (outGameUIManager.trainingLevel < 4)
+                {
+                    outGameUIManager.UpgradeFacility();
+                    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                }
                 //survivor.haveQualifyToParticipateInSeasonChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
                 calendar.NeareastWorldChampionship.reserver = survivor;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
-                if (outGameUIManager.trainingLevel < 5) outGameUIManager.UpgradeFacility();
+                if (outGameUIManager.trainingLevel < 5)
+                {
+                    outGameUIManager.UpgradeFacility();
+                    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                }
                 //survivor.haveQualifyToParticipateInWorldChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
@@ -437,6 +474,47 @@ public class GameResult : MonoBehaviour
     public void ExitBattle(bool goTitle = false)
     {
         gameResult.SetActive(false);
+        ClearBattleRoyale();
+        if(!goTitle)
+        {
+            if(gameOver)
+            {
+                GameOver();
+            }
+            else
+            {
+                if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
+                // 여기서 수술
+                foreach (var injury in injuryNeedSurgery)
+                {
+                    injury.type = InjuryType.ArtificialPartsTransplanted;
+                    injury.degree = 0;
+                }
+                // Auto save
+                //GameManager.Instance.Save(0);
+                //GameManager.Instance.Option.SetSaveButtonInteractable(true);
+
+                GameManager.Instance.inGameUICanvas.SetActive(false);
+                GameManager.Instance.outCanvas.SetActive(true);
+                GameManager.Instance.globalCanvas.SetActive(true);
+
+                GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+                GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
+                notification?.Invoke();
+                notification = null;
+                GameManager.Instance.DestroyBattleRoyaleManager();
+            }
+        }
+        else
+        {
+            gameResult.SetActive(false);
+        }
+
+    }
+
+    public void ClearBattleRoyale()
+    {
+        if (GameManager.Instance.BattleRoyaleManager == null) return;
         AudioSource bgsfx = GameManager.Instance.BattleRoyaleManager.bgsfx;
         SoundManager.StopSFX(bgsfx);
         bgsfx.minDistance = 1;
@@ -448,37 +526,6 @@ public class GameResult : MonoBehaviour
             foreach (GameObject blood in survivor.bloods) PoolManager.Despawn(blood);
             foreach (GameObject buried in survivor.burieds) PoolManager.Despawn(buried);
         }
-
-        if(gameOver)
-        {
-            GameOver();
-        }
-        else
-        {
-            // 여기서 수술
-            foreach (var injury in injuryNeedSurgery)
-            {
-                injury.type = InjuryType.ArtificialPartsTransplanted;
-                injury.degree = 0;
-            }
-
-            if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
-            GameManager.Instance.inGameUICanvas.SetActive(false);
-            GameManager.Instance.outCanvas.SetActive(true);
-            GameManager.Instance.globalCanvas.SetActive(true);
-            if(!goTitle)
-            {
-                GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
-                GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
-                notification?.Invoke();
-                // Auto save
-                //GameManager.Instance.Save(0);
-                //GameManager.Instance.Option.SetSaveButtonInteractable(true);
-            }
-            notification = null;
-            GameManager.Instance.DestroyBattleRoyaleManager();
-        }
-
     }
 
     public void GameOver()

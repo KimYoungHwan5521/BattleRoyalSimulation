@@ -417,7 +417,7 @@ public class InGameUIManager : MonoBehaviour
                         2 => "3rd",
                         _ => $"{survivorRank + 1}th",
                     };
-                    otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
+                    if(survivorRank > 0) otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
                     break;
                 }
             }

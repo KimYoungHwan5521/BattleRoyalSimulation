@@ -493,10 +493,21 @@ public class Option : MonoBehaviour
         characteristicAutoNewlineLG.ArrangeCharacteristics();
         for(int i=0; i<characteristicBoxes.Count; i++) characteristicBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!CharacteristicManager.UnlockCheck(CharacteristicManager.Characteristics[i].type));
         for(int i=0; i<trainingBoxes.Count; i++) trainingBoxes[i].GetComponentInChildren<Locked>(true).gameObject.SetActive(!TrainingManager.UnlockCheck(TrainingManager.Trainings[i]));
-        // 진척도 갱신
+        // 업적 갱신
         for(int i=0; i<achievementsBoxes.Count; i++)
         {
-            var achievement = achievementsBoxes[i].GetComponent<AchievementDataForSort>().linkedAchievementInfo;
+            var achievement = achievementsBoxes[i].GetComponent<AchievementDataForSort>().linkedAchievementInfo; 
+            string parseString = achievement.achievementKey.Replace(" ", "").Replace("-", "");
+            if (char.IsDigit(parseString[0])) parseString = "_" + parseString;
+            if (Enum.TryParse(parseString, out ResourceEnum.Sprite spriteE))
+            {
+                if (achievement.Unlocked) achievementsBoxes[i].GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(spriteE);
+                else if (Enum.TryParse(parseString + "_unlock", out ResourceEnum.Sprite spriteE_unlock))
+                {
+                    achievementsBoxes[i].GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(spriteE_unlock);
+                }
+                else achievementsBoxes[i].GetComponentsInChildren<Image>()[2].sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
+            }
             if (!achievement.statsKey.Equals(""))
             {
                 if (achievement.statIsInt)
@@ -560,14 +571,14 @@ public class Option : MonoBehaviour
 
     public void Save(int slot)
     {
-        if(!saveSlots[slot].isEmpty)
-        {
-            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Overwrite", () =>
-            {
-                GameManager.Instance.Save(slot);
-            });
-        }
-        else
+        //if(!saveSlots[slot].isEmpty)
+        //{
+        //    GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Overwrite", () =>
+        //    {
+        //        GameManager.Instance.Save(slot);
+        //    });
+        //}
+        //else
         {
             GameManager.Instance.Save(slot);
         }
@@ -613,39 +624,33 @@ public class Option : MonoBehaviour
         }
     }
 
-    public void SetSaveButtonInteractable(bool interactable)
+    public void SetSaveButtonInteractable(bool interactable, bool hideQuitBtn)
     {
-        if(interactable)
-        {
-            resume.SetActive(true);
-            //saveButton.gameObject.SetActive(true);
-            goTitle.SetActive(true);
-            quitBtn.gameObject.SetActive(true);
-        }
-        //saveButton.interactable = interactable;
+        resume.SetActive(interactable);
+        goTitle.SetActive(interactable);
+        quitBtn.gameObject.SetActive(hideQuitBtn);
     }
 
     public void GoTitle(bool ask)
     {
-        if(ask)
-        {
-            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
-            {
-                GoingTitle();
-            });
-        }
-        else
+        Save(0);
+        //if(ask)
+        //{
+        //    GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
+        //    {
+        //        GoingTitle();
+        //    });
+        //}
+        //else
         {
             GoingTitle();
         }
     }
 
-    void GoingTitle()
+    public void GoingTitle()
     {
         if(GameManager.Instance.BattleRoyaleManager != null) GameManager.Instance.GetComponent<GameResult>().ExitBattle(true);
-        resume.SetActive(false);
-        //saveButton.gameObject.SetActive(false);
-        goTitle.SetActive(false);
+        SetSaveButtonInteractable(false, false);
         GameManager.Instance.CheckSaveData();
         GameManager.Instance.optionCanvas.SetActive(false);
         GameManager.Instance.Title.title.SetActive(true);
@@ -656,7 +661,9 @@ public class Option : MonoBehaviour
         GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Give Up Challenge", () =>
         {
             GameManager.Instance.GetComponent<GameResult>().gameOverMessage.StringReference = new("Basic", "GameOver:Give Up");
+            GameManager.Instance.GetComponent<GameResult>().ClearBattleRoyale();
             GameManager.Instance.GetComponent<GameResult>().GameOver();
+            SetSaveButtonInteractable(false, false);
             option.SetActive(false);
         });
     }

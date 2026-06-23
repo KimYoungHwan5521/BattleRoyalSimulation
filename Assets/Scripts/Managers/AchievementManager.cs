@@ -27,7 +27,6 @@ public static class AchievementManager
     {
         if(!SteamManager.Initialized) return;
         bool success = SteamUserStats.SetStat(achievementId, value);
-        Debug.Log($"Set Stat {achievementId} : {success}");
         SteamUserStats.StoreStats();
     }
 

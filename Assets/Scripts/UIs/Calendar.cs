@@ -132,17 +132,21 @@ public class Calendar : CustomObject
                 //if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
 
-            if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
+            //if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
 
-            if(today == 77 && NeareastSeasonChampionship.reserver == null && NeareastWorldChampionship.reserver == null)
+            if(today == 21 && outGameUIManager.MySurvivorsData[0].tier == Tier.Bronze)
             {
-                int targetDate = outGameUIManager.MySurvivorsData[0].tier switch
-                {
-                    Tier.Bronze => 79,
-                    Tier.Silver => 80,
-                    Tier.Gold or _ => 81,
-                };
-                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], targetDate);
+                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 24);
+                outGameUIManager.Alert("Alert:Auto Reserve For Objective");
+            }
+            else if(today == 49 && outGameUIManager.MySurvivorsData[0].tier == Tier.Silver)
+            {
+                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 53);
+                outGameUIManager.Alert("Alert:Auto Reserve For Objective");
+            }
+            else if(today == 77 && NeareastSeasonChampionship.reserver == null && NeareastWorldChampionship.reserver == null)
+            {
+                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 81);
                 outGameUIManager.Alert("Alert:Last Week Auto Reserve");
             }
 
@@ -256,12 +260,12 @@ public class Calendar : CustomObject
         //for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 336; i++)
         for (int i = 0; i < 84; i++)
         {
-            if (i % 7 == 3 && i < 77 || i > 77 && i % 7 == 2)
+            if (i % 7 == 3 && i < 27)
             {
                 ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
                 leagueReserveInfo[i] = new(League.BronzeLeague, map);
             }
-            if (i % 7 == 4 && i < 77 || i > 77 && i % 7 == 3)
+            if (i % 7 == 4 && i < 55)
             {
                 ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
                 leagueReserveInfo[i] = new(League.SilverLeague, map);
@@ -635,16 +639,26 @@ public class Calendar : CustomObject
             {
                 if(wantReserveDate == Today)
                 {
-                    if(outGameUIManager.CheckHaveInjury(out int expectedDateOfFullyRecovery))
-                    {
-                        outGameUIManager.Alert("Alert:Can't Battle Royale", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
-                    }
-                    else
+                    if(today == 24 || today == 53 || today > 77)
                     {
                         outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
                         {
                             outGameUIManager.SkipBetting();
                         });
+                    }
+                    else 
+                    {
+                        if(outGameUIManager.CheckHaveInjury(out int expectedDateOfFullyRecovery))
+                        {
+                            outGameUIManager.Alert("Alert:Can't Battle Royale", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+                        }
+                        else
+                        {
+                            outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                            {
+                                outGameUIManager.SkipBetting();
+                            });
+                        }
                     }
                 }
                 else if (leagueReserveInfo[wantReserveDate].reserver == null)

@@ -68,7 +68,7 @@ public class Title : MonoBehaviour
         title.SetActive(false);
         AchievementManager.earnedAchievementsInThisRun = new();
         GameManager.Instance.outCanvas.SetActive(true);
-        GameManager.Instance.Option.SetSaveButtonInteractable(true);
+        GameManager.Instance.Option.SetSaveButtonInteractable(false, false);
     }
 
     public void Continue()

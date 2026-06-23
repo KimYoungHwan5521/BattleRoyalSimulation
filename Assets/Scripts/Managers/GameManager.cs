@@ -416,7 +416,7 @@ public class GameManager : MonoBehaviour
         CloseLoadInfo();
         gameReady = true;
         title.title.SetActive(false);
-        option.SetSaveButtonInteractable(true);
+        option.SetSaveButtonInteractable(true, true);
 
         OutGameUIManager.Alert("Alert:Load Successful");
     }

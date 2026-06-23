@@ -1729,6 +1729,44 @@ MonoBehaviour:
     m_Localized: "Continuer \xE0 regarder"
     m_Metadata:
       m_Items: []
+  - m_Id: 138819220440412160
+    m_Localized: "Le survivant s\u2019est entra\xEEn\xE9 par moments, m\xEAme pendant
+      son repos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819221518348288
+    m_Localized: "Pendant son repos, le survivant a eu une id\xE9e pour son entra\xEEnement."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819222747279360
+    m_Localized: Sauvegarder et revenir au titre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889698362322944
+    m_Localized: Objectif
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889700270731264
+    m_Localized: Remporter la Ligue de bronze avant la fin du premier mois
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889701411581952
+    m_Localized: "Remporter la Ligue d\u2019argent avant la fin du deuxi\xE8me mois"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889702887976960
+    m_Localized: Remporter le Championnat du monde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889706717376512
+    m_Localized: "L\u2019objectif n\u2019a pas encore \xE9t\xE9 atteint. Vous avez
+      \xE9t\xE9 automatiquement inscrit \xE0 la ligue cible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889865731829760
+    m_Localized: "L\u2019objectif n\u2019a pas \xE9t\xE9 atteint."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

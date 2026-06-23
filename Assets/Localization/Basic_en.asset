@@ -1704,6 +1704,43 @@ MonoBehaviour:
     m_Localized: Keep Watching
     m_Metadata:
       m_Items: []
+  - m_Id: 138819220440412160
+    m_Localized: The survivor squeezed in some training while resting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819222747279360
+    m_Localized: Save & Return to Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819221518348288
+    m_Localized: The survivor came up with an idea for training while resting.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889698362322944
+    m_Localized: Objective
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889700270731264
+    m_Localized: Win the Bronze League within the first month
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889701411581952
+    m_Localized: Win the Silver League within the second month
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889702887976960
+    m_Localized: Win the World Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889706717376512
+    m_Localized: You have not achieved the objective yet. You have been automatically
+      registered for the target league.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889865731829760
+    m_Localized: Failed to achieve the objective.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

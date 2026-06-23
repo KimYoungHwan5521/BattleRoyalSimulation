@@ -1705,6 +1705,43 @@ MonoBehaviour:
     m_Localized: Continuar assistindo
     m_Metadata:
       m_Items: []
+  - m_Id: 138819220440412160
+    m_Localized: "O sobrevivente treinou sempre que p\xF4de, mesmo enquanto descansava."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819221518348288
+    m_Localized: Durante o descanso, o sobrevivente teve uma ideia para o treinamento.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819222747279360
+    m_Localized: "Salvar e Voltar ao T\xEDtulo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889698362322944
+    m_Localized: Objetivo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889700270731264
+    m_Localized: "Vencer a Liga de Bronze at\xE9 o fim do primeiro m\xEAs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889701411581952
+    m_Localized: "Vencer a Liga de Prata at\xE9 o fim do segundo m\xEAs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889702887976960
+    m_Localized: Vencer o Campeonato Mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889706717376512
+    m_Localized: "O objetivo ainda n\xE3o foi cumprido. A inscri\xE7\xE3o na liga-alvo
+      foi feita automaticamente."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889865731829760
+    m_Localized: "O objetivo n\xE3o foi cumprido."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1605,6 +1605,42 @@ MonoBehaviour:
     m_Key: Keep Watching
     m_Metadata:
       m_Items: []
+  - m_Id: 138819220440412160
+    m_Key: Alert:Rest30
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819221518348288
+    m_Key: Alert:OverRest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819222747279360
+    m_Key: Save & Return to Title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889698362322944
+    m_Key: Objective
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889700270731264
+    m_Key: Objective1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889701411581952
+    m_Key: Objective2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889702887976960
+    m_Key: Objective3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889706717376512
+    m_Key: Alert:Auto Reserve For Objective
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889865731829760
+    m_Key: GameOver:Failed to achieve the objective.
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

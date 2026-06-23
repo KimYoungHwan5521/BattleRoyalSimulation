@@ -1715,6 +1715,45 @@ MonoBehaviour:
     m_Localized: Weiter zuschauen
     m_Metadata:
       m_Items: []
+  - m_Id: 138819220440412160
+    m_Localized: "Der \xDCberlebende trainierte selbst w\xE4hrend der Erholung immer
+      wieder zwischendurch."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819221518348288
+    m_Localized: "W\xE4hrend der Erholung kam dem \xDCberlebenden eine Idee f\xFCr
+      das Training."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138819222747279360
+    m_Localized: "Speichern und zum Titel zur\xFCckkehren"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889698362322944
+    m_Localized: Ziel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889700270731264
+    m_Localized: Die Bronze-Liga bis zum Ende des ersten Monats gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889701411581952
+    m_Localized: Die Silber-Liga bis zum Ende des zweiten Monats gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889702887976960
+    m_Localized: Die Weltmeisterschaft gewinnen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889706717376512
+    m_Localized: "Das Ziel wurde noch nicht erreicht. Du wurdest automatisch f\xFCr
+      die Zielliga angemeldet."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138889865731829760
+    m_Localized: Das Ziel wurde nicht erreicht.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

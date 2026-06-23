@@ -119,7 +119,7 @@ public class SurvivorInfo : MonoBehaviour
     public SurvivorData survivorData;
 
     bool statIncreaseProduction;
-    const float statIncreaseWait = 0.3f;
+    const float statIncreaseWait = 0.1f;
     float curStatIncreaseWait;
     const float statIncreaseTerm = 0.1f;
     float curStatIncreaseTerm;
@@ -179,6 +179,7 @@ public class SurvivorInfo : MonoBehaviour
         
         survivorNameText.StringReference = survivorName;
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount, true);
+        survivorData._stamina = survivorData.MaxStamina;
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
