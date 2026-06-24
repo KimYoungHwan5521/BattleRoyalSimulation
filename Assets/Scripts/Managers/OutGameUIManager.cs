@@ -460,6 +460,7 @@ public class OutGameUIManager : MonoBehaviour
                     mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
                     mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
                     mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
+                    mySurvivorsData[0]._stamina = mySurvivorsData[0].MaxStamina;
                     //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
                     survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
@@ -557,14 +558,19 @@ public class OutGameUIManager : MonoBehaviour
     {
         if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
         {
-            if((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
-                Alert("Alert:Last Week Join Championship");
+                Alert("Alert:Join Championship");
                 return;
             }
-            if(calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
                 Alert("Alert:Last Week Join League");
+                return;
+            }
+            else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Chance For Objective");
                 return;
             }
         }
@@ -662,12 +668,17 @@ public class OutGameUIManager : MonoBehaviour
         {
             if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
-                Alert("Alert:Last Week Join Championship");
+                Alert("Alert:Join Championship");
                 return;
             }
-            if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
                 Alert("Alert:Last Week Join League");
+                return;
+            }
+            else if((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Chance For Objective");
                 return;
             }
         }
@@ -680,6 +691,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             trainingRoom.SetActive(true);
             RelocalizeTrainingRoom();
+            foreach (var trainingCard in trainingCards) trainingCard.RecalculateFailRate();
             GameManager.Instance.openedWindows.Push(trainingRoom);
         }
     }
@@ -742,6 +754,7 @@ public class OutGameUIManager : MonoBehaviour
         float failRate = 0;
         if (Stamina < training.staminaConsumtion) failRate = 1f;
         else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
+        Debug.Log($"Stamina : {Stamina}, consumtion : {training.staminaConsumtion}, difficulty : {training.trainingDifficulty} | failRate : {failRate}");
         float rand = UnityEngine.Random.Range(0, 1f);
         trainingResult.SetActive(true);
         resultText.gameObject.SetActive(true);
@@ -903,12 +916,17 @@ public class OutGameUIManager : MonoBehaviour
         {
             if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
-                Alert("Alert:Last Week Join Championship");
+                Alert("Alert:Join Championship");
                 return;
             }
-            if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
             {
                 Alert("Alert:Last Week Join League");
+                return;
+            }
+            else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                Alert("Alert:Last Chance For Objective");
                 return;
             }
         }

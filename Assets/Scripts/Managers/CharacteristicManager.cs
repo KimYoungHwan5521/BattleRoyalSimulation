@@ -261,7 +261,7 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.Challenger, CharacteristicRarity.Common, 0, true, CharacteristicType.Prospect, CharacteristicType.DarkHorse));
         characteristics.Add(new(CharacteristicType.WideVision, CharacteristicRarity.Common, 0, true, CharacteristicType.NarrowVision, CharacteristicType.Flounder));
         characteristics.Add(new(CharacteristicType.NarrowVision, CharacteristicRarity.Common, 0, true, CharacteristicType.WideVision, CharacteristicType.Flounder));
-        characteristics.Add(new(CharacteristicType.Flounder, CharacteristicRarity.Common, 0, true, CharacteristicType.WideVision, CharacteristicType.NarrowVision));
+        characteristics.Add(new(CharacteristicType.Flounder, CharacteristicRarity.Uncommon, 0, true, CharacteristicType.WideVision, CharacteristicType.NarrowVision));
         yield return null;
     }
 

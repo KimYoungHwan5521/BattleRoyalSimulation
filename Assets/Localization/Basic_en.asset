@@ -1761,6 +1761,11 @@ MonoBehaviour:
     m_Localized: Resolution
     m_Metadata:
       m_Items: []
+  - m_Id: 139149798574452736
+    m_Localized: The deadline for completing the objective has arrived. Click Schedule
+      to enter the league.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

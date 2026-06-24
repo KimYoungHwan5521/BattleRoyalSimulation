@@ -489,6 +489,7 @@ public class ResourcesPath
         "Sounds/SFXs/UI/Fanfare1",
         "Sounds/SFXs/UI/Fanfare2",
         "Sounds/SFXs/UI/Fail",
+        "Sounds/SFXs/UI/Cheers",
     };
 
     public const string AudioMixerPath = "Sounds/AudioMixer";

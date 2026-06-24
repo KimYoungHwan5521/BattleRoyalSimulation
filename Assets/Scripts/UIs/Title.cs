@@ -64,10 +64,10 @@ public class Title : MonoBehaviour
 
     public void NewGame()
     {
+        GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.ResetData(wantDifficulty);
         title.SetActive(false);
         AchievementManager.earnedAchievementsInThisRun = new();
-        GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.Option.SetSaveButtonInteractable(false, false);
     }
 

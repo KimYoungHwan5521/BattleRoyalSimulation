@@ -1770,6 +1770,11 @@ MonoBehaviour:
     m_Localized: "Resoluci\xF3n"
     m_Metadata:
       m_Items: []
+  - m_Id: 139149798574452736
+    m_Localized: "Ha llegado la fecha l\xEDmite para cumplir el objetivo. Pulsa \xABCronograma\xBB
+      para participar en la liga."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

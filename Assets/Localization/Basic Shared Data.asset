@@ -1522,7 +1522,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 137088771183669248
-    m_Key: Alert:Last Week Join Championship
+    m_Key: Alert:Join Championship
     m_Metadata:
       m_Items: []
   - m_Id: 137348072804511744
@@ -1659,6 +1659,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 138930320263671808
     m_Key: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 139149798574452736
+    m_Key: Alert:Last Chance For Objective
     m_Metadata:
       m_Items: []
   m_Metadata:

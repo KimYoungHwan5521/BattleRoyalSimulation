@@ -108,7 +108,12 @@ public class Calendar : CustomObject
             //tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
             //outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
             //if (outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value)) outGameUIManager.Alert("Click today's league in the schedule to go to the Battle Royale.");
-            if (leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null) outGameUIManager.Alert("Alert:Reserve Reminder");
+            if (leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null)
+            {
+                if (today == 24 || today == 53 || today == 81) outGameUIManager.Alert("Alert:Last Chance For Objective");
+                else outGameUIManager.Alert("Alert:Reserve Reminder");
+            }
+
             
             if (leagueReserveInfo.ContainsKey(value - 1) && leagueReserveInfo[value - 1].reserver != null)
             {
@@ -635,7 +640,19 @@ public class Calendar : CustomObject
         wantReserveDate = date + 28 * (calendarPage - 1);
         if(leagueReserveInfo.ContainsKey(wantReserveDate))
         {
-            if (CheckTier(outGameUIManager.MySurvivorsData[0].tier, leagueReserveInfo[wantReserveDate].league))
+            if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
+            {
+                if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
+                else
+                {
+                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                    {
+                        calendarObject.SetActive(false);
+                        outGameUIManager.SkipBetting();
+                    });
+                }
+            }
+            else if (CheckTier(outGameUIManager.MySurvivorsData[0].tier, leagueReserveInfo[wantReserveDate].league))
             {
                 if(wantReserveDate == Today)
                 {
@@ -643,6 +660,7 @@ public class Calendar : CustomObject
                     {
                         outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
                         {
+                            calendarObject.SetActive(false);
                             outGameUIManager.SkipBetting();
                         });
                     }
@@ -656,6 +674,7 @@ public class Calendar : CustomObject
                         {
                             outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
                             {
+                                calendarObject.SetActive(false);
                                 outGameUIManager.SkipBetting();
                             });
                         }
@@ -688,10 +707,6 @@ public class Calendar : CustomObject
                     });
                 }
 
-            }
-            else if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
-            {
-                if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
             }
             else
             {

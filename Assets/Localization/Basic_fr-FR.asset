@@ -1787,6 +1787,11 @@ MonoBehaviour:
     m_Localized: "R\xE9solution"
     m_Metadata:
       m_Items: []
+  - m_Id: 139149798574452736
+    m_Localized: "La date limite pour atteindre l\u2019objectif est arriv\xE9e. Cliquez
+      sur \xAB Calendrier \xBB pour participer \xE0 la ligue."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

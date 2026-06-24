@@ -99,8 +99,8 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
         SetText(didPlayerParticipate, out int totalProfit);
         outGameUIManager.Money += totalProfit;
-        gameOver = outGameUIManager.Money < 0;
-        if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
+        //gameOver = outGameUIManager.Money < 0;
+        //if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
@@ -319,7 +319,8 @@ public class GameResult : MonoBehaviour
                             continue;
                         }
                         treatments[i].SetActive(true);
-                        treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
+                        if (playerSurvivor.injuries[i].degree == 1) treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", "ArtificialPartsTransplanted").GetLocalizedString()}";
+                        else treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                         int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i]);
                         treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
                         treatments[i].GetComponentInChildren<Help>().SetDescription("");
@@ -474,8 +475,9 @@ public class GameResult : MonoBehaviour
     public void ExitBattle(bool goTitle = false)
     {
         gameResult.SetActive(false);
+        if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
         ClearBattleRoyale();
-        if(!goTitle)
+        if (!goTitle)
         {
             if(gameOver)
             {
@@ -483,7 +485,6 @@ public class GameResult : MonoBehaviour
             }
             else
             {
-                if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
                 // 여기서 수술
                 foreach (var injury in injuryNeedSurgery)
                 {
@@ -502,14 +503,13 @@ public class GameResult : MonoBehaviour
                 GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
                 notification?.Invoke();
                 notification = null;
-                GameManager.Instance.DestroyBattleRoyaleManager();
             }
         }
         else
         {
             gameResult.SetActive(false);
         }
-
+        GameManager.Instance.DestroyBattleRoyaleManager();
     }
 
     public void ClearBattleRoyale()
@@ -535,7 +535,11 @@ public class GameResult : MonoBehaviour
         gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
 
         SetEarnedAchievements();
-        if (winWC) SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare2);
+        if (winWC)
+        {
+            SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare2);
+            SoundManager.PlayUISFX(ResourceEnum.SFX.Cheers);
+        }
         GameManager.Instance.Option.DeleteSaveData(0);
     }
 
@@ -630,10 +634,10 @@ public class GameResult : MonoBehaviour
         earnedAchievementsNext.interactable = index < AchievementManager.earnedAchievementsInThisRun.Count - 1;
         earnedAchievemetName.StringReference = new("Achievement", AchievementManager.earnedAchievementsInThisRun[index]);
         string key = AchievementManager.earnedAchievementsInThisRun[index].Replace(" ", "").Replace("-", "");
+        AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == key);
         if (char.IsDigit(key[0])) key = "_" + key;
         if (Enum.TryParse(key, out ResourceEnum.Sprite spriteE)) earnedAchievementImage.sprite = ResourceManager.Get(spriteE);
         else earnedAchievementImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);
-        AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == key);
         if (achievement != null && !achievement.unlockElementName.Equals(""))
         {
             string unlockElement = achievement.unlockElement == AchievementUIManager.UnlockElement.Characteristic ? new LocalizedString("Basic", "Characteristic").GetLocalizedString() : new LocalizedString("Basic", "Training").GetLocalizedString();

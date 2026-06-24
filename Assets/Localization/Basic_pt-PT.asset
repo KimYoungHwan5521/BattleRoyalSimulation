@@ -1763,6 +1763,11 @@ MonoBehaviour:
     m_Localized: "Resolu\xE7\xE3o"
     m_Metadata:
       m_Items: []
+  - m_Id: 139149798574452736
+    m_Localized: "Chegou o prazo para cumprir o objetivo. Seleciona \xABAgendar\xBB
+      para participar na liga."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

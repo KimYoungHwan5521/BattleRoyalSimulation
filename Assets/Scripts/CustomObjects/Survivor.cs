@@ -1931,7 +1931,7 @@ public class Survivor : CustomObject
                     _ => 15f
                 };
                 biometricRader.GetComponent<CircleCollider2D>().radius = detectionRange;
-                biometricRader.GetComponent<SpriteRenderer>().transform.localScale = new(detectionRange * 2, detectionRange * 2);
+                biometricRader.GetComponentInChildren<SpriteRenderer>().transform.localScale = new(detectionRange * 2, detectionRange * 2);
             }
             else if (item.itemType == ItemManager.Items.EnergyBarrier)
             {
@@ -2707,7 +2707,7 @@ public class Survivor : CustomObject
                 }
                 var message = new LocalizedString("Basic", "Masterpiece Crafted");
                 string crafter = linkedSurvivorData.localizedSurvivorName.GetLocalizedString();
-                string crafted = currentCrafting.itemType.ToString();
+                string crafted = new LocalizedString("Item", currentCrafting.itemType.ToString()).GetLocalizedString();
                 message.Arguments = new[] { crafter, crafted };
                 InGameUIManager.AddLog(message.GetLocalizedString());
             }

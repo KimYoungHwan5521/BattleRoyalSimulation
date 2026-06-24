@@ -26,6 +26,8 @@ public static class AchievementManager
     public static void SetStat(string achievementId, int value)
     {
         if(!SteamManager.Initialized) return;
+        var achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == achievementId);
+        if (achievement != null && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
         bool success = SteamUserStats.SetStat(achievementId, value);
         SteamUserStats.StoreStats();
     }
@@ -33,6 +35,8 @@ public static class AchievementManager
     public static void SetStat(string achievementId, float value)
     {
         if (!SteamManager.Initialized) return;
+        var achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == achievementId);
+        if (achievement != null && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
         SteamUserStats.SetStat(achievementId, value);
         SteamUserStats.StoreStats();
     }

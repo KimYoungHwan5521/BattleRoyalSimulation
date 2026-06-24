@@ -35,10 +35,13 @@ public class LocalizedDropdown : MonoBehaviour
 
     public void RelocalizeOptions()
     {
+        int value = dropdown.value;
         dropdown.ClearOptions();
         for (int i = 0; i < keys.Count; i++)
         {
             dropdown.options.Add(new OptionData(keys[i].GetLocalizedString()));
         }
+        dropdown.value = value;
+        dropdown.RefreshShownValue();
     }
 }

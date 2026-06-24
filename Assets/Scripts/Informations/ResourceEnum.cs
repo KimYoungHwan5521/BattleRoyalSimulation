@@ -486,5 +486,6 @@ namespace ResourceEnum
         Fanfare1,
         Fanfare2,
         Fail,
+        Cheers,
     }
 }

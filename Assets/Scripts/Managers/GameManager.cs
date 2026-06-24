@@ -169,8 +169,11 @@ public class GameManager : MonoBehaviour
 
     public void Test(int wantDate)
     {
-        calendar.LeagueReserveInfo[calendar.Today] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01);
-        outGameUIManger.SetContestants();
+        //calendar.Today = 83;
+        //outGameUIManger.MySurvivorsData[0].tier = Tier.Gold;
+        //outGameUIManger.MySurvivorsData[0].IncreaseStats(100, 100, 100, 100, 100, 100);
+        //calendar.LeagueReserveInfo[83].reserver = outGameUIManger.MySurvivorsData[0];
+        //outGameUIManger.SetContestants();
     }
 
     public void Test2(int wantNumber)

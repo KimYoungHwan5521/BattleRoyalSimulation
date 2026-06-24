@@ -1774,6 +1774,11 @@ MonoBehaviour:
     m_Localized: "Aufl\xF6sung"
     m_Metadata:
       m_Items: []
+  - m_Id: 139149798574452736
+    m_Localized: "Die Frist zum Erreichen des Ziels ist erreicht. Klicke auf \u201EZeitplan\u201C,
+      um an der Liga teilzunehmen."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
