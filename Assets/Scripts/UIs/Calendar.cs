@@ -54,9 +54,9 @@ public class Calendar : CustomObject
     {
         get
         {
-            for (int i = today; i < today + 56; i++)
+            for (int i = today + 1; i < today + 83; i++)
             {
-                if (i % 56 == 27) return leagueReserveInfo[i];
+                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.SeasonChampionship) return leagueReserveInfo[i];
             }
             return null;
         }
@@ -66,9 +66,9 @@ public class Calendar : CustomObject
     {
         get
         {
-            for (int i = today; i < today + 56; i++)
+            for (int i = today + 1; i < today + 83; i++)
             {
-                if (i % 56 == 27) return i;
+                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.SeasonChampionship) return i;
             }
             return -1;
         }
@@ -78,9 +78,9 @@ public class Calendar : CustomObject
     {
         get
         {
-            for (int i = today; i < today + 56; i++)
+            for (int i = today + 1; i < today + 83; i++)
             {
-                if (i % 56 == 55) return leagueReserveInfo[i];
+                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.WorldChampionship) return leagueReserveInfo[i];
             }
             return null;
         }
@@ -90,9 +90,9 @@ public class Calendar : CustomObject
     {
         get
         {
-            for (int i = today; i < today + 56; i++)
+            for (int i = today + 1; i < today + 83; i++)
             {
-                if (i % 56 == 55) return i;
+                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.SeasonChampionship) return i;
             }
             return -1;
         }

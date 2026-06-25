@@ -152,6 +152,7 @@ public class AchievementUIManager
         achivementInfos.Add(new("Sword Master", UnlockElement.Characteristic, "SwordSaint", "Total_SowrdKill", 10));
         achivementInfos.Add(new("Sniper", UnlockElement.Characteristic, "Sniper", "Total_SniperKill", 10));
         achivementInfos.Add(new("Ace", UnlockElement.Training, "Invite Local Expert"));
+        achivementInfos.Add(new("Pentakill", UnlockElement.Training, "Visit Hidden Master"));
         achivementInfos.Add(new("Severe Bleeding", UnlockElement.Characteristic, "Regenerator"));
         achivementInfos.Add(new("Augmented Prosthetic", UnlockElement.Characteristic, "BodyEnhancementAdvocate"));
         achivementInfos.Add(new("Transcendent Prosthetic", UnlockElement.Characteristic, "AugmentationFanatic"));
