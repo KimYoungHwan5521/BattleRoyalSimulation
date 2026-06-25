@@ -1632,7 +1632,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             foreach (var craftableAllow in craftableAllows)
             {
-                if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value - 1].TableEntryReference.Key}"
+                if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}"
                 && craftableAllow.GetComponentsInChildren<Toggle>()[1].isOn)
                 {
                     Alert("Alert:Crafting Priority Not Valid");

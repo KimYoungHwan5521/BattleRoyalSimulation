@@ -5451,13 +5451,14 @@ public class Survivor : CustomObject
                             break;
                         // My HP
                         case 2:
+                            int conditionInt= strategyDictionary.Value.conditions[i].inputInt;
                             switch(strategyDictionary.Value.conditions[i].operator_)
                             {
                                 case 0:
-                                    condition.conditions[i] = () => CurHPPercent > strategyDictionary.Value.conditions[i].inputInt;
+                                    condition.conditions[i] = () => CurHPPercent > conditionInt;
                                     break;
                                 case 1:
-                                    condition.conditions[i] = () => CurHPPercent < strategyDictionary.Value.conditions[i].inputInt;
+                                    condition.conditions[i] = () => CurHPPercent < conditionInt;
                                     break;
                             }
                             break;
@@ -5475,13 +5476,14 @@ public class Survivor : CustomObject
                             break;
                         // Distance with the enemy
                         case 4:
+                            float inputDistance = strategyDictionary.Value.conditions[i].inputInt;
                             switch(strategyDictionary.Value.conditions[i].operator_)
                             {
                                 case 0:
-                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) > strategyDictionary.Value.conditions[i].inputInt;
+                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) > inputDistance;
                                     break;
                                 case 1:
-                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) < Mathf.Min(strategyDictionary.Value.conditions[i].inputInt, 1.5f);
+                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) < Mathf.Min(inputDistance, 1.5f);
                                     break;
                             }
                             break;

@@ -31,7 +31,7 @@ public class ProjectileGenerator : CustomObject
         {
             SpawnProjectile_Bazooka(weapon);
         }
-        else if (weapon.itemType == ItemManager.Items.Bow || weapon.itemType == ItemManager.Items.AdvancedBow) SpawnProjectile(weapon, ResourceEnum.Prefab.Arrow, owner.ValidBullet.itemType == ItemManager.Items.Arrow_Enchanted);
+        else if ((weapon.itemType == ItemManager.Items.Bow || weapon.itemType == ItemManager.Items.AdvancedBow) && owner.ValidBullet != null) SpawnProjectile(weapon, ResourceEnum.Prefab.Arrow, owner.ValidBullet.itemType == ItemManager.Items.Arrow_Enchanted);
         else SpawnProjectile(weapon, ResourceEnum.Prefab.Bullet);
     }
 
