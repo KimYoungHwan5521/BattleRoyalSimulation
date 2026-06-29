@@ -20,6 +20,7 @@ public class ProjectileGenerator : CustomObject
         RangedWeapon weapon = owner.CurrentWeapon as RangedWeapon;
         weapon.Fire();
         owner.InGameUIManager.UpdateSelectedObjectInventory(owner);
+        if(weapon.CurrentMagazine <= 0 && owner.ValidBullet == null) owner.currentWeaponisBestWeapon = false;
 
         if (muzzleTF == null) ResetMuzzleTF(owner.RightHandDisabled || owner.CurrentWeapon.itemType == ItemManager.Items.Bow || owner.CurrentWeapon.itemType == ItemManager.Items.AdvancedBow ? owner.leftHandTF : owner.rightHandTF);
         spawnPos = muzzleTF != null ? muzzleTF.position : owner.transform.position + owner.transform.up * 2;

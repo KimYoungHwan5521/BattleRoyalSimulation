@@ -17,7 +17,7 @@ public class Buriable : Consumable
         this.damage = damage; 
     }
 
-    public Buriable(ItemManager.Items itemType, LocalizedString itemName, float weight, float damage, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public Buriable(ItemManager.Items itemType, LocalizedString itemName, int weight, float damage, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
         this.damage = damage;

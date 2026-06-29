@@ -1172,6 +1172,7 @@ public class OutGameUIManager : MonoBehaviour
     void Surgery()
     {
         trainingResult.SetActive(true);
+        GameManager.Instance.openedWindows.Push(trainingResult);
         resultText.gameObject.SetActive(true);
         resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Surgery Result");
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
@@ -2413,7 +2414,7 @@ public class OutGameUIManager : MonoBehaviour
             int randCrafting = UnityEngine.Random.Range(0, 101);
             int randKnowledge = UnityEngine.Random.Range(0, 101);
             int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 60 + difficulty * (value * value + 15) - 30 || totalRand > (value + 1) * 60 + difficulty * (value * value + 15) - 30))
+            if ((totalRand < value * 30 + difficulty * (value * value + 5) || totalRand > (value + 1) * 30 + difficulty * (value * value + 5)))
             {
                 check++;
                 if (check >= 10000)

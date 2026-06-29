@@ -360,7 +360,7 @@ public class Survivor : CustomObject
             return validBullet;
         }
     }
-    bool currentWeaponisBestWeapon;
+    public bool currentWeaponisBestWeapon;
 
     [SerializeField]List<ItemManager.Craftable> craftables = new();
     ItemManager.Craftable currentCrafting;
@@ -1835,6 +1835,14 @@ public class Survivor : CustomObject
         {
             if (rightHandDisabled || leftHandDisabled) return false;
         }
+        if(weapon is MeleeWeapon meleeWeapon)
+        {
+            return CorrectedStrength >= (meleeWeapon.weight - 1) * 20;
+        }
+        else if(weapon is RangedWeapon rangedWeapon)
+        {
+            return CorrectedStrength >= (rangedWeapon.weight - 4) * 10;
+        }
         return true;
     }
 
@@ -2804,6 +2812,16 @@ public class Survivor : CustomObject
         int knowledge = linkedSurvivorData.Knowledge;
         foreach(var craftable in ItemManager.craftables)
         {
+            if(craftable.itemType == ItemManager.Items.Bow || craftable.itemType == ItemManager.Items.AdvancedBow || craftable.itemType == ItemManager.Items.SubMachineGun
+                || craftable.itemType == ItemManager.Items.ShotGun || craftable.itemType == ItemManager.Items.AssaultRifle || craftable.itemType == ItemManager.Items.SniperRifle
+                || craftable.itemType == ItemManager.Items.Bazooka)
+            {
+                if (rightHandDisabled || leftHandDisabled) continue;
+            }
+            if(craftable.itemType == ItemManager.Items.Bazooka)
+            {
+                if (CorrectedStrength < 40) continue;
+            }
             bool trapExpertAndTrap = characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (craftable.itemType == ItemManager.Items.BearTrap || craftable.itemType == ItemManager.Items.NoiseTrap || craftable.itemType == ItemManager.Items.ShrapnelTrap || craftable.itemType == ItemManager.Items.ChemicalTrap || craftable.itemType == ItemManager.Items.ExplosiveTrap || craftable.itemType == ItemManager.Items.TrapDetectionDevice);
             bool haveCraftingMaterials = AdvancedComponentCount >= craftable.needAdvancedComponentCount && ComponentsCount >= craftable.needComponentsCount && ChemicalsCount >= craftable.needChemicalsCount && SalvagesCount >= craftable.needSalvagesCount && GunpowderCount >= craftable.needGunpowderCount;
             if ((knowledge >= craftable.requiredKnowledge && haveCraftingMaterials) || trapExpertAndTrap)
@@ -3047,14 +3065,17 @@ public class Survivor : CustomObject
             }
             else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) Aim();
             else if (ValidBullet != null) Reload();
-            else if (!currentWeaponisBestWeapon)
+            else
             {
-                List<Item> candidates = inventory.FindAll(x => x is Weapon);
-                foreach (Item candidate in candidates)
+                if (!currentWeaponisBestWeapon)
                 {
-                    if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
+                    List<Item> candidates = inventory.FindAll(x => x is Weapon);
+                    foreach (Item candidate in candidates)
+                    {
+                        if (CompareWeaponValue(candidate as Weapon)) Equip(candidate as Weapon);
+                    }
+                    currentWeaponisBestWeapon = true;
                 }
-                currentWeaponisBestWeapon = true;
             }
         }
         else Attack();
@@ -3123,7 +3144,16 @@ public class Survivor : CustomObject
         {
             animator.SetInteger("AnimNumber", 0);
         }
-        animator.SetFloat("AttackSpeed", attackSpeed);
+        if(IsValid(CurrentWeapon) && CurrentWeapon is MeleeWeapon)
+        {
+            float correctedAttackSpeed = 1f;
+            if(CurrentWeapon.weight >= 2)
+            {
+                correctedAttackSpeed = 0.5f + 0.5f * Mathf.Clamp(CorrectedStrength - 20 * (CurrentWeapon.weight - 2), 0, 20) / 20;
+            }
+            animator.SetFloat("AttackSpeed", Mathf.Min(attackSpeed, attackSpeed * correctedAttackSpeed));
+        }
+        else animator.SetFloat("AttackSpeed", attackSpeed);
     }
 
     void Aim()
@@ -3166,7 +3196,21 @@ public class Survivor : CustomObject
         animator.SetBool("Crafting", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
-        animator.SetFloat("ReloadSpeed", reloadSpeed);
+
+        float correctedReloadSpeed = 1f;
+        if(CurrentWeaponAsRangedWeapon != null)
+        {
+            if(CurrentWeaponAsRangedWeapon.weight > 4)
+            {
+                // ¹ÙÁÖÄ«
+                correctedReloadSpeed = 0.5f + 0.5f * Mathf.Max(CorrectedStrength - 10 * (CurrentWeaponAsRangedWeapon.weight - 4), 0) / 20;
+            }
+            else if(CurrentWeaponAsRangedWeapon.weight == 4)
+            {
+                correctedReloadSpeed = 0.5f + 0.5f * Mathf.Clamp(CorrectedStrength, 0, 10) / 10;
+            }
+        }
+        animator.SetFloat("ReloadSpeed", reloadSpeed * correctedReloadSpeed);
         curAimDelay = 0;
     }
     #endregion
@@ -5053,11 +5097,15 @@ public class Survivor : CustomObject
 
     int itemCorrectionFighting;
     int itemCorrectionShooting;
+    int equipedArmorsWeight;
     void ApplyCorrectionStatByItem(Item item, bool equip)
     {
         if ((item.itemType == ItemManager.Items.Bow || item.itemType == ItemManager.Items.AdvancedBow) && characteristics.FindIndex(x => x.type == CharacteristicType.MasterArcher) != -1) itemCorrectionShooting = equip ? 20 : 0;
         if (item is MeleeWeapon && characteristics.FindIndex(x => x.type == CharacteristicType.LethalWeapon) != -1) itemCorrectionFighting = equip ? 20 : 0;
         if (characteristics.FindIndex(x => x.type == CharacteristicType.StreetFighter) != -1) itemCorrectionFighting = equip ? 0 : 20;
+        equipedArmorsWeight = 0;
+        equipedArmorsWeight += CurrentWearingHelmet != null ? CurrentWearingHelmet.weight : 0;
+        equipedArmorsWeight += CurrentWearingVest != null ? CurrentWearingVest.weight : 0;
         ApplyCorrectionStats();
     }
 
@@ -5093,7 +5141,9 @@ public class Survivor : CustomObject
 
         attackDamage = 5 * Mathf.Max(0.2f, (correctedStrength + correctedFighting) / 40f) * injuryCorrection_AttackDamage;
         attackSpeed = Mathf.Max((120f + correctedAgility + correctedFighting) / 160f * injuryCorrection_AttackSpeed, 0.1f);
-        moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_MoveSpeed, 0.1f);
+
+        float correctionMoveSpeedByArmors = 1f - Mathf.Max((equipedArmorsWeight - (CorrectedStrength / 20f) * 3) / 30f, 0);
+        moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_MoveSpeed * correctionMoveSpeedByArmors, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
         crafting = Mathf.Max(correctedCrafting + injuryCorrection_Crafting, 0);
@@ -5315,8 +5365,8 @@ public class Survivor : CustomObject
         linkedSurvivorData = survivorInfo;
         survivorName = new LocalizedString("Name", survivorInfo.SurvivorName);
         nameTag.GetComponent<LocalizeStringEvent>().StringReference = survivorName;
-        curHP = maxHP = survivorInfo.Strength + 100;
-        curBlood = maxBlood = maxHP * 80;
+        curHP = maxHP = survivorInfo.Strength * 2 + 100;
+        curBlood = maxBlood = (survivorInfo.Strength + 100) * 80;
         bleedingSprite = curBlood - 100;
         luck = linkedSurvivorData.Luck;
         characteristics = survivorInfo.characteristics;

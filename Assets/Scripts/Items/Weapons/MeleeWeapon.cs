@@ -22,7 +22,7 @@ public class MeleeWeapon : Weapon
         isEnchanted = true;
     }
 
-    public MeleeWeapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, DamageType damageType, float attackDamage, float attackRange, int attackAnimNumber, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public MeleeWeapon(ItemManager.Items itemType, LocalizedString itemName, int weight, NeedHand needHand, DamageType damageType, float attackDamage, float attackRange, int attackAnimNumber, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, needHand, attackDamage, attackRange, attackAnimNumber, quality, amount)
     { 
         this.damageType = damageType;

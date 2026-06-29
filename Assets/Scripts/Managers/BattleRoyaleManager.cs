@@ -56,7 +56,7 @@ public class BattleRoyaleManager
     public IEnumerator Initiate()
     {
         SoundManager.StopBGM();
-        SoundManager.Play(ResourceEnum.SFX.forest, Vector3.zero, true, out bgsfx);
+        SoundManager.Play(ResourceEnum.SFX.forest, Vector3.zero, true, out bgsfx, true);
         count3Animator = GameManager.Instance.count3.GetComponent<Animator>();
         GameManager.Instance.ManagerUpdate -= BattleRoyaleManagerUpdate;
         GameManager.Instance.ManagerUpdate += BattleRoyaleManagerUpdate;

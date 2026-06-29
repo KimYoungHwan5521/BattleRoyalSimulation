@@ -22,7 +22,7 @@ public class RangedWeapon : Weapon
     public int CurrentMagazine => currentMagazine;
     public int ShotAnimNumber => shotAnimNumber;
     public bool NeedPreload => needPreload;
-    public RangedWeapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, 
+    public RangedWeapon(ItemManager.Items itemType, LocalizedString itemName, int weight, NeedHand needHand, float attackDamage, float attackRange, 
         float minimumRange, float projectileSpeed, float shotCoolTime, int magazineCapacity, 
         float reloadCoolTime, int attackAnimNumber, int shotAnimNumber, CraftingQuality quality = CraftingQuality.NotCrafted, bool needPreload = true, int amount = 1)
         : base(itemType, itemName, weight, needHand, attackDamage, attackRange, attackAnimNumber, quality, amount)

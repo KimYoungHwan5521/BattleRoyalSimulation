@@ -18,7 +18,7 @@ public abstract class BoobyTrap : Consumable
 
     public abstract void Trigger(Survivor victim);
 
-    public BoobyTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public BoobyTrap(ItemManager.Items itemType, LocalizedString itemName, int weight, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
     }
@@ -27,7 +27,7 @@ public abstract class BoobyTrap : Consumable
 public class NoiseTrap : BoobyTrap
 {
     float noiseVolume;
-    public NoiseTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float noiseVolume, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public NoiseTrap(ItemManager.Items itemType, LocalizedString itemName, int weight, float noiseVolume, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
         this.noiseVolume = noiseVolume;
@@ -42,7 +42,7 @@ public class NoiseTrap : BoobyTrap
 
 public class ChemicalTrap : BoobyTrap
 {
-    public ChemicalTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public ChemicalTrap(ItemManager.Items itemType, LocalizedString itemName, int weight, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
     }
@@ -65,7 +65,7 @@ public class ChemicalTrap : BoobyTrap
 public class ShrapnelTrap : BoobyTrap
 {
     float damage;
-    public ShrapnelTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float damage, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public ShrapnelTrap(ItemManager.Items itemType, LocalizedString itemName, int weight, float damage, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
         this.damage = damage;
@@ -88,7 +88,7 @@ public class ExplosiveTrap : BoobyTrap
 {
     float damage;
     float explosionRange;
-    public ExplosiveTrap(ItemManager.Items itemType, LocalizedString itemName, float weight, float damage, float explosionRange, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public ExplosiveTrap(ItemManager.Items itemType, LocalizedString itemName, int weight, float damage, float explosionRange, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
         this.damage = damage;

@@ -17,7 +17,7 @@ public class Weapon : Item
     public float AttackRange => attackRange;
     public int AttackAnimNumber => attackAnimNumber;
 
-    public Weapon(ItemManager.Items itemType, LocalizedString itemName, float weight, NeedHand needHand, float attackDamage, float attackRange, int attackAnimNumber, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
+    public Weapon(ItemManager.Items itemType, LocalizedString itemName, int weight, NeedHand needHand, float attackDamage, float attackRange, int attackAnimNumber, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1) 
         : base(itemType, itemName, weight, quality, amount)
     {
         this.needHand = needHand;

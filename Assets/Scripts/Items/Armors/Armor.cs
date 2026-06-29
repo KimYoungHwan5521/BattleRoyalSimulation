@@ -19,7 +19,7 @@ public class Armor : Item
     }
     public float DurabilityPercent => curDurability / maxDurability;
 
-    public Armor(ItemManager.Items itemType, LocalizedString itemName, float weight, float defense, float maxDurability, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1)
+    public Armor(ItemManager.Items itemType, LocalizedString itemName, int weight, float defense, float maxDurability, CraftingQuality quality = CraftingQuality.NotCrafted, int amount = 1)
         : base(itemType, itemName, weight, quality, amount)
     {
         this.itemName = itemName;
