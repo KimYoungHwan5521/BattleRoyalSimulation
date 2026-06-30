@@ -363,6 +363,14 @@ MonoBehaviour:
     m_Key: Arrow_Enchanted
     m_Metadata:
       m_Items: []
+  - m_Id: 138942275502272512
+    m_Key: Required Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138942276072697856
+    m_Key: Weight
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -560,11 +560,11 @@ public class Calendar : CustomObject
         // Crafting League
         items = new()
         {
-            { ItemManager.Items.AdvancedComponent, 50 },
-            { ItemManager.Items.Components, 250 },
-            { ItemManager.Items.Salvages, 400 },
-            { ItemManager.Items.Chemicals, 150 },
-            { ItemManager.Items.Gunpowder, 400 },
+            { ItemManager.Items.AdvancedComponent, 10 },
+            { ItemManager.Items.Components, 500 },
+            { ItemManager.Items.Salvages, 800 },
+            { ItemManager.Items.Chemicals, 300 },
+            { ItemManager.Items.Gunpowder, 800 },
             { ItemManager.Items.BandageRoll, 100 },
         };
         itemPool.Add(7, items);
@@ -643,7 +643,7 @@ public class Calendar : CustomObject
             if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
             {
                 if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
-                else
+                else if (wantReserveDate == Today)
                 {
                     outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
                     {

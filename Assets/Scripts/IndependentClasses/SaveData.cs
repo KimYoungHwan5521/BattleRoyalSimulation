@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 #region Survivors
@@ -30,6 +29,68 @@ public class StrategyDictionaryEntry
     {
         this.key = key;
         this.value = value;
+    }
+}
+
+[Serializable]
+public class StrategyDictionarySaveData
+{
+    public ItemManager.Items priority1Weapon = ItemManager.Items.LASER;
+    public ItemManager.Items priority2Weapon = ItemManager.Items.AssaultRifle;
+    public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
+    public ItemManager.Craftable priority1Crafting = null;
+    public ItemManager.Craftable priority2Crafting = null;
+    public int priority1CraftingToInt = -1;
+    public int priority2CraftingToInt = -1;
+    public bool[] craftingAllows;
+    public int repairCondition = 70;
+
+    public List<StrategyDictionaryEntry> entries = new();
+
+    public StrategyDictionarySaveData(SurvivorData data)
+    {
+        priority1Weapon = data.priority1Weapon;
+        priority2Weapon = data.priority2Weapon;
+
+        priority1Crafting = data.priority1Crafting;
+        priority2Crafting = data.priority2Crafting;
+
+        priority1CraftingToInt = data.priority1CraftingToInt;
+        priority2CraftingToInt = data.priority2CraftingToInt;
+
+        craftingAllows = data.craftingAllows != null
+            ? (bool[])data.craftingAllows.Clone()
+            : null;
+
+        repairCondition = data.repairCondition;
+
+        strategyDictionary = data.strategyDictionary != null
+            ? new Dictionary<StrategyCase, StrategyData>(data.strategyDictionary)
+            : new Dictionary<StrategyCase, StrategyData>();
+
+        entries = new List<StrategyDictionaryEntry>();
+
+        foreach (var kv in strategyDictionary)
+        {
+            entries.Add(
+                new StrategyDictionaryEntry(kv.Key, kv.Value)
+            );
+        }
+    }
+
+    public Dictionary<StrategyCase, StrategyData> CreateStrategyDictionary()
+    {
+        Dictionary<StrategyCase, StrategyData> result = new();
+
+        if (entries == null)
+            return result;
+
+        foreach (var entry in entries)
+        {
+            result[entry.key] = entry.value;
+        }
+
+        return result;
     }
 }
 

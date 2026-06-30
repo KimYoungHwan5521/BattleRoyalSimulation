@@ -238,7 +238,7 @@ public class ItemManager
                             attackRange = 20.1f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.OneHand, attackDamage, attackRange, 2f, 38f, 0.7f, 17, 3f, 0, 1, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.OneHand, attackDamage, attackRange, 2f, 35f, 0.7f, 17, 3f, 0, 1, quality));
                 }
                 break;
             case Items.Revolver:
@@ -269,7 +269,7 @@ public class ItemManager
                             attackRange = 20f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.OneHand, attackDamage, attackRange, 2f, 27f, 1f, 7, 3f, 0, 0, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.OneHand, attackDamage, attackRange, 2f, 25f, 1f, 7, 3f, 0, 0, quality));
                 }
                 break;
             case Items.ShotGun:
@@ -300,7 +300,7 @@ public class ItemManager
                             attackRange = 20.2f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 2f, 40f, 1.8f, 4, 1f, 2, 4, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 2f, 35f, 1.8f, 4, 1f, 2, 4, quality));
                 }
                 break;
             case Items.SubMachineGun:
@@ -331,7 +331,7 @@ public class ItemManager
                             attackRange = 25f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 2f, 40f, 0.075f, 30, 3f, 2, 3, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 2f, 35f, 0.075f, 30, 3f, 2, 3, quality));
                 }
                 break;
             case Items.AssaultRifle:
@@ -362,7 +362,7 @@ public class ItemManager
                             attackRange = 50f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 4, NeedHand.TwoHand, attackDamage, attackRange, 2f, 71f, 0.1f, 30, 3f, 2, 2, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 4, NeedHand.TwoHand, attackDamage, attackRange, 2f, 50f, 0.1f, 30, 3f, 2, 2, quality));
                 }
                 break;
             case Items.SniperRifle:
@@ -393,7 +393,7 @@ public class ItemManager
                             attackRange = 90f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 4, NeedHand.TwoHand, attackDamage, attackRange, 3f, 86f, 2.0f, 5, 4f, 2, 5, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 4, NeedHand.TwoHand, attackDamage, attackRange, 3f, 60f, 2.0f, 5, 4f, 2, 5, quality));
                 }
                 break;
             case Items.Bazooka:
@@ -424,7 +424,7 @@ public class ItemManager
                             attackRange = 40f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 8, NeedHand.TwoHand, attackDamage, attackRange, 3f, 20f, 3f, 1, 5f, 2, 6, quality));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 8, NeedHand.TwoHand, attackDamage, attackRange, 3f, 18f, 3f, 1, 5f, 2, 6, quality));
                 }
                 break;
             case Items.LASER:
@@ -488,7 +488,7 @@ public class ItemManager
                             attackRange = 30f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.TwoHand, attackDamage, attackRange, 3f, 12f, 3f, 1, 1f, 3, 8, quality, false));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, NeedHand.TwoHand, attackDamage, attackRange, 3f, 11f, 3f, 1, 1f, 3, 8, quality, false));
                 }
                 break;
             case Items.AdvancedBow:
@@ -519,7 +519,7 @@ public class ItemManager
                             attackRange = 60f;
                             break;
                     }
-                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 3f, 18f, 2f, 1, 1f, 3, 9, quality, false));
+                    itemDictionary[wantItem].Add(new RangedWeapon(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, NeedHand.TwoHand, attackDamage, attackRange, 3f, 17f, 2f, 1, 1f, 3, 9, quality, false));
                 }
                 break;
             // Bullets

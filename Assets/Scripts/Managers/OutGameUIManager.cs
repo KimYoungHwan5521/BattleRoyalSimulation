@@ -468,6 +468,7 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         survivorsDropdown.ClearOptions();
                         selectedSurvivor.SetInfo(mySurvivorsData[0], true);
+                        GameManager.Instance.LoadStrategy(0);
                         trainingRoomAnim.SetBool("Tutorial", true);
                         Alert("Click the Training Room and assign survivors to training.");
                         objective.SetActive(true);
@@ -552,6 +553,7 @@ public class OutGameUIManager : MonoBehaviour
     public void ResetSelectedSurvivorInfo()
     {
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
+        selectedSurvivor.StatIncreaseProduction();
     }
 
     public void Rest()
@@ -596,7 +598,7 @@ public class OutGameUIManager : MonoBehaviour
 
             if(overRest)
             {
-                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:OverRest").GetLocalizedString()}\n";
+                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:OverRest").GetLocalizedString()}\n\n";
 
                 int[] randStat = new int[6];
                 randStat[UnityEngine.Random.Range(0, 6)]++;
@@ -622,7 +624,7 @@ public class OutGameUIManager : MonoBehaviour
             }
             else if (value == 30)
             {
-                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:Rest30").GetLocalizedString()}\n";
+                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:Rest30").GetLocalizedString()}\n\n";
 
                 int[] randStat = new int[6];
                 for (int i = 0; i < 2; i++)
@@ -765,6 +767,7 @@ public class OutGameUIManager : MonoBehaviour
             trainingResultText.text = new LocalizedString("Basic", "Failed").GetLocalizedString();
             trainingResultDetailText.text = "";
             StaminaConsume(training);
+            selectedSurvivor.StatIncreaseProduction();
             SoundManager.PlayUISFX(ResourceEnum.SFX.Fail);
         }
         else if (rand > 1f - trainingGreatSuccessRate)
@@ -1733,7 +1736,8 @@ public class OutGameUIManager : MonoBehaviour
     }
     #endregion
 
-    public int MeasureTreatmentCost(Injury injury)
+    // alreadyHad : 0 = Not already had, 1 = prostetic, 2 = augmented, 3 = transcendant
+    public int MeasureTreatmentCost(Injury injury, int alreadyHad)
     {
         float cost = 0;
 
@@ -1752,13 +1756,17 @@ public class OutGameUIManager : MonoBehaviour
                 break;
             case InjurySite.RightEar:
             case InjurySite.LeftEar:
-                cost = injury.degree * 50;
-                if (injury.degree == 1) cost += 100;
+                if(alreadyHad > 0) cost = injury.degree * 100;
+                else if (injury.degree == 1) cost = 100;
+                else cost = injury.degree * 50;
                 break;
             case InjurySite.RightEye:
             case InjurySite.LeftEye:
-                cost = injury.degree * 50;
-                if (injury.degree == 1) cost += 400;
+                if (alreadyHad == 1) cost = injury.degree * 400;
+                else if (alreadyHad == 2) cost = injury.degree * 4000;
+                else if (alreadyHad == 3) cost = injury.degree * 40000;
+                else if (injury.degree == 1) cost = 400;
+                else cost = injury.degree * 50;
                 break;
             case InjurySite.Chest:
             case InjurySite.Ribs:
@@ -1766,27 +1774,33 @@ public class OutGameUIManager : MonoBehaviour
                 cost = injury.degree * 100;
                 break;
             case InjurySite.Organ:
-                cost = injury.degree * 300;
-                if (injury.degree == 1) cost += 600;
+                if (alreadyHad > 0) cost = injury.degree * 600;
+                else if (injury.degree == 1) cost = 600;
+                else cost = injury.degree * 300;
                 break;
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
-                cost = injury.degree * 100;
-                if (injury.degree == 1) cost += 500;
+                if (alreadyHad == 1) cost = injury.degree * 500;
+                else if (alreadyHad == 2) cost = injury.degree * 5000;
+                else if (alreadyHad == 3) cost = injury.degree * 50000;
+                else if (injury.degree == 1) cost = 500;
+                else cost = injury.degree * 100;
                 break;
             case InjurySite.RightArm:
             case InjurySite.LeftArm:
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
-                cost = injury.degree * 50;
-                if (injury.degree == 1) cost += 250;
+                if (alreadyHad > 0) cost = injury.degree * 250;
+                else if (injury.degree == 1) cost = 250;
+                else cost = injury.degree * 50;
                 break;
             case InjurySite.RightHand:
             case InjurySite.LeftHand:
             case InjurySite.RightFoot:
             case InjurySite.LeftFoot:
-                cost = injury.degree * 25;
-                if (injury.degree == 1) cost += 100;
+                if (alreadyHad > 0) cost = injury.degree * 100;
+                else if (injury.degree == 1) cost = 100;
+                else cost = injury.degree * 25;
                 break;
             case InjurySite.RightThumb:
             case InjurySite.RightIndexFinger:
@@ -1808,8 +1822,9 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftRingToe:
             case InjurySite.RightLittleToe:
             case InjurySite.LeftLittleToe:
-                cost = injury.degree * 10;
-                if (injury.degree == 1) cost += 10;
+                if (alreadyHad > 0) cost = injury.degree * 10;
+                else if (injury.degree == 1) cost += 10;
+                else cost = injury.degree * 10;
                 break;
             case InjurySite.None:
                 break;
@@ -2217,6 +2232,7 @@ public class OutGameUIManager : MonoBehaviour
     public void EndTheDayWeekend()
     {
         contestantsData = null;
+        ResetTrainingRoom();
         calendar.Today++;
         calendar.TurnPageCalendar(0);
         if (calendar.Today % 7 == 0)

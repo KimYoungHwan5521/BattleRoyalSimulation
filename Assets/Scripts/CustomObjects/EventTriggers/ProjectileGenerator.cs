@@ -46,7 +46,7 @@ public class ProjectileGenerator : CustomObject
         }
         else
         {
-            if(muzzleTF != null)
+            if(muzzleTF != null && collisionHitPoint != Vector2.zero)
             {
                 bool haveWall = false;
                 RaycastHit2D[] hits = Physics2D.RaycastAll(muzzleTF.position, owner.TargetEnemy.transform.position - muzzleTF.position, Vector2.Distance(muzzleTF.position, owner.TargetEnemy.transform.position));
@@ -64,7 +64,7 @@ public class ProjectileGenerator : CustomObject
                     return collisionHitPoint;
                 }
             }
-            if (owner.LinkedSurvivorData.Shooting >= 100)
+            if (owner.CorrectedShooting >= 100)
             {
                 // ¿¹Ãø¼¦
                 Vector2 currentTargetPosition = owner.TargetEnemy.transform.position;
@@ -120,6 +120,8 @@ public class ProjectileGenerator : CustomObject
         Vector2 destination = GetDestination();
 
         float err = owner.AimErrorRange;
+        if (owner.CurrentWeapon.itemType == ItemManager.Items.SubMachineGun) err += 1.25f;
+        else if (owner.CurrentWeapon.itemType == ItemManager.Items.AssaultRifle) err += 2.5f;
         float rand = Random.Range(-err, err);
         
         Vector2 direction = ((destination - (Vector2)muzzleTF.position).normalized).Rotate(rand);

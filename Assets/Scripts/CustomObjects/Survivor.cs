@@ -107,7 +107,7 @@ public class Survivor : CustomObject
     [SerializeField] float attackRange = 1.5f;
     [SerializeField] float moveSpeed = 3f;
     public float MoveSpeed => moveSpeed;
-    int crafting;
+    
     [SerializeField] float leftSightRange = 45f;
     [SerializeField] float rightSightRange = 45f;
     float sightAngle = 90;
@@ -190,7 +190,7 @@ public class Survivor : CustomObject
     #region Injury
     [Header("Injury")]
     public List<Injury> injuries = new();
-    public List<InjurySite> rememberAlreadyHaveInjury;
+    public Dictionary<InjurySite, int> rememberAlreadyHaveInjury = new();
 
     [SerializeField] bool rightHandDisabled;
     public bool RightHandDisabled
@@ -687,14 +687,14 @@ public class Survivor : CustomObject
         }
         else
         {
-            //Look((Vector2)(transform.position + agent.velocity));
             if (agent.velocity.magnitude > 0)
             {
                 Look((Vector2)(transform.position + agent.velocity));
-                //lastVelocity = agent.velocity;
             }
-            //else Look((Vector2)(transform.position + lastVelocity));
-            else Look((Vector2)(transform.forward));
+            else
+            {
+                Look((Vector2)transform.position + (Vector2)transform.up);
+            }
         }
     }
 
@@ -2697,10 +2697,10 @@ public class Survivor : CustomObject
             if(ItemManager.CheckUseQuality(currentCrafting.itemType))
             {
                 float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
-                float pMasterPiece = (crafting - 40) * 1.25f;
-                float pExcellent = (crafting - 20) * 1.25f;
-                float pFine = crafting * 1.25f;
-                float pCommon = (crafting + 20) * 1.25f;
+                float pMasterPiece = (correctedCrafting - 40) * 1.25f;
+                float pExcellent = (correctedCrafting - 20) * 1.25f;
+                float pFine = correctedCrafting * 1.25f;
+                float pCommon = (correctedCrafting + 20) * 1.25f;
                 if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
                 else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
                 else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Fine;
@@ -3168,6 +3168,7 @@ public class Survivor : CustomObject
 
         curAimDelay += Time.deltaTime * aiCool;
         // 적이 너무 가까우면 그냥 바로 사격
+        if (projectileGenerator != null) projectileGenerator.collisionHitPoint = targetEnemyHitPoint;
         if (Vector2.Distance(transform.position, TargetEnemy.transform.position) < 5f) curAimDelay = aimDelay + 1;
         progressBar.fillAmount = curAimDelay / aimDelay;
         if(curAimDelay > aimDelay)
@@ -3789,7 +3790,7 @@ public class Survivor : CustomObject
     {
         float probability = UnityEngine.Random.Range(0, 1f);
         InjurySiteMajor damagePart;
-        float correctionProbability = Mathf.Pow(2, Mathf.Log(Mathf.Max(launcher.correctedShooting, 1), 20));
+        float correctionProbability = Mathf.Pow(2, launcher.correctedShooting / 20f);
         float headShotProbability = 0.01f * launcher.luck / luck * correctionProbability;
         float bodyShotProbability = 1 - 0.01f * (128f / correctionProbability * luck / launcher.luck);
         // 헤드샷
@@ -5146,7 +5147,7 @@ public class Survivor : CustomObject
         moveSpeed = Mathf.Max((60f + correctedAgility) * 3f / 80f * injuryCorrection_MoveSpeed * correctionMoveSpeedByArmors, 0.1f);
         agent.speed = moveSpeed;
         farmingSpeed = Mathf.Max((60f + correctedAgility) / 80f * injuryCorrection_FarmingSpeed, 0.1f);
-        crafting = Mathf.Max(correctedCrafting + injuryCorrection_Crafting, 0);
+        correctedCrafting = Mathf.Max(correctedCrafting + injuryCorrection_Crafting, 0);
         craftingSpeed = Mathf.Max((1 + 0.01f * correctedCrafting) * injuryCorrection_CraftingSpeed, 0.1f);
         wearingSpeed = Mathf.Max(injuryCorrection_WearingSpeed, 0.1f);
         animator.SetFloat("CraftingSpeed", craftingSpeed);
@@ -5268,7 +5269,7 @@ public class Survivor : CustomObject
     #endregion
 
     #region SightIn SightOut
-    public void SightIn(Survivor survivor, bool corpse, Vector2 collisionHitPoint)
+    public void SightIn(Survivor survivor, bool corpse)
     {
         if(!corpse)
         {
@@ -5278,7 +5279,6 @@ public class Survivor : CustomObject
                 keepEyesOnPosition = Vector2.zero;
                 inSightEnemies.Add(survivor);
                 sightMeshRenderer.material = m_SightAlert;
-                if(projectileGenerator != null) projectileGenerator.collisionHitPoint = collisionHitPoint;
                 if (survivor != lastTargetEnemy) emotionAnimator.SetTrigger("Alert");
             }
         }
@@ -5301,22 +5301,27 @@ public class Survivor : CustomObject
                 lastTargetEnemy = survivor;
             }
             else if(!farmingCorpses.ContainsKey(survivor)) farmingCorpses.Add(survivor, false);
+            targetEnemyHitPoint = Vector3.zero;
         }
         if(inSightEnemies.Contains(survivor)) inSightEnemies.Remove(survivor);
     }
 
-    float curSeeEnemy = 0;
+    Vector3 targetEnemyHitPoint;
+    private readonly Dictionary<Survivor, float> seeEnemyTimers = new();
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if (collision.TryGetComponent(out Survivor survivor) && (!collision.isTrigger || survivor.IsDead))
         {
-            curSeeEnemy += Time.fixedDeltaTime;
-            if (curSeeEnemy > 0.1f)
+            if (!seeEnemyTimers.TryAdd(survivor, 0f))
+                seeEnemyTimers[survivor] += Time.fixedDeltaTime;
+
+            if (seeEnemyTimers[survivor] >= 0.1f)
             {
-                curSeeEnemy = 0;
-                SightIn(survivor, survivor.IsDead, collision.ClosestPoint(transform.position));
+                seeEnemyTimers[survivor] = 0f;
+                SightIn(survivor, survivor.IsDead);
             }
+            if (survivor == TargetEnemy) targetEnemyHitPoint = collision.ClosestPoint(transform.position);
         }
     }
 
@@ -5326,7 +5331,7 @@ public class Survivor : CustomObject
         {
             if (!collision.isTrigger)
             {
-                curSeeEnemy = 0;
+                seeEnemyTimers.Remove(survivor);
                 SightOut(survivor);
             }
         }
@@ -5375,14 +5380,26 @@ public class Survivor : CustomObject
         // game result 단계에서 돈을 걷지 않기 위해
         foreach (Injury injury in injuries)
         {
-            if (injury.degree == 1 || injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged
-                || injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged
-                || injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged)
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || injury.type == InjuryType.ArtificialPartsDamaged)
             {
-                if (rememberAlreadyHaveInjury.Contains(injury.site)) continue;
-                rememberAlreadyHaveInjury.Add(injury.site);
+                if (rememberAlreadyHaveInjury.ContainsKey(injury.site)) continue;
+                rememberAlreadyHaveInjury.Add(injury.site, 1);
+                foreach (var subpart in Injury.GetSubparts(injury.site))
+                    if (!rememberAlreadyHaveInjury.ContainsKey(subpart)) rememberAlreadyHaveInjury.Add(subpart, 1);
+            }
+            else if(injury.type == InjuryType.AugmentedPartsTransplanted || injury.type == InjuryType.AugmentedPartsDamaged)
+            {
+                if (rememberAlreadyHaveInjury.ContainsKey(injury.site)) continue;
+                rememberAlreadyHaveInjury.Add(injury.site, 2);
+                foreach (var subpart in Injury.GetSubparts(injury.site))
+                    if (!rememberAlreadyHaveInjury.ContainsKey(subpart)) rememberAlreadyHaveInjury.Add(subpart, 2);
+            }
+            else if(injury.type == InjuryType.TranscendantPartsTransplanted || injury.type == InjuryType.TranscendantPartsDamaged)
+            {
+                if (rememberAlreadyHaveInjury.ContainsKey(injury.site)) continue;
+                rememberAlreadyHaveInjury.Add(injury.site, 3);
                 foreach (var subpart in Injury.GetSubparts(injury.site)) 
-                    if (!rememberAlreadyHaveInjury.Contains(subpart)) rememberAlreadyHaveInjury.Add(subpart);
+                    if (!rememberAlreadyHaveInjury.ContainsKey(subpart)) rememberAlreadyHaveInjury.Add(subpart, 3);
             }
         }
         Injury tempInjury;

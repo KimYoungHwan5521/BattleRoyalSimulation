@@ -366,6 +366,14 @@ MonoBehaviour:
     m_Localized: Arrow(Enchanted)
     m_Metadata:
       m_Items: []
+  - m_Id: 138942275502272512
+    m_Localized: Required Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138942276072697856
+    m_Localized: Weight
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -1334,7 +1334,8 @@ MonoBehaviour:
   - m_Id: 41018071012929536
     m_Localized: "\uCE74\uBA54\uB77C \uC774\uB3D9 : \uB9C8\uC6B0\uC2A4 \uB4DC\uB798\uADF8
       \uB610\uB294 'WASD' \uB610\uB294 \uBC29\uD5A5\uD0A4\n\uCE74\uBA54\uB77C \uC90C
-      : \uD720 \uC2A4\uD06C\uB864\n\uC120\uD0DD : \uD074\uB9AD"
+      : \uD720 \uC2A4\uD06C\uB864\n\uC120\uD0DD : \uD074\uB9AD\n\uBC30\uC18D : \uC22B\uC790\uD0A4
+      1~3\n\uC77C\uC2DC\uC815\uC9C0/\uC7AC\uAC1C : \uC2A4\uD398\uC774\uC2A4\uBC14"
     m_Metadata:
       m_Items: []
   - m_Id: 41024498473431040
@@ -1855,6 +1856,20 @@ MonoBehaviour:
       \uB20C\uB7EC \uB9AC\uADF8\uC5D0 \uCC38\uAC00\uD558\uC138\uC694."
     m_Metadata:
       m_Items: []
+  - m_Id: 141419040040611840
+    m_Localized: "\uC0DD\uC874\uC790\uB4E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141419041760276480
+    m_Localized: "(\uD074\uB9AD\uD574\uC11C \uC774\uB3D9)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141426194537574400
+    m_Localized: "\uC0DD\uC874\uC790\uAC00 \uC2E4\uC804 \uACBD\uD5D8\uC744 \uD1B5\uD574
+      \uC601\uAC10\uC744 \uC5BB\uC5C8\uC2B5\uB2C8\uB2E4.{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
   references:
     version: 2
     RefIds:
@@ -1917,3 +1932,4 @@ MonoBehaviour:
         - id: 134541262687105024
         - id: 135927656617668608
         - id: 138535249391448064
+        - id: 141426194537574400

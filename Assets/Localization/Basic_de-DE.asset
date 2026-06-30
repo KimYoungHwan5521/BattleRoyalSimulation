@@ -1276,8 +1276,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41018071012929536
-    m_Localized: "Kamerabewegung: Maus ziehen oder \u201EWASD\u201C oder Pfeiltasten\nKamera-Zoom:
-      Mausrad scrollen\nAuswahl: Klicken"
+    m_Localized: "Kamerabewegung: Maus ziehen, \u201EWASD\u201C oder Pfeiltasten\nKamerazoom:
+      Mausrad\nAuswahl: Klicken\nSpielgeschwindigkeit: Zifferntasten 1\u20133\nPause/Fortsetzen:
+      Leertaste"
     m_Metadata:
       m_Items: []
   - m_Id: 41024498473431040
@@ -1779,6 +1780,19 @@ MonoBehaviour:
       um an der Liga teilzunehmen."
     m_Metadata:
       m_Items: []
+  - m_Id: 141419040040611840
+    m_Localized: "\xDCberlebende"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141419041760276480
+    m_Localized: (Zum Bewegen klicken)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141426194537574400
+    m_Localized: "Der \xDCberlebende lie\xDF sich von seiner Kampferfahrung inspirieren.{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359338
   references:
     version: 2
     RefIds:
@@ -1841,3 +1855,4 @@ MonoBehaviour:
         - id: 134541262687105024
         - id: 135927656617668608
         - id: 138535249391448064
+        - id: 141426194537574400

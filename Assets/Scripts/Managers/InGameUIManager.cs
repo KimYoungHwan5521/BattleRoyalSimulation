@@ -32,6 +32,14 @@ public class InGameUIManager : MonoBehaviour
     float cameraRightLimit = 75;
     float cameraUpLimit = 75;
 
+    [SerializeField] private float minZoom = 1f;
+    [SerializeField] private float maxZoom = 100f;
+    [SerializeField] private float zoomSensitivity = 0.05f;
+    [SerializeField] private float zoomSmoothTime = 0.12f;
+
+    private float targetZoom;
+    private float zoomVelocity;
+
     [Header("Left Top")]
     [SerializeField] TextMeshProUGUI leftSurvivors;
     [SerializeField] GameObject predictionResult;
@@ -188,8 +196,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image rightLittleToe;
     [SerializeField] Image leftLittleToe;
 
-    private void Start()
+    private void Awake()
     {
+        targetZoom = Camera.main.orthographicSize;
         outGameUIManager = GetComponent<OutGameUIManager>();
         selectedObjectsCurrentWeaponText = selectedObjectsCurrentWeapon.GetComponentInChildren<TextMeshProUGUI>();
         selectedObjectsCurrentHelmetText = selectedObjectsCurrentHelmet.GetComponentInChildren<TextMeshProUGUI>();
@@ -197,7 +206,10 @@ public class InGameUIManager : MonoBehaviour
 
         selectedObjectsItems = new GameObject[selectedObjectsInventory.childCount];
         for (int i = 0; i < selectedObjectsInventory.childCount; i++) selectedObjectsItems[i] = selectedObjectsInventory.GetChild(i).gameObject;
+    }
 
+    private void Start()
+    {
         selectedObjectInventorySortDropdown.ClearOptions();
         selectedObjectInventorySortDropdown.AddOptions(new List<string> {
             new LocalizedString("Item", "Acquired").GetLocalizedString(),
@@ -212,9 +224,22 @@ public class InGameUIManager : MonoBehaviour
         AutoCameraMove();
         ManualCameraMove();
         UpdateSelectedObjectInfo();
+        OnKeyboardInput();
         if (GameManager.Instance.BattleRoyaleManager == null || !GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart) return;
         currentBattleTimer.text = $"{(int)GameManager.Instance.BattleRoyaleManager.battleTime / 60:00} : {(int)GameManager.Instance.BattleRoyaleManager.battleTime % 60:00}";
         nextProhibitTimer.text = $"{(int)GameManager.Instance.BattleRoyaleManager.NextProhibitTime / 60:00} : {(int)GameManager.Instance.BattleRoyaleManager.NextProhibitTime % 60:00}";
+    }
+
+    private void LateUpdate()
+    {
+        Camera.main.orthographicSize = Mathf.SmoothDamp(
+            Camera.main.orthographicSize,
+            targetZoom,
+            ref zoomVelocity,
+            zoomSmoothTime,
+            Mathf.Infinity,
+            Time.unscaledDeltaTime
+        );
     }
 
     void AutoCameraMove()
@@ -247,6 +272,21 @@ public class InGameUIManager : MonoBehaviour
         cameraUpLimit = upLimit;
     }
 
+    void OnKeyboardInput()
+    {
+        if (Keyboard.current == null)
+            return;
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            SetTimeScale(1);
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            SetTimeScale(2);
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            SetTimeScale(3);
+    }
+
     void OnSpace(InputValue value)
     {
         Pause();
@@ -260,7 +300,17 @@ public class InGameUIManager : MonoBehaviour
 
     void OnScrollWheel(InputValue value)
     {
-        if (!IsPointerOverUI()) Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - value.Get<Vector2>().y * 0.05f, 1, 100);
+
+        if (IsPointerOverUI())
+            return;
+
+        float scroll = value.Get<Vector2>().y;
+
+        targetZoom = Mathf.Clamp(
+            targetZoom - scroll * zoomSensitivity,
+            minZoom,
+            maxZoom
+        );
     }
 
     void OnClick(InputValue value)

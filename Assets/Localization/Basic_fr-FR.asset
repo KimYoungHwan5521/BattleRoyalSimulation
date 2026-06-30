@@ -1285,9 +1285,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41018071012929536
-    m_Localized: "D\xE9placement de la cam\xE9ra : Glisser la souris ou \"WASD\"
-      ou fl\xE8ches\nZoom de la cam\xE9ra : D\xE9filement de la molette\nS\xE9lection
-      : Clic"
+    m_Localized: "D\xE9placement de la cam\xE9ra : glisser avec la souris, \xAB WASD
+      \xBB ou touches fl\xE9ch\xE9es\nZoom de la cam\xE9ra : molette de la souris\nS\xE9lection
+      : clic\nVitesse du jeu : touches num\xE9riques 1 \xE0 3\nPause/Reprendre :
+      barre d\u2019espace"
     m_Metadata:
       m_Items: []
   - m_Id: 41024498473431040
@@ -1792,6 +1793,20 @@ MonoBehaviour:
       sur \xAB Calendrier \xBB pour participer \xE0 la ligue."
     m_Metadata:
       m_Items: []
+  - m_Id: 141419040040611840
+    m_Localized: Survivants
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141419041760276480
+    m_Localized: (Click to Move)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141426194537574400
+    m_Localized: "Le survivant a trouv\xE9 l\u2019inspiration gr\xE2ce \xE0 son exp\xE9rience
+      du combat.{param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
   references:
     version: 2
     RefIds:
@@ -1854,3 +1869,4 @@ MonoBehaviour:
         - id: 134541262687105024
         - id: 135927656617668608
         - id: 138535249391448064
+        - id: 141426194537574400

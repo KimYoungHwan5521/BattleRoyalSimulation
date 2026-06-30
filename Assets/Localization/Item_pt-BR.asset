@@ -366,6 +366,14 @@ MonoBehaviour:
     m_Localized: Flecha(Encantado)
     m_Metadata:
       m_Items: []
+  - m_Id: 138942275502272512
+    m_Localized: "For\xE7a Necess\xE1ria"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 138942276072697856
+    m_Localized: Peso
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
