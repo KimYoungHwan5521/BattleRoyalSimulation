@@ -28,6 +28,7 @@ public class Survivor : CustomObject
     [SerializeField] GameObject energyBarrier;
     Animator animator => GetComponent<Animator>();
     NavMeshAgent agent;
+    NavMeshPath farmingSearchPath;
     public Vector2 Velocity => ((Vector2)transform.position - lastPosition) / Time.deltaTime;
 
     [SerializeField] MeshFilter sightMeshFilter;
@@ -264,19 +265,12 @@ public class Survivor : CustomObject
     float dizzyDuration = 3f;
     float curDizzyDuration;
 
-    //bool inProhibitedArea;
     public bool InProhibitedArea
     {
         get
         {
             return GetCurrentArea().IsProhibited;
         }
-        //get { return InProhibitedArea; }
-        //set
-        //{
-        //    inProhibitedArea = value;
-        //    prohibitTimer.SetActive(value);
-        //}
     }
     [SerializeField] float prohibitedAreaTime = 10f;
     int timerSound = 9;
@@ -584,6 +578,7 @@ public class Survivor : CustomObject
         projectileGenerator = GetComponent<ProjectileGenerator>();
         emotionAnimator = emotion.GetComponent<Animator>();
         sightMeshRenderer = sightMeshFilter.GetComponent<MeshRenderer>();
+        farmingSearchPath = new();
     }
 
     protected override void Start()
@@ -1487,7 +1482,9 @@ public class Survivor : CustomObject
                         return null;
                     }
                 }
-                distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                //distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                distance = GetPathDistance(candidate.Key.transform.position, candidate.Key.GetComponent<Collider2D>());
+                Debug.Log($"{survivorName.GetLocalizedString()} : TargetPos = {candidate.Key.transform.position}, Distance = {distance}");
                 if (distance < minDistance)
                 {
                     minDistance = distance;
@@ -1521,6 +1518,44 @@ public class Survivor : CustomObject
         targetFarmingSection = FindNearest(farmingSections);
         targetFarmingBox = FindNearest(farmingBoxes);
         targetFarmingCorpse = FindNearest(farmingCorpses);
+    }
+
+    private float GetPathDistance(Vector3 destination, Collider2D collider)
+    {
+        if (agent == null || !agent.isOnNavMesh)
+            return Vector2.Distance(transform.position, destination);
+
+        bool pathFound = agent.CalculatePath(destination, farmingSearchPath);
+
+        if (farmingSearchPath.status == NavMeshPathStatus.PathInvalid) return Vector2.Distance(transform.position, destination);
+        if (!pathFound)
+        {
+            // 생존자에게 가장 가까운 상자 표면
+            Vector2 boxSurface =
+                collider.ClosestPoint(transform.position);
+
+            Vector2 outwardDirection =
+                ((Vector2)transform.position - boxSurface).normalized;
+
+            // 상자 표면에서 에이전트 반지름만큼 바깥으로 이동
+            Vector3 candidatePosition =
+                boxSurface +
+                outwardDirection * (agent.radius + 0.05f);
+
+            destination = candidatePosition;
+            if (!agent.CalculatePath(destination, farmingSearchPath)) return Vector2.Distance(transform.position, destination);
+        }
+
+        Vector3[] corners = farmingSearchPath.corners;
+
+        float distance = 0f;
+
+        for (int i = 1; i < corners.Length; i++)
+        {
+            distance += Vector3.Distance(corners[i - 1], corners[i]);
+        }
+
+        return distance;
     }
 
     Survivor FindWhoseWeaponRangeIsLongest(List<Survivor> survivors)
@@ -5170,7 +5205,11 @@ public class Survivor : CustomObject
             else
             {
                 PlaySFX("avoid, 1", this);
-                if (!TargetEnemy.inSightEnemies.Contains(this)) TargetEnemy.inSightEnemies.Add(this);
+                if (!TargetEnemy.inSightEnemies.Contains(this))
+                {
+                    TargetEnemy.inSightEnemies.Add(this);
+                    sightMeshRenderer.material = m_SightAlert;
+                }
             }
         }
         else
@@ -5182,7 +5221,11 @@ public class Survivor : CustomObject
             else
             {
                 PlaySFX("avoid, 1", this);
-                if (!TargetEnemy.inSightEnemies.Contains(this)) TargetEnemy.inSightEnemies.Add(this);
+                if (!TargetEnemy.inSightEnemies.Contains(this))
+                {
+                    TargetEnemy.inSightEnemies.Add(this);
+                    sightMeshRenderer.material = m_SightAlert;
+                }
             }
 		}
     }
@@ -5313,6 +5356,7 @@ public class Survivor : CustomObject
         if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if (collision.TryGetComponent(out Survivor survivor) && (!collision.isTrigger || survivor.IsDead))
         {
+            sightMeshRenderer.material = m_SightAlert;
             if (!seeEnemyTimers.TryAdd(survivor, 0f))
                 seeEnemyTimers[survivor] += Time.fixedDeltaTime;
 

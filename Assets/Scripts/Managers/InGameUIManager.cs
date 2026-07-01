@@ -40,6 +40,10 @@ public class InGameUIManager : MonoBehaviour
     private float targetZoom;
     private float zoomVelocity;
 
+    bool rankChangeAnimation;
+    readonly float rankChangeAnimTime = 1f;
+    float curRankChangeAnimTime;
+
     [Header("Left Top")]
     [SerializeField] TextMeshProUGUI leftSurvivors;
     [SerializeField] GameObject predictionResult;
@@ -55,6 +59,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] Image[] otherSurvivorsPortraits;
     [SerializeField] Image[] otherSurvivorsResultBGs;
     [SerializeField] TextMeshProUGUI[] otherSurvivorsResults;
+    [SerializeField] RectTransform otherSurvivorsBox;
+    List<int> targetRank;
+    List<float> rankChangeDistances;
 
     [Header("Middle Top")]
     [SerializeField] TextMeshProUGUI currentBattleTimer;
@@ -240,6 +247,23 @@ public class InGameUIManager : MonoBehaviour
             Mathf.Infinity,
             Time.unscaledDeltaTime
         );
+
+        if(rankChangeAnimation)
+        {
+            curRankChangeAnimTime += Time.unscaledDeltaTime;
+            for(int i=0; i< rankChangeDistances.Count; i++)
+            {
+                otherSurvivorsResultRows[i].GetComponent<RectTransform>().anchoredPosition += new Vector2(0, rankChangeDistances[i]) * Time.unscaledDeltaTime;
+            }
+            if(curRankChangeAnimTime > 1f)
+            {
+                for (int i = 0; i < rankChangeDistances.Count; i++)
+                {
+                    otherSurvivorsResultRows[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, targetRank[i] * -30);
+                }
+                rankChangeAnimation = false;
+            }
+        }
     }
 
     void AutoCameraMove()
@@ -412,11 +436,19 @@ public class InGameUIManager : MonoBehaviour
         else
         {
             predictionResult.SetActive(false);
-            for(int i=0; i<otherSurvivorsResultRows.Length; i++)
+            targetRank = new();
+            rankChangeDistances = new();
+            curRankChangeAnimTime = 0;
+            rankChangeAnimation = false;
+            otherSurvivorsBox.sizeDelta = new Vector2(otherSurvivorsBox.rect.width, 30 * outGameUIManager.contestantsData.Count);
+            for (int i=0; i<otherSurvivorsResultRows.Length; i++)
             {
                 if (i < outGameUIManager.contestantsData.Count)
                 {
                     otherSurvivorsResultRows[i].SetActive(true);
+                    targetRank.Add(i);
+                    otherSurvivorsResultRows[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (i) * -30);
+                    rankChangeDistances.Add(0);
                     otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
                     otherSurvivorsPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
                     otherSurvivorsResultBGs[i].color = Color.white;
@@ -468,11 +500,29 @@ public class InGameUIManager : MonoBehaviour
                         _ => $"{survivorRank + 1}th",
                     };
                     if(survivorRank > 0) otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
+                    for(int k=0; k<targetRank.Count; k++) Debug.Log($"Bef targetRank[{k}] = {targetRank[k]}");
+                    targetRank[i] = survivorRank;
+                    for(int j=i+1; j < outGameUIManager.contestantsData.Count - predictionNumber; j++)
+                    {
+                        if (targetRank[j] <= survivorRank)targetRank[j]--;
+                    }
+                    for(int k=0; k<targetRank.Count; k++) Debug.Log($"Aft targetRank[{k}] = {targetRank[k]}");
+                    RankChangeAnimation();
                     break;
                 }
             }
         }
         if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
+    }
+
+    void RankChangeAnimation()
+    {
+        for(int i = 0; i<rankChangeDistances.Count; i++)
+        {
+            rankChangeDistances[i] = (targetRank[i] * -30 - otherSurvivorsResultRows[i].GetComponent<RectTransform>().anchoredPosition.y);
+        }
+        curRankChangeAnimTime = 0;
+        rankChangeAnimation = true;
     }
 
     bool otherSurvivorsFolded;

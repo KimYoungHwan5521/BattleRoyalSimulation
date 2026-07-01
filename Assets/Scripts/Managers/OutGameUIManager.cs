@@ -756,7 +756,7 @@ public class OutGameUIManager : MonoBehaviour
         float failRate = 0;
         if (Stamina < training.staminaConsumtion) failRate = 1f;
         else if (Stamina < training.trainingDifficulty) failRate = 1f - (float)Stamina / training.trainingDifficulty;
-        Debug.Log($"Stamina : {Stamina}, consumtion : {training.staminaConsumtion}, difficulty : {training.trainingDifficulty} | failRate : {failRate}");
+        //Debug.Log($"Stamina : {Stamina}, consumtion : {training.staminaConsumtion}, difficulty : {training.trainingDifficulty} | failRate : {failRate}");
         float rand = UnityEngine.Random.Range(0, 1f);
         trainingResult.SetActive(true);
         resultText.gameObject.SetActive(true);
@@ -2421,49 +2421,63 @@ public class OutGameUIManager : MonoBehaviour
             _ => 4
         };
         int check = 0;
-        while (true)
+        int[] distribute = new int[6];
+        int min = value * 30 + difficulty * (value * value + 5);
+        int max = (value + 1) * 30 + difficulty * (value * value + 5);
+        int totalValue = UnityEngine.Random.Range(min, max + 1);
+        if(totalValue >= 600)
         {
-            int randStrength = UnityEngine.Random.Range(0, 101);
-            int randAgility = UnityEngine.Random.Range(0, 101);
-            int randFighting = UnityEngine.Random.Range(0, 101);
-            int randShooting = UnityEngine.Random.Range(0, 101);
-            int randCrafting = UnityEngine.Random.Range(0, 101);
-            int randKnowledge = UnityEngine.Random.Range(0, 101);
-            int totalRand = randStrength + randAgility + randFighting + randShooting + randCrafting + randKnowledge;
-            if ((totalRand < value * 30 + difficulty * (value * value + 5) || totalRand > (value + 1) * 30 + difficulty * (value * value + 5)))
-            {
-                check++;
-                if (check >= 10000)
-                {
-                    Debug.LogWarning("Infinite roof has detected");
-                    break;
-                }
-                continue;
-            }
-            SurvivorData survivorData = new(
-                GetRandomName(),
-                randStrength,
-                randAgility,
-                randFighting,
-                randShooting,
-                randCrafting,
-                randKnowledge,
-                totalRand,
-                calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
-                );
-            int characteristicCount;
-            float randCharCount = UnityEngine.Random.Range(0, 1f);
-            if (randCharCount < 0.33f) characteristicCount = 0;
-            else if (randCharCount < 0.66f) characteristicCount = 1;
-            else if (randCharCount < 0.9f) characteristicCount = 2;
-            else characteristicCount = 3;
-            CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicCount, false);
-
-            survivorData.priority1Weapon = ItemManager.Items.LASER;
-            survivorData.priority2Weapon = ItemManager.Items.AssaultRifle;
-            return survivorData;
+            distribute = new int[]{ 100, 100, 100, 100, 100, 100 };
         }
-        return new(GetRandomName(), 20 * value, 20 * value, 20 * value, 20 * value, 20 * value, 20 * value, 100, calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league));
+        else
+        {
+            while (totalValue > 0)
+            {
+                int rand = UnityEngine.Random.Range(0, Mathf.Min(101, totalValue + 1));
+                int target = UnityEngine.Random.Range(0, 6);
+                if (distribute[target] + rand > 100)
+                {
+                    check++;
+                    if (check >= 10000)
+                    {
+                        Debug.LogWarning("Infinite roof has detected");
+                        break;
+                    }
+                    continue;
+                }
+                distribute[target] += rand;
+                totalValue -= rand;
+            }
+        }
+        int randStrength = distribute[0];
+        int randAgility = distribute[1];
+        int randFighting = distribute[2];
+        int randShooting = distribute[3];
+        int randCrafting = distribute[4];
+        int randKnowledge = distribute[5];
+        SurvivorData survivorData = new(
+            GetRandomName(),
+            randStrength,
+            randAgility,
+            randFighting,
+            randShooting,
+            randCrafting,
+            randKnowledge,
+            0,
+            calendar.GetNeedTier(calendar.LeagueReserveInfo[calendar.Today].league)
+            );
+        int characteristicCount;
+        float randCharCount = UnityEngine.Random.Range(0, 1f);
+        if (randCharCount < 0.33f) characteristicCount = 0;
+        else if (randCharCount < 0.66f) characteristicCount = 1;
+        else if (randCharCount < 0.9f) characteristicCount = 2;
+        else characteristicCount = 3;
+        CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicCount, false);
+
+        survivorData.priority1Weapon = ItemManager.Items.LASER;
+        survivorData.priority2Weapon = ItemManager.Items.AssaultRifle;
+        return survivorData;
+        
     }
 
     public void OpenConfirmWindow(string key, UnityAction wantAction, params string[] vars)
