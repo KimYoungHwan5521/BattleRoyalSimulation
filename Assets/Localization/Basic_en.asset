@@ -1780,6 +1780,14 @@ MonoBehaviour:
     m_Localized: Priority Target
     m_Metadata:
       m_Items: []
+  - m_Id: 142114721432662016
+    m_Localized: Training Sessions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142114721982115840
+    m_Localized: Stamina Spent
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

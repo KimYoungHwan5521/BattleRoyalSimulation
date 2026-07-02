@@ -1787,6 +1787,14 @@ MonoBehaviour:
     m_Localized: "Alvo Priorit\xE1rio"
     m_Metadata:
       m_Items: []
+  - m_Id: 142114721432662016
+    m_Localized: Treinos Realizados
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142114721982115840
+    m_Localized: "Resist\xEAncia Consumida"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

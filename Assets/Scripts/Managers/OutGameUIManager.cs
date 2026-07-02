@@ -603,7 +603,7 @@ public class OutGameUIManager : MonoBehaviour
                 int[] randStat = new int[6];
                 randStat[UnityEngine.Random.Range(0, 6)]++;
                 mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (randStat[i] > 0)
                     {
@@ -633,7 +633,7 @@ public class OutGameUIManager : MonoBehaviour
                 }
                 mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
                 bool first = true;
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (randStat[i] > 0)
                     {
@@ -786,6 +786,7 @@ public class OutGameUIManager : MonoBehaviour
             ApplyTrainingResult(training, false);
             SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare1);
         }
+        mySurvivorsData[0].receivedTrainings++;
         //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
         trainingRoom.SetActive(false);
 
@@ -915,24 +916,24 @@ public class OutGameUIManager : MonoBehaviour
     #region Operating Room
     public void OpenOperatingRoom()
     {
-        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
-        {
-            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Join Championship");
-                return;
-            }
-            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Last Week Join League");
-                return;
-            }
-            else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Last Chance For Objective");
-                return;
-            }
-        }
+        //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        //{
+        //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        //    {
+        //        Alert("Alert:Join Championship");
+        //        return;
+        //    }
+        //    else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        //    {
+        //        Alert("Alert:Last Week Join League");
+        //        return;
+        //    }
+        //    else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        //    {
+        //        Alert("Alert:Last Chance For Objective");
+        //        return;
+        //    }
+        //}
 
         operatingRoom.SetActive(true);
         SetOperatingRoom();
@@ -2422,8 +2423,8 @@ public class OutGameUIManager : MonoBehaviour
         };
         int check = 0;
         int[] distribute = new int[6];
-        int min = value * 30 + difficulty * (value * value + 5);
-        int max = (value + 1) * 30 + difficulty * (value * value + 5);
+        int min = value * 30 + difficulty * (value * value + 5) * 2;
+        int max = (value + 1) * 30 + difficulty * (value * value + 5) * 2;
         int totalValue = UnityEngine.Random.Range(min, max + 1);
         if(totalValue >= 600)
         {

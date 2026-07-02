@@ -56,7 +56,7 @@ public class UnlockManager : MonoBehaviour
         }
         foreach (var locked in lockeds)
         {
-            locked.Lock();
+            if(!locked.NotNeedRelock) locked.Lock();
         }
     }
 

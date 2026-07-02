@@ -96,6 +96,8 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] GameObject trophyWorld;
     [SerializeField] TextMeshProUGUI totalRecord;
     [SerializeField] TextMeshProUGUI totalRecordGoldPlus;
+    [SerializeField] TextMeshProUGUI receivedTrainings;
+    [SerializeField] TextMeshProUGUI consumedStaminas;
     [SerializeField] TextMeshProUGUI totalKill;
     [SerializeField] TextMeshProUGUI totalSurvivalTime;
     [SerializeField] TextMeshProUGUI totalPrize;
@@ -540,6 +542,9 @@ public class SurvivorInfo : MonoBehaviour
             Arguments = new[] { winRate, rankDefenseRate }
         };
         totalRecordGoldPlus.text += localizedString.GetLocalizedString();
+
+        receivedTrainings.text = $"{new LocalizedString("Basic", "Training Sessions").GetLocalizedString()} : {survivorData.receivedTrainings}";
+        consumedStaminas.text = $"{new LocalizedString("Basic", "Stamina Spent").GetLocalizedString()} : {survivorData.consumedStaminas}";
 
         localizedString = new("Basic", "Total Kill")
         {

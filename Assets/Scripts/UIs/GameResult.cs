@@ -86,6 +86,7 @@ public class GameResult : MonoBehaviour
         winWC = false;
     }
 
+    int rememberTotalProfit;
     public void ShowGameResult(bool isBattleEnd = true)
     {
         lastTimeScale = (int)Time.timeScale;
@@ -98,7 +99,7 @@ public class GameResult : MonoBehaviour
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
         GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
         SetText(didPlayerParticipate, out int totalProfit);
-        outGameUIManager.Money += totalProfit;
+        rememberTotalProfit = totalProfit;
         //gameOver = outGameUIManager.Money < 0;
         //if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
@@ -212,8 +213,31 @@ public class GameResult : MonoBehaviour
                     if (playerWin == 1)
                     {
                         winPrize = 100000;
-                        AchievementManager.UnlockAchievement("World Champion");
-                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
+                        switch(outGameUIManager.Difficulty)
+                        {
+                            case 1:
+                                AchievementManager.UnlockAchievement("Hard");
+                                break;
+                            case 2:
+                                AchievementManager.UnlockAchievement("Very Hard");
+                                break;
+                            case 3:
+                                AchievementManager.UnlockAchievement("Expert");
+                                break;
+                            case 4:
+                                AchievementManager.UnlockAchievement("Hardcore");
+                                break;
+                            case 5:
+                                AchievementManager.UnlockAchievement("Nightmare");
+                                break;
+                            case 6:
+                                AchievementManager.UnlockAchievement("Hell");
+                                break;
+                            default:
+                                AchievementManager.UnlockAchievement("World Champion");
+                                GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
+                                break;
+                        }
                         if (playerSurvivor.LinkedSurvivorData.royalLoader) AchievementManager.UnlockAchievement("Royal Loader");
                         winWC = true;
                     }
@@ -356,7 +380,7 @@ public class GameResult : MonoBehaviour
                             else treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                             int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i], 0);
                             treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                            treatments[i].GetComponentInChildren<Help>().SetDescription("");
+                            //treatments[i].GetComponentInChildren<Help>().SetDescription("");
                             totalTreatmentCost += cost;
                         }
                     }
@@ -368,7 +392,7 @@ public class GameResult : MonoBehaviour
                             int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
                             treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = new LocalizedString("Basic", "Blood transfusion cost").GetLocalizedString();
                             treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
-                            treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Basic", "Help:Blood transfusion cost").GetLocalizedString());
+                            //treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Basic", "Help:Blood transfusion cost").GetLocalizedString());
                             treatments[i].SetActive(true);
                         }
                         else treatments[i].SetActive(false);
@@ -379,74 +403,6 @@ public class GameResult : MonoBehaviour
             totalTreatmentCostText.text = $"{new LocalizedString("Basic", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
             totalProfit = winPrize + killPrize - totalTreatmentCost;
 
-            if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
-            notification += () =>
-            {
-                switch(calendar.LeagueReserveInfo[calendar.Today].league)
-                {
-                    case League.BronzeLeague:
-                    case League.SilverLeague:
-                    case League.GoldLeague:
-                    case League.SeasonChampionship:
-                    case League.WorldChampionship:
-                        string gainStats = "";
-                        if (playerWin == 1)
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 2, 2, 2);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 2";
-                        }
-                        else
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(1, 1, 1, 1, 1, 1);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 1";
-                        } 
-                        outGameUIManager.ResetSelectedSurvivorInfo();
-                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                        break;
-                    case League.MeleeLeague:
-                        if (playerWin == 1)
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(4, 4, 4, 0, 0, 0);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 4";
-                        }
-                        else
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 0, 0, 0);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2";
-                        }
-                        outGameUIManager.ResetSelectedSurvivorInfo();
-                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                        break;
-                    case League.RangeLeague:
-                        if (playerWin == 1)
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 12, 0, 0);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 12";
-                        }
-                        else
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 6, 0, 0);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 6";
-                        }
-                        outGameUIManager.ResetSelectedSurvivorInfo();
-                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                        break;
-                    case League.CraftingLeague:
-                        if (playerWin == 1)
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 6, 6);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 6, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 6";
-                        }
-                        else
-                        {
-                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 3, 3);
-                            gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 3, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 3";
-                        }
-                        outGameUIManager.ResetSelectedSurvivorInfo();
-                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                        break;
-                }
-            };
         }
         else
         {
@@ -568,10 +524,101 @@ public class GameResult : MonoBehaviour
         resultClaimed = true;
     }
 
+    void ExitBattleEvent()
+    {
+        outGameUIManager.Money += rememberTotalProfit;
+
+        Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
+        if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0) playerWin = 1;
+        else
+        {
+            for (int i = 0; i < GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
+            {
+                float percentile = (float)i + 1 / GameManager.Instance.BattleRoyaleManager.rankings.Length;
+                if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
+                {
+                    if (percentile <= 0.25f) playerWin = 25;
+                    else if (percentile <= 0.5f) playerWin = 50;
+                    else playerWin = -1;
+                    break;
+                }
+            }
+        }
+        if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
+        notification += () =>
+        {
+            switch (calendar.LeagueReserveInfo[calendar.Today].league)
+            {
+                case League.BronzeLeague:
+                case League.SilverLeague:
+                case League.GoldLeague:
+                case League.SeasonChampionship:
+                case League.WorldChampionship:
+                    string gainStats = "";
+                    if (playerWin == 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 2, 2, 2);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 2";
+                    }
+                    else
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(1, 1, 1, 1, 1, 1);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 1";
+                    }
+                    outGameUIManager.ResetSelectedSurvivorInfo();
+                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                    break;
+                case League.MeleeLeague:
+                    if (playerWin == 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(4, 4, 4, 0, 0, 0);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 4";
+                    }
+                    else
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 0, 0, 0);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2";
+                    }
+                    outGameUIManager.ResetSelectedSurvivorInfo();
+                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                    break;
+                case League.RangeLeague:
+                    if (playerWin == 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 12, 0, 0);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 12";
+                    }
+                    else
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 6, 0, 0);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 6";
+                    }
+                    outGameUIManager.ResetSelectedSurvivorInfo();
+                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                    break;
+                case League.CraftingLeague:
+                    if (playerWin == 1)
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 6, 6);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 6, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 6";
+                    }
+                    else
+                    {
+                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 3, 3);
+                        gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 3, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 3";
+                    }
+                    outGameUIManager.ResetSelectedSurvivorInfo();
+                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                    break;
+            }
+        };
+        if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
+    }
+
     public void ExitBattle(bool goTitle = false)
     {
         gameResult.SetActive(false);
-        if(outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
+        ExitBattleEvent();
         ClearBattleRoyale();
         if (!goTitle)
         {

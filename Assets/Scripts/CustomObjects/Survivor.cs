@@ -5356,7 +5356,7 @@ public class Survivor : CustomObject
         if (!GameManager.Instance.BattleRoyaleManager.isBattleRoyaleStart || isDead) return;
         if (collision.TryGetComponent(out Survivor survivor) && (!collision.isTrigger || survivor.IsDead))
         {
-            sightMeshRenderer.material = m_SightAlert;
+            if(!survivor.IsDead) sightMeshRenderer.material = m_SightAlert;
             if (!seeEnemyTimers.TryAdd(survivor, 0f))
                 seeEnemyTimers[survivor] += Time.fixedDeltaTime;
 

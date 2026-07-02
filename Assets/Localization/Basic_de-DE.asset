@@ -1797,6 +1797,14 @@ MonoBehaviour:
     m_Localized: "Priorit\xE4tsziel"
     m_Metadata:
       m_Items: []
+  - m_Id: 142114721432662016
+    m_Localized: Absolvierte Trainingseinheiten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142114721982115840
+    m_Localized: Verbrauchte Ausdauer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

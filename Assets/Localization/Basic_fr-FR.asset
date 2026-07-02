@@ -1811,6 +1811,14 @@ MonoBehaviour:
     m_Localized: Cible prioritaire
     m_Metadata:
       m_Items: []
+  - m_Id: 142114721432662016
+    m_Localized: "Entra\xEEnements effectu\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 142114721982115840
+    m_Localized: "Endurance d\xE9pens\xE9e"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

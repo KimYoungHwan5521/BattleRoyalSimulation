@@ -165,6 +165,8 @@ public class SurvivorSaveData
     public bool wonCraftingLeague;
     public int craftingCount;
     public bool royalLoader;
+    public int receivedTrainings;
+    public int consumedStaminas;
 }
 
 [Serializable]

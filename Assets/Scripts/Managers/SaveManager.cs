@@ -70,6 +70,8 @@ public static class SaveManager
             wonCraftingLeague = data.wonCraftingLeague,
             craftingCount = data.craftingCount,
             royalLoader = data.royalLoader,
+            receivedTrainings = data.receivedTrainings,
+            consumedStaminas = data.consumedStaminas,
         };
 
         foreach (var kv in data.strategyDictionary)
@@ -136,6 +138,8 @@ public static class SaveManager
             wonCraftingLeague = saveData.wonCraftingLeague,
             craftingCount = saveData.craftingCount,
             royalLoader = saveData.royalLoader,
+            receivedTrainings = saveData.receivedTrainings,
+            consumedStaminas = saveData.consumedStaminas,
 };
 
         survivor.strategyDictionary.Clear();

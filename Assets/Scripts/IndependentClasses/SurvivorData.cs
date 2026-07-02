@@ -44,6 +44,7 @@ public class SurvivorData
             {
                 // ¼Ò¸ð
                 int changed = before - _stamina;
+                consumedStaminas += changed;
                 PlayerPrefs.SetInt("Total Stamina Consumption", PlayerPrefs.GetInt("Total Stamina Consumption") + changed);
                 AchievementManager.GetStat("Total_StaminaConsumption", out int original);
                 AchievementManager.SetStat("Total_StaminaConsumption", original + changed);
@@ -486,6 +487,8 @@ public class SurvivorData
     public bool wonCraftingLeague;
     public int craftingCount;
     public bool royalLoader = true;
+    public int receivedTrainings;
+    public int consumedStaminas;
 
     public SurvivorData(LocalizedString localizedSurvivorName, int strength, int agility, int fighting, int shooting, int crafting, int knowledge, int price, Tier tier)
     {

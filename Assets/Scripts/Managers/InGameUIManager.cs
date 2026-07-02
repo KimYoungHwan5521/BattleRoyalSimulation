@@ -41,7 +41,6 @@ public class InGameUIManager : MonoBehaviour
     private float zoomVelocity;
 
     bool rankChangeAnimation;
-    readonly float rankChangeAnimTime = 1f;
     float curRankChangeAnimTime;
 
     [Header("Left Top")]

@@ -6,6 +6,9 @@ public class Locked : MonoBehaviour
     Animator anim => GetComponent<Animator>();
     bool readyUnlockAnim;
     bool isUnlocked;
+    [SerializeField] bool notNeedRelock;
+    public bool NotNeedRelock => notNeedRelock;
+
     public bool IsUnlocked
     {
         get { return isUnlocked; }
