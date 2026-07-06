@@ -1732,11 +1732,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 138889700270731264
-    m_Localized: Ganar la Liga de Bronce antes de que termine el primer mes
+    m_Localized: Alcanza el Tier Plata antes de la semana 4
     m_Metadata:
       m_Items: []
   - m_Id: 138889701411581952
-    m_Localized: Ganar la Liga de Plata antes de que termine el segundo mes
+    m_Localized: Alcanza el Tier Oro antes de la semana 8
     m_Metadata:
       m_Items: []
   - m_Id: 138889702887976960
@@ -1803,6 +1803,56 @@ MonoBehaviour:
     m_Localized: Resistencia consumida
     m_Metadata:
       m_Items: []
+  - m_Id: 143567613515591680
+    m_Localized: Semana {0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359332
+  - m_Id: 143573953801678848
+    m_Localized: Carrera Individual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143573955596840960
+    m_Localized: "Un modo desaf\xEDo en el que entrenas a un superviviente durante
+      12 semanas para convertirlo en Campe\xF3n Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574317359755264
+    m_Localized: "Gesti\xF3n Libre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574319498850304
+    m_Localized: "Un modo en el que puedes gestionar hasta 10 supervivientes a la
+      vez y jugar libremente sin l\xEDmite de tiempo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143584591378706432
+    m_Localized: "Hoy es d\xEDa de partida Battle Royale. Pulsa la liga en \xABCronograma\xBB
+      para participar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592857970208768
+    m_Localized: Consigue una plaza para el Campeonato de Temporada antes de la semana
+      12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592859945725952
+    m_Localized: Queda entre los 5 mejores del Campeonato de Temporada para avanzar
+      al Campeonato Mundial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628694380408832
+    m_Localized: Puntos de Liga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628699463905280
+    m_Localized: "\xA1Ascenso!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143632775832465408
+    m_Localized: "\xA1Avance al Campeonato de Temporada!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1866,3 +1916,4 @@ MonoBehaviour:
         - id: 135927656617668608
         - id: 138535249391448064
         - id: 141426194537574400
+        - id: 143567613515591680

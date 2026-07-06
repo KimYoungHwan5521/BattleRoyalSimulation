@@ -120,7 +120,7 @@ public class SurvivorInfo : MonoBehaviour
 
     public SurvivorData survivorData;
 
-    bool statIncreaseProduction;
+    bool statIncreaseAnimation;
     const float statIncreaseWait = 0.1f;
     float curStatIncreaseWait;
     const float statIncreaseTerm = 0.1f;
@@ -133,7 +133,7 @@ public class SurvivorInfo : MonoBehaviour
 
     private void Update()
     {
-        if(statIncreaseProduction && staminaText != null)
+        if(statIncreaseAnimation && staminaText != null)
         {
             curStatIncreaseWait += Time.deltaTime;
             if(curStatIncreaseWait > statIncreaseWait)
@@ -162,7 +162,7 @@ public class SurvivorInfo : MonoBehaviour
 
     public void ResetInfo()
     {
-        statIncreaseProduction = false;
+        statIncreaseAnimation = false;
         curStatIncreaseWait = 0f;
         curStatIncreaseTerm = 0f;
     }
@@ -261,9 +261,9 @@ public class SurvivorInfo : MonoBehaviour
         SetStastics();
     }
 
-    public void StatIncreaseProduction()
+    public void StatIncreaseAnimation()
     {
-        statIncreaseProduction = true;
+        statIncreaseAnimation = true;
     }
 
     Image GetTargetImage(InjurySite site)
@@ -417,6 +417,7 @@ public class SurvivorInfo : MonoBehaviour
         cheek.color = Color.white;
         nose.color = Color.white;
         jaw.color = Color.white;
+        neck.color = Color.white;
         chest.color = Color.white;
         ribs.color = Color.white;
         abdomen.color = Color.white;
@@ -460,6 +461,7 @@ public class SurvivorInfo : MonoBehaviour
         cheek.GetComponentInChildren<Help>().SetDescription("");
         nose.GetComponentInChildren<Help>().SetDescription("");
         jaw.GetComponentInChildren<Help>().SetDescription("");
+        neck.GetComponentInChildren<Help>().SetDescription("");
         chest.GetComponentInChildren<Help>().SetDescription("");
         ribs.GetComponentInChildren<Help>().SetDescription("");
         abdomen.GetComponentInChildren<Help>().SetDescription("");

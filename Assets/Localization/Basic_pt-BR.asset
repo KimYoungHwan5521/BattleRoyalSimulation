@@ -1723,11 +1723,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 138889700270731264
-    m_Localized: "Vencer a Liga de Bronze at\xE9 o fim do primeiro m\xEAs"
+    m_Localized: "Alcance o Tier Prata at\xE9 a Semana 4"
     m_Metadata:
       m_Items: []
   - m_Id: 138889701411581952
-    m_Localized: "Vencer a Liga de Prata at\xE9 o fim do segundo m\xEAs"
+    m_Localized: "Alcance o Tier Ouro at\xE9 a Semana 8"
     m_Metadata:
       m_Items: []
   - m_Id: 138889702887976960
@@ -1794,6 +1794,55 @@ MonoBehaviour:
     m_Localized: Vigor Consumido
     m_Metadata:
       m_Items: []
+  - m_Id: 143567613515591680
+    m_Localized: Semana {0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359335
+  - m_Id: 143573953801678848
+    m_Localized: Carreira Solo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143573955596840960
+    m_Localized: "Um modo de desafio em que voc\xEA treina um sobrevivente por 12
+      semanas para torn\xE1-lo Campe\xE3o Mundial."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574317359755264
+    m_Localized: Gerenciamento Livre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574319498850304
+    m_Localized: "Um modo em que voc\xEA pode gerenciar at\xE9 10 sobreviventes ao
+      mesmo tempo e jogar livremente sem limite de tempo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143584591378706432
+    m_Localized: "Hoje \xE9 dia de partida Battle Royale. Clique na liga em \u201CHor\xE1rio\u201D
+      para participar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592857970208768
+    m_Localized: "Consiga uma vaga no Campeonato da Temporada at\xE9 a Semana 12"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592859945725952
+    m_Localized: "Fique entre os 5 melhores no Campeonato da Temporada para avan\xE7ar
+      ao Campeonato Mundial"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628694380408832
+    m_Localized: Pontos da Liga
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628699463905280
+    m_Localized: Promovido!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143632775832465408
+    m_Localized: "Avan\xE7ou para o Campeonato da Temporada!"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1857,3 +1906,4 @@ MonoBehaviour:
         - id: 135927656617668608
         - id: 138535249391448064
         - id: 141426194537574400
+        - id: 143567613515591680

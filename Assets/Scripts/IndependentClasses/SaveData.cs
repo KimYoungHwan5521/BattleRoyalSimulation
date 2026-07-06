@@ -114,6 +114,7 @@ public class SurvivorSaveData
     public int reservedDate;
     //public bool haveQualifyToParticipateInSeasonChampionship;
     //public bool haveQualifyToParticipateInWorldChampionship;
+    public int promotePoint;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
     public int increaseComparedToPrevious_fighting;
@@ -218,6 +219,7 @@ public class UnlockStatusDictionary
 public class ETCData
 {
     // out game ui manager
+    public GameMode gameMode;
     public int difficulty;
     public int money;
     public int mySurvivorsId;
@@ -236,9 +238,10 @@ public class ETCData
 
     public List<string> earnedAchievements = new();
 
-    public ETCData(int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
+    public ETCData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
         Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
+        this.gameMode = gameMode;
         this.difficulty = difficulty;
         this.money = money;
         this.mySurvivorsId = mySurvivorsId;

@@ -87,6 +87,7 @@ public class GameResult : MonoBehaviour
     }
 
     int rememberTotalProfit;
+    int rememberPromotePoint;
     public void ShowGameResult(bool isBattleEnd = true)
     {
         lastTimeScale = (int)Time.timeScale;
@@ -98,8 +99,9 @@ public class GameResult : MonoBehaviour
         mySurvivorResult.SetActive(didPlayerParticipate);
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
         GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
-        SetText(didPlayerParticipate, out int totalProfit);
+        SetText(didPlayerParticipate, out int totalProfit, out int promotePoint);
         rememberTotalProfit = totalProfit;
+        rememberPromotePoint = promotePoint;
         //gameOver = outGameUIManager.Money < 0;
         //if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
@@ -111,9 +113,10 @@ public class GameResult : MonoBehaviour
     int killPrize = 0;
     int totalTreatmentCost = 0;
     List<Injury> injuryNeedSurgery = new();
-    void SetText(bool didPlayerParticipate, out int totalProfit)
+    void SetText(bool didPlayerParticipate, out int totalProfit, out int promotePoint)
     {
         totalProfit = 0;
+        promotePoint = 0;
         playerWin = -1;
         if (didPlayerParticipate)
         {
@@ -171,9 +174,15 @@ public class GameResult : MonoBehaviour
                         winPrize = 5000;
                         AchievementManager.UnlockAchievement("Bronze Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinBronzeLeague);
+                        promotePoint = 100;
                     }
-                    else if (playerWin == 50) winPrize = 2500;
+                    else if (playerWin == 50)
+                    {
+                        winPrize = 2500;
+                        promotePoint = 50;
+                    }
                     killPrize = playerSurvivor.KillCount * 500;
+                    promotePoint += playerSurvivor.KillCount * 10;
                     break;
                 case League.SilverLeague:
                     if (playerWin == 1)
@@ -181,10 +190,20 @@ public class GameResult : MonoBehaviour
                         winPrize = 10000;
                         AchievementManager.UnlockAchievement("Silver Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSilverLeague);
+                        promotePoint = 100;
                     }
-                    else if (playerWin == 25) winPrize = 5000;
-                    else if (playerWin == 50) winPrize = 2500;
+                    else if (playerWin == 25)
+                    {
+                        winPrize = 5000;
+                        promotePoint = 50;
+                    }
+                    else if (playerWin == 50)
+                    {
+                        winPrize = 2500;
+                        promotePoint = 25;
+                    }
                     killPrize = playerSurvivor.KillCount * 1000;
+                    promotePoint += playerSurvivor.KillCount * 10;
                     break;
                 case League.GoldLeague:
                     if (playerWin == 1)
@@ -192,10 +211,20 @@ public class GameResult : MonoBehaviour
                         winPrize = 20000;
                         AchievementManager.UnlockAchievement("Gold Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
+                        promotePoint = 100;
                     }
-                    else if (playerWin == 25) winPrize = 10000;
-                    else if (playerWin == 50) winPrize = 5000;
+                    else if (playerWin == 25)
+                    {
+                        winPrize = 10000;
+                        promotePoint = 50;
+                    }
+                    else if (playerWin == 50)
+                    {
+                        winPrize = 5000;
+                        promotePoint = 25;
+                    }
                     killPrize = playerSurvivor.KillCount * 2000;
+                    promotePoint += playerSurvivor.KillCount * 10;
                     break;
                 case League.SeasonChampionship:
                     if (playerWin == 1)
@@ -207,6 +236,8 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 25000;
                     else if (playerWin == 50) winPrize = 12500;
                     killPrize = playerSurvivor.KillCount * 5000;
+                    int rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
+                    promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
                     break;
                 case League.WorldChampionship:
@@ -243,9 +274,11 @@ public class GameResult : MonoBehaviour
                     }
                     else if (playerWin == 25) winPrize = 50000;
                     else if (playerWin == 50) winPrize = 25000;
-                    gameOver = true;
-                    gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
+                    //gameOver = true;
+                    //gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
                     killPrize = playerSurvivor.KillCount * 10000;
+                    rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
+                    promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
                 case League.MeleeLeague:
@@ -279,53 +312,53 @@ public class GameResult : MonoBehaviour
                     killPrize = playerSurvivor.KillCount * 4000;
                     break;
             }
-            switch(calendar.LeagueReserveInfo[calendar.Today].league)
-            {
-                case League.BronzeLeague:
-                    if (playerWin != 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                        if (calendar.Today == 24)
-                        {
-                            gameOver = true;
-                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-                        }
-                    }
-                    break;
-                case League.SilverLeague:
-                    if (playerWin != 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                        if (calendar.Today == 53)
-                        {
-                            gameOver = true;
-                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-                        }
-                    }
-                    break;
-                case League.GoldLeague:
-                    if (playerWin != 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                        if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null)
-                        {
-                            gameOver = true;
-                            gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-                        }
-                    }
-                    break;
-                case League.SeasonChampionship:
-                    if (playerWin != 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                        if (calendar.Today > 77)
-                        {
-                            gameOver = true;
-                            gameOverMessage.StringReference = new("Basic", "GameOver:Lose");
-                        }
-                    }
-                    break;
-            }
+            //switch(calendar.LeagueReserveInfo[calendar.Today].league)
+            //{
+            //    case League.BronzeLeague:
+            //        if (playerWin != 1)
+            //        {
+            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
+            //            if (calendar.Today == 24)
+            //            {
+            //                gameOver = true;
+            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+            //            }
+            //        }
+            //        break;
+            //    case League.SilverLeague:
+            //        if (playerWin != 1)
+            //        {
+            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
+            //            if (calendar.Today == 53)
+            //            {
+            //                gameOver = true;
+            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+            //            }
+            //        }
+            //        break;
+            //    case League.GoldLeague:
+            //        if (playerWin != 1)
+            //        {
+            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
+            //            if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null)
+            //            {
+            //                gameOver = true;
+            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+            //            }
+            //        }
+            //        break;
+            //    case League.SeasonChampionship:
+            //        if (playerWin != 1)
+            //        {
+            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
+            //            if (calendar.Today > 77)
+            //            {
+            //                gameOver = true;
+            //                gameOverMessage.StringReference = new("Basic", "GameOver:Lose");
+            //            }
+            //        }
+            //        break;
+            //}
             winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
             killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
             if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
@@ -544,7 +577,9 @@ public class GameResult : MonoBehaviour
                 }
             }
         }
-        if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
+        //if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
+        playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint;
+        if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
         notification += () =>
         {
             switch (calendar.LeagueReserveInfo[calendar.Today].league)
@@ -611,6 +646,7 @@ public class GameResult : MonoBehaviour
                     outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
                     break;
             }
+            outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
         };
         if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
     }
@@ -803,7 +839,7 @@ public class GameResult : MonoBehaviour
     void OnLocaleChanged(Locale newLocale)
     {
         if (GameManager.Instance.BattleRoyaleManager == null || GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
-        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _);
+        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _, out int _);
     }
 
 }

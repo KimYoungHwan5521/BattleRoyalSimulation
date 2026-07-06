@@ -5167,7 +5167,8 @@ public class Survivor : CustomObject
         correctedShooting = Mathf.Max(linkedSurvivorData.Shooting + characteristicCorrection_Shooting + itemCorrectionShooting, 0);
         correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
-        aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
+        //aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
+        aimErrorRange = 20f / Mathf.Max(1f, (correctedShooting + characteristicCorrection_AimErrorRange) / 3.5f);
         reloadSpeed = characteristicCorrection_ReloadSpeed;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;

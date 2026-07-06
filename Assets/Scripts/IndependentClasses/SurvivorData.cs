@@ -430,6 +430,8 @@ public class SurvivorData
     public int reservedDate = -1;
     //public bool haveQualifyToParticipateInSeasonChampionship;
     //public bool haveQualifyToParticipateInWorldChampionship;
+    public int promotePoint;
+    public int increaseComparedToPrevious_promotePoint;
 
     // Training
     public int increaseComparedToPrevious_strength = 0;

@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "2.1";
+    public static string gameVersion = "2.2";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -316,6 +316,7 @@ public class GameManager : MonoBehaviour
     void SaveETCData(int slot)
     {
         ETCData saveData = new(
+            OutGameUIManager.GameMode,
             OutGameUIManager.Difficulty,
             OutGameUIManager.Money,
             OutGameUIManager.MySurvivorsId,
@@ -372,13 +373,14 @@ public class GameManager : MonoBehaviour
         }
 
         OutGameUIManager.LoadData(
-        saveData.difficulty,
-        saveData.money,
-        saveData.mySurvivorsId,
-        saveData.trainingLevel,
-        saveData.trainings,
-        saveData.survivorHireLimit,
-        saveData.contestantsData
+            saveData.gameMode,
+            saveData.difficulty,
+            saveData.money,
+            saveData.mySurvivorsId,
+            saveData.trainingLevel,
+            saveData.trainings,
+            saveData.survivorHireLimit,
+            saveData.contestantsData    
             );
         outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
         outGameUIManger.survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);

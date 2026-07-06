@@ -120,8 +120,8 @@ public class ProjectileGenerator : CustomObject
         Vector2 destination = GetDestination();
 
         float err = owner.AimErrorRange;
-        if (owner.CurrentWeapon.itemType == ItemManager.Items.SubMachineGun) err += 1.25f;
-        else if (owner.CurrentWeapon.itemType == ItemManager.Items.AssaultRifle) err += 2.5f;
+        if (owner.CurrentWeapon.itemType == ItemManager.Items.SubMachineGun) err += 2.5f;
+        else if (owner.CurrentWeapon.itemType == ItemManager.Items.AssaultRifle) err += 5f;
         float rand = Random.Range(-err, err);
         
         Vector2 direction = ((destination - (Vector2)muzzleTF.position).normalized).Rotate(rand);

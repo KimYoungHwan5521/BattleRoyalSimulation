@@ -1718,11 +1718,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 138889700270731264
-    m_Localized: Win the Bronze League within the first month
+    m_Localized: Reach Silver Tier by Week 4
     m_Metadata:
       m_Items: []
   - m_Id: 138889701411581952
-    m_Localized: Win the Silver League within the second month
+    m_Localized: Reach Gold Tier by Week 8
     m_Metadata:
       m_Items: []
   - m_Id: 138889702887976960
@@ -1788,6 +1788,55 @@ MonoBehaviour:
     m_Localized: Stamina Spent
     m_Metadata:
       m_Items: []
+  - m_Id: 143567613515591680
+    m_Localized: Week {0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 143573953801678848
+    m_Localized: Single Career Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143573955596840960
+    m_Localized: A challenge mode where you train one survivor over 12 weeks and
+      turn them into a World Champion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574317359755264
+    m_Localized: Free Management
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574319498850304
+    m_Localized: A mode where you can manage up to 10 survivors at once and play
+      freely without any time limit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143584591378706432
+    m_Localized: Today is a Battle Royale match day. Click the league in Schedule
+      to participate.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592857970208768
+    m_Localized: Earn a Season Championship berth by Week 12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592859945725952
+    m_Localized: Place in the top 5 of the Season Championship to advance to the
+      World Championship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628694380408832
+    m_Localized: League Points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628699463905280
+    m_Localized: Promoted!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143632775832465408
+    m_Localized: Advanced to the Season Championship!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1851,3 +1900,4 @@ MonoBehaviour:
         - id: 135927656617668608
         - id: 138535249391448064
         - id: 141426194537574400
+        - id: 143567613515591680

@@ -41,6 +41,7 @@ public class BattleRoyaleManager
     Survivor battleWinner;
     public Survivor BattleWinner => battleWinner;
     public LocalizedString[] rankings;
+    public int playerSurvivorRank;
 
     public static Vector3[] colorInfo = new Vector3[] 
     { 
@@ -358,6 +359,7 @@ public class BattleRoyaleManager
             GameManager.Instance.GetComponent<InGameUIManager>().SetLeftSurvivors(aliveSurvivors.Count);
             rankings[aliveSurvivors.Count] = survivor.survivorName;
             InGameUIManager.SetSurvivorRank(rankings[aliveSurvivors.Count], aliveSurvivors.Count);
+            if (survivor.playerSurvivor) playerSurvivorRank = aliveSurvivors.Count;
             if (aliveSurvivors.Count == 1)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();

@@ -208,7 +208,6 @@ public class Calendar : CustomObject
     OutGameUIManager outGameUIManager;
 
     [Header("Calendar UI")]
-    [SerializeField] GameObject calendarObject;
     [SerializeField] TextMeshProUGUI monthText;
     [SerializeField] TextMeshProUGUI yearText;
     [SerializeField] GameObject[] dates;
@@ -216,6 +215,11 @@ public class Calendar : CustomObject
     Image[] datesEvent;
     GameObject[] reserved;
     Animator[] datesAnimator;
+    public GameObject CalendarObject => outGameUIManager.CalendarObject;
+    [SerializeField] TextMeshProUGUI weeksText;
+    [SerializeField] GameObject[] scr_dates;
+    GameObject[] scr_datesGone;
+    Image[] scr_datesEvent;
 
     [Header("Global UI")]
     [SerializeField] TextMeshProUGUI todayText;
@@ -246,6 +250,8 @@ public class Calendar : CustomObject
         datesEvent = new Image[28];
         reserved = new GameObject[28];
         datesAnimator = new Animator[28];
+        scr_datesGone = new GameObject[7];
+        scr_datesEvent = new Image[7];
         AddLeagueReserveInfo(3);
         LoadItemPool();
     }
@@ -263,45 +269,54 @@ public class Calendar : CustomObject
     void AddLeagueReserveInfo(int howManyYears)
     {
         //for (int i = curMaxYear * 336; i < (curMaxYear + howManyYears) * 336; i++)
-        for (int i = 0; i < 84; i++)
+        //for (int i = 0; i < 84; i++)
+        //{
+        //    if (i % 7 == 3 && i < 27)
+        //    {
+        //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
+        //        leagueReserveInfo[i] = new(League.BronzeLeague, map);
+        //    }
+        //    if (i % 7 == 4 && i < 55)
+        //    {
+        //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
+        //        leagueReserveInfo[i] = new(League.SilverLeague, map);
+        //    }
+        //    if (i % 7 == 5 && i < 77 || i > 77 && i % 7 == 4)
+        //    {
+        //        ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
+        //        leagueReserveInfo[i] = new(League.GoldLeague, map);
+        //    }
+        //    if (i % 28 == 27 && i < 77 || i > 77 && i % 7 == 5)
+        //    {
+        //        leagueReserveInfo[i] = new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01);
+        //    }
+        //    if (i % 84 == 83)
+        //    {
+        //        leagueReserveInfo[i] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01);
+        //    }
+        //    if (i % 28 == 6)
+        //    {
+        //        leagueReserveInfo[i] = new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01);
+        //    }
+        //    else if (i % 28 == 13)
+        //    {
+        //        leagueReserveInfo[i] = new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01);
+        //    }
+        //    else if (i % 28 == 20)
+        //    {
+        //        leagueReserveInfo[i] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01);
+        //    }
+        //}
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
-            if (i % 7 == 3 && i < 27)
-            {
-                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
-                leagueReserveInfo[i] = new(League.BronzeLeague, map);
-            }
-            if (i % 7 == 4 && i < 55)
-            {
-                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01);
-                leagueReserveInfo[i] = new(League.SilverLeague, map);
-            }
-            if (i % 7 == 5 && i < 77 || i > 77 && i % 7 == 4)
-            {
-                ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01);
-                leagueReserveInfo[i] = new(League.GoldLeague, map);
-            }
-            if (i % 28 == 27 && i < 77 || i > 77 && i % 7 == 5)
-            {
-                leagueReserveInfo[i] = new(League.SeasonChampionship, ResourceEnum.Prefab.Map_5x5_01);
-            }
-            if (i % 84 == 83)
-            {
-                leagueReserveInfo[i] = new(League.WorldChampionship, ResourceEnum.Prefab.Map_5x5_01);
-            }
-            if (i % 28 == 6)
-            {
-                leagueReserveInfo[i] = new(League.MeleeLeague, ResourceEnum.Prefab.Map_5x5_01);
-            }
-            else if (i % 28 == 13)
-            {
-                leagueReserveInfo[i] = new(League.RangeLeague, ResourceEnum.Prefab.Map_5x5_01);
-            }
-            else if (i % 28 == 20)
-            {
-                leagueReserveInfo[i] = new(League.CraftingLeague, ResourceEnum.Prefab.Map_5x5_01);
-            }
+            ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
+            leagueReserveInfo[6] = new(League.BronzeLeague, map);
         }
-        curMaxYear += howManyYears;
+        else
+        {
+
+            curMaxYear += howManyYears;
+        }
     }
 
     public void SetLeagueInfo(SurvivorData reserver, int reserveDate)
@@ -582,6 +597,11 @@ public class Calendar : CustomObject
             dateText.text = $"{i + 1}";
             dateText.raycastTarget = false;
         }
+        for(int i = 0; i < scr_dates.Length; i++)
+        {
+            scr_dates[i] = scr_dates[i].transform.Find("Gone").gameObject;
+            scr_datesEvent[i] = scr_dates[i].transform.Find("Event").GetComponent<Image>();
+        }
         Today = 0;
         TurnPageCalendar(0);
         bool colorChanged = false;
@@ -625,9 +645,59 @@ public class Calendar : CustomObject
 
     public void OpenCalendar()
     {
-        calendarObject.SetActive(true);
-        CalendarPage = today / 28 + 1;
-        GameManager.Instance.openedWindows.Push(calendarObject);
+        CalendarObject.SetActive(true);
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            SetSingleCareerRunCalendar();
+        }
+        else
+        {
+            CalendarPage = today / 28 + 1;
+        }
+        GameManager.Instance.openedWindows.Push(CalendarObject);
+    }
+
+    void SetSingleCareerRunCalendar()
+    {
+        weeksText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", "Weeks") { Arguments = new[] { $"{ Today % 7 + 1 }" } };
+        if (!leagueReserveInfo.ContainsKey(6 + 7 * (Today / 7)))
+        {
+            League league = outGameUIManager.MySurvivorsData[0].tier switch
+            {
+                Tier.Bronze => League.BronzeLeague,
+                Tier.Silver => League.SilverLeague,
+                Tier.Gold or _ => League.GoldLeague,
+            };
+            ResourceEnum.Prefab map = league switch
+            {
+                League.BronzeLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01),
+                League.SilverLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01),
+                League.GoldLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01),
+                _ => ResourceEnum.Prefab.Map_5x5_01
+            };
+
+            leagueReserveInfo.Add(6 + 7 * (Today / 7), new(league, map));
+        }
+
+        for (int i = 0; i < 7; i++)
+        {
+            scr_datesGone[i].SetActive(i < today % 7);
+            if(leagueReserveInfo.ContainsKey(i + 7 * (Today / 7)))
+            {
+                datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 28 * (calendarPage - 1)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
+                if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
+                {
+                    reserved[i].SetActive(true);
+                    reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.localizedSurvivorName.GetLocalizedString());
+                }
+                else reserved[i].SetActive(false);
+            }
+            else
+            {
+                datesEvent[i].sprite = null;
+                reserved[i].SetActive(false);
+            }
+        }
     }
 
     public void TurnPageCalendar(int value)
@@ -637,82 +707,96 @@ public class Calendar : CustomObject
 
     public void OpenReserveBattleRoyaleForm(int date)
     {
-        wantReserveDate = date + 28 * (calendarPage - 1);
-        if(leagueReserveInfo.ContainsKey(wantReserveDate))
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
-            if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
+            if (leagueReserveInfo.ContainsKey(Today))
             {
-                if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
-                else if (wantReserveDate == Today)
+                outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
                 {
-                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
-                    {
-                        calendarObject.SetActive(false);
-                        outGameUIManager.SkipBetting();
-                    });
-                }
-            }
-            else if (CheckTier(outGameUIManager.MySurvivorsData[0].tier, leagueReserveInfo[wantReserveDate].league))
-            {
-                if(wantReserveDate == Today)
-                {
-                    if(today == 24 || today == 53 || today > 77)
-                    {
-                        outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
-                        {
-                            calendarObject.SetActive(false);
-                            outGameUIManager.SkipBetting();
-                        });
-                    }
-                    else 
-                    {
-                        if(outGameUIManager.CheckHaveInjury(out int expectedDateOfFullyRecovery))
-                        {
-                            outGameUIManager.Alert("Alert:Can't Battle Royale", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
-                        }
-                        else
-                        {
-                            outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
-                            {
-                                calendarObject.SetActive(false);
-                                outGameUIManager.SkipBetting();
-                            });
-                        }
-                    }
-                }
-                else if (leagueReserveInfo[wantReserveDate].reserver == null)
-                {
-                    if (outGameUIManager.MySurvivorsData[0].isReserved)
-                    {
-                        outGameUIManager.OpenConfirmWindow($"Confirm:Rebook", () =>
-                        {
-                            CancelAllReservation();
-                            Reserve();
-                        }, outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString());
-                    }
-                    else
-                    {
-                        outGameUIManager.OpenConfirmWindow("Confirm:Reserve Battle Royale", () =>
-                        {
-                            Reserve();
-                        });
-                    }
-                }
-                else
-                {
-                    if (wantReserveDate >= 77 && Today >= 77) return;
-                    outGameUIManager.OpenConfirmWindow("Confirm:Cancel Reservation", () =>
-                    {
-                        CancelReservation();
-                    });
-                }
-
-            }
-            else
-            {
-                outGameUIManager.Alert("Alert:Tier Not Match", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", outGameUIManager.MySurvivorsData[0].tier.ToString()).GetLocalizedString());
+                    CalendarObject.SetActive(false);
+                    outGameUIManager.SkipBetting();
+                });
             }
         }
+        //wantReserveDate = date + 28 * (calendarPage - 1);
+        //if(leagueReserveInfo.ContainsKey(wantReserveDate))
+        //{
+        //    if (leagueReserveInfo[wantReserveDate].league == League.SeasonChampionship || leagueReserveInfo[wantReserveDate].league == League.WorldChampionship)
+        //    {
+        //        if (leagueReserveInfo[wantReserveDate].reserver == null) outGameUIManager.Alert("Alert:Reserve Championship");
+        //        else if (wantReserveDate == Today)
+        //        {
+        //            outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+        //            {
+        //                CalendarObject.SetActive(false);
+        //                outGameUIManager.SkipBetting();
+        //            });
+        //        }
+        //    }
+        //    else if (CheckTier(outGameUIManager.MySurvivorsData[0].tier, leagueReserveInfo[wantReserveDate].league))
+        //    {
+        //        if(wantReserveDate == Today)
+        //        {
+        //            if(today == 24 || today == 53 || today > 77)
+        //            {
+        //                outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+        //                {
+        //                    CalendarObject.SetActive(false);
+        //                    outGameUIManager.SkipBetting();
+        //                });
+        //            }
+        //            else 
+        //            {
+        //                if(outGameUIManager.CheckHaveInjury(out int expectedDateOfFullyRecovery))
+        //                {
+        //                    outGameUIManager.Alert("Alert:Can't Battle Royale", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+        //                }
+        //                else
+        //                {
+        //                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+        //                    {
+        //                        CalendarObject.SetActive(false);
+        //                        outGameUIManager.SkipBetting();
+        //                    });
+        //                }
+        //            }
+        //        }
+        //        else if (leagueReserveInfo[wantReserveDate].reserver == null)
+        //        {
+        //            if (outGameUIManager.MySurvivorsData[0].isReserved)
+        //            {
+        //                outGameUIManager.OpenConfirmWindow($"Confirm:Rebook", () =>
+        //                {
+        //                    CancelAllReservation();
+        //                    Reserve();
+        //                }, outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString());
+        //            }
+        //            else
+        //            {
+        //                outGameUIManager.OpenConfirmWindow("Confirm:Reserve Battle Royale", () =>
+        //                {
+        //                    Reserve();
+        //                });
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (wantReserveDate >= 77 && Today >= 77) return;
+        //            outGameUIManager.OpenConfirmWindow("Confirm:Cancel Reservation", () =>
+        //            {
+        //                CancelReservation();
+        //            });
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        outGameUIManager.Alert("Alert:Tier Not Match", outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", outGameUIManager.MySurvivorsData[0].tier.ToString()).GetLocalizedString());
+        //    }
+        //}
+
+
+
         //if (leagueReserveInfo.ContainsKey(wantReserveDate))
         //{
         //    if (today == wantReserveDate)
@@ -953,7 +1037,7 @@ public class Calendar : CustomObject
         participationConfirmed = true;
         SetLeagueInfo(wantReserver, Today);
         outGameUIManager.OpenBettingRoom();
-        outGameUIManager.calendarObject.SetActive(false);
+        outGameUIManager.CalendarObject.SetActive(false);
         reserveForm.SetActive(false);
     }
 
@@ -963,7 +1047,7 @@ public class Calendar : CustomObject
         { 
             participationConfirmed = true;
             outGameUIManager.OpenBettingRoom();
-            outGameUIManager.calendarObject.SetActive(false);
+            outGameUIManager.CalendarObject.SetActive(false);
             reserveForm.SetActive(false);
         });
     }
@@ -1099,7 +1183,7 @@ public class Calendar : CustomObject
     public void CloseAll()
     {
         scheduleByEachSurvivor.SetActive(false);
-        calendarObject.SetActive(false);
+        CalendarObject.SetActive(false);
         reserveForm.SetActive(false);
     }
 

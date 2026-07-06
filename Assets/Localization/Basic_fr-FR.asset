@@ -1748,11 +1748,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 138889700270731264
-    m_Localized: Remporter la Ligue de bronze avant la fin du premier mois
+    m_Localized: "Atteindre le rang Argent d\u2019ici la semaine 4"
     m_Metadata:
       m_Items: []
   - m_Id: 138889701411581952
-    m_Localized: "Remporter la Ligue d\u2019argent avant la fin du deuxi\xE8me mois"
+    m_Localized: "Atteindre le rang Or d\u2019ici la semaine 8"
     m_Metadata:
       m_Items: []
   - m_Id: 138889702887976960
@@ -1819,6 +1819,56 @@ MonoBehaviour:
     m_Localized: "Endurance d\xE9pens\xE9e"
     m_Metadata:
       m_Items: []
+  - m_Id: 143567613515591680
+    m_Localized: Semaine {0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 143573953801678848
+    m_Localized: "Carri\xE8re solo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143573955596840960
+    m_Localized: "Un mode d\xE9fi o\xF9 vous entra\xEEnez un seul survivant pendant
+      12 semaines pour en faire un champion du monde."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574317359755264
+    m_Localized: Gestion libre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143574319498850304
+    m_Localized: "Un mode o\xF9 vous pouvez g\xE9rer jusqu\u2019\xE0 10 survivants
+      \xE0 la fois et jouer librement sans limite de temps."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143584591378706432
+    m_Localized: "Aujourd\u2019hui est un jour de match Battle Royale. Cliquez sur
+      la ligue dans \xAB Calendrier \xBB pour participer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592857970208768
+    m_Localized: "Obtenir une place au Championnat de saison d\u2019ici la semaine
+      12"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143592859945725952
+    m_Localized: "Terminer dans le top 5 du Championnat de saison pour acc\xE9der
+      au Championnat du monde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628694380408832
+    m_Localized: Points de ligue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143628699463905280
+    m_Localized: Promotion !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 143632775832465408
+    m_Localized: Qualification pour le Championnat de saison !
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1882,3 +1932,4 @@ MonoBehaviour:
         - id: 135927656617668608
         - id: 138535249391448064
         - id: 141426194537574400
+        - id: 143567613515591680

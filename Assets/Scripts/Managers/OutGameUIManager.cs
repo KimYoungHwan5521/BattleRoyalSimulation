@@ -12,6 +12,12 @@ using UnityEngine.Localization.Components;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
+public enum GameMode
+{
+    SingleCareerRun,
+    FreeManagement,
+}
+
 public enum SurgeryType 
 { 
     ArtificialPartTransplant,
@@ -37,6 +43,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject alertCanvas;
 
     [Header("Global")]
+    [SerializeField] GameMode gameMode;
+    public GameMode GameMode => gameMode;
     [SerializeField] TextMeshProUGUI moneyText;
     [SerializeField] int money;
     public int Money
@@ -46,7 +54,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             if (value > 99999999) value = 99999999;
             money = value;
-            if(money < 0) moneyText.text = $"<color=red>{money:###,###,###,##0}</color>";
+            if (money < 0) moneyText.text = $"<color=red>{money:###,###,###,##0}</color>";
             else moneyText.text = $"{money:###,###,###,##0}";
 
             if (value >= 100000) AchievementManager.UnlockAchievement("Hundred-Thousandaire");
@@ -115,7 +123,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI trainingRoomLevelText;
     const float trainingGreatSuccessRate = 0.1f;
     public int trainingLevel = 1;
-    readonly int[] facilityUpgradeCost = new[]{ 5000, 10000, 15000, 20000, 25000, 30000 };
+    readonly int[] facilityUpgradeCost = new[] { 5000, 10000, 15000, 20000, 25000, 30000 };
     [SerializeField] TextMeshProUGUI resultText;
     [SerializeField] GameObject trainingResult;
     [SerializeField] TextMeshProUGUI trainingResultText;
@@ -167,7 +175,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] LocalizedDropdown weaponPriority1Dropdown;
     [SerializeField] LocalizedDropdown weaponPriority2Dropdown;
     [SerializeField] Strategy[] strategies;
-    
+
     [SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
     [SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsInAttackRangeDropdown;
 
@@ -187,6 +195,8 @@ public class OutGameUIManager : MonoBehaviour
 
     [SerializeField] Transform craftingAllow;
     public List<GameObject> craftableAllows = new();
+
+    [SerializeField] TMP_InputField armorRepairConditionInputField;
 
     [Serializable]
     struct SurgeryInfo
@@ -209,7 +219,9 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] List<SurgeryInfo> surgeryList;
 
     [Header("Schedule")]
-    public GameObject calendarObject;
+    [SerializeField] GameObject scr_calanderObject;
+    [SerializeField] GameObject fm_calanderObject;
+    public GameObject CalendarObject => gameMode == GameMode.SingleCareerRun ? scr_calanderObject : fm_calanderObject;
     Calendar calendar;
     [SerializeField] SurvivorData mySurvivorDataInBattleRoyale;
     public SurvivorData MySurvivorDataInBattleRoyale
@@ -264,6 +276,20 @@ public class OutGameUIManager : MonoBehaviour
     public Animator trainingRoomSurvivorAnim;
     public Animator scheduleAnim;
     public bool tutorial = false;
+
+    [Header("Promote")]
+    [SerializeField] GameObject promoteBG;
+    [SerializeField] Image leaguePointBar;
+    [SerializeField] TextMeshProUGUI leaguePointText;
+    [SerializeField] LocalizeStringEvent promotedText;
+    [SerializeField] TextMeshProUGUI promoteDetailText;
+    [SerializeField] Button promoteConfirmBtn;
+    bool promoteAnimation;
+    const float leaguePointIncreaseWait = 0.5f;
+    float curLeaguePointIncreaseWait;
+    const float leaguePointIncreaseTerm = 0.1f;
+    float curLeaguePointIncreaseTerm;
+    Tier beforeTier;
     #endregion
 
     private void Start()
@@ -331,40 +357,11 @@ public class OutGameUIManager : MonoBehaviour
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
-    public void ResetData(int difficulty)
-    {
-        mySurvivorsData = new();
-        hireSurvivor.SetActive(true);
-        trainingLevel = 1;
-        ResetHireMarket();
-        Money = 1000;
-        survivorHireLimit = 10;
-        selectedSurvivor.ResetInfo();
-        Difficulty = difficulty;
-        objective.SetActive(false);
-        objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}";
-
-        tutorial = true;
-    }
-
-    void RelocalizeTrainingRoom()
-    {
-        currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
-        {
-            Arguments = new[] { $"{trainingLevel}" }
-        }.GetLocalizedString();
-        upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
-        {
-            Arguments = new[] { trainingLevel > facilityUpgradeCost.Length || trainingLevel <= 0 ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
-        }.GetLocalizedString();
-        trainingRoomLevelText.text = new LocalizedString("Basic", "Training Room Level") { Arguments = new[] { $"{trainingLevel}" } }.GetLocalizedString();
-    }
-
     private void Update()
     {
-        if(isClicked)
+        if (isClicked)
         {
-            if(selectedContestantData != null)
+            if (selectedContestantData != null)
             {
                 Vector2 localPoint;
                 Vector2 mousePos = Input.mousePosition;
@@ -380,6 +377,90 @@ public class OutGameUIManager : MonoBehaviour
                 draggingContestant.transform.localPosition = localPoint;
             }
         }
+
+        if (promoteAnimation)
+        {
+            curLeaguePointIncreaseWait += Time.deltaTime;
+            if (curLeaguePointIncreaseWait > leaguePointIncreaseWait)
+            {
+                curLeaguePointIncreaseTerm += Time.deltaTime;
+                if (curLeaguePointIncreaseTerm > leaguePointIncreaseTerm)
+                {
+                    if (mySurvivorsData[0].increaseComparedToPrevious_promotePoint > 0) { mySurvivorsData[0].promotePoint++; mySurvivorsData[0].increaseComparedToPrevious_promotePoint--; }
+                    leaguePointText.text = $"{mySurvivorsData[0].promotePoint} / 100";
+                    leaguePointBar.fillAmount = mySurvivorsData[0].promotePoint / 100f;
+                    if (mySurvivorsData[0].increaseComparedToPrevious_promotePoint == 0 || mySurvivorsData[0].promotePoint >= 100)
+                    {
+                        promoteAnimation = false;
+                        promoteConfirmBtn.interactable = true;
+                        if (mySurvivorsData[0].promotePoint >= 100)
+                        {
+                            mySurvivorsData[0].promotePoint = 0;
+                            mySurvivorsData[0].increaseComparedToPrevious_promotePoint = 0;
+                            promotedText.gameObject.SetActive(true);
+                            promoteDetailText.gameObject.SetActive(true);
+                            
+                            if(beforeTier != Tier.Gold)
+                            {
+                                promotedText.StringReference = new LocalizedString("Basic", "Promoted!");
+                                promoteDetailText.text = $"{new LocalizedString("Baisc", beforeTier.ToString())} => {new LocalizedString("Baisc", MySurvivorsData[0].tier.ToString())}";
+                            }
+                            else
+                            {
+                                promotedText.StringReference = new LocalizedString("Basic", "Advanced to the Season Championship!");
+                                promoteDetailText.text = $"";
+                            }
+                            SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void ResetData(int difficulty)
+    {
+        mySurvivorsData = new();
+        hireSurvivor.SetActive(true);
+        trainingLevel = 1;
+        ResetHireMarket();
+        Money = 1000;
+        survivorHireLimit = 10;
+        selectedSurvivor.ResetInfo();
+        Difficulty = difficulty;
+        objective.SetActive(false);
+        objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}";
+
+        tutorial = true;
+        promoteAnimation = false;
+    }
+
+    public void PromoteAnimation(League league)
+    {
+        promoteAnimation = true;
+        promoteBG.SetActive(true);
+        promotedText.gameObject.SetActive(false);
+        promoteDetailText.gameObject.SetActive(false);
+        promoteConfirmBtn.interactable = false;
+        beforeTier = league switch
+        { 
+            League.BronzeLeague => Tier.Bronze,
+            League.SilverLeague => Tier.Silver,
+            League.GoldLeague or _ => Tier.Gold,
+        };
+    }
+
+    void RelocalizeTrainingRoom()
+    {
+        currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
+        {
+            Arguments = new[] { $"{trainingLevel}" }
+        }.GetLocalizedString();
+        upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
+        {
+            Arguments = new[] { trainingLevel > facilityUpgradeCost.Length || trainingLevel <= 0 ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
+        }.GetLocalizedString();
+        trainingRoomLevelText.text = new LocalizedString("Basic", "Training Room Level") { Arguments = new[] { $"{trainingLevel}" } }.GetLocalizedString();
     }
 
     #region Hire
@@ -553,148 +634,170 @@ public class OutGameUIManager : MonoBehaviour
     public void ResetSelectedSurvivorInfo()
     {
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
-        selectedSurvivor.StatIncreaseProduction();
+        selectedSurvivor.StatIncreaseAnimation();
     }
 
     public void Rest()
     {
-        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        if(GameMode == GameMode.SingleCareerRun)
         {
-            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
             {
-                Alert("Alert:Join Championship");
+                Alert("Alert:Today is a Battle Royale match day.");
                 return;
             }
-            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+            //{
+            //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Join Championship");
+            //        return;
+            //    }
+            //    else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Last Week Join League");
+            //        return;
+            //    }
+            //    else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Last Chance For Objective");
+            //        return;
+            //    }
+            //}
+
+            OpenConfirmWindow("Confirm:Rest", () =>
             {
-                Alert("Alert:Last Week Join League");
-                return;
-            }
-            else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Last Chance For Objective");
-                return;
-            }
-        }
+                int value;
+                float rand = UnityEngine.Random.Range(0, 1f);
+                if (rand < 0.2f) value = 30;
+                else if (rand < 0.8f) value = 50;
+                else value = 70;
 
-        OpenConfirmWindow("Confirm:Rest", () =>
-        {
-            int value;
-            float rand = UnityEngine.Random.Range(0, 1f);
-            if (rand < 0.2f) value = 30;
-            else if (rand < 0.8f) value = 50;
-            else value = 70;
+                if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.FastRecharge)) value = mySurvivorsData[0].MaxStamina;
+                else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) value = (int)(value * 1.1f);
+                else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) value = (int)(value * 1.2f);
 
-            if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.FastRecharge)) value = mySurvivorsData[0].MaxStamina;
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.Tireless)) value = (int)(value * 1.1f);
-            else if (mySurvivorsData[0].HaveCharacteristic(CharacteristicType.IronMan)) value = (int)(value * 1.2f);
+                bool overRest = value > mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina;
+                value = Mathf.Min(value, mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina);
+                mySurvivorsData[0].StaminaConsomtionReserve(value);
+                trainingResult.SetActive(true);
+                resultText.gameObject.SetActive(false);
+                trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
 
-            bool overRest = value > mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina;
-            value = Mathf.Min(value, mySurvivorsData[0].MaxStamina - mySurvivorsData[0].Stamina);
-            mySurvivorsData[0].StaminaConsomtionReserve(value);
-            trainingResult.SetActive(true);
-            resultText.gameObject.SetActive(false);
-            trainingResultText.text = new LocalizedString("Basic", "Rest").GetLocalizedString();
-
-            if(overRest)
-            {
-                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:OverRest").GetLocalizedString()}\n\n";
-
-                int[] randStat = new int[6];
-                randStat[UnityEngine.Random.Range(0, 6)]++;
-                mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
-                for (int i = 0; i < 6; i++)
+                if(overRest)
                 {
-                    if (randStat[i] > 0)
-                    {
-                        trainingResultDetailText.text += i switch
-                        {
-                            0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
-                            1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
-                            2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
-                            3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
-                            4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
-                            5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
-                            _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
-                        };
-                        trainingResultDetailText.text += $" + {randStat[i]}";
-                    }
-                }
-                trainingResultDetailText.text += $"\n{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
-            }
-            else if (value == 30)
-            {
-                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:Rest30").GetLocalizedString()}\n\n";
+                    trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:OverRest").GetLocalizedString()}\n\n";
 
-                int[] randStat = new int[6];
-                for (int i = 0; i < 2; i++)
-                {
+                    int[] randStat = new int[6];
                     randStat[UnityEngine.Random.Range(0, 6)]++;
-                }
-                mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
-                bool first = true;
-                for (int i = 0; i < 6; i++)
-                {
-                    if (randStat[i] > 0)
+                    mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                    for (int i = 0; i < 6; i++)
                     {
-                        if (!first) trainingResultDetailText.text += ", ";
-                        trainingResultDetailText.text += i switch
+                        if (randStat[i] > 0)
                         {
-                            0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
-                            1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
-                            2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
-                            3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
-                            4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
-                            5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
-                            _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
-                        };
-                        trainingResultDetailText.text += $" + {randStat[i]}";
-                        first = false;
+                            trainingResultDetailText.text += i switch
+                            {
+                                0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
+                                1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
+                                2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
+                                3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
+                                4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
+                                5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
+                                _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
+                            };
+                            trainingResultDetailText.text += $" + {randStat[i]}";
+                        }
+                    }
+                    trainingResultDetailText.text += $"\n{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+                }
+                else if (value == 30)
+                {
+                    trainingResultDetailText.text = $"{new LocalizedString("Basic", "Alert:Rest30").GetLocalizedString()}\n\n";
+
+                    int[] randStat = new int[6];
+                    for (int i = 0; i < 2; i++)
+                    {
+                        randStat[UnityEngine.Random.Range(0, 6)]++;
+                    }
+                    mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
+                    bool first = true;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (randStat[i] > 0)
+                        {
+                            if (!first) trainingResultDetailText.text += ", ";
+                            trainingResultDetailText.text += i switch
+                            {
+                                0 => new LocalizedString("Basic", "Strength").GetLocalizedString(),
+                                1 => new LocalizedString("Basic", "Agility").GetLocalizedString(),
+                                2 => new LocalizedString("Basic", "Fighting").GetLocalizedString(),
+                                3 => new LocalizedString("Basic", "Shooting").GetLocalizedString(),
+                                4 => new LocalizedString("Basic", "Crafting").GetLocalizedString(),
+                                5 => new LocalizedString("Basic", "Knowledge").GetLocalizedString(),
+                                _ => new LocalizedString("Basic", "Unknown").GetLocalizedString(),
+                            };
+                            trainingResultDetailText.text += $" + {randStat[i]}";
+                            first = false;
+                        }
                     }
                 }
-            }
-            else
-            {
-                trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
-            }
-            selectedSurvivor.StatIncreaseProduction();
-            GameManager.Instance.openedWindows.Push(trainingResult);
-            DayEnd();
-        });
+                else
+                {
+                    trainingResultDetailText.text = $"{new LocalizedString("Basic", "Stamina").GetLocalizedString()} <color=#367D38>+{value}</color>";
+                }
+                selectedSurvivor.StatIncreaseAnimation();
+                GameManager.Instance.openedWindows.Push(trainingResult);
+                DayEnd();
+            });
+
+        }
     }
 
     #region Training
     public void OpenTrainingRoom()
     {
-        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+        if(GameMode == GameMode.SingleCareerRun)
         {
-            if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
             {
-                Alert("Alert:Join Championship");
+                Alert("Alert:Today is a Battle Royale match day.");
                 return;
             }
-            else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Last Week Join League");
-                return;
-            }
-            else if((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            {
-                Alert("Alert:Last Chance For Objective");
-                return;
-            }
-        }
 
-        if (CheckHaveInjury(out int expectedDateOfFullyRecovery))
-        {
-            Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+            //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+            //{
+            //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Join Championship");
+            //        return;
+            //    }
+            //    else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Last Week Join League");
+            //        return;
+            //    }
+            //    else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            //    {
+            //        Alert("Alert:Last Chance For Objective");
+            //        return;
+            //    }
+            //}
+
+            if (CheckHaveInjury(out int expectedDateOfFullyRecovery))
+            {
+                Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+            }
+            else
+            {
+                trainingRoom.SetActive(true);
+                RelocalizeTrainingRoom();
+                foreach (var trainingCard in trainingCards) trainingCard.RecalculateFailRate();
+                GameManager.Instance.openedWindows.Push(trainingRoom);
+            }
         }
         else
         {
-            trainingRoom.SetActive(true);
-            RelocalizeTrainingRoom();
-            foreach (var trainingCard in trainingCards) trainingCard.RecalculateFailRate();
-            GameManager.Instance.openedWindows.Push(trainingRoom);
+
         }
     }
 
@@ -767,7 +870,7 @@ public class OutGameUIManager : MonoBehaviour
             trainingResultText.text = new LocalizedString("Basic", "Failed").GetLocalizedString();
             trainingResultDetailText.text = "";
             StaminaConsume(training);
-            selectedSurvivor.StatIncreaseProduction();
+            selectedSurvivor.StatIncreaseAnimation();
             SoundManager.PlayUISFX(ResourceEnum.SFX.Fail);
         }
         else if (rand > 1f - trainingGreatSuccessRate)
@@ -860,7 +963,7 @@ public class OutGameUIManager : MonoBehaviour
                     break;
             }
         }
-        selectedSurvivor.StatIncreaseProduction();
+        selectedSurvivor.StatIncreaseAnimation();
     }
 
     void StaminaConsume(TrainingInfo training)
@@ -1403,14 +1506,14 @@ public class OutGameUIManager : MonoBehaviour
     {
         weaponPriority1Dropdown.dropdown.value = (int)ItemManager.Items.LASER - (int)ItemManager.Items.Knife;
         weaponPriority2Dropdown.dropdown.value = (int)ItemManager.Items.AssaultRifle - (int)ItemManager.Items.Knife;
-        Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
-        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
-        selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
-            = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
-        selectedWeaponPriority1Image = weaponPriority2Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
-        selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
-        selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
-            = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+        //Image selectedWeaponPriority1Image = weaponPriority1Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+        //selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.LASER);
+        //selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
+        //    = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
+        //selectedWeaponPriority1Image = weaponPriority2Dropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+        //selectedWeaponPriority1Image.sprite = ResourceManager.Get(ResourceEnum.Sprite.AssaultRifle);
+        //selectedWeaponPriority1Image.GetComponent<AspectRatioFitter>().aspectRatio
+        //    = selectedWeaponPriority1Image.sprite.textureRect.width / selectedWeaponPriority1Image.sprite.textureRect.height;
         foreach (Strategy strategy in strategies) strategy.SetDefault();
         sawAnEnemyAndItIsInAttackRangeDropdown.value = 0;
         sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = 0;
@@ -1420,6 +1523,7 @@ public class OutGameUIManager : MonoBehaviour
         craftingPriority1Dropdown.dropdown.value = 0;
         craftingPriority2Dropdown.dropdown.value = 0;
         foreach(var craftableAllow in craftableAllows) craftableAllow.GetComponentsInChildren<Toggle>()[0].isOn = true;
+        armorRepairConditionInputField.text = "70";
     }
 
     public void OpenStrategyRoom()
@@ -1484,9 +1588,9 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
         craftingPriority1Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
-        CraftingPriority1Changed();
+        //CraftingPriority1Changed();
         craftingPriority2Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1;
-        CraftingPriority2Changed();
+        //CraftingPriority2Changed();
 
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
@@ -2639,8 +2743,9 @@ public class OutGameUIManager : MonoBehaviour
         yield return null;
     }
 
-    public void LoadData(int difficulty, int money, int mySurvivorsId, int trainingLevel, List<TrainingInfo> trainingInfos, int survivorHireLimit, List<SurvivorData> contestantsData)
+    public void LoadData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, List<TrainingInfo> trainingInfos, int survivorHireLimit, List<SurvivorData> contestantsData)
     {
+        this.gameMode = gameMode;
         Difficulty = difficulty;
         Money = money;
         this.mySurvivorsId = mySurvivorsId;
