@@ -1837,6 +1837,13 @@ MonoBehaviour:
     m_Localized: Advanced to the Season Championship!
     m_Metadata:
       m_Items: []
+  - m_Id: 143988419643109376
+    m_Localized: 'Tiebreaker: If League Points are tied, the player with higher Kill
+      Points wins. If Kill Points are also tied, the player with higher League Points
+      in the final match wins. If those are also tied, the player with higher Kill
+      Points in the final match wins.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

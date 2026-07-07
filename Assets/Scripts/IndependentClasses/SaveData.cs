@@ -112,8 +112,8 @@ public class SurvivorSaveData
     public Tier tier;
     public bool isReserved;
     public int reservedDate;
-    //public bool haveQualifyToParticipateInSeasonChampionship;
-    //public bool haveQualifyToParticipateInWorldChampionship;
+    public bool haveQualifyToParticipateInSeasonChampionship;
+    public bool haveQualifyToParticipateInWorldChampionship;
     public int promotePoint;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
@@ -229,6 +229,9 @@ public class ETCData
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];
     public List<SurvivorData> contestantsData = new List<SurvivorData>();
+    public bool championship;
+    public int championshipHeldCount;
+    public List<OutGameUIManager.ChampionshipData> championshipDatas;
     // calendar
     public int today;
     public int curMaxYear;
@@ -238,8 +241,9 @@ public class ETCData
 
     public List<string> earnedAchievements = new();
 
-    public ETCData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData, int today, int curMaxYear, bool participationConfirmed,
-        Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
+    public ETCData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData,
+        bool championship, int championshipHeldCount, List<OutGameUIManager.ChampionshipData> championshipDatas,
+        int today, int curMaxYear, bool participationConfirmed, Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
     {
         this.gameMode = gameMode;
         this.difficulty = difficulty;
@@ -248,6 +252,9 @@ public class ETCData
         this.trainingLevel = trainingLevel;
         this.survivorHireLimit = survivorHireLimit;
         this.contestantsData = contestantsData;
+        this.championship = championship;
+        this.championshipHeldCount = championshipHeldCount;
+        this.championshipDatas = championshipDatas;
         this.today = today;
         this.curMaxYear = curMaxYear;
         this.participationConfirmed = participationConfirmed;

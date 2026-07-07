@@ -1852,6 +1852,14 @@ MonoBehaviour:
     m_Localized: "\xA1Avance al Campeonato de Temporada!"
     m_Metadata:
       m_Items: []
+  - m_Id: 143988419643109376
+    m_Localized: "Desempate: si los Puntos de Liga est\xE1n empatados, gana quien
+      tenga m\xE1s Puntos de Eliminaci\xF3n. Si los Puntos de Eliminaci\xF3n tambi\xE9n
+      est\xE1n empatados, gana quien tenga m\xE1s Puntos de Liga en la \xFAltima
+      partida. Si tambi\xE9n est\xE1n empatados, gana quien tenga m\xE1s Puntos de
+      Eliminaci\xF3n en la \xFAltima partida."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

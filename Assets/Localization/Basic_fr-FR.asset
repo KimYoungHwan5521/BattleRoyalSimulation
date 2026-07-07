@@ -1869,6 +1869,15 @@ MonoBehaviour:
     m_Localized: Qualification pour le Championnat de saison !
     m_Metadata:
       m_Items: []
+  - m_Id: 143988419643109376
+    m_Localized: "D\xE9partage : en cas d\u2019\xE9galit\xE9 de points de ligue,
+      le joueur ayant le plus de points d\u2019\xE9limination l\u2019emporte. En
+      cas d\u2019\xE9galit\xE9 \xE9galement sur les points d\u2019\xE9limination,
+      le joueur ayant le plus de points de ligue lors du dernier match l\u2019emporte.
+      S\u2019ils sont encore \xE0 \xE9galit\xE9, le joueur ayant le plus de points
+      d\u2019\xE9limination lors du dernier match l\u2019emporte."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

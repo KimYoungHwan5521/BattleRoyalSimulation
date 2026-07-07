@@ -324,6 +324,9 @@ public class GameManager : MonoBehaviour
             OutGameUIManager.trainingCards,
             OutGameUIManager.SurvivorHireLimit,
             OutGameUIManager.contestantsData,
+            OutGameUIManager.Championship,
+            OutGameUIManager.championshipHeldCount,
+            OutGameUIManager.championshipDatas,
             calendar.Today,
             calendar.CurMaxYear,
             calendar.participationConfirmed,
@@ -380,7 +383,10 @@ public class GameManager : MonoBehaviour
             saveData.trainingLevel,
             saveData.trainings,
             saveData.survivorHireLimit,
-            saveData.contestantsData    
+            saveData.contestantsData,
+            saveData.championship,
+            saveData.championshipHeldCount,
+            saveData.championshipDatas
             );
         outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
         outGameUIManger.survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);
@@ -484,9 +490,9 @@ public class GameManager : MonoBehaviour
         int loadedDataGameVersionInt1 = int.Parse(loadedDataGameVersion.Split('.')[0]);
         int loadedDataGameVersionInt2 = int.Parse(loadedDataGameVersion.Split('.')[1]);
         
-        if (loadedDataGameVersionInt1 <= 1)
+        if (loadedDataGameVersionInt2 <= 1)
         {
-
+            calendar.ResetCalendar();
         }
         unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 <= 1 && loadedDataGameVersionInt2 <= 3);
         yield return null;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -658,18 +659,22 @@ public class GameResult : MonoBehaviour
         ClearBattleRoyale();
         if (!goTitle)
         {
+            // 여기서 수술
+            foreach (var injury in injuryNeedSurgery)
+            {
+                injury.type = InjuryType.ArtificialPartsTransplanted;
+                injury.degree = 0;
+            }
+
+            RecordChampionshipProgress();
+
             if(gameOver)
             {
                 GameOver();
             }
             else
             {
-                // 여기서 수술
-                foreach (var injury in injuryNeedSurgery)
-                {
-                    injury.type = InjuryType.ArtificialPartsTransplanted;
-                    injury.degree = 0;
-                }
+                
                 // Auto save
                 //GameManager.Instance.Save(0);
                 //GameManager.Instance.Option.SetSaveButtonInteractable(true);
@@ -689,6 +694,56 @@ public class GameResult : MonoBehaviour
             gameResult.SetActive(false);
         }
         GameManager.Instance.DestroyBattleRoyaleManager();
+    }
+
+    void RecordChampionshipProgress()
+    {
+        foreach(var survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
+        {
+            OutGameUIManager.ChampionshipData cSurvivor = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.LinkedSurvivorData.localizedScheduledSurgeryName.TableEntryReference.Key);
+            int rank = 0;
+            for(int i = 0; i < 25; i++)
+            {
+                if (GameManager.Instance.BattleRoyaleManager.rankings[i].TableEntryReference.Key == cSurvivor.SurvivorName.TableEntryReference.Key)
+                {
+                    rank = i;
+                    break;
+                }
+            }
+            cSurvivor.points[outGameUIManager.championshipHeldCount] += Mathf.Max(0, 10 - rank) + survivor.KillCount;
+            cSurvivor.killPoints[outGameUIManager.championshipHeldCount] += survivor.KillCount;
+        }
+        SortChampionshipRanking();
+        outGameUIManager.championshipHeldCount++;
+        if(outGameUIManager.championshipHeldCount >= 3)
+        {
+            if (calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship)
+            {
+                if(outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == outGameUIManager.MySurvivorsData[0].localizedSurvivorName.TableEntryReference.Key).currentRank < 5)
+                {
+                    // 상위 5인 월챔 진출
+
+                }
+                else
+                {
+                    gameOver = true;
+                    gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+                }
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    void SortChampionshipRanking()
+    {
+        foreach (var survivor in outGameUIManager.championshipDatas) survivor.beforeRank = survivor.currentRank;
+        List<OutGameUIManager.ChampionshipData> sortedChampionshipDatas = outGameUIManager.championshipDatas
+            .OrderByDescending(x => x.TotalPoint).ThenByDescending(x => x.TotalKillPoint).ThenByDescending(x => x.points[^1]).ThenByDescending(x => x.killPoints[^1]).ToList();
+        outGameUIManager.championshipDatas = sortedChampionshipDatas;
+        for (int i=0; i<25; i++) outGameUIManager.championshipDatas[i].currentRank = i;
     }
 
     public void ClearBattleRoyale()

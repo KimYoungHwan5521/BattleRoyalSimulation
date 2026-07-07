@@ -93,6 +93,43 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] LocalizeStringEvent difficultyText;
     [SerializeField] GameObject objective;
     public TextMeshProUGUI objectiveText;
+    bool championship;
+    public bool Championship => championship;
+    public int championshipHeldCount;
+    
+    [Serializable]
+    public class ChampionshipData
+    {
+        public LocalizedString SurvivorName;
+        public List<int> points;
+        public List<int> killPoints;
+        public int TotalPoint
+        {
+            get
+            {
+                int result = 0;
+                foreach (int point in points) result += point;
+                return result;
+            }
+        }
+        public int TotalKillPoint
+        {
+            get
+            {
+                int result = 0;
+                foreach(int point in killPoints) result += point;
+                return result;
+            }
+        }
+        public int beforeRank;
+        public int currentRank;
+
+        public ChampionshipData(SurvivorData survivor)
+        {
+            SurvivorName = survivor.localizedSurvivorName;
+        }
+    }
+    public List<ChampionshipData> championshipDatas;
 
     [Header("Checklist")]
     [SerializeField] GameObject checkTrainingTrue;
@@ -407,6 +444,8 @@ public class OutGameUIManager : MonoBehaviour
                             }
                             else
                             {
+                                mySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship = true;
+                                championship = true;
                                 promotedText.StringReference = new LocalizedString("Basic", "Advanced to the Season Championship!");
                                 promoteDetailText.text = $"";
                             }
@@ -433,6 +472,9 @@ public class OutGameUIManager : MonoBehaviour
 
         tutorial = true;
         promoteAnimation = false;
+        championship = false;
+        championshipHeldCount = 0;
+        championshipDatas = new();
     }
 
     public void PromoteAnimation(League league)
@@ -1996,6 +2038,8 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SetContestants()
     {
+        if (championship && championshipDatas != null && championshipDatas.Count > 0) return;
+        
         contestantsData = new();
         int index = 0;
         //if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
@@ -2030,7 +2074,9 @@ public class OutGameUIManager : MonoBehaviour
         }
         for (int i = index; i < needSurvivorNumber; i++)
         {
-            contestantsData.Add(CreateRandomSurvivorData());
+            SurvivorData survivor = CreateRandomSurvivorData();
+            contestantsData.Add(survivor);
+            if(championship) championshipDatas.Add(new(survivor));
         }
     }
 
@@ -2743,7 +2789,8 @@ public class OutGameUIManager : MonoBehaviour
         yield return null;
     }
 
-    public void LoadData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, List<TrainingInfo> trainingInfos, int survivorHireLimit, List<SurvivorData> contestantsData)
+    public void LoadData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, List<TrainingInfo> trainingInfos, int survivorHireLimit, List<SurvivorData> contestantsData,
+        bool championship, int championshipHeldCount, List<ChampionshipData> championshipDatas)
     {
         this.gameMode = gameMode;
         Difficulty = difficulty;
@@ -2752,6 +2799,9 @@ public class OutGameUIManager : MonoBehaviour
         this.trainingLevel = trainingLevel;
         this.survivorHireLimit = survivorHireLimit;
         this.contestantsData = contestantsData;
+        this.championship = championship;
+        this.championshipHeldCount = championshipHeldCount;
+        this.championshipDatas = championshipDatas;
 
         for (int i = 0; i < trainingCards.Length; i++) 
         {

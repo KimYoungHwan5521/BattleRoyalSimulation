@@ -158,6 +158,7 @@ namespace ResourceEnum
         RangeLeague,
         CraftingLeague,
         RegularLeague,
+        EventLeague,
 
         BronzeLeagueUntagged,
         SilverLeagueUntagged,
@@ -249,6 +250,15 @@ namespace ResourceEnum
         RegularLeagueRU,
         RegularLeagueES,
         RegularLeaguePT,
+        EventLeagueKR,
+        EventLeagueJP,
+        EventLeagueTC,
+        EventLeagueSC,
+        EventLeagueFR,
+        EventLeagueDE,
+        EventLeagueRU,
+        EventLeagueES,
+        EventLeaguePT,
 
         // Tiers
         Bronze,

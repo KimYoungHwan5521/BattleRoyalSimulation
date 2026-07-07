@@ -369,7 +369,7 @@ public class BattleRoyaleManager
                 InGameUIManager.SetSurvivorRank(rankings[0], 0);
                 isBattleRoyaleStart = false;
             }
-            else if (survivor.playerSurvivor)
+            else if (survivor.playerSurvivor && Calendar_.LeagueReserveInfo[Calendar_.Today].league != League.SeasonChampionship && Calendar_.LeagueReserveInfo[Calendar_.Today].league != League.WorldChampionship)
             {
                 GameManager.Instance.GetComponent<GameResult>().DelayedShowGameResult();
             }

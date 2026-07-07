@@ -1855,6 +1855,13 @@ MonoBehaviour:
     m_Localized: "F\xFCr die Saisonmeisterschaft qualifiziert!"
     m_Metadata:
       m_Items: []
+  - m_Id: 143988419643109376
+    m_Localized: "Gleichstandsregel: Bei gleichen Ligapunkten gewinnt der Spieler
+      mit den h\xF6heren Kill-Punkten. Sind auch die Kill-Punkte gleich, gewinnt
+      der Spieler mit den h\xF6heren Ligapunkten im letzten Match. Sind auch diese
+      gleich, gewinnt der Spieler mit den h\xF6heren Kill-Punkten im letzten Match."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

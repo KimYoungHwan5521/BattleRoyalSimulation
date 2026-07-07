@@ -1845,6 +1845,13 @@ MonoBehaviour:
     m_Localized: "Avan\xE7ou para o Campeonato da Temporada!"
     m_Metadata:
       m_Items: []
+  - m_Id: 143988419643109376
+    m_Localized: "Desempate: se os Pontos da Liga estiverem empatados, vence quem
+      tiver mais Pontos de Abate. Se os Pontos de Abate tamb\xE9m estiverem empatados,
+      vence quem tiver mais Pontos da Liga na \xFAltima partida. Se ainda houver
+      empate, vence quem tiver mais Pontos de Abate na \xFAltima partida."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

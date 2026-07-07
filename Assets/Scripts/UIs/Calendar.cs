@@ -139,21 +139,21 @@ public class Calendar : CustomObject
 
             //if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
 
-            if(today == 21 && outGameUIManager.MySurvivorsData[0].tier == Tier.Bronze)
-            {
-                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 24);
-                outGameUIManager.Alert("Alert:Auto Reserve For Objective");
-            }
-            else if(today == 49 && outGameUIManager.MySurvivorsData[0].tier == Tier.Silver)
-            {
-                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 53);
-                outGameUIManager.Alert("Alert:Auto Reserve For Objective");
-            }
-            else if(today == 77 && NeareastSeasonChampionship.reserver == null && NeareastWorldChampionship.reserver == null)
-            {
-                SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 81);
-                outGameUIManager.Alert("Alert:Last Week Auto Reserve");
-            }
+            //if(today == 21 && outGameUIManager.MySurvivorsData[0].tier == Tier.Bronze)
+            //{
+            //    SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 24);
+            //    outGameUIManager.Alert("Alert:Auto Reserve For Objective");
+            //}
+            //else if(today == 49 && outGameUIManager.MySurvivorsData[0].tier == Tier.Silver)
+            //{
+            //    SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 53);
+            //    outGameUIManager.Alert("Alert:Auto Reserve For Objective");
+            //}
+            //else if(today == 77 && NeareastSeasonChampionship.reserver == null && NeareastWorldChampionship.reserver == null)
+            //{
+            //    SetLeagueInfo(outGameUIManager.MySurvivorsData[0], 81);
+            //    outGameUIManager.Alert("Alert:Last Week Auto Reserve");
+            //}
 
             // Auto save
             if(Today > 0) GameManager.Instance.Save(0);
@@ -242,6 +242,9 @@ public class Calendar : CustomObject
     //         itemPool,          itemType,      count
     public Dictionary<int, Dictionary<ItemManager.Items, int>> itemPool = new();
 
+    [SerializeField] GameObject selectLeagueBG;
+    [SerializeField] LocalizedDropdown selectLeagueDropdown;
+
     protected override void Start()
     {
         base.Start();
@@ -262,6 +265,15 @@ public class Calendar : CustomObject
         curMaxYear = 0;
         leagueReserveInfo.Clear();
         AddLeagueReserveInfo(3);
+    }
+
+    public void ResetCalendar()
+    {
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            leagueReserveInfo.Clear();
+            AddLeagueReserveInfo(1);
+        }
     }
 
     int curMaxYear = 0;
@@ -640,6 +652,31 @@ public class Calendar : CustomObject
             }
             else colorChanged = false;
         };
+
+        selectLeagueDropdown.ClearOptions();
+        selectLeagueDropdown.AddLocalizedOptions(new() { new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague") });
+
+        Sprite sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeague);
+        selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite); 
+        sprite = ResourceManager.Get(ResourceEnum.Sprite.RangeLeague);
+        selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
+        sprite = ResourceManager.Get(ResourceEnum.Sprite.CraftingLeague);
+        selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
+
+        GameManager.Instance.ObjectUpdate += () =>
+        {
+            if (selectLeagueDropdown.dropdown.IsExpanded)
+            {
+                var dropdownSprites = selectLeagueDropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                for (int i = 0; i < selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                {
+                    Image image = dropdownSprites[i].GetComponent<Image>();
+                    image.sprite = selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites[i];
+                    if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+                }
+            }
+        };
+
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
@@ -660,23 +697,58 @@ public class Calendar : CustomObject
     void SetSingleCareerRunCalendar()
     {
         weeksText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", "Weeks") { Arguments = new[] { $"{ Today % 7 + 1 }" } };
-        if (!leagueReserveInfo.ContainsKey(6 + 7 * (Today / 7)))
+        League league = default;
+        ResourceEnum.Prefab map;
+        if (outGameUIManager.MySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship)
         {
-            League league = outGameUIManager.MySurvivorsData[0].tier switch
+            if(Today / 7 > 11)
             {
-                Tier.Bronze => League.BronzeLeague,
-                Tier.Silver => League.SilverLeague,
-                Tier.Gold or _ => League.GoldLeague,
-            };
-            ResourceEnum.Prefab map = league switch
-            {
-                League.BronzeLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01),
-                League.SilverLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01),
-                League.GoldLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01),
-                _ => ResourceEnum.Prefab.Map_5x5_01
-            };
+                if(!leagueReserveInfo.ContainsKey(7 * (Today / 7)))
+                {
+                    league = League.SeasonChampionship;
+                    map = ResourceEnum.Prefab.Map_5x5_01;
 
-            leagueReserveInfo.Add(6 + 7 * (Today / 7), new(league, map));
+                    leagueReserveInfo.Add(7 * (Today / 7), new(league, map));
+                    leagueReserveInfo.Add(1 + 7 * (Today / 7), new(league, map));
+                    leagueReserveInfo.Add(2 + 7 * (Today / 7), new(league, map));
+
+                    league = League.WorldChampionship;
+                    leagueReserveInfo.Add(3 + 7 * (Today / 7), new(league, map));
+                    leagueReserveInfo.Add(4 + 7 * (Today / 7), new(league, map));
+                    leagueReserveInfo.Add(5 + 7 * (Today / 7), new(league, map));
+                }
+            }
+            else
+            {
+                if (!leagueReserveInfo.ContainsKey(6 + 7 * (Today / 7)))
+                {
+                    league = League.MeleeLeague;
+                    map = ResourceEnum.Prefab.Map_5x5_01;
+
+                    leagueReserveInfo.Add(6 + 7 * (Today / 7), new(league, map));
+                }
+            }
+        }
+        else
+        {
+            if (!leagueReserveInfo.ContainsKey(6 + 7 * (Today / 7)))
+            {
+                league = outGameUIManager.MySurvivorsData[0].tier switch
+                {
+                    Tier.Bronze => League.BronzeLeague,
+                    Tier.Silver => League.SilverLeague,
+                    Tier.Gold or _ => League.GoldLeague,
+                };
+                map = league switch
+                {
+                    League.BronzeLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01),
+                    League.SilverLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01),
+                    League.GoldLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01),
+                    _ => ResourceEnum.Prefab.Map_5x5_01
+                };
+
+                leagueReserveInfo.Add(6 + 7 * (Today / 7), new(league, map));
+            }
         }
 
         for (int i = 0; i < 7; i++)
@@ -684,18 +756,11 @@ public class Calendar : CustomObject
             scr_datesGone[i].SetActive(i < today % 7);
             if(leagueReserveInfo.ContainsKey(i + 7 * (Today / 7)))
             {
-                datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 28 * (calendarPage - 1)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
-                if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
-                {
-                    reserved[i].SetActive(true);
-                    reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.localizedSurvivorName.GetLocalizedString());
-                }
-                else reserved[i].SetActive(false);
+                datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 7 * (Today / 7)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
             }
             else
             {
                 datesEvent[i].sprite = null;
-                reserved[i].SetActive(false);
             }
         }
     }
@@ -705,17 +770,46 @@ public class Calendar : CustomObject
         CalendarPage = Mathf.Clamp(calendarPage + value, 1, 3);
     }
 
+    void OpenSelectLeagueForm()
+    {
+        selectLeagueBG.SetActive(true);
+        GameManager.Instance.openedWindows.Push(selectLeagueBG);
+    }
+
+    public void SelectLeague()
+    {
+        outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+        {
+            selectLeagueBG.SetActive(false);
+            CalendarObject.SetActive(false);
+            leagueReserveInfo[Today].league = selectLeagueDropdown.dropdown.value switch
+            {
+                1 => League.MeleeLeague,
+                2 => League.RangeLeague,
+                3 or _ => League.CraftingLeague,
+            };
+            outGameUIManager.SkipBetting();
+        });
+    }
+
     public void OpenReserveBattleRoyaleForm(int date)
     {
         if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
             if (leagueReserveInfo.ContainsKey(Today))
             {
-                outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                if (outGameUIManager.MySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship)
                 {
-                    CalendarObject.SetActive(false);
-                    outGameUIManager.SkipBetting();
-                });
+                    OpenSelectLeagueForm();
+                }
+                else
+                {
+                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                    {
+                        CalendarObject.SetActive(false);
+                        outGameUIManager.SkipBetting();
+                    });
+                }
             }
         }
         //wantReserveDate = date + 28 * (calendarPage - 1);
@@ -1237,7 +1331,6 @@ public class Calendar : CustomObject
             _ => ""
         };
 
-        string leagueType = league.ToString();
         //string leagueType = league switch
         //{ 
         //    League.MeleeLeague => "MeleeLeague",
@@ -1245,6 +1338,19 @@ public class Calendar : CustomObject
         //    League.CraftingLeague => "CraftingLeague",
         //    _ => "RegularLeague"
         //};
+        string leagueType;
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            leagueType = league switch
+            {
+                League.MeleeLeague or League.RangeLeague or League.CraftingLeague => "EventLeague",
+                _ => league.ToString()
+            };
+        }
+        else
+        {
+            leagueType = league.ToString();
+        }
 
         if (Enum.TryParse($"{leagueType}{code}", out ResourceEnum.Sprite result))
         {

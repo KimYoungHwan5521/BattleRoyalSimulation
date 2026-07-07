@@ -428,8 +428,8 @@ public class SurvivorData
     public Tier tier;
     public bool isReserved;
     public int reservedDate = -1;
-    //public bool haveQualifyToParticipateInSeasonChampionship;
-    //public bool haveQualifyToParticipateInWorldChampionship;
+    public bool haveQualifyToParticipateInSeasonChampionship;
+    public bool haveQualifyToParticipateInWorldChampionship;
     public int promotePoint;
     public int increaseComparedToPrevious_promotePoint;
 
