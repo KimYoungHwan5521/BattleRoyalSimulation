@@ -1878,6 +1878,31 @@ MonoBehaviour:
       d\u2019\xE9limination lors du dernier match l\u2019emporte."
     m_Metadata:
       m_Items: []
+  - m_Id: 144322004694659072
+    m_Localized: Voir le classement actuel du championnat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322008930906112
+    m_Localized: Jour {param0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359339
+  - m_Id: 144322007932661760
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322006682759168
+    m_Localized: Rang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322398778880000
+    m_Localized: Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322400188166144
+    m_Localized: "Les 5 premiers acc\xE8dent au Championnat du monde"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1942,3 +1967,4 @@ MonoBehaviour:
         - id: 138535249391448064
         - id: 141426194537574400
         - id: 143567613515591680
+        - id: 144322008930906112

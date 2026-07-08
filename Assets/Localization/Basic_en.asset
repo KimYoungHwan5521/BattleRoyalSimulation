@@ -1844,6 +1844,31 @@ MonoBehaviour:
       Points in the final match wins.'
     m_Metadata:
       m_Items: []
+  - m_Id: 144322004694659072
+    m_Localized: View Current Championship Standings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322008930906112
+    m_Localized: Day {param0}
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 144322006682759168
+    m_Localized: Rank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322007932661760
+    m_Localized: Name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322398778880000
+    m_Localized: Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322400188166144
+    m_Localized: Top 5 advance to the World Championship
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1908,3 +1933,4 @@ MonoBehaviour:
         - id: 138535249391448064
         - id: 141426194537574400
         - id: 143567613515591680
+        - id: 144322008930906112

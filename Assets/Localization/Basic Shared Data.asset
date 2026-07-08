@@ -1737,6 +1737,30 @@ MonoBehaviour:
     m_Key: Help:Tiebreaker
     m_Metadata:
       m_Items: []
+  - m_Id: 144322004694659072
+    m_Key: View Current Championship Standings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322006682759168
+    m_Key: Rank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322007932661760
+    m_Key: Name(Person)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322008930906112
+    m_Key: Days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322398778880000
+    m_Key: Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322400188166144
+    m_Key: Top 5 advance to the World Championship
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

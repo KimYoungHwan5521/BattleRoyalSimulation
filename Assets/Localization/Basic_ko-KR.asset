@@ -1943,6 +1943,31 @@ MonoBehaviour:
       \uB192\uC740\uC0AC\uB78C \uC2B9\uB9AC"
     m_Metadata:
       m_Items: []
+  - m_Id: 144322004694659072
+    m_Localized: "\uD604\uC7AC \uCC54\uD53C\uC5B8\uC27D \uC21C\uC704 \uBCF4\uAE30"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322006682759168
+    m_Localized: "\uC21C\uC704"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322007932661760
+    m_Localized: "\uC774\uB984"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322008930906112
+    m_Localized: "{param0}\uC77C\uCC28"
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359336
+  - m_Id: 144322398778880000
+    m_Localized: "\uD569\uACC4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322400188166144
+    m_Localized: "5\uC704 \uAE4C\uC9C0 \uC6D4\uB4DC \uCC54\uD53C\uC5B8\uC27D \uC9C4\uCD9C"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -2007,3 +2032,4 @@ MonoBehaviour:
         - id: 138535249391448064
         - id: 141426194537574400
         - id: 143567613515591680
+        - id: 144322008930906112

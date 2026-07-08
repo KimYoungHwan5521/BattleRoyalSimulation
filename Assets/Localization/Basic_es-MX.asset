@@ -1860,6 +1860,31 @@ MonoBehaviour:
       Eliminaci\xF3n en la \xFAltima partida."
     m_Metadata:
       m_Items: []
+  - m_Id: 144322004694659072
+    m_Localized: "Ver clasificaci\xF3n actual del campeonato"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322008930906112
+    m_Localized: "D\xEDa {param0}"
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 144322006682759168
+    m_Localized: "Posici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322007932661760
+    m_Localized: Nombre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322398778880000
+    m_Localized: Total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 144322400188166144
+    m_Localized: Los 5 mejores avanzan al Campeonato Mundial
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -1924,3 +1949,4 @@ MonoBehaviour:
         - id: 138535249391448064
         - id: 141426194537574400
         - id: 143567613515591680
+        - id: 144322008930906112

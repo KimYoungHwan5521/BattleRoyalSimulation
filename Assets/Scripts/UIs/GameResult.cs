@@ -47,7 +47,9 @@ public class GameResult : MonoBehaviour
     int lastTimeScale;
     bool gameOver;
     bool winWC;
+    [Header("Game Over")]
     [SerializeField] GameObject gameOverCanvas;
+    [SerializeField] GameObject viewChampionshipProgress;
     public LocalizeStringEvent gameOverMessage;
     [SerializeField] SurvivorInfo gameOverSurvivorInfo;
     [SerializeField] GameObject earnedAchievementsBox;
@@ -230,13 +232,11 @@ public class GameResult : MonoBehaviour
                 case League.SeasonChampionship:
                     if (playerWin == 1)
                     {
-                        winPrize = 50000;
-                        AchievementManager.UnlockAchievement("Season Champion");
-                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSeasonChampionship);
+                        winPrize = 10000;
                     }
-                    else if (playerWin == 25) winPrize = 25000;
-                    else if (playerWin == 50) winPrize = 12500;
-                    killPrize = playerSurvivor.KillCount * 5000;
+                    else if (playerWin == 25) winPrize = 5000;
+                    else if (playerWin == 50) winPrize = 2500;
+                    killPrize = playerSurvivor.KillCount * 1000;
                     int rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
                     promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
@@ -244,40 +244,13 @@ public class GameResult : MonoBehaviour
                 case League.WorldChampionship:
                     if (playerWin == 1)
                     {
-                        winPrize = 100000;
-                        switch(outGameUIManager.Difficulty)
-                        {
-                            case 1:
-                                AchievementManager.UnlockAchievement("Hard");
-                                break;
-                            case 2:
-                                AchievementManager.UnlockAchievement("Very Hard");
-                                break;
-                            case 3:
-                                AchievementManager.UnlockAchievement("Expert");
-                                break;
-                            case 4:
-                                AchievementManager.UnlockAchievement("Hardcore");
-                                break;
-                            case 5:
-                                AchievementManager.UnlockAchievement("Nightmare");
-                                break;
-                            case 6:
-                                AchievementManager.UnlockAchievement("Hell");
-                                break;
-                            default:
-                                AchievementManager.UnlockAchievement("World Champion");
-                                GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
-                                break;
-                        }
-                        if (playerSurvivor.LinkedSurvivorData.royalLoader) AchievementManager.UnlockAchievement("Royal Loader");
-                        winWC = true;
+                        winPrize = 20000;
                     }
-                    else if (playerWin == 25) winPrize = 50000;
-                    else if (playerWin == 50) winPrize = 25000;
+                    else if (playerWin == 25) winPrize = 10000;
+                    else if (playerWin == 50) winPrize = 5000;
+                    killPrize = playerSurvivor.KillCount * 2000;
                     //gameOver = true;
                     //gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
-                    killPrize = playerSurvivor.KillCount * 10000;
                     rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
                     promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
@@ -312,6 +285,10 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 50) winPrize = 10000;
                     killPrize = playerSurvivor.KillCount * 4000;
                     break;
+            }
+            if(playerWin != 1 && (calendar.LeagueReserveInfo[calendar.Today].league == League.BronzeLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.SilverLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.GoldLeague))
+            {
+                playerSurvivor.LinkedSurvivorData.royalLoader = false;
             }
             //switch(calendar.LeagueReserveInfo[calendar.Today].league)
             //{
@@ -667,6 +644,8 @@ public class GameResult : MonoBehaviour
             }
 
             RecordChampionshipProgress();
+            ContestantsMaintain();
+            if (outGameUIManager.Championship) outGameUIManager.OpenChampionshipProgress();
 
             if(gameOver)
             {
@@ -717,12 +696,26 @@ public class GameResult : MonoBehaviour
         outGameUIManager.championshipHeldCount++;
         if(outGameUIManager.championshipHeldCount >= 3)
         {
+            int playerSurvivorRank = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == outGameUIManager.MySurvivorsData[0].localizedSurvivorName.TableEntryReference.Key).currentRank;
             if (calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship)
             {
-                if(outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == outGameUIManager.MySurvivorsData[0].localizedSurvivorName.TableEntryReference.Key).currentRank < 5)
+                // 시챔 끝
+                if(playerSurvivorRank < 5)
                 {
+                    if(playerSurvivorRank == 0)
+                    {
+                        AchievementManager.UnlockAchievement("Season Champion");
+                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSeasonChampionship);
+                    }
                     // 상위 5인 월챔 진출
-
+                    for (int i = 5; i<25; i++)
+                    {
+                        // 6위부터 제거
+                        outGameUIManager.contestantsData.Remove(outGameUIManager.contestantsData.Find(x => x.localizedSurvivorName.TableEntryReference.Key == outGameUIManager.championshipDatas[i].SurvivorName.TableEntryReference.Key));
+                    }
+                    // 챔피언쉽 데이터 초기화
+                    outGameUIManager.championshipDatas.Clear();
+                    foreach (var survivor in outGameUIManager.contestantsData) outGameUIManager.championshipDatas.Add(new(survivor));
                 }
                 else
                 {
@@ -732,7 +725,43 @@ public class GameResult : MonoBehaviour
             }
             else
             {
-
+                // 월챔 끝
+                gameOver = true;
+                if(playerSurvivorRank == 0)
+                {
+                    winWC = true;
+                    switch (outGameUIManager.Difficulty)
+                    {
+                        case 1:
+                            AchievementManager.UnlockAchievement("Hard");
+                            break;
+                        case 2:
+                            AchievementManager.UnlockAchievement("Very Hard");
+                            break;
+                        case 3:
+                            AchievementManager.UnlockAchievement("Expert");
+                            break;
+                        case 4:
+                            AchievementManager.UnlockAchievement("Hardcore");
+                            break;
+                        case 5:
+                            AchievementManager.UnlockAchievement("Nightmare");
+                            break;
+                        case 6:
+                            AchievementManager.UnlockAchievement("Hell");
+                            break;
+                        default:
+                            AchievementManager.UnlockAchievement("World Champion");
+                            GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinWorldChampionship);
+                            break;
+                    }
+                    if (outGameUIManager.MySurvivorsData[0].royalLoader) AchievementManager.UnlockAchievement("Royal Loader");
+                    gameOverMessage.StringReference = new("Basic", "GameOver:Win World Champion");
+                }
+                else
+                {
+                    gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
+                }
             }
         }
     }
@@ -744,6 +773,80 @@ public class GameResult : MonoBehaviour
             .OrderByDescending(x => x.TotalPoint).ThenByDescending(x => x.TotalKillPoint).ThenByDescending(x => x.points[^1]).ThenByDescending(x => x.killPoints[^1]).ToList();
         outGameUIManager.championshipDatas = sortedChampionshipDatas;
         for (int i=0; i<25; i++) outGameUIManager.championshipDatas[i].currentRank = i;
+    }
+
+    void ContestantsMaintain()
+    {
+        if (!outGameUIManager.Championship) return;
+
+        // 상대들도 수술해주고, 실전경험을 통한 능력치 상승
+        float chanceTranscendant = outGameUIManager.Difficulty switch
+        {
+            6 => 0.5f,
+            5 => 0.25f,
+            _ => 0f,
+        };
+        float chanceAugment = outGameUIManager.Difficulty switch
+        {
+            0 => 0f,
+            1 => 0.25f,
+            2 => 0.5f,
+            3 => 0.75f,
+            _ => 1f,
+        };
+
+        InjuryType artificial;
+        foreach (var survivor in outGameUIManager.contestantsData)
+        {
+            foreach (var injury in survivor.injuries)
+            {
+                if(injury.degree == 1)
+                {
+                    float rand = UnityEngine.Random.Range(0, 1f);
+                    if (rand < chanceTranscendant) artificial = InjuryType.TranscendantPartsTransplanted;
+                    else if (rand < chanceTranscendant + chanceAugment) artificial = InjuryType.AugmentedPartsTransplanted;
+                    else artificial = InjuryType.ArtificialPartsTransplanted;
+                    injury.type = artificial;
+                    injury.degree = 0;
+                }
+                else
+                {
+                    switch(injury.type)
+                    {
+                        case InjuryType.TranscendantPartsTransplanted:
+                        case InjuryType.TranscendantPartsDamaged:
+                            artificial = InjuryType.TranscendantPartsTransplanted;
+                            break;
+                        case InjuryType.AugmentedPartsTransplanted:
+                        case InjuryType.AugmentedPartsDamaged:
+                            artificial = InjuryType.AugmentedPartsTransplanted;
+                            break;
+                        case InjuryType.ArtificialPartsTransplanted:
+                        case InjuryType.ArtificialPartsDamaged:
+                            artificial = InjuryType.ArtificialPartsTransplanted;
+                            break;
+                        default:
+                            float rand = UnityEngine.Random.Range(0, 1f);
+                            if (rand < chanceTranscendant) artificial = InjuryType.TranscendantPartsTransplanted;
+                            else if (rand < chanceTranscendant + chanceAugment) artificial = InjuryType.AugmentedPartsTransplanted;
+                            else artificial = InjuryType.ArtificialPartsTransplanted;
+                            break;
+                    }
+                    injury.type = artificial;
+                    injury.degree = 0;
+                }
+            }
+
+            var championshipInfo = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.localizedSurvivorName.TableEntryReference.Key);
+            if (championshipInfo.points[^1] - championshipInfo.killPoints[^1] == 10)
+            {
+                survivor.IncreaseStats(2, 2, 2, 2, 2, 2);
+            }
+            else
+            {
+                survivor.IncreaseStats(1, 1, 1, 1, 1, 1);
+            }
+        }
     }
 
     public void ClearBattleRoyale()
@@ -768,6 +871,8 @@ public class GameResult : MonoBehaviour
         // 생존자 통계 보여주기
         gameOverSurvivorInfo.SetInfo(outGameUIManager.MySurvivorsData[0], false);
 
+        viewChampionshipProgress.SetActive(outGameUIManager.Championship);
+        
         SetEarnedAchievements();
         if (winWC)
         {
