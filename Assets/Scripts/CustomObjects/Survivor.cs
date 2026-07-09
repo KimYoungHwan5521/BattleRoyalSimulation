@@ -476,6 +476,7 @@ public class Survivor : CustomObject
         }
     }
     [SerializeField] Area lastFarmingArea;
+    [SerializeField] List<Area> transits = new();
     [SerializeField] Dictionary<FarmingSection, bool> farmingSections = new();
     [SerializeField] FarmingSection targetFarmingSection;
     [SerializeField] Dictionary<Box, bool> farmingBoxes = new();
@@ -1032,6 +1033,7 @@ public class Survivor : CustomObject
 
     int curAICool;
     int aiCool = 1;
+    bool enemyWasInAttackRange;
     void AI()
     {
         //if (curAICool++ < GameManager.Instance.BattleRoyaleManager.AliveSurvivors.Count) return;
@@ -1187,10 +1189,22 @@ public class Survivor : CustomObject
                                 return;
                             }
                         }
-                        // 근거리거나 원거리+총알 있으면 weapon.AttackRange
-                        else if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
+                        else
+                        {
+                            // 근거리거나 원거리+총알 있으면 weapon.AttackRange
+                            // 상대가 도망갈 때 움찔움찔하지 않고 걍 쏘게
+                            if(enemyWasInAttackRange)
+                            {
+                                if (distance < currentWeapon.AttackRange + 2f) enemyInAttackRange = true;
+                            }
+                            else
+                            {
+                                if (distance < currentWeapon.AttackRange) enemyInAttackRange = true;
+                            }
+                        }
                     }
                     else if (distance < attackRange) enemyInAttackRange = true;
+                    enemyWasInAttackRange = enemyInAttackRange;
 
                     if (enemyInAttackRange)
                     {
@@ -1324,6 +1338,13 @@ public class Survivor : CustomObject
         lookPosition = Vector2.zero;
         CurrentStatus = Status.Farming;
         sightMeshRenderer.material = m_SightNormal;
+
+        if(transits.Count > 0)
+        {
+            MoveToTransit();
+            return;
+        }
+
         if (!(RightHandDisabled && LeftHandDisabled))
         {
             // 파밍을 하는 경우:
@@ -1398,6 +1419,122 @@ public class Survivor : CustomObject
         targetFarmingSection = nearestFarmingSection;
     }
 
+    void MoveToTransit()
+    {
+        Area curArea = GetCurrentArea();
+        if (curArea == transits[0])
+        {
+            transits.Remove(curArea);
+            return;
+        }
+        else
+        {
+            agent.destination = transits[0].transform.position;
+        }
+    }
+
+    void SetTransits(Area start, Area end)
+    {
+        transits.Clear();
+        if (start == null || end == null || start == end) return;
+
+        // start.Distances가 모든 Area를 가지고 있다는 전제
+        HashSet<Area> nodes = new(start.Distances.Keys)
+        {
+            start,
+            end
+        };
+
+        Dictionary<Area, long> cost = new();
+        Dictionary<Area, Area> previous = new();
+        HashSet<Area> visited = new();
+
+        foreach (Area area in nodes)
+            cost[area] = long.MaxValue;
+
+        cost[start] = 0;
+
+        while (true)
+        {
+            Area current = null;
+            long currentCost = long.MaxValue;
+
+            // 아직 방문하지 않은 노드 중 비용이 가장 낮은 노드 선택
+            foreach (Area area in nodes)
+            {
+                if (visited.Contains(area)) continue;
+
+                if (cost[area] < currentCost)
+                {
+                    current = area;
+                    currentCost = cost[area];
+                }
+            }
+
+            if (current == null)
+                break;
+
+            if (current == end)
+                break;
+
+            visited.Add(current);
+
+            foreach (var pair in current.Distances)
+            {
+                Area next = pair.Key;
+                int distance = pair.Value;
+
+                if (!nodes.Contains(next))
+                    continue;
+
+                if (visited.Contains(next))
+                    continue;
+
+                // start/end는 허용, 중간 Area는 금지 Area 통과 불가
+                if (next != end && next.IsProhibited)
+                    continue;
+
+                if (distance < 0)
+                    continue;
+
+                long newCost = cost[current] + distance;
+
+                if (newCost < cost[next])
+                {
+                    cost[next] = newCost;
+                    previous[next] = current;
+                }
+            }
+        }
+
+        // end까지 도달 불가
+        if (!previous.ContainsKey(end))
+            return;
+
+        // 경로 복원
+        List<Area> path = new();
+        Area cur = end;
+
+        path.Add(cur);
+
+        while (previous.ContainsKey(cur))
+        {
+            cur = previous[cur];
+            path.Add(cur);
+
+            if (cur == start)
+                break;
+        }
+
+        path.Reverse();
+
+        // start, end 제외하고 transits에 추가
+        for (int i = 1; i < path.Count - 1; i++)
+        {
+            transits.Add(path[i]);
+        }
+    }
+
     public Area FindNearest(Dictionary<Area, bool> candidates)
     {
         if (!farmingAreas[GetCurrentArea()]) return GetCurrentArea();
@@ -1442,6 +1579,11 @@ public class Survivor : CustomObject
             farmingAreas[reserveRemove] = true;
         }
         if (nearest == null) return farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
+
+        if (minAreaDistance > 2)
+        {
+            SetTransits(GetCurrentArea(), nearest);
+        }
         return nearest;
     }
 
@@ -3113,7 +3255,11 @@ public class Survivor : CustomObject
                 }
             }
         }
-        else Attack();
+        else
+        {
+            if (distance < attackRange) Attack();
+            else ApproachEnemy(TargetEnemy);
+        }
     }
 
     void ApproachEnemy(Survivor target)
@@ -3152,12 +3298,12 @@ public class Survivor : CustomObject
             }
             else destination = target.transform.position;
 
-            curSetDestinationCool += Time.deltaTime * aiCool;
-            if (curSetDestinationCool > 1)
-            {
+            //curSetDestinationCool += Time.deltaTime * aiCool;
+            //if (curSetDestinationCool > 1)
+            //{
                 agent.SetDestination(destination);
-                curSetDestinationCool = 0;
-            }
+            //    curSetDestinationCool = 0;
+            //}
         }
     }
 
@@ -5168,7 +5314,7 @@ public class Survivor : CustomObject
         correctedCrafting = Mathf.Max(linkedSurvivorData.Crafting + characteristicCorrection_Crafting, 0);
         aimDelay = 1.5f * characteristicCorrection_AimTime;
         //aimErrorRange = 20f / Mathf.Pow(2, (correctedShooting + characteristicCorrection_AimErrorRange) / 20f);
-        aimErrorRange = 20f / Mathf.Max(1f, (correctedShooting + characteristicCorrection_AimErrorRange) / 3.5f);
+        aimErrorRange = 40f / Mathf.Max(1f, (correctedShooting + characteristicCorrection_AimErrorRange) / 3.5f);
         reloadSpeed = characteristicCorrection_ReloadSpeed;
         naturalHemostasis = characteristicCorrection_NatualHemostasis;
         bloodRegeneration = characteristicCorrection_BloodRegeneration;

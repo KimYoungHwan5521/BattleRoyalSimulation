@@ -15,6 +15,8 @@ public class SurvivorInfo : MonoBehaviour
     [SerializeField] LocalizeStringEvent scheduledTrainingText;
     [SerializeField] TextMeshProUGUI staminaText;
     [SerializeField] Image staminaBar;
+    [SerializeField] TextMeshProUGUI leaguePointText;
+    [SerializeField] Image leaguePointBar;
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI agilityText;
     [SerializeField] TextMeshProUGUI fightingText;
@@ -218,6 +220,11 @@ public class SurvivorInfo : MonoBehaviour
 
         survivorData = wantSurvivorData;
         survivorNameText.StringReference = wantSurvivorData.localizedSurvivorName;
+        if (leaguePointText != null)
+        {
+            leaguePointText.text = $"{wantSurvivorData.promotePoint} / 100";
+            leaguePointBar.fillAmount = wantSurvivorData.promotePoint / 100f;
+        }
         if(staminaText != null)
         {
             staminaText.text = $"{wantSurvivorData.Stamina} / {wantSurvivorData.MaxStamina}";

@@ -556,6 +556,7 @@ public class GameResult : MonoBehaviour
             }
         }
         //if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
+        Debug.Log($"Promote Point : {rememberPromotePoint}");
         playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint;
         if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
         notification += () =>
@@ -677,6 +678,7 @@ public class GameResult : MonoBehaviour
 
     void RecordChampionshipProgress()
     {
+        if (!outGameUIManager.Championship) return;
         foreach(var survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
             OutGameUIManager.ChampionshipData cSurvivor = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.LinkedSurvivorData.localizedScheduledSurgeryName.TableEntryReference.Key);

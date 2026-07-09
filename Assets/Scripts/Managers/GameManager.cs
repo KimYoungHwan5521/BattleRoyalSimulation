@@ -487,14 +487,17 @@ public class GameManager : MonoBehaviour
         string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
         var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
         string loadedDataGameVersion = saveData.gameVersion;
+        Debug.Log($"Saved Data Version : {saveData.gameVersion}");
         int loadedDataGameVersionInt1 = int.Parse(loadedDataGameVersion.Split('.')[0]);
         int loadedDataGameVersionInt2 = int.Parse(loadedDataGameVersion.Split('.')[1]);
+        int currentGameVersionInt1 = int.Parse(gameVersion.Split('.')[0]);
+        int currentGameVersionInt2 = int.Parse(gameVersion.Split('.')[1]);
         
         if (loadedDataGameVersionInt2 <= 1)
         {
             calendar.ResetCalendar();
         }
-        unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 <= 1 && loadedDataGameVersionInt2 <= 3);
+        unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 < currentGameVersionInt1 || loadedDataGameVersionInt1 == currentGameVersionInt1 && loadedDataGameVersionInt2 < currentGameVersionInt2);
         yield return null;
     }
     #endregion

@@ -321,8 +321,25 @@ public class Calendar : CustomObject
         //}
         if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
-            ResourceEnum.Prefab map = (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01);
-            leagueReserveInfo[6] = new(League.BronzeLeague, map);
+            League fitLeague;
+            if (outGameUIManager.MySurvivorsData != null && outGameUIManager.MySurvivorsData.Count > 0 && outGameUIManager.MySurvivorsData[0] != null)
+            {
+                fitLeague = outGameUIManager.MySurvivorsData[0].tier switch
+                { 
+                    Tier.Bronze => League.BronzeLeague,
+                    Tier.Silver => League.SilverLeague,
+                    Tier.Gold or _ => League.GoldLeague,
+                };
+            }
+            else fitLeague = League.BronzeLeague;
+            ResourceEnum.Prefab map = fitLeague switch
+            {
+                League.BronzeLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01),
+                League.SilverLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01),
+                League.GoldLeague => (ResourceEnum.Prefab)UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01),
+                _ => ResourceEnum.Prefab.Map_5x5_01
+            };
+            leagueReserveInfo[6 + (Today / 7) * 7] = new(fitLeague, map);
         }
         else
         {
@@ -611,7 +628,7 @@ public class Calendar : CustomObject
         }
         for(int i = 0; i < scr_dates.Length; i++)
         {
-            scr_dates[i] = scr_dates[i].transform.Find("Gone").gameObject;
+            scr_datesGone[i] = scr_dates[i].transform.Find("Gone").gameObject;
             scr_datesEvent[i] = scr_dates[i].transform.Find("Event").GetComponent<Image>();
         }
         Today = 0;
@@ -696,7 +713,7 @@ public class Calendar : CustomObject
 
     void SetSingleCareerRunCalendar()
     {
-        weeksText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", "Weeks") { Arguments = new[] { $"{ Today % 7 + 1 }" } };
+        weeksText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", "Weeks") { Arguments = new[] { $"{ Today / 7 + 1 }" } };
         League league = default;
         ResourceEnum.Prefab map;
         if (outGameUIManager.MySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship)
@@ -756,11 +773,11 @@ public class Calendar : CustomObject
             scr_datesGone[i].SetActive(i < today % 7);
             if(leagueReserveInfo.ContainsKey(i + 7 * (Today / 7)))
             {
-                datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 7 * (Today / 7)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
+                scr_datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 7 * (Today / 7)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
             }
             else
             {
-                datesEvent[i].sprite = null;
+                scr_datesEvent[i].sprite = null;
             }
         }
     }

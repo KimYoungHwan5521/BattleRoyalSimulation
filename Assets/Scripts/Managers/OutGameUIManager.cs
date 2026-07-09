@@ -376,9 +376,21 @@ public class OutGameUIManager : MonoBehaviour
             new("Basic", "Stat Total"),
         });
 
-        for(int i=0; i<championshipRanks.Length; i++)
+
+        championshipRankRankChanges = new TextMeshProUGUI[25];
+        championshipRankRanks = new TextMeshProUGUI[25];
+        championshipRankNames = new LocalizeStringEvent[25];
+        championshipRankDay1Points = new TextMeshProUGUI[25];
+        championshipRankDay1PointDetails = new TextMeshProUGUI[25];
+        championshipRankDay2Points = new TextMeshProUGUI[25];
+        championshipRankDay2PointDetails = new TextMeshProUGUI[25];
+        championshipRankDay3Points = new TextMeshProUGUI[25];
+        championshipRankDay3PointDetails = new TextMeshProUGUI[25];
+        championshipRankTotalPoints = new TextMeshProUGUI[25];
+        championshipRankTotalPointDetails = new TextMeshProUGUI[25];
+        for (int i=0; i<championshipRanks.Length; i++)
         {
-            TextMeshProUGUI[] tmps = championshipRanks[i].GetComponentsInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI[] tmps = championshipRanks[i].GetComponentsInChildren<TextMeshProUGUI>(true);
             championshipRankRankChanges[i] = tmps[0];
             championshipRankRanks[i] = tmps[1];
             championshipRankNames[i] = tmps[2].GetComponent<LocalizeStringEvent>();
@@ -451,10 +463,10 @@ public class OutGameUIManager : MonoBehaviour
 
         if (promoteAnimation)
         {
-            curLeaguePointIncreaseWait += Time.deltaTime;
+            curLeaguePointIncreaseWait += Time.unscaledDeltaTime;
             if (curLeaguePointIncreaseWait > leaguePointIncreaseWait)
             {
-                curLeaguePointIncreaseTerm += Time.deltaTime;
+                curLeaguePointIncreaseTerm += Time.unscaledDeltaTime;
                 if (curLeaguePointIncreaseTerm > leaguePointIncreaseTerm)
                 {
                     if (mySurvivorsData[0].increaseComparedToPrevious_promotePoint > 0) { mySurvivorsData[0].promotePoint++; mySurvivorsData[0].increaseComparedToPrevious_promotePoint--; }
@@ -474,7 +486,7 @@ public class OutGameUIManager : MonoBehaviour
                             if(beforeTier != Tier.Gold)
                             {
                                 promotedText.StringReference = new LocalizedString("Basic", "Promoted!");
-                                promoteDetailText.text = $"{new LocalizedString("Baisc", beforeTier.ToString())} => {new LocalizedString("Baisc", MySurvivorsData[0].tier.ToString())}";
+                                promoteDetailText.text = $"{new LocalizedString("Baisc", beforeTier.ToString()).GetLocalizedString()} => {new LocalizedString("Baisc", MySurvivorsData[0].tier.ToString()).GetLocalizedString()}";
                             }
                             else
                             {
@@ -498,6 +510,7 @@ public class OutGameUIManager : MonoBehaviour
                                 gameResult.GameOver();
                             }
                         }
+                        selectedSurvivor.SetInfo(mySurvivorsData[0], false);
                     }
                 }
             }
