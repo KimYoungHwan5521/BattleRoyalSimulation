@@ -155,8 +155,14 @@ public class Calendar : CustomObject
             //    outGameUIManager.Alert("Alert:Last Week Auto Reserve");
             //}
 
-            // Auto save
-            if(Today > 0) GameManager.Instance.Save(0);
+            if(Today > 0)
+            {
+                // Auto save
+                GameManager.Instance.Save(0);
+
+                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) SetSingleCareerRunCalendar();
+            }
+
         }
     }
     public int Month { get { return 1 + today / 28; } }
@@ -807,6 +813,18 @@ public class Calendar : CustomObject
             };
             outGameUIManager.SkipBetting();
         });
+    }
+
+    public void SelectLeagueChanged()
+    {
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{selectLeagueDropdown.keys[selectLeagueDropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
+        if (spriteNotNull)
+        {
+            Image image = selectLeagueDropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
+            image.sprite = ResourceManager.Get(itemSpriteEnum);
+            image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
+        }
+        else Debug.Log($"Sprite not found : {selectLeagueDropdown.keys[selectLeagueDropdown.dropdown.value].TableEntryReference.Key}");
     }
 
     public void OpenReserveBattleRoyaleForm(int date)

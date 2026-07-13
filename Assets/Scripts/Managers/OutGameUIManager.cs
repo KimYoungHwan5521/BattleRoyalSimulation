@@ -318,6 +318,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject promoteBG;
     [SerializeField] Image leaguePointBar;
     [SerializeField] TextMeshProUGUI leaguePointText;
+    [SerializeField] TextMeshProUGUI leaguePointDetailText;
     [SerializeField] LocalizeStringEvent promotedText;
     [SerializeField] TextMeshProUGUI promoteDetailText;
     [SerializeField] Button promoteConfirmBtn;
@@ -471,6 +472,7 @@ public class OutGameUIManager : MonoBehaviour
                 {
                     if (mySurvivorsData[0].increaseComparedToPrevious_promotePoint > 0) { mySurvivorsData[0].promotePoint++; mySurvivorsData[0].increaseComparedToPrevious_promotePoint--; }
                     leaguePointText.text = $"{mySurvivorsData[0].promotePoint} / 100";
+                    leaguePointDetailText.text = $"{mySurvivorsData[0].promotePoint_Rank} + {mySurvivorsData[0].promotePoint_Kill} ({new LocalizedString("Basic", "Rank").GetLocalizedString()} + {new LocalizedString("Basic", "Kill").GetLocalizedString()})";
                     leaguePointBar.fillAmount = mySurvivorsData[0].promotePoint / 100f;
                     if (mySurvivorsData[0].increaseComparedToPrevious_promotePoint == 0 || mySurvivorsData[0].promotePoint >= 100)
                     {
@@ -486,7 +488,7 @@ public class OutGameUIManager : MonoBehaviour
                             if(beforeTier != Tier.Gold)
                             {
                                 promotedText.StringReference = new LocalizedString("Basic", "Promoted!");
-                                promoteDetailText.text = $"{new LocalizedString("Baisc", beforeTier.ToString()).GetLocalizedString()} => {new LocalizedString("Baisc", MySurvivorsData[0].tier.ToString()).GetLocalizedString()}";
+                                promoteDetailText.text = $"{new LocalizedString("Basic", beforeTier.ToString()).GetLocalizedString()} => {new LocalizedString("Basic", MySurvivorsData[0].tier.ToString()).GetLocalizedString()}";
                             }
                             else
                             {
@@ -511,6 +513,7 @@ public class OutGameUIManager : MonoBehaviour
                             }
                         }
                         selectedSurvivor.SetInfo(mySurvivorsData[0], false);
+                        GameManager.Instance.Save(0);
                     }
                 }
             }

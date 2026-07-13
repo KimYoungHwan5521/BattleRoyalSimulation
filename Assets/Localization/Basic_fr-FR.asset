@@ -1903,6 +1903,14 @@ MonoBehaviour:
     m_Localized: "Les 5 premiers acc\xE8dent au Championnat du monde"
     m_Metadata:
       m_Items: []
+  - m_Id: 146144019428732928
+    m_Localized: Prix de classement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146151925255565312
+    m_Localized: "S\xE9lectionnez la ligue \xE0 laquelle participer."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

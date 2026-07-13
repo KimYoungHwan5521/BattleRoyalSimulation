@@ -431,6 +431,8 @@ public class SurvivorData
     public bool haveQualifyToParticipateInSeasonChampionship;
     public bool haveQualifyToParticipateInWorldChampionship;
     public int promotePoint;
+    public int promotePoint_Rank;
+    public int promotePoint_Kill;
     public int increaseComparedToPrevious_promotePoint;
 
     // Training

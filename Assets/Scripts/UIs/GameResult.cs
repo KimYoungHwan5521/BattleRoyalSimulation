@@ -90,7 +90,8 @@ public class GameResult : MonoBehaviour
     }
 
     int rememberTotalProfit;
-    int rememberPromotePoint;
+    int rememberPromotePoint_Rank;
+    int rememberPromotePoint_Kill;
     public void ShowGameResult(bool isBattleEnd = true)
     {
         lastTimeScale = (int)Time.timeScale;
@@ -102,9 +103,10 @@ public class GameResult : MonoBehaviour
         mySurvivorResult.SetActive(didPlayerParticipate);
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
         GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
-        SetText(didPlayerParticipate, out int totalProfit, out int promotePoint);
+        SetText(didPlayerParticipate, out int totalProfit, out int promotePoint_Rank, out int promotePoint_Kill);
         rememberTotalProfit = totalProfit;
-        rememberPromotePoint = promotePoint;
+        rememberPromotePoint_Rank = promotePoint_Rank;
+        rememberPromotePoint_Kill = promotePoint_Kill;
         //gameOver = outGameUIManager.Money < 0;
         //if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
@@ -116,10 +118,11 @@ public class GameResult : MonoBehaviour
     int killPrize = 0;
     int totalTreatmentCost = 0;
     List<Injury> injuryNeedSurgery = new();
-    void SetText(bool didPlayerParticipate, out int totalProfit, out int promotePoint)
+    void SetText(bool didPlayerParticipate, out int totalProfit, out int promotePoint_Rank, out int promotePoint_Kill)
     {
         totalProfit = 0;
-        promotePoint = 0;
+        promotePoint_Rank = 0;
+        promotePoint_Kill = 0;
         playerWin = -1;
         if (didPlayerParticipate)
         {
@@ -130,7 +133,7 @@ public class GameResult : MonoBehaviour
             {
                 for(int i=0; i<GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
                 {
-                    float percentile = (float)i + 1 / GameManager.Instance.BattleRoyaleManager.rankings.Length;
+                    float percentile = ((float)i + 1) / outGameUIManager.contestantsData.Count;
                     if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
                     {
                         if (percentile <= 0.25f) playerWin = 25;
@@ -177,15 +180,15 @@ public class GameResult : MonoBehaviour
                         winPrize = 5000;
                         AchievementManager.UnlockAchievement("Bronze Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinBronzeLeague);
-                        promotePoint = 100;
+                        promotePoint_Rank = 100;
                     }
                     else if (playerWin == 50)
                     {
                         winPrize = 2500;
-                        promotePoint = 50;
+                        promotePoint_Rank = 50;
                     }
                     killPrize = playerSurvivor.KillCount * 500;
-                    promotePoint += playerSurvivor.KillCount * 10;
+                    promotePoint_Kill = playerSurvivor.KillCount * 10;
                     break;
                 case League.SilverLeague:
                     if (playerWin == 1)
@@ -193,20 +196,20 @@ public class GameResult : MonoBehaviour
                         winPrize = 10000;
                         AchievementManager.UnlockAchievement("Silver Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSilverLeague);
-                        promotePoint = 100;
+                        promotePoint_Rank = 100;
                     }
                     else if (playerWin == 25)
                     {
                         winPrize = 5000;
-                        promotePoint = 50;
+                        promotePoint_Rank = 50;
                     }
                     else if (playerWin == 50)
                     {
                         winPrize = 2500;
-                        promotePoint = 25;
+                        promotePoint_Rank = 25;
                     }
                     killPrize = playerSurvivor.KillCount * 1000;
-                    promotePoint += playerSurvivor.KillCount * 10;
+                    promotePoint_Kill = playerSurvivor.KillCount * 10;
                     break;
                 case League.GoldLeague:
                     if (playerWin == 1)
@@ -214,20 +217,20 @@ public class GameResult : MonoBehaviour
                         winPrize = 20000;
                         AchievementManager.UnlockAchievement("Gold Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
-                        promotePoint = 100;
+                        promotePoint_Rank = 100;
                     }
                     else if (playerWin == 25)
                     {
                         winPrize = 10000;
-                        promotePoint = 50;
+                        promotePoint_Rank = 50;
                     }
                     else if (playerWin == 50)
                     {
                         winPrize = 5000;
-                        promotePoint = 25;
+                        promotePoint_Rank = 25;
                     }
                     killPrize = playerSurvivor.KillCount * 2000;
-                    promotePoint += playerSurvivor.KillCount * 10;
+                    promotePoint_Kill = playerSurvivor.KillCount * 10;
                     break;
                 case League.SeasonChampionship:
                     if (playerWin == 1)
@@ -238,7 +241,8 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 50) winPrize = 2500;
                     killPrize = playerSurvivor.KillCount * 1000;
                     int rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
-                    promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
+                    promotePoint_Rank = Mathf.Max((10 - rank), 0);
+                    promotePoint_Kill = playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
                     break;
                 case League.WorldChampionship:
@@ -252,7 +256,8 @@ public class GameResult : MonoBehaviour
                     //gameOver = true;
                     //gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
                     rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
-                    promotePoint = Mathf.Max((10 - rank), 0) + playerSurvivor.KillCount;
+                    promotePoint_Rank = Mathf.Max((10 - rank), 0);
+                    promotePoint_Kill = playerSurvivor.KillCount;
                     //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
                 case League.MeleeLeague:
@@ -337,7 +342,7 @@ public class GameResult : MonoBehaviour
             //        }
             //        break;
             //}
-            winPrizeText.text = $"{new LocalizedString("Basic", "Victory reward").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
+            winPrizeText.text = $"{new LocalizedString("Basic", "Rank Prize").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
             killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
             if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
             
@@ -498,14 +503,14 @@ public class GameResult : MonoBehaviour
                 notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 break;
             case League.GoldLeague:
-                calendar.NeareastSeasonChampionship.reserver = survivor;
+                //calendar.NeareastSeasonChampionship.reserver = survivor;
+                survivor.haveQualifyToParticipateInSeasonChampionship = true;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
                 if (outGameUIManager.trainingLevel < 4)
                 {
                     outGameUIManager.UpgradeFacility();
                     notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 }
-                //survivor.haveQualifyToParticipateInSeasonChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
@@ -556,8 +561,10 @@ public class GameResult : MonoBehaviour
             }
         }
         //if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
-        Debug.Log($"Promote Point : {rememberPromotePoint}");
-        playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint;
+        Debug.Log($"Promote Point : {rememberPromotePoint_Rank + rememberPromotePoint_Kill}");
+        playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint_Rank + rememberPromotePoint_Kill;
+        playerSurvivor.LinkedSurvivorData.promotePoint_Rank = rememberPromotePoint_Rank;
+        playerSurvivor.LinkedSurvivorData.promotePoint_Kill = rememberPromotePoint_Kill;
         if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
         notification += () =>
         {
@@ -1001,7 +1008,7 @@ public class GameResult : MonoBehaviour
     void OnLocaleChanged(Locale newLocale)
     {
         if (GameManager.Instance.BattleRoyaleManager == null || GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
-        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _, out int _);
+        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _, out int _, out int _);
     }
 
 }

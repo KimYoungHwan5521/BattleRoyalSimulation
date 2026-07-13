@@ -1887,6 +1887,14 @@ MonoBehaviour:
     m_Localized: "Die Top 5 qualifizieren sich f\xFCr die Weltmeisterschaft"
     m_Metadata:
       m_Items: []
+  - m_Id: 146144019428732928
+    m_Localized: "Rangpr\xE4mie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146151925255565312
+    m_Localized: "W\xE4hle eine Liga zur Teilnahme aus."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

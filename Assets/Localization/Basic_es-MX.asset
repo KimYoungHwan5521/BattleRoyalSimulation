@@ -1885,6 +1885,14 @@ MonoBehaviour:
     m_Localized: Los 5 mejores avanzan al Campeonato Mundial
     m_Metadata:
       m_Items: []
+  - m_Id: 146144019428732928
+    m_Localized: "Premio por Posici\xF3n"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146151925255565312
+    m_Localized: Selecciona una liga para participar.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

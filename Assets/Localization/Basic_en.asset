@@ -1869,6 +1869,14 @@ MonoBehaviour:
     m_Localized: Top 5 advance to the World Championship
     m_Metadata:
       m_Items: []
+  - m_Id: 146144019428732928
+    m_Localized: Rank Prize
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146151925255565312
+    m_Localized: Select a league to enter.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

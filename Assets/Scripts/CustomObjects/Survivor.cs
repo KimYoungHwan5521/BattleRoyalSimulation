@@ -1400,6 +1400,12 @@ public class Survivor : CustomObject
         FarmingSection nearestFarmingSection = FindNearest(farmingSections);
         if (nearestFarmingSection != null)
         {
+            Area curArea = GetCurrentArea();
+            if(curArea.IsProhibited || curArea.IsProhibited_Plan)
+            {
+                SetTransits(curArea, nearestFarmingSection.ownerArea);
+                if(transits.Count > 0) return;
+            }
             farmingBoxes = new();
             foreach(Box box in nearestFarmingSection.boxes)
             {
