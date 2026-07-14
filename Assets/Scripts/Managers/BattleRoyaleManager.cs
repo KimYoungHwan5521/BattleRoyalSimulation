@@ -111,6 +111,7 @@ public class BattleRoyaleManager
 
     void MapSetting()
     {
+        Debug.Log(Calendar_.LeagueReserveInfo[Calendar_.Today].league);
         switch (Calendar_.LeagueReserveInfo[Calendar_.Today].league)
         {
             case League.BronzeLeague:

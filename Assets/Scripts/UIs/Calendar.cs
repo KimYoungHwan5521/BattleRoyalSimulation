@@ -125,9 +125,20 @@ public class Calendar : CustomObject
 
             string localizedMonth = new LocalizedString("Basic", monthName[(Month - 1) % 12]).GetLocalizedString();
             string localizedDateName = new LocalizedString("Basic", dateName[today % 7]).GetLocalizedString();
-            LocalizedString date = new("Basic", "Date Format");
-            date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
-            todayText.text = date.GetLocalizedString();
+
+            LocalizedString date;
+            if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+            {
+                date = new("Basic", "Weeks");
+                date.Arguments = new[] { $"{(today / 7) + 1}" };
+                todayText.text = $"{date.GetLocalizedString()} ({localizedDateName})";
+            }
+            else
+            {
+                date = new("Basic", "Date Format");
+                date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
+                todayText.text = date.GetLocalizedString();
+            }
             GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
             //outGameUIManager.HideEndTheWeekend(value % 7 > 4);
             if (value > 0)
@@ -135,6 +146,10 @@ public class Calendar : CustomObject
                 outGameUIManager.SurvivorsRecovery();
                 outGameUIManager.ResetHireMarket();
                 //if (value % 336 == 0) AddLeagueReserveInfo(1);
+            }
+            if (outGameUIManager.GameMode == GameMode.SingleCareerRun && value > 77)
+            {
+                outGameUIManager.SetChampionship(true);
             }
 
             //if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
@@ -155,7 +170,7 @@ public class Calendar : CustomObject
             //    outGameUIManager.Alert("Alert:Last Week Auto Reserve");
             //}
 
-            if(Today > 0)
+            if (Today > 0)
             {
                 // Auto save
                 GameManager.Instance.Save(0);
@@ -679,11 +694,11 @@ public class Calendar : CustomObject
         selectLeagueDropdown.ClearOptions();
         selectLeagueDropdown.AddLocalizedOptions(new() { new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague") });
 
-        Sprite sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeague);
+        Sprite sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeagueUntagged);
         selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite); 
-        sprite = ResourceManager.Get(ResourceEnum.Sprite.RangeLeague);
+        sprite = ResourceManager.Get(ResourceEnum.Sprite.RangeLeagueUntagged);
         selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
-        sprite = ResourceManager.Get(ResourceEnum.Sprite.CraftingLeague);
+        sprite = ResourceManager.Get(ResourceEnum.Sprite.CraftingLeagueUntagged);
         selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
 
         GameManager.Instance.ObjectUpdate += () =>
@@ -807,9 +822,16 @@ public class Calendar : CustomObject
             CalendarObject.SetActive(false);
             leagueReserveInfo[Today].league = selectLeagueDropdown.dropdown.value switch
             {
-                1 => League.MeleeLeague,
-                2 => League.RangeLeague,
-                3 or _ => League.CraftingLeague,
+                0 => League.MeleeLeague,
+                1 => League.RangeLeague,
+                2 or _ => League.CraftingLeague,
+            };
+
+            leagueReserveInfo[Today].itemPool = selectLeagueDropdown.dropdown.value switch
+            {
+                0 => 5,
+                1 => 6,
+                2 or _ => 7,
             };
             outGameUIManager.SkipBetting();
         });
@@ -817,7 +839,7 @@ public class Calendar : CustomObject
 
     public void SelectLeagueChanged()
     {
-        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{selectLeagueDropdown.keys[selectLeagueDropdown.dropdown.value].TableEntryReference.Key}", out var itemSpriteEnum);
+        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{selectLeagueDropdown.keys[selectLeagueDropdown.dropdown.value].TableEntryReference.Key}Untagged", out var itemSpriteEnum);
         if (spriteNotNull)
         {
             Image image = selectLeagueDropdown.transform.Find("SizeBox").Find("Sprite").GetComponent<Image>();
@@ -831,9 +853,9 @@ public class Calendar : CustomObject
     {
         if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
-            if (leagueReserveInfo.ContainsKey(Today))
+            if (leagueReserveInfo.ContainsKey(Today) && date % 7 == today % 7)
             {
-                if (outGameUIManager.MySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship)
+                if (outGameUIManager.MySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship && today % 7 == 6)
                 {
                     OpenSelectLeagueForm();
                 }

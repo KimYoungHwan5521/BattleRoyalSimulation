@@ -173,6 +173,10 @@ public class GameManager : MonoBehaviour
         //outGameUIManger.MySurvivorsData[0].IncreaseStats(100, 100, 100, 100, 100, 100);
         //calendar.LeagueReserveInfo[83].reserver = outGameUIManger.MySurvivorsData[0];
         //outGameUIManger.SetContestants();
+
+        outGameUIManger.championshipHeldCount = 0;
+        outGameUIManger.championshipDatas.Clear();
+        calendar.Today = 84;
     }
 
     public void Test2(int wantNumber)

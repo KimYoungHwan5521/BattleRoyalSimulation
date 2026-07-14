@@ -199,7 +199,7 @@ public class Survivor : CustomObject
         get { return rightHandDisabled; }
         private set 
         {
-            if (value) Debug.Log($"Right hand disabled : {linkedSurvivorData.localizedSurvivorName.GetLocalizedString()}");
+            Debug.Log($"Right hand disabled ({value}) : {linkedSurvivorData.localizedSurvivorName.GetLocalizedString()}");
             rightHandDisabled = value;
             animator.SetBool("RightHandDisabled", value);
             rightHand.SetActive(!value);
@@ -661,6 +661,20 @@ public class Survivor : CustomObject
         if(runAwayFrom != null)
         {
             CanRunAway(out runAwayDestination);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if(animator.GetBool("StopBleeding") || animator.GetBool("Drinking") || animator.GetBool("Crafting"))
+        {
+            rightHand.SetActive(false);
+            leftHand.SetActive(false);
+        }
+        else
+        {
+            rightHand.SetActive(!rightHandDisabled);
+            leftHand.SetActive(!leftHandDisabled);
         }
     }
 
@@ -1442,73 +1456,81 @@ public class Survivor : CustomObject
     void SetTransits(Area start, Area end)
     {
         transits.Clear();
-        if (start == null || end == null || start == end) return;
 
-        // start.Distances가 모든 Area를 가지고 있다는 전제
-        HashSet<Area> nodes = new(start.Distances.Keys)
-        {
-            start,
-            end
-        };
+        if (start == null || end == null || start == end)
+            return;
 
-        Dictionary<Area, long> cost = new();
+        Dictionary<Area, long> costs = new();
         Dictionary<Area, Area> previous = new();
         HashSet<Area> visited = new();
 
-        foreach (Area area in nodes)
-            cost[area] = long.MaxValue;
+        List<Area> openList = new();
 
-        cost[start] = 0;
+        costs[start] = 0;
+        openList.Add(start);
 
-        while (true)
+        while (openList.Count > 0)
         {
             Area current = null;
             long currentCost = long.MaxValue;
 
-            // 아직 방문하지 않은 노드 중 비용이 가장 낮은 노드 선택
-            foreach (Area area in nodes)
+            // openList 중 현재 비용이 가장 낮은 Area 선택
+            foreach (Area area in openList)
             {
-                if (visited.Contains(area)) continue;
+                if (!costs.TryGetValue(area, out long cost))
+                    continue;
 
-                if (cost[area] < currentCost)
+                if (cost < currentCost)
                 {
                     current = area;
-                    currentCost = cost[area];
+                    currentCost = cost;
                 }
             }
 
             if (current == null)
                 break;
 
-            if (current == end)
-                break;
+            openList.Remove(current);
+
+            if (visited.Contains(current))
+                continue;
 
             visited.Add(current);
 
-            foreach (var pair in current.Distances)
-            {
-                Area next = pair.Key;
-                int distance = pair.Value;
+            if (current == end)
+                break;
 
-                if (!nodes.Contains(next))
+            if (current.adjacentAreas == null)
+                continue;
+
+            foreach (Area next in current.adjacentAreas)
+            {
+                if (next == null)
                     continue;
 
                 if (visited.Contains(next))
                     continue;
 
-                // start/end는 허용, 중간 Area는 금지 Area 통과 불가
+                // start/end는 허용, 중간 경유지는 금지 Area 불가
                 if (next != end && next.IsProhibited)
+                    continue;
+
+                // current에서 next까지의 거리 가져오기
+                if (!current.Distances.TryGetValue(next, out int distance))
                     continue;
 
                 if (distance < 0)
                     continue;
 
-                long newCost = cost[current] + distance;
+                long newCost = currentCost + distance;
 
-                if (newCost < cost[next])
+                if (!costs.TryGetValue(next, out long oldCost) || newCost < oldCost)
                 {
-                    cost[next] = newCost;
+                    costs[next] = newCost;
                     previous[next] = current;
+
+                    if (!openList.Contains(next))
+                        openList.Add(next);
                 }
             }
         }
@@ -1517,25 +1539,27 @@ public class Survivor : CustomObject
         if (!previous.ContainsKey(end))
             return;
 
-        // 경로 복원
         List<Area> path = new();
         Area cur = end;
 
         path.Add(cur);
 
-        while (previous.ContainsKey(cur))
+        while (cur != start)
         {
-            cur = previous[cur];
-            path.Add(cur);
+            if (!previous.TryGetValue(cur, out Area prev))
+            {
+                transits.Clear();
+                return;
+            }
 
-            if (cur == start)
-                break;
+            cur = prev;
+            path.Add(cur);
         }
 
         path.Reverse();
 
-        // start, end 제외하고 transits에 추가
-        for (int i = 1; i < path.Count - 1; i++)
+        // start와 end 제외하고 transit만 저장
+        for (int i = 1; i < path.Count; i++)
         {
             transits.Add(path[i]);
         }
@@ -1586,10 +1610,7 @@ public class Survivor : CustomObject
         }
         if (nearest == null) return farmingAreas.FirstOrDefault(x => !x.Key.IsProhibited && !x.Key.IsProhibited_Plan).Key;
 
-        if (minAreaDistance > 2)
-        {
-            SetTransits(GetCurrentArea(), nearest);
-        }
+        SetTransits(GetCurrentArea(), nearest);
         return nearest;
     }
 
@@ -1632,7 +1653,7 @@ public class Survivor : CustomObject
                 }
                 //distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
                 distance = GetPathDistance(candidate.Key.transform.position, candidate.Key.GetComponent<Collider2D>());
-                Debug.Log($"{survivorName.GetLocalizedString()} : TargetPos = {candidate.Key.transform.position}, Distance = {distance}");
+                //Debug.Log($"{survivorName.GetLocalizedString()} : TargetPos = {candidate.Key.transform.position}, Distance = {distance}");
                 if (distance < minDistance)
                 {
                     minDistance = distance;

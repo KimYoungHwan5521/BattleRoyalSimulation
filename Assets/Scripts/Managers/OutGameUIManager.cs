@@ -101,8 +101,8 @@ public class OutGameUIManager : MonoBehaviour
     public class ChampionshipData
     {
         public LocalizedString SurvivorName;
-        public List<int> points;
-        public List<int> killPoints;
+        public List<int> points = new();
+        public List<int> killPoints = new();
         public int TotalPoint
         {
             get
@@ -493,7 +493,6 @@ public class OutGameUIManager : MonoBehaviour
                             else
                             {
                                 mySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship = true;
-                                championship = true;
                                 viewCurrentChampionshipStandings.SetActive(true);
                                 promotedText.StringReference = new LocalizedString("Basic", "Advanced to the Season Championship!");
                                 promoteDetailText.text = $"";
@@ -1391,6 +1390,7 @@ public class OutGameUIManager : MonoBehaviour
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
         trainingResultDetailText.text = new LocalizedString("Injury", mySurvivorsData[0].localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", mySurvivorsData[0].surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
         Surgery(mySurvivorsData[0]);
+        selectedSurvivor.SetInfo(mySurvivorsData[0], false);
         operatingRoom.SetActive(false);
     }
 
@@ -2118,6 +2118,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             calendar.LeagueReserveInfo[calendar.Today].reserver = mySurvivorsData[0];
             contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
+            if(championship) championshipDatas.Add(new(calendar.LeagueReserveInfo[calendar.Today].reserver));
             index++;
         }
         switch (calendar.LeagueReserveInfo[calendar.Today].league)
@@ -2397,7 +2398,7 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     void DayEnd(int week = 0)
     {
-        contestantsData = null;
+        //contestantsData = null;
         ResetTrainingRoom();
         calendar.Today++;
         calendar.TurnPageCalendar(0);
@@ -2708,17 +2709,20 @@ public class OutGameUIManager : MonoBehaviour
         championshipRankBG.SetActive(true);
         GameManager.Instance.openedWindows.Push(championshipRankBG);
 
+        if (championshipDatas.Count < 25) SetContestants();
+
         bool season = calendar.LeagueReserveInfo.ContainsKey(calendar.Today) && calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship;
         championshipTitle.StringReference = season ? new("Basic", "SeasonChampionship") : new("Basic", "WorldChampionship");
         championshipDescription.SetActive(season);
         for(int i=0; i<25; i++)
         {
             int rankChange = championshipDatas[i].beforeRank - championshipDatas[i].currentRank;
-            if(rankChange == 0)championshipRankRankChanges[i].text = "";
+            if(championshipDatas[i].points.Count <= 1 || rankChange == 0)championshipRankRankChanges[i].text = "";
             else if(rankChange > 0) championshipRankRankChanges[i].text = $"(<color=red>(¡ã{rankChange})</color>";
             else championshipRankRankChanges[i].text = $"<color=blue>(¡å{-rankChange})</color>";
             championshipRankRanks[i].text = $"{championshipDatas[i].currentRank + 1}";
             championshipRankNames[i].StringReference = championshipDatas[i].SurvivorName;
+            championshipRanks[i].GetComponent<Image>().color = championshipDatas[i].SurvivorName.TableEntryReference.Key == mySurvivorsData[0].localizedSurvivorName.TableEntryReference.Key ? new(1, 1, 1, 0.5f) : new(1, 1, 1, 0);
             int point = championshipDatas[i].points.Count > 0 ? championshipDatas[i].points[0] : 0;
             championshipRankDay1Points[i].text = $"{point}";
             championshipRankDay1PointDetails[i].text = point > 0 ? $"( {championshipDatas[i].points[0] - championshipDatas[i].killPoints[0]} + {championshipDatas[i].killPoints[0]} )" : "";
@@ -2731,6 +2735,12 @@ public class OutGameUIManager : MonoBehaviour
             championshipRankTotalPoints[i].text = $"{championshipDatas[i].TotalPoint}";
             championshipRankTotalPointDetails[i].text = championshipDatas[i].TotalPoint > 0 ? $"( {championshipDatas[i].TotalPoint - championshipDatas[i].TotalKillPoint} + {championshipDatas[i].TotalKillPoint} )" : "";
         }
+    }
+
+    public void SetChampionship(bool boolean)
+    {
+        championship = boolean;
+        viewCurrentChampionshipStandings.SetActive(boolean);
     }
 
     public void OpenConfirmWindow(string key, UnityAction wantAction, params string[] vars)

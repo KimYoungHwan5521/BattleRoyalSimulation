@@ -511,7 +511,7 @@ public class InGameUIManager : MonoBehaviour
                 }
             }
         }
-        if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead)) exitBattleRoyale.SetActive(true);
+        if (predictionLeft == 0 && (outGameUIManager.MySurvivorDataInBattleRoyale == null || GameManager.Instance.BattleRoyaleManager.Survivors[0].IsDead && !outGameUIManager.Championship)) exitBattleRoyale.SetActive(true);
     }
 
     void RankChangeAnimation()

@@ -514,13 +514,13 @@ public class GameResult : MonoBehaviour
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
             case League.SeasonChampionship:
-                calendar.NeareastWorldChampionship.reserver = survivor;
+                //calendar.NeareastWorldChampionship.reserver = survivor;
                 notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
-                if (outGameUIManager.trainingLevel < 5)
-                {
-                    outGameUIManager.UpgradeFacility();
-                    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
-                }
+                //if (outGameUIManager.trainingLevel < 5)
+                //{
+                //    outGameUIManager.UpgradeFacility();
+                //    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                //}
                 //survivor.haveQualifyToParticipateInWorldChampionship = true;
                 //notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
@@ -562,9 +562,12 @@ public class GameResult : MonoBehaviour
         }
         //if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
         Debug.Log($"Promote Point : {rememberPromotePoint_Rank + rememberPromotePoint_Kill}");
-        playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint_Rank + rememberPromotePoint_Kill;
-        playerSurvivor.LinkedSurvivorData.promotePoint_Rank = rememberPromotePoint_Rank;
-        playerSurvivor.LinkedSurvivorData.promotePoint_Kill = rememberPromotePoint_Kill;
+        if(!outGameUIManager.Championship)
+        {
+            playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint_Rank + rememberPromotePoint_Kill;
+            playerSurvivor.LinkedSurvivorData.promotePoint_Rank = rememberPromotePoint_Rank;
+            playerSurvivor.LinkedSurvivorData.promotePoint_Kill = rememberPromotePoint_Kill;
+        }
         if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
         notification += () =>
         {
@@ -632,7 +635,7 @@ public class GameResult : MonoBehaviour
                     outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
                     break;
             }
-            outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
+            if(!outGameUIManager.Championship) outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
         };
         if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
     }
@@ -688,7 +691,7 @@ public class GameResult : MonoBehaviour
         if (!outGameUIManager.Championship) return;
         foreach(var survivor in GameManager.Instance.BattleRoyaleManager.Survivors)
         {
-            OutGameUIManager.ChampionshipData cSurvivor = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.LinkedSurvivorData.localizedScheduledSurgeryName.TableEntryReference.Key);
+            OutGameUIManager.ChampionshipData cSurvivor = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.LinkedSurvivorData.localizedSurvivorName.TableEntryReference.Key);
             int rank = 0;
             for(int i = 0; i < 25; i++)
             {
@@ -698,8 +701,8 @@ public class GameResult : MonoBehaviour
                     break;
                 }
             }
-            cSurvivor.points[outGameUIManager.championshipHeldCount] += Mathf.Max(0, 10 - rank) + survivor.KillCount;
-            cSurvivor.killPoints[outGameUIManager.championshipHeldCount] += survivor.KillCount;
+            cSurvivor.points.Add(Mathf.Max(0, 10 - rank) + survivor.KillCount);
+            cSurvivor.killPoints.Add(survivor.KillCount);
         }
         SortChampionshipRanking();
         outGameUIManager.championshipHeldCount++;
@@ -714,7 +717,9 @@ public class GameResult : MonoBehaviour
                     if(playerSurvivorRank == 0)
                     {
                         AchievementManager.UnlockAchievement("Season Champion");
+                        outGameUIManager.MySurvivorsData[0].wonSeasonChampionship = true;
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSeasonChampionship);
+                        Promote(outGameUIManager.MySurvivorsData[0]);
                     }
                     // 상위 5인 월챔 진출
                     for (int i = 5; i<25; i++)
@@ -739,6 +744,7 @@ public class GameResult : MonoBehaviour
                 if(playerSurvivorRank == 0)
                 {
                     winWC = true;
+                    outGameUIManager.MySurvivorsData[0].wonWorldChampionship = true;
                     switch (outGameUIManager.Difficulty)
                     {
                         case 1:
@@ -804,18 +810,20 @@ public class GameResult : MonoBehaviour
             _ => 1f,
         };
 
-        InjuryType artificial;
-        foreach (var survivor in outGameUIManager.contestantsData)
+        int artificial;
+        for(int i=1; i<outGameUIManager.contestantsData.Count; i++)
         {
+            var survivor = outGameUIManager.contestantsData[i];
+            List<Injury> rememberRemove = new();
             foreach (var injury in survivor.injuries)
             {
                 if(injury.degree == 1)
                 {
                     float rand = UnityEngine.Random.Range(0, 1f);
-                    if (rand < chanceTranscendant) artificial = InjuryType.TranscendantPartsTransplanted;
-                    else if (rand < chanceTranscendant + chanceAugment) artificial = InjuryType.AugmentedPartsTransplanted;
-                    else artificial = InjuryType.ArtificialPartsTransplanted;
-                    injury.type = artificial;
+                    if (rand < chanceTranscendant) artificial = 3;
+                    else if (rand < chanceTranscendant + chanceAugment) artificial = 2;
+                    else artificial = 1;
+                    injury.type = artificial == 3 ? InjuryType.TranscendantPartsTransplanted : artificial == 2 ? InjuryType.AugmentedPartsTransplanted : InjuryType.ArtificialPartsTransplanted;
                     injury.degree = 0;
                 }
                 else
@@ -824,27 +832,32 @@ public class GameResult : MonoBehaviour
                     {
                         case InjuryType.TranscendantPartsTransplanted:
                         case InjuryType.TranscendantPartsDamaged:
-                            artificial = InjuryType.TranscendantPartsTransplanted;
+                            artificial = 3;
                             break;
                         case InjuryType.AugmentedPartsTransplanted:
                         case InjuryType.AugmentedPartsDamaged:
-                            artificial = InjuryType.AugmentedPartsTransplanted;
+                            artificial = 2;
                             break;
                         case InjuryType.ArtificialPartsTransplanted:
                         case InjuryType.ArtificialPartsDamaged:
-                            artificial = InjuryType.ArtificialPartsTransplanted;
+                            artificial = 1;
                             break;
                         default:
-                            float rand = UnityEngine.Random.Range(0, 1f);
-                            if (rand < chanceTranscendant) artificial = InjuryType.TranscendantPartsTransplanted;
-                            else if (rand < chanceTranscendant + chanceAugment) artificial = InjuryType.AugmentedPartsTransplanted;
-                            else artificial = InjuryType.ArtificialPartsTransplanted;
+                            artificial = 0;
                             break;
                     }
-                    injury.type = artificial;
-                    injury.degree = 0;
+                    if(artificial == 0)
+                    {
+                        rememberRemove.Add(injury);
+                    }
+                    else
+                    {
+                        injury.type = artificial == 3 ? InjuryType.TranscendantPartsTransplanted : artificial == 2 ? InjuryType.AugmentedPartsTransplanted : InjuryType.ArtificialPartsTransplanted;
+                        injury.degree = 0;
+                    }
                 }
             }
+            foreach (var remove in rememberRemove) survivor.injuries.Remove(remove);
 
             var championshipInfo = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == survivor.localizedSurvivorName.TableEntryReference.Key);
             if (championshipInfo.points[^1] - championshipInfo.killPoints[^1] == 10)
@@ -911,12 +924,12 @@ public class GameResult : MonoBehaviour
                 case League.GoldLeague:
                     survivor.wonGoldLeague = true;
                     break;
-                case League.SeasonChampionship:
-                    survivor.wonSeasonChampionship = true;
-                    break;
-                case League.WorldChampionship:
-                    survivor.wonWorldChampionship = true;
-                    break;
+                //case League.SeasonChampionship:
+                //    survivor.wonSeasonChampionship = true;
+                //    break;
+                //case League.WorldChampionship:
+                //    survivor.wonWorldChampionship = true;
+                //    break;
                 case League.MeleeLeague:
                     survivor.wonMeleeLeague = true;
                     break;
