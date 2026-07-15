@@ -75,7 +75,7 @@ public class UnlockManager : MonoBehaviour
                     unlockStatus[UnlockCondition.WinBronzeLeague] = true;
                     unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
                 }
-                else if(survivor.wonSeasonChampionship)
+                else if(survivor.wonSeasonChampionship || survivor.haveQualifyToParticipateInWorldChampionship)
                 {
                     unlockStatus[UnlockCondition.WinSeasonChampionship] = true;
                     unlockStatus[UnlockCondition.WinGoldLeague] = true;
@@ -83,20 +83,20 @@ public class UnlockManager : MonoBehaviour
                     unlockStatus[UnlockCondition.WinBronzeLeague] = true;
                     unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
                 }
-                else if(survivor.wonGoldLeague)
+                else if(survivor.wonGoldLeague || survivor.haveQualifyToParticipateInSeasonChampionship)
                 {
                     unlockStatus[UnlockCondition.WinGoldLeague] = true;
                     unlockStatus[UnlockCondition.WinSilverLeague] = true;
                     unlockStatus[UnlockCondition.WinBronzeLeague] = true;
                     unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
                 }
-                else if(survivor.wonSilverLeague)
+                else if(survivor.tier == Tier.Gold)
                 {
                     unlockStatus[UnlockCondition.WinSilverLeague] = true;
                     unlockStatus[UnlockCondition.WinBronzeLeague] = true;
                     unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;
                 }
-                else if(survivor.wonBronzeLeague)
+                else if(survivor.tier == Tier.Silver)
                 {
                     unlockStatus[UnlockCondition.WinBronzeLeague] = true;
                     unlockStatus[UnlockCondition.FirstParticipateInBattleRoyale] = true;

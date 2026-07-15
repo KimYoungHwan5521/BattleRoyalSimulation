@@ -18,6 +18,7 @@ public class ProjectileGenerator : CustomObject
     {
         if (owner.CurrentWeaponAsRangedWeapon == null) return;
         RangedWeapon weapon = owner.CurrentWeapon as RangedWeapon;
+        if (weapon.NeedPreload && weapon.CurrentMagazine <= 0) return;
         weapon.Fire();
         owner.InGameUIManager.UpdateSelectedObjectInventory(owner);
         if(weapon.CurrentMagazine <= 0 && owner.ValidBullet == null) owner.currentWeaponisBestWeapon = false;

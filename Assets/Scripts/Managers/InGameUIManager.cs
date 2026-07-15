@@ -352,6 +352,11 @@ public class InGameUIManager : MonoBehaviour
         }
     }
 
+    public void SetZoom(float value)
+    {
+        targetZoom = Mathf.Clamp(value, minZoom, maxZoom);
+    }
+
     public void SetTimeScale(int wantScale)
     {
         Time.timeScale = wantScale;

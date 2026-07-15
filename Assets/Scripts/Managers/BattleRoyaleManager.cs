@@ -388,6 +388,7 @@ public class BattleRoyaleManager
         InGameUIManager.SetTimeScale(0);
         InGameUIManager.ClearLog();
         InGameUIManager.SetPredictionUI();
+        InGameUIManager.SetZoom(10);
         battleWinner = null;
         count3Animator.gameObject.SetActive(true);
         battleTime = 0;

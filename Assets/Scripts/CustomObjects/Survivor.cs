@@ -1127,12 +1127,6 @@ public class Survivor : CustomObject
 
                 if (!(rightHandDisabled && leftHandDisabled))
                 {
-                    if(currentRepairing > 0)
-                    {
-                        Repair();
-                        return;
-                    }
-
                     if (Maintain())
                     {
                         CurrentStatus = Status.Maintain;
@@ -1193,7 +1187,7 @@ public class Survivor : CustomObject
                     bool enemyInAttackRange = false;
                     if (IsValid(currentWeapon))
                     {
-                        if (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0)
+                        if (CurrentWeaponAsRangedWeapon != null && (CurrentWeaponAsRangedWeapon.NeedPreload && CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 || !CurrentWeaponAsRangedWeapon.NeedPreload && ValidBullet == null))
                         {
                             // 원거린데 총알 없으면 attackRange
                             if (distance < attackRange) enemyInAttackRange = true;
@@ -1304,7 +1298,6 @@ public class Survivor : CustomObject
         if (CheckReload()) return true;
         animator.SetBool("Reload", false);
 
-        if (CheckRepair()) return true;
         return false;
     }
 
@@ -1314,6 +1307,13 @@ public class Survivor : CustomObject
         if(!GetCurrentArea().IsProhibited_Plan && !GetCurrentArea().IsProhibited && !(RightHandDisabled && LeftHandDisabled))
         {
             if (SetBoobyTrap()) return;
+
+            if (currentRepairing > 0)
+            {
+                Repair();
+                return;
+            }
+            else if (CheckRepair()) return;
 
             if (currentCrafting != null)
             {
@@ -1364,7 +1364,7 @@ public class Survivor : CustomObject
             // 파밍을 하는 경우:
             // 1. 막금구가 아님
             // 2. 막금구인 경우 : 무기가 priority1 무기가 아님 || 총알이 없음
-            if (!lastArea || !IsValid(currentWeapon) || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null))
+            if (!lastArea || !IsValid(currentWeapon) || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null))
             {
                 if (targetFarmingCorpse != null)
                 {
@@ -1651,8 +1651,16 @@ public class Survivor : CustomObject
                         return null;
                     }
                 }
-                //distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
-                distance = GetPathDistance(candidate.Key.transform.position, candidate.Key.GetComponent<Collider2D>());
+
+                // 섹션은 그냥 직선거리를 재는게 더 정확할듯
+                if (typeof(TKey) == typeof(FarmingSection))
+                {
+                    distance = Vector2.Distance(transform.position, candidate.Key.transform.position);
+                }
+                else
+                {
+                    distance = GetPathDistance(candidate.Key.transform.position, candidate.Key.GetComponent<Collider2D>());
+                }
                 //Debug.Log($"{survivorName.GetLocalizedString()} : TargetPos = {candidate.Key.transform.position}, Distance = {distance}");
                 if (distance < minDistance)
                 {
@@ -2293,18 +2301,60 @@ public class Survivor : CustomObject
 
     bool CompareBulletproofHelmetValue(BulletproofHelmet newBulletproofHelmet)
     {
-        if (!IsValid(currentHelmet)) return true;
-        if (newBulletproofHelmet.Defense > currentHelmet.Defense) return true;
-        else if (newBulletproofHelmet.Defense == currentHelmet.Defense && newBulletproofHelmet.CurDurability > currentHelmet.CurDurability) return true;
-        else return false;
+        if(!IsValid(currentWearingHelmet))
+        {
+            if (!IsValid(currentHelmet)) return true;
+            if (newBulletproofHelmet.Defense > currentHelmet.Defense) return true;
+            else if (newBulletproofHelmet.Defense == currentHelmet.Defense && newBulletproofHelmet.CurDurability > currentHelmet.CurDurability) return true;
+            else return false;
+        }
+        else
+        {
+            if (newBulletproofHelmet.Defense > currentWearingHelmet.Defense) return true;
+            else if (newBulletproofHelmet.Defense == currentWearingHelmet.Defense && newBulletproofHelmet.CurDurability > currentWearingHelmet.CurDurability) return true;
+            else return false;
+        }
+    }
+
+    int GetBulletproofHelmetTier(ItemManager.Items helmetType)
+    {
+        return helmetType switch
+        {
+            ItemManager.Items.LowLevelBulletproofHelmet => 1,
+            ItemManager.Items.MiddleLevelBulletproofHelmet => 2,
+            ItemManager.Items.HighLevelBulletproofHelmet => 3,
+            ItemManager.Items.LegendaryBulletproofHelmet => 4,
+            _ => -1,
+        };
+    }
+
+    int GetBulletproofVestTier(ItemManager.Items helmetType)
+    {
+        return helmetType switch
+        {
+            ItemManager.Items.LowLevelBulletproofVest => 1,
+            ItemManager.Items.MiddleLevelBulletproofVest => 2,
+            ItemManager.Items.HighLevelBulletproofVest => 3,
+            ItemManager.Items.LegendaryBulletproofVest => 4,
+            _ => -1,
+        };
     }
 
     bool CompareBulletproofVestValue(BulletproofVest newBulletproofVest)
     {
-        if (!IsValid(currentVest)) return true;
-        if (newBulletproofVest.Defense > currentVest.Defense) return true;
-        else if (newBulletproofVest.Defense == currentVest.Defense && newBulletproofVest.CurDurability > currentVest.CurDurability) return true;
-        else return false;
+        if(!IsValid(currentWearingVest))
+        {
+            if (!IsValid(currentVest)) return true;
+            if (newBulletproofVest.Defense > currentVest.Defense) return true;
+            else if (newBulletproofVest.Defense == currentVest.Defense && newBulletproofVest.CurDurability > currentVest.CurDurability) return true;
+            else return false;
+        }
+        else
+        {
+            if (newBulletproofVest.Defense > currentWearingVest.Defense) return true;
+            else if (newBulletproofVest.Defense == currentWearingVest.Defense && newBulletproofVest.CurDurability > currentWearingVest.CurDurability) return true;
+            else return false;
+        }
     }
 
     void Equip(Weapon wantWeapon)
@@ -2403,6 +2453,7 @@ public class Survivor : CustomObject
         if (IsValid(currentHelmet))
         {
             inventory.Add(currentHelmet);
+            currentHelmet.amount = 1;
             Transform curWeaponTF = transform.Find("Head").Find($"{currentHelmet.itemType}");
             if (curWeaponTF != null)
             {
@@ -2434,6 +2485,7 @@ public class Survivor : CustomObject
         if (IsValid(currentVest))
         {
             inventory.Add(currentVest);
+            currentVest.amount = 1;
             currentVest = null;
         }
         InGameUIManager.UpdateSelectedObjectInventory(this);
@@ -2667,6 +2719,7 @@ public class Survivor : CustomObject
                 if (inventory.Find(x => x.itemType == craftables[^i].itemType) != null || (IsValid(currentWeapon) && currentWeapon.itemType == craftables[^i].itemType)
                     || (IsValid(currentHelmet) && currentHelmet.itemType == craftables[^i].itemType) || (IsValid(currentVest) && currentVest.itemType == craftables[^i].itemType)) continue;
 
+                #region Check needs a gun
                 bool gunNeeds = false;
                 // 총 필요성 검사
                 if (IsValid(currentWeapon))
@@ -2701,7 +2754,7 @@ public class Survivor : CustomObject
                             // 만드려는게 레이져면 만들고
                             if (craftables[^i].itemType == ItemManager.Items.LASER) needCompare = false;
                             // 아니면 현재 무기 총알 체크 => 총알이 없으면 총기 티어비교
-                            else if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) needCompare = true;
+                            else if (CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null) needCompare = true;
                             else
                             {
                                 // 총알이 있으면, 내가 만드려는 무기의 총알이 있을 때만 총기 티어 비교
@@ -2722,7 +2775,8 @@ public class Survivor : CustomObject
                     }
                 }
                 else gunNeeds = true;
-
+                #endregion
+                #region Check need bullets
                 bool bulletNeeds = false;
                 Item bestWeapon = null;
                 if (craftables[^i].itemType == ItemManager.Items.Bullet_Revolver || craftables[^i].itemType == ItemManager.Items.Bullet_Pistol
@@ -2756,60 +2810,108 @@ public class Survivor : CustomObject
                     {
                         if (CurrentWeaponAsRangedWeapon == bestWeapon)
                         {
-                            if (CurrentWeaponAsRangedWeapon.CurrentMagazine == 0 && ValidBullet == null) bulletNeeds = true;
+                            if (CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null) bulletNeeds = true;
                         }
                         else bulletNeeds = true;
                     }
                 }
+                #endregion
+                #region Check need an Armor
+                bool needArmor = false;
+                if (craftables[^i].itemType == ItemManager.Items.LowLevelBulletproofHelmet || craftables[^i].itemType == ItemManager.Items.MiddleLevelBulletproofHelmet || craftables[^i].itemType == ItemManager.Items.HighLevelBulletproofHelmet || craftables[^i].itemType == ItemManager.Items.LegendaryBulletproofHelmet)
+                {
+                    if(IsValid(CurrentWearingHelmet))
+                    {
+                        needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentWearingHelmet.itemType);
+                    }
+                    else
+                    {
+                        if (IsValid(CurrentHelmet))
+                        {
+                            needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentHelmet.itemType);
+                        }
+                        else needArmor = true;
+                    }
+                }
+                else if (craftables[^i].itemType == ItemManager.Items.LowLevelBulletproofVest || craftables[^i].itemType == ItemManager.Items.MiddleLevelBulletproofVest || craftables[^i].itemType == ItemManager.Items.HighLevelBulletproofVest || craftables[^i].itemType == ItemManager.Items.LegendaryBulletproofVest)
+                {
+                    if (IsValid(CurrentWearingVest))
+                    {
+                        needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentWearingVest.itemType);
+                    }
+                    else
+                    {
+                        if (IsValid(CurrentVest))
+                        {
+                            needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentVest.itemType);
+                        }
+                        else needArmor = true;
+                    }
+                }
+                #endregion
                 // 아이템 제작 필요성 검사
                 switch (craftables[^i].itemType)
-                {
-                    case ItemManager.Items.Poison:
-                        continue;
-                    case ItemManager.Items.WalkingAid:
-                        int howManyNeed = HowManyWalkingAidNeed();
-                        Item walkingAid = inventory.Find(x => x.itemType == ItemManager.Items.WalkingAid);
-                        int currentHave = walkingAid != null ? walkingAid.amount : 0;
-                        if (currentHave < howManyNeed)
-                        {
-                            currentCrafting = craftables[^i];
-                            return true;
-                        }
-                        else continue;
-                    case ItemManager.Items.Bullet_Revolver:
-                    case ItemManager.Items.Bullet_Pistol:
-                    case ItemManager.Items.Bullet_SubMachineGun:
-                    case ItemManager.Items.Bullet_ShotGun:
-                    case ItemManager.Items.Bullet_AssaultRifle:
-                    case ItemManager.Items.Bullet_SniperRifle:
-                    case ItemManager.Items.Rocket_Bazooka:
-                    case ItemManager.Items.Arrow:
-                        if (bulletNeeds)
-                        {
-                            if(craftables[^i].itemType == ItemManager.Items.Arrow)
-                            {
-                                if (bestWeapon.itemType == ItemManager.Items.Bow || bestWeapon.itemType == ItemManager.Items.AdvancedBow) return true;
-                                else return false;
-                            }
-                            else if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
+                    {
+                        case ItemManager.Items.Poison:
+                            continue;
+                        case ItemManager.Items.WalkingAid:
+                            int howManyNeed = HowManyWalkingAidNeed();
+                            Item walkingAid = inventory.Find(x => x.itemType == ItemManager.Items.WalkingAid);
+                            int currentHave = walkingAid != null ? walkingAid.amount : 0;
+                            if (currentHave < howManyNeed)
                             {
                                 currentCrafting = craftables[^i];
                                 return true;
                             }
                             else continue;
-                        }
-                        else continue;
-                    case ItemManager.Items.Revolver:
-                    case ItemManager.Items.Pistol:
-                    case ItemManager.Items.SubMachineGun:
-                    case ItemManager.Items.ShotGun:
-                    case ItemManager.Items.SniperRifle:
-                    case ItemManager.Items.AssaultRifle:
-                    case ItemManager.Items.Bazooka:
-                    case ItemManager.Items.LASER:
-                    case ItemManager.Items.Bow:
-                    case ItemManager.Items.AdvancedBow:
-                        if (gunNeeds)
+                        case ItemManager.Items.Bullet_Revolver:
+                        case ItemManager.Items.Bullet_Pistol:
+                        case ItemManager.Items.Bullet_SubMachineGun:
+                        case ItemManager.Items.Bullet_ShotGun:
+                        case ItemManager.Items.Bullet_AssaultRifle:
+                        case ItemManager.Items.Bullet_SniperRifle:
+                        case ItemManager.Items.Rocket_Bazooka:
+                        case ItemManager.Items.Arrow:
+                            if (bulletNeeds)
+                            {
+                                if (craftables[^i].itemType == ItemManager.Items.Arrow)
+                                {
+                                    if (bestWeapon.itemType == ItemManager.Items.Bow || bestWeapon.itemType == ItemManager.Items.AdvancedBow) return true;
+                                    else return false;
+                                }
+                                else if (craftables[^i].itemType.ToString().Split("_")[1] == bestWeapon.itemType.ToString())
+                                {
+                                    currentCrafting = craftables[^i];
+                                    return true;
+                                }
+                                else continue;
+                            }
+                            else continue;
+                        case ItemManager.Items.Revolver:
+                        case ItemManager.Items.Pistol:
+                        case ItemManager.Items.SubMachineGun:
+                        case ItemManager.Items.ShotGun:
+                        case ItemManager.Items.SniperRifle:
+                        case ItemManager.Items.AssaultRifle:
+                        case ItemManager.Items.Bazooka:
+                        case ItemManager.Items.LASER:
+                        case ItemManager.Items.Bow:
+                        case ItemManager.Items.AdvancedBow:
+                            if (gunNeeds)
+                            {
+                                currentCrafting = craftables[^i];
+                                return true;
+                            }
+                            else continue;
+                    case ItemManager.Items.LowLevelBulletproofHelmet:
+                    case ItemManager.Items.MiddleLevelBulletproofHelmet:
+                    case ItemManager.Items.HighLevelBulletproofHelmet:
+                    case ItemManager.Items.LegendaryBulletproofHelmet:
+                    case ItemManager.Items.LowLevelBulletproofVest:
+                    case ItemManager.Items.MiddleLevelBulletproofVest:
+                    case ItemManager.Items.HighLevelBulletproofVest:
+                    case ItemManager.Items.LegendaryBulletproofVest:
+                        if (needArmor)
                         {
                             currentCrafting = craftables[^i];
                             return true;
@@ -2818,7 +2920,7 @@ public class Survivor : CustomObject
                     default:
                         currentCrafting = craftables[^i];
                         return true;
-                }
+                    }
             }
         }
         return false;
@@ -5588,8 +5690,6 @@ public class Survivor : CustomObject
         linkedSurvivorData = survivorInfo;
         survivorName = new LocalizedString("Name", survivorInfo.SurvivorName);
         nameTag.GetComponent<LocalizeStringEvent>().StringReference = survivorName;
-        curHP = maxHP = survivorInfo.Strength * 2 + 100;
-        curBlood = maxBlood = (survivorInfo.Strength + 100) * 80;
         bleedingSprite = curBlood - 100;
         luck = linkedSurvivorData.Luck;
         characteristics = survivorInfo.characteristics;
@@ -5620,20 +5720,36 @@ public class Survivor : CustomObject
                     if (!rememberAlreadyHaveInjury.ContainsKey(subpart)) rememberAlreadyHaveInjury.Add(subpart, 3);
             }
         }
+        bool artificailRightArm;
+        bool artificailLeftArm;
+        bool artificailRightLeg;
+        bool artificailLeftLeg;
         Injury tempInjury;
         tempInjury = injuries.Find(x => x.site == InjurySite.RightArm);
         augmentedRightArm = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
         transcendantRightArm = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        artificailRightArm = tempInjury != null && (tempInjury.type == InjuryType.ArtificialPartsTransplanted || tempInjury.type == InjuryType.ArtificialPartsDamaged);
         tempInjury = injuries.Find(x => x.site == InjurySite.LeftArm);
         augmentedLeftArm = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
         transcendantLeftArm = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        artificailLeftArm = tempInjury != null && (tempInjury.type == InjuryType.ArtificialPartsTransplanted || tempInjury.type == InjuryType.ArtificialPartsDamaged);
         tempInjury = injuries.Find(x => x.site == InjurySite.RightLeg);
         augmentedRightLeg = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
         transcendantRightLeg = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        artificailRightLeg = tempInjury != null && (tempInjury.type == InjuryType.ArtificialPartsTransplanted || tempInjury.type == InjuryType.ArtificialPartsDamaged);
         tempInjury = injuries.Find(x => x.site == InjurySite.LeftLeg);
         augmentedLeftLeg = tempInjury != null && (tempInjury.type == InjuryType.AugmentedPartsTransplanted || tempInjury.type == InjuryType.AugmentedPartsDamaged);
         transcendantLeftLeg = tempInjury != null && (tempInjury.type == InjuryType.TranscendantPartsTransplanted || tempInjury.type == InjuryType.TranscendantPartsDamaged);
+        artificailLeftLeg = tempInjury != null && (tempInjury.type == InjuryType.ArtificialPartsTransplanted || tempInjury.type == InjuryType.ArtificialPartsDamaged);
 
+        float noBlood = 0;
+        if (augmentedRightArm || transcendantRightArm || artificailRightArm) noBlood += 0.05f;
+        if (augmentedLeftArm || transcendantLeftArm || artificailLeftArm) noBlood += 0.05f;
+        if (augmentedRightLeg || transcendantRightLeg || artificailRightLeg) noBlood += 0.15f;
+        if (augmentedLeftLeg || transcendantLeftLeg || artificailLeftLeg) noBlood += 0.15f;
+
+        curHP = maxHP = (survivorInfo.Strength * 2 + 100) * (1 - noBlood);
+        curBlood = maxBlood = (survivorInfo.Strength + 100) * (1 - noBlood) * 80;
 
         lastPosition = transform.position;
         ApplyCharacteristics();
@@ -5680,7 +5796,7 @@ public class Survivor : CustomObject
                                             condition.conditions[i] = () => currentWeapon is RangedWeapon && (ValidBullet != null || CurrentWeaponAsRangedWeapon.CurrentMagazine > 0);
                                             break;
                                         case 2:
-                                            condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null && CurrentWeaponAsRangedWeapon.CurrentMagazine == 0);
+                                            condition.conditions[i] = () => currentWeapon == null || (currentWeapon is RangedWeapon && ValidBullet == null && CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0);
                                             break;
                                     }
                                     break;

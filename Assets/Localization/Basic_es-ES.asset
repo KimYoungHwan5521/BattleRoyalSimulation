@@ -1349,19 +1349,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 118118342322614272
-    m_Localized: Se desbloquea al ganar la Liga Bronce
+    m_Localized: Se desbloquea al alcanzar el Tier Plata
     m_Metadata:
       m_Items: []
   - m_Id: 118118343929032704
-    m_Localized: Se desbloquea al ganar la Liga Plata
+    m_Localized: Se desbloquea al alcanzar el Tier Oro
     m_Metadata:
       m_Items: []
   - m_Id: 118118345401233408
-    m_Localized: Se desbloquea al ganar la Liga Oro
+    m_Localized: Se desbloquea al avanzar al Campeonato de Temporada
     m_Metadata:
       m_Items: []
   - m_Id: 118118346722439168
-    m_Localized: Se desbloquea al ganar el Campeonato de Temporada
+    m_Localized: Se desbloquea al avanzar al Campeonato Mundial
     m_Metadata:
       m_Items: []
   - m_Id: 118118348089782272
@@ -1892,6 +1892,20 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 146151925255565312
     m_Localized: Selecciona una liga para participar.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146798478160883712
+    m_Localized: "Puntos de Liga: puntos de posici\xF3n (1.\xBA = 100, top 25% =
+      50, top 50% = 25) + puntos de eliminaci\xF3n (eliminaciones \xD7 10)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146865984145780736
+    m_Localized: "\xA1El Campeonato ha comenzado!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146893268957327360
+    m_Localized: "Puntos: puntos de posici\xF3n (1.\xBA = 10, 2.\xBA = 9, 3.\xBA
+      = 8 ... 10.\xBA = 1) + puntos de eliminaci\xF3n (eliminaciones \xD7 1)"
     m_Metadata:
       m_Items: []
   references:

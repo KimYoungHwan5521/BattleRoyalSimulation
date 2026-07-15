@@ -185,7 +185,7 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 50)
                     {
                         winPrize = 2500;
-                        promotePoint_Rank = 50;
+                        promotePoint_Rank = 25;
                     }
                     killPrize = playerSurvivor.KillCount * 500;
                     promotePoint_Kill = playerSurvivor.KillCount * 10;
@@ -635,7 +635,14 @@ public class GameResult : MonoBehaviour
                     outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
                     break;
             }
-            if(!outGameUIManager.Championship) outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
+            switch(calendar.LeagueReserveInfo[calendar.Today].league)
+            {
+                case League.BronzeLeague:
+                case League.SilverLeague:
+                case League.GoldLeague:
+                    outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
+                    break;
+            }
         };
         if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
     }
@@ -656,7 +663,6 @@ public class GameResult : MonoBehaviour
 
             RecordChampionshipProgress();
             ContestantsMaintain();
-            if (outGameUIManager.Championship) outGameUIManager.OpenChampionshipProgress();
 
             if(gameOver)
             {
@@ -676,6 +682,7 @@ public class GameResult : MonoBehaviour
                 notification?.Invoke();
                 notification = null;
                 GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+                if (outGameUIManager.Championship) outGameUIManager.OpenChampionshipProgress();
                 GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
             }
         }
@@ -729,6 +736,7 @@ public class GameResult : MonoBehaviour
                     }
                     // 챔피언쉽 데이터 초기화
                     outGameUIManager.championshipDatas.Clear();
+                    outGameUIManager.championshipHeldCount = 0;
                     foreach (var survivor in outGameUIManager.contestantsData) outGameUIManager.championshipDatas.Add(new(survivor));
                 }
                 else
@@ -792,7 +800,7 @@ public class GameResult : MonoBehaviour
 
     void ContestantsMaintain()
     {
-        if (!outGameUIManager.Championship) return;
+        if (!outGameUIManager.Championship || outGameUIManager.championshipDatas.Count < 25) return;
 
         // 상대들도 수술해주고, 실전경험을 통한 능력치 상승
         float chanceTranscendant = outGameUIManager.Difficulty switch

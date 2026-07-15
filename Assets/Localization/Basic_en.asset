@@ -1341,19 +1341,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 118118342322614272
-    m_Localized: Unlock by winning Bronze League
+    m_Localized: Unlocked upon reaching Silver Tier
     m_Metadata:
       m_Items: []
   - m_Id: 118118343929032704
-    m_Localized: Unlock by winning Silver League
+    m_Localized: Unlocked upon reaching Gold Tier
     m_Metadata:
       m_Items: []
   - m_Id: 118118345401233408
-    m_Localized: Unlock by winning Gold League
+    m_Localized: Unlocked upon advancing to the Season Championship
     m_Metadata:
       m_Items: []
   - m_Id: 118118346722439168
-    m_Localized: Unlock by winning Season Championship
+    m_Localized: Unlocked upon advancing to the World Championship
     m_Metadata:
       m_Items: []
   - m_Id: 118118348089782272
@@ -1875,6 +1875,20 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 146151925255565312
     m_Localized: Select a league to enter.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146798478160883712
+    m_Localized: "League Points: Placement Points (1st = 100, Top 25% = 50, Top 50%
+      = 25) + Kill Points (Kills \xD7 10)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146865984145780736
+    m_Localized: The Championship has begun!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146893268957327360
+    m_Localized: "Points: Placement Points (1st = 10, 2nd = 9, 3rd = 8 ... 10th =
+      1) + Kill Points (Kills \xD7 1)"
     m_Metadata:
       m_Items: []
   references:

@@ -1360,19 +1360,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 118118342322614272
-    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Bronze"
+    m_Localized: "D\xE9bloqu\xE9 en atteignant le rang Argent"
     m_Metadata:
       m_Items: []
   - m_Id: 118118343929032704
-    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Argent"
+    m_Localized: "D\xE9bloqu\xE9 en atteignant le rang Or"
     m_Metadata:
       m_Items: []
   - m_Id: 118118345401233408
-    m_Localized: "D\xE9bloqu\xE9 en remportant la ligue Or"
+    m_Localized: "D\xE9bloqu\xE9 en acc\xE9dant au Championnat de saison"
     m_Metadata:
       m_Items: []
   - m_Id: 118118346722439168
-    m_Localized: "D\xE9bloqu\xE9 en remportant le championnat de saison"
+    m_Localized: "D\xE9bloqu\xE9 en acc\xE9dant au Championnat du monde"
     m_Metadata:
       m_Items: []
   - m_Id: 118118348089782272
@@ -1909,6 +1909,20 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 146151925255565312
     m_Localized: "S\xE9lectionnez la ligue \xE0 laquelle participer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146798478160883712
+    m_Localized: "Points de ligue : points de classement (1er = 100, top 25 % = 50,
+      top 50 % = 25) + points d\u2019\xE9limination (\xE9liminations \xD7 10)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146865984145780736
+    m_Localized: "Le championnat a commenc\xE9 !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146893268957327360
+    m_Localized: "Points : points de classement (1er = 10, 2e = 9, 3e = 8 ... 10e
+      = 1) + points d\u2019\xE9limination (\xE9liminations \xD7 1)"
     m_Metadata:
       m_Items: []
   references:

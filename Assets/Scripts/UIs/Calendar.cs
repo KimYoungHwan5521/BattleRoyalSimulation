@@ -147,10 +147,11 @@ public class Calendar : CustomObject
                 outGameUIManager.ResetHireMarket();
                 //if (value % 336 == 0) AddLeagueReserveInfo(1);
             }
-            if (outGameUIManager.GameMode == GameMode.SingleCareerRun && value > 77)
+            if (outGameUIManager.GameMode == GameMode.SingleCareerRun && value > 83)
             {
                 outGameUIManager.SetChampionship(true);
             }
+            if (value == 84) outGameUIManager.Alert("Alert:TheChampionshipHasBegun");
 
             //if (leagueReserveInfo.ContainsKey(value) && (outGameUIManager.contestantsData == null || outGameUIManager.contestantsData.Count == 0)) outGameUIManager.SetContestants();
 

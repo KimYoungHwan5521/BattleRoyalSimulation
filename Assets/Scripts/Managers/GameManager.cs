@@ -181,7 +181,9 @@ public class GameManager : MonoBehaviour
 
     public void Test2(int wantNumber)
     {
-        BattleRoyaleManager.SetProhibitArea(wantNumber);
+        //BattleRoyaleManager.SetProhibitArea(wantNumber);
+        outGameUIManger.championshipHeldCount = 0;
+        outGameUIManger.contestantsData.RemoveRange(25, outGameUIManger.contestantsData.Count - 25);
     }
     void Update()
     {
@@ -501,7 +503,8 @@ public class GameManager : MonoBehaviour
         {
             calendar.ResetCalendar();
         }
-        unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 < currentGameVersionInt1 || loadedDataGameVersionInt1 == currentGameVersionInt1 && loadedDataGameVersionInt2 < currentGameVersionInt2);
+        //unlockManager.CheckAlreadyLocked(loadedDataGameVersionInt1 < currentGameVersionInt1 || loadedDataGameVersionInt1 == currentGameVersionInt1 && loadedDataGameVersionInt2 < currentGameVersionInt2);
+        unlockManager.CheckAlreadyLocked(true);
         yield return null;
     }
     #endregion

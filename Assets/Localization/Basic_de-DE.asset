@@ -1348,19 +1348,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 118118342322614272
-    m_Localized: Freigeschaltet durch den Sieg in der Bronze-Liga
+    m_Localized: Wird beim Erreichen des Silber-Tiers freigeschaltet
     m_Metadata:
       m_Items: []
   - m_Id: 118118343929032704
-    m_Localized: Freigeschaltet durch den Sieg in der Silber-Liga
+    m_Localized: Wird beim Erreichen des Gold-Tiers freigeschaltet
     m_Metadata:
       m_Items: []
   - m_Id: 118118345401233408
-    m_Localized: Freigeschaltet durch den Sieg in der Gold-Liga
+    m_Localized: "Wird bei der Qualifikation f\xFCr die Saisonmeisterschaft freigeschaltet"
     m_Metadata:
       m_Items: []
   - m_Id: 118118346722439168
-    m_Localized: Freigeschaltet durch den Sieg der Saisonmeisterschaft
+    m_Localized: "Wird bei der Qualifikation f\xFCr die Weltmeisterschaft freigeschaltet"
     m_Metadata:
       m_Items: []
   - m_Id: 118118348089782272
@@ -1893,6 +1893,20 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 146151925255565312
     m_Localized: "W\xE4hle eine Liga zur Teilnahme aus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146798478160883712
+    m_Localized: "Ligapunkte: Platzierungspunkte (1. Platz = 100, Top 25 % = 50,
+      Top 50 % = 25) + Kill-Punkte (Kills \xD7 10)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146865984145780736
+    m_Localized: Die Meisterschaft hat begonnen!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146893268957327360
+    m_Localized: "Punkte: Platzierungspunkte (1. Platz = 10, 2. Platz = 9, 3. Platz
+      = 8 ... 10. Platz = 1) + Kill-Punkte (Kills \xD7 1)"
     m_Metadata:
       m_Items: []
   references:

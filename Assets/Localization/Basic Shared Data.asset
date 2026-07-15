@@ -1769,6 +1769,18 @@ MonoBehaviour:
     m_Key: Select a league to enter.
     m_Metadata:
       m_Items: []
+  - m_Id: 146798478160883712
+    m_Key: Help:League Points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146865984145780736
+    m_Key: Alert:TheChampionshipHasBegun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 146893268957327360
+    m_Key: Help:Championship Points
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

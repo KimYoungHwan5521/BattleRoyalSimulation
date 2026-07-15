@@ -493,11 +493,11 @@ public class OutGameUIManager : MonoBehaviour
                             else
                             {
                                 mySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship = true;
-                                viewCurrentChampionshipStandings.SetActive(true);
                                 promotedText.StringReference = new LocalizedString("Basic", "Advanced to the Season Championship!");
                                 promoteDetailText.text = $"";
                             }
                             SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare1);
+                            ResetObjectiveText();
                         }
                         else
                         {
@@ -1288,10 +1288,10 @@ public class OutGameUIManager : MonoBehaviour
         {
             AddTransplantSurgeryToSurgeryList(InjurySite.RightEye, 4000, 40000);
             AddTransplantSurgeryToSurgeryList(InjurySite.LeftEye, 4000, 40000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.RightArm, 2500, 25000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.LeftArm, 2500, 25000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.RightLeg, 5000, 50000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.LeftLeg, 5000, 50000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightArm, 5000, 25000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftArm, 5000, 25000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightLeg, 10000, 50000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftLeg, 10000, 50000);
         }
         else if (surgeryType_Other_Treatments.isOn)
         {
@@ -1392,6 +1392,8 @@ public class OutGameUIManager : MonoBehaviour
         Surgery(mySurvivorsData[0]);
         selectedSurvivor.SetInfo(mySurvivorsData[0], false);
         operatingRoom.SetActive(false);
+
+        GameManager.Instance.Save(0);
     }
 
     public void ScheduleSurgery()
@@ -1551,6 +1553,7 @@ public class OutGameUIManager : MonoBehaviour
             int toggleIndex = i;
             craftableAllow.GetComponentInChildren<Toggle>().onValueChanged.AddListener((value) => { strategies.ToList().Find(x => x.strategyCase == StrategyCase.CraftingAllow).hasChanged = true; });
             craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference = new LocalizedString("Item", ItemManager.craftables[i].itemType.ToString());
+            craftableAllow.AddComponent<Help>().SetDescription(ItemManager.craftables[i].itemType);
             craftableAllows.Add(craftableAllow); 
         }
         foreach (Strategy strategy in strategies) strategy.Initialize();
@@ -1975,7 +1978,7 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftEye:
                 if (alreadyHad == 1) cost = injury.degree * 400;
                 else if (alreadyHad == 2) cost = injury.degree * 4000;
-                else if (alreadyHad == 3) cost = injury.degree * 40000;
+                else if (alreadyHad == 3) cost = injury.degree * 20000;
                 else if (injury.degree == 1) cost = 400;
                 else cost = injury.degree * 50;
                 break;
@@ -1992,13 +1995,19 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
                 if (alreadyHad == 1) cost = injury.degree * 500;
-                else if (alreadyHad == 2) cost = injury.degree * 5000;
+                else if (alreadyHad == 2) cost = injury.degree * 10000;
                 else if (alreadyHad == 3) cost = injury.degree * 50000;
                 else if (injury.degree == 1) cost = 500;
                 else cost = injury.degree * 100;
                 break;
             case InjurySite.RightArm:
             case InjurySite.LeftArm:
+                if (alreadyHad == 1) cost = injury.degree * 250;
+                else if (alreadyHad == 2) cost = injury.degree * 5000;
+                else if (alreadyHad == 3) cost = injury.degree * 25000;
+                else if (injury.degree == 1) cost = 250;
+                else cost = injury.degree * 50;
+                break;
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
                 if (alreadyHad > 0) cost = injury.degree * 250;
@@ -2051,8 +2060,15 @@ public class OutGameUIManager : MonoBehaviour
     {
         tutorial = false;
         GameManager.Instance.Option.SetSaveButtonInteractable(false, true);
-        mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
-        if (mySurvivorDataInBattleRoyale == null) AchievementManager.UnlockAchievement("Spectator");
+        if(gameMode == GameMode.SingleCareerRun)
+        {
+            mySurvivorDataInBattleRoyale = mySurvivorsData[0];
+        }
+        else
+        {
+            mySurvivorDataInBattleRoyale = calendar.LeagueReserveInfo[calendar.Today].reserver;
+        }
+        //if (mySurvivorDataInBattleRoyale == null) AchievementManager.UnlockAchievement("Spectator");
         StartCoroutine(GameManager.Instance.BattleRoyaleStart());
     }
 
@@ -2117,9 +2133,12 @@ public class OutGameUIManager : MonoBehaviour
         //if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
         {
             calendar.LeagueReserveInfo[calendar.Today].reserver = mySurvivorsData[0];
-            contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
-            if(championship) championshipDatas.Add(new(calendar.LeagueReserveInfo[calendar.Today].reserver));
-            index++;
+            if(championship && calendar.LeagueReserveInfo[calendar.Today].league != League.WorldChampionship)
+            {
+                contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
+                championshipDatas.Add(new(MySurvivorsData[0]));
+                index++;
+            }
         }
         switch (calendar.LeagueReserveInfo[calendar.Today].league)
         {
@@ -2455,7 +2474,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void EndTheDayWeekend()
     {
-        contestantsData = null;
+        //contestantsData = null;
         ResetTrainingRoom();
         calendar.Today++;
         calendar.TurnPageCalendar(0);
@@ -2646,8 +2665,8 @@ public class OutGameUIManager : MonoBehaviour
         };
         int check = 0;
         int[] distribute = new int[6];
-        int min = value * 30 + difficulty * (value * value + 5) * 2;
-        int max = (value + 1) * 30 + difficulty * (value * value + 5) * 2;
+        int min = value * 45 + difficulty * (value * value + 5) * 2;
+        int max = min + 30;
         int totalValue = UnityEngine.Random.Range(min, max + 1);
         if(totalValue >= 600)
         {
@@ -2718,7 +2737,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             int rankChange = championshipDatas[i].beforeRank - championshipDatas[i].currentRank;
             if(championshipDatas[i].points.Count <= 1 || rankChange == 0)championshipRankRankChanges[i].text = "";
-            else if(rankChange > 0) championshipRankRankChanges[i].text = $"(<color=red>(бу{rankChange})</color>";
+            else if(rankChange > 0) championshipRankRankChanges[i].text = $"<color=red>бу({rankChange})</color>";
             else championshipRankRankChanges[i].text = $"<color=blue>(бх{-rankChange})</color>";
             championshipRankRanks[i].text = $"{championshipDatas[i].currentRank + 1}";
             championshipRankNames[i].StringReference = championshipDatas[i].SurvivorName;
@@ -2741,6 +2760,30 @@ public class OutGameUIManager : MonoBehaviour
     {
         championship = boolean;
         viewCurrentChampionshipStandings.SetActive(boolean);
+    }
+
+    public void ResetObjectiveText()
+    {
+        if (mySurvivorsData[0].haveQualifyToParticipateInSeasonChampionship)
+        {
+            if(calendar.Today < 87)
+            {
+                objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective4").GetLocalizedString()}";
+            }
+            else
+            {
+                objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective5").GetLocalizedString()}";
+            }
+        }
+        else
+        {
+            objectiveText.text = mySurvivorsData[0].tier switch
+            {
+                Tier.Bronze => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}",
+                Tier.Silver => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}",
+                _ => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}",
+            };
+        }
     }
 
     public void OpenConfirmWindow(string key, UnityAction wantAction, params string[] vars)
@@ -2922,12 +2965,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         tutorial = false;
 
-        objectiveText.text = mySurvivorsData[0].tier switch
-        {
-            Tier.Bronze => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}",
-            Tier.Silver => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}",
-            _ => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}",
-        };
+        ResetObjectiveText();
     }
 
     void OnLocaleChanged(Locale newLocale)
@@ -2941,11 +2979,6 @@ public class OutGameUIManager : MonoBehaviour
         SetStrategyRoom();
         sortContestantsListDropdown.RelocalizeOptions();
 
-        objectiveText.text = mySurvivorsData[0].tier switch
-        {
-            Tier.Bronze => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective1").GetLocalizedString()}",
-            Tier.Silver => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}",
-            _ => $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}",
-        };
+        ResetObjectiveText();
     }
 }
