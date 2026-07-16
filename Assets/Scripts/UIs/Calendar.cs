@@ -98,7 +98,7 @@ public class Calendar : CustomObject
         }
     }
 
-    int today = 0;
+    [SerializeField] int today = 0;
     public int Today
     {
         get { return today; }

@@ -1156,8 +1156,6 @@ public class Survivor : CustomObject
             else
             {
                 CurrentStatus = Status.InCombat;
-                targetFarmingCorpse = null;
-                targetFarmingSection = null;
                 animator.SetBool("Crafting", false);
                 // 대상이 죽어버릴 경우
                 if (TargetEnemy.isDead)
@@ -1377,6 +1375,7 @@ public class Survivor : CustomObject
                 else
                 {
                     CheckFarmingTarget();
+                    if (targetFarmingCorpse != null || targetFarmingSection != null) return;
                     Explore();
                 }
             }
@@ -1720,7 +1719,10 @@ public class Survivor : CustomObject
                 outwardDirection * (agent.radius + 0.05f);
 
             destination = candidatePosition;
-            if (!agent.CalculatePath(destination, farmingSearchPath)) return Vector2.Distance(transform.position, destination);
+            if (!agent.CalculatePath(destination, farmingSearchPath))
+            {
+                return Vector2.Distance(transform.position, destination);
+            }
         }
 
         Vector3[] corners = farmingSearchPath.corners;
@@ -1729,7 +1731,7 @@ public class Survivor : CustomObject
 
         for (int i = 1; i < corners.Length; i++)
         {
-            distance += Vector3.Distance(corners[i - 1], corners[i]);
+            distance += Vector2.Distance(corners[i - 1], corners[i]);
         }
 
         return distance;
@@ -2273,6 +2275,7 @@ public class Survivor : CustomObject
         {
             ItemManager.Items.LASER => true,
             ItemManager.Items.Bazooka => wantWeapon.CurrentMagazine > 0 || inventory.Find(x => x.itemType.ToString() == $"Rocket_Bazooka") != null,
+            ItemManager.Items.Bow or ItemManager.Items.AdvancedBow => inventory.Find(x => x.itemType.ToString() == $"Arrow" || x.itemType.ToString() == $"Arrow_Enchanted") != null,
             _ => wantWeapon.CurrentMagazine > 0 || inventory.Find(x => x.itemType.ToString() == $"Bullet_{wantWeapon.itemType}") != null,
         };
     }
@@ -3369,7 +3372,7 @@ public class Survivor : CustomObject
                 if (distance < attackRange) Attack();
                 else ApproachEnemy(TargetEnemy);
             }
-            else if (CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) Aim();
+            else if (CurrentWeaponAsRangedWeapon.NeedPreload && CurrentWeaponAsRangedWeapon.CurrentMagazine > 0) Aim();
             else if (ValidBullet != null) Reload();
             else
             {

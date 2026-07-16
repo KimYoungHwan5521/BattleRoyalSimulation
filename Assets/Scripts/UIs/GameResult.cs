@@ -721,7 +721,8 @@ public class GameResult : MonoBehaviour
                 // Ω√√® ≥°
                 if(playerSurvivorRank < 5)
                 {
-                    if(playerSurvivorRank == 0)
+                    GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSeasonChampionship);
+                    if (playerSurvivorRank == 0)
                     {
                         AchievementManager.UnlockAchievement("Season Champion");
                         outGameUIManager.MySurvivorsData[0].wonSeasonChampionship = true;

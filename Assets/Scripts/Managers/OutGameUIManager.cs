@@ -498,6 +498,18 @@ public class OutGameUIManager : MonoBehaviour
                             }
                             SoundManager.PlayUISFX(ResourceEnum.SFX.Fanfare1);
                             ResetObjectiveText();
+                            switch(beforeTier)
+                            {
+                                case Tier.Bronze:
+                                    GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinBronzeLeague);
+                                    break;
+                                case Tier.Silver:
+                                    GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSilverLeague);
+                                    break;
+                                case Tier.Gold:
+                                    GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
+                                    break;
+                            }
                         }
                         else
                         {
@@ -509,6 +521,7 @@ public class OutGameUIManager : MonoBehaviour
                                 GameResult gameResult = GameManager.Instance.GetComponent<GameResult>();
                                 gameResult.gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
                                 gameResult.GameOver();
+                                return;
                             }
                         }
                         selectedSurvivor.SetInfo(mySurvivorsData[0], false);
@@ -1286,12 +1299,12 @@ public class OutGameUIManager : MonoBehaviour
         }
         else if(surgeryType_Alteration.isOn)
         {
-            AddTransplantSurgeryToSurgeryList(InjurySite.RightEye, 4000, 40000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.LeftEye, 4000, 40000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightEye, 4000, 20000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftEye, 4000, 20000);
             AddTransplantSurgeryToSurgeryList(InjurySite.RightArm, 5000, 25000);
             AddTransplantSurgeryToSurgeryList(InjurySite.LeftArm, 5000, 25000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.RightLeg, 10000, 50000);
-            AddTransplantSurgeryToSurgeryList(InjurySite.LeftLeg, 10000, 50000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.RightLeg, 15000, 75000);
+            AddTransplantSurgeryToSurgeryList(InjurySite.LeftLeg, 15000, 75000);
         }
         else if (surgeryType_Other_Treatments.isOn)
         {
@@ -1995,30 +2008,40 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.RightLeg:
             case InjurySite.LeftLeg:
                 if (alreadyHad == 1) cost = injury.degree * 500;
-                else if (alreadyHad == 2) cost = injury.degree * 10000;
-                else if (alreadyHad == 3) cost = injury.degree * 50000;
+                else if (alreadyHad == 2) cost = injury.degree * 15000 * 0.3f;
+                else if (alreadyHad == 3) cost = injury.degree * 75000 * 0.3f;
                 else if (injury.degree == 1) cost = 500;
                 else cost = injury.degree * 100;
                 break;
             case InjurySite.RightArm:
             case InjurySite.LeftArm:
                 if (alreadyHad == 1) cost = injury.degree * 250;
-                else if (alreadyHad == 2) cost = injury.degree * 5000;
-                else if (alreadyHad == 3) cost = injury.degree * 25000;
+                else if (alreadyHad == 2) cost = injury.degree * 5000 * 0.5f;
+                else if (alreadyHad == 3) cost = injury.degree * 25000 * 0.5f;
                 else if (injury.degree == 1) cost = 250;
                 else cost = injury.degree * 50;
                 break;
             case InjurySite.RightKnee:
             case InjurySite.LeftKnee:
-                if (alreadyHad > 0) cost = injury.degree * 250;
+                if (alreadyHad == 1) cost = injury.degree * 250;
+                else if (alreadyHad == 2) cost = injury.degree * 15000 * 0.3f;
+                else if (alreadyHad == 3) cost = injury.degree * 75000 * 0.3f;
                 else if (injury.degree == 1) cost = 250;
                 else cost = injury.degree * 50;
                 break;
             case InjurySite.RightHand:
             case InjurySite.LeftHand:
+                if (alreadyHad == 1) cost = injury.degree * 100;
+                else if (alreadyHad == 2) cost = injury.degree * 5000 * 0.25f;
+                else if (alreadyHad == 3) cost = injury.degree * 25000 * 0.25f;
+                else if (injury.degree == 1) cost = 100;
+                else cost = injury.degree * 25;
+                break;
             case InjurySite.RightFoot:
             case InjurySite.LeftFoot:
-                if (alreadyHad > 0) cost = injury.degree * 100;
+                if (alreadyHad == 1) cost = injury.degree * 100;
+                else if (alreadyHad == 2) cost = injury.degree * 15000 * 0.2f;
+                else if (alreadyHad == 3) cost = injury.degree * 75000 * 0.2f;
                 else if (injury.degree == 1) cost = 100;
                 else cost = injury.degree * 25;
                 break;
@@ -2032,6 +2055,12 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftMiddleFinger:
             case InjurySite.LeftRingFinger:
             case InjurySite.LeftLittleFinger:
+                if (alreadyHad == 1) cost = injury.degree * 10;
+                else if (alreadyHad == 2) cost = injury.degree * 5000 * 0.05f;
+                else if (alreadyHad == 3) cost = injury.degree * 25000 * 0.05f;
+                else if (injury.degree == 1) cost = 10;
+                else cost = injury.degree * 10;
+                break;
             case InjurySite.RightBigToe:
             case InjurySite.LeftBigToe:
             case InjurySite.RightIndexToe:
@@ -2042,8 +2071,10 @@ public class OutGameUIManager : MonoBehaviour
             case InjurySite.LeftRingToe:
             case InjurySite.RightLittleToe:
             case InjurySite.LeftLittleToe:
-                if (alreadyHad > 0) cost = injury.degree * 10;
-                else if (injury.degree == 1) cost += 10;
+                if (alreadyHad == 1) cost = injury.degree * 10;
+                else if (alreadyHad == 2) cost = injury.degree * 15000 * 0.04f;
+                else if (alreadyHad == 3) cost = injury.degree * 75000 * 0.04f;
+                else if (injury.degree == 1) cost = 10;
                 else cost = injury.degree * 10;
                 break;
             case InjurySite.None:
@@ -2133,8 +2164,9 @@ public class OutGameUIManager : MonoBehaviour
         //if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
         {
             calendar.LeagueReserveInfo[calendar.Today].reserver = mySurvivorsData[0];
-            if(championship && calendar.LeagueReserveInfo[calendar.Today].league != League.WorldChampionship)
+            if(!championship || championship && calendar.LeagueReserveInfo[calendar.Today].league != League.WorldChampionship)
             {
+                championshipDatas.Clear();
                 contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
                 championshipDatas.Add(new(MySurvivorsData[0]));
                 index++;

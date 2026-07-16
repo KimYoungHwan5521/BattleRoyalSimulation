@@ -45,6 +45,7 @@ public class SurvivorData
                 // ¼Ò¸ð
                 int changed = before - _stamina;
                 consumedStaminas += changed;
+                if (consumedStaminas >= 1000) AchievementManager.UnlockAchievement("Training Master");
                 PlayerPrefs.SetInt("Total Stamina Consumption", PlayerPrefs.GetInt("Total Stamina Consumption") + changed);
                 AchievementManager.GetStat("Total_StaminaConsumption", out int original);
                 AchievementManager.SetStat("Total_StaminaConsumption", original + changed);
