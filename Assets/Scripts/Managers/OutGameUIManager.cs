@@ -33,6 +33,7 @@ public class OutGameUIManager : MonoBehaviour
     [Header("Components")]
     [SerializeField] Canvas canvas;
     [SerializeField] GraphicRaycaster outCanvasRaycaster;
+    [SerializeField] GraphicRaycaster championshipCanvasRaycaster;
     EventSystem eventSystem;
     bool isClicked;
 
@@ -346,6 +347,8 @@ public class OutGameUIManager : MonoBehaviour
     TextMeshProUGUI[] championshipRankDay3PointDetails;
     TextMeshProUGUI[] championshipRankTotalPoints;
     TextMeshProUGUI[] championshipRankTotalPointDetails;
+
+    [SerializeField] SurvivorInfo championshipSurvivorInfo;
     #endregion
 
     private void Awake()
@@ -486,6 +489,7 @@ public class OutGameUIManager : MonoBehaviour
                     {
                         promoteAnimation = false;
                         promoteConfirmBtn.interactable = true;
+                        GameManager.Instance.openedWindows.Push(promoteBG);
                         if (mySurvivorsData[0].promotePoint >= 100)
                         {
                             mySurvivorsData[0].promotePoint = 0;
@@ -1600,13 +1604,13 @@ public class OutGameUIManager : MonoBehaviour
                     strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
                     GameManager.Instance.ObjectUpdate += () =>
                     {
-                        if (strategy.ElseActionDropdown.dropdown.IsExpanded)
+                        if (strategy.ActionDropdown.dropdown.IsExpanded)
                         {
-                            var dropdownSprites = strategy.ElseActionDropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
-                            for (int i = 0; i < strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
+                            var dropdownSprites = strategy.ActionDropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
+                            for (int i = 0; i < strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
                             {
                                 Image image = dropdownSprites[i].GetComponent<Image>();
-                                image.sprite = strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites[i];
+                                image.sprite = strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites[i];
                                 if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
                             }
                         }
@@ -1859,8 +1863,8 @@ public class OutGameUIManager : MonoBehaviour
                             strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
                         }
                     }
-                    strategy.ActionDropdown.Value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
-                    strategy.ElseActionDropdown.Value = survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1;
+                    strategy.ActionDropdown.Value = strategy.ActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 : 0;
+                    strategy.ElseActionDropdown.Value = strategy.ElseActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 : 0;
                     break;
             }
         }
@@ -1896,8 +1900,8 @@ public class OutGameUIManager : MonoBehaviour
             craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge);
             if (survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (ItemManager.craftables[i].itemType == ItemManager.Items.BearTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ShrapnelTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ChemicalTrap || ItemManager.craftables[i].itemType == ItemManager.Items.NoiseTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ExplosiveTrap || ItemManager.craftables[i].itemType == ItemManager.Items.TrapDetectionDevice))
                 craftableAllows[i].SetActive(true);
-            if (survivorWhoWantEstablishStrategy.craftingAllows[i]) craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn = true;
-            else craftableAllows[i].GetComponentsInChildren<Toggle>()[1].isOn = true;
+            if (survivorWhoWantEstablishStrategy.craftingAllows[i]) craftableAllows[i].GetComponentsInChildren<Toggle>(true)[0].isOn = true;
+            else craftableAllows[i].GetComponentsInChildren<Toggle>(true)[1].isOn = true;
         }
 
         // 조건 불러오기
@@ -2935,6 +2939,8 @@ public class OutGameUIManager : MonoBehaviour
     public void OpenChampionshipProgress()
     {
         championshipRankBG.SetActive(true);
+        if (championshipHeldCount >= 3) championshipSurvivorInfo.gameObject.SetActive(false);
+        else championshipSurvivorInfo.SetInfo(MySurvivorsData[0], false);
         GameManager.Instance.openedWindows.Push(championshipRankBG);
 
         if (championshipDatas.Count < 25) SetContestants();
@@ -3070,6 +3076,7 @@ public class OutGameUIManager : MonoBehaviour
     void OnClick(InputValue value)
     {
         List<RaycastResult> results = Raycast();
+        List<RaycastResult> championshipR = ChampionshipRaycast();
         if(value.Get<float>() > 0)
         {
             isClicked = true;
@@ -3089,6 +3096,26 @@ public class OutGameUIManager : MonoBehaviour
                     draggingContestant.SetActive(true);
                     draggingContestant.GetComponentsInChildren<Image>()[1].color = results[index].gameObject.GetComponentsInChildren<Image>()[1].color;
                     draggingContestant.GetComponentInChildren<LocalizeStringEvent>().StringReference = selectedContestantData.localizedSurvivorName;
+                }
+            }
+
+            index = championshipR.FindIndex(x => x.gameObject.CompareTag("ContestantUI"));
+            if(index > -1)
+            {
+                for (int i = 0; i < contestants.Length; i++)
+                {
+                    int jndex = contestantsData.FindIndex(x => x.localizedSurvivorName.GetLocalizedString() == championshipR[index].gameObject.GetComponentInChildren<TextMeshProUGUI>().text);
+                    if (jndex > -1) selectedContestantData = contestantsData[jndex];
+                }
+                if (selectedContestantData != null)
+                {
+                    if (gameMode == GameMode.SingleCareerRun)
+                    {
+                        if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
+                        {
+                            championshipSurvivorInfo.SetInfo(selectedContestantData, false);
+                        }
+                    }
                 }
             }
         }
@@ -3142,6 +3169,18 @@ public class OutGameUIManager : MonoBehaviour
 
         List<RaycastResult> results = new();
         outCanvasRaycaster.Raycast(pointerData, results);
+        return results;
+    }
+
+    List<RaycastResult> ChampionshipRaycast()
+    {
+        PointerEventData pointerData = new(eventSystem)
+        {
+            position = Input.mousePosition
+        };
+
+        List<RaycastResult> results = new();
+        championshipCanvasRaycaster.Raycast(pointerData, results);
         return results;
     }
 

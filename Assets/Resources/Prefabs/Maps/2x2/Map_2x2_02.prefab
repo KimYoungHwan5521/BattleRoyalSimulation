@@ -238,7 +238,7 @@ PrefabInstance:
     - target: {fileID: 2696446842607445563, guid: c87ad2a403c46354181a67fbdb63b040, type: 3}
       propertyPath: adjacentAreas.Array.data[1]
       value: 
-      objectReference: {fileID: 1825870654596531516}
+      objectReference: {fileID: 2377254188313226206}
     - target: {fileID: 8971607455267918619, guid: c87ad2a403c46354181a67fbdb63b040, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

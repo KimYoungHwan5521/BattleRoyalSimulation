@@ -482,6 +482,7 @@ public class Survivor : CustomObject
     [SerializeField] Box targetFarmingBox;
     [SerializeField] Dictionary<Survivor, bool> farmingCorpses = new();
     [SerializeField] Survivor targetFarmingCorpse;
+    bool determinFarmingCorpse;
     float farmingTime = 3f;
     [SerializeField] float curFarmingTime;
     float aimDelay = 1.5f;
@@ -667,8 +668,8 @@ public class Survivor : CustomObject
     {
         if(animator.GetBool("StopBleeding") || animator.GetBool("Drinking") || animator.GetBool("Crafting"))
         {
-            rightHand.SetActive(false);
-            leftHand.SetActive(false);
+            if (RightHandDisabled) leftHand.SetActive(false);
+            else rightHand.SetActive(false);
         }
         else
         {
@@ -1383,8 +1384,9 @@ public class Survivor : CustomObject
             // 2. 막금구인 경우 : 무기가 priority1 무기가 아님 || 총알이 없음
             if (!lastArea || !IsValid(currentWeapon) || currentWeapon.itemType != linkedSurvivorData.priority1Weapon || (CurrentWeaponAsRangedWeapon != null && CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null))
             {
-                if (targetFarmingCorpse != null)
+                if (targetFarmingCorpse != null && (targetFarmingBox == null || determinFarmingCorpse || Vector2.Distance(targetFarmingBox.transform.position, transform.position) > Vector2.Distance(targetFarmingCorpse.transform.position, transform.position)))
                 {
+                    determinFarmingCorpse = true;
                     FarmingCorpse();
                 }
                 else if (targetFarmingSection != null)
@@ -1678,6 +1680,7 @@ public class Survivor : CustomObject
                 else
                 {
                     distance = GetPathDistance(candidate.Key.transform.position, candidate.Key.GetComponent<Collider2D>());
+                    Debug.Log($"Box : {candidate.Key.transform.position}, Direct Distance : {Vector2.Distance(transform.position, candidate.Key.transform.position)}, Move Distance : {distance}");
                 }
                 //Debug.Log($"{survivorName.GetLocalizedString()} : TargetPos = {candidate.Key.transform.position}, Distance = {distance}");
                 if (distance < minDistance)
@@ -1800,6 +1803,7 @@ public class Survivor : CustomObject
         {
             farmingCorpses[targetFarmingCorpse] = true;
             targetFarmingCorpse = null;
+            determinFarmingCorpse = false;
             return;
         }
         if (Vector2.Distance(transform.position, targetFarmingCorpse.transform.position) < 1.5f)
@@ -1831,6 +1835,7 @@ public class Survivor : CustomObject
                 InGameUIManager.UpdateSelectedObjectInventory(targetFarmingCorpse);
                 farmingCorpses[targetFarmingCorpse] = true;
                 targetFarmingCorpse = null;
+                determinFarmingCorpse = false;
                 CheckCraftables();
                 CurrentFarmingArea = FindNearest(farmingAreas);
                 targetFarmingSection = FindNearest(farmingSections);

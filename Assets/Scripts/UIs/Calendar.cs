@@ -862,11 +862,22 @@ public class Calendar : CustomObject
                 }
                 else
                 {
-                    outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                    if (CapableBattleRoyale(outGameUIManager.MySurvivorsData[0], out string cause) < 1)
                     {
-                        CalendarObject.SetActive(false);
-                        outGameUIManager.SkipBetting();
-                    });
+                        outGameUIManager.OpenConfirmWindow("Confirm:Participate Battle Royale Who Have Injury", () =>
+                        {
+                            CalendarObject.SetActive(false);
+                            outGameUIManager.SkipBetting();
+                        }, outGameUIManager.MySurvivorsData[0].localizedSurvivorName.GetLocalizedString());
+                    }
+                    else
+                    {
+                        outGameUIManager.OpenConfirmWindow("Confirm:Go Battle Royale", () =>
+                        {
+                            CalendarObject.SetActive(false);
+                            outGameUIManager.SkipBetting();
+                        });
+                    }
                 }
             }
         }

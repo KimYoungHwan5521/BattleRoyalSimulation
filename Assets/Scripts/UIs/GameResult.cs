@@ -682,7 +682,6 @@ public class GameResult : MonoBehaviour
                 notification?.Invoke();
                 notification = null;
                 GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
-                if (outGameUIManager.Championship) outGameUIManager.OpenChampionshipProgress();
                 GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
             }
         }
@@ -713,6 +712,7 @@ public class GameResult : MonoBehaviour
         }
         SortChampionshipRanking();
         outGameUIManager.championshipHeldCount++;
+        outGameUIManager.OpenChampionshipProgress();
         if(outGameUIManager.championshipHeldCount >= 3)
         {
             int playerSurvivorRank = outGameUIManager.championshipDatas.Find(x => x.SurvivorName.TableEntryReference.Key == outGameUIManager.MySurvivorsData[0].localizedSurvivorName.TableEntryReference.Key).currentRank;
