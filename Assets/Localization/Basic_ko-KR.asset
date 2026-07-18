@@ -1992,6 +1992,15 @@ MonoBehaviour:
       \xD7 1)"
     m_Metadata:
       m_Items: []
+  - m_Id: 147872951555387392
+    m_Localized: "\uCD94\uC801\uD55C\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Localized: "\uC801\uC774 \uC2DC\uC57C\uC5D0\uC11C \uC0AC\uB77C\uC84C\uC744
+      \uB54C."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -193,9 +193,9 @@ public class Option : MonoBehaviour
         sortBy.options[2].text = new LocalizedString("Basic", "Name").GetLocalizedString();
 
         craftQualityDropdown.options[0].text = new LocalizedString("Basic", "Default").GetLocalizedString();
-        craftQualityDropdown.options[1].text = new LocalizedString("Basic", "Poor").GetLocalizedString();
-        craftQualityDropdown.options[2].text = new LocalizedString("Basic", "Common").GetLocalizedString();
-        craftQualityDropdown.options[3].text = new LocalizedString("Basic", "Fine").GetLocalizedString();
+        craftQualityDropdown.options[1].text = new LocalizedString("Basic", "Botched").GetLocalizedString();
+        craftQualityDropdown.options[2].text = new LocalizedString("Basic", "Shoddy").GetLocalizedString();
+        craftQualityDropdown.options[3].text = new LocalizedString("Basic", "Average").GetLocalizedString();
         craftQualityDropdown.options[4].text = new LocalizedString("Basic", "Excellent").GetLocalizedString();
         craftQualityDropdown.options[5].text = new LocalizedString("Basic", "Masterpiece").GetLocalizedString();
 

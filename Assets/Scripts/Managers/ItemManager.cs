@@ -225,11 +225,11 @@ public class ItemManager
                             attackDamage = 50;
                             attackRange = 22.6f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 30;
                             attackRange = 17.6f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 20;
                             attackRange = 15.1f;
                             break;
@@ -256,11 +256,11 @@ public class ItemManager
                             attackDamage = 95;
                             attackRange = 22.5f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 65;
                             attackRange = 17.5f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 50;
                             attackRange = 15f;
                             break;
@@ -287,11 +287,11 @@ public class ItemManager
                             attackDamage = 50;
                             attackRange = 22.7f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 30;
                             attackRange = 17.7f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 20;
                             attackRange = 15.2f;
                             break;
@@ -318,11 +318,11 @@ public class ItemManager
                             attackDamage = 50;
                             attackRange = 28f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 30;
                             attackRange = 22f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 20;
                             attackRange = 19f;
                             break;
@@ -349,11 +349,11 @@ public class ItemManager
                             attackDamage = 70;
                             attackRange = 55f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 50;
                             attackRange = 45f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 40;
                             attackRange = 40f;
                             break;
@@ -380,11 +380,11 @@ public class ItemManager
                             attackDamage = 250;
                             attackRange = 110f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 150;
                             attackRange = 70f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 100;
                             attackRange = 50f;
                             break;
@@ -411,11 +411,11 @@ public class ItemManager
                             attackDamage = 500;
                             attackRange = 45f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 300;
                             attackRange = 35f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 200;
                             attackRange = 30f;
                             break;
@@ -442,11 +442,11 @@ public class ItemManager
                             attackDamage = 125;
                             attackRange = 50f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 90;
                             attackRange = 40f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 80;
                             attackRange = 35f;
                             break;
@@ -475,11 +475,11 @@ public class ItemManager
                             attackDamage = 22.5f;
                             attackRange = 33f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 17.5f;
                             attackRange = 27f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 15;
                             attackRange = 24f;
                             break;
@@ -506,11 +506,11 @@ public class ItemManager
                             attackDamage = 67.5f;
                             attackRange = 70f;
                             break;
-                        case CraftingQuality.Common:
+                        case CraftingQuality.Shoddy:
                             attackDamage = 52.5f;
                             attackRange = 50f;
                             break;
-                        case CraftingQuality.Poor:
+                        case CraftingQuality.Botched:
                             attackDamage = 45;
                             attackRange = 40f;
                             break;
@@ -567,8 +567,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 30,
                         CraftingQuality.Excellent => 25,
-                        CraftingQuality.Common => 15,
-                        CraftingQuality.Poor => 10,
+                        CraftingQuality.Shoddy => 15,
+                        CraftingQuality.Botched => 10,
                         _ => 20,
                     };
                     itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, defense, defense * 10, quality));
@@ -581,8 +581,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 50,
                         CraftingQuality.Excellent => 45,
-                        CraftingQuality.Common => 35,
-                        CraftingQuality.Poor => 30,
+                        CraftingQuality.Shoddy => 35,
+                        CraftingQuality.Botched => 30,
                         _ => 40,
                     };
                     itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, defense, defense * 10, quality));
@@ -595,8 +595,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 100,
                         CraftingQuality.Excellent => 80,
-                        CraftingQuality.Common => 55,
-                        CraftingQuality.Poor => 50,
+                        CraftingQuality.Shoddy => 55,
+                        CraftingQuality.Botched => 50,
                         _ => 60,
                     };
                     itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 1, defense, defense * 10, quality));
@@ -609,8 +609,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 300,
                         CraftingQuality.Excellent => 250,
-                        CraftingQuality.Common => 150,
-                        CraftingQuality.Poor => 100,
+                        CraftingQuality.Shoddy => 150,
+                        CraftingQuality.Botched => 100,
                         _ => 200,
                     };
                     itemDictionary[wantItem].Add(new BulletproofHelmet(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, defense, defense * 10, quality));
@@ -624,8 +624,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 20,
                         CraftingQuality.Excellent => 15,
-                        CraftingQuality.Common => 7.5f,
-                        CraftingQuality.Poor => 5,
+                        CraftingQuality.Shoddy => 7.5f,
+                        CraftingQuality.Botched => 5,
                         _ => 10,
                     };
                     itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, defense, defense * 10, quality));
@@ -638,8 +638,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 40,
                         CraftingQuality.Excellent => 35,
-                        CraftingQuality.Common => 25,
-                        CraftingQuality.Poor => 20,
+                        CraftingQuality.Shoddy => 25,
+                        CraftingQuality.Botched => 20,
                         _ => 30,
                     };
                     itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 6, defense, defense * 10, quality));
@@ -652,8 +652,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 70,
                         CraftingQuality.Excellent => 60,
-                        CraftingQuality.Common => 45,
-                        CraftingQuality.Poor => 40,
+                        CraftingQuality.Shoddy => 45,
+                        CraftingQuality.Botched => 40,
                         _ => 50,
                     };
                     itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 9, defense, defense * 10, quality));
@@ -666,8 +666,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 150,
                         CraftingQuality.Excellent => 125,
-                        CraftingQuality.Common => 85,
-                        CraftingQuality.Poor => 70,
+                        CraftingQuality.Shoddy => 85,
+                        CraftingQuality.Botched => 70,
                         _ => 100,
                     };
                     itemDictionary[wantItem].Add(new BulletproofVest(wantItem, new LocalizedString("Item", wantItem.ToString()), 12, defense, defense * 100, quality));
@@ -727,8 +727,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 60,
                         CraftingQuality.Excellent => 50,
-                        CraftingQuality.Common => 30,
-                        CraftingQuality.Poor => 20,
+                        CraftingQuality.Shoddy => 30,
+                        CraftingQuality.Botched => 20,
                         _ => 40,
                     };
                     itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, damage, quality));
@@ -749,8 +749,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 140,
                         CraftingQuality.Excellent => 120,
-                        CraftingQuality.Common => 80,
-                        CraftingQuality.Poor => 60,
+                        CraftingQuality.Shoddy => 80,
+                        CraftingQuality.Botched => 60,
                         _ => 100,
                     };
                     itemDictionary[wantItem].Add(new Buriable(wantItem, new LocalizedString("Item", wantItem.ToString()), 3, damage, quality));
@@ -763,8 +763,8 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 3600,
                         CraftingQuality.Excellent => 2500,
-                        CraftingQuality.Common => 900,
-                        CraftingQuality.Poor => 400,
+                        CraftingQuality.Shoddy => 900,
+                        CraftingQuality.Botched => 400,
                         _ => 1600,
                     };
                     itemDictionary[wantItem].Add(new NoiseTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 2, noiseVolume, quality));
@@ -781,8 +781,8 @@ public class ItemManager
                         {
                             CraftingQuality.Masterpiece => 60,
                             CraftingQuality.Excellent => 50,
-                            CraftingQuality.Common => 30,
-                            CraftingQuality.Poor => 20,
+                            CraftingQuality.Shoddy => 30,
+                            CraftingQuality.Botched => 20,
                             _ => 40,
                         };
                         itemDictionary[wantItem].Add(new ShrapnelTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 7, damage, quality));
@@ -795,16 +795,16 @@ public class ItemManager
                     {
                         CraftingQuality.Masterpiece => 140,
                         CraftingQuality.Excellent => 120,
-                        CraftingQuality.Common => 80,
-                        CraftingQuality.Poor => 60,
+                        CraftingQuality.Shoddy => 80,
+                        CraftingQuality.Botched => 60,
                         _ => 100,
                     };
                     float explosionRange = quality switch
                     {
                         CraftingQuality.Masterpiece => 3f,
                         CraftingQuality.Excellent => 2.5f,
-                        CraftingQuality.Common => 1.75f,
-                        CraftingQuality.Poor => 1.5f,
+                        CraftingQuality.Shoddy => 1.75f,
+                        CraftingQuality.Botched => 1.5f,
                         _ => 2f,
                     };
                     itemDictionary[wantItem].Add(new ExplosiveTrap(wantItem, new LocalizedString("Item", wantItem.ToString()), 5, damage, explosionRange, quality));

@@ -107,8 +107,8 @@ public class ProjectileGenerator : CustomObject
         { 
             CraftingQuality.Masterpiece => 5f,
             CraftingQuality.Excellent => 4f,
-            CraftingQuality.Common => 2.5f,
-            CraftingQuality.Poor => 2f,
+            CraftingQuality.Shoddy => 2.5f,
+            CraftingQuality.Botched => 2f,
             _ => 3f
         };
         rocket.SetExplosionRange(explosionRange);

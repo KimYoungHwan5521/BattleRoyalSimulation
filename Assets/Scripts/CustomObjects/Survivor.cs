@@ -447,7 +447,6 @@ public class Survivor : CustomObject
     [SerializeField] Vector2 targetEnemiesLastPosition;
     public Vector2 TargetEnemiesLastPosition => targetEnemiesLastPosition;
     [SerializeField] Vector2 threateningSoundPosition;
-    float curSetDestinationCool = 1f;
     [SerializeField] Vector2 runAwayDestination;
     [SerializeField] Survivor runAwayFrom;
 
@@ -1146,7 +1145,28 @@ public class Survivor : CustomObject
                 }
                 else if (targetEnemiesLastPosition != Vector2.zero)
                 {
-                    TraceEnemy();
+                    if (strategyConditions[StrategyCase.WhenAnEnemyDisappearsFromSight].TotalCondition.Invoke())
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.WhenAnEnemyDisappearsFromSight].action == 0)
+                        {
+                            TraceEnemy();
+                        }
+                        else
+                        {
+                            TryFarming();
+                        }
+                    }
+                    else
+                    {
+                        if (linkedSurvivorData.strategyDictionary[StrategyCase.WhenAnEnemyDisappearsFromSight].elseAction == 0)
+                        {
+                            TraceEnemy();
+                        }
+                        else
+                        {
+                            TryFarming();
+                        }
+                    }
                 }
                 else
                 {
@@ -1250,7 +1270,6 @@ public class Survivor : CustomObject
                     {
                         if (strategyConditions[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].TotalCondition.Invoke())
                         {
-                            if (playerSurvivor) Debug.Log(linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action);
                             if (linkedSurvivorData.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action == 0)
                             {
                                 ApproachEnemy(TargetEnemy);
@@ -2135,8 +2154,8 @@ public class Survivor : CustomObject
                 {
                     CraftingQuality.Masterpiece => 2.5f,
                     CraftingQuality.Excellent => 2f,
-                    CraftingQuality.Common => 1.25f,
-                    CraftingQuality.Poor => 1f,
+                    CraftingQuality.Shoddy => 1.25f,
+                    CraftingQuality.Botched => 1f,
                     _ => 1.5f
                 };
                 trapDetectionDevice.GetComponent<CircleCollider2D>().radius = detectionRange;
@@ -2148,8 +2167,8 @@ public class Survivor : CustomObject
                 {
                     CraftingQuality.Masterpiece => 20f,
                     CraftingQuality.Excellent => 17.5f,
-                    CraftingQuality.Common => 12.5f,
-                    CraftingQuality.Poor => 10f,
+                    CraftingQuality.Shoddy => 12.5f,
+                    CraftingQuality.Botched => 10f,
                     _ => 15f
                 };
                 biometricRader.GetComponent<CircleCollider2D>().radius = detectionRange;
@@ -2161,8 +2180,8 @@ public class Survivor : CustomObject
                 {
                     CraftingQuality.Masterpiece => 0.7f,
                     CraftingQuality.Excellent => 0.6f,
-                    CraftingQuality.Common => 0.4f,
-                    CraftingQuality.Poor => 0.3f,
+                    CraftingQuality.Shoddy => 0.4f,
+                    CraftingQuality.Botched => 0.3f,
                     _ => 0.5f
                 };
                 energyBarrier.SetActive(true);
@@ -2295,8 +2314,8 @@ public class Survivor : CustomObject
         { 
             CraftingQuality.Masterpiece => 2,
             CraftingQuality.Excellent => 1,
-            CraftingQuality.Common => -1,
-            CraftingQuality.Poor => -2,
+            CraftingQuality.Shoddy => -1,
+            CraftingQuality.Botched => -2,
             _ => 0
         };
         return value;
@@ -3012,9 +3031,9 @@ public class Survivor : CustomObject
                 float pCommon = (correctedCrafting + 20) * 1.25f;
                 if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
                 else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
-                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Fine;
-                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine + pCommon) craftingQuality = CraftingQuality.Common;
-                else craftingQuality = CraftingQuality.Poor;
+                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Average;
+                else if (craftingQualityChance < pMasterPiece + pExcellent + pFine + pCommon) craftingQuality = CraftingQuality.Shoddy;
+                else craftingQuality = CraftingQuality.Botched;
             }
             if(craftingQuality == CraftingQuality.Masterpiece)
             {
@@ -5564,8 +5583,8 @@ public class Survivor : CustomObject
                 {
                     CraftingQuality.Masterpiece => 70,
                     CraftingQuality.Excellent => 60,
-                    CraftingQuality.Common => 40,
-                    CraftingQuality.Poor => 30,
+                    CraftingQuality.Shoddy => 40,
+                    CraftingQuality.Botched => 30,
                     _ => 50
                 };
                 curHP = Mathf.Min(curHP + recoveryRate, maxHP);
@@ -5575,8 +5594,8 @@ public class Survivor : CustomObject
                 {
                     CraftingQuality.Masterpiece => 150,
                     CraftingQuality.Excellent => 125,
-                    CraftingQuality.Common => 85,
-                    CraftingQuality.Poor => 70,
+                    CraftingQuality.Shoddy => 85,
+                    CraftingQuality.Botched => 70,
                     _ => 100
                 };
                 curHP = Mathf.Min(curHP + recoveryRate, maxHP);

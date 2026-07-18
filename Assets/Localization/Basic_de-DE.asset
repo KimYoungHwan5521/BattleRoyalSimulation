@@ -1433,15 +1433,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: Miserabel
+    m_Localized: Verpfuscht
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: "Gew\xF6hnlich"
+    m_Localized: Minderwertig
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Solide
+    m_Localized: Durchschnittlich
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
@@ -1907,6 +1907,14 @@ MonoBehaviour:
   - m_Id: 146893268957327360
     m_Localized: "Punkte: Platzierungspunkte (1. Platz = 10, 2. Platz = 9, 3. Platz
       = 8 ... 10. Platz = 1) + Kill-Punkte (Kills \xD7 1)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147872951555387392
+    m_Localized: Verfolgt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Localized: Wenn der Feind aus dem Sichtfeld verschwindet.
     m_Metadata:
       m_Items: []
   references:

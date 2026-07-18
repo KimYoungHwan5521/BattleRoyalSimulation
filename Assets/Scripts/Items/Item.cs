@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Localization;
 
-public enum CraftingQuality { NotCrafted, Poor, Common, Fine, Excellent, Masterpiece }
+public enum CraftingQuality { NotCrafted, Botched, Shoddy, Average, Excellent, Masterpiece }
 
 [Serializable]
 public class Item

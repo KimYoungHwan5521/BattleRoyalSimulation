@@ -10,6 +10,11 @@ public class LocalizedDropdown : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
     public List<LocalizedString> keys = new();
+    public int Value
+    {
+        get => dropdown.value;
+        set => dropdown.value = value;
+    }
 
     private void Awake()
     {
@@ -27,10 +32,21 @@ public class LocalizedDropdown : MonoBehaviour
         dropdown.RefreshShownValue();
     }
 
+    public void AddLocalizedOptions(params LocalizedString[] options)
+    {
+        for (int i = 0; i < options.Length; i++)
+        {
+            keys.Add(options[i]);
+            dropdown.options.Add(new OptionData(options[i].GetLocalizedString()));
+        }
+
+        dropdown.RefreshShownValue();
+    }
+
     public void ClearOptions()
     {
         keys.Clear();
-        dropdown.options.Clear();
+        dropdown.options?.Clear();
     }
 
     public void RelocalizeOptions()

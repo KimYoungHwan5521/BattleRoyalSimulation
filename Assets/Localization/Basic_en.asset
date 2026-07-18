@@ -1423,15 +1423,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: Poor
+    m_Localized: Botched
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: Common
+    m_Localized: Shoddy
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Fine
+    m_Localized: Average
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
@@ -1889,6 +1889,14 @@ MonoBehaviour:
   - m_Id: 146893268957327360
     m_Localized: "Points: Placement Points (1st = 10, 2nd = 9, 3rd = 8 ... 10th =
       1) + Kill Points (Kills \xD7 1)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147872951555387392
+    m_Localized: Tracks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Localized: When the enemy disappears from sight.
     m_Metadata:
       m_Items: []
   references:

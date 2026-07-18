@@ -1445,15 +1445,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: "M\xE9diocre"
+    m_Localized: "Rat\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: Ordinaire
+    m_Localized: "B\xE2cl\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Correct
+    m_Localized: Moyen
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
@@ -1923,6 +1923,14 @@ MonoBehaviour:
   - m_Id: 146893268957327360
     m_Localized: "Points : points de classement (1er = 10, 2e = 9, 3e = 8 ... 10e
       = 1) + points d\u2019\xE9limination (\xE9liminations \xD7 1)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147872951555387392
+    m_Localized: Traque.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Localized: "Lorsque l\u2019ennemi dispara\xEEt du champ de vision."
     m_Metadata:
       m_Items: []
   references:

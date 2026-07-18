@@ -693,7 +693,7 @@ public class Calendar : CustomObject
         };
 
         selectLeagueDropdown.ClearOptions();
-        selectLeagueDropdown.AddLocalizedOptions(new() { new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague") });
+        selectLeagueDropdown.AddLocalizedOptions(new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague"));
 
         Sprite sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeagueUntagged);
         selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite); 

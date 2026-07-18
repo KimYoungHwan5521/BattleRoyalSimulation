@@ -1349,15 +1349,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Key: Poor
+    m_Key: Botched
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Key: Common
+    m_Key: Shoddy
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Key: Fine
+    m_Key: Average
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
@@ -1779,6 +1779,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 146893268957327360
     m_Key: Help:Championship Points
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147872951555387392
+    m_Key: Tracks.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Key: When the enemy disappears from sight.
     m_Metadata:
       m_Items: []
   m_Metadata:

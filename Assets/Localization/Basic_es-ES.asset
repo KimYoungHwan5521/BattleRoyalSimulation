@@ -1434,15 +1434,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: Deficiente
+    m_Localized: Fallido
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: "Com\xFAn"
+    m_Localized: Deficiente
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Bueno
+    m_Localized: Normal
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
@@ -1906,6 +1906,14 @@ MonoBehaviour:
   - m_Id: 146893268957327360
     m_Localized: "Puntos: puntos de posici\xF3n (1.\xBA = 10, 2.\xBA = 9, 3.\xBA
       = 8 ... 10.\xBA = 1) + puntos de eliminaci\xF3n (eliminaciones \xD7 1)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147872951555387392
+    m_Localized: Rastrea.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 147877969993986048
+    m_Localized: "Cuando el enemigo desaparece del campo de visi\xF3n."
     m_Metadata:
       m_Items: []
   references:

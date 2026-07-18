@@ -10,15 +10,16 @@ using UnityEngine.UI;
 
 public enum StrategyCase
 {
-    WeaponPriority,
-    SawAnEnemyAndItIsInAttackRange,
-    SawAnEnemyAndItIsOutsideOfAttackRange,
-    HeardDistinguishableSound,
-    HeardIndistinguishableSound,
-    WhenThereAreMultipleEnemiesInSightWhoIsTheTarget,
-    CraftingPriority,
-    CraftingAllow,
-    RepairCondition,
+    WeaponPriority = 0,
+    SawAnEnemyAndItIsInAttackRange = 1,
+    SawAnEnemyAndItIsOutsideOfAttackRange = 2,
+    HeardDistinguishableSound = 3,
+    HeardIndistinguishableSound = 4,
+    WhenThereAreMultipleEnemiesInSightWhoIsTheTarget = 5,
+    CraftingPriority = 6,
+    CraftingAllow = 7,
+    RepairCondition = 8,
+    WhenAnEnemyDisappearsFromSight = 9,
 }
 
 [Serializable]
@@ -75,23 +76,23 @@ public class Strategy : MonoBehaviour
     GameObject[] inputFieldsPercents;
     [HideInInspector] public TMP_InputField[] inputFields;
     [SerializeField] GameObject action;
-    public TMP_Dropdown ActionDropdown
+    public LocalizedDropdown ActionDropdown
     {
         get
         {
             if (action == null) return null;
-            else return action.GetComponentInChildren<TMP_Dropdown>();
+            else return action.GetComponentInChildren<LocalizedDropdown>();
         }
     }
     [SerializeField] GameObject elseAction;
-    public TMP_Dropdown ElseActionDropdown
+    public LocalizedDropdown ElseActionDropdown
     {
         get
         {
             if (elseAction == null) return null;
             else
             {
-                return elseAction.GetComponentInChildren<TMP_Dropdown>();
+                return elseAction.GetComponentInChildren<LocalizedDropdown>();
             }
         }
     }
@@ -159,13 +160,13 @@ public class Strategy : MonoBehaviour
 
             condition.SetActive(false);
         }
-        ActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
-        ElseActionDropdown.onValueChanged.AddListener((value) => hasChanged = true);
+        ActionDropdown.dropdown.onValueChanged.AddListener((value) => hasChanged = true);
+        ElseActionDropdown.dropdown.onValueChanged.AddListener((value) => hasChanged = true);
         andOrs[0].gameObject.SetActive(false);
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
-    public void SetDefault()
+    public void ResetConditions()
     {
         if (noCondition) return;
         DeleteCondition();
@@ -265,6 +266,7 @@ public class Strategy : MonoBehaviour
         wantDictionary.Clear();
         wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsInAttackRange, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange, new(0, 0, 0));
+        wantDictionary.Add(StrategyCase.WhenAnEnemyDisappearsFromSight, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardDistinguishableSound, new(0, 0, 0));
         wantDictionary.Add(StrategyCase.HeardIndistinguishableSound, new(1, 1, 0));
         wantDictionary.Add(StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget, new(1, 0, 0));
@@ -289,7 +291,7 @@ public class Strategy : MonoBehaviour
         }
         else if (noCondition)
         {
-            copyStrategy = new(ActionDropdown != null ? ActionDropdown.value : 0, ElseActionDropdown != null ? ElseActionDropdown.value : 0, 0);
+            copyStrategy = new(ActionDropdown != null ? ActionDropdown.Value : 0, ElseActionDropdown != null ? ElseActionDropdown.Value : 0, 0);
         }
         else
         {
@@ -298,7 +300,7 @@ public class Strategy : MonoBehaviour
             {
                 conditions[i] = new(andOrs[i].value, variable1s[i].value, operators[i].value, variable2s[i].value, int.Parse(inputFields[i].text));
             }
-            copyStrategy = new(ActionDropdown.value, ElseActionDropdown.value, activeConditionCount, conditions);
+            copyStrategy = new(ActionDropdown.Value, ElseActionDropdown.Value, activeConditionCount, conditions);
         }
     }
 
@@ -315,12 +317,12 @@ public class Strategy : MonoBehaviour
             }
             return;
         }
-        if(ActionDropdown != null && ActionDropdown.options.Count > copyStrategy.action) ActionDropdown.value = copyStrategy.action;
-        if(ElseActionDropdown != null && ElseActionDropdown.options.Count > copyStrategy.action) ElseActionDropdown.value = copyStrategy.elseAction;
+        if(ActionDropdown != null && ActionDropdown.keys.Count > copyStrategy.action) ActionDropdown.Value = copyStrategy.action;
+        if(ElseActionDropdown != null && ElseActionDropdown.keys.Count > copyStrategy.action) ElseActionDropdown.Value = copyStrategy.elseAction;
         if (intagerInput != null) intagerInput.text = copyStrategy.action.ToString();
         if(!noCondition)
         {
-            SetDefault();
+            ResetConditions();
             for (int i = 0; i < copyStrategy.conditionConut; i++)
             {
                 AddCondition();
@@ -330,7 +332,7 @@ public class Strategy : MonoBehaviour
                 variable2s[i].value = copyStrategy.conditions[i].variable2;
                 inputFields[i].text = copyStrategy.conditions[i].inputInt.ToString();
             }
-            ElseActionDropdown.value = copyStrategy.elseAction;
+            ElseActionDropdown.Value = copyStrategy.elseAction;
         }
     }
 
@@ -355,16 +357,16 @@ public class Strategy : MonoBehaviour
                 }
                 conditionsData = conditionsList.ToArray();
                 survivor.strategyDictionary[strategyCase] = new(
-                    ActionDropdown != null ? ActionDropdown.value : 0,
-                    ElseActionDropdown != null ? ElseActionDropdown.value : 0,
+                    ActionDropdown != null ? ActionDropdown.Value : 0,
+                    ElseActionDropdown != null ? ElseActionDropdown.Value : 0,
                     activeConditionCount,
                     conditionsData
                     );
             }
             else
                 survivor.strategyDictionary[strategyCase] = new(
-                    ActionDropdown != null ? ActionDropdown.value : (intagerInput != null ? int.Parse(intagerInput.text) : 0),
-                    ElseActionDropdown != null ? ElseActionDropdown.value : 0,
+                    ActionDropdown != null ? ActionDropdown.Value : (intagerInput != null ? int.Parse(intagerInput.text) : 0),
+                    ElseActionDropdown != null ? ElseActionDropdown.Value : 0,
                     0
                     );
         }
