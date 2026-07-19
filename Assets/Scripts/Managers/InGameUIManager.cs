@@ -274,10 +274,12 @@ public class InGameUIManager : MonoBehaviour
     {
         Vector3 cameraPos;
         cameraPos = Camera.main.transform.position + (Vector3)navVector * Camera.main.orthographicSize * 0.05f;
+        if(navVector.magnitude > 0.1f) autoFocus.GetComponent<Toggle>().isOn = false;
         if (!IsPointerOverUI() && isClicked)
         {
             cameraPos = cameraPosBeforeClick + ((Vector3)clickPos - Input.mousePosition) * 0.02f * 0.2f * Camera.main.orthographicSize;
             cameraTarget = null;
+            autoFocus.GetComponent<Toggle>().isOn = false;
         }
         Camera.main.transform.position = new(Mathf.Clamp(cameraPos.x, cameraLeftLimit, cameraRightLimit), Mathf.Clamp(cameraPos.y, cameraDownLimit, cameraUpLimit), -10);
     }
@@ -1004,7 +1006,7 @@ public class InGameUIManager : MonoBehaviour
             }
             if (selectedSurvivor.IsValid(selectedSurvivor.CurrentWeapon))
             {
-                if (selectedSurvivor.CurrentWeapon is RangedWeapon)
+                if (selectedSurvivor.CurrentWeapon is RangedWeapon rangeWeapon && rangeWeapon.NeedPreload)
                 {
                     //int validBulletAmount = selectedSurvivor.ValidBullet != null ? selectedSurvivor.ValidBullet.amount : 0;
                     selectedObjectsCurrentWeaponText.text = $"{selectedSurvivor.CurrentWeapon.itemName.GetLocalizedString()} ({selectedSurvivor.CurrentWeaponAsRangedWeapon.CurrentMagazine} / {selectedSurvivor.CurrentWeaponAsRangedWeapon.MagazineCapacity})";

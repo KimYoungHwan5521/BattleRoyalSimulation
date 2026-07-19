@@ -1003,8 +1003,9 @@ public class GameResult : MonoBehaviour
         earnedAchievementsPrevious.interactable = index > 0;
         earnedAchievementsNext.interactable = index < AchievementManager.earnedAchievementsInThisRun.Count - 1;
         earnedAchievemetName.StringReference = new("Achievement", AchievementManager.earnedAchievementsInThisRun[index]);
-        string key = AchievementManager.earnedAchievementsInThisRun[index].Replace(" ", "").Replace("-", "");
+        string key = AchievementManager.earnedAchievementsInThisRun[index];
         AchievementUIManager.AchievementInfo achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == key);
+        key = key.Replace(" ", "").Replace("-", "");
         if (char.IsDigit(key[0])) key = "_" + key;
         if (Enum.TryParse(key, out ResourceEnum.Sprite spriteE)) earnedAchievementImage.sprite = ResourceManager.Get(spriteE);
         else earnedAchievementImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Unknown);

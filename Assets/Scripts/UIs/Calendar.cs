@@ -1284,7 +1284,7 @@ public class Calendar : CustomObject
             League.BronzeLeague => Tier.Bronze,
             League.SilverLeague => Tier.Silver,
             League.GoldLeague => Tier.Gold,
-            _ => Tier.Bronze,
+            _ => Tier.Gold,
         };
     }
 

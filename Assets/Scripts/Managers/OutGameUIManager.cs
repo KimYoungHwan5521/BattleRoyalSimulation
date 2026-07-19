@@ -1866,6 +1866,14 @@ public class OutGameUIManager : MonoBehaviour
                     strategy.ActionDropdown.Value = strategy.ActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 : 0;
                     strategy.ElseActionDropdown.Value = strategy.ElseActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 : 0;
                     break;
+                default:
+                    if (strategy.ActionDropdown != null) strategy.ActionDropdown.Value = survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase].action;
+                    if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.Value = survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase].elseAction;
+                    if (strategy.IntagerInput != null)
+                    {
+                        strategy.IntagerInput.text = survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase].action.ToString();
+                    }
+                    break;
             }
         }
         
@@ -1900,8 +1908,8 @@ public class OutGameUIManager : MonoBehaviour
             craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge);
             if (survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (ItemManager.craftables[i].itemType == ItemManager.Items.BearTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ShrapnelTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ChemicalTrap || ItemManager.craftables[i].itemType == ItemManager.Items.NoiseTrap || ItemManager.craftables[i].itemType == ItemManager.Items.ExplosiveTrap || ItemManager.craftables[i].itemType == ItemManager.Items.TrapDetectionDevice))
                 craftableAllows[i].SetActive(true);
-            if (survivorWhoWantEstablishStrategy.craftingAllows[i]) craftableAllows[i].GetComponentsInChildren<Toggle>(true)[0].isOn = true;
-            else craftableAllows[i].GetComponentsInChildren<Toggle>(true)[1].isOn = true;
+            craftableAllows[i].GetComponentsInChildren<Toggle>(true)[0].isOn = survivorWhoWantEstablishStrategy.craftingAllows[i];
+            craftableAllows[i].GetComponentsInChildren<Toggle>(true)[1].isOn = !survivorWhoWantEstablishStrategy.craftingAllows[i];
         }
 
         // 조건 불러오기
@@ -1916,12 +1924,6 @@ public class OutGameUIManager : MonoBehaviour
                     strategy = st;
                     break;
                 }
-            }
-            if (strategy.ActionDropdown != null) strategy.ActionDropdown.Value = strategyDictionary.Value.action;
-            if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.Value = strategyDictionary.Value.elseAction;
-            if (strategy.IntagerInput != null)
-            {
-                strategy.IntagerInput.text = strategyDictionary.Value.action.ToString();
             }
             for (int j = 0; j < 5; j++)
             {
@@ -2940,7 +2942,11 @@ public class OutGameUIManager : MonoBehaviour
     {
         championshipRankBG.SetActive(true);
         if (championshipHeldCount >= 3) championshipSurvivorInfo.gameObject.SetActive(false);
-        else championshipSurvivorInfo.SetInfo(MySurvivorsData[0], false);
+        else
+        {
+            championshipSurvivorInfo.gameObject.SetActive(true);
+            championshipSurvivorInfo.SetInfo(MySurvivorsData[0], false);
+        }
         GameManager.Instance.openedWindows.Push(championshipRankBG);
 
         if (championshipDatas.Count < 25) SetContestants();
@@ -3202,6 +3208,7 @@ public class OutGameUIManager : MonoBehaviour
         this.trainingLevel = trainingLevel;
         this.survivorHireLimit = survivorHireLimit;
         this.contestantsData = contestantsData;
+        if (contestantsData != null && contestantsData.Count > 0 && calendar.LeagueReserveInfo.ContainsKey(calendar.Today)) contestantsData[0] = calendar.LeagueReserveInfo[calendar.Today].reserver != null ? MySurvivorsData.Find(x => x.id == calendar.LeagueReserveInfo[calendar.Today].reserver.id) : MySurvivorsData[0];
         this.championship = championship;
         viewCurrentChampionshipStandings.SetActive(championship);
         this.championshipHeldCount = championshipHeldCount;

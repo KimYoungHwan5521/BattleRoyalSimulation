@@ -575,6 +575,16 @@ public class Option : MonoBehaviour
                     achievementsBoxes[i].GetComponentsInChildren<Image>()[^1].fillAmount = achievement.GetCurrentStatF() / achievement.goalStat;
                 }
             }
+            // «ÿ±›¿œ
+            if (SteamManager.Initialized && SteamUserStats.GetAchievementAndUnlockTime(achievement.achievementKey, out bool achived, out uint achievedTime) && achived)
+            {
+                DateTime date = DateTimeOffset.FromUnixTimeSeconds(achievedTime).LocalDateTime;
+                achievementsBoxes[i].GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"{new LocalizedString("Basic", "Unlock Date").GetLocalizedString()} : {date:yyyy-MM-dd}";
+            }
+            else
+            {
+                achievementsBoxes[i].GetComponentsInChildren<TextMeshProUGUI>(true)[3].text = $"({new LocalizedString("Basic", "Locked").GetLocalizedString()})";
+            }
         }
         sortBy_Characteristic.onValueChanged?.Invoke(0);
         sortBy_Training.onValueChanged?.Invoke(0);

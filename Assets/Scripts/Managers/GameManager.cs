@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "2.2";
+    public static string gameVersion = "2.2.1";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -183,8 +183,10 @@ public class GameManager : MonoBehaviour
     public void Test2(int wantNumber)
     {
         //BattleRoyaleManager.SetProhibitArea(wantNumber);
-        outGameUIManger.championshipHeldCount = 0;
-        outGameUIManger.contestantsData.RemoveRange(25, outGameUIManger.contestantsData.Count - 25);
+        //outGameUIManger.championshipHeldCount = 0;
+        //outGameUIManger.contestantsData.RemoveRange(25, outGameUIManger.contestantsData.Count - 25);
+        AchievementManager.earnedAchievementsInThisRun.Add("1 hour");
+        AchievementManager.earnedAchievementsInThisRun.Add("Very Hard");
     }
     void Update()
     {
@@ -382,6 +384,7 @@ public class GameManager : MonoBehaviour
             saveData = JsonUtility.FromJson<ETCData>(json);
         }
 
+        calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
         OutGameUIManager.LoadData(
             saveData.gameMode,
             saveData.difficulty,
@@ -401,7 +404,6 @@ public class GameManager : MonoBehaviour
         outGameUIManger.survivorsInHireMarket[0].SoldOut = saveData.soldOut[0];
         outGameUIManger.survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
         outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
-        calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
         unlockManager.LoadUnlockStatus(saveData.unlockStatus);
 
         AchievementManager.earnedAchievementsInThisRun = saveData.earnedAchievements;

@@ -1834,7 +1834,7 @@ public class Survivor : CustomObject
                 targetFarmingCorpse.inventory.Clear();
                 InGameUIManager.UpdateSelectedObjectInventory(targetFarmingCorpse);
                 farmingCorpses[targetFarmingCorpse] = true;
-                targetFarmingCorpse = null;
+                targetFarmingCorpse = FindNearest(farmingCorpses);
                 determinFarmingCorpse = false;
                 CheckCraftables();
                 CurrentFarmingArea = FindNearest(farmingAreas);
@@ -3030,10 +3030,10 @@ public class Survivor : CustomObject
             if(ItemManager.CheckUseQuality(currentCrafting.itemType))
             {
                 float craftingQualityChance = UnityEngine.Random.Range(0, 100f);
-                float pMasterPiece = (correctedCrafting - 40) * 1.25f;
-                float pExcellent = (correctedCrafting - 20) * 1.25f;
-                float pFine = correctedCrafting * 1.25f;
-                float pCommon = (correctedCrafting + 20) * 1.25f;
+                float pMasterPiece = (correctedCrafting - 60) * 1.25f;
+                float pExcellent = (correctedCrafting - 40) * 1.25f;
+                float pFine = (correctedCrafting - 20) * 1.25f;
+                float pCommon = correctedCrafting * 1.25f;
                 if (craftingQualityChance < pMasterPiece) craftingQuality = CraftingQuality.Masterpiece;
                 else if (craftingQualityChance < pMasterPiece + pExcellent) craftingQuality = CraftingQuality.Excellent;
                 else if (craftingQualityChance < pMasterPiece + pExcellent + pFine) craftingQuality = CraftingQuality.Average;
