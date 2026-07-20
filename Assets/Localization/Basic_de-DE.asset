@@ -1917,6 +1917,14 @@ MonoBehaviour:
     m_Localized: Wenn der Feind aus dem Sichtfeld verschwindet.
     m_Metadata:
       m_Items: []
+  - m_Id: 148635438793945088
+    m_Localized: Spiel starten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148635441096617984
+    m_Localized: (Falls Speicherdaten vorhanden sind, werden sie automatisch geladen.)
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

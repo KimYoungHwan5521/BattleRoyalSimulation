@@ -69,6 +69,7 @@ public class Option : MonoBehaviour
     [SerializeField] Button quitBtn;
 
     [Header("Save")]
+    [SerializeField] GameObject freeManagementNewGame;
     [SerializeField] TextMeshProUGUI saveOrLoadText;
     [SerializeField] GameObject saveSlotsObject;
     [SerializeField] SaveSlot[] saveSlots;
@@ -594,7 +595,10 @@ public class Option : MonoBehaviour
 
     public void OpenSaveSlot(bool save)
     {
-        //saveOrLoadText.text = save ? "Save" : "Load";
+        saveSlotsObject.SetActive(true);
+        GameManager.Instance.openedWindows.Push(saveSlotsObject);
+        ReloadSavedata();
+        freeManagementNewGame.SetActive(!save);
         saveOrLoadText.GetComponent<LocalizeStringEvent>().StringReference 
             = save ? new("Basic", "Save") : new("Basic", "Load");
         for(int i=1; i<saveSlots.Length; i++)
@@ -602,23 +606,16 @@ public class Option : MonoBehaviour
             saveSlots[i].saveButton.SetActive(save);
             saveSlots[i].GetComponent<Button>().enabled = !save;
         }
-        saveSlotsObject.SetActive(true);
-        GameManager.Instance.openedWindows.Push(saveSlotsObject);
     }
 
     public void ReloadSavedata()
     {
         for (int i = 0; i < saveSlots.Length; i++)
         {
-            string json = PlayerPrefs.GetString($"SaveDataInfo{i}", "{}");
+            int dataIndex = i == 0 ? 100 : i;
+            string json = PlayerPrefs.GetString($"SaveDataInfo{dataIndex}", "{}");
             if (json != "{}")
             {
-                if(i > 0)
-                {
-                    DeleteSaveData(i);
-                    continue;
-                }
-
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
                 if (saveData.gameVersion.Split('.')[0] == "1") DeleteSaveData(0);
                 string info = $"\n<i><size=12>{new LocalizedString("Basic", "Saved Time:").GetLocalizedString()} {saveData.savedTime}\nVersion {saveData.gameVersion}</size></i>";
@@ -691,16 +688,27 @@ public class Option : MonoBehaviour
         }
     }
 
-    public void SetSaveButtonInteractable(bool interactable, bool hideQuitBtn)
+    public void NewGameFreeManagement()
+    {
+        saveSlotsObject.SetActive(false);
+        GameManager.Instance.outCanvas.SetActive(true);
+        GameManager.Instance.ResetData(GameMode.FreeManagement, 0);
+        GameManager.Instance.Title.title.SetActive(false);
+        GameManager.Instance.Option.SetSaveButtonInteractable(false, false);
+    }
+
+
+    public void SetSaveButtonInteractable(bool interactable, bool showQuitBtn)
     {
         resume.SetActive(interactable);
         goTitle.SetActive(interactable);
-        quitBtn.gameObject.SetActive(hideQuitBtn);
+        quitBtn.gameObject.SetActive(showQuitBtn);
     }
 
     public void GoTitle(bool ask)
     {
-        Save(0);
+        if (GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun) Save(0);
+        else Save(100);
         //if(ask)
         //{
         //    GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Return to title", () =>
@@ -709,9 +717,9 @@ public class Option : MonoBehaviour
         //    });
         //}
         //else
-        {
+        //{
             GoingTitle();
-        }
+        //}
     }
 
     public void GoingTitle()

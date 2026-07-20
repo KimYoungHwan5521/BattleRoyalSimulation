@@ -18,7 +18,7 @@ public static class AchievementManager
         {
             SteamUserStats.SetAchievement(achievementId);
             SteamUserStats.StoreStats();
-            earnedAchievementsInThisRun.Add(achievementId);
+            if(GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun) earnedAchievementsInThisRun.Add(achievementId);
             Debug.Log($"업적 {achievementId} 달성!");
         }
     }
@@ -27,7 +27,7 @@ public static class AchievementManager
     {
         if(!SteamManager.Initialized) return;
         var achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == achievementId);
-        if (achievement != null && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
+        if (achievement != null && GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
         bool success = SteamUserStats.SetStat(achievementId, value);
         SteamUserStats.StoreStats();
     }
@@ -36,7 +36,7 @@ public static class AchievementManager
     {
         if (!SteamManager.Initialized) return;
         var achievement = AchievementUIManager.AchievementInfos.Find(x => x.achievementKey == achievementId);
-        if (achievement != null && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
+        if (achievement != null && GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun && achievement.Unlocked == false && value >= achievement.goalStat) earnedAchievementsInThisRun.Add(achievementId);
         SteamUserStats.SetStat(achievementId, value);
         SteamUserStats.StoreStats();
     }

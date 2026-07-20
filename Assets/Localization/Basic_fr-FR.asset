@@ -1933,6 +1933,15 @@ MonoBehaviour:
     m_Localized: "Lorsque l\u2019ennemi dispara\xEEt du champ de vision."
     m_Metadata:
       m_Items: []
+  - m_Id: 148635438793945088
+    m_Localized: Commencer la partie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148635441096617984
+    m_Localized: "(Si des donn\xE9es sauvegard\xE9es sont disponibles, elles seront
+      automatiquement charg\xE9es.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

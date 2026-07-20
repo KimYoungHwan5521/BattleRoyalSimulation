@@ -144,13 +144,13 @@ public class GameManager : MonoBehaviour
     public void CheckSaveData()
     {
         string json = PlayerPrefs.GetString($"SaveDataInfo0", "{}");
-        title.CheckSaveData(json != "{}");
+        title.haveSaveData = json != "{}";
     }
 
-    public void ResetData(int difficulty)
+    public void ResetData(GameMode wantMode, int difficulty)
     {
-        OutGameUIManager.ResetData(difficulty);
-        calendar.ResetData();
+        OutGameUIManager.ResetData(wantMode, difficulty);
+        calendar.ResetData(wantMode);
         GetComponent<GameResult>().ResetData();
         unlockManager.RelockAll();
     }

@@ -190,6 +190,10 @@ public class SurvivorInfo : MonoBehaviour
         shootingText.text = $"{survivorData.Shooting}";
         craftingText.text = $"{survivorData.Crafting}";
         knowledgeText.text = $"{survivorData.Knowledge}";
+
+        foreach (var characteristic in survivorData.characteristics) price += characteristic.value;
+        price = Mathf.Max(1, price);
+        priceText.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.FreeManagement);
         priceText.text = $"$ {price}";
 
         strengthBar.fillAmount = (float)survivorData.Strength / survivorData.MaxStrength;

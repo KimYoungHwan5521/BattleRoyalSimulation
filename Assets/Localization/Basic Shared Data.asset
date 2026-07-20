@@ -1789,6 +1789,14 @@ MonoBehaviour:
     m_Key: When the enemy disappears from sight.
     m_Metadata:
       m_Items: []
+  - m_Id: 148635438793945088
+    m_Key: Start Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148635441096617984
+    m_Key: (If saved data is available, it will be loaded automatically.)
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

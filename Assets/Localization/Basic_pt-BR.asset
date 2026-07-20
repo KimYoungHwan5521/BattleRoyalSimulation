@@ -1905,6 +1905,14 @@ MonoBehaviour:
     m_Localized: "Quando o inimigo desaparece do campo de vis\xE3o."
     m_Metadata:
       m_Items: []
+  - m_Id: 148635438793945088
+    m_Localized: Iniciar jogo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 148635441096617984
+    m_Localized: "(Se houver dados salvos, eles ser\xE3o carregados automaticamente.)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

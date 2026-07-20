@@ -13,21 +13,17 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject credits;
     [SerializeField] RectTransform buttonsRect;
 
+    [SerializeField] GameObject selectGameMode;
     [SerializeField] GameObject selectDifficulty;
     [SerializeField] Toggle[] difficulties;
     [SerializeField] Transform focusArrow;
 
     Color[] difficultyColors = { new(0, 1, 0), new(1, 1, 0), new(1, 0.75f, 0), new(1, 0.5f, 0), new(1, 0.25f, 0), new(1, 0, 0), new(0.75f, 0, 0) };
+    public bool haveSaveData;
 
     private void Start()
     {
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
-    }
-
-    public void CheckSaveData(bool haveSaveData)
-    {
-        continueBtn.SetActive(haveSaveData);
-        newGameBtn.SetActive(!haveSaveData);
     }
 
     public void CheckUnlockDifficulty()
@@ -54,6 +50,24 @@ public class Title : MonoBehaviour
         }
     }
 
+    public void OpenSelectMode()
+    {
+        selectGameMode.SetActive(true);
+        GameManager.Instance.openedWindows.Push(selectDifficulty);
+    }
+
+    public void SelectSingleCareerRun()
+    {
+        if (haveSaveData) Continue();
+        else NewGameSingleCareerRun();
+        selectGameMode.SetActive(false);
+    }
+
+    public void SelectFreeManagement()
+    {
+        Load();
+    }
+
     public void OpenSelectDifficulty()
     {
         selectDifficulty.SetActive(true);
@@ -62,10 +76,10 @@ public class Title : MonoBehaviour
         GameManager.Instance.openedWindows.Push(selectDifficulty);
     }
 
-    public void NewGame()
+    public void NewGameSingleCareerRun()
     {
         GameManager.Instance.outCanvas.SetActive(true);
-        GameManager.Instance.ResetData(wantDifficulty);
+        GameManager.Instance.ResetData(GameMode.SingleCareerRun, wantDifficulty);
         title.SetActive(false);
         AchievementManager.earnedAchievementsInThisRun = new();
         GameManager.Instance.Option.SetSaveButtonInteractable(false, false);

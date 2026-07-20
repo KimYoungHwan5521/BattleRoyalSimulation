@@ -281,7 +281,7 @@ public class Calendar : CustomObject
         LoadItemPool();
     }
 
-    public void ResetData()
+    public void ResetData(GameMode wantMode)
     {
         Today = 0;
         curMaxYear = 0;

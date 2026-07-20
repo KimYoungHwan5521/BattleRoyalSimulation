@@ -544,8 +544,9 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    public void ResetData(int difficulty)
+    public void ResetData(GameMode wantMode, int difficulty)
     {
+        gameMode = wantMode;
         mySurvivorsData = new();
         hireSurvivor.SetActive(true);
         trainingLevel = 1;
@@ -629,8 +630,7 @@ public class OutGameUIManager : MonoBehaviour
                 randCrafting,
                 randKnowledge,
                 characteristicCount,
-                //(int)(value * value * totalRand),
-                0,
+                totalRand,
                 Tier.Bronze);
             survivorsInHireMarket[i].SoldOut = false;
         }
@@ -655,50 +655,61 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HireSurvivor(int candidate)
     {
-        //OpenConfirmWindow($"Confirm:Purchase",
-        //    () => {
-        //        if(mySurvivorsData.Count >= survivorHireLimit)
-        //        {
-        //            Alert("Alert:Survivor limit reached.");
-        //        }
-        //        else if(money < survivorsInHireMarket[candidate].survivorData.price)
-        //        {
-        //            Alert("Alert:Not enough money.");
-        //        }
-        //        else
-        //        {
-        //            Money -= survivorsInHireMarket[candidate].survivorData.price;
-                    mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
-                    mySurvivorsData[mySurvivorsData.Count - 1].id = mySurvivorsId++;
-                    mySurvivorsData[mySurvivorsData.Count - 1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
-                    mySurvivorsData[0]._stamina = mySurvivorsData[0].MaxStamina;
-                    //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
-                    survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
+        if(gameMode == GameMode.SingleCareerRun)
+        {
+            Purchase(candidate);
+        }
+        else
+        {
+            OpenConfirmWindow($"Confirm:Purchase", () => Purchase(candidate), $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
+        }
+    }
 
-                    if(mySurvivorsData.Count == 1)
-                    {
-                        survivorsDropdown.ClearOptions();
-                        selectedSurvivor.SetInfo(mySurvivorsData[0], true);
-                        GameManager.Instance.LoadStrategy(0);
-                        trainingRoomAnim.SetBool("Tutorial", true);
-                        Alert("Click the Training Room and assign survivors to training.");
-                        objective.SetActive(true);
-                    }
-                    else if (mySurvivorsData.Count >= 10)
-                    {
-                        AchievementManager.UnlockAchievement("Full House");
-                    }
-                    survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
-                    survivorsInHireMarket[candidate].SoldOut = true;
+    void Purchase(int candidate)
+    {
+        if (mySurvivorsData.Count >= survivorHireLimit)
+        {
+            Alert("Alert:Survivor limit reached.");
+        }
+        else if (gameMode == GameMode.FreeManagement && money < survivorsInHireMarket[candidate].survivorData.price)
+        {
+            Alert("Alert:Not enough money.");
+        }
+        else
+        {
+            if(gameMode == GameMode.FreeManagement) Money -= survivorsInHireMarket[candidate].survivorData.price;
+            mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
+            mySurvivorsData[^1].id = mySurvivorsId++;
+            mySurvivorsData[^1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
+            mySurvivorsData[0]._stamina = mySurvivorsData[0].MaxStamina;
+            //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
+            survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
-                    if (mySurvivorsData.Count == 1) ResetHireMarket();
-                    hireSurvivor.SetActive(false);
-                    ResetTrainingRoom();
-                    GameManager.Instance.Save(0);
-                    GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
-        //    }
-        //},  $"{survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString()}", $"{survivorsInHireMarket[candidate].survivorData.price}");
+            if (mySurvivorsData.Count == 1)
+            {
+                survivorsDropdown.ClearOptions();
+                selectedSurvivor.SetInfo(mySurvivorsData[0], true);
+                GameManager.Instance.LoadStrategy(0);
+                trainingRoomAnim.SetBool("Tutorial", true);
+                Alert("Click the Training Room and assign survivors to training.");
+                if(gameMode == GameMode.SingleCareerRun) objective.SetActive(true);
+            }
+            else if (mySurvivorsData.Count >= 10)
+            {
+                AchievementManager.UnlockAchievement("Full House");
+            }
+            survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
+            survivorsInHireMarket[candidate].SoldOut = true;
 
+            //if (mySurvivorsData.Count == 1) ResetHireMarket();
+            hireSurvivor.SetActive(false);
+            if(gameMode == GameMode.SingleCareerRun)
+            {
+                ResetTrainingRoom();
+                GameManager.Instance.Save(0);
+            }
+            GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
+        }
     }
 
     LocalizedString GetRandomName(int depth = 0)
@@ -985,6 +996,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SelectTraining()
     {
+        trainingRoomAnim.SetBool("Tutorial", false);
         TrainingInfo training = trainingCards[focusedTraining].LinkedTraining;
         float failRate = 0;
         if (Stamina < training.staminaConsumtion) failRate = 1f;
