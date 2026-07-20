@@ -106,7 +106,7 @@ public class Calendar : CustomObject
         {
             today = value;
             //tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
-            //outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
+            outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
             //if (outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value)) outGameUIManager.Alert("Click today's league in the schedule to go to the Battle Royale.");
             if (leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null)
             {
@@ -140,7 +140,7 @@ public class Calendar : CustomObject
                 todayText.text = date.GetLocalizedString();
             }
             GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
-            //outGameUIManager.HideEndTheWeekend(value % 7 > 4);
+            outGameUIManager.HideEndTheWeekend(outGameUIManager.GameMode == GameMode.FreeManagement && value % 7 > 4);
             if (value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();

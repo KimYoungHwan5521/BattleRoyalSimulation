@@ -36,6 +36,11 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GraphicRaycaster championshipCanvasRaycaster;
     EventSystem eventSystem;
     bool isClicked;
+    [SerializeField] GameObject survivorsList;
+    [SerializeField] GameObject leaguePoint;
+    [SerializeField] GameObject stamina;
+    [SerializeField] GameObject dismissSurvivor;
+    [SerializeField] GameObject hireSurvivorBtn;
 
     [Header("Confirm / Alert")]
     [SerializeField] GameObject confirmCanvas;
@@ -178,7 +183,8 @@ public class OutGameUIManager : MonoBehaviour
             selectedSurvivor.SetInfo(mySurvivorsData[0], true);
         }
     }
-    [SerializeField] GameObject trainingRoom;
+    [SerializeField] GameObject trainingRoomSingleCareerRun;
+    [SerializeField] GameObject trainingRoomFreeManagement;
     public TrainingCard[] trainingCards;
     [SerializeField] TextMeshProUGUI currentFacilityLevelText;
     [SerializeField] Button upgradeFacilityButton;
@@ -275,7 +281,8 @@ public class OutGameUIManager : MonoBehaviour
     }
 
     [Header("Daily Result")]
-    //[SerializeField] GameObject buttonEndTheWeek;
+    [SerializeField] GameObject buttonEndTheDay;
+    [SerializeField] GameObject buttonEndTheWeek;
     [SerializeField] GameObject dailyResult;
     [SerializeField] GameObject[] survivorTrainingResults;
     TextMeshProUGUI[][] resultTexts;
@@ -547,6 +554,16 @@ public class OutGameUIManager : MonoBehaviour
     public void ResetData(GameMode wantMode, int difficulty)
     {
         gameMode = wantMode;
+
+        survivorsList.SetActive(gameMode == GameMode.FreeManagement);
+        leaguePoint.SetActive(gameMode == GameMode.SingleCareerRun);
+        stamina.SetActive(gameMode == GameMode.SingleCareerRun);
+        dismissSurvivor.SetActive(gameMode == GameMode.FreeManagement);
+        hireSurvivorBtn.SetActive(gameMode == GameMode.FreeManagement);
+        buttonEndTheDay.SetActive(gameMode == GameMode.FreeManagement);
+        buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
+        difficultyText.gameObject.SetActive(gameMode == GameMode.SingleCareerRun);
+
         mySurvivorsData = new();
         hireSurvivor.SetActive(true);
         trainingLevel = 1;
@@ -647,7 +664,8 @@ public class OutGameUIManager : MonoBehaviour
     public void CloseAll()
     {
         hireSurvivor.SetActive(false);
-        trainingRoom.SetActive(false);
+        trainingRoomSingleCareerRun.SetActive(false);
+        trainingRoomFreeManagement.SetActive(false);
         operatingRoom.SetActive(false);
         strategyRoom.SetActive(false);
         bettingRoom.SetActive(false);
@@ -905,6 +923,22 @@ public class OutGameUIManager : MonoBehaviour
                 return;
             }
 
+            if (CheckHaveInjury(out int expectedDateOfFullyRecovery))
+            {
+                Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
+            }
+            else
+            {
+                trainingRoomSingleCareerRun.SetActive(true);
+                RelocalizeTrainingRoom();
+                foreach (var trainingCard in trainingCards) trainingCard.RecalculateFailRate();
+                GameManager.Instance.openedWindows.Push(trainingRoomSingleCareerRun);
+            }
+        }
+        else
+        {
+            trainingRoomFreeManagement.SetActive(true);
+            GameManager.Instance.openedWindows.Push(trainingRoomFreeManagement);
             //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
             //{
             //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
@@ -923,22 +957,6 @@ public class OutGameUIManager : MonoBehaviour
             //        return;
             //    }
             //}
-
-            if (CheckHaveInjury(out int expectedDateOfFullyRecovery))
-            {
-                Alert("Alert:Can't Training", mySurvivorsData[0].localizedSurvivorName.GetLocalizedString(), $"{expectedDateOfFullyRecovery}");
-            }
-            else
-            {
-                trainingRoom.SetActive(true);
-                RelocalizeTrainingRoom();
-                foreach (var trainingCard in trainingCards) trainingCard.RecalculateFailRate();
-                GameManager.Instance.openedWindows.Push(trainingRoom);
-            }
-        }
-        else
-        {
-
         }
     }
 
@@ -1033,7 +1051,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         mySurvivorsData[0].receivedTrainings++;
         //foreach (var card in trainingCards) card.SetCard(card.LinkedTraining);
-        trainingRoom.SetActive(false);
+        trainingRoomSingleCareerRun.SetActive(false);
 
         GameManager.Instance.openedWindows.Push(trainingResult);
         DayEnd();
@@ -2725,7 +2743,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HideEndTheWeekend(bool hide)
     {
-        //buttonEndTheWeek.SetActive(!hide);
+        buttonEndTheWeek.SetActive(!hide);
     }
 
     void Surgery(SurvivorData survivor)
@@ -3225,6 +3243,8 @@ public class OutGameUIManager : MonoBehaviour
         viewCurrentChampionshipStandings.SetActive(championship);
         this.championshipHeldCount = championshipHeldCount;
         this.championshipDatas = championshipDatas;
+
+        ResetData(gameMode, difficulty);
 
         for (int i = 0; i < trainingCards.Length; i++) 
         {

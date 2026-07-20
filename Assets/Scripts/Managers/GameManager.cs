@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadSaveDataInfo(int slot)
     {
+        string json;
         if (SteamRemoteStorage.FileExists($"SaveDataInfo{slot}.json"))
         {
             Debug.Log("Steam Cloud 로드 성공!");
@@ -237,18 +238,17 @@ public class GameManager : MonoBehaviour
             byte[] bytes = new byte[fileSize];
             SteamRemoteStorage.FileRead($"SaveDataInfo{slot}.json", bytes, fileSize);
 
-            string json = Encoding.UTF8.GetString(bytes);
-            var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+            json = Encoding.UTF8.GetString(bytes);
         }
         else
         {
-            string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
-            var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
-            string loadedDataGameVersion = saveData.gameVersion;
-            if( loadedDataGameVersion != gameVersion )
-            {
-                ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
-            }
+            json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+        }
+        var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
+        string loadedDataGameVersion = saveData.gameVersion;
+        if( loadedDataGameVersion != gameVersion )
+        {
+            ManagerStart += () => OutGameUIManager.Alert("The saved data does not match the current game version. The game may not function properly.");
         }
         yield return null;
     }
@@ -472,10 +472,10 @@ public class GameManager : MonoBehaviour
         outCanvas.SetActive(true);
         if (BattleRoyaleManager != null) GetComponent<GameResult>().ExitBattle(true);
         ClaimLoadInfo("Loading save data...");
+        yield return LoadETCData(slot);
         yield return LoadSaveDataInfo(slot);
         yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));
         yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve(slot));
-        yield return LoadETCData(slot);
         outGameUIManger.CloseAll();
         calendar.CloseAll();
         ClaimLoadInfo("Setting markets...", 3, 3);
