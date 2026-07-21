@@ -817,6 +817,10 @@ public class Survivor : CustomObject
 
     void StopBleeding()
     {
+        animator.SetBool("Attack", false);
+        animator.SetBool("Crafting", false);
+        animator.SetBool("Reload", false);
+        animator.SetBool("Drinking", false);
         agent.SetDestination(transform.position);
         animator.SetBool("StopBleeding", true);
         animator.SetFloat("StopBleedingSpeed", stopBleedingSpeed);
@@ -877,6 +881,10 @@ public class Survivor : CustomObject
         }
         else
         {
+            animator.SetBool("Attack", false);
+            animator.SetBool("Crafting", false);
+            animator.SetBool("Reload", false);
+            animator.SetBool("StopBleeding", false);
             agent.destination = transform.position;
             animator.SetBool("Drinking", true);
             return true;
@@ -3426,6 +3434,7 @@ public class Survivor : CustomObject
         animator.SetBool("Reload", false);
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Crafting", false);
+        animator.SetBool("Drinking", false);
         if (Vector2.Distance(agent.destination, target.transform.position) > attackRange)
         {
             // 상대는 금구에 있고 난 아닌경우 :
@@ -3532,6 +3541,7 @@ public class Survivor : CustomObject
         animator.SetBool("Attack", false);
         animator.SetBool("StopBleeding", false);
         animator.SetBool("Crafting", false);
+        animator.SetBool("Drinking", false);
         agent.SetDestination(transform.position);
         animator.SetBool("Reload", true);
 
@@ -5535,11 +5545,39 @@ public class Survivor : CustomObject
 
     void AE_Reload()
     {
-        int amount;
-        if (currentWeapon.itemType == ItemManager.Items.ShotGun) amount = 1;
-        else amount = Math.Max(1, CurrentWeaponAsRangedWeapon.MagazineCapacity - CurrentWeaponAsRangedWeapon.CurrentMagazine);
-        ConsumptionItem(ValidBullet, amount);
-        CurrentWeaponAsRangedWeapon.Reload(amount);
+        RangedWeapon weapon = CurrentWeaponAsRangedWeapon;
+        Item bullet = ValidBullet;
+
+        if (weapon == null ||
+            bullet == null ||
+            weapon.CurrentMagazine >= weapon.MagazineCapacity)
+        {
+            animator.SetBool("Reload", false);
+            return;
+        }
+
+        int requiredAmount =
+            currentWeapon.itemType == ItemManager.Items.ShotGun
+                ? 1
+                : weapon.MagazineCapacity - weapon.CurrentMagazine;
+
+        int amount = Mathf.Min(requiredAmount, bullet.amount);
+
+        if (amount <= 0)
+        {
+            animator.SetBool("Reload", false);
+            return;
+        }
+
+        ConsumptionItem(bullet, amount);
+        weapon.Reload(amount);
+
+        if (weapon.CurrentMagazine >= weapon.MagazineCapacity ||
+            ValidBullet == null)
+        {
+            animator.SetBool("Reload", false);
+        }
+
         InGameUIManager.UpdateSelectedObjectInventory(this);
     }
 

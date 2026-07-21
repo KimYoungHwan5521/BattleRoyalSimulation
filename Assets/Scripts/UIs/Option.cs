@@ -667,10 +667,10 @@ public class Option : MonoBehaviour
             PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
             PlayerPrefs.DeleteKey($"ETCData{slot}");
 
-            DeleteSteamCloudData($"SaveDataInfo{slot}");
-            DeleteSteamCloudData($"MySurvivorList{slot}");
-            DeleteSteamCloudData($"LeagueReserveData{slot}");
-            DeleteSteamCloudData($"ETCData{slot}");
+            DeleteSteamCloudData($"SaveDataInfo{slot}.json");
+            DeleteSteamCloudData($"MySurvivorList{slot}.json");
+            DeleteSteamCloudData($"LeagueReserveData{slot}.json");
+            DeleteSteamCloudData($"ETCData{slot}.json");
 
             ReloadSavedata();
         //});

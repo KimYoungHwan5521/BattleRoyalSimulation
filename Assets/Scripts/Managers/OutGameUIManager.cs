@@ -480,7 +480,7 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
 
-        if (promoteAnimation)
+        if (promoteAnimation && MySurvivorsData != null && MySurvivorsData.Count > 0)
         {
             curLeaguePointIncreaseWait += Time.unscaledDeltaTime;
             if (curLeaguePointIncreaseWait > leaguePointIncreaseWait)
@@ -564,7 +564,7 @@ public class OutGameUIManager : MonoBehaviour
         buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
         difficultyText.gameObject.SetActive(gameMode == GameMode.SingleCareerRun);
 
-        mySurvivorsData = new();
+        //mySurvivorsData = new();
         hireSurvivor.SetActive(true);
         trainingLevel = 1;
         ResetHireMarket();
@@ -792,6 +792,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void ResetSelectedSurvivorInfo()
     {
+        if (mySurvivorsData == null || mySurvivorsData.Count == 0) return;
         selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
         selectedSurvivor.StatIncreaseAnimation();
     }
@@ -805,25 +806,7 @@ public class OutGameUIManager : MonoBehaviour
                 Alert("Alert:Today is a Battle Royale match day.");
                 return;
             }
-            //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
-            //{
-            //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            //    {
-            //        Alert("Alert:Join Championship");
-            //        return;
-            //    }
-            //    else if (calendar.Today > 77 && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            //    {
-            //        Alert("Alert:Last Week Join League");
-            //        return;
-            //    }
-            //    else if ((calendar.Today == 24 || calendar.Today == 53) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-            //    {
-            //        Alert("Alert:Last Chance For Objective");
-            //        return;
-            //    }
-            //}
-
+            
             OpenConfirmWindow("Confirm:Rest", () =>
             {
                 int value;

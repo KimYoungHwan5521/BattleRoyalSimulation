@@ -59,7 +59,7 @@ public class Title : MonoBehaviour
     public void SelectSingleCareerRun()
     {
         if (haveSaveData) Continue();
-        else NewGameSingleCareerRun();
+        else OpenSelectDifficulty();
         selectGameMode.SetActive(false);
     }
 

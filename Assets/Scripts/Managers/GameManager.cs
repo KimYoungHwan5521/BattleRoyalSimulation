@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetData(GameMode wantMode, int difficulty)
     {
+        OutGameUIManager.MySurvivorsData.Clear();
         OutGameUIManager.ResetData(wantMode, difficulty);
         calendar.ResetData(wantMode);
         GetComponent<GameResult>().ResetData();
@@ -182,11 +183,8 @@ public class GameManager : MonoBehaviour
 
     public void Test2(int wantNumber)
     {
-        //BattleRoyaleManager.SetProhibitArea(wantNumber);
-        //outGameUIManger.championshipHeldCount = 0;
-        //outGameUIManger.contestantsData.RemoveRange(25, outGameUIManger.contestantsData.Count - 25);
-        AchievementManager.earnedAchievementsInThisRun.Add("1 hour");
-        AchievementManager.earnedAchievementsInThisRun.Add("Very Hard");
+        Option.DeleteSaveData(0);
+        CheckSaveData();
     }
     void Update()
     {
@@ -412,6 +410,7 @@ public class GameManager : MonoBehaviour
 
     void SaveStrategy(int slot)
     {
+        if (OutGameUIManager.MySurvivorsData != null && OutGameUIManager.MySurvivorsData.Count == 0) return;
         var wrapper = new StrategyDictionarySaveData(OutGameUIManager.MySurvivorsData[0]);
 
         string json = JsonUtility.ToJson(wrapper);
@@ -472,10 +471,10 @@ public class GameManager : MonoBehaviour
         outCanvas.SetActive(true);
         if (BattleRoyaleManager != null) GetComponent<GameResult>().ExitBattle(true);
         ClaimLoadInfo("Loading save data...");
-        yield return LoadETCData(slot);
         yield return LoadSaveDataInfo(slot);
         yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));
         yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve(slot));
+        yield return LoadETCData(slot);
         outGameUIManger.CloseAll();
         calendar.CloseAll();
         ClaimLoadInfo("Setting markets...", 3, 3);

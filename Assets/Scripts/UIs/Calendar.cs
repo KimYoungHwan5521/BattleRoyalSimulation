@@ -140,7 +140,7 @@ public class Calendar : CustomObject
                 todayText.text = date.GetLocalizedString();
             }
             GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
-            outGameUIManager.HideEndTheWeekend(outGameUIManager.GameMode == GameMode.FreeManagement && value % 7 > 4);
+            outGameUIManager.HideEndTheWeekend(outGameUIManager.GameMode == GameMode.SingleCareerRun || value % 7 > 4);
             if (value > 0)
             {
                 outGameUIManager.SurvivorsRecovery();

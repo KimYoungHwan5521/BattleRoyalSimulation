@@ -675,7 +675,11 @@ public class InGameUIManager : MonoBehaviour
             //Box selectedBox = selectedObject as Box;
             selectedObjectImage.sprite = ResourceManager.Get(ResourceEnum.Sprite.Box);
             selectedObjectImage.color = Color.white;
+#if UNITY_EDITOR
+            selectedObjectName.text = selectedObject.transform.position.ToString();
+#else
             selectedObjectName.text = new LocalizedString("Basic", "Box").GetLocalizedString();
+#endif
             selectedSurvivorsHealthBar.SetActive(false);
             selectedSurvivorBleedingBar.SetActive(false);
             selectedObjectsCurrentWeapon.SetActive(false);

@@ -43,7 +43,10 @@ public class RangedWeapon : Weapon
 
     public void Reload(int amount)
     {
-        currentMagazine += amount;
+        currentMagazine = Mathf.Min(
+            currentMagazine + amount,
+            magazineCapacity
+        );
     }
 
 }
