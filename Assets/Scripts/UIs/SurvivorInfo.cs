@@ -184,6 +184,7 @@ public class SurvivorInfo : MonoBehaviour
         survivorNameText.StringReference = survivorName;
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount, true);
         survivorData._stamina = survivorData.MaxStamina;
+        if (scheduledTrainingText != null) scheduledTrainingText.StringReference = new("Basic", $"{survivorData.assignedTraining}");
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
@@ -191,10 +192,10 @@ public class SurvivorInfo : MonoBehaviour
         craftingText.text = $"{survivorData.Crafting}";
         knowledgeText.text = $"{survivorData.Knowledge}";
 
-        foreach (var characteristic in survivorData.characteristics) price += characteristic.value;
-        price = Mathf.Max(1, price);
+        foreach (var characteristic in survivorData.characteristics) survivorData.price += characteristic.value;
+        survivorData.price = Mathf.Max(1, survivorData.price);
         priceText.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.FreeManagement);
-        priceText.text = $"$ {price}";
+        priceText.text = $"$ {survivorData.price}";
 
         strengthBar.fillAmount = (float)survivorData.Strength / survivorData.MaxStrength;
         agilityBar.fillAmount = (float)survivorData.Agility / survivorData.MaxAgility;

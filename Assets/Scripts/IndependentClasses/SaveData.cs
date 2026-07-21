@@ -114,6 +114,7 @@ public class SurvivorSaveData
     public int reservedDate;
     public bool haveQualifyToParticipateInSeasonChampionship;
     public bool haveQualifyToParticipateInWorldChampionship;
+    public Training_FreeManagement assignedTraining;
     public int promotePoint;
     public int increaseComparedToPrevious_strength;
     public int increaseComparedToPrevious_agility;
@@ -223,8 +224,17 @@ public class ETCData
     public int difficulty;
     public int money;
     public int mySurvivorsId;
+
     public int trainingLevel;
     public List<TrainingInfo> trainings = new();
+
+    public int fightTrainingLevel = 1;
+    public int shootingTrainingLevel = 1;
+    public int craftingTrainingLevel = 1;
+    public int runningLevel = 1;
+    public int weightTrainingLevel = 1;
+    public int studyingLevel = 1;
+
     public int survivorHireLimit;
     public SurvivorData[] hireMarketSurvivorData = new SurvivorData[3];
     public bool[] soldOut = new bool[3];

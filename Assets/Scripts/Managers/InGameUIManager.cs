@@ -506,13 +506,13 @@ public class InGameUIManager : MonoBehaviour
                         _ => $"{survivorRank + 1}th",
                     };
                     if(survivorRank > 0) otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
-                    for(int k=0; k<targetRank.Count; k++) Debug.Log($"Bef targetRank[{k}] = {targetRank[k]}");
+                    //for(int k=0; k<targetRank.Count; k++) Debug.Log($"Bef targetRank[{k}] = {targetRank[k]}");
                     targetRank[i] = survivorRank;
                     for(int j=i+1; j < outGameUIManager.contestantsData.Count - predictionNumber; j++)
                     {
                         if (targetRank[j] <= survivorRank)targetRank[j]--;
                     }
-                    for(int k=0; k<targetRank.Count; k++) Debug.Log($"Aft targetRank[{k}] = {targetRank[k]}");
+                    //for(int k=0; k<targetRank.Count; k++) Debug.Log($"Aft targetRank[{k}] = {targetRank[k]}");
                     RankChangeAnimation();
                     break;
                 }

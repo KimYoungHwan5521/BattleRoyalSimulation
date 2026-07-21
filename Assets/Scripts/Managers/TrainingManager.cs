@@ -8,6 +8,7 @@ using UnityEngine.Localization;
 
 public enum Stat { Strength = 0, Agility = 1, Fighting = 2, Shooting = 3, Crafting = 4, Knowledge = 5, Random = 6 }
 public enum TrainingRarity { Common = 0, Uncommon = 1, Rare = 2 }
+public enum Training_FreeManagement { None, Weight, Running, Fighting, Shooting, Crafting, Studying }
 
 [Serializable]
 public struct StatIncrease

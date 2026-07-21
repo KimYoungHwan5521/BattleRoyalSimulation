@@ -437,6 +437,7 @@ public class SurvivorData
     public int increaseComparedToPrevious_promotePoint;
 
     // Training
+    public Training_FreeManagement assignedTraining;
     public int increaseComparedToPrevious_strength = 0;
     public int increaseComparedToPrevious_agility = 0;
     public int increaseComparedToPrevious_fighting = 0;

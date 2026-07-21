@@ -382,26 +382,8 @@ public class GameManager : MonoBehaviour
             saveData = JsonUtility.FromJson<ETCData>(json);
         }
 
-        calendar.LoadToday(saveData.today, saveData.curMaxYear, saveData.participationConfirmed);
-        OutGameUIManager.LoadData(
-            saveData.gameMode,
-            saveData.difficulty,
-            saveData.money,
-            saveData.mySurvivorsId,
-            saveData.trainingLevel,
-            saveData.trainings,
-            saveData.survivorHireLimit,
-            saveData.contestantsData,
-            saveData.championship,
-            saveData.championshipHeldCount,
-            saveData.championshipDatas
-            );
-        outGameUIManger.survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
-        outGameUIManger.survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);
-        outGameUIManger.survivorsInHireMarket[2].SetInfo(saveData.hireMarketSurvivorData[2], false);
-        outGameUIManger.survivorsInHireMarket[0].SoldOut = saveData.soldOut[0];
-        outGameUIManger.survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
-        outGameUIManger.survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
+        calendar.LoadToday(saveData);
+        OutGameUIManager.LoadData(saveData);
         unlockManager.LoadUnlockStatus(saveData.unlockStatus);
 
         AchievementManager.earnedAchievementsInThisRun = saveData.earnedAchievements;

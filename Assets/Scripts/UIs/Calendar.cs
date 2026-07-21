@@ -1376,11 +1376,11 @@ public class Calendar : CustomObject
         yield return null;
     }
 
-    public void LoadToday(int today, int curMaxYear, bool participationConfirmed)
+    public void LoadToday(ETCData saveData)
     {
-        Today = today;
-        this.curMaxYear = curMaxYear;
-        this.participationConfirmed = participationConfirmed;
+        Today = saveData.today;
+        curMaxYear = saveData.curMaxYear;
+        participationConfirmed = saveData.participationConfirmed;
         TurnPageCalendar(0);
     }
 

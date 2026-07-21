@@ -163,10 +163,10 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
+    [Header("Single Career Run")]
     [SerializeField] TextMeshProUGUI trainingRoomLevelText;
     const float trainingGreatSuccessRate = 0.1f;
     public int trainingLevel = 1;
-    readonly int[] facilityUpgradeCost = new[] { 5000, 10000, 15000, 20000, 25000, 30000 };
     [SerializeField] TextMeshProUGUI resultText;
     [SerializeField] GameObject trainingResult;
     [SerializeField] TextMeshProUGUI trainingResultText;
@@ -188,6 +188,58 @@ public class OutGameUIManager : MonoBehaviour
     public TrainingCard[] trainingCards;
     [SerializeField] TextMeshProUGUI currentFacilityLevelText;
     [SerializeField] Button upgradeFacilityButton;
+
+    [Header("Free Management")]
+    [SerializeField] GameObject trainingAssignForm;
+    //[SerializeField] GameObject scheduledTrainingByEachSurvivor;
+    [SerializeField] GameObject[] scheduledTrainings;
+    [SerializeField] TextMeshProUGUI weightTrainingNameText;
+    [SerializeField] TextMeshProUGUI runningNameText;
+    [SerializeField] TextMeshProUGUI fightTrainingNameText;
+    [SerializeField] TextMeshProUGUI shootingTraningNameText;
+    [SerializeField] TextMeshProUGUI craftingTraningNameText;
+    [SerializeField] TextMeshProUGUI studyingNameText;
+    [SerializeField] TextMeshProUGUI weightTrainingExplain;
+    [SerializeField] TextMeshProUGUI runningExplain;
+    [SerializeField] TextMeshProUGUI fightingTrainingExplain;
+    [SerializeField] TextMeshProUGUI shootingTrainingExplain;
+    [SerializeField] TextMeshProUGUI craftingTrainingExplain;
+    [SerializeField] TextMeshProUGUI studyExplain;
+    int fightTrainingLevel = 1;
+    int shootingTrainingLevel = 1;
+    int craftingTrainingLevel = 1;
+    int runningLevel = 1;
+    int weightTrainingLevel = 1;
+    int studyingLevel = 1;
+
+    public int FightTrainingLevel => fightTrainingLevel;
+    public int ShootingTrainingLevel => shootingTrainingLevel;
+    public int CraftingTrainingLevel => craftingTrainingLevel;
+    public int AgilityTrainingLevel => runningLevel;
+    public int WeightTrainingLevel => weightTrainingLevel;
+    public int StudyLevel => studyingLevel;
+    readonly int[] facilityUpgradeCost = { 5000, 12000, 30000 };
+    [SerializeField] GameObject weightTrainingUpgradeButton;
+    [SerializeField] GameObject runningUpgradeButton;
+    [SerializeField] GameObject fightTrainingUpgradeButton;
+    [SerializeField] GameObject shootingTrainingUpgradeButton;
+    [SerializeField] GameObject craftingTrainingUpgradeButton;
+    [SerializeField] GameObject studyingUpgradeButton;
+    [SerializeField] ScrollRect[] bookedTodayScrollRects;
+    [SerializeField] TextMeshProUGUI weightTrainingBookers;
+    [SerializeField] TextMeshProUGUI runningBookers;
+    [SerializeField] TextMeshProUGUI fightTrainingBookers;
+    [SerializeField] TextMeshProUGUI shootingTrainingBookers;
+    [SerializeField] TextMeshProUGUI craftingTrainingBookers;
+    [SerializeField] TextMeshProUGUI studyingBookers;
+
+    [SerializeField] TextMeshProUGUI assignTrainingNameText;
+    [SerializeField] Transform survivorsAssignedThis;
+    [SerializeField] Transform survivorsWithoutSchedule;
+    [SerializeField] Transform survivorsWithOtherSchedule;
+    List<SurvivorSchedule> survivorSchedules = new();
+    bool autoAssign = true;
+    [SerializeField] GameObject autoAssignCheckBox;
 
     [Header("Operating Room")]
     [SerializeField] GameObject operatingRoom;
@@ -219,20 +271,6 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] Strategy[] strategies;
     LocalizedDropdown weaponPriority1Dropdown;
     LocalizedDropdown weaponPriority2Dropdown;
-
-    //[SerializeField] TMP_Dropdown sawAnEnemyAndItIsInAttackRangeDropdown;
-    //[SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsInAttackRangeDropdown;
-
-    //[SerializeField] TMP_Dropdown sawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
-    //[SerializeField] TMP_Dropdown elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown;
-
-    //[SerializeField] TMP_Dropdown heardDistinguishableSoundDropdown;
-    //[SerializeField] TMP_Dropdown elseActionHeardDistinguishableSoundDropdown;
-
-    //[SerializeField] TMP_Dropdown heardIndistinguishableSoundDropdown;
-    //[SerializeField] TMP_Dropdown elseActionHeardIndistinguishableSoundDropdown;
-
-    //[SerializeField] TMP_Dropdown whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown;
 
     LocalizedDropdown craftingPriority1Dropdown;
     LocalizedDropdown craftingPriority2Dropdown;
@@ -600,15 +638,75 @@ public class OutGameUIManager : MonoBehaviour
 
     void RelocalizeTrainingRoom()
     {
-        currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
+        if(gameMode == GameMode.SingleCareerRun)
         {
-            Arguments = new[] { $"{trainingLevel}" }
-        }.GetLocalizedString();
-        upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
+            currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
+            {
+                Arguments = new[] { $"{trainingLevel}" }
+            }.GetLocalizedString();
+            upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
+            {
+                Arguments = new[] { trainingLevel > facilityUpgradeCost.Length || trainingLevel <= 0 ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
+            }.GetLocalizedString();
+            trainingRoomLevelText.text = new LocalizedString("Basic", "Training Room Level") { Arguments = new[] { $"{trainingLevel}" } }.GetLocalizedString();
+        }
+        else
         {
-            Arguments = new[] { trainingLevel > facilityUpgradeCost.Length || trainingLevel <= 0 ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
-        }.GetLocalizedString();
-        trainingRoomLevelText.text = new LocalizedString("Basic", "Training Room Level") { Arguments = new[] { $"{trainingLevel}" } }.GetLocalizedString();
+            SetTrainingName(weightTrainingNameText, "Training:Weight", weightTrainingLevel);
+            SetTrainingName(runningNameText, "Training:Running", runningLevel);
+            SetTrainingName(fightTrainingNameText, "Training:Fighting", fightTrainingLevel);
+            SetTrainingName(shootingTraningNameText, "Training:Shooting", shootingTrainingLevel);
+            SetTrainingName(craftingTraningNameText, "Training:Crafting", craftingTrainingLevel);
+            SetTrainingName(studyingNameText, "Training:Studying", studyingLevel);
+
+            weightTrainingUpgradeButton.SetActive(weightTrainingLevel < facilityUpgradeCost.Length + 1);
+            runningUpgradeButton.SetActive(runningLevel < facilityUpgradeCost.Length + 1);
+            fightTrainingUpgradeButton.SetActive(fightTrainingLevel < facilityUpgradeCost.Length + 1);
+            shootingTrainingUpgradeButton.SetActive(shootingTrainingLevel < facilityUpgradeCost.Length + 1);
+            craftingTrainingUpgradeButton.SetActive(craftingTrainingLevel < facilityUpgradeCost.Length + 1);
+            studyingUpgradeButton.SetActive(studyingLevel < facilityUpgradeCost.Length + 1);
+
+            weightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[weightTrainingLevel - 1] };
+            runningUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[runningLevel - 1] };
+            fightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[fightTrainingLevel - 1] };
+            shootingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[shootingTrainingLevel - 1] };
+            craftingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[CraftingTrainingLevel - 1] };
+            studyingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[studyingLevel - 1] };
+
+            weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            fightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            shootingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            craftingTraningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            studyingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            weightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            runningUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            fightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            shootingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            craftingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+            studyingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
+
+            weightTrainingExplain.text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()}+";
+            runningExplain.text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()}+";
+            fightingTrainingExplain.text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()}+";
+            shootingTrainingExplain.text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()}+";
+            craftingTrainingExplain.text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()}+";
+            studyExplain.text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()}+";
+        }
+    }
+
+    void SetTrainingName(TextMeshProUGUI target, string trainingKey, int level)
+    {
+        var trainingType = new LocalizedString("Basic", trainingKey);
+        var stringEvent = target.GetComponentInChildren<LocalizeStringEvent>(true);
+
+        stringEvent.StringReference.Arguments = new object[]
+        {
+            trainingType.GetLocalizedString(),
+            level
+        };
+
+        stringEvent.RefreshString();
     }
 
     #region Hire
@@ -895,7 +993,7 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    #region Training
+    #region Training : Single Career Run
     public void OpenTrainingRoom()
     {
         if(GameMode == GameMode.SingleCareerRun)
@@ -920,8 +1018,10 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
+            RelocalizeTrainingRoom();
             trainingRoomFreeManagement.SetActive(true);
             GameManager.Instance.openedWindows.Push(trainingRoomFreeManagement);
+            SetTrainingRoomSurvivorsInfo();
             //if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
             //{
             //    if ((calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) && calendar.LeagueReserveInfo[calendar.Today].reserver != null)
@@ -1127,35 +1227,452 @@ public class OutGameUIManager : MonoBehaviour
         mySurvivorsData[0].StaminaConsomtionReserve(-staminaConsumtion);
     }
 
-    public void RequestUpgradeFacility()
-    {
-        if(Money < facilityUpgradeCost[trainingLevel - 1])
-        {
-            Alert("Alert:Not enough money.");
-        }
-        else
-        {
-            OpenConfirmWindow("Confirm:Upgrade Facility", () =>
-            {
-                Money -= facilityUpgradeCost[trainingLevel - 1];
-                UpgradeFacility();
-            }, "");
-        }
-    }
-
     public void UpgradeFacility()
     {
         trainingLevel++;
-        //upgradeFacilityButton.GetComponentInChildren<TextMeshProUGUI>().text = new LocalizedString("Basic", "Facility Upgrade")
-        //{
-        //    Arguments = new[] { trainingLevel > facilityUpgradeCost.Length ? "" : $"{facilityUpgradeCost[trainingLevel - 1]}" }
-        //}.GetLocalizedString();
-        //currentFacilityLevelText.text = new LocalizedString("Basic", "Current Facility Level")
-        //{
-        //    Arguments = new[] { $"{trainingLevel}" }
-        //}.GetLocalizedString();
-        //if (trainingLevel > facilityUpgradeCost.Length) upgradeFacilityButton.gameObject.SetActive(false);
-        //Alert("Alert:Facility upgraded.");
+    }
+    #endregion
+    #region Training Room : Free Management
+    public void OpenAssignTraining(int trainingIndex)
+    {
+        trainingAssignForm.SetActive(true);
+        GameManager.Instance.openedWindows.Push(trainingAssignForm);
+        Training_FreeManagement training = (Training_FreeManagement)trainingIndex;
+        survivorSchedules = new();
+        assignTrainingNameText.GetComponent<LocalizeStringEvent>().StringReference = new("Basic", $"Training:{training}");
+
+        for (int i = survivorsAssignedThis.childCount - 1; i >= 0; i--)
+        {
+            PoolManager.Despawn(survivorsAssignedThis.GetChild(i).gameObject);
+        }
+        for (int i = survivorsWithoutSchedule.childCount - 1; i >= 0; i--)
+        {
+            PoolManager.Despawn(survivorsWithoutSchedule.GetChild(i).gameObject);
+        }
+        for (int i = survivorsWithOtherSchedule.childCount - 1; i >= 0; i--)
+        {
+            PoolManager.Despawn(survivorsWithOtherSchedule.GetChild(i).gameObject);
+        }
+
+        foreach (SurvivorData survivor in mySurvivorsData)
+        {
+            Transform fitParent;
+            Transform targetParent;
+            SurvivorSchedule survivorSchedule;
+            string description = "";
+            string cause = "";
+            LocalizedString targetTraining = new();
+
+            bool assignable = true;
+            bool alreadyAssigned = false;
+            if (survivor.assignedTraining == training)
+            {
+                fitParent = survivorsAssignedThis;
+                targetParent = survivorsWithoutSchedule;
+            }
+            else if (survivor.assignedTraining == Training_FreeManagement.None)
+            {
+                fitParent = survivorsWithoutSchedule;
+                targetParent = survivorsAssignedThis;
+                if (!Trainable(survivor, training, out cause))
+                {
+                    assignable = false;
+                    description = "Help:Cannot Assign Training";
+                }
+            }
+            else
+            {
+                alreadyAssigned = true;
+                fitParent = survivorsWithOtherSchedule;
+                targetParent = survivorsAssignedThis;
+                description = "Help:Training Already Assigned";
+                targetTraining = new("Basic", $"Training:{survivor.assignedTraining}");
+            }
+            survivorSchedule = PoolManager.Spawn(ResourceEnum.Prefab.SurvivorSchedule, fitParent).GetComponent<SurvivorSchedule>();
+            survivorSchedule.SetSurvivorData(survivor, training, assignable, fitParent, targetParent);
+            if (!assignable) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), cause);
+            else if (alreadyAssigned) survivorSchedule.GetComponent<Help>().SetDescriptionWithKey(description, survivor.localizedSurvivorName.GetLocalizedString(), targetTraining.GetLocalizedString());
+            survivorSchedule.GetComponent<Button>().enabled = assignable;
+            survivorSchedules.Add(survivorSchedule);
+        }
+    }
+
+    public void SetTrainingRoomSurvivorsInfo()
+    {
+        for (int i = 0; i < scheduledTrainings.Length; i++)
+        {
+            if (i < mySurvivorsData.Count)
+            {
+                scheduledTrainings[i].SetActive(true);
+                scheduledTrainings[i].GetComponent<SurvivorInfo>().SetInfo(mySurvivorsData[i], false);
+            }
+            else scheduledTrainings[i].SetActive(false);
+        }
+    }
+
+    public void ConfirmAssignTraining()
+    {
+        foreach (var survivorSchedule in survivorSchedules)
+        {
+            survivorSchedule.survivor.assignedTraining = survivorSchedule.whereAmI;
+        }
+        AssignTraining();
+        SetTrainingRoomSurvivorsInfo();
+    }
+
+    public void AssignTraining()
+    {
+        weightTrainingBookers.text = "";
+        runningBookers.text = "";
+        fightTrainingBookers.text = "";
+        shootingTrainingBookers.text = "";
+        craftingTrainingBookers.text = "";
+        studyingBookers.text = "";
+        foreach (SurvivorData survivor in mySurvivorsData)
+        {
+            TextMeshProUGUI targetText;
+            switch (survivor.assignedTraining)
+            {
+                case Training_FreeManagement.Fighting:
+                    targetText = fightTrainingBookers;
+                    break;
+                case Training_FreeManagement.Shooting:
+                    targetText = shootingTrainingBookers;
+                    break;
+                case Training_FreeManagement.Crafting:
+                    targetText = craftingTrainingBookers;
+                    break;
+                case Training_FreeManagement.Running:
+                    targetText = runningBookers;
+                    break;
+                case Training_FreeManagement.Weight:
+                    targetText = weightTrainingBookers;
+                    break;
+                case Training_FreeManagement.Studying:
+                    targetText = studyingBookers;
+                    break;
+                default:
+                    targetText = null;
+                    break;
+            }
+
+            if (targetText != null)
+            {
+                if (targetText.text != "") targetText.text += $"\n";
+                targetText.text += $"{survivor.localizedSurvivorName.GetLocalizedString()}";
+            }
+        }
+        foreach (var scrollRect in bookedTodayScrollRects)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scrollRect.GetComponent<RectTransform>());
+        }
+        //ChecklistTraining();
+    }
+
+    public void CheckTrainable(SurvivorData survivor)
+    {
+        if (Trainable(survivor, survivor.assignedTraining, out string cause)) return;
+        else
+        {
+            survivor.assignedTraining = Training_FreeManagement.None;
+            AssignTraining();
+            Alert("Alert:Training Assignment Cancelled", survivor.localizedSurvivorName.GetLocalizedString(), cause);
+        }
+    }
+
+    bool TrainableAnything(SurvivorData survivor)
+    {
+        if (Trainable(survivor, Training_FreeManagement.Fighting)) return true;
+        if (Trainable(survivor, Training_FreeManagement.Shooting)) return true;
+        if (Trainable(survivor, Training_FreeManagement.Crafting)) return true;
+        if (Trainable(survivor, Training_FreeManagement.Running)) return true;
+        if (Trainable(survivor, Training_FreeManagement.Weight)) return true;
+        return false;
+    }
+
+    public bool Trainable(SurvivorData survivor, Training_FreeManagement training)
+    {
+        return Trainable(survivor, training, out string cause);
+    }
+
+    bool Trainable(SurvivorData survivor, Training_FreeManagement training, out string cause)
+    {
+        if (survivor.surgeryScheduled)
+        {
+            cause = new LocalizedString("Basic", "Surgery scheduled").GetLocalizedString();
+            return false;
+        }
+
+        int eyeInjury = 0;
+        foreach (Injury injury in survivor.injuries)
+        {
+            if (injury.type == InjuryType.ArtificialPartsTransplanted || (injury.type == InjuryType.ArtificialPartsDamaged && injury.degree < 1)) continue;
+            if (injury.type == InjuryType.AugmentedPartsTransplanted || (injury.type == InjuryType.AugmentedPartsDamaged && injury.degree < 1)) continue;
+            if (injury.type == InjuryType.TranscendantPartsTransplanted || (injury.type == InjuryType.TranscendantPartsDamaged && injury.degree < 1)) continue;
+            if (injury.degree < 0.1f) continue;
+            switch (training)
+            {
+                case Training_FreeManagement.Fighting:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                        case InjurySite.RightLeg:
+                        case InjurySite.LeftLeg:
+                        case InjurySite.RightKnee:
+                        case InjurySite.LeftKnee:
+                        case InjurySite.RightFoot:
+                        case InjurySite.LeftFoot:
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                            return false;
+                        default:
+                            if (injury.degree < 1)
+                            {
+                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training_FreeManagement.Shooting:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                            return false;
+                        case InjurySite.Organ:
+                            if (injury.degree >= 1)
+                            {
+                                cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                                return false;
+                            }
+                            break;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            eyeInjury++;
+                            if (eyeInjury >= 2)
+                            {
+                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training_FreeManagement.Crafting:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftArm:
+                        case InjurySite.LeftHand:
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                            return false;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            eyeInjury++;
+                            if (eyeInjury >= 2)
+                            {
+                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training_FreeManagement.Running:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.Chest:
+                        case InjurySite.Ribs:
+                        case InjurySite.Abdomen:
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                        case InjurySite.RightLeg:
+                        case InjurySite.LeftLeg:
+                        case InjurySite.RightKnee:
+                        case InjurySite.LeftKnee:
+                        case InjurySite.RightFoot:
+                        case InjurySite.LeftFoot:
+                        case InjurySite.RightBigToe:
+                        case InjurySite.LeftBigToe:
+                        case InjurySite.RightIndexToe:
+                        case InjurySite.LeftIndexToe:
+                        case InjurySite.RightMiddleToe:
+                        case InjurySite.LeftMiddleToe:
+                        case InjurySite.RightRingToe:
+                        case InjurySite.LeftRingToe:
+                        case InjurySite.RightLittleToe:
+                        case InjurySite.LeftLittleToe:
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                            return false;
+                        case InjurySite.RightEye:
+                        case InjurySite.LeftEye:
+                            eyeInjury++;
+                            if (eyeInjury >= 2)
+                            {
+                                cause = new LocalizedString("Basic", "Both eye injuries").GetLocalizedString();
+                                return false;
+                            }
+                            break;
+                    }
+                    break;
+                case Training_FreeManagement.Weight:
+                    switch (injury.site)
+                    {
+                        case InjurySite.Brain:
+                        case InjurySite.Chest:
+                        case InjurySite.Ribs:
+                        case InjurySite.Abdomen:
+                        case InjurySite.Organ:
+                        case InjurySite.RightArm:
+                        case InjurySite.LeftArm:
+                        case InjurySite.RightHand:
+                        case InjurySite.LeftHand:
+                            cause = $"{new LocalizedString("Injury", injury.site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", injury.type.ToString()).GetLocalizedString()}";
+                            return false;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        cause = null;
+        return true;
+    }
+
+    public void ToggleAutoAssign()
+    {
+        autoAssign = !autoAssign;
+        autoAssignCheckBox.SetActive(autoAssign);
+    }
+
+    public void UpgradeTrainingRoom(int trainingRoomIndex)
+    {
+        int level;
+        Action<int> setLevel;
+        TextMeshProUGUI nameText;
+        GameObject upgradeButton;
+
+        switch (trainingRoomIndex)
+        {
+            case 1:
+                level = weightTrainingLevel;
+                setLevel = value => weightTrainingLevel = value;
+                nameText = weightTrainingNameText;
+                upgradeButton = weightTrainingUpgradeButton;
+                break;
+
+            case 2:
+                level = runningLevel;
+                setLevel = value => runningLevel = value;
+                nameText = runningNameText;
+                upgradeButton = runningUpgradeButton;
+                break;
+
+            case 3:
+                level = fightTrainingLevel;
+                setLevel = value => fightTrainingLevel = value;
+                nameText = fightTrainingNameText;
+                upgradeButton = fightTrainingUpgradeButton;
+                break;
+
+            case 4:
+                level = shootingTrainingLevel;
+                setLevel = value => shootingTrainingLevel = value;
+                nameText = shootingTraningNameText;
+                upgradeButton = shootingTrainingUpgradeButton;
+                break;
+
+            case 5:
+                level = craftingTrainingLevel;
+                setLevel = value => craftingTrainingLevel = value;
+                nameText = craftingTraningNameText;
+                upgradeButton = craftingTrainingUpgradeButton;
+                break;
+
+            case 6:
+                level = studyingLevel;
+                setLevel = value => studyingLevel = value;
+                nameText = studyingNameText;
+                upgradeButton = studyingUpgradeButton;
+                break;
+
+            default:
+                Debug.LogError($"Invalid training room index: {trainingRoomIndex}");
+                return;
+        }
+
+        var trainingType = new LocalizedString(
+            "Basic",
+            $"Training:{(Training_FreeManagement)(trainingRoomIndex + 1)}"
+        );
+
+        string localizedTrainingName = trainingType.GetLocalizedString();
+
+        OpenConfirmWindow(
+            "Confirm:Upgrade Facility",
+            () =>
+            {
+                // 이미 최종 레벨인 경우 배열 접근 방지
+                if (level > facilityUpgradeCost.Length)
+                {
+                    upgradeButton.SetActive(false);
+                    return;
+                }
+
+                int upgradeCost = facilityUpgradeCost[level - 1];
+
+                if (money < upgradeCost)
+                {
+                    Alert("Alert:Not enough money.");
+                    return;
+                }
+
+                Money -= upgradeCost;
+
+                level++;
+                setLevel(level);
+
+                LocalizeStringEvent nameStringEvent =
+                    nameText.GetComponentInChildren<LocalizeStringEvent>(true);
+
+                // 로컬라이징 문자열: {0} (lv {1})
+                nameStringEvent.StringReference.Arguments = new object[]
+                {
+                    localizedTrainingName,
+                    level
+                };
+                nameStringEvent.RefreshString();
+
+                if (level > facilityUpgradeCost.Length)
+                {
+                    upgradeButton.SetActive(false);
+                    return;
+                }
+
+                LocalizeStringEvent buttonStringEvent = upgradeButton.GetComponentInChildren<LocalizeStringEvent>(true);
+
+                buttonStringEvent.StringReference.Arguments = new object[]
+                {
+                    facilityUpgradeCost[level - 1]
+                };
+                buttonStringEvent.RefreshString();
+            },
+            localizedTrainingName
+        );
     }
     #endregion
 
@@ -3211,29 +3728,43 @@ public class OutGameUIManager : MonoBehaviour
         yield return null;
     }
 
-    public void LoadData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, List<TrainingInfo> trainingInfos, int survivorHireLimit, List<SurvivorData> contestantsData,
-        bool championship, int championshipHeldCount, List<ChampionshipData> championshipDatas)
+    public void LoadData(ETCData saveData)
     {
-        this.gameMode = gameMode;
-        Difficulty = difficulty;
-        Money = money;
-        this.mySurvivorsId = mySurvivorsId;
-        this.trainingLevel = trainingLevel;
-        this.survivorHireLimit = survivorHireLimit;
-        this.contestantsData = contestantsData;
+        gameMode = saveData.gameMode;
+        Difficulty = saveData.difficulty;
+        Money = saveData.money;
+        mySurvivorsId = saveData.mySurvivorsId;
+        trainingLevel = saveData.trainingLevel;
+
+        fightTrainingLevel = saveData.fightTrainingLevel;
+        shootingTrainingLevel = saveData.shootingTrainingLevel;
+        craftingTrainingLevel = saveData.craftingTrainingLevel;
+        runningLevel = saveData.runningLevel;
+        weightTrainingLevel = saveData.weightTrainingLevel;
+        studyingLevel = saveData.studyingLevel;
+        survivorHireLimit = saveData.survivorHireLimit;
+        contestantsData = saveData.contestantsData;
         if (contestantsData != null && contestantsData.Count > 0 && calendar.LeagueReserveInfo.ContainsKey(calendar.Today)) contestantsData[0] = calendar.LeagueReserveInfo[calendar.Today].reserver != null ? MySurvivorsData.Find(x => x.id == calendar.LeagueReserveInfo[calendar.Today].reserver.id) : MySurvivorsData[0];
-        this.championship = championship;
+        
+        championship = saveData.championship;
+        championshipHeldCount = saveData.championshipHeldCount;
+        championshipDatas = saveData.championshipDatas;
         viewCurrentChampionshipStandings.SetActive(championship);
-        this.championshipHeldCount = championshipHeldCount;
-        this.championshipDatas = championshipDatas;
 
         ResetData(gameMode, difficulty);
 
         for (int i = 0; i < trainingCards.Length; i++) 
         {
-            trainingCards[i].SetCard(trainingInfos[i]);
+            trainingCards[i].SetCard(saveData.trainings[i]);
         }
         tutorial = false;
+
+        survivorsInHireMarket[0].SetInfo(saveData.hireMarketSurvivorData[0], false);
+        survivorsInHireMarket[1].SetInfo(saveData.hireMarketSurvivorData[1], false);
+        survivorsInHireMarket[2].SetInfo(saveData.hireMarketSurvivorData[2], false);
+        survivorsInHireMarket[0].SoldOut = saveData.soldOut[0];
+        survivorsInHireMarket[1].SoldOut = saveData.soldOut[1];
+        survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
 
         ResetObjectiveText();
     }

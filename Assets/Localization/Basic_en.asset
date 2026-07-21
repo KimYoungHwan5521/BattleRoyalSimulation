@@ -154,7 +154,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 89402442838016
-    m_Localized: '{trainingType} (lv {level})'
+    m_Localized: '{0} (lv {1})'
     m_Metadata:
       m_Items:
       - rid: 7835753295874359340
