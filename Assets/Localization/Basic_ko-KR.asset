@@ -2010,6 +2010,14 @@ MonoBehaviour:
       \uBC14\uB85C \uBD88\uB7EC\uC635\uB2C8\uB2E4.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Localized: "\uC804\uB7B5 \uD504\uB9AC\uC14B \uC800\uC7A5\uD558\uAE30"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Localized: "\uC804\uB7B5 \uD504\uB9AC\uC14B \uBD88\uB7EC\uC624\uAE30"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

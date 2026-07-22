@@ -390,10 +390,10 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    void SaveStrategy(int slot)
+    public void SaveStrategy(int slot, string presetName = "")
     {
         if (OutGameUIManager.MySurvivorsData != null && OutGameUIManager.MySurvivorsData.Count == 0) return;
-        var wrapper = new StrategyDictionarySaveData(OutGameUIManager.MySurvivorsData[0]);
+        var wrapper = new StrategyDictionarySaveData(slot, OutGameUIManager.MySurvivorsData[0], presetName);
 
         string json = JsonUtility.ToJson(wrapper);
         PlayerPrefs.SetString($"StrategyPreset{slot}", json);
@@ -405,7 +405,7 @@ public class GameManager : MonoBehaviour
         if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
     }
 
-    public void LoadStrategy(int slot)
+    public StrategyDictionarySaveData LoadStrategy(int slot)
     {
         string json = "{}";
         if (SteamRemoteStorage.FileExists($"StrategyPreset{slot}.json"))
@@ -420,19 +420,10 @@ public class GameManager : MonoBehaviour
         {
             json = PlayerPrefs.GetString($"StrategyPreset{slot}", "{}");
         }
-        if (json.Equals("{}")) return;
+        if (json.Equals("{}")) return null;
 
         StrategyDictionarySaveData saveData = JsonUtility.FromJson<StrategyDictionarySaveData>(json);
-        
-        OutGameUIManager.MySurvivorsData[0].priority1Weapon = saveData.priority1Weapon;
-        OutGameUIManager.MySurvivorsData[0].priority2Weapon = saveData.priority2Weapon;
-        OutGameUIManager.MySurvivorsData[0].priority1Crafting = saveData.priority1Crafting;
-        OutGameUIManager.MySurvivorsData[0].priority2Crafting = saveData.priority2Crafting;
-        OutGameUIManager.MySurvivorsData[0].priority1CraftingToInt = saveData.priority1CraftingToInt;
-        OutGameUIManager.MySurvivorsData[0].priority2CraftingToInt = saveData.priority2CraftingToInt;
-        OutGameUIManager.MySurvivorsData[0].craftingAllows = saveData.craftingAllows;
-        OutGameUIManager.MySurvivorsData[0].repairCondition = saveData.repairCondition;
-        OutGameUIManager.MySurvivorsData[0].strategyDictionary = saveData.CreateStrategyDictionary();
+        return saveData;
 }
 
     public void Save(int slot)
@@ -441,7 +432,7 @@ public class GameManager : MonoBehaviour
         SaveMySurvivorList(outGameUIManger.MySurvivorsData, slot);
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
-        SaveStrategy(0);
+        if(outGameUIManger.GameMode == GameMode.SingleCareerRun) SaveStrategy(0);
         //Option.ReloadSavedata();
         //string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
         //OutGameUIManager.Alert(message);

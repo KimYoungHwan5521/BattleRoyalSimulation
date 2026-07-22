@@ -1923,6 +1923,14 @@ MonoBehaviour:
     m_Localized: "(Si hay datos guardados, se cargar\xE1n autom\xE1ticamente.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Localized: "Guardar configuraci\xF3n de estrategia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Localized: "Cargar configuraci\xF3n de estrategia"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

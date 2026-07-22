@@ -1942,6 +1942,14 @@ MonoBehaviour:
       automatiquement charg\xE9es.)"
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Localized: "Enregistrer le pr\xE9r\xE9glage de strat\xE9gie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Localized: "Charger le pr\xE9r\xE9glage de strat\xE9gie"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

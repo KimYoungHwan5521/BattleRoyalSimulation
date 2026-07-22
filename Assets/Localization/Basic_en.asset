@@ -1907,6 +1907,14 @@ MonoBehaviour:
     m_Localized: (If saved data is available, it will be loaded automatically.)
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Localized: Save Strategy Preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Localized: Load Strategy Preset
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

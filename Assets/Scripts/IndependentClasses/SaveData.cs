@@ -35,6 +35,7 @@ public class StrategyDictionaryEntry
 [Serializable]
 public class StrategyDictionarySaveData
 {
+    public string strategyName;
     public ItemManager.Items priority1Weapon = ItemManager.Items.LASER;
     public ItemManager.Items priority2Weapon = ItemManager.Items.AssaultRifle;
     public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
@@ -47,8 +48,9 @@ public class StrategyDictionarySaveData
 
     public List<StrategyDictionaryEntry> entries = new();
 
-    public StrategyDictionarySaveData(SurvivorData data)
+    public StrategyDictionarySaveData(int index, SurvivorData data, string presetName = "")
     {
+        strategyName = string.IsNullOrEmpty(presetName) ? $"StrategyPreset{index}" : presetName;
         priority1Weapon = data.priority1Weapon;
         priority2Weapon = data.priority2Weapon;
 

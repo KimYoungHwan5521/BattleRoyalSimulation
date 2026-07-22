@@ -1797,6 +1797,14 @@ MonoBehaviour:
     m_Key: (If saved data is available, it will be loaded automatically.)
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Key: Save Strategy Preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Key: Load Strategy Preset
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

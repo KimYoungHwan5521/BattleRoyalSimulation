@@ -1,7 +1,9 @@
+using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -163,7 +165,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI survivorCountText;
 
     [Header("Training Room")]
-    [Header("Single Career Run")]
+    [Header("Training Room - Single Career Run")]
     [SerializeField] TextMeshProUGUI trainingRoomLevelText;
     const float trainingGreatSuccessRate = 0.1f;
     public int trainingLevel = 1;
@@ -189,7 +191,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentFacilityLevelText;
     [SerializeField] Button upgradeFacilityButton;
 
-    [Header("Free Management")]
+    [Header("Training Room - Free Management")]
     [SerializeField] GameObject trainingAssignForm;
     //[SerializeField] GameObject scheduledTrainingByEachSurvivor;
     [SerializeField] GameObject[] scheduledTrainings;
@@ -259,27 +261,6 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject[] surgeries;
     [SerializeField] ToggleGroup surgeriesToggleGroup;
 
-    [Header("Strategy Room")]
-    [SerializeField] GameObject strategyRoom;
-    [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
-    [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
-    [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
-
-    [SerializeField] TMP_InputField search;
-    [SerializeField] GameObject deleteSearchText;
-
-    [SerializeField] Strategy[] strategies;
-    LocalizedDropdown weaponPriority1Dropdown;
-    LocalizedDropdown weaponPriority2Dropdown;
-
-    LocalizedDropdown craftingPriority1Dropdown;
-    LocalizedDropdown craftingPriority2Dropdown;
-
-    [SerializeField] Transform craftingAllow;
-    public List<GameObject> craftableAllows = new();
-
-    [SerializeField] TMP_InputField armorRepairConditionInputField;
-
     [Serializable]
     struct SurgeryInfo
     {
@@ -299,6 +280,34 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
     [SerializeField] List<SurgeryInfo> surgeryList;
+
+    [Header("Strategy Room")]
+    [SerializeField] GameObject strategyRoom;
+    [SerializeField] GameObject strategyRoomSelectSurvivor;
+    [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
+    [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
+    [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
+
+    [SerializeField] GameObject strategyButtonCopyPate;
+    [SerializeField] TMP_InputField search;
+    [SerializeField] GameObject deleteSearchText;
+
+    [SerializeField] Strategy[] strategies;
+    LocalizedDropdown weaponPriority1Dropdown;
+    LocalizedDropdown weaponPriority2Dropdown;
+
+    LocalizedDropdown craftingPriority1Dropdown;
+    LocalizedDropdown craftingPriority2Dropdown;
+
+    [SerializeField] Transform craftingAllow;
+    public List<GameObject> craftableAllows = new();
+
+    [SerializeField] TMP_InputField armorRepairConditionInputField;
+    [SerializeField] GameObject strategyPresetBG;
+    [SerializeField] LocalizeStringEvent strategyPresetSaveLoadText;
+    [SerializeField] GameObject[] strategyPresets;
+    [SerializeField] GameObject strategyNameBG;
+    [SerializeField] TMP_InputField strategyPresetNameInputField;
 
     [Header("Schedule")]
     [SerializeField] GameObject scr_calanderObject;
@@ -602,6 +611,8 @@ public class OutGameUIManager : MonoBehaviour
         buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
         difficultyText.gameObject.SetActive(gameMode == GameMode.SingleCareerRun);
 
+        StartCoroutine(RefreshRooms());
+
         //mySurvivorsData = new();
         hireSurvivor.SetActive(true);
         trainingLevel = 1;
@@ -619,6 +630,25 @@ public class OutGameUIManager : MonoBehaviour
         championshipHeldCount = 0;
         championshipDatas = new();
         viewCurrentChampionshipStandings.SetActive(false);
+    }
+
+    private IEnumerator RefreshRooms()
+    {
+        GameManager.ClaimLoadInfo("Setting rooms");
+        operatingRoom.SetActive(true);
+        strategyRoom.SetActive(true);
+
+        bool isFreeManagement = gameMode == GameMode.FreeManagement;
+
+        selectSurvivorGetSurgeryDropdown.gameObject.SetActive(isFreeManagement);
+        strategyRoomSelectSurvivor.SetActive(isFreeManagement);
+        strategyButtonCopyPate.SetActive(isFreeManagement);
+
+        yield return null; // UI 레이아웃 갱신 대기
+
+        operatingRoom.SetActive(false);
+        strategyRoom.SetActive(false);
+        GameManager.CloseLoadInfo();
     }
 
     public void PromoteAnimation(League league)
@@ -805,10 +835,13 @@ public class OutGameUIManager : MonoBehaviour
             {
                 survivorsDropdown.ClearOptions();
                 selectedSurvivor.SetInfo(mySurvivorsData[0], true);
-                GameManager.Instance.LoadStrategy(0);
                 trainingRoomAnim.SetBool("Tutorial", true);
                 Alert("Click the Training Room and assign survivors to training.");
-                if(gameMode == GameMode.SingleCareerRun) objective.SetActive(true);
+                if(gameMode == GameMode.SingleCareerRun)
+                {
+                    LoadStrategyPreset(GameManager.Instance.LoadStrategy(0), mySurvivorsData[0]);
+                    objective.SetActive(true);
+                }
             }
             else if (mySurvivorsData.Count >= 10)
             {
@@ -2010,42 +2043,6 @@ public class OutGameUIManager : MonoBehaviour
     void InitializeStrategyRoom()
     {
         search.onValueChanged.AddListener((value) => Search(value));
-        //weaponPriority1Dropdown.ClearOptions();
-        //weaponPriority2Dropdown.ClearOptions();
-        //ItemManager.Items[] items = (ItemManager.Items[])Enum.GetValues(typeof(ItemManager.Items));
-        //for(int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Knife_Enchanted;  i++)
-        //{
-        //    bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
-        //    weaponPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
-        //    weaponPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
-        //    Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
-        //    weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
-        //    weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
-        //}
-        //GameManager.Instance.ObjectUpdate += () => 
-        //{ 
-        //    if(weaponPriority1Dropdown.dropdown.IsExpanded)
-        //    {
-        //        var dropdownSprites = weaponPriority1Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
-        //        for(int i=0; i<weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
-        //        {
-        //            Image image = dropdownSprites[i].GetComponent<Image>();
-        //            image.sprite = weaponPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
-        //            if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
-        //        }
-        //    }
-
-        //    if (weaponPriority2Dropdown.dropdown.IsExpanded)
-        //    {
-        //        var dropdownSprites = weaponPriority2Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
-        //        for (int i = 0; i < weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
-        //        {
-        //            Image image = dropdownSprites[i].GetComponent<Image>();
-        //            image.sprite = weaponPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
-        //            if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
-        //        }
-        //    }
-        //};
 
         foreach(var strategy in strategies)
         {
@@ -2159,60 +2156,6 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
 
-        //sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        //sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-        //elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        //elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-        
-        //sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        //sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Approaches.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-        //elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        //elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Approaches.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-
-        //heardDistinguishableSoundDropdown.ClearOptions();
-        //heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        //elseActionHeardDistinguishableSoundDropdown.ClearOptions();
-        //elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        
-        //heardIndistinguishableSoundDropdown.ClearOptions();
-        //heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        //elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
-        //elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        
-        //whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
-        //whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "First seen person").GetLocalizedString(), new LocalizedString("Basic", "Nearest person").GetLocalizedString(), new LocalizedString("Basic", "Person with the longest range").GetLocalizedString() }));
-        
-        //craftingPriority1Dropdown.ClearOptions();
-        //craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        //craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
-        //craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
-        //craftingPriority2Dropdown.ClearOptions();
-        //craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        //craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
-        //craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
-        //GameManager.Instance.ObjectUpdate += () =>
-        //{
-        //    if (craftingPriority1Dropdown.dropdown.IsExpanded)
-        //    {
-        //        var dropdownSprites = craftingPriority1Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
-        //        for (int i = 0; i < craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
-        //        {
-        //            Image image = dropdownSprites[i].GetComponent<Image>();
-        //            image.sprite = craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
-        //            if(image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
-        //        }
-        //    }
-        //    if (craftingPriority2Dropdown.dropdown.IsExpanded)
-        //    {
-        //        var dropdownSprites = craftingPriority2Dropdown.transform.Find("Dropdown List").GetComponentsInChildren<DropdownSprite>();
-        //        for (int i = 0; i < craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Count; i++)
-        //        {
-        //            Image image = dropdownSprites[i].GetComponent<Image>();
-        //            image.sprite = craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites[i];
-        //            if (image.sprite != null) image.GetComponent<AspectRatioFitter>().aspectRatio = image.sprite.textureRect.width / image.sprite.textureRect.height;
-        //        }
-        //    }
-        //};
         for (int i = 0; i < ItemManager.craftables.Count; i++)
         {
             GameObject craftableAllow = PoolManager.Spawn(ResourceEnum.Prefab.CraftableAllow, craftingAllow);
@@ -2236,49 +2179,6 @@ public class OutGameUIManager : MonoBehaviour
             if (strategy.ActionDropdown != null) strategy.ActionDropdown.RelocalizeOptions();
             if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.RelocalizeOptions();
         }
-        //weaponPriority1Dropdown.RelocalizeOptions();
-        //weaponPriority2Dropdown.RelocalizeOptions();
-
-        //weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
-        //weaponPriority2Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority2Weapon - (int)ItemManager.Items.Knife;
-        //sawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        //sawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-        //elseActionSawAnEnemyAndItIsInAttackRangeDropdown.ClearOptions();
-        //elseActionSawAnEnemyAndItIsInAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Attacks.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-
-        //sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        //sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Approaches.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-        //elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.ClearOptions();
-        //elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Approaches.").GetLocalizedString(), new LocalizedString("Basic", "Ignores.").GetLocalizedString(), new LocalizedString("Basic", "Runs away.").GetLocalizedString() }));
-
-        //heardDistinguishableSoundDropdown.ClearOptions();
-        //heardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        //elseActionHeardDistinguishableSoundDropdown.ClearOptions();
-        //elseActionHeardDistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-
-        //heardIndistinguishableSoundDropdown.ClearOptions();
-        //heardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-        //elseActionHeardIndistinguishableSoundDropdown.ClearOptions();
-        //elseActionHeardIndistinguishableSoundDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "Goes to the source of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Looks in the direction of the sound.").GetLocalizedString(), new LocalizedString("Basic", "Ignores the sound.").GetLocalizedString() }));
-
-        //whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.ClearOptions();
-        //whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.AddOptions(new List<string>(new string[] { new LocalizedString("Basic", "First seen person").GetLocalizedString(), new LocalizedString("Basic", "Nearest person").GetLocalizedString(), new LocalizedString("Basic", "Person with the longest range").GetLocalizedString() }));
-        
-        //if(survivorWhoWantEstablishStrategy != null && survivorWhoWantEstablishStrategy.strategyDictionary != null)
-        //{
-        //    sawAnEnemyAndItIsInAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].action;
-        //    elseActionSawAnEnemyAndItIsInAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsInAttackRange].elseAction;
-        //    sawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].action;
-        //    elseActionSawAnEnemyAndItIsOutsideOfAttackRangeDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange].elseAction;
-        //    heardDistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardDistinguishableSound].action;
-        //    elseActionHeardDistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardDistinguishableSound].elseAction;
-        //    heardIndistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardIndistinguishableSound].action;
-        //    elseActionHeardIndistinguishableSoundDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.HeardIndistinguishableSound].elseAction;
-        //    whenThereAreMultipleEnemiesInSightWhoIsTheTargetDropdown.value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget].action;
-        //}
-
-        //craftingPriority1Dropdown.RelocalizeOptions();
-        //craftingPriority2Dropdown.RelocalizeOptions();
     }
 
     public void SetDefault()
@@ -2407,32 +2307,6 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
         
-        //weaponPriority1Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
-        //craftingPriority1Dropdown.ClearOptions();
-        //craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        //craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
-        //craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
-        //weaponPriority2Dropdown.dropdown.value = (int)survivorWhoWantEstablishStrategy.priority2Weapon - (int)ItemManager.Items.Knife;
-        //craftingPriority2Dropdown.ClearOptions();
-        //craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-        //craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
-        //craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
-        //foreach (var craftable in ItemManager.craftables)
-        //{
-        //    bool trapExpertAndTraps = survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1 && (craftable.itemType == ItemManager.Items.BearTrap || craftable.itemType == ItemManager.Items.NoiseTrap || craftable.itemType == ItemManager.Items.ShrapnelTrap || craftable.itemType == ItemManager.Items.ChemicalTrap || craftable.itemType == ItemManager.Items.ExplosiveTrap || craftable.itemType == ItemManager.Items.TrapDetectionDevice);
-        //    if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge || trapExpertAndTraps)
-        //    {
-        //        bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
-        //        craftingPriority1Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
-        //        craftingPriority2Dropdown.AddLocalizedOptions(new List<LocalizedString>{ new LocalizedString("Item", craftable.itemType.ToString()) });
-        //        Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
-        //        craftingPriority1Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
-        //        craftingPriority2Dropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
-        //    }
-        //}
-        //craftingPriority1Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1;
-        //craftingPriority2Dropdown.dropdown.value = survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1;
-
         for(int i=0; i<survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
             craftableAllows[i].SetActive(ItemManager.craftables[i].requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge);
@@ -2673,6 +2547,70 @@ public class OutGameUIManager : MonoBehaviour
     {
         foreach (Strategy strategy in strategies) strategy.PasteThisStrategyToAllOtherSurvivor(true);
         Alert("Strategy pasted and saved.");
+    }
+
+    bool strategyPresetSave;
+    StrategyDictionarySaveData[] presets;
+    int strategyPresetSlot = -1;
+    public void OpenStrategyPresets(bool save)
+    {
+        strategyPresetBG.SetActive(true);
+        strategyPresetSave = save;
+        strategyPresetSaveLoadText.StringReference = new("Basic", save ? "Save" : "Load");
+        presets = new StrategyDictionarySaveData[10];
+        for(int i=0; i<strategyPresets.Length; i++)
+        {
+            StrategyDictionarySaveData saveData = GameManager.Instance.LoadStrategy(i + 1);
+
+            if (saveData == null)
+            {
+                strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = $"StrategyPreset{i + 1}";
+                if (!strategyPresetSave) strategyPresets[i].GetComponentInChildren<Button>().interactable = false;
+            }
+            else
+            {
+                presets[i] = saveData;
+                strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = string.IsNullOrEmpty(saveData.strategyName) ? $"StrategyPreset{i + 1}" : saveData.strategyName;
+                strategyPresets[i].GetComponentInChildren<Button>().interactable = true;
+            }
+        }
+    }
+
+    public void SaveLoadStrategyPreset(int slot)
+    {
+        if(strategyPresetSave)
+        {
+            strategyNameBG.SetActive(true);
+            strategyPresetSlot = slot;
+            if (presets[slot] != null) strategyPresetNameInputField.text = string.IsNullOrEmpty(presets[slot].strategyName) ? $"StrategyPreset{slot + 1}" : presets[slot].strategyName;
+        }
+        else
+        {
+            LoadStrategyPreset(presets[slot], survivorWhoWantEstablishStrategy);
+            strategyPresetBG.SetActive(false);
+        }
+    }
+
+    public void ConfirmSaveStrategyPreset()
+    {
+        if(!string.IsNullOrEmpty(strategyPresetNameInputField.text))
+        {
+            GameManager.Instance.SaveStrategy(strategyPresetSlot, strategyPresetNameInputField.text);
+            Alert("Alert:Strategy Saved");
+        }
+    }
+
+    void LoadStrategyPreset(StrategyDictionarySaveData saveData, SurvivorData wantSurvivor)
+    {
+        wantSurvivor.priority1Weapon = saveData.priority1Weapon;
+        wantSurvivor.priority2Weapon = saveData.priority2Weapon;
+        wantSurvivor.priority1Crafting = saveData.priority1Crafting;
+        wantSurvivor.priority2Crafting = saveData.priority2Crafting;
+        wantSurvivor.priority1CraftingToInt = saveData.priority1CraftingToInt;
+        wantSurvivor.priority2CraftingToInt = saveData.priority2CraftingToInt;
+        wantSurvivor.craftingAllows = saveData.craftingAllows;
+        wantSurvivor.repairCondition = saveData.repairCondition;
+        wantSurvivor.strategyDictionary = saveData.CreateStrategyDictionary();
     }
     #endregion
 

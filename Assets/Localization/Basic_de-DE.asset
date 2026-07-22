@@ -1925,6 +1925,14 @@ MonoBehaviour:
     m_Localized: (Falls Speicherdaten vorhanden sind, werden sie automatisch geladen.)
     m_Metadata:
       m_Items: []
+  - m_Id: 149295498327027712
+    m_Localized: Strategievorlage speichern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149295499560153088
+    m_Localized: Strategievorlage laden
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
