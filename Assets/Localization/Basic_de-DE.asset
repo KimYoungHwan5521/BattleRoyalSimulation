@@ -626,7 +626,7 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 2479581325488128
-    m_Localized: "Kein qualifizierter \xDCberlebender"
+    m_Localized: "Keine teilnahmeberechtigten \xDCberlebenden"
     m_Metadata:
       m_Items: []
   - m_Id: 2481288361078784
@@ -1931,6 +1931,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 149295499560153088
     m_Localized: Strategievorlage laden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149569864822484992
+    m_Localized: Teilnehmen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149569866781224960
+    m_Localized: Zuschauen
     m_Metadata:
       m_Items: []
   references:

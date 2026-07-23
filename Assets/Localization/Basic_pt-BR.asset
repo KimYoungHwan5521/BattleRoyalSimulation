@@ -1921,6 +1921,14 @@ MonoBehaviour:
     m_Localized: "Carregar predefini\xE7\xE3o de estrat\xE9gia"
     m_Metadata:
       m_Items: []
+  - m_Id: 149569864822484992
+    m_Localized: Participar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149569866781224960
+    m_Localized: Assistir
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

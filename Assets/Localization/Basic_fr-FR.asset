@@ -1950,6 +1950,14 @@ MonoBehaviour:
     m_Localized: "Charger le pr\xE9r\xE9glage de strat\xE9gie"
     m_Metadata:
       m_Items: []
+  - m_Id: 149569864822484992
+    m_Localized: Participer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149569866781224960
+    m_Localized: Regarder
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

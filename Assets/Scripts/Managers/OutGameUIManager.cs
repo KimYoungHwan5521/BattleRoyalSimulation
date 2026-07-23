@@ -2979,17 +2979,22 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SkipBetting()
     {
-        //OpenConfirmWindow("Confirm:Skip Bet", () => 
-        //{
+        if(gameMode == GameMode.SingleCareerRun)
+        {
             bettingAmount = 0;
-            bettingRoom.SetActive(false);
-
-        // 2.0
-        mySurvivorDataInBattleRoyale = mySurvivorsData[0];
-        SetContestants();
-
+            mySurvivorDataInBattleRoyale = mySurvivorsData[0];
+            SetContestants();
             StartBattleRoyale();
-        //});
+        }
+        else
+        {
+            OpenConfirmWindow("Confirm:Skip Bet", () =>
+            {
+                bettingAmount = 0;
+                bettingRoom.SetActive(false);
+                StartBattleRoyale();
+            });
+        }
     }
 
     bool IsValidPrediction(out string reason)
