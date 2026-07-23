@@ -259,15 +259,15 @@ public class SurvivorInfo : MonoBehaviour
             knowledgeRank.sprite = GameManager.Instance.OutGameUIManager.rankSprites[Mathf.Min((wantSurvivorData.Knowledge + 19) / 20, 6)];
         }
 
-        //if (showIncrease)
-        //{
-        //    if (wantSurvivorData.increaseComparedToPrevious_strength > -1) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
-        //    if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
-        //    if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
-        //    if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
-        //    if (wantSurvivorData.increaseComparedToPrevious_crafting > -1) craftingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_crafting})</color>";
-        //    if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
-        //}
+        if (showIncrease && GameManager.Instance.OutGameUIManager.GameMode == GameMode.FreeManagement)
+        {
+            if (wantSurvivorData.increaseComparedToPrevious_strength > -1) strengthText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_strength})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_agility > -1) agilityText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_agility})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_fighting > -1) fightingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_fighting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_shooting > -1) shootingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_shooting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_crafting > -1) craftingText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_crafting})</color>";
+            if (wantSurvivorData.increaseComparedToPrevious_knowledge > -1) knowledgeText.text += $" <color=green>(бу{wantSurvivorData.increaseComparedToPrevious_knowledge})</color>";
+        }
         SetInjury(wantSurvivorData.injuries);
         SetCharacteristic();
         SetStastics();
@@ -556,9 +556,12 @@ public class SurvivorInfo : MonoBehaviour
             Arguments = new[] { winRate, rankDefenseRate }
         };
         totalRecordGoldPlus.text += localizedString.GetLocalizedString();
+        totalRecordGoldPlus.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.FreeManagement);
 
         receivedTrainings.text = $"{new LocalizedString("Basic", "Training Sessions").GetLocalizedString()} : {survivorData.receivedTrainings}";
         consumedStaminas.text = $"{new LocalizedString("Basic", "Stamina Spent").GetLocalizedString()} : {survivorData.consumedStaminas}";
+        receivedTrainings.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun);
+        consumedStaminas.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.SingleCareerRun);
 
         localizedString = new("Basic", "Total Kill")
         {

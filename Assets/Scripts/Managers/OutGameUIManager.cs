@@ -3235,15 +3235,18 @@ public class OutGameUIManager : MonoBehaviour
             Alert("Alert:Money Recived");
         }
 
-        //foreach (var survivor in mySurvivorsData)
-        //{
-        //    survivor.increaseComparedToPrevious_strength = -1;
-        //    survivor.increaseComparedToPrevious_agility = -1;
-        //    survivor.increaseComparedToPrevious_fighting = -1;
-        //    survivor.increaseComparedToPrevious_shooting = -1;
-        //    survivor.increaseComparedToPrevious_crafting = -1;
-        //    survivor.increaseComparedToPrevious_knowledge = -1;
-        //}
+        if(gameMode == GameMode.FreeManagement)
+        {
+            foreach (var survivor in mySurvivorsData)
+            {
+                survivor.increaseComparedToPrevious_strength = -1;
+                survivor.increaseComparedToPrevious_agility = -1;
+                survivor.increaseComparedToPrevious_fighting = -1;
+                survivor.increaseComparedToPrevious_shooting = -1;
+                survivor.increaseComparedToPrevious_crafting = -1;
+                survivor.increaseComparedToPrevious_knowledge = -1;
+            }
+        }
         Alert("Alert:A day has passed.");
     }
 

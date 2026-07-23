@@ -107,8 +107,6 @@ public class GameResult : MonoBehaviour
         rememberTotalProfit = totalProfit;
         rememberPromotePoint_Rank = promotePoint_Rank;
         rememberPromotePoint_Kill = promotePoint_Kill;
-        //gameOver = outGameUIManager.Money < 0;
-        //if (outGameUIManager.Money < 0) gameOverMessage.StringReference = new("Basic", "GameOver:Can't Pay Fee");
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
@@ -218,6 +216,7 @@ public class GameResult : MonoBehaviour
                         AchievementManager.UnlockAchievement("Gold Cup");
                         GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
                         promotePoint_Rank = 100;
+                        if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = true;
                     }
                     else if (playerWin == 25)
                     {
@@ -243,7 +242,7 @@ public class GameResult : MonoBehaviour
                     int rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
                     promotePoint_Rank = Mathf.Max((10 - rank), 0);
                     promotePoint_Kill = playerSurvivor.KillCount;
-                    //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
+                    if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
                     break;
                 case League.WorldChampionship:
                     if (playerWin == 1)
@@ -253,12 +252,10 @@ public class GameResult : MonoBehaviour
                     else if (playerWin == 25) winPrize = 10000;
                     else if (playerWin == 50) winPrize = 5000;
                     killPrize = playerSurvivor.KillCount * 2000;
-                    //gameOver = true;
-                    //gameOverMessage.StringReference = new("Basic", playerWin == 1 ? "GameOver:Win World Champion" : "GameOver:Lose");
                     rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
                     promotePoint_Rank = Mathf.Max((10 - rank), 0);
                     promotePoint_Kill = playerSurvivor.KillCount;
-                    //playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
+                    if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
                     break;
                 case League.MeleeLeague:
                     if (playerWin == 1)
@@ -291,57 +288,17 @@ public class GameResult : MonoBehaviour
                     killPrize = playerSurvivor.KillCount * 4000;
                     break;
             }
-            if(playerWin != 1 && (calendar.LeagueReserveInfo[calendar.Today].league == League.BronzeLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.SilverLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.GoldLeague))
+            if(playerWin != 1)
             {
-                playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                if(calendar.LeagueReserveInfo[calendar.Today].league == League.BronzeLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.SilverLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.GoldLeague)
+                {
+                    playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                }
+                if(outGameUIManager.GameMode == GameMode.FreeManagement && (calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship))
+                {
+                    playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                }
             }
-            //switch(calendar.LeagueReserveInfo[calendar.Today].league)
-            //{
-            //    case League.BronzeLeague:
-            //        if (playerWin != 1)
-            //        {
-            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
-            //            if (calendar.Today == 24)
-            //            {
-            //                gameOver = true;
-            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-            //            }
-            //        }
-            //        break;
-            //    case League.SilverLeague:
-            //        if (playerWin != 1)
-            //        {
-            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
-            //            if (calendar.Today == 53)
-            //            {
-            //                gameOver = true;
-            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-            //            }
-            //        }
-            //        break;
-            //    case League.GoldLeague:
-            //        if (playerWin != 1)
-            //        {
-            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
-            //            if (calendar.Today > 77 && calendar.NeareastSeasonChampionship.reserver == null && calendar.NeareastWorldChampionship.reserver == null)
-            //            {
-            //                gameOver = true;
-            //                gameOverMessage.StringReference = new("Basic", "GameOver:Failed to achieve the objective.");
-            //            }
-            //        }
-            //        break;
-            //    case League.SeasonChampionship:
-            //        if (playerWin != 1)
-            //        {
-            //            playerSurvivor.LinkedSurvivorData.royalLoader = false;
-            //            if (calendar.Today > 77)
-            //            {
-            //                gameOver = true;
-            //                gameOverMessage.StringReference = new("Basic", "GameOver:Lose");
-            //            }
-            //        }
-            //        break;
-            //}
             winPrizeText.text = $"{new LocalizedString("Basic", "Rank Prize").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
             killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
             if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
@@ -363,7 +320,7 @@ public class GameResult : MonoBehaviour
                                 treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
                                 totalTreatmentCost += cost;
 
-                                injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
+                                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
                             }
                             else if (playerSurvivor.injuries[i].degree > 0)
                             {
@@ -391,7 +348,7 @@ public class GameResult : MonoBehaviour
                             if (playerSurvivor.injuries[i].degree == 1)
                             {
                                 treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", "ArtificialPartsTransplanted").GetLocalizedString()}";
-                                injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
+                                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
                             }
                             else treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
                             int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i], 0);
@@ -426,60 +383,63 @@ public class GameResult : MonoBehaviour
             else gameResultText.text = $"{new LocalizedString("Basic", "Result").GetLocalizedString()}"; ;
         }
 
-        // Betting Result
-        //if (outGameUIManager.BettingAmount > 0)
-        //{
-        //    bettingPrediction.SetActive(true);
-        //    for (int i = 0; i < predictionTable.Length; i++)
-        //    {
-        //        if (i < outGameUIManager.PredictionNumber)
-        //        {
-        //            predictionTable[i].SetActive(true);
-        //            predictionsText[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
-        //            if (GameManager.Instance.BattleRoyaleManager.rankings[i] == null) rankingsText[i].text = "?";
-        //            else rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
-        //        }
-        //        else predictionTable[i].SetActive(false);
-        //    }
-        //    int correctExactRanking = 0;
-        //    int correctOnlyRankedIn = 0;
-        //    for (int i = 0; i < outGameUIManager.PredictionNumber; i++)
-        //    {
-        //        bool doContinue = false;
-        //        for (int j = 0; j < outGameUIManager.PredictionNumber; j++)
-        //        {
-        //            if (predictionsText[i].text == rankingsText[j].text)
-        //            {
-        //                if (i == j)
-        //                {
-        //                    correctExactRanking++;
-        //                    predictionsBG[i].color = new Color(0.48f, 1f, 0.44f);
-        //                }
-        //                else
-        //                {
-        //                    correctOnlyRankedIn++;
-        //                    predictionsBG[i].color = new Color(0.89f, 0.93f, 0.39f);
-        //                }
-        //                doContinue = true;
-        //                continue;
-        //            }
-        //        }
-        //        if (doContinue) continue;
-        //        predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
-        //    }
-        //    float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
-        //    if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
-        //    if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
-        //    long bettingRewards = (long)(outGameUIManager.BettingAmount * odds);
-        //    if (bettingRewards > 99999999) bettingRewards = 99999999;
-        //    bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
-        //    totalProfit += (int)bettingRewards - outGameUIManager.BettingAmount;
-        //}
-        //else
-        //{
-        //    bettingPrediction.SetActive(false);
-        //    bettingRewardsText.text = $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : $ 0";
-        //}
+        if(outGameUIManager.GameMode == GameMode.FreeManagement)
+        {
+            // Betting Result
+            if (outGameUIManager.BettingAmount > 0)
+            {
+                bettingPrediction.SetActive(true);
+                for (int i = 0; i < predictionTable.Length; i++)
+                {
+                    if (i < outGameUIManager.PredictionNumber)
+                    {
+                        predictionTable[i].SetActive(true);
+                        predictionsText[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
+                        if (GameManager.Instance.BattleRoyaleManager.rankings[i] == null) rankingsText[i].text = "?";
+                        else rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
+                    }
+                    else predictionTable[i].SetActive(false);
+                }
+                int correctExactRanking = 0;
+                int correctOnlyRankedIn = 0;
+                for (int i = 0; i < outGameUIManager.PredictionNumber; i++)
+                {
+                    bool doContinue = false;
+                    for (int j = 0; j < outGameUIManager.PredictionNumber; j++)
+                    {
+                        if (predictionsText[i].text == rankingsText[j].text)
+                        {
+                            if (i == j)
+                            {
+                                correctExactRanking++;
+                                predictionsBG[i].color = new Color(0.48f, 1f, 0.44f);
+                            }
+                            else
+                            {
+                                correctOnlyRankedIn++;
+                                predictionsBG[i].color = new Color(0.89f, 0.93f, 0.39f);
+                            }
+                            doContinue = true;
+                            continue;
+                        }
+                    }
+                    if (doContinue) continue;
+                    predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
+                }
+                float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
+                if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
+                if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
+                long bettingRewards = (long)(outGameUIManager.BettingAmount * odds);
+                if (bettingRewards > 99999999) bettingRewards = 99999999;
+                bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
+                totalProfit += (int)bettingRewards - outGameUIManager.BettingAmount;
+            }
+            else
+            {
+                bettingPrediction.SetActive(false);
+                bettingRewardsText.text = $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : $ 0";
+            }
+        }
 
         if (totalProfit >= 0) totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=green>$ {totalProfit}</color>";
         else totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=red>- $ {-totalProfit}</color>";
@@ -492,37 +452,38 @@ public class GameResult : MonoBehaviour
         {
             case League.BronzeLeague:
                 survivor.tier = Tier.Silver;
-                outGameUIManager.UpgradeFacility();
-                outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}";
-                notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+                {
+                    outGameUIManager.UpgradeFacility();
+                    outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}";
+                    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                }
                 break;
             case League.SilverLeague:
                 survivor.tier = Tier.Gold;
-                outGameUIManager.UpgradeFacility();
-                outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}";
-                notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
+                {
+                    outGameUIManager.UpgradeFacility();
+                    outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}";
+                    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                }
                 break;
             case League.GoldLeague:
                 //calendar.NeareastSeasonChampionship.reserver = survivor;
-                survivor.haveQualifyToParticipateInSeasonChampionship = true;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
-                if (outGameUIManager.trainingLevel < 4)
+                if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
                 {
+                    survivor.haveQualifyToParticipateInSeasonChampionship = true;
+                    notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "SeasonChampionship").GetLocalizedString()); };
                     outGameUIManager.UpgradeFacility();
                     notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 }
-                //notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
+                else
+                {
+                    notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
+                }
                 break;
             case League.SeasonChampionship:
                 //calendar.NeareastWorldChampionship.reserver = survivor;
-                notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
-                //if (outGameUIManager.trainingLevel < 5)
-                //{
-                //    outGameUIManager.UpgradeFacility();
-                //    notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
-                //}
-                //survivor.haveQualifyToParticipateInWorldChampionship = true;
-                //notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 int characteristic = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.ChokingUnderPressure);
                 if (characteristic != -1)
                 {
@@ -531,6 +492,8 @@ public class GameResult : MonoBehaviour
                     notification += () => { outGameUIManager.Alert("Alert:Overcame", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Characteristic", "ClutchPerformance").GetLocalizedString(), new LocalizedString("Characteristic", "ChokingUnderPressure").GetLocalizedString()); };
                     AchievementManager.UnlockAchievement("Overcome");
                 }
+                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
+                else notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 break;
         }
     }
@@ -560,91 +523,97 @@ public class GameResult : MonoBehaviour
                 }
             }
         }
-        //if (playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
-        Debug.Log($"Promote Point : {rememberPromotePoint_Rank + rememberPromotePoint_Kill}");
-        if(!outGameUIManager.Championship)
+        if (outGameUIManager.GameMode == GameMode.FreeManagement)
         {
-            playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint_Rank + rememberPromotePoint_Kill;
-            playerSurvivor.LinkedSurvivorData.promotePoint_Rank = rememberPromotePoint_Rank;
-            playerSurvivor.LinkedSurvivorData.promotePoint_Kill = rememberPromotePoint_Kill;
+            if(playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
         }
-        if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
-        notification += () =>
+        else
         {
-            switch (calendar.LeagueReserveInfo[calendar.Today].league)
+            Debug.Log($"Promote Point : {rememberPromotePoint_Rank + rememberPromotePoint_Kill}");
+            if(!outGameUIManager.Championship)
             {
-                case League.BronzeLeague:
-                case League.SilverLeague:
-                case League.GoldLeague:
-                case League.SeasonChampionship:
-                case League.WorldChampionship:
-                    string gainStats = "";
-                    if (playerWin == 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 2, 2, 2);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 2";
-                    }
-                    else
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(1, 1, 1, 1, 1, 1);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 1";
-                    }
-                    outGameUIManager.ResetSelectedSurvivorInfo();
-                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                    break;
-                case League.MeleeLeague:
-                    if (playerWin == 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(4, 4, 4, 0, 0, 0);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 4";
-                    }
-                    else
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 0, 0, 0);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2";
-                    }
-                    outGameUIManager.ResetSelectedSurvivorInfo();
-                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                    break;
-                case League.RangeLeague:
-                    if (playerWin == 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 12, 0, 0);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 12";
-                    }
-                    else
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 6, 0, 0);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 6";
-                    }
-                    outGameUIManager.ResetSelectedSurvivorInfo();
-                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                    break;
-                case League.CraftingLeague:
-                    if (playerWin == 1)
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 6, 6);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 6, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 6";
-                    }
-                    else
-                    {
-                        playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 3, 3);
-                        gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 3, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 3";
-                    }
-                    outGameUIManager.ResetSelectedSurvivorInfo();
-                    outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
-                    break;
+                playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint += rememberPromotePoint_Rank + rememberPromotePoint_Kill;
+                playerSurvivor.LinkedSurvivorData.promotePoint_Rank = rememberPromotePoint_Rank;
+                playerSurvivor.LinkedSurvivorData.promotePoint_Kill = rememberPromotePoint_Kill;
             }
-            switch(calendar.LeagueReserveInfo[calendar.Today].league)
+            if (playerSurvivor.LinkedSurvivorData.promotePoint + playerSurvivor.LinkedSurvivorData.increaseComparedToPrevious_promotePoint >= 100) Promote(playerSurvivor.LinkedSurvivorData);
+            notification += () =>
             {
-                case League.BronzeLeague:
-                case League.SilverLeague:
-                case League.GoldLeague:
-                    outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
-                    break;
-            }
-        };
-        if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics();
+                switch (calendar.LeagueReserveInfo[calendar.Today].league)
+                {
+                    case League.BronzeLeague:
+                    case League.SilverLeague:
+                    case League.GoldLeague:
+                    case League.SeasonChampionship:
+                    case League.WorldChampionship:
+                        string gainStats = "";
+                        if (playerWin == 1)
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 2, 2, 2);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 2";
+                        }
+                        else
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(1, 1, 1, 1, 1, 1);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 1, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 1";
+                        }
+                        outGameUIManager.ResetSelectedSurvivorInfo();
+                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                        break;
+                    case League.MeleeLeague:
+                        if (playerWin == 1)
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(4, 4, 4, 0, 0, 0);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 4, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 4";
+                        }
+                        else
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(2, 2, 2, 0, 0, 0);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Strength").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Agility").GetLocalizedString()} + 2, {new LocalizedString("Basic", "Fighting").GetLocalizedString()} + 2";
+                        }
+                        outGameUIManager.ResetSelectedSurvivorInfo();
+                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                        break;
+                    case League.RangeLeague:
+                        if (playerWin == 1)
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 12, 0, 0);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 12";
+                        }
+                        else
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 6, 0, 0);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + 6";
+                        }
+                        outGameUIManager.ResetSelectedSurvivorInfo();
+                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                        break;
+                    case League.CraftingLeague:
+                        if (playerWin == 1)
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 6, 6);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 6, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 6";
+                        }
+                        else
+                        {
+                            playerSurvivor.LinkedSurvivorData.IncreaseStatsReserve(0, 0, 0, 0, 3, 3);
+                            gainStats = $"\n\n{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + 3, {new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + 3";
+                        }
+                        outGameUIManager.ResetSelectedSurvivorInfo();
+                        outGameUIManager.Alert("Alert:Gain stat from match", gainStats);
+                        break;
+                }
+                switch(calendar.LeagueReserveInfo[calendar.Today].league)
+                {
+                    case League.BronzeLeague:
+                    case League.SilverLeague:
+                    case League.GoldLeague:
+                        outGameUIManager.PromoteAnimation(calendar.LeagueReserveInfo[calendar.Today].league);
+                        break;
+                }
+            };
+        }
+        if (outGameUIManager.MySurvivorDataInBattleRoyale != null) LinkStastics(outGameUIManager.MySurvivorDataInBattleRoyale);
     }
 
     public void ExitBattle(bool goTitle = false)
@@ -654,15 +623,18 @@ public class GameResult : MonoBehaviour
         ClearBattleRoyale();
         if (!goTitle)
         {
-            // 여기서 수술
-            foreach (var injury in injuryNeedSurgery)
+            if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
             {
-                injury.type = InjuryType.ArtificialPartsTransplanted;
-                injury.degree = 0;
-            }
+                // 여기서 수술
+                foreach (var injury in injuryNeedSurgery)
+                {
+                    injury.type = InjuryType.ArtificialPartsTransplanted;
+                    injury.degree = 0;
+                }
 
-            RecordChampionshipProgress();
-            ContestantsMaintain();
+                RecordChampionshipProgress();
+                ContestantsMaintain();
+            }
 
             if(gameOver)
             {
@@ -913,9 +885,8 @@ public class GameResult : MonoBehaviour
         GameManager.Instance.Option.DeleteSaveData(0);
     }
 
-    void LinkStastics()
+    void LinkStastics(SurvivorData survivor)
     {
-        SurvivorData survivor = outGameUIManager.MySurvivorDataInBattleRoyale;
         var league = calendar.LeagueReserveInfo[calendar.Today].league;
         bool goldPlus = league != League.BronzeLeague && league != League.SilverLeague;
         if(playerWin == 1)
@@ -933,12 +904,12 @@ public class GameResult : MonoBehaviour
                 case League.GoldLeague:
                     survivor.wonGoldLeague = true;
                     break;
-                //case League.SeasonChampionship:
-                //    survivor.wonSeasonChampionship = true;
-                //    break;
-                //case League.WorldChampionship:
-                //    survivor.wonWorldChampionship = true;
-                //    break;
+                case League.SeasonChampionship:
+                    if (outGameUIManager.GameMode == GameMode.FreeManagement) survivor.wonSeasonChampionship = true;
+                    break;
+                case League.WorldChampionship:
+                    if (outGameUIManager.GameMode == GameMode.FreeManagement) survivor.wonWorldChampionship = true;
+                    break;
                 case League.MeleeLeague:
                     survivor.wonMeleeLeague = true;
                     break;
