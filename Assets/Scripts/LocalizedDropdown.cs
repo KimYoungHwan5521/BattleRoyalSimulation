@@ -32,7 +32,7 @@ public class LocalizedDropdown : MonoBehaviour
         dropdown.RefreshShownValue();
     }
 
-    public void AddLocalizedOptions(params LocalizedString[] options)
+    public void AddKeys(params LocalizedString[] options)
     {
         for (int i = 0; i < options.Length; i++)
         {

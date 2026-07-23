@@ -154,8 +154,8 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject hireSurvivor;
     [SerializeField] GameObject hireClose;
     public SurvivorInfo[] survivorsInHireMarket;
-    [SerializeField] TMP_Dropdown survivorsDropdown;
-    public TMP_Dropdown SurvivorsDropdown => survivorsDropdown;
+    [SerializeField] LocalizedDropdown survivorsDropdown;
+    public LocalizedDropdown SurvivorsDropdown => survivorsDropdown;
     [SerializeField] SurvivorInfo selectedSurvivor;
 
     [SerializeField] List<SurvivorData> mySurvivorsData;
@@ -245,7 +245,7 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Operating Room")]
     [SerializeField] GameObject operatingRoom;
-    [SerializeField] TMP_Dropdown selectSurvivorGetSurgeryDropdown;
+    [SerializeField] LocalizedDropdown selectSurvivorGetSurgeryDropdown;
     [SerializeField] SurvivorInfo survivorInfoGetSurgery;
     [SerializeField] SurvivorData survivorWhoWantSurgery;
     [SerializeField] Toggle surgeryType_Transplantation;
@@ -284,7 +284,7 @@ public class OutGameUIManager : MonoBehaviour
     [Header("Strategy Room")]
     [SerializeField] GameObject strategyRoom;
     [SerializeField] GameObject strategyRoomSelectSurvivor;
-    [SerializeField] TMP_Dropdown selectSurvivorEstablishStrategyDropdown;
+    [SerializeField] LocalizedDropdown selectSurvivorEstablishStrategyDropdown;
     [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
     [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
 
@@ -442,7 +442,6 @@ public class OutGameUIManager : MonoBehaviour
             new("Basic", "Stat Total"),
         });
 
-
         championshipRankRankChanges = new TextMeshProUGUI[25];
         championshipRankRanks = new TextMeshProUGUI[25];
         championshipRankNames = new LocalizeStringEvent[25];
@@ -476,33 +475,35 @@ public class OutGameUIManager : MonoBehaviour
             InitializeStrategyRoom();
             sortContestantsListDropdown.RelocalizeOptions();
         };
-        bool colorChanged = false;
-        GameManager.Instance.ObjectUpdate += () =>
-        {
-            if (selectSurvivorGetSurgeryDropdown.IsExpanded)
-            {
-                if (!colorChanged)
-                {
-                    var dropdownSprites = selectSurvivorGetSurgeryDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
-                    for (int i = 0; i < mySurvivorsData.Count; i++)
-                    {
-                        bool exit = false;
-                        foreach (var injury in mySurvivorsData[i].injuries)
-                        {
-                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged) || injury.degree >= 1)
-                            {
-                                dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
-                                exit = true;
-                                break;
-                            }
-                        }
-                        if(!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
-                    }
-                    colorChanged = true;
-                }
-            }
-            else colorChanged = false;
-        };
+
+        //bool colorChanged = false;
+        //GameManager.Instance.ObjectUpdate += () =>
+        //{
+        //    if (selectSurvivorGetSurgeryDropdown.dropdown.IsExpanded)
+        //    {
+        //        if (!colorChanged)
+        //        {
+        //            var dropdownSprites = selectSurvivorGetSurgeryDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
+        //            for (int i = 0; i < mySurvivorsData.Count; i++)
+        //            {
+        //                bool exit = false;
+        //                foreach (var injury in mySurvivorsData[i].injuries)
+        //                {
+        //                    if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged) || injury.degree >= 1)
+        //                    {
+        //                        dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
+        //                        exit = true;
+        //                        break;
+        //                    }
+        //                }
+        //                if(!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
+        //            }
+        //            colorChanged = true;
+        //        }
+        //    }
+        //    else colorChanged = false;
+        //};
+
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
 
@@ -847,7 +848,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 AchievementManager.UnlockAchievement("Full House");
             }
-            survivorsDropdown.AddOptions(new List<string>() { survivorsInHireMarket[candidate].survivorData.localizedSurvivorName.GetLocalizedString() });
+            foreach(var survivor in MySurvivorsData) survivorsDropdown.AddKeys(survivorsInHireMarket[candidate].survivorData.localizedSurvivorName);
             survivorsInHireMarket[candidate].SoldOut = true;
 
             //if (mySurvivorsData.Count == 1) ResetHireMarket();
@@ -887,10 +888,10 @@ public class OutGameUIManager : MonoBehaviour
         survivorsDropdown.ClearOptions();
         for(int i = 0; i<mySurvivorsData.Count; i++)
         {
-            survivorsDropdown.AddOptions(new List<string>(new string[] { mySurvivorsData[i].localizedSurvivorName.GetLocalizedString() }));
+            survivorsDropdown.AddKeys( mySurvivorsData[i].localizedSurvivorName);
         }
         if (mySurvivorsData.Count == 0) return;
-        survivorsDropdown.captionText.text = survivorsDropdown.options[survivorsDropdown.value].text;
+        survivorsDropdown.Value = 0;
         ResetSelectedSurvivorInfo();
         survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
     }
@@ -903,7 +904,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
-            SurvivorData wantDismiss = mySurvivorsData[survivorsDropdown.value];
+            SurvivorData wantDismiss = MySurvivorsData.Find(x => x.localizedSurvivorName == survivorsDropdown.keys[survivorsDropdown.Value]);
             OpenConfirmWindow("Confirm:Release", () =>
                 {
                     mySurvivorsData.Remove(wantDismiss);
@@ -917,14 +918,14 @@ public class OutGameUIManager : MonoBehaviour
 
     public void OnSurvivorSelected()
     {
-        SurvivorData survivorInfo = mySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == survivorsDropdown.options[survivorsDropdown.value].text);
+        SurvivorData survivorInfo = mySurvivorsData.Find(x => x.localizedSurvivorName == survivorsDropdown.keys[survivorsDropdown.Value]);
         selectedSurvivor.SetInfo(survivorInfo, true);
     }
 
     public void ResetSelectedSurvivorInfo()
     {
         if (mySurvivorsData == null || mySurvivorsData.Count == 0) return;
-        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.value], true);
+        selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.Value], true);
         selectedSurvivor.StatIncreaseAnimation();
     }
 
@@ -1353,6 +1354,62 @@ public class OutGameUIManager : MonoBehaviour
         SetTrainingRoomSurvivorsInfo();
     }
 
+    void ApplyTraining(SurvivorData survivor, Training_FreeManagement training, int week = 0)
+    {
+        int survivorStrengthLv = survivor._strength / 20;
+        int survivorAgilityLv = survivor._agility / 20;
+        int survivorFightingLv = survivor._fighting / 20;
+        int survivorShtLv = survivor._shooting / 20;
+        int survivorCrfLv = survivor._crafting / 20;
+        int survivorKnowledgeLv = survivor._knowledge / 20;
+
+        if (week == 0)
+        {
+            survivor.increaseComparedToPrevious_strength = -1;
+            survivor.increaseComparedToPrevious_agility = -1;
+            survivor.increaseComparedToPrevious_fighting = -1;
+            survivor.increaseComparedToPrevious_shooting = -1;
+            survivor.increaseComparedToPrevious_crafting = -1;
+            survivor.increaseComparedToPrevious_knowledge = -1;
+        }
+
+        switch (training)
+        {
+            case Training_FreeManagement.Weight:
+                int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_strength = 0;
+                survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0, 0);
+                break;
+            case Training_FreeManagement.Running:
+                int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_agility = 0;
+                survivor.IncreaseStats(0, increseAgility, 0, 0, 0, 0);
+                break;
+            case Training_FreeManagement.Fighting:
+                int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_fighting = 0;
+                survivor.IncreaseStats(0, 0, increseFighting, 0, 0, 0);
+                break;
+            case Training_FreeManagement.Shooting:
+                int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_shooting = 0;
+                survivor.IncreaseStats(0, 0, 0, increseShooting, 0, 0);
+                break;
+            case Training_FreeManagement.Crafting:
+                int increseCrafting = Mathf.Max(craftingTrainingLevel + 1 - survivorCrfLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_crafting = 0;
+                survivor.IncreaseStats(0, 0, 0, 0, increseCrafting, 0);
+                break;
+            case Training_FreeManagement.Studying:
+                int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
+                if (week == 0) survivor.increaseComparedToPrevious_knowledge = 0;
+                survivor.IncreaseStats(0, 0, 0, 0, 0, increseKnowledge);
+                break;
+            default:
+                break;
+        }
+    }
+
     public void AssignTraining()
     {
         weightTrainingBookers.text = "";
@@ -1739,31 +1796,31 @@ public class OutGameUIManager : MonoBehaviour
     public void SetOperatingRoom()
     {
         selectSurvivorGetSurgeryDropdown.ClearOptions();
-        selectSurvivorGetSurgeryDropdown.AddOptions(survivorsDropdown.options);
+        foreach(var survivor in MySurvivorsData) selectSurvivorGetSurgeryDropdown.AddKeys(survivor.localizedSurvivorName);
         SelectSurvivorToSurgery();
     }
 
     public void SelectSurvivorToSurgery()
     {
-        survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.value], false);
-        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorGetSurgeryDropdown.options[selectSurvivorGetSurgeryDropdown.value].text);
+        survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.Value], false);
+        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
         
-        if(survivorWhoWantSurgery.surgeryScheduled)
-        {
-            scheduledSurgery.SetActive(true);
-            buttonCancelSurgery.SetActive(true);
-            selectSurgery.SetActive(false);
-            buttonScheduleSurgery.SetActive(false);
-            scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString()}";
-        }
-        else
-        {
-            scheduledSurgery.SetActive(false);
-            buttonCancelSurgery.SetActive(false);
-            selectSurgery.SetActive(true);
-            buttonScheduleSurgery.SetActive(true);
-            GetListOfSurgeryCanUndergo();
-        }
+        //if(survivorWhoWantSurgery.surgeryScheduled)
+        //{
+        //    scheduledSurgery.SetActive(true);
+        //    buttonCancelSurgery.SetActive(true);
+        //    selectSurgery.SetActive(false);
+        //    buttonScheduleSurgery.SetActive(false);
+        //    scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString()}";
+        //}
+        //else
+        //{
+        //    scheduledSurgery.SetActive(false);
+        //    buttonCancelSurgery.SetActive(false);
+        //    selectSurgery.SetActive(true);
+        //    buttonScheduleSurgery.SetActive(true);
+        //    GetListOfSurgeryCanUndergo();
+        //}
     }
 
     public void GetListOfSurgeryCanUndergo()
@@ -1977,66 +2034,68 @@ public class OutGameUIManager : MonoBehaviour
         resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Surgery Result");
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
         trainingResultDetailText.text = new LocalizedString("Injury", mySurvivorsData[0].localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", mySurvivorsData[0].surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
-        Surgery(mySurvivorsData[0]);
-        selectedSurvivor.SetInfo(mySurvivorsData[0], false);
+        if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = mySurvivorsData[0];
+        else survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
+        Surgery(survivorWhoWantSurgery);
+        selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
         operatingRoom.SetActive(false);
 
         GameManager.Instance.Save(0);
     }
 
-    public void ScheduleSurgery()
-    {
-        if (surgeryList.Count == 0) return;
-        int index = 0;
-        for(int i=0; i< surgeries.Length; i++)
-        {
-            if (surgeries[i].GetComponentInChildren<Toggle>().isOn)
-            {
-                index = i;
-                break;
-            }
-        }
+    //public void ScheduleSurgery()
+    //{
+    //    if (surgeryList.Count == 0) return;
+    //    int index = 0;
+    //    for(int i=0; i< surgeries.Length; i++)
+    //    {
+    //        if (surgeries[i].GetComponentInChildren<Toggle>().isOn)
+    //        {
+    //            index = i;
+    //            break;
+    //        }
+    //    }
         
-        if(index > surgeryList.Count)
-        {
-            Debug.LogWarning("Wrong surgeryList index");
-            return;
-        }
+    //    if(index > surgeryList.Count)
+    //    {
+    //        Debug.LogWarning("Wrong surgeryList index");
+    //        return;
+    //    }
 
-        survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
-        survivorWhoWantSurgery.scheduledSurgeryName = survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString();
-        survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
-        survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
-        survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
-        survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
-        OpenConfirmWindow("Confirm:Surgery", ()=>
-        {
-            if(money < survivorWhoWantSurgery.scheduledSurgeryCost)
-            {
-                Alert("Alert:Not enough money.");
-            }
-            else
-            {
-                survivorWhoWantSurgery.surgeryScheduled = true;
-                Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
-                SelectSurvivorToSurgery();
-                //Alert("Alert:Surgery has been scheduled.");
-                Surgery();
-            }
-        }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
-    }
+    //    survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
+    //    survivorWhoWantSurgery.scheduledSurgeryName = survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString();
+    //    survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
+    //    survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
+    //    survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
+    //    survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
+    //    OpenConfirmWindow("Confirm:Surgery", ()=>
+    //    {
+    //        if(money < survivorWhoWantSurgery.scheduledSurgeryCost)
+    //        {
+    //            Alert("Alert:Not enough money.");
+    //        }
+    //        else
+    //        {
+    //            survivorWhoWantSurgery.surgeryScheduled = true;
+    //            Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
+    //            SelectSurvivorToSurgery();
+    //            //Alert("Alert:Surgery has been scheduled.");
+    //            Surgery();
+    //        }
+    //    }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
+    //}
 
-    public void CancelSurgery()
-    {
-        OpenConfirmWindow("Confirm:Cancel Surgery", () =>
-        {
-            survivorWhoWantSurgery.surgeryScheduled = false;
-            Money += survivorWhoWantSurgery.scheduledSurgeryCost;
-            survivorWhoWantSurgery.scheduledSurgeryCost = 0;
-            SelectSurvivorToSurgery();
-            Alert("Alert:Surgery has been canceled.");
-        });
-    }
+    //public void CancelSurgery()
+    //{
+    //    OpenConfirmWindow("Confirm:Cancel Surgery", () =>
+    //    {
+    //        survivorWhoWantSurgery.surgeryScheduled = false;
+    //        Money += survivorWhoWantSurgery.scheduledSurgeryCost;
+    //        survivorWhoWantSurgery.scheduledSurgeryCost = 0;
+    //        SelectSurvivorToSurgery();
+    //        Alert("Alert:Surgery has been canceled.");
+    //    });
+    //}
     #endregion
 
     #region Strategy Room
@@ -2088,37 +2147,37 @@ public class OutGameUIManager : MonoBehaviour
                     break;
                 case StrategyCase.SawAnEnemyAndItIsInAttackRange:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "Attacks."), new("Basic", "Ignores."), new("Basic", "Runs away."));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "Attacks."), new("Basic", "Ignores."), new("Basic", "Runs away."));
                     strategy.ElseActionDropdown.ClearOptions();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new("Basic", "Attacks."), new("Basic", "Ignores."), new("Basic", "Runs away."));
+                    strategy.ElseActionDropdown.AddKeys(new("Basic", "Attacks."), new("Basic", "Ignores."), new("Basic", "Runs away."));
                     break;
                 case StrategyCase.SawAnEnemyAndItIsOutsideOfAttackRange:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "Approaches."), new("Basic", "Ignores."), new("Basic", "Runs away."));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "Approaches."), new("Basic", "Ignores."), new("Basic", "Runs away."));
                     strategy.ElseActionDropdown.ClearOptions();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new("Basic", "Approaches."), new("Basic", "Ignores."), new("Basic", "Runs away."));
+                    strategy.ElseActionDropdown.AddKeys(new("Basic", "Approaches."), new("Basic", "Ignores."), new("Basic", "Runs away."));
                     break;
                 case StrategyCase.WhenAnEnemyDisappearsFromSight:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "Tracks."), new("Basic", "Ignores."));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "Tracks."), new("Basic", "Ignores."));
                     strategy.ElseActionDropdown.ClearOptions();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new("Basic", "Tracks."), new("Basic", "Ignores."));
+                    strategy.ElseActionDropdown.AddKeys(new("Basic", "Tracks."), new("Basic", "Ignores."));
                     break;
                 case StrategyCase.HeardDistinguishableSound:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
                     strategy.ElseActionDropdown.ClearOptions();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
+                    strategy.ElseActionDropdown.AddKeys(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
                     break;
                 case StrategyCase.HeardIndistinguishableSound:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
                     strategy.ElseActionDropdown.ClearOptions();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
+                    strategy.ElseActionDropdown.AddKeys(new("Basic", "Goes to the source of the sound."), new("Basic", "Looks in the direction of the sound."), new("Basic", "Ignores the sound."));
                     break;
                 case StrategyCase.WhenThereAreMultipleEnemiesInSightWhoIsTheTarget:
                     strategy.ActionDropdown.ClearOptions();
-                    strategy.ActionDropdown.AddLocalizedOptions(new("Basic", "First seen person"), new("Basic", "Nearest person"), new("Basic", "Person with the longest range"));
+                    strategy.ActionDropdown.AddKeys(new("Basic", "First seen person"), new("Basic", "Nearest person"), new("Basic", "Person with the longest range"));
                     break;
                 case StrategyCase.CraftingPriority:
                     strategy.ActionDropdown.ClearOptions();
@@ -2244,7 +2303,7 @@ public class OutGameUIManager : MonoBehaviour
     void SetStrategyRoom()
     {
         selectSurvivorEstablishStrategyDropdown.ClearOptions();
-        selectSurvivorEstablishStrategyDropdown.AddOptions(survivorsDropdown.options);
+        foreach(var survivor in MySurvivorsData) selectSurvivorEstablishStrategyDropdown.AddKeys(survivor.localizedSurvivorName);
         survivorWhoWantEstablishStrategy = mySurvivorsData[0];
         strategyRoomJustOpend = true;
         SelectSurvivorToEstablishStrategy();
@@ -2260,8 +2319,8 @@ public class OutGameUIManager : MonoBehaviour
             foreach (Strategy strategy in strategies) if (strategy.hasChanged) { hasChanged = true; break; }
             if(hasChanged) SaveStrategy();
         }
-        survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.value], false);
-        survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName.GetLocalizedString() == selectSurvivorEstablishStrategyDropdown.options[selectSurvivorEstablishStrategyDropdown.value].text);
+        survivorInfoEstablishStrategy.SetInfo(MySurvivorsData[selectSurvivorEstablishStrategyDropdown.Value], false);
+        survivorWhoWantEstablishStrategy = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorEstablishStrategyDropdown.keys[selectSurvivorEstablishStrategyDropdown.Value]);
         
         foreach(var strategy in strategies)
         {
@@ -3105,8 +3164,48 @@ public class OutGameUIManager : MonoBehaviour
     #region End The Day
     void DayEnd(int week = 0)
     {
-        //contestantsData = null;
-        ResetTrainingRoom();
+        if(gameMode == GameMode.SingleCareerRun)
+        {
+            ResetTrainingRoom();
+        }
+        if(gameMode == GameMode.FreeManagement)
+        {
+            dailyResult.SetActive(true);
+            int index = 0;
+            foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
+            foreach (SurvivorData survivor in mySurvivorsData)
+            {
+                ApplyTraining(survivor, survivor.assignedTraining, week);
+                if (survivor.assignedTraining != Training_FreeManagement.None)
+                {
+                    survivorTrainingResults[index].SetActive(true);
+                    resultTexts[index][0].text = survivor.localizedSurvivorName.GetLocalizedString();
+                    resultTexts[index][1].text = $"{new LocalizedString("Basic", "Strength").GetLocalizedString()} + {survivor.increaseComparedToPrevious_strength}";
+                    resultTexts[index][1].gameObject.SetActive(survivor.increaseComparedToPrevious_strength > -1);
+                    resultTexts[index][2].text = $"{new LocalizedString("Basic", "Agility").GetLocalizedString()} + {survivor.increaseComparedToPrevious_agility}";
+                    resultTexts[index][2].gameObject.SetActive(survivor.increaseComparedToPrevious_agility > -1);
+                    resultTexts[index][3].text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_fighting}";
+                    resultTexts[index][3].gameObject.SetActive(survivor.increaseComparedToPrevious_fighting > -1);
+                    resultTexts[index][4].text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_shooting}";
+                    resultTexts[index][4].gameObject.SetActive(survivor.increaseComparedToPrevious_shooting > -1);
+                    resultTexts[index][5].text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {survivor.increaseComparedToPrevious_crafting}";
+                    resultTexts[index][5].gameObject.SetActive(survivor.increaseComparedToPrevious_crafting > -1);
+                    resultTexts[index][6].text = $"{new LocalizedString("Basic", "Knowledge").GetLocalizedString()} + {survivor.increaseComparedToPrevious_knowledge}";
+                    resultTexts[index][6].gameObject.SetActive(survivor.increaseComparedToPrevious_knowledge > -1);
+                    index++;
+                }
+                if (!autoAssign)
+                {
+                    survivor.assignedTraining = Training_FreeManagement.None;
+                    AssignTraining();
+                }
+            }
+            selectedSurvivor.SetInfo(mySurvivorsData[survivorsDropdown.Value], true);
+
+            GameManager.Instance.FixLayout(dailyResult.GetComponent<RectTransform>());
+            GameManager.Instance.openedWindows.Push(dailyResult);
+        }
+
         calendar.Today++;
         calendar.TurnPageCalendar(0);
         if (calendar.Today % 7 == 0)
@@ -3114,50 +3213,14 @@ public class OutGameUIManager : MonoBehaviour
             Money += 1000;
             Alert("Alert:Money Recived");
         }
-
-        GameManager.Instance.FixLayout(dailyResult.GetComponent<RectTransform>());
-        GameManager.Instance.openedWindows.Push(dailyResult);
     }
 
     public void EndTheDay()
     {
-        string key = "End The Day";
-        string warning = "";
-        if(calendar.Today % 7 < 5)
+        OpenConfirmWindow("End The Day", () =>
         {
-        }
-        else
-        {
-            if (calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
-            {
-                if(calendar.LeagueReserveInfo[calendar.Today].reserver != null)
-                {
-                    Alert("Alert:Scheduled Battle Royale Today", calendar.LeagueReserveInfo[calendar.Today].reserver.localizedSurvivorName.GetLocalizedString());
-                    return;
-                }
-                else
-                {
-                    warning = new LocalizedString("Basic", "Today is a battle royale day. Skip it?").GetLocalizedString();
-                }
-            }
-        }
-
-        if(calendar.Today % 7 < 5)
-        {
-            OpenConfirmWindow(key, () =>
-            {
-                DayEnd();
-                ShowSurgeryResult();
-            }, warning);
-        }
-        else if(calendar.LeagueReserveInfo.ContainsKey(calendar.Today))
-        {
-            OpenConfirmWindow(key, () =>
-            {
-                EndTheDayWeekend();
-            }, warning);
-        }
-        else EndTheDayWeekend();
+            DayEnd();
+        });
     }
 
     public void EndTheDayWeekend()
@@ -3714,11 +3777,11 @@ public class OutGameUIManager : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
-        if (survivorsDropdown.options.Count == 0) return;
+        if (survivorsDropdown.keys.Count == 0) return;
         RelocalizeTrainingRoom();
         RelocalizeStrategyRoom();
         ResetSurvivorsDropdown();
-        if (survivorsDropdown.options.Count == 0) return;
+        if (survivorsDropdown.keys.Count == 0) return;
         SetOperatingRoom();
         SetStrategyRoom();
         sortContestantsListDropdown.RelocalizeOptions();

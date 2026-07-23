@@ -657,7 +657,7 @@ public class Calendar : CustomObject
         //};
 
         selectLeagueDropdown.ClearOptions();
-        selectLeagueDropdown.AddLocalizedOptions(new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague"));
+        selectLeagueDropdown.AddKeys(new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague"));
 
         Sprite sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeagueUntagged);
         selectLeagueDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite); 
@@ -681,7 +681,7 @@ public class Calendar : CustomObject
         };
 
         selectLeagueDropdown_FreeManagement_RegularLeague.ClearOptions();
-        selectLeagueDropdown_FreeManagement_RegularLeague.AddLocalizedOptions(new("Basic", "BronzeLeague"), new("Basic", "SilverLeague"), new("Basic", "GoldLeague"), new("Basic", "SeasonChampionship"), new("Basic", "WorldChampionship"));
+        selectLeagueDropdown_FreeManagement_RegularLeague.AddKeys(new("Basic", "BronzeLeague"), new("Basic", "SilverLeague"), new("Basic", "GoldLeague"), new("Basic", "SeasonChampionship"), new("Basic", "WorldChampionship"));
 
         sprite = ResourceManager.Get(ResourceEnum.Sprite.BronzeLeagueUntagged);
         selectLeagueDropdown_FreeManagement_RegularLeague.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -709,7 +709,7 @@ public class Calendar : CustomObject
         };
 
         selectLeagueDropdown_FreeManagement_EventLeague.ClearOptions();
-        selectLeagueDropdown_FreeManagement_EventLeague.AddLocalizedOptions(new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague"));
+        selectLeagueDropdown_FreeManagement_EventLeague.AddKeys(new("Basic", "MeleeLeague"), new("Basic", "RangeLeague"), new("Basic", "CraftingLeague"));
 
         sprite = ResourceManager.Get(ResourceEnum.Sprite.MeleeLeagueUntagged);
         selectLeagueDropdown_FreeManagement_EventLeague.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -925,7 +925,7 @@ public class Calendar : CustomObject
             selectSurvivorWhoParticipateLeagueDropdown.ClearOptions();
             if (Today % 7 == 6)
             {
-                foreach (var survivor in outGameUIManager.MySurvivorsData) selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                foreach (var survivor in outGameUIManager.MySurvivorsData) selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
             }
             else
             {
@@ -935,23 +935,23 @@ public class Calendar : CustomObject
                     {
                         case 0:
                             if (survivor.tier == Tier.Bronze)
-                                selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                                selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
                             break;
                         case 1:
                             if (survivor.tier == Tier.Silver)
-                                selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                                selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
                             break;
                         case 2:
                             if (survivor.tier == Tier.Gold && !survivor.haveQualifyToParticipateInSeasonChampionship && !survivor.haveQualifyToParticipateInWorldChampionship)
-                                selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                                selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
                             break;
                         case 3:
                             if (survivor.haveQualifyToParticipateInSeasonChampionship)
-                                selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                                selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
                             break;
                         case 4:
                             if(survivor.haveQualifyToParticipateInWorldChampionship)
-                                selectSurvivorWhoParticipateLeagueDropdown.AddLocalizedOptions(survivor.localizedSurvivorName);
+                                selectSurvivorWhoParticipateLeagueDropdown.AddKeys(survivor.localizedSurvivorName);
                             break;
                     }
                 }
