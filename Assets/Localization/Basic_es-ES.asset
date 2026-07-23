@@ -1940,6 +1940,14 @@ MonoBehaviour:
     m_Localized: Ver
     m_Metadata:
       m_Items: []
+  - m_Id: 149845955856363520
+    m_Localized: "Se han encontrado datos guardados. \xBFQuieres cargarlos?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149845957135626240
+    m_Localized: Eliminar y empezar de nuevo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

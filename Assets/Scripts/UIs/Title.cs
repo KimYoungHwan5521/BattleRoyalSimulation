@@ -14,6 +14,7 @@ public class Title : MonoBehaviour
     [SerializeField] RectTransform buttonsRect;
 
     [SerializeField] GameObject selectGameMode;
+    [SerializeField] GameObject askLoadData;
     [SerializeField] GameObject selectDifficulty;
     [SerializeField] Toggle[] difficulties;
     [SerializeField] Transform focusArrow;
@@ -58,9 +59,19 @@ public class Title : MonoBehaviour
 
     public void SelectSingleCareerRun()
     {
-        if (haveSaveData) Continue();
+        if (haveSaveData)
+        {
+            askLoadData.SetActive(true);
+            //Continue();
+        }
         else OpenSelectDifficulty();
-        selectGameMode.SetActive(false);
+    }
+
+    public void DeleteSingleCareerRunSaveData()
+    {
+        GameManager.Instance.Option.DeleteSaveData(0);
+        askLoadData.SetActive(false);
+        OpenSelectDifficulty();
     }
 
     public void SelectFreeManagement()
@@ -78,6 +89,8 @@ public class Title : MonoBehaviour
 
     public void NewGameSingleCareerRun()
     {
+        selectDifficulty.SetActive(false);
+        selectGameMode.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.ResetData(GameMode.SingleCareerRun, wantDifficulty);
         title.SetActive(false);
@@ -87,6 +100,7 @@ public class Title : MonoBehaviour
 
     public void Continue()
     {
+        selectGameMode.SetActive(false);
         StartCoroutine(GameManager.Instance.Load(0));
     }
 

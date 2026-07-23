@@ -1923,6 +1923,14 @@ MonoBehaviour:
     m_Localized: Spectate
     m_Metadata:
       m_Items: []
+  - m_Id: 149845955856363520
+    m_Localized: Saved data found. Load it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149845957135626240
+    m_Localized: Delete and Start Over
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

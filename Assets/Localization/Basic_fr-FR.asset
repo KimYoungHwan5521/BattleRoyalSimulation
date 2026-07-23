@@ -1958,6 +1958,15 @@ MonoBehaviour:
     m_Localized: Regarder
     m_Metadata:
       m_Items: []
+  - m_Id: 149845955856363520
+    m_Localized: "Des donn\xE9es sauvegard\xE9es ont \xE9t\xE9 trouv\xE9es. Les charger
+      ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149845957135626240
+    m_Localized: Supprimer et recommencer
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

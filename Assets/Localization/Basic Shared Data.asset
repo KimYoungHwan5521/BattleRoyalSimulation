@@ -1813,6 +1813,14 @@ MonoBehaviour:
     m_Key: Spectate
     m_Metadata:
       m_Items: []
+  - m_Id: 149845955856363520
+    m_Key: Saved data found. Load it?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149845957135626240
+    m_Key: Delete and Start Over
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

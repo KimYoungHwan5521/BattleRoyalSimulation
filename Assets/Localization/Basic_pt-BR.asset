@@ -1929,6 +1929,14 @@ MonoBehaviour:
     m_Localized: Assistir
     m_Metadata:
       m_Items: []
+  - m_Id: 149845955856363520
+    m_Localized: "H\xE1 dados salvos. Deseja carreg\xE1-los?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149845957135626240
+    m_Localized: "Excluir e come\xE7ar do in\xEDcio"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
