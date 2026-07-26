@@ -1803,24 +1803,10 @@ public class OutGameUIManager : MonoBehaviour
     public void SelectSurvivorToSurgery()
     {
         survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.Value], false);
-        survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
+        if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = MySurvivorsData[0];
+        else survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
         
-        //if(survivorWhoWantSurgery.surgeryScheduled)
-        //{
-        //    scheduledSurgery.SetActive(true);
-        //    buttonCancelSurgery.SetActive(true);
-        //    selectSurgery.SetActive(false);
-        //    buttonScheduleSurgery.SetActive(false);
-        //    scheduledSurgery.GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"{survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString()}";
-        //}
-        //else
-        //{
-        //    scheduledSurgery.SetActive(false);
-        //    buttonCancelSurgery.SetActive(false);
-        //    selectSurgery.SetActive(true);
-        //    buttonScheduleSurgery.SetActive(true);
-        //    GetListOfSurgeryCanUndergo();
-        //}
+        GetListOfSurgeryCanUndergo();
     }
 
     public void GetListOfSurgeryCanUndergo()
@@ -2026,7 +2012,7 @@ public class OutGameUIManager : MonoBehaviour
         return false;
     }
 
-    void Surgery()
+    public void Surgery()
     {
         trainingResult.SetActive(true);
         GameManager.Instance.openedWindows.Push(trainingResult);
@@ -2036,54 +2022,54 @@ public class OutGameUIManager : MonoBehaviour
         trainingResultDetailText.text = new LocalizedString("Injury", mySurvivorsData[0].localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", mySurvivorsData[0].surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
         if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = mySurvivorsData[0];
         else survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
-        Surgery(survivorWhoWantSurgery);
+        //Surgery(survivorWhoWantSurgery);
         selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
         operatingRoom.SetActive(false);
 
         GameManager.Instance.Save(0);
     }
 
-    //public void ScheduleSurgery()
-    //{
-    //    if (surgeryList.Count == 0) return;
-    //    int index = 0;
-    //    for(int i=0; i< surgeries.Length; i++)
-    //    {
-    //        if (surgeries[i].GetComponentInChildren<Toggle>().isOn)
-    //        {
-    //            index = i;
-    //            break;
-    //        }
-    //    }
-        
-    //    if(index > surgeryList.Count)
-    //    {
-    //        Debug.LogWarning("Wrong surgeryList index");
-    //        return;
-    //    }
+    public void ScheduleSurgery()
+    {
+        if (surgeryList.Count == 0) return;
+        int index = 0;
+        for (int i = 0; i < surgeries.Length; i++)
+        {
+            if (surgeries[i].GetComponentInChildren<Toggle>().isOn)
+            {
+                index = i;
+                break;
+            }
+        }
 
-    //    survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
-    //    survivorWhoWantSurgery.scheduledSurgeryName = survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString();
-    //    survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
-    //    survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
-    //    survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
-    //    survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
-    //    OpenConfirmWindow("Confirm:Surgery", ()=>
-    //    {
-    //        if(money < survivorWhoWantSurgery.scheduledSurgeryCost)
-    //        {
-    //            Alert("Alert:Not enough money.");
-    //        }
-    //        else
-    //        {
-    //            survivorWhoWantSurgery.surgeryScheduled = true;
-    //            Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
-    //            SelectSurvivorToSurgery();
-    //            //Alert("Alert:Surgery has been scheduled.");
-    //            Surgery();
-    //        }
-    //    }, $"{ survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString() }", $"{ survivorWhoWantSurgery.scheduledSurgeryCost }");
-    //}
+        if (index > surgeryList.Count)
+        {
+            Debug.LogWarning("Wrong surgeryList index");
+            return;
+        }
+
+        survivorWhoWantSurgery.localizedScheduledSurgeryName = surgeryList[index].surgeryName;
+        survivorWhoWantSurgery.scheduledSurgeryName = survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString();
+        survivorWhoWantSurgery.scheduledSurgeryCost = surgeryList[index].surgeryCost;
+        survivorWhoWantSurgery.surgerySite = surgeryList[index].surgerySite;
+        survivorWhoWantSurgery.surgeryType = surgeryList[index].surgeryType;
+        survivorWhoWantSurgery.surgeryCharacteristic = surgeryList[index].surgeryCharacteristic;
+        OpenConfirmWindow("Confirm:Surgery", () =>
+        {
+            if (money < survivorWhoWantSurgery.scheduledSurgeryCost)
+            {
+                Alert("Alert:Not enough money.");
+            }
+            else
+            {
+                survivorWhoWantSurgery.surgeryScheduled = true;
+                Money -= survivorWhoWantSurgery.scheduledSurgeryCost;
+                SelectSurvivorToSurgery();
+                //Alert("Alert:Surgery has been scheduled.");
+                Surgery();
+            }
+        }, $"{survivorWhoWantSurgery.localizedSurvivorName.GetLocalizedString()}", $"{survivorWhoWantSurgery.localizedScheduledSurgeryName.GetLocalizedString()}", $"{survivorWhoWantSurgery.scheduledSurgeryCost}");
+    }
 
     //public void CancelSurgery()
     //{

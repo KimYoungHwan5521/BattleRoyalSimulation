@@ -660,8 +660,27 @@ public class Option : MonoBehaviour
 
     public void DeleteSaveData(int slot)
     {
-        //GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Delete Save Data", () =>
-        //{
+        if(slot > 0)
+        {
+            GameManager.Instance.OutGameUIManager.OpenConfirmWindow("Confirm:Delete Save Data", () =>
+            {
+                PlayerPrefs.DeleteKey($"SaveDataInfo{slot}");
+                PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
+                PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
+                PlayerPrefs.DeleteKey($"ETCData{slot}");
+
+                DeleteSteamCloudData($"SaveDataInfo{slot}.json");
+                DeleteSteamCloudData($"MySurvivorList{slot}.json");
+                DeleteSteamCloudData($"LeagueReserveData{slot}.json");
+                DeleteSteamCloudData($"ETCData{slot}.json");
+
+                ReloadSavedata();
+            });
+        }
+        else
+        {
+            if (slot == 0) GameManager.Instance.Title.haveSaveData = false;
+
             PlayerPrefs.DeleteKey($"SaveDataInfo{slot}");
             PlayerPrefs.DeleteKey($"MySurvivorList{slot}");
             PlayerPrefs.DeleteKey($"LeagueReserveData{slot}");
@@ -673,7 +692,7 @@ public class Option : MonoBehaviour
             DeleteSteamCloudData($"ETCData{slot}.json");
 
             ReloadSavedata();
-        //});
+        }
     }
 
     void DeleteSteamCloudData(string fileName)

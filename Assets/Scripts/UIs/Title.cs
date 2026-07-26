@@ -101,6 +101,7 @@ public class Title : MonoBehaviour
     public void Continue()
     {
         selectGameMode.SetActive(false);
+        askLoadData.SetActive(false);
         StartCoroutine(GameManager.Instance.Load(0));
     }
 

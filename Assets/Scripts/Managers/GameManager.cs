@@ -15,7 +15,7 @@ public delegate void CustomDestroy();
 
 public class GameManager : MonoBehaviour
 {
-    public static string gameVersion = "2.2.2";
+    public static string gameVersion = "2.2.3";
     [SerializeField] TextMeshProUGUI[] versionTexts;
 
     public CustomStart ManagerStart;
@@ -183,8 +183,9 @@ public class GameManager : MonoBehaviour
 
     public void Test2(int wantNumber)
     {
-        Option.DeleteSaveData(0);
-        CheckSaveData();
+        //Option.DeleteSaveData(0);
+        //CheckSaveData();
+        OutGameUIManager.MySurvivorsData[0].injuries.Add(new(InjurySite.RightArm, InjuryType.Contusion, 0.5f));
     }
     void Update()
     {
