@@ -2678,11 +2678,11 @@ public class OutGameUIManager : MonoBehaviour
         {
             strategyNameBG.SetActive(true);
             strategyPresetSlot = slot;
-            if (presets[slot] != null) strategyPresetNameInputField.text = string.IsNullOrEmpty(presets[slot].strategyName) ? $"StrategyPreset{slot + 1}" : presets[slot].strategyName;
+            if (presets[slot - 1] != null) strategyPresetNameInputField.text = string.IsNullOrEmpty(presets[slot - 1].strategyName) ? $"StrategyPreset{slot}" : presets[slot - 1].strategyName;
         }
         else
         {
-            LoadStrategyPreset(presets[slot], survivorWhoWantEstablishStrategy);
+            LoadStrategyPreset(presets[slot - 1], survivorWhoWantEstablishStrategy);
             strategyPresetBG.SetActive(false);
         }
     }
@@ -3776,10 +3776,8 @@ public class OutGameUIManager : MonoBehaviour
 
     public void LoadData(ETCData saveData)
     {
-        ResetData(gameMode, difficulty);
+        ResetData(saveData.gameMode, saveData.difficulty);
 
-        gameMode = saveData.gameMode;
-        Difficulty = saveData.difficulty;
         Money = saveData.money;
         mySurvivorsId = saveData.mySurvivorsId;
         trainingLevel = saveData.trainingLevel;

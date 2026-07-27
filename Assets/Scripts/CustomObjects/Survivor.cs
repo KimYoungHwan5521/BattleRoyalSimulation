@@ -251,7 +251,7 @@ public class Survivor : CustomObject
     {
         get
         {
-            return Mathf.Min(0, (0.8f - (curBlood / maxBlood)) / 0.3f);
+            return Mathf.Clamp01((0.8f - curBlood / maxBlood) / 0.3f);
         }
     }
     float DizzyRate
@@ -924,7 +924,7 @@ public class Survivor : CustomObject
             else
             {
                 // 수선
-                if (CurrentHelmet.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                if (CurrentHelmet.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action / 100f)
                 {
                     //재료체크
                     int originalValue = CurrentHelmet.itemType switch
@@ -935,7 +935,7 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 12,
                         _ => 0
                     };
-                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * (1f - CurrentHelmet.DurabilityPercent));
                     originalValue = CurrentHelmet.itemType switch
                     {
                         ItemManager.Items.LowLevelBulletproofHelmet => 7,
@@ -944,7 +944,7 @@ public class Survivor : CustomObject
                         ItemManager.Items.LegendaryBulletproofHelmet => 18,
                         _ => 0
                     };
-                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * (1f - CurrentHelmet.DurabilityPercent));
                     if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
                     {
                         currentRepairing = 1;
@@ -970,27 +970,27 @@ public class Survivor : CustomObject
             else
             {
                 // 수선
-                if (CurrentVest.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action)
+                if (CurrentVest.DurabilityPercent < linkedSurvivorData.strategyDictionary[StrategyCase.RepairCondition].action / 100f)
                 {
                     //재료체크
-                    int originalValue = CurrentHelmet.itemType switch
+                    int originalValue = currentVest.itemType switch
                     {
-                        ItemManager.Items.LowLevelBulletproofHelmet => 0,
-                        ItemManager.Items.MiddleLevelBulletproofHelmet => 3,
-                        ItemManager.Items.HighLevelBulletproofHelmet => 6,
-                        ItemManager.Items.LegendaryBulletproofHelmet => 12,
+                        ItemManager.Items.LowLevelBulletproofVest => 0,
+                        ItemManager.Items.MiddleLevelBulletproofVest => 3,
+                        ItemManager.Items.HighLevelBulletproofVest => 6,
+                        ItemManager.Items.LegendaryBulletproofVest => 12,
                         _ => 0
                     };
-                    needComponentsToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
-                    originalValue = CurrentHelmet.itemType switch
+                    needComponentsToRepair = Mathf.CeilToInt(originalValue * (1f - CurrentVest.DurabilityPercent));
+                    originalValue = currentVest.itemType switch
                     {
-                        ItemManager.Items.LowLevelBulletproofHelmet => 10,
-                        ItemManager.Items.MiddleLevelBulletproofHelmet => 11,
-                        ItemManager.Items.HighLevelBulletproofHelmet => 12,
-                        ItemManager.Items.LegendaryBulletproofHelmet => 24,
+                        ItemManager.Items.LowLevelBulletproofVest => 10,
+                        ItemManager.Items.MiddleLevelBulletproofVest => 11,
+                        ItemManager.Items.HighLevelBulletproofVest => 12,
+                        ItemManager.Items.LegendaryBulletproofVest => 24,
                         _ => 0
                     };
-                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * CurrentHelmet.DurabilityPercent);
+                    needSalvagesToRepair = Mathf.CeilToInt(originalValue * (1f - CurrentVest.DurabilityPercent));
                     if (ComponentsCount >= needComponentsToRepair && SalvagesCount >= needSalvagesToRepair)
                     {
                         currentRepairing = 2;
@@ -1030,7 +1030,7 @@ public class Survivor : CustomObject
                 curDizzyCool += Time.deltaTime;
                 if (curDizzyCool > dizzyCoolTime)
                 {
-                    if (UnityEngine.Random.Range(0, 1f) < dizzyRateByConcussion) Dizzy = true;
+                    if (UnityEngine.Random.Range(0, 1f) < DizzyRate) Dizzy = true;
                     curDizzyCool = 0;
                     return true;
                 }
@@ -2591,6 +2591,42 @@ public class Survivor : CustomObject
             if (currentRepairing == 1) CurrentHelmet.SetDurabilityPercent(1f);
             else CurrentVest.SetDurabilityPercent(1f);
             currentRepairing = 0;
+
+            // 수리 재료 소모
+            if (needComponentsToRepair > 0)
+            {
+                Item components = inventory.Find(
+                    x => x.itemType == ItemManager.Items.Components);
+
+                ConsumptionItem(components, needComponentsToRepair);
+            }
+
+            if (needSalvagesToRepair > 0)
+            {
+                Item salvages = inventory.Find(
+                    x => x.itemType == ItemManager.Items.Salvages);
+
+                ConsumptionItem(salvages, needSalvagesToRepair);
+            }
+
+            switch (currentRepairing)
+            {
+                case 1:
+                    if (IsValid(CurrentHelmet))
+                        CurrentHelmet.SetDurabilityPercent(1f);
+                    break;
+
+                case 2:
+                    if (IsValid(CurrentVest))
+                        CurrentVest.SetDurabilityPercent(1f);
+                    break;
+            }
+
+            currentRepairing = 0;
+            needComponentsToRepair = 0;
+            needSalvagesToRepair = 0;
+
+            InGameUIManager.UpdateSelectedObjectInventory(this);
         }
     }
     #endregion
@@ -3018,7 +3054,7 @@ public class Survivor : CustomObject
                 return true;
             }
             Item notEnchantedArrow = inventory.Find(x => x.itemType == ItemManager.Items.Arrow);
-            if(notEnchantedArrow != null && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow))
+            if(notEnchantedArrow != null && IsValid(CurrentWeapon) && (CurrentWeapon.itemType == ItemManager.Items.Bow || CurrentWeapon.itemType == ItemManager.Items.AdvancedBow))
             {
                 currentEnchanting = notEnchantedArrow;
                 return true;
@@ -3180,6 +3216,9 @@ public class Survivor : CustomObject
             }
             var poison = inventory.Find(x => x.itemType == ItemManager.Items.Poison);
             if (poison != null) ConsumptionItem(poison, 1);
+            curEnchantingTime = 0;
+            currentEnchanting = null;
+            animator.SetBool("Crafting", false);
         }
     }
 
@@ -4007,11 +4046,11 @@ public class Survivor : CustomObject
                 ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Head, DamageType.Explosion);
                 if(randLEye < 0.3f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.LeftEye, DamageType.Explosion);
                 if(randREye < 0.3f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.RightEye, DamageType.Explosion);
-                if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
-                if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
+                if(randLEar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.LeftEar, DamageType.Explosion);
+                if(randREar < 0.5f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.RightEar, DamageType.Explosion);
                 if(randNose < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Nose, DamageType.Explosion);
                 if(randCheek < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Cheek, DamageType.Explosion);
-                if(randNeck < 0.7f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Neck, DamageType.Explosion);
+                if(randNeck < 0.3f) ApplyDamage(attacker, dividedDamage, weapon, InjurySiteMajor.Head, InjurySite.Neck, DamageType.Explosion);
                 break;
             case InjurySiteMajor.Torso:
                 ApplyDamage(attacker, damage / 2, weapon, InjurySiteMajor.Torso, InjurySite.Chest, DamageType.Explosion);
@@ -4041,6 +4080,7 @@ public class Survivor : CustomObject
     void ApplyPoisonDamage(Survivor poisonOriginator)
     {
         float damage = 5 * Time.deltaTime;
+        curHP -= damage;
         poisonOriginator.totalDamage += damage;
         if (curHP <= 0)
         {
@@ -4067,11 +4107,7 @@ public class Survivor : CustomObject
             }
         }
 
-        DamageType damageType = DamageType.Strike;
-        if (currentWeapon != null && IsValid(currentWeapon))
-        {
-            if(currentWeapon is MeleeWeapon) damageType = (currentWeapon as MeleeWeapon).DamageType;
-        }
+        DamageType damageType = weapon is MeleeWeapon meleeWeapon ? meleeWeapon.DamageType : DamageType.Strike;
 
         InjurySiteMajor damagePart;
         // 타격 무기면 머리를 주로 노릴 것이고, 날붙이면 몸을 노릴 것이라 가정
@@ -4098,12 +4134,12 @@ public class Survivor : CustomObject
         else
         {
             float probability = UnityEngine.Random.Range(0, 1f);
-            float coefficient = (linkedSurvivorData.Fighting / Mathf.Max(attacker.linkedSurvivorData.Fighting, 1)) * (moveSpeed / attacker.moveSpeed);
+            float coefficient = ((float)linkedSurvivorData.Fighting / Mathf.Max(attacker.linkedSurvivorData.Fighting, 1)) * (moveSpeed / Mathf.Max(attacker.moveSpeed, 0.01f));
             float avoidRate = Mathf.Min(0.1f * coefficient, 0.3f);
             float defendRate = Mathf.Min(0.4f * coefficient, 0.7f);
             if (rightHandDisabled) defendRate -= defendRate * 0.5f;
             if (leftHandDisabled) defendRate -= defendRate * 0.5f;
-            float criticalRate = 0.1f / coefficient * attacker.luck / luck;
+            float criticalRate = Mathf.Clamp01(0.1f / Mathf.Max(coefficient, 0.01f) * attacker.luck / Mathf.Max(luck, 1));
 
             float chanceToIncreaseStat = UnityEngine.Random.Range(0, 1f);
             if (probability < avoidRate)
@@ -4142,7 +4178,7 @@ public class Survivor : CustomObject
 				if (chanceToIncreaseStat < 0.1f)
                 {
                     attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
-                    increaseFighting++;
+                    attacker.increaseFighting++;
                 }
             }
             else
@@ -4152,7 +4188,7 @@ public class Survivor : CustomObject
 				if (chanceToIncreaseStat < 0.02f)
                 {
                     attacker.linkedSurvivorData.IncreaseStats(0, 0, 1, 0, 0, 0);
-                    increaseFighting++;
+                    attacker.increaseFighting++;
                 }
             }
         }
@@ -4283,7 +4319,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Arms);
+                ApplyExplosionDamage(rocket.Launcher, damage * 0.9f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Legs);
                 ApplyExplosionDamage(rocket.Launcher, damage * 0.1f, rocket.Launcher.CurrentWeapon, InjurySiteMajor.Torso);
             }
         }
@@ -5721,7 +5757,7 @@ public class Survivor : CustomObject
     {
         if (survivor == TargetEnemy)
         {
-            if (survivor != isDead)
+            if (!survivor.isDead)
             {
                 targetEnemiesLastPosition = survivor.transform.position;
                 lastTargetEnemy = survivor;
@@ -5991,7 +6027,7 @@ public class Survivor : CustomObject
                                     condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) > inputDistance;
                                     break;
                                 case 1:
-                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) < Mathf.Min(inputDistance, 1.5f);
+                                    condition.conditions[i] = () => TargetEnemy != null && Vector2.Distance(transform.position, TargetEnemy.transform.position) < Mathf.Max(inputDistance, 1.5f);
                                     break;
                             }
                             break;
