@@ -3776,6 +3776,8 @@ public class OutGameUIManager : MonoBehaviour
 
     public void LoadData(ETCData saveData)
     {
+        ResetData(gameMode, difficulty);
+
         gameMode = saveData.gameMode;
         Difficulty = saveData.difficulty;
         Money = saveData.money;
@@ -3796,8 +3798,6 @@ public class OutGameUIManager : MonoBehaviour
         championshipHeldCount = saveData.championshipHeldCount;
         championshipDatas = saveData.championshipDatas;
         viewCurrentChampionshipStandings.SetActive(championship);
-
-        ResetData(gameMode, difficulty);
 
         for (int i = 0; i < trainingCards.Length; i++) 
         {

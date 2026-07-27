@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 #region Survivors
@@ -253,33 +254,53 @@ public class ETCData
 
     public List<string> earnedAchievements = new();
 
-    public ETCData(GameMode gameMode, int difficulty, int money, int mySurvivorsId, int trainingLevel, TrainingCard[] trainingCards, int survivorHireLimit, List<SurvivorData> contestantsData,
-        bool championship, int championshipHeldCount, List<OutGameUIManager.ChampionshipData> championshipDatas,
-        int today, int curMaxYear, bool participationConfirmed, Dictionary<UnlockManager.UnlockCondition, bool> unlockStatus)
+    public ETCData()
     {
-        this.gameMode = gameMode;
-        this.difficulty = difficulty;
-        this.money = money;
-        this.mySurvivorsId = mySurvivorsId;
-        this.trainingLevel = trainingLevel;
-        this.survivorHireLimit = survivorHireLimit;
-        this.contestantsData = contestantsData;
-        this.championship = championship;
-        this.championshipHeldCount = championshipHeldCount;
-        this.championshipDatas = championshipDatas;
-        this.today = today;
-        this.curMaxYear = curMaxYear;
-        this.participationConfirmed = participationConfirmed;
+        OutGameUIManager outGameUIManager = GameManager.Instance.OutGameUIManager;
+        Calendar calendar = GameManager.Instance.Calendar;
+
+        gameMode = outGameUIManager.GameMode;
+        difficulty = outGameUIManager.Difficulty;
+        money = outGameUIManager.Money;
+        mySurvivorsId = outGameUIManager.MySurvivorsId;
+        trainingLevel = outGameUIManager.trainingLevel;
+        fightTrainingLevel = outGameUIManager.FightTrainingLevel;
+        shootingTrainingLevel = outGameUIManager.ShootingTrainingLevel;
+        craftingTrainingLevel = outGameUIManager.CraftingTrainingLevel;
+        runningLevel = outGameUIManager.AgilityTrainingLevel;
+        weightTrainingLevel = outGameUIManager.WeightTrainingLevel;
+        studyingLevel = outGameUIManager.StudyLevel;
+        survivorHireLimit = outGameUIManager.SurvivorHireLimit;
+        contestantsData = outGameUIManager.contestantsData;
+        championship = outGameUIManager.Championship;
+        championshipHeldCount = outGameUIManager.championshipHeldCount;
+        championshipDatas = outGameUIManager.championshipDatas;
+        today = calendar.Today;
+        curMaxYear = calendar.CurMaxYear;
+        participationConfirmed = calendar.participationConfirmed;
         earnedAchievements = AchievementManager.earnedAchievementsInThisRun;
 
-        this.unlockStatus = new();
-        foreach (var kv in unlockStatus)
+        hireMarketSurvivorData =
+        new SurvivorData[]{
+                outGameUIManager.survivorsInHireMarket[0].survivorData,
+                outGameUIManager.survivorsInHireMarket[1].survivorData,
+                outGameUIManager.survivorsInHireMarket[2].survivorData,
+        };
+        soldOut = new bool[]
         {
-            this.unlockStatus.Add(new(kv.Key, kv.Value));
+            outGameUIManager.survivorsInHireMarket[0].SoldOut,
+            outGameUIManager.survivorsInHireMarket[1].SoldOut,
+            outGameUIManager.survivorsInHireMarket[2].SoldOut,
+        };
+
+        unlockStatus = new();
+        foreach (var kv in GameManager.Instance.UnlockManager.unlockStatus)
+        {
+            unlockStatus.Add(new(kv.Key, kv.Value));
         }
 
         trainings = new();
-        foreach (var trainingCard in trainingCards)
+        foreach (var trainingCard in outGameUIManager.trainingCards)
         {
             trainings.Add(trainingCard.LinkedTraining);
         }

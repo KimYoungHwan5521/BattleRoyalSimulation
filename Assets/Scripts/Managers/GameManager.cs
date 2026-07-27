@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
     AchievementUIManager achievementUIManager;
     public AchievementUIManager AchievementUIManager => achievementUIManager;
 
-    OutGameUIManager outGameUIManger;
-    public OutGameUIManager OutGameUIManager => outGameUIManger;
+    OutGameUIManager outGameUIManager;
+    public OutGameUIManager OutGameUIManager => outGameUIManager;
     Calendar calendar;
     public Calendar Calendar => calendar;
     UnlockManager unlockManager;
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         yield return itemManager.Initiate();
 
         title.title.SetActive(true);
-        outGameUIManger = GetComponent<OutGameUIManager>();
+        outGameUIManager = GetComponent<OutGameUIManager>();
         calendar = GetComponent<Calendar>();
         unlockManager = GetComponent<UnlockManager>();
         yield return unlockManager.Initiate();
@@ -126,8 +126,8 @@ public class GameManager : MonoBehaviour
         {
             if (type == LogType.Error || type == LogType.Exception)
             {
-                outGameUIManger.DebugLog(log + "\n" + stack);
-                outGameUIManger.Alert("Alert:Error");
+                outGameUIManager.DebugLog(log + "\n" + stack);
+                outGameUIManager.Alert("Alert:Error");
             }
         };
 #if UNITY_EDITOR
@@ -175,9 +175,9 @@ public class GameManager : MonoBehaviour
         //calendar.LeagueReserveInfo[83].reserver = outGameUIManger.MySurvivorsData[0];
         //outGameUIManger.SetContestants();
 
-        outGameUIManger.SetChampionship(false);
-        outGameUIManger.championshipHeldCount = 0;
-        outGameUIManger.championshipDatas.Clear();
+        outGameUIManager.SetChampionship(false);
+        outGameUIManager.championshipHeldCount = 0;
+        outGameUIManager.championshipDatas.Clear();
         calendar.Today = 83;
     }
 
@@ -323,37 +323,7 @@ public class GameManager : MonoBehaviour
 
     void SaveETCData(int slot)
     {
-        ETCData saveData = new(
-            OutGameUIManager.GameMode,
-            OutGameUIManager.Difficulty,
-            OutGameUIManager.Money,
-            OutGameUIManager.MySurvivorsId,
-            OutGameUIManager.trainingLevel,
-            OutGameUIManager.trainingCards,
-            OutGameUIManager.SurvivorHireLimit,
-            OutGameUIManager.contestantsData,
-            OutGameUIManager.Championship,
-            OutGameUIManager.championshipHeldCount,
-            OutGameUIManager.championshipDatas,
-            calendar.Today,
-            calendar.CurMaxYear,
-            calendar.participationConfirmed,
-            unlockManager.unlockStatus
-            )
-        {
-            hireMarketSurvivorData =
-            new SurvivorData[]{
-                outGameUIManger.survivorsInHireMarket[0].survivorData,
-                outGameUIManger.survivorsInHireMarket[1].survivorData,
-                outGameUIManger.survivorsInHireMarket[2].survivorData,
-            },
-            soldOut = new bool[]
-            {
-                outGameUIManger.survivorsInHireMarket[0].SoldOut,
-                outGameUIManger.survivorsInHireMarket[1].SoldOut,
-                outGameUIManger.survivorsInHireMarket[2].SoldOut,
-            }
-        };
+        ETCData saveData = new();
         string json = JsonUtility.ToJson(saveData);
         PlayerPrefs.SetString($"ETCData{slot}", json);
         PlayerPrefs.Save();
@@ -430,10 +400,10 @@ public class GameManager : MonoBehaviour
     public void Save(int slot)
     {
         SaveSaveDataInfo(slot);
-        SaveMySurvivorList(outGameUIManger.MySurvivorsData, slot);
+        SaveMySurvivorList(outGameUIManager.MySurvivorsData, slot);
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
-        if(outGameUIManger.GameMode == GameMode.SingleCareerRun) SaveStrategy(0);
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun) SaveStrategy(0);
         //Option.ReloadSavedata();
         //string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
         //OutGameUIManager.Alert(message);
@@ -446,13 +416,13 @@ public class GameManager : MonoBehaviour
         if (BattleRoyaleManager != null) GetComponent<GameResult>().ExitBattle(true);
         ClaimLoadInfo("Loading save data...");
         yield return LoadSaveDataInfo(slot);
-        yield return outGameUIManger.LoadMySurvivorData(LoadMySurvivorList(slot));
+        yield return outGameUIManager.LoadMySurvivorData(LoadMySurvivorList(slot));
         yield return calendar.LoadLeagueReserveInfo(LoadLeagueReserve(slot));
         yield return LoadETCData(slot);
-        outGameUIManger.CloseAll();
+        outGameUIManager.CloseAll();
         calendar.CloseAll();
         ClaimLoadInfo("Setting markets...", 3, 3);
-        outGameUIManger.ResetSurvivorsDropdown();
+        outGameUIManager.ResetSurvivorsDropdown();
         ClaimLoadInfo("Version checking...", 0, 1);
         yield return VersionCompatible(slot);
         ClaimLoadInfo("Version checking...", 1, 1);
@@ -466,7 +436,19 @@ public class GameManager : MonoBehaviour
 
     IEnumerator VersionCompatible(int slot)
     {
-        string json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+        string json = "{}";
+        if (SteamRemoteStorage.FileExists($"SaveDataInfo{slot}.json"))
+        {
+            int fileSize = SteamRemoteStorage.GetFileSize($"SaveDataInfo{slot}.json");
+            byte[] bytes = new byte[fileSize];
+            SteamRemoteStorage.FileRead($"SaveDataInfo{slot}.json", bytes, fileSize);
+
+            json = Encoding.UTF8.GetString(bytes);
+        }
+        else
+        {
+            json = PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}");
+        }
         var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
         string loadedDataGameVersion = saveData.gameVersion;
         Debug.Log($"Saved Data Version : {saveData.gameVersion}");

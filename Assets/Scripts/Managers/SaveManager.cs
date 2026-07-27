@@ -27,6 +27,12 @@ public static class SaveManager
             haveQualifyToParticipateInWorldChampionship = data.haveQualifyToParticipateInWorldChampionship,
             assignedTraining = data.assignedTraining,
             promotePoint = data.promotePoint,
+            increaseComparedToPrevious_strength = data.increaseComparedToPrevious_strength,
+            increaseComparedToPrevious_agility = data.increaseComparedToPrevious_agility,
+            increaseComparedToPrevious_fighting = data.increaseComparedToPrevious_fighting,
+            increaseComparedToPrevious_shooting = data.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_crafting = data.increaseComparedToPrevious_crafting,
+            increaseComparedToPrevious_knowledge = data.increaseComparedToPrevious_knowledge,
             injuries = data.injuries,
             surgeryScheduled = data.surgeryScheduled,
             //scheduledSurgeryName = data.scheduledSurgeryName,
@@ -99,6 +105,12 @@ public static class SaveManager
             haveQualifyToParticipateInWorldChampionship = saveData.haveQualifyToParticipateInWorldChampionship,
             assignedTraining = saveData.assignedTraining,
             promotePoint = saveData.promotePoint,
+            increaseComparedToPrevious_strength = saveData.increaseComparedToPrevious_strength,
+            increaseComparedToPrevious_agility = saveData.increaseComparedToPrevious_agility,
+            increaseComparedToPrevious_fighting = saveData.increaseComparedToPrevious_fighting,
+            increaseComparedToPrevious_shooting = saveData.increaseComparedToPrevious_shooting,
+            increaseComparedToPrevious_crafting = saveData.increaseComparedToPrevious_crafting,
+            increaseComparedToPrevious_knowledge = saveData.increaseComparedToPrevious_knowledge,
             injuries = saveData.injuries ?? new(),
             surgeryScheduled = saveData.surgeryScheduled,
             localizedScheduledSurgeryName = !string.IsNullOrEmpty(saveData.localizedScheduledSurgeryEntry) ? new(saveData.localizedScheduledSurgeryTable, saveData.localizedScheduledSurgeryEntry) : null,
@@ -189,7 +201,7 @@ public static class SaveManager
 
             var reserveData = new LeagueReserveData(league, map);
             reserveData.reserver = reserver;
-
+            reserveData.itemPool = itemPool;
             result[entry.key] = reserveData;
         }
 
