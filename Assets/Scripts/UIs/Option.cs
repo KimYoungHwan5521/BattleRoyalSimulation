@@ -64,9 +64,11 @@ public class Option : MonoBehaviour
 
     [Header("Buttons")]
     [SerializeField] GameObject resume;
-    //[SerializeField] Button saveButton;
+    [SerializeField] Button saveButton;
+    [SerializeField] GameObject loadButton;
     [SerializeField] GameObject goTitle;
-    [SerializeField] Button quitBtn;
+    [SerializeField] GameObject quitBtn;
+    [SerializeField] GameObject saveAndGoTitleButton;
 
     [Header("Save")]
     [SerializeField] GameObject freeManagementNewGame;
@@ -713,15 +715,19 @@ public class Option : MonoBehaviour
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.ResetData(GameMode.FreeManagement, 0);
         GameManager.Instance.Title.title.SetActive(false);
-        GameManager.Instance.Option.SetSaveButtonInteractable(false, false);
+        GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
     }
 
 
-    public void SetSaveButtonInteractable(bool interactable, bool showQuitBtn)
+    public void SetSaveButtonInteractable(bool showSaveButton, bool interactableSaveButton, bool showQuitBtn)
     {
-        resume.SetActive(interactable);
-        goTitle.SetActive(interactable);
-        quitBtn.gameObject.SetActive(showQuitBtn);
+        resume.SetActive(showSaveButton || showQuitBtn);
+        saveButton.gameObject.SetActive(showSaveButton);
+        saveButton.interactable = interactableSaveButton;
+        loadButton.SetActive(showSaveButton);
+        goTitle.SetActive(showSaveButton);
+        quitBtn.SetActive(showQuitBtn);
+        saveAndGoTitleButton.SetActive(showSaveButton || showQuitBtn);
     }
 
     public void GoTitle(bool ask)
@@ -744,7 +750,7 @@ public class Option : MonoBehaviour
     public void GoingTitle()
     {
         if(GameManager.Instance.BattleRoyaleManager != null) GameManager.Instance.GetComponent<GameResult>().ExitBattle(true);
-        SetSaveButtonInteractable(false, false);
+        SetSaveButtonInteractable(false, false, false);
         GameManager.Instance.CheckSaveData();
         GameManager.Instance.optionCanvas.SetActive(false);
         GameManager.Instance.Title.title.SetActive(true);
@@ -757,7 +763,7 @@ public class Option : MonoBehaviour
             GameManager.Instance.GetComponent<GameResult>().gameOverMessage.StringReference = new("Basic", "GameOver:Give Up");
             GameManager.Instance.GetComponent<GameResult>().ClearBattleRoyale();
             GameManager.Instance.GetComponent<GameResult>().GameOver();
-            SetSaveButtonInteractable(false, false);
+            SetSaveButtonInteractable(false, false, false);
             option.SetActive(false);
         });
     }

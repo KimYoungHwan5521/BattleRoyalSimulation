@@ -4173,7 +4173,7 @@ public class Survivor : CustomObject
                 damage *= 2;
                 if (damageType == DamageType.Strike) damagePart = InjurySiteMajor.Head;
                 else damagePart = InjurySiteMajor.Torso;
-                hitSound = weapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+                hitSound = weapon is RangedWeapon eRW && eRW.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
 				if (chanceToIncreaseStat < 0.1f)
                 {
@@ -4183,7 +4183,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                hitSound = weapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+                hitSound = weapon is RangedWeapon eRW && eRW.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
 				if (chanceToIncreaseStat < 0.02f)
                 {

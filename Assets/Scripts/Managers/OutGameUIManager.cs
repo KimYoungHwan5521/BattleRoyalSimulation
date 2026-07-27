@@ -413,6 +413,8 @@ public class OutGameUIManager : MonoBehaviour
         weaponPriority2Dropdown = Array.Find(strategies, x => x.strategyCase == StrategyCase.WeaponPriority).ElseActionDropdown;
         craftingPriority1Dropdown = Array.Find(strategies, x => x.strategyCase == StrategyCase.CraftingPriority).ActionDropdown;
         craftingPriority2Dropdown = Array.Find(strategies, x => x.strategyCase == StrategyCase.CraftingPriority).ElseActionDropdown;
+        craftingPriority1MinimumQualityDropdown = Array.Find(strategies, x => x.strategyCase == StrategyCase.CraftingPriority).SpareDropdown1;
+        craftingPriority2MinimumQualityDropdown = Array.Find(strategies, x => x.strategyCase == StrategyCase.CraftingPriority).SpareDropdown2;
     }
 
     private void Start()
@@ -691,20 +693,25 @@ public class OutGameUIManager : MonoBehaviour
             SetTrainingName(shootingTraningNameText, "Training:Shooting", shootingTrainingLevel);
             SetTrainingName(craftingTraningNameText, "Training:Crafting", craftingTrainingLevel);
             SetTrainingName(studyingNameText, "Training:Studying", studyingLevel);
-
-            weightTrainingUpgradeButton.SetActive(weightTrainingLevel < facilityUpgradeCost.Length + 1);
-            runningUpgradeButton.SetActive(runningLevel < facilityUpgradeCost.Length + 1);
-            fightTrainingUpgradeButton.SetActive(fightTrainingLevel < facilityUpgradeCost.Length + 1);
-            shootingTrainingUpgradeButton.SetActive(shootingTrainingLevel < facilityUpgradeCost.Length + 1);
-            craftingTrainingUpgradeButton.SetActive(craftingTrainingLevel < facilityUpgradeCost.Length + 1);
-            studyingUpgradeButton.SetActive(studyingLevel < facilityUpgradeCost.Length + 1);
-
-            weightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[weightTrainingLevel - 1] };
-            runningUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[runningLevel - 1] };
-            fightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[fightTrainingLevel - 1] };
-            shootingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[shootingTrainingLevel - 1] };
-            craftingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[CraftingTrainingLevel - 1] };
-            studyingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>().StringReference.Arguments = new object[] { facilityUpgradeCost[studyingLevel - 1] };
+            
+            bool canUpgrade = weightTrainingLevel <= facilityUpgradeCost.Length;
+            weightTrainingUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) weightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[weightTrainingLevel - 1] };
+            canUpgrade = runningLevel <= facilityUpgradeCost.Length;
+            runningUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) runningUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[runningLevel - 1] };
+            canUpgrade = fightTrainingLevel <= facilityUpgradeCost.Length;
+            fightTrainingUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) fightTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[fightTrainingLevel - 1] };
+            canUpgrade = shootingTrainingLevel <= facilityUpgradeCost.Length;
+            shootingTrainingUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) shootingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[shootingTrainingLevel - 1] };
+            canUpgrade = craftingTrainingLevel <= facilityUpgradeCost.Length;
+            craftingTrainingUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) craftingTrainingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[CraftingTrainingLevel - 1] };
+            canUpgrade = studyingLevel <= facilityUpgradeCost.Length;
+            studyingUpgradeButton.SetActive(canUpgrade);
+            if (canUpgrade) studyingUpgradeButton.GetComponentInChildren<LocalizeStringEvent>(true).StringReference.Arguments = new object[] { facilityUpgradeCost[studyingLevel - 1] };
 
             weightTrainingNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
             runningNameText.GetComponentInChildren<LocalizeStringEvent>().RefreshString();
@@ -829,9 +836,9 @@ public class OutGameUIManager : MonoBehaviour
             if(gameMode == GameMode.FreeManagement) Money -= survivorsInHireMarket[candidate].survivorData.price;
             mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
             mySurvivorsData[^1].id = mySurvivorsId++;
-            mySurvivorsData[^1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
+            mySurvivorsData[^1].characteristics = new List<Characteristic>(survivorsInHireMarket[candidate].survivorData.characteristics);
             PostApplyCharacteristics(mySurvivorsData[^1]);
-            mySurvivorsData[0]._stamina = mySurvivorsData[0].MaxStamina;
+            mySurvivorsData[^1]._stamina = mySurvivorsData[^1].MaxStamina;
             //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
             survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
@@ -851,7 +858,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 AchievementManager.UnlockAchievement("Full House");
             }
-            foreach(var survivor in MySurvivorsData) survivorsDropdown.AddKeys(survivorsInHireMarket[candidate].survivorData.localizedSurvivorName);
+            ResetSurvivorsDropdown();
             survivorsInHireMarket[candidate].SoldOut = true;
 
             //if (mySurvivorsData.Count == 1) ResetHireMarket();
@@ -861,7 +868,8 @@ public class OutGameUIManager : MonoBehaviour
                 ResetTrainingRoom();
                 GameManager.Instance.Save(0);
             }
-            GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
+            if(gameMode == GameMode.SingleCareerRun) GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
+            else GameManager.Instance.Option.SetSaveButtonInteractable(true, true, false);
         }
     }
 
@@ -879,21 +887,21 @@ public class OutGameUIManager : MonoBehaviour
 
     LocalizedString GetRandomName(int depth = 0)
     {
-        if (depth > 100)
+        if (depth > 10000)
         {
             Debug.LogWarning("Infinite recursion detected");
             return default;
         }
 
         string candidate = Names.SurvivorName[UnityEngine.Random.Range(0, Names.SurvivorName.Length)];
-        for (int i = 0; i < 3; i++)
-            if (survivorsInHireMarket[0].survivorData.SurvivorName == candidate) return GetRandomName(depth++);
+        for (int i = 0; i < survivorsInHireMarket.Length; i++)
+            if (survivorsInHireMarket[i].survivorData != null && survivorsInHireMarket[i].survivorData.SurvivorName == candidate) return GetRandomName(depth + 1);
         for (int i = 0; i < mySurvivorsData.Count; i++)
-            if (mySurvivorsData[i].SurvivorName == candidate) return GetRandomName(depth++);
+            if (mySurvivorsData[i].SurvivorName == candidate) return GetRandomName(depth + 1);
         if(contestantsData != null)
         {
             for(int i = 0; i < contestantsData.Count; i++)
-                if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth++);
+                if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth + 1);
         }
         return new("Name", candidate);
     }
@@ -1231,7 +1239,7 @@ public class OutGameUIManager : MonoBehaviour
                     }
                     mySurvivorsData[0].IncreaseStatsReserve(randStat[0], randStat[1], randStat[2], randStat[3], randStat[4], randStat[5]);
                     trainingResultDetailText.text = "";
-                    for(int i = 0; i < 5; i++)
+                    for(int i = 0; i < randStat.Length; i++)
                     {
                         if (randStat[i] > 0)
                         {
@@ -2387,8 +2395,8 @@ public class OutGameUIManager : MonoBehaviour
                         strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Masterpiece") });
                         strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Masterpiece") });
                     }
-                    strategy.SpareDropdown1.Value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue1;
-                    strategy.SpareDropdown2.Value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue2;
+                    strategy.SpareDropdown1.Value = survivorWhoWantEstablishStrategy.craftingPriority1MinimumQuality;
+                    strategy.SpareDropdown2.Value = survivorWhoWantEstablishStrategy.craftingPriority2MinimumQuality;
                     break;
                 default:
                     if (strategy.ActionDropdown != null) strategy.ActionDropdown.Value = survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase].action;
@@ -2588,8 +2596,8 @@ public class OutGameUIManager : MonoBehaviour
                 else Debug.LogWarning($"Craftable not found : {craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
             }
         }
-        survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 = craftingPriority1MinimumQualityDropdown.Value;
-        survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 = craftingPriority2MinimumQualityDropdown.Value;
+        survivorWhoWantEstablishStrategy.craftingPriority1MinimumQuality = craftingPriority1MinimumQualityDropdown.Value;
+        survivorWhoWantEstablishStrategy.craftingPriority2MinimumQuality = craftingPriority2MinimumQualityDropdown.Value;
 
         for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {
@@ -2651,10 +2659,16 @@ public class OutGameUIManager : MonoBehaviour
     public void OpenStrategyPresets(bool save)
     {
         strategyPresetBG.SetActive(true);
+        GameManager.Instance.openedWindows.Push(strategyPresetBG);
         strategyPresetSave = save;
         strategyPresetSaveLoadText.StringReference = new("Basic", save ? "Save" : "Load");
+        LoadPresetData();
+    }
+
+    void LoadPresetData()
+    {
         presets = new StrategyDictionarySaveData[10];
-        for(int i=0; i<strategyPresets.Length; i++)
+        for (int i = 0; i < strategyPresets.Length; i++)
         {
             StrategyDictionarySaveData saveData = GameManager.Instance.LoadStrategy(i + 1);
 
@@ -2677,8 +2691,10 @@ public class OutGameUIManager : MonoBehaviour
         if(strategyPresetSave)
         {
             strategyNameBG.SetActive(true);
+            GameManager.Instance.openedWindows.Push(strategyNameBG);
             strategyPresetSlot = slot;
             if (presets[slot - 1] != null) strategyPresetNameInputField.text = string.IsNullOrEmpty(presets[slot - 1].strategyName) ? $"StrategyPreset{slot}" : presets[slot - 1].strategyName;
+            else strategyPresetNameInputField.text = $"StrategyPreset{slot}";
         }
         else
         {
@@ -2693,6 +2709,7 @@ public class OutGameUIManager : MonoBehaviour
         {
             GameManager.Instance.SaveStrategy(strategyPresetSlot, strategyPresetNameInputField.text);
             Alert("Alert:Strategy Saved");
+            LoadPresetData();
         }
     }
 
@@ -2837,8 +2854,10 @@ public class OutGameUIManager : MonoBehaviour
     public void StartBattleRoyale()
     {
         tutorial = false;
-        GameManager.Instance.Option.SetSaveButtonInteractable(false, true);
-        if(gameMode == GameMode.SingleCareerRun)
+        if(gameMode == GameMode.SingleCareerRun) GameManager.Instance.Option.SetSaveButtonInteractable(false, false, false);
+        else GameManager.Instance.Option.SetSaveButtonInteractable(true, false, false);
+
+        if (gameMode == GameMode.SingleCareerRun)
         {
             mySurvivorDataInBattleRoyale = mySurvivorsData[0];
         }

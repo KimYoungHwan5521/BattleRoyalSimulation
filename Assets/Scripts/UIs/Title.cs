@@ -95,7 +95,7 @@ public class Title : MonoBehaviour
         GameManager.Instance.ResetData(GameMode.SingleCareerRun, wantDifficulty);
         title.SetActive(false);
         AchievementManager.earnedAchievementsInThisRun = new();
-        GameManager.Instance.Option.SetSaveButtonInteractable(false, false);
+        GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
     }
 
     public void Continue()

@@ -143,6 +143,8 @@ public class SurvivorSaveData
     public ItemManager.Craftable priority2Crafting;
     public int priority1CraftingToInt;
     public int priority2CraftingToInt;
+    public int craftingPriority1MinimumQuality;
+    public int craftingPriority2MinimumQuality;
     public bool[] craftingAllows;
     public int repairCondition;
     public int winCount;

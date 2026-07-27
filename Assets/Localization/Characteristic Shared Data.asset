@@ -740,19 +740,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 149373837821669376
-    m_Key: Sniper Rifle Fanatic
+    m_Key: SniperRifleFanatic
     m_Metadata:
       m_Items: []
   - m_Id: 149373839658774528
-    m_Key: Help:Sniper Rifle Fanatic
+    m_Key: Help:SniperRifleFanatic
     m_Metadata:
       m_Items: []
   - m_Id: 149373842452180992
-    m_Key: Bazooka Fanatic
+    m_Key: BazookaFanatic
     m_Metadata:
       m_Items: []
   - m_Id: 149373844763242496
-    m_Key: Help:Bazooka Fanatic
+    m_Key: Help:BazookaFanatic
     m_Metadata:
       m_Items: []
   m_Metadata:

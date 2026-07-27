@@ -404,9 +404,9 @@ public class GameManager : MonoBehaviour
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
         if(outGameUIManager.GameMode == GameMode.SingleCareerRun) SaveStrategy(0);
-        //Option.ReloadSavedata();
+        Option.ReloadSavedata();
         //string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
-        //OutGameUIManager.Alert(message);
+        OutGameUIManager.Alert("Alert:Game Saved.");
     }
 
     public IEnumerator Load(int slot)
@@ -429,7 +429,9 @@ public class GameManager : MonoBehaviour
         CloseLoadInfo();
         gameReady = true;
         title.title.SetActive(false);
-        option.SetSaveButtonInteractable(true, true);
+
+        if (slot == 0) option.SetSaveButtonInteractable(false, false, true);
+        else option.SetSaveButtonInteractable(true, true, false);
 
         OutGameUIManager.Alert("Alert:Load Successful");
     }

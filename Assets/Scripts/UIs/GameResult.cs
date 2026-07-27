@@ -102,7 +102,8 @@ public class GameResult : MonoBehaviour
         bool didPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
         mySurvivorResult.SetActive(didPlayerParticipate);
         mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
-        GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun) GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
+        else GameManager.Instance.Option.SetSaveButtonInteractable(true, true, false);
         SetText(didPlayerParticipate, out int totalProfit, out int promotePoint_Rank, out int promotePoint_Kill);
         rememberTotalProfit = totalProfit;
         rememberPromotePoint_Rank = promotePoint_Rank;

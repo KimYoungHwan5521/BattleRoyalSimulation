@@ -464,6 +464,8 @@ public class SurvivorData
     [SerializeField] public ItemManager.Craftable priority2Crafting = null;
     public int priority1CraftingToInt = -1;
     public int priority2CraftingToInt = -1;
+    public int craftingPriority1MinimumQuality;
+    public int craftingPriority2MinimumQuality;
     public bool[] craftingAllows;
     public int repairCondition = 70;
 
