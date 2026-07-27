@@ -14,7 +14,7 @@ public class Survivor : CustomObject
 {
     #region Variables and Properties
     public enum Status { Farming, FarmingBox, InCombat, TraceEnemy, InvestigateThreateningSound, Maintain, RunAway, Trapping, 
-        TrapDisarming, Crafting, Enchanting, FindingEnemy, Wearing, Reparing }
+        TrapDisarming, Crafting, Enchanting, FindingEnemy, Wearing, Repairing }
     #region Components
     [Header("Components")]
     [SerializeField] GameObject rightHand;
@@ -2577,7 +2577,7 @@ public class Survivor : CustomObject
 
     void Repair()
     {
-        CurrentStatus = Status.Reparing;
+        CurrentStatus = Status.Repairing;
         lookPosition = Vector2.zero;
         agent.SetDestination(transform.position);
         animator.SetInteger("CraftingAnimNumber", 0);
@@ -2588,9 +2588,6 @@ public class Survivor : CustomObject
         {
             curRepairingTime = 0;
             animator.SetBool("Crafting", false);
-            if (currentRepairing == 1) CurrentHelmet.SetDurabilityPercent(1f);
-            else CurrentVest.SetDurabilityPercent(1f);
-            currentRepairing = 0;
 
             // 수리 재료 소모
             if (needComponentsToRepair > 0)
@@ -3203,7 +3200,10 @@ public class Survivor : CustomObject
                 var arrow = inventory.Find(x => x.itemType == ItemManager.Items.Arrow);
                 if(arrow == null)
                 {
+                    curEnchantingTime = 0;
                     currentEnchanting = null;
+                    animator.SetBool("Crafting", false);
+                    progressBar.fillAmount = 0;
                     return;
                 }
                 int amount = Math.Min(arrow.amount, 5);
@@ -4119,11 +4119,11 @@ public class Survivor : CustomObject
             // 시야 밖에서 맞으면 무조건 치명타
             damage *= 2;
             damagePart = InjurySiteMajor.Head;
-            if (attacker.currentWeapon is RangedWeapon attackerWeaponRange)
+            if (weapon is RangedWeapon attackerWeaponRange)
             {
                 hitSound = attackerWeaponRange.AttackAnimNumber == 2 ? "hit02,10" : "hit01,10";
             }
-            else if (attacker.currentWeapon is MeleeWeapon attackerWeaponMelee)
+            else if (weapon is MeleeWeapon attackerWeaponMelee)
             {
                 if (attackerWeaponMelee.DamageType == DamageType.Slash) hitSound = "hit_flesh,5";
                 else if (attackerWeaponMelee.DamageType == DamageType.Strike) hitSound = "hit01,20";
@@ -4173,7 +4173,7 @@ public class Survivor : CustomObject
                 damage *= 2;
                 if (damageType == DamageType.Strike) damagePart = InjurySiteMajor.Head;
                 else damagePart = InjurySiteMajor.Torso;
-                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+                hitSound = weapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
 				if (chanceToIncreaseStat < 0.1f)
                 {
@@ -4183,7 +4183,7 @@ public class Survivor : CustomObject
             }
             else
             {
-                hitSound = currentWeapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
+                hitSound = weapon is RangedWeapon && CurrentWeaponAsRangedWeapon.AttackAnimNumber == 2 ? "hit02,5" : "hit01,5";
 
 				if (chanceToIncreaseStat < 0.02f)
                 {
