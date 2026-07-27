@@ -1433,23 +1433,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: Verpfuscht
+    m_Localized: <color=#7F7F7F>Verpfuscht</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: Minderwertig
+    m_Localized: <color=#60CC3F>Minderwertig</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Durchschnittlich
+    m_Localized: <color=#1A8EF6>Durchschnittlich</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
-    m_Localized: Hervorragend
+    m_Localized: <color=#B527C2>Hervorragend</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924953916862464
-    m_Localized: Meisterwerk
+    m_Localized: <color=#F09310>Meisterwerk</color>
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
@@ -1947,6 +1947,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 149845957135626240
     m_Localized: "L\xF6schen und neu beginnen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 151245658502262784
+    m_Localized: "Mindestqualit\xE4t : "
     m_Metadata:
       m_Items: []
   references:

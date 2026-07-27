@@ -102,6 +102,9 @@ public enum CharacteristicType
     WideVision = 85,
     NarrowVision = 86,
     Flounder = 87,
+
+    SniperRifleFanatic = 88,
+    BazookaFanatic = 89,
 }
 
 public enum CharacteristicRarity { Common, Uncommon, Rare }
@@ -264,6 +267,10 @@ public class CharacteristicManager
         characteristics.Add(new(CharacteristicType.WideVision, CharacteristicRarity.Common, 50, false, false, CharacteristicType.NarrowVision, CharacteristicType.Flounder));
         characteristics.Add(new(CharacteristicType.NarrowVision, CharacteristicRarity.Common, -50, false, false, CharacteristicType.WideVision, CharacteristicType.Flounder));
         characteristics.Add(new(CharacteristicType.Flounder, CharacteristicRarity.Uncommon, 100, false, false, CharacteristicType.WideVision, CharacteristicType.NarrowVision));
+
+        // 2.3
+        characteristics.Add(new(CharacteristicType.SniperRifleFanatic, CharacteristicRarity.Common, -10, false, false, CharacteristicType.BazookaFanatic, CharacteristicType.KnifeFighter, CharacteristicType.SwordSaint, CharacteristicType.MasterArcher));
+        characteristics.Add(new(CharacteristicType.BazookaFanatic, CharacteristicRarity.Common, -10, false, false, CharacteristicType.SniperRifleFanatic, CharacteristicType.KnifeFighter, CharacteristicType.SwordSaint, CharacteristicType.MasterArcher));
         yield return null;
     }
 

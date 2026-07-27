@@ -1445,23 +1445,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: "Rat\xE9"
+    m_Localized: "<color=#7F7F7F>Rat\xE9</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: "B\xE2cl\xE9"
+    m_Localized: "<color=#60CC3F>B\xE2cl\xE9</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Moyen
+    m_Localized: <color=#1A8EF6>Moyen</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
-    m_Localized: Excellent
+    m_Localized: <color=#B527C2>Excellent</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924953916862464
-    m_Localized: "Chef-d\u2019\u0153uvre"
+    m_Localized: "<color=#F09310>Chef-d\u2019\u0153uvre</color>"
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
@@ -1965,6 +1965,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 149845957135626240
     m_Localized: Supprimer et recommencer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 151245658502262784
+    m_Localized: "Qualit\xE9 minimale : "
     m_Metadata:
       m_Items: []
   references:

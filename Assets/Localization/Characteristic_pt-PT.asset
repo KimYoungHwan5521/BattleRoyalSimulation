@@ -758,6 +758,22 @@ MonoBehaviour:
     m_Localized: "\xC2ngulo de Vis\xE3o = 180\xB0"
     m_Metadata:
       m_Items: []
+  - m_Id: 149373837821669376
+    m_Localized: "Fan\xE1tico por espingardas de precis\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373839658774528
+    m_Localized: "A Prioridade de Arma 1 fica definida para a Espingarda de Precis\xE3o"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373842452180992
+    m_Localized: "Fan\xE1tico por bazucas"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373844763242496
+    m_Localized: A Prioridade de Arma 1 fica definida para a Bazuca
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

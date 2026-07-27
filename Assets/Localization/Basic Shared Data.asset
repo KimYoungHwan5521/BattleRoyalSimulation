@@ -1821,6 +1821,10 @@ MonoBehaviour:
     m_Key: Delete and Start Over
     m_Metadata:
       m_Items: []
+  - m_Id: 151245658502262784
+    m_Key: Minimum Quality
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

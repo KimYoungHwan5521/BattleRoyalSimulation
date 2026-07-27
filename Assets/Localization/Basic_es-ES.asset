@@ -1434,23 +1434,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 126924945222070272
-    m_Localized: Fallido
+    m_Localized: <color=#7F7F7F>Fallido</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924947440857088
-    m_Localized: Deficiente
+    m_Localized: <color=#60CC3F>Deficiente</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924949449928704
-    m_Localized: Normal
+    m_Localized: <color=#1A8EF6>Normal</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924951702269952
-    m_Localized: Excelente
+    m_Localized: <color=#B527C2>Excelente</color>
     m_Metadata:
       m_Items: []
   - m_Id: 126924953916862464
-    m_Localized: Obra maestra
+    m_Localized: <color=#F09310>Obra maestra</color>
     m_Metadata:
       m_Items: []
   - m_Id: 128711725592145920
@@ -1946,6 +1946,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 149845957135626240
     m_Localized: Eliminar y empezar de nuevo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 151245658502262784
+    m_Localized: "Calidad m\xEDnima : "
     m_Metadata:
       m_Items: []
   references:

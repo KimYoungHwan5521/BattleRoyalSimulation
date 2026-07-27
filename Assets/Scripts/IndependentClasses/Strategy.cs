@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -48,6 +47,8 @@ public class StrategyData
     public int elseAction = 0;
     public int conditionConut = 0;
     public ConditionData[] conditions;
+    public int etcValue1;
+    public int etcValue2;
 
     public StrategyData(int action, int elseAction, int conditionConut, ConditionData[] conditions = null)
     {
@@ -98,6 +99,10 @@ public class Strategy : MonoBehaviour
     }
     [SerializeField] TMP_InputField intagerInput;
     public TMP_InputField IntagerInput => intagerInput;
+    [SerializeField] LocalizedDropdown spareDropdown1;
+    public LocalizedDropdown SpareDropdown1 => spareDropdown1;
+    [SerializeField] LocalizedDropdown spareDropdown2;
+    public LocalizedDropdown SpareDropdown2 => spareDropdown2;
 
     public StrategyCase strategyCase;
     [SerializeField] bool noCondition;
@@ -284,7 +289,7 @@ public class Strategy : MonoBehaviour
             copyStrategy = new(0, 0, 0);
             return;
         }
-        if(strategyCase == StrategyCase.RepairCondition)
+        else if(strategyCase == StrategyCase.RepairCondition)
         {
             if (int.TryParse(intagerInput.text, out int input)) copyStrategy = new(input, 0, 0);
             else return;
@@ -292,6 +297,11 @@ public class Strategy : MonoBehaviour
         else if (noCondition)
         {
             copyStrategy = new(ActionDropdown != null ? ActionDropdown.Value : 0, ElseActionDropdown != null ? ElseActionDropdown.Value : 0, 0);
+            if(strategyCase == StrategyCase.CraftingPriority)
+            {
+                copyStrategy.etcValue1 = spareDropdown1.Value;
+                copyStrategy.etcValue2 = spareDropdown2.Value;
+            }
         }
         else
         {

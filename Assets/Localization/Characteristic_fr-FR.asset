@@ -761,6 +761,23 @@ MonoBehaviour:
     m_Localized: "Angle de vision = 180\xB0"
     m_Metadata:
       m_Items: []
+  - m_Id: 149373837821669376
+    m_Localized: "Fanatique du fusil de pr\xE9cision"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373839658774528
+    m_Localized: "La priorit\xE9 d\u2019arme 1 est verrouill\xE9e sur le fusil de
+      pr\xE9cision"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373842452180992
+    m_Localized: Fanatique du bazooka
+    m_Metadata:
+      m_Items: []
+  - m_Id: 149373844763242496
+    m_Localized: "La priorit\xE9 d\u2019arme 1 est verrouill\xE9e sur le bazooka"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

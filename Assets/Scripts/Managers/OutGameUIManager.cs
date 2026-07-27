@@ -298,6 +298,8 @@ public class OutGameUIManager : MonoBehaviour
 
     LocalizedDropdown craftingPriority1Dropdown;
     LocalizedDropdown craftingPriority2Dropdown;
+    LocalizedDropdown craftingPriority1MinimumQualityDropdown;
+    LocalizedDropdown craftingPriority2MinimumQualityDropdown;
 
     [SerializeField] Transform craftingAllow;
     public List<GameObject> craftableAllows = new();
@@ -431,7 +433,7 @@ public class OutGameUIManager : MonoBehaviour
         predictions = new LocalizedString[5];
 
         sortContestantsListDropdown.ClearOptions();
-        sortContestantsListDropdown.AddLocalizedOptions(new List<LocalizedString>()
+        sortContestantsListDropdown.AddKeys(new List<LocalizedString>()
         {
             new("Basic", "Strength"),
             new("Basic", "Agility"),
@@ -828,6 +830,7 @@ public class OutGameUIManager : MonoBehaviour
             mySurvivorsData.Add(new(survivorsInHireMarket[candidate].survivorData));
             mySurvivorsData[^1].id = mySurvivorsId++;
             mySurvivorsData[^1].characteristics = survivorsInHireMarket[candidate].survivorData.characteristics;
+            PostApplyCharacteristics(mySurvivorsData[^1]);
             mySurvivorsData[0]._stamina = mySurvivorsData[0].MaxStamina;
             //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
             survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
@@ -859,6 +862,18 @@ public class OutGameUIManager : MonoBehaviour
                 GameManager.Instance.Save(0);
             }
             GameManager.Instance.Option.SetSaveButtonInteractable(true, true);
+        }
+    }
+
+    void PostApplyCharacteristics(SurvivorData survivor)
+    {
+        if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.SniperRifleFanatic) != -1)
+        {
+            survivor.priority1Weapon = ItemManager.Items.SniperRifle;
+        }
+        if (survivor.characteristics.FindIndex(x => x.type == CharacteristicType.BazookaFanatic) != -1)
+        {
+            survivor.priority1Weapon = ItemManager.Items.Bazooka;
         }
     }
 
@@ -2100,8 +2115,8 @@ public class OutGameUIManager : MonoBehaviour
                     for (int i = (int)ItemManager.Items.Knife; i < (int)ItemManager.Items.Knife_Enchanted; i++)
                     {
                         bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{items[i]}", out var itemSpriteEnum);
-                        strategy.ActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
-                        strategy.ElseActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Item", items[i].ToString()) });
+                        strategy.ActionDropdown.AddKeys(new List<LocalizedString> { new("Item", items[i].ToString()) });
+                        strategy.ElseActionDropdown.AddKeys(new List<LocalizedString> { new("Item", items[i].ToString()) });
                         Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                         strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
                         strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -2168,12 +2183,16 @@ public class OutGameUIManager : MonoBehaviour
                 case StrategyCase.CraftingPriority:
                     strategy.ActionDropdown.ClearOptions();
                     strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-                    strategy.ActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+                    strategy.ActionDropdown.AddKeys(new List<LocalizedString> { new("Basic", "None") });
                     strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
                     strategy.ElseActionDropdown.ClearOptions();
                     strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+                    strategy.ElseActionDropdown.AddKeys(new List<LocalizedString> { new("Basic", "None") });
                     strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
+                    strategy.SpareDropdown1.ClearOptions();
+                    strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Botched"), new("Basic", "Shoddy"), new("Basic", "Average"), new("Basic", "Excellent"), new("Basic", "Masterpiece") });
+                    strategy.SpareDropdown2.ClearOptions();
+                    strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Botched"), new("Basic", "Shoddy"), new("Basic", "Average"), new("Basic", "Excellent"), new("Basic", "Masterpiece") });
                     GameManager.Instance.ObjectUpdate += () =>
                     {
                         if (strategy.ActionDropdown.dropdown.IsExpanded)
@@ -2252,6 +2271,8 @@ public class OutGameUIManager : MonoBehaviour
                 case StrategyCase.CraftingPriority:
                     strategy.ActionDropdown.Value = 0;
                     strategy.ElseActionDropdown.Value = 0;
+                    strategy.SpareDropdown1.Value = 0;
+                    strategy.SpareDropdown2.Value = 0;
                     break;
             }
         }
@@ -2315,15 +2336,17 @@ public class OutGameUIManager : MonoBehaviour
                 case StrategyCase.WeaponPriority:
                     strategy.ActionDropdown.Value = (int)survivorWhoWantEstablishStrategy.priority1Weapon - (int)ItemManager.Items.Knife;
                     strategy.ElseActionDropdown.Value = (int)survivorWhoWantEstablishStrategy.priority2Weapon - (int)ItemManager.Items.Knife;
+                    bool priority1fix = survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.SniperRifleFanatic || x.type == CharacteristicType.BazookaFanatic) != -1;
+                    strategy.ActionDropdown.dropdown.interactable = !priority1fix;
                     break;
                 case StrategyCase.CraftingPriority:
                     strategy.ActionDropdown.ClearOptions();
                     strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-                    strategy.ActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+                    strategy.ActionDropdown.AddKeys(new List<LocalizedString> { new("Basic", "None") });
                     strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
                     strategy.ElseActionDropdown.ClearOptions();
                     strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Clear();
-                    strategy.ElseActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new("Basic", "None") });
+                    strategy.ElseActionDropdown.AddKeys(new List<LocalizedString> { new("Basic", "None") });
                     strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(null);
                     foreach (var craftable in ItemManager.craftables)
                     {
@@ -2331,8 +2354,8 @@ public class OutGameUIManager : MonoBehaviour
                         if (craftable.requiredKnowledge <= survivorWhoWantEstablishStrategy.Knowledge || trapExpertAndTraps)
                         {
                             bool spriteNotNull = Enum.TryParse<ResourceEnum.Sprite>($"{craftable.itemType}", out var itemSpriteEnum);
-                            strategy.ActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new LocalizedString("Item", craftable.itemType.ToString()) });
-                            strategy.ElseActionDropdown.AddLocalizedOptions(new List<LocalizedString> { new LocalizedString("Item", craftable.itemType.ToString()) });
+                            strategy.ActionDropdown.AddKeys(new List<LocalizedString> { new LocalizedString("Item", craftable.itemType.ToString()) });
+                            strategy.ElseActionDropdown.AddKeys(new List<LocalizedString> { new LocalizedString("Item", craftable.itemType.ToString()) });
                             Sprite sprite = spriteNotNull ? ResourceManager.Get(itemSpriteEnum) : ResourceManager.Get(ResourceEnum.Sprite.Unknown);
                             strategy.ActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
                             strategy.ElseActionDropdown.GetComponent<DropdownSpritesData>().sprites.Add(sprite);
@@ -2340,6 +2363,32 @@ public class OutGameUIManager : MonoBehaviour
                     }
                     strategy.ActionDropdown.Value = strategy.ActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority1CraftingToInt + 1 : 0;
                     strategy.ElseActionDropdown.Value = strategy.ElseActionDropdown.keys.Count + 1 > survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 ? survivorWhoWantEstablishStrategy.priority2CraftingToInt + 1 : 0;
+                    strategy.SpareDropdown1.ClearOptions();
+                    strategy.SpareDropdown2.ClearOptions();
+                    strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Botched")});
+                    strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Botched") });
+                    if (survivorWhoWantEstablishStrategy.Crafting > 0)
+                    {
+                        strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Shoddy") });
+                        strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Shoddy") });
+                    }
+                    if (survivorWhoWantEstablishStrategy.Crafting > 20)
+                    {
+                        strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Average") });
+                        strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Average") });
+                    }
+                    if (survivorWhoWantEstablishStrategy.Crafting > 40)
+                    {
+                        strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Excellent") });
+                        strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Excellent") });
+                    }
+                    if (survivorWhoWantEstablishStrategy.Crafting > 60)
+                    {
+                        strategy.SpareDropdown1.AddKeys(new List<LocalizedString> { new("Basic", "Masterpiece") });
+                        strategy.SpareDropdown2.AddKeys(new List<LocalizedString> { new("Basic", "Masterpiece") });
+                    }
+                    strategy.SpareDropdown1.Value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue1;
+                    strategy.SpareDropdown2.Value = survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue2;
                     break;
                 default:
                     if (strategy.ActionDropdown != null) strategy.ActionDropdown.Value = survivorWhoWantEstablishStrategy.strategyDictionary[strategy.strategyCase].action;
@@ -2539,6 +2588,8 @@ public class OutGameUIManager : MonoBehaviour
                 else Debug.LogWarning($"Craftable not found : {craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
             }
         }
+        survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 = craftingPriority1MinimumQualityDropdown.Value;
+        survivorWhoWantEstablishStrategy.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 = craftingPriority2MinimumQualityDropdown.Value;
 
         for(int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
         {

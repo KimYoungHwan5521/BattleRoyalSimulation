@@ -8,6 +8,7 @@ using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class Survivor : CustomObject
 {
@@ -2351,28 +2352,46 @@ public class Survivor : CustomObject
         }
     }
 
-    int GetBulletproofHelmetTier(ItemManager.Items helmetType)
+    int GetBulletproofHelmetTier(ItemManager.Items helmetType, CraftingQuality quality)
     {
-        return helmetType switch
+        int value = helmetType switch
         {
-            ItemManager.Items.LowLevelBulletproofHelmet => 1,
-            ItemManager.Items.MiddleLevelBulletproofHelmet => 2,
-            ItemManager.Items.HighLevelBulletproofHelmet => 3,
-            ItemManager.Items.LegendaryBulletproofHelmet => 4,
+            ItemManager.Items.LowLevelBulletproofHelmet => 10,
+            ItemManager.Items.MiddleLevelBulletproofHelmet => 20,
+            ItemManager.Items.HighLevelBulletproofHelmet => 30,
+            ItemManager.Items.LegendaryBulletproofHelmet => 40,
             _ => -1,
         };
+        value += quality switch
+        { 
+            CraftingQuality.Botched => 1,
+            CraftingQuality.Shoddy => 3,
+            CraftingQuality.Excellent => 7,
+            CraftingQuality.Masterpiece => 9,
+            _ => 9,
+        };
+        return value;
     }
 
-    int GetBulletproofVestTier(ItemManager.Items helmetType)
+    int GetBulletproofVestTier(ItemManager.Items vestType, CraftingQuality quality)
     {
-        return helmetType switch
+        int value = vestType switch
         {
-            ItemManager.Items.LowLevelBulletproofVest => 1,
-            ItemManager.Items.MiddleLevelBulletproofVest => 2,
-            ItemManager.Items.HighLevelBulletproofVest => 3,
-            ItemManager.Items.LegendaryBulletproofVest => 4,
+            ItemManager.Items.LowLevelBulletproofHelmet => 10,
+            ItemManager.Items.MiddleLevelBulletproofHelmet => 20,
+            ItemManager.Items.HighLevelBulletproofHelmet => 30,
+            ItemManager.Items.LegendaryBulletproofHelmet => 40,
             _ => -1,
         };
+        value += quality switch
+        {
+            CraftingQuality.Botched => 1,
+            CraftingQuality.Shoddy => 3,
+            CraftingQuality.Excellent => 7,
+            CraftingQuality.Masterpiece => 9,
+            _ => 9,
+        };
+        return value;
     }
 
     bool CompareBulletproofVestValue(BulletproofVest newBulletproofVest)
@@ -2600,7 +2619,20 @@ public class Survivor : CustomObject
             // 그 다음으로 Crafting Priority 체크
             if (linkedSurvivorData.priority1Crafting != null && linkedSurvivorData.priority1Crafting.itemType != ItemManager.Items.NotValid)
             {
-                if (inventory.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType) == null)
+                bool checkNeeds = inventory.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType) == null;
+                if (ItemManager.CheckUseQuality(linkedSurvivorData.priority1Crafting.itemType)) 
+                {
+                    foreach(var item in inventory.FindAll(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType))
+                    {
+                        int value = item.quality == CraftingQuality.NotCrafted ? 3 : (int)item.quality;
+                        if(value >= linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1)
+                        {
+                            checkNeeds = false;
+                            break;
+                        }
+                    }
+                }
+                if (checkNeeds)
                 {
                     // 0: weapon, 1: helmet, 2: vest
                     int check = linkedSurvivorData.priority1Crafting.itemType switch
@@ -2614,9 +2646,10 @@ public class Survivor : CustomObject
                         _ => -1
                     };
                     // 이미 장비하고 있으면 재료 보존x
+                    // 헬멧과 조끼가 이미 상위티어여도 보존x
                     if(!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority1Crafting.itemType
-                        || check == 1 && currentHelmet != null && currentHelmet.itemType == linkedSurvivorData.priority1Crafting.itemType
-                        || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority1Crafting.itemType))
+                        || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1))
+                        || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1))))
                     {
                         var priority1 = craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
                         if (priority1 != null)
@@ -2629,7 +2662,6 @@ public class Survivor : CustomObject
                             var original = ItemManager.craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
                             needLefts = new int[] { original.needAdvancedComponentCount, original.needComponentsCount, original.needChemicalsCount, original.needGunpowderCount, original.needSalvagesCount };
                         }
-                        
                     }
                 }
                 // cp2 체크
@@ -2650,8 +2682,8 @@ public class Survivor : CustomObject
                         };
                         // 이미 장비하고 있으면 재료 보존x
                         if (!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority2Crafting.itemType
-                            || check == 1 && currentHelmet != null && currentHelmet.itemType == linkedSurvivorData.priority2Crafting.itemType
-                            || check == 2 && currentVest != null && currentVest.itemType == linkedSurvivorData.priority2Crafting.itemType))
+                            || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 + 1))
+                            || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 + 1))))
                         {
                             var priority2 = craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
                             if (priority2 != null)
@@ -2845,7 +2877,12 @@ public class Survivor : CustomObject
                     {
                         if (CurrentWeaponAsRangedWeapon == bestWeapon)
                         {
-                            if (CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null) bulletNeeds = true;
+                            if(CurrentWeaponAsRangedWeapon.itemType == linkedSurvivorData.priority1Weapon)
+                            {
+                                int magazine = CurrentWeaponAsRangedWeapon.NeedPreload ? CurrentWeaponAsRangedWeapon.MagazineCapacity : 1;
+                                bulletNeeds = ValidBullet == null || ValidBullet.amount < magazine * 5;
+                            }
+                            else if (CurrentWeaponAsRangedWeapon.CurrentMagazine <= 0 && ValidBullet == null) bulletNeeds = true;
                         }
                         else bulletNeeds = true;
                     }
@@ -2857,13 +2894,13 @@ public class Survivor : CustomObject
                 {
                     if(IsValid(CurrentWearingHelmet))
                     {
-                        needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentWearingHelmet.itemType);
+                        needArmor = GetBulletproofHelmetTier(craftables[^i].itemType, CraftingQuality.Average) > GetBulletproofHelmetTier(CurrentWearingHelmet.itemType, CraftingQuality.Average);
                     }
                     else
                     {
                         if (IsValid(CurrentHelmet))
                         {
-                            needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentHelmet.itemType);
+                            needArmor = GetBulletproofHelmetTier(craftables[^i].itemType, CraftingQuality.Average) > GetBulletproofHelmetTier(CurrentHelmet.itemType, CraftingQuality.Average);
                         }
                         else needArmor = true;
                     }
@@ -2872,13 +2909,13 @@ public class Survivor : CustomObject
                 {
                     if (IsValid(CurrentWearingVest))
                     {
-                        needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentWearingVest.itemType);
+                        needArmor = GetBulletproofVestTier(craftables[^i].itemType, CraftingQuality.Average) > GetBulletproofVestTier(CurrentWearingVest.itemType, CraftingQuality.Average);
                     }
                     else
                     {
                         if (IsValid(CurrentVest))
                         {
-                            needArmor = GetBulletproofHelmetTier(craftables[^i].itemType) > GetBulletproofHelmetTier(CurrentVest.itemType);
+                            needArmor = GetBulletproofVestTier(craftables[^i].itemType, CraftingQuality.Average) > GetBulletproofVestTier(CurrentVest.itemType, CraftingQuality.Average);
                         }
                         else needArmor = true;
                     }
@@ -3556,6 +3593,11 @@ public class Survivor : CustomObject
             else if(CurrentWeaponAsRangedWeapon.weight == 4)
             {
                 correctedReloadSpeed = 0.5f + 0.5f * Mathf.Clamp(CorrectedStrength, 0, 10) / 10;
+            }
+
+            if(characteristics.FindIndex(x => x.type == CharacteristicType.MasterArcher) > -1 && (CurrentWeaponAsRangedWeapon.itemType == ItemManager.Items.Bow || CurrentWeaponAsRangedWeapon.itemType == ItemManager.Items.AdvancedBow))
+            {
+                correctedReloadSpeed = 2;
             }
         }
         animator.SetFloat("ReloadSpeed", reloadSpeed * correctedReloadSpeed);

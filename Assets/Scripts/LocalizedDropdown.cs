@@ -21,7 +21,7 @@ public class LocalizedDropdown : MonoBehaviour
         dropdown = GetComponent<TMP_Dropdown>();
     }
 
-    public void AddLocalizedOptions(List<LocalizedString> options)
+    public void AddKeys(List<LocalizedString> options)
     {
         for (int i = 0; i < options.Count; i++)
         {
