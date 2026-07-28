@@ -192,6 +192,10 @@ public class GameResult : MonoBehaviour
             ApplyWinLoseStatistics();
             CalculatePrizes(cachedPlayerSurvivor);
             CalculateTreatments(cachedPlayerSurvivor);
+            cachedTotalProfit =
+                winPrize +
+                killPrize -
+                totalTreatmentCost;
         }
 
         CalculateBettingResult();
@@ -239,17 +243,290 @@ public class GameResult : MonoBehaviour
         winPrize = 0;
         killPrize = 0;
 
+        cachedPromotePointRank = 0;
+        cachedPromotePointKill = 0;
+
+        SurvivorData survivorData =
+            playerSurvivor.LinkedSurvivorData;
+
         League league =
             calendar.LeagueReserveInfo[calendar.Today].league;
 
+        GameManager.Instance.UnlockManager.Unlock(
+            UnlockManager.UnlockCondition
+                .FirstParticipateInBattleRoyale);
+
         switch (league)
         {
-            // 기존 리그별 상금 계산 코드를 그대로 이동
-            // promotePoint_Rank 대신 cachedPromotePointRank 사용
-            // promotePoint_Kill 대신 cachedPromotePointKill 사용
+            case League.BronzeLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 5000;
+                    cachedPromotePointRank = 100;
+
+                    AchievementManager.UnlockAchievement(
+                        "Bronze Cup");
+
+                    GameManager.Instance.UnlockManager.Unlock(
+                        UnlockManager.UnlockCondition
+                            .WinBronzeLeague);
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 2500;
+                    cachedPromotePointRank = 25;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 500;
+
+                cachedPromotePointKill =
+                    playerSurvivor.KillCount * 10;
+                break;
+
+            case League.SilverLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 10000;
+                    cachedPromotePointRank = 100;
+
+                    AchievementManager.UnlockAchievement(
+                        "Silver Cup");
+
+                    GameManager.Instance.UnlockManager.Unlock(
+                        UnlockManager.UnlockCondition
+                            .WinSilverLeague);
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 5000;
+                    cachedPromotePointRank = 50;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 2500;
+                    cachedPromotePointRank = 25;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 1000;
+
+                cachedPromotePointKill =
+                    playerSurvivor.KillCount * 10;
+                break;
+
+            case League.GoldLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 20000;
+                    cachedPromotePointRank = 100;
+
+                    AchievementManager.UnlockAchievement(
+                        "Gold Cup");
+
+                    GameManager.Instance.UnlockManager.Unlock(
+                        UnlockManager.UnlockCondition
+                            .WinGoldLeague);
+
+                    if (outGameUIManager.GameMode ==
+                        GameMode.FreeManagement)
+                    {
+                        survivorData
+                            .haveQualifyToParticipateInSeasonChampionship =
+                            true;
+                    }
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 10000;
+                    cachedPromotePointRank = 50;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 5000;
+                    cachedPromotePointRank = 25;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 2000;
+
+                cachedPromotePointKill =
+                    playerSurvivor.KillCount * 10;
+                break;
+
+            case League.SeasonChampionship:
+                if (playerWin == 1)
+                {
+                    winPrize = 10000;
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 5000;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 2500;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 1000;
+
+                cachedPromotePointRank =
+                    Mathf.Max(
+                        10 -
+                        GameManager.Instance
+                            .BattleRoyaleManager
+                            .playerSurvivorRank,
+                        0);
+
+                cachedPromotePointKill =
+                    playerSurvivor.KillCount;
+
+                if (outGameUIManager.GameMode ==
+                    GameMode.FreeManagement)
+                {
+                    // 참가에 사용한 시즌 챔피언십 티켓 소모
+                    survivorData
+                        .haveQualifyToParticipateInSeasonChampionship =
+                        false;
+                }
+
+                break;
+
+            case League.WorldChampionship:
+                if (playerWin == 1)
+                {
+                    winPrize = 20000;
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 10000;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 5000;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 2000;
+
+                cachedPromotePointRank =
+                    Mathf.Max(
+                        10 -
+                        GameManager.Instance
+                            .BattleRoyaleManager
+                            .playerSurvivorRank,
+                        0);
+
+                cachedPromotePointKill =
+                    playerSurvivor.KillCount;
+
+                if (outGameUIManager.GameMode ==
+                    GameMode.FreeManagement)
+                {
+                    // 참가에 사용한 월드 챔피언십 티켓 소모
+                    survivorData
+                        .haveQualifyToParticipateInWorldChampionship =
+                        false;
+                }
+
+                break;
+
+            case League.MeleeLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 40000;
+
+                    AchievementManager.UnlockAchievement(
+                        "Melee Champion");
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 20000;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 10000;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 4000;
+                break;
+
+            case League.RangeLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 40000;
+
+                    AchievementManager.UnlockAchievement(
+                        "Shooting Champion");
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 20000;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 10000;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 4000;
+                break;
+
+            case League.CraftingLeague:
+                if (playerWin == 1)
+                {
+                    winPrize = 40000;
+
+                    AchievementManager.UnlockAchievement(
+                        "Crafting Champion");
+                }
+                else if (playerWin == 25)
+                {
+                    winPrize = 20000;
+                }
+                else if (playerWin == 50)
+                {
+                    winPrize = 10000;
+                }
+
+                killPrize =
+                    playerSurvivor.KillCount * 4000;
+                break;
+
+            default:
+                Debug.LogWarning(
+                    $"Unsupported league result: {league}");
+                break;
         }
 
-        cachedTotalProfit = winPrize + killPrize;
+        if (playerWin != 1)
+        {
+            bool regularLeague =
+                league == League.BronzeLeague ||
+                league == League.SilverLeague ||
+                league == League.GoldLeague;
+
+            bool freeManagementChampionship =
+                outGameUIManager.GameMode ==
+                    GameMode.FreeManagement &&
+                (league == League.SeasonChampionship ||
+                 league == League.WorldChampionship);
+
+            if (regularLeague ||
+                freeManagementChampionship)
+            {
+                survivorData.royalLoader = false;
+            }
+        }
+
+        if (survivorData.mostKillsInASingleMatch <
+            playerSurvivor.KillCount)
+        {
+            survivorData.mostKillsInASingleMatch =
+                playerSurvivor.KillCount;
+        }
     }
 
     void CalculateTreatments(Survivor playerSurvivor)
@@ -788,6 +1065,7 @@ public class GameResult : MonoBehaviour
                 }
                 else
                 {
+                    survivor.haveQualifyToParticipateInSeasonChampionship = true;
                     notification += () => { outGameUIManager.Alert("Alert:Obtain Season Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
                 }
                 break;
@@ -802,7 +1080,11 @@ public class GameResult : MonoBehaviour
                     AchievementManager.UnlockAchievement("Overcome");
                 }
                 if (outGameUIManager.GameMode == GameMode.SingleCareerRun) notification += () => { outGameUIManager.Alert("Alert:Auto Reserve", survivor.localizedSurvivorName.GetLocalizedString(), new LocalizedString("Basic", "WorldChampionship").GetLocalizedString()); };
-                else notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
+                else
+                {
+                    survivor.haveQualifyToParticipateInWorldChampionship = true;
+                    notification += () => { outGameUIManager.Alert("Alert:Obtain World Championship Ticket", survivor.localizedSurvivorName.GetLocalizedString()); };
+                }
                 break;
         }
     }
@@ -822,7 +1104,7 @@ public class GameResult : MonoBehaviour
         {
             for (int i = 0; i < GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
             {
-                float percentile = (float)i + 1 / GameManager.Instance.BattleRoyaleManager.rankings.Length;
+                float percentile = ((float)i + 1) / GameManager.Instance.BattleRoyaleManager.rankings.Length;
                 if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
                 {
                     if (percentile <= 0.25f) playerWin = 25;
@@ -832,6 +1114,8 @@ public class GameResult : MonoBehaviour
                 }
             }
         }
+        if (calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
+        else if (calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
         if (outGameUIManager.GameMode == GameMode.FreeManagement)
         {
             if(playerWin == 1) Promote(playerSurvivor.LinkedSurvivorData);
