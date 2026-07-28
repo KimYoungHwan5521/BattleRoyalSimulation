@@ -1225,15 +1225,19 @@ public class GameResult : MonoBehaviour
     {
         gameResult.SetActive(false);
 
-        if (!resultCalculated)
+        if (!goTitle)
         {
-            cachedDidPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
+            if (!resultCalculated)
+            {
+                cachedDidPlayerParticipate =
+                    outGameUIManager.MySurvivorDataInBattleRoyale != null;
 
-            CalculateResult(cachedDidPlayerParticipate);
-            resultCalculated = true;
+                CalculateResult(cachedDidPlayerParticipate);
+                resultCalculated = true;
+            }
+
+            ExitBattleEvent();
         }
-
-        ExitBattleEvent();
         ClearBattleRoyale();
         if (!goTitle)
         {

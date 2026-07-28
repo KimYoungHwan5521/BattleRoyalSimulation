@@ -3894,11 +3894,20 @@ public class OutGameUIManager : MonoBehaviour
         studyingLevel = saveData.studyingLevel;
         survivorHireLimit = saveData.survivorHireLimit;
         contestantsData = saveData.contestantsData;
-        if (contestantsData != null && contestantsData.Count > 0 && calendar.LeagueReserveInfo.ContainsKey(calendar.Today)) contestantsData[0] = calendar.LeagueReserveInfo[calendar.Today].reserver != null ? MySurvivorsData.Find(x => x.id == calendar.LeagueReserveInfo[calendar.Today].reserver.id) : MySurvivorsData[0];
         
         championship = saveData.championship;
         championshipHeldCount = saveData.championshipHeldCount;
         championshipDatas = saveData.championshipDatas;
+
+        if (gameMode == GameMode.SingleCareerRun && championship)
+        {
+            RestoreChampionshipContestants();
+        }
+        else
+        {
+            RestoreReserverReference();
+        }
+
         viewCurrentChampionshipStandings.SetActive(championship);
 
         for (int i = 0; i < trainingCards.Length; i++) 
@@ -3915,6 +3924,89 @@ public class OutGameUIManager : MonoBehaviour
         survivorsInHireMarket[2].SoldOut = saveData.soldOut[2];
 
         ResetObjectiveText();
+    }
+
+    void RestoreChampionshipContestants()
+    {
+        SurvivorData player = mySurvivorsData[0];
+
+        contestantsData ??= new List<SurvivorData>();
+
+        int playerIndex = contestantsData.FindIndex(
+            x => x != null && x.id == player.id);
+
+        if (playerIndex >= 0)
+        {
+            // 저장된 복사본을 현재 플레이어 객체 참조로 교체
+            contestantsData[playerIndex] = player;
+
+            // BattleRoyaleManager는 0번을 플레이어로 취급하므로 맨 앞으로 이동
+            if (playerIndex != 0)
+            {
+                contestantsData.RemoveAt(playerIndex);
+                contestantsData.Insert(0, player);
+            }
+        }
+        else
+        {
+            // 구버전 데이터에서 플레이어가 누락된 경우
+            contestantsData.Insert(0, player);
+        }
+
+        const int championshipSurvivorCount = 25;
+
+        // 플레이어 추가로 26명이 됐다면 마지막 AI 제거
+        if (contestantsData.Count > championshipSurvivorCount)
+        {
+            contestantsData.RemoveRange(
+                championshipSurvivorCount,
+                contestantsData.Count - championshipSurvivorCount);
+        }
+
+        // 구버전 데이터에 참가자 자체가 부족한 경우
+        while (contestantsData.Count < championshipSurvivorCount)
+        {
+            SurvivorData survivor = CreateRandomSurvivorData();
+            contestantsData.Add(survivor);
+
+            if (!championshipDatas.Exists(
+                x => x.SurvivorName.TableEntryReference.Key ==
+                     survivor.localizedSurvivorName.TableEntryReference.Key))
+            {
+                championshipDatas.Add(new ChampionshipData(survivor));
+            }
+        }
+
+        string playerNameKey =
+            player.localizedSurvivorName.TableEntryReference.Key;
+
+        if (!championshipDatas.Exists(
+            x => x.SurvivorName.TableEntryReference.Key == playerNameKey))
+        {
+            championshipDatas.Insert(0, new ChampionshipData(player));
+        }
+    }
+
+    void RestoreReserverReference()
+    {
+        if (contestantsData == null ||
+            contestantsData.Count == 0 ||
+            !calendar.LeagueReserveInfo.TryGetValue(
+                calendar.Today,
+                out LeagueReserveData leagueInfo) ||
+            leagueInfo.reserver == null)
+        {
+            return;
+        }
+
+        SurvivorData reserver = mySurvivorsData.Find(
+            x => x.id == leagueInfo.reserver.id);
+
+        if (reserver == null)
+            return;
+
+        leagueInfo.reserver = reserver;
+        contestantsData[0] = reserver;
     }
 
     void OnLocaleChanged(Locale newLocale)

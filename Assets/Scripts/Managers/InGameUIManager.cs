@@ -404,7 +404,8 @@ public class InGameUIManager : MonoBehaviour
         bool hasBetting = outGameUIManager.GameMode == GameMode.FreeManagement && outGameUIManager.BettingAmount > 0;
         predictionLeft = hasBetting ? outGameUIManager.PredictionNumber : 0;
 
-        otherSurvivorsBox.sizeDelta = new Vector2(otherSurvivorsBox.rect.width, 30 * outGameUIManager.contestantsData.Count);
+        int otherSurvivorCount = hasBetting ? outGameUIManager.contestantsData.Count - outGameUIManager.PredictionNumber : outGameUIManager.contestantsData.Count;
+        otherSurvivorsBox.sizeDelta = new Vector2(otherSurvivorsBox.rect.width, 30 * otherSurvivorCount);
 
         if (outGameUIManager.BettingAmount > 0)
         {

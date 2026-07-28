@@ -913,7 +913,7 @@ public class Calendar : CustomObject
         {
             if(!spectating)
             {
-                outGameUIManager.contestantsData.Clear();
+                outGameUIManager.contestantsData?.Clear();
                 if(selectSurvivorWhoParticipateLeagueDropdown.keys.Count > 0)
                 {
                     selectLeagueBG_FreeManagement.SetActive(false);
