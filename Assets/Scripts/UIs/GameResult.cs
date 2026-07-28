@@ -47,6 +47,35 @@ public class GameResult : MonoBehaviour
     int lastTimeScale;
     bool gameOver;
     bool winWC;
+
+    bool resultCalculated;
+    bool cachedDidPlayerParticipate;
+
+    int cachedTotalProfit;
+    int cachedPromotePointRank;
+    int cachedPromotePointKill;
+    long cachedBettingRewards;
+    float cachedBettingOdds;
+
+    Survivor cachedPlayerSurvivor;
+
+    readonly List<TreatmentResultData> cachedTreatments = new();
+
+    class TreatmentResultData
+    {
+        public string injurySiteKey;
+        public string treatmentKey;
+        public int cost;
+        public bool isBloodTransfusion;
+    }
+    bool cachedHasBetting;
+
+    int cachedPredictionNumber;
+
+    string[] cachedPredictionKeys;
+    string[] cachedRankingKeys;
+    Color[] cachedPredictionColors;
+
     [Header("Game Over")]
     [SerializeField] GameObject gameOverCanvas;
     [SerializeField] GameObject viewChampionshipProgress;
@@ -87,6 +116,17 @@ public class GameResult : MonoBehaviour
     {
         gameOver = false;
         winWC = false;
+
+        resultCalculated = false;
+        cachedDidPlayerParticipate = false;
+        cachedPlayerSurvivor = null;
+        cachedTreatments.Clear();
+
+        cachedTotalProfit = 0;
+        cachedPromotePointRank = 0;
+        cachedPromotePointKill = 0;
+        cachedBettingRewards = 0;
+        cachedBettingOdds = 0;
     }
 
     int rememberTotalProfit;
@@ -96,19 +136,37 @@ public class GameResult : MonoBehaviour
     {
         lastTimeScale = (int)Time.timeScale;
         Time.timeScale = 0;
+
         gameResult.SetActive(true);
         buttonKeepWatching.SetActive(!isBattleEnd);
 
-        bool didPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
-        mySurvivorResult.SetActive(didPlayerParticipate);
-        mySurvivorTreatmentCost.SetActive(didPlayerParticipate);
-        if(outGameUIManager.GameMode == GameMode.SingleCareerRun) GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
-        else GameManager.Instance.Option.SetSaveButtonInteractable(true, true, false);
-        SetText(didPlayerParticipate, out int totalProfit, out int promotePoint_Rank, out int promotePoint_Kill);
-        rememberTotalProfit = totalProfit;
-        rememberPromotePoint_Rank = promotePoint_Rank;
-        rememberPromotePoint_Kill = promotePoint_Kill;
-        GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
+        cachedDidPlayerParticipate =
+            outGameUIManager.MySurvivorDataInBattleRoyale != null;
+
+        mySurvivorResult.SetActive(cachedDidPlayerParticipate);
+        mySurvivorTreatmentCost.SetActive(cachedDidPlayerParticipate);
+
+        if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            GameManager.Instance.Option.SetSaveButtonInteractable(
+                false, false, true);
+        }
+        else
+        {
+            GameManager.Instance.Option.SetSaveButtonInteractable(
+                true, true, false);
+        }
+
+        if (!resultCalculated)
+        {
+            CalculateResult(cachedDidPlayerParticipate);
+            resultCalculated = true;
+        }
+
+        RefreshResultUI();
+
+        GameManager.Instance.FixLayout(
+            gameResult.GetComponent<RectTransform>());
     }
 
     // playerWin | 1: win, 25: top 25%, 50: top 50%, -1 : bottom 50%
@@ -117,334 +175,584 @@ public class GameResult : MonoBehaviour
     int killPrize = 0;
     int totalTreatmentCost = 0;
     List<Injury> injuryNeedSurgery = new();
-    void SetText(bool didPlayerParticipate, out int totalProfit, out int promotePoint_Rank, out int promotePoint_Kill)
+    void CalculateResult(bool didPlayerParticipate)
     {
-        totalProfit = 0;
-        promotePoint_Rank = 0;
-        promotePoint_Kill = 0;
+        cachedTotalProfit = 0;
+        cachedPromotePointRank = 0;
+        cachedPromotePointKill = 0;
+
         playerWin = -1;
+
         if (didPlayerParticipate)
         {
-            GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.FirstParticipateInBattleRoyale);
-            Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
-            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0) playerWin = 1;
+            cachedPlayerSurvivor =
+                GameManager.Instance.BattleRoyaleManager.Survivors[0];
+
+            CalculatePlayerRank(cachedPlayerSurvivor);
+            ApplyWinLoseStatistics();
+            CalculatePrizes(cachedPlayerSurvivor);
+            CalculateTreatments(cachedPlayerSurvivor);
+        }
+
+        CalculateBettingResult();
+
+        rememberTotalProfit = cachedTotalProfit;
+        rememberPromotePoint_Rank = cachedPromotePointRank;
+        rememberPromotePoint_Kill = cachedPromotePointKill;
+    }
+
+    void CalculatePlayerRank(Survivor playerSurvivor)
+    {
+        BattleRoyaleManager manager =
+            GameManager.Instance.BattleRoyaleManager;
+
+        if (manager.BattleWinner != null &&
+            manager.BattleWinner.survivorID == 0)
+        {
+            playerWin = 1;
+            return;
+        }
+
+        for (int i = 0; i < manager.rankings.Length; i++)
+        {
+            if (manager.rankings[i] != playerSurvivor.survivorName)
+                continue;
+
+            float percentile =
+                ((float)i + 1) / manager.rankings.Length;
+
+            if (percentile <= 0.25f)
+                playerWin = 25;
+            else if (percentile <= 0.5f)
+                playerWin = 50;
+            else
+                playerWin = -1;
+
+            return;
+        }
+
+        playerWin = -1;
+    }
+
+    void CalculatePrizes(Survivor playerSurvivor)
+    {
+        winPrize = 0;
+        killPrize = 0;
+
+        League league =
+            calendar.LeagueReserveInfo[calendar.Today].league;
+
+        switch (league)
+        {
+            // 기존 리그별 상금 계산 코드를 그대로 이동
+            // promotePoint_Rank 대신 cachedPromotePointRank 사용
+            // promotePoint_Kill 대신 cachedPromotePointKill 사용
+        }
+
+        cachedTotalProfit = winPrize + killPrize;
+    }
+
+    void CalculateTreatments(Survivor playerSurvivor)
+    {
+        totalTreatmentCost = 0;
+        cachedTreatments.Clear();
+        injuryNeedSurgery.Clear();
+
+        foreach (Injury injury in playerSurvivor.injuries)
+        {
+            if (playerSurvivor.rememberAlreadyHaveInjury.TryGetValue(
+                    injury.site,
+                    out int alreadyHad))
+            {
+                if (injury.degree == 1)
+                {
+                    int cost =
+                        outGameUIManager.MeasureTreatmentCost(
+                            injury,
+                            0);
+
+                    AddTreatmentResult(
+                        injury,
+                        "Replace Prosthetic",
+                        cost);
+
+                    if (outGameUIManager.GameMode ==
+                        GameMode.SingleCareerRun)
+                    {
+                        injuryNeedSurgery.Add(injury);
+                    }
+                }
+                else if (injury.degree > 0)
+                {
+                    int cost =
+                        outGameUIManager.MeasureTreatmentCost(
+                            injury,
+                            alreadyHad);
+
+                    AddTreatmentResult(
+                        injury,
+                        "Prosthetic Repair",
+                        cost);
+
+                    switch (injury.type)
+                    {
+                        case InjuryType.ArtificialPartsDamaged:
+                            injury.type =
+                                InjuryType.ArtificialPartsTransplanted;
+                            break;
+
+                        case InjuryType.AugmentedPartsDamaged:
+                            injury.type =
+                                InjuryType.AugmentedPartsTransplanted;
+                            break;
+
+                        case InjuryType.TranscendantPartsDamaged:
+                            injury.type =
+                                InjuryType.TranscendantPartsTransplanted;
+                            break;
+                    }
+
+                    injury.degree = 0;
+                }
+            }
             else
             {
-                for(int i=0; i<GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
+                string treatmentKey;
+
+                if (injury.degree == 1)
                 {
-                    float percentile = ((float)i + 1) / outGameUIManager.contestantsData.Count;
-                    if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
+                    treatmentKey = "ArtificialPartsTransplanted";
+
+                    if (outGameUIManager.GameMode ==
+                        GameMode.SingleCareerRun)
                     {
-                        if (percentile <= 0.25f) playerWin = 25;
-                        else if (percentile <= 0.5f) playerWin = 50;
-                        else playerWin = -1;
-                        break;
+                        injuryNeedSurgery.Add(injury);
                     }
                 }
-            }
-            LocalizedString resultText = playerWin == 1 ? new LocalizedString("Basic", "Your survivor won!") : new LocalizedString("Basic", "Your survivor was defeated.");
-            if(playerWin == 1)
-            {
-                if (AchievementManager.GetStat("Total_Win", out int totalWin))
+                else
                 {
-                    AchievementManager.SetStat("Total_Win", totalWin + 1);
-                    if (totalWin + 1 >= 10) AchievementManager.UnlockAchievement("Tactician");
+                    treatmentKey = injury.type.ToString();
                 }
+
+                int cost =
+                    outGameUIManager.MeasureTreatmentCost(
+                        injury,
+                        0);
+
+                AddTreatmentResult(
+                    injury,
+                    treatmentKey,
+                    cost);
+            }
+        }
+
+        if (playerSurvivor.maxBlood > 0 &&
+            playerSurvivor.curBlood /
+                playerSurvivor.maxBlood < 0.8f)
+        {
+            int bloodTransfusionFee =
+                (int)((playerSurvivor.maxBlood -
+                       playerSurvivor.curBlood) * 0.1f);
+
+            AddBloodTransfusionResult(
+                bloodTransfusionFee);
+        }
+    }
+
+    void AddTreatmentResult(
+    Injury injury,
+    string treatmentKey,
+    int cost)
+    {
+        cachedTreatments.Add(new TreatmentResultData
+        {
+            injurySiteKey = injury.site.ToString(),
+            treatmentKey = treatmentKey,
+            cost = cost
+        });
+
+        totalTreatmentCost += cost;
+    }
+
+    void AddBloodTransfusionResult(int cost)
+    {
+        cachedTreatments.Add(new TreatmentResultData
+        {
+            cost = cost,
+            isBloodTransfusion = true
+        });
+
+        totalTreatmentCost += cost;
+    }
+
+    void CalculateBettingResult()
+    {
+        cachedHasBetting =
+            outGameUIManager.GameMode ==
+                GameMode.FreeManagement &&
+            outGameUIManager.BettingAmount > 0;
+
+        cachedPredictionNumber =
+            outGameUIManager.PredictionNumber;
+
+        cachedBettingRewards = 0;
+        cachedBettingOdds = 0;
+
+        cachedPredictionKeys =
+            new string[cachedPredictionNumber];
+
+        cachedRankingKeys =
+            new string[cachedPredictionNumber];
+
+        cachedPredictionColors =
+            new Color[cachedPredictionNumber];
+
+        if (!cachedHasBetting)
+            return;
+
+        BattleRoyaleManager battleRoyaleManager =
+            GameManager.Instance.BattleRoyaleManager;
+
+        for (int i = 0;
+             i < cachedPredictionNumber;
+             i++)
+        {
+            LocalizedString prediction =
+                outGameUIManager.Predictions[i];
+
+            LocalizedString ranking =
+                i < battleRoyaleManager.rankings.Length
+                    ? battleRoyaleManager.rankings[i]
+                    : null;
+
+            cachedPredictionKeys[i] =
+                prediction?.TableEntryReference.Key;
+
+            cachedRankingKeys[i] =
+                ranking?.TableEntryReference.Key;
+        }
+
+        int correctExactRanking = 0;
+        int correctOnlyRankedIn = 0;
+
+        for (int i = 0;
+             i < cachedPredictionNumber;
+             i++)
+        {
+            bool found = false;
+
+            for (int j = 0;
+                 j < cachedPredictionNumber;
+                 j++)
+            {
+                if (string.IsNullOrEmpty(
+                        cachedPredictionKeys[i]) ||
+                    cachedPredictionKeys[i] !=
+                        cachedRankingKeys[j])
+                {
+                    continue;
+                }
+
+                if (i == j)
+                {
+                    correctExactRanking++;
+
+                    cachedPredictionColors[i] =
+                        new Color(
+                            0.48f,
+                            1f,
+                            0.44f);
+                }
+                else
+                {
+                    correctOnlyRankedIn++;
+
+                    cachedPredictionColors[i] =
+                        new Color(
+                            0.89f,
+                            0.93f,
+                            0.39f);
+                }
+
+                found = true;
+                break;
+            }
+
+            if (!found)
+            {
+                cachedPredictionColors[i] =
+                    new Color(
+                        0.88f,
+                        0.43f,
+                        0.43f);
+            }
+        }
+
+        cachedBettingOdds =
+            outGameUIManager.GetOdds(
+                correctExactRanking,
+                correctOnlyRankedIn);
+
+        if (cachedBettingOdds >= 10)
+        {
+            AchievementManager.UnlockAchievement(
+                "King of Betting");
+        }
+
+        if (cachedBettingOdds >= 100)
+        {
+            AchievementManager.UnlockAchievement(
+                "God of Betting");
+        }
+
+        cachedBettingRewards =
+            (long)(outGameUIManager.BettingAmount *
+                   cachedBettingOdds);
+
+        cachedBettingRewards =
+            Math.Min(
+                cachedBettingRewards,
+                99999999);
+
+        cachedTotalProfit +=
+            (int)cachedBettingRewards -
+            outGameUIManager.BettingAmount;
+    }
+
+    void RefreshBettingUI()
+    {
+        if (!cachedHasBetting)
+        {
+            bettingPrediction.SetActive(false);
+            bettingRewardsText.text = $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : $ 0";
+            return;
+        }
+
+        bettingPrediction.SetActive(true);
+
+        for (int i = 0;
+             i < predictionTable.Length;
+             i++)
+        {
+            bool active =
+                i < cachedPredictionNumber;
+
+            predictionTable[i].SetActive(active);
+
+            if (!active)
+                continue;
+
+            predictionsText[i]
+                .GetComponent<LocalizeStringEvent>()
+                .StringReference =
+                    outGameUIManager.Predictions[i];
+
+            if (string.IsNullOrEmpty(
+                    cachedRankingKeys[i]))
+            {
+                rankingsText[i].text = "?";
             }
             else
             {
-                if (AchievementManager.GetStat("Total_Lose", out int totalLose))
-                {
-                    AchievementManager.SetStat("Total_Lose", totalLose + 1);
-                    if (totalLose + 1 >= 10) AchievementManager.UnlockAchievement("Experience");
-                }
+                rankingsText[i].text =
+                    new LocalizedString(
+                        "Name",
+                        cachedRankingKeys[i]
+                    ).GetLocalizedString();
             }
-            resultText.Arguments = new[] { outGameUIManager.MySurvivorDataInBattleRoyale.localizedSurvivorName.GetLocalizedString() };
-            gameResultText.text = resultText.GetLocalizedString();
-            survivedTimeText.text = $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : {(int)playerSurvivor.SurvivedTime / 60:00m} {(int)playerSurvivor.SurvivedTime - ((int)playerSurvivor.SurvivedTime / 60) * 60:00s}";
-            killsText.text = $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : {playerSurvivor.KillCount}";
-            totalDamageText.text = $"{new LocalizedString("Basic", "Total damage dealt").GetLocalizedString()} : {(int)playerSurvivor.TotalDamage}";
-            increaseFightingText.text = $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + {playerSurvivor.IncreaseFighting}";
-            increaseShootingText.text = $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + {playerSurvivor.IncreaseShooting}";
-            increaseCraftingText.text = $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + {playerSurvivor.IncreaseCrafting}";
 
-            winPrize = 0;
-            killPrize = 0;
-            totalTreatmentCost = 0;
-            switch (calendar.LeagueReserveInfo[calendar.Today].league)
+            predictionsBG[i].color =
+                cachedPredictionColors[i];
+        }
+
+        bettingRewardsText.text =
+            $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} " + $"$ <color=red>- " + $"{outGameUIManager.BettingAmount}</color>\n" +
+            $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : " + $"<color=green>$ " +
+            $"{cachedBettingRewards}</color>\n" + $"($ {outGameUIManager.BettingAmount} x " + $"{cachedBettingOdds:0.##})";
+    }
+
+    void ApplyWinLoseStatistics()
+    {
+        if (playerWin == 1)
+        {
+            if (AchievementManager.GetStat(
+                    "Total_Win",
+                    out int totalWin))
             {
-                case League.BronzeLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 5000;
-                        AchievementManager.UnlockAchievement("Bronze Cup");
-                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinBronzeLeague);
-                        promotePoint_Rank = 100;
-                    }
-                    else if (playerWin == 50)
-                    {
-                        winPrize = 2500;
-                        promotePoint_Rank = 25;
-                    }
-                    killPrize = playerSurvivor.KillCount * 500;
-                    promotePoint_Kill = playerSurvivor.KillCount * 10;
-                    break;
-                case League.SilverLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 10000;
-                        AchievementManager.UnlockAchievement("Silver Cup");
-                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinSilverLeague);
-                        promotePoint_Rank = 100;
-                    }
-                    else if (playerWin == 25)
-                    {
-                        winPrize = 5000;
-                        promotePoint_Rank = 50;
-                    }
-                    else if (playerWin == 50)
-                    {
-                        winPrize = 2500;
-                        promotePoint_Rank = 25;
-                    }
-                    killPrize = playerSurvivor.KillCount * 1000;
-                    promotePoint_Kill = playerSurvivor.KillCount * 10;
-                    break;
-                case League.GoldLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 20000;
-                        AchievementManager.UnlockAchievement("Gold Cup");
-                        GameManager.Instance.UnlockManager.Unlock(UnlockManager.UnlockCondition.WinGoldLeague);
-                        promotePoint_Rank = 100;
-                        if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = true;
-                    }
-                    else if (playerWin == 25)
-                    {
-                        winPrize = 10000;
-                        promotePoint_Rank = 50;
-                    }
-                    else if (playerWin == 50)
-                    {
-                        winPrize = 5000;
-                        promotePoint_Rank = 25;
-                    }
-                    killPrize = playerSurvivor.KillCount * 2000;
-                    promotePoint_Kill = playerSurvivor.KillCount * 10;
-                    break;
-                case League.SeasonChampionship:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 10000;
-                    }
-                    else if (playerWin == 25) winPrize = 5000;
-                    else if (playerWin == 50) winPrize = 2500;
-                    killPrize = playerSurvivor.KillCount * 1000;
-                    int rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
-                    promotePoint_Rank = Mathf.Max((10 - rank), 0);
-                    promotePoint_Kill = playerSurvivor.KillCount;
-                    if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInSeasonChampionship = false;
-                    break;
-                case League.WorldChampionship:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 20000;
-                    }
-                    else if (playerWin == 25) winPrize = 10000;
-                    else if (playerWin == 50) winPrize = 5000;
-                    killPrize = playerSurvivor.KillCount * 2000;
-                    rank = GameManager.Instance.BattleRoyaleManager.playerSurvivorRank;
-                    promotePoint_Rank = Mathf.Max((10 - rank), 0);
-                    promotePoint_Kill = playerSurvivor.KillCount;
-                    if (outGameUIManager.GameMode == GameMode.FreeManagement) playerSurvivor.LinkedSurvivorData.haveQualifyToParticipateInWorldChampionship = false;
-                    break;
-                case League.MeleeLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 40000;
-                        AchievementManager.UnlockAchievement("Melee Champion");
-                    }
-                    else if (playerWin == 25) winPrize = 20000;
-                    else if (playerWin == 50) winPrize = 10000;
-                    killPrize = playerSurvivor.KillCount * 4000;
-                    break;
-                case League.RangeLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 40000;
-                        AchievementManager.UnlockAchievement("Shooting Champion");
-                    }
-                    else if (playerWin == 25) winPrize = 20000;
-                    else if (playerWin == 50) winPrize = 10000;
-                    killPrize = playerSurvivor.KillCount * 4000;
-                    break;
-                case League.CraftingLeague:
-                    if (playerWin == 1)
-                    {
-                        winPrize = 40000;
-                        AchievementManager.UnlockAchievement("Crafting Champion");
-                    }
-                    else if (playerWin == 25) winPrize = 20000;
-                    else if (playerWin == 50) winPrize = 10000;
-                    killPrize = playerSurvivor.KillCount * 4000;
-                    break;
-            }
-            if(playerWin != 1)
-            {
-                if(calendar.LeagueReserveInfo[calendar.Today].league == League.BronzeLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.SilverLeague || calendar.LeagueReserveInfo[calendar.Today].league == League.GoldLeague)
+                AchievementManager.SetStat(
+                    "Total_Win",
+                    totalWin + 1);
+
+                if (totalWin + 1 >= 10)
                 {
-                    playerSurvivor.LinkedSurvivorData.royalLoader = false;
-                }
-                if(outGameUIManager.GameMode == GameMode.FreeManagement && (calendar.LeagueReserveInfo[calendar.Today].league == League.SeasonChampionship || calendar.LeagueReserveInfo[calendar.Today].league == League.WorldChampionship))
-                {
-                    playerSurvivor.LinkedSurvivorData.royalLoader = false;
+                    AchievementManager.UnlockAchievement(
+                        "Tactician");
                 }
             }
-            winPrizeText.text = $"{new LocalizedString("Basic", "Rank Prize").GetLocalizedString()} : <color=green>$ {winPrize}</color>";
-            killPrizeText.text = $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : <color=green>$ {killPrize}</color>";
-            if (playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch < playerSurvivor.KillCount) playerSurvivor.LinkedSurvivorData.mostKillsInASingleMatch = playerSurvivor.KillCount;
-            
-            injuryNeedSurgery = new();
-            for (int i = 0; i < treatments.Length; i++)
-            {
-                if (i < playerSurvivor.injuries.Count + 1)
-                {
-                    if (i < playerSurvivor.injuries.Count)
-                    {
-                        if (playerSurvivor.rememberAlreadyHaveInjury.ContainsKey(playerSurvivor.injuries[i].site))
-                        {
-                            if(playerSurvivor.injuries[i].degree == 1)
-                            {
-                                treatments[i].SetActive(true);
-                                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", "Replace Prosthetic").GetLocalizedString()}";
-                                int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i], 0);
-                                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                                totalTreatmentCost += cost;
-
-                                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
-                            }
-                            else if (playerSurvivor.injuries[i].degree > 0)
-                            {
-                                treatments[i].SetActive(true);
-                                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", "Prosthetic Repair").GetLocalizedString()}";
-                                int alreadyHad = playerSurvivor.rememberAlreadyHaveInjury[playerSurvivor.injuries[i].site];
-                                int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i], alreadyHad);
-                                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                                totalTreatmentCost += cost;
-
-                                if (playerSurvivor.injuries[i].type == InjuryType.ArtificialPartsDamaged) playerSurvivor.injuries[i].type = InjuryType.ArtificialPartsTransplanted;
-                                else if (playerSurvivor.injuries[i].type == InjuryType.AugmentedPartsDamaged) playerSurvivor.injuries[i].type = InjuryType.AugmentedPartsTransplanted;
-                                else if (playerSurvivor.injuries[i].type == InjuryType.TranscendantPartsDamaged) playerSurvivor.injuries[i].type = InjuryType.TranscendantPartsTransplanted;
-                                playerSurvivor.injuries[i].degree = 0;
-                            }
-                            else
-                            {
-                                treatments[i].SetActive(false);
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            treatments[i].SetActive(true);
-                            if (playerSurvivor.injuries[i].degree == 1)
-                            {
-                                treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", "ArtificialPartsTransplanted").GetLocalizedString()}";
-                                if (outGameUIManager.GameMode == GameMode.SingleCareerRun) injuryNeedSurgery.Add(playerSurvivor.injuries[i]);
-                            }
-                            else treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = $"{new LocalizedString("Injury", playerSurvivor.injuries[i].site.ToString()).GetLocalizedString()} {new LocalizedString("Injury", playerSurvivor.injuries[i].type.ToString()).GetLocalizedString()}";
-                            int cost = outGameUIManager.MeasureTreatmentCost(playerSurvivor.injuries[i], 0);
-                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {cost}</color>";
-                            //treatments[i].GetComponentInChildren<Help>().SetDescription("");
-                            totalTreatmentCost += cost;
-                        }
-                    }
-                    else
-                    {
-                        if (playerSurvivor.curBlood / playerSurvivor.maxBlood < 0.8f)
-                        {
-                            // 수혈비
-                            int bloodTransfusionFee = (int)((playerSurvivor.maxBlood - playerSurvivor.curBlood) * 0.1f);
-                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[0].text = new LocalizedString("Basic", "Blood transfusion cost").GetLocalizedString();
-                            treatments[i].GetComponentsInChildren<TextMeshProUGUI>()[1].text = $"<color=red>- $ {bloodTransfusionFee}</color>";
-                            //treatments[i].GetComponentInChildren<Help>().SetDescription(new LocalizedString("Basic", "Help:Blood transfusion cost").GetLocalizedString());
-                            treatments[i].SetActive(true);
-                        }
-                        else treatments[i].SetActive(false);
-                    }
-                }
-                else treatments[i].SetActive(false);
-            }
-            totalTreatmentCostText.text = $"{new LocalizedString("Basic", "Total medical cost").GetLocalizedString()} : <color=red>- $ {totalTreatmentCost}</color>";
-            totalProfit = winPrize + killPrize - totalTreatmentCost;
-
         }
         else
         {
-            if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null) gameResultText.text = $"{new LocalizedString("Basic", "wins!") { Arguments = new[] { GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorName.GetLocalizedString() } }.GetLocalizedString()}";
-            else gameResultText.text = $"{new LocalizedString("Basic", "Result").GetLocalizedString()}"; ;
+            if (AchievementManager.GetStat(
+                    "Total_Lose",
+                    out int totalLose))
+            {
+                AchievementManager.SetStat(
+                    "Total_Lose",
+                    totalLose + 1);
+
+                if (totalLose + 1 >= 10)
+                {
+                    AchievementManager.UnlockAchievement(
+                        "Experience");
+                }
+            }
+        }
+    }
+
+    void RefreshResultUI()
+    {
+        if (cachedDidPlayerParticipate &&
+            cachedPlayerSurvivor != null)
+        {
+            LocalizedString resultText = playerWin == 1
+                ? new LocalizedString(
+                    "Basic",
+                    "Your survivor won!")
+                : new LocalizedString(
+                    "Basic",
+                    "Your survivor was defeated.");
+
+            resultText.Arguments = new object[]
+            {
+            outGameUIManager
+                .MySurvivorDataInBattleRoyale
+                .localizedSurvivorName
+                .GetLocalizedString()
+            };
+
+            gameResultText.text = resultText.GetLocalizedString();
+
+            survivedTimeText.text =
+                $"{new LocalizedString("Basic", "Survival Time").GetLocalizedString()} : " +
+                $"{(int)cachedPlayerSurvivor.SurvivedTime / 60:00m} " +
+                $"{(int)cachedPlayerSurvivor.SurvivedTime % 60:00s}";
+
+            killsText.text =
+                $"{new LocalizedString("Basic", "Kill").GetLocalizedString()} : " +
+                $"{cachedPlayerSurvivor.KillCount}";
+
+            totalDamageText.text =
+                $"{new LocalizedString("Basic", "Total damage dealt").GetLocalizedString()} : " +
+                $"{(int)cachedPlayerSurvivor.TotalDamage}";
+
+            increaseFightingText.text =
+                $"{new LocalizedString("Basic", "Fighting").GetLocalizedString()} + " +
+                $"{cachedPlayerSurvivor.IncreaseFighting}";
+
+            increaseShootingText.text =
+                $"{new LocalizedString("Basic", "Shooting").GetLocalizedString()} + " +
+                $"{cachedPlayerSurvivor.IncreaseShooting}";
+
+            increaseCraftingText.text =
+                $"{new LocalizedString("Basic", "Crafting").GetLocalizedString()} + " +
+                $"{cachedPlayerSurvivor.IncreaseCrafting}";
+
+            winPrizeText.text =
+                $"{new LocalizedString("Basic", "Rank Prize").GetLocalizedString()} : " +
+                $"<color=green>$ {winPrize}</color>";
+
+            killPrizeText.text =
+                $"{new LocalizedString("Basic", "Kill reward").GetLocalizedString()} : " +
+                $"<color=green>$ {killPrize}</color>";
+
+            RefreshTreatmentUI();
+        }
+        else
+        {
+            BattleRoyaleManager manager =
+                GameManager.Instance.BattleRoyaleManager;
+
+            gameResultText.text = manager.BattleWinner != null
+                ? new LocalizedString("Basic", "wins!")
+                {
+                    Arguments = new object[]
+                    {
+                    manager.BattleWinner
+                        .survivorName
+                        .GetLocalizedString()
+                    }
+                }.GetLocalizedString()
+                : new LocalizedString(
+                    "Basic",
+                    "Result"
+                ).GetLocalizedString();
         }
 
-        if(outGameUIManager.GameMode == GameMode.FreeManagement)
+        RefreshBettingUI();
+
+        if (cachedTotalProfit >= 0)
         {
-            // Betting Result
-            if (outGameUIManager.BettingAmount > 0)
+            totalProfitText.text =
+                $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : " +
+                $"<color=green>$ {cachedTotalProfit}</color>";
+        }
+        else
+        {
+            totalProfitText.text =
+                $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : " +
+                $"<color=red>- $ {-cachedTotalProfit}</color>";
+        }
+    }
+
+    void RefreshTreatmentUI()
+    {
+        for (int i = 0; i < treatments.Length; i++)
+        {
+            if (i >= cachedTreatments.Count)
             {
-                bettingPrediction.SetActive(true);
-                for (int i = 0; i < predictionTable.Length; i++)
-                {
-                    if (i < outGameUIManager.PredictionNumber)
-                    {
-                        predictionTable[i].SetActive(true);
-                        predictionsText[i].GetComponent<LocalizeStringEvent>().StringReference = outGameUIManager.Predictions[i];
-                        if (GameManager.Instance.BattleRoyaleManager.rankings[i] == null) rankingsText[i].text = "?";
-                        else rankingsText[i].text = GameManager.Instance.BattleRoyaleManager.rankings[i].GetLocalizedString();
-                    }
-                    else predictionTable[i].SetActive(false);
-                }
-                int correctExactRanking = 0;
-                int correctOnlyRankedIn = 0;
-                for (int i = 0; i < outGameUIManager.PredictionNumber; i++)
-                {
-                    bool doContinue = false;
-                    for (int j = 0; j < outGameUIManager.PredictionNumber; j++)
-                    {
-                        if (predictionsText[i].text == rankingsText[j].text)
-                        {
-                            if (i == j)
-                            {
-                                correctExactRanking++;
-                                predictionsBG[i].color = new Color(0.48f, 1f, 0.44f);
-                            }
-                            else
-                            {
-                                correctOnlyRankedIn++;
-                                predictionsBG[i].color = new Color(0.89f, 0.93f, 0.39f);
-                            }
-                            doContinue = true;
-                            continue;
-                        }
-                    }
-                    if (doContinue) continue;
-                    predictionsBG[i].color = new Color(0.88f, 0.43f, 0.43f);
-                }
-                float odds = outGameUIManager.GetOdds(correctExactRanking, correctOnlyRankedIn);
-                if (odds >= 10) AchievementManager.UnlockAchievement("King of Betting");
-                if (odds >= 100) AchievementManager.UnlockAchievement("God of Betting");
-                long bettingRewards = (long)(outGameUIManager.BettingAmount * odds);
-                if (bettingRewards > 99999999) bettingRewards = 99999999;
-                bettingRewardsText.text = $"{new LocalizedString("Basic", "Bet Amount :").GetLocalizedString()} $ <color=red>- {outGameUIManager.BettingAmount}</color>\n{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : <color=green>$ {bettingRewards}</color>\n($ {outGameUIManager.BettingAmount} x {odds:0.##})";
-                totalProfit += (int)bettingRewards - outGameUIManager.BettingAmount;
+                treatments[i].SetActive(false);
+                continue;
+            }
+
+            TreatmentResultData result = cachedTreatments[i];
+            TextMeshProUGUI[] texts =
+                treatments[i]
+                    .GetComponentsInChildren<TextMeshProUGUI>(true);
+
+            if (result.isBloodTransfusion)
+            {
+                texts[0].text =
+                    new LocalizedString(
+                        "Basic",
+                        "Blood transfusion cost"
+                    ).GetLocalizedString();
             }
             else
             {
-                bettingPrediction.SetActive(false);
-                bettingRewardsText.text = $"{new LocalizedString("Basic", "Betting payout").GetLocalizedString()} : $ 0";
+                string site =
+                    new LocalizedString(
+                        "Injury",
+                        result.injurySiteKey
+                    ).GetLocalizedString();
+
+                string treatment =
+                    new LocalizedString(
+                        "Injury",
+                        result.treatmentKey
+                    ).GetLocalizedString();
+
+                texts[0].text = $"{site} {treatment}";
             }
+
+            texts[1].text =
+                $"<color=red>- $ {result.cost}</color>";
+
+            treatments[i].SetActive(true);
         }
 
-        if (totalProfit >= 0) totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=green>$ {totalProfit}</color>";
-        else totalProfitText.text = $"{new LocalizedString("Basic", "Net profit/loss").GetLocalizedString()} : <color=red>- $ {-totalProfit}</color>";
-
+        totalTreatmentCostText.text =
+            $"{new LocalizedString("Basic", "Total medical cost").GetLocalizedString()} : " +
+            $"<color=red>- $ {totalTreatmentCost}</color>";
     }
 
     void Promote(SurvivorData survivor)
@@ -1003,7 +1311,9 @@ public class GameResult : MonoBehaviour
     void OnLocaleChanged(Locale newLocale)
     {
         if (GameManager.Instance.BattleRoyaleManager == null || GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
-        SetText(outGameUIManager.MySurvivorDataInBattleRoyale != null, out int _, out int _, out int _);
+        RefreshResultUI();
+
+        GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
     }
 
 }

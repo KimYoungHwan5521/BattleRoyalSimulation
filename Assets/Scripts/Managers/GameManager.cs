@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour
         outCanvas.SetActive(false);
         globalCanvas.SetActive(false);
         inGameUICanvas.SetActive(true);
+        GetComponent<GameResult>().ResetData();
         yield return battleRoyaleManager = new BattleRoyaleManager();
         yield return battleRoyaleManager.Initiate();
     }

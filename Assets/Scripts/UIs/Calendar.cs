@@ -335,6 +335,8 @@ public class Calendar : CustomObject
 
             todayText.text = date.GetLocalizedString();
         }
+
+        GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
     }
 
     int curMaxYear = 0;
