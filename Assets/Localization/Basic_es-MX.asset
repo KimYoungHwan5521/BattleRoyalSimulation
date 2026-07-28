@@ -1574,9 +1574,10 @@ MonoBehaviour:
       m_Items:
       - rid: 4743152768665780226
   - m_Id: 134541266474561536
-    m_Localized: "La lesi\xF3n se ha recuperado por completo."
+    m_Localized: "La lesi\xF3n de {param0} se ha recuperado por completo."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4743152768665780226
   - m_Id: 135927656617668608
     m_Localized: "\xBFRealizar la cirug\xEDa?\\n{param0}: {param1} ($ {param2})"
     m_Metadata:
@@ -1950,6 +1951,16 @@ MonoBehaviour:
     m_Localized: "Calidad m\xEDnima : "
     m_Metadata:
       m_Items: []
+  - m_Id: 151688594494910464
+    m_Localized: "{param0} alcanz\xF3 el rango Plata."
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
+  - m_Id: 151688596508176384
+    m_Localized: "{param0} alcanz\xF3 el rango Oro."
+    m_Metadata:
+      m_Items:
+      - rid: 4743152768665780226
   references:
     version: 2
     RefIds:
@@ -2014,3 +2025,6 @@ MonoBehaviour:
         - id: 141426194537574400
         - id: 143567613515591680
         - id: 144322008930906112
+        - id: 134541266474561536
+        - id: 151688594494910464
+        - id: 151688596508176384

@@ -156,13 +156,11 @@ public class GameResult : MonoBehaviour
 
         if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
         {
-            GameManager.Instance.Option.SetSaveButtonInteractable(
-                false, false, true);
+            GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
         }
         else
         {
-            GameManager.Instance.Option.SetSaveButtonInteractable(
-                true, true, false);
+            GameManager.Instance.Option.SetSaveButtonInteractable(true, true, false);
         }
 
         if (!resultCalculated)
@@ -1051,6 +1049,10 @@ public class GameResult : MonoBehaviour
                     outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective2").GetLocalizedString()}";
                     notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
                 }
+                else
+                {
+                    notification += () => { outGameUIManager.Alert("Alert:Reached the Silver tier", survivor.localizedSurvivorName.GetLocalizedString()); };
+                }
                 break;
             case League.SilverLeague:
                 survivor.tier = Tier.Gold;
@@ -1059,6 +1061,10 @@ public class GameResult : MonoBehaviour
                     outGameUIManager.UpgradeFacility();
                     outGameUIManager.objectiveText.text = $"{new LocalizedString("Basic", "Objective").GetLocalizedString()} : {new LocalizedString("Basic", "Objective3").GetLocalizedString()}";
                     notification += () => { outGameUIManager.Alert("Alert:Facility upgraded."); };
+                }
+                else
+                {
+                    notification += () => { outGameUIManager.Alert("Alert:Reached the Gold tier", survivor.localizedSurvivorName.GetLocalizedString()); };
                 }
                 break;
             case League.GoldLeague:
@@ -1271,7 +1277,12 @@ public class GameResult : MonoBehaviour
 
                 notification?.Invoke();
                 notification = null;
-                GameManager.Instance.OutGameUIManager.EndTheDayWeekend();
+                GameManager.Instance.OutGameUIManager.EndTheDayWeekend(); 
+                if (outGameUIManager.GameMode == GameMode.FreeManagement && cachedDidPlayerParticipate && cachedPlayerSurvivor?.LinkedSurvivorData != null)
+                {
+                    outGameUIManager.CheckTrainable(cachedPlayerSurvivor.LinkedSurvivorData);
+                }
+
                 GameManager.Instance.OutGameUIManager.ResetSelectedSurvivorInfo();
             }
         }

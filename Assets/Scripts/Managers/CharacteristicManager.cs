@@ -288,6 +288,7 @@ public class CharacteristicManager
         Characteristic characteristic = characteristics.Find(x => x.type == wantCharacteristic);
         if(rarity > -1 && (int)characteristic.rarity != rarity) return false;
         if (!isPlayer && characteristic.playerOnly) return false;
+        if (characteristic.singleCareerRunOnly && GameManager.Instance.OutGameUIManager.GameMode != GameMode.SingleCareerRun) return false;
         survivor.characteristics.Add(characteristic);
         return true;
     }

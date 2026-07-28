@@ -356,6 +356,7 @@ public class GameManager : MonoBehaviour
 
         calendar.LoadToday(saveData);
         OutGameUIManager.LoadData(saveData);
+        calendar.RefreshTodayUI();
         unlockManager.LoadUnlockStatus(saveData.unlockStatus);
 
         AchievementManager.earnedAchievementsInThisRun = saveData.earnedAchievements;
@@ -535,7 +536,9 @@ public class GameManager : MonoBehaviour
     public Stack<GameObject> openedWindows = new();
     void OnCancel(InputValue value)
     {
-        if(openedWindows.Count > 0)
+        description.SetActive(false);
+
+        if (openedWindows.Count > 0)
         {
             GameObject top = openedWindows.Pop();
             if (top.activeSelf) top.SetActive(false);

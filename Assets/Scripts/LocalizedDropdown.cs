@@ -45,8 +45,9 @@ public class LocalizedDropdown : MonoBehaviour
 
     public void ClearOptions()
     {
+        dropdown.SetValueWithoutNotify(0);
         keys.Clear();
-        dropdown.options?.Clear();
+        dropdown.ClearOptions();
     }
 
     public void RelocalizeOptions()

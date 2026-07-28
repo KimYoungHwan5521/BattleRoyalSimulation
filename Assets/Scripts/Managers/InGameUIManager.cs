@@ -1250,8 +1250,17 @@ public class InGameUIManager : MonoBehaviour
         SetTimeScale(0);
         outGameUIManager.OpenConfirmWindow("Confirm:Exit Battle Royale", () =>
         {
-            // GameManager.Instance.GetComponent<GameResult>().ShowGameResult();
-            GameManager.Instance.GetComponent<GameResult>().ExitBattle();
+            GameResult gameResult = GameManager.Instance.GetComponent<GameResult>();
+            if (outGameUIManager.BettingAmount > 0)
+            {
+                // 베팅 결과를 먼저 표시
+                gameResult.ShowGameResult(false);
+            }
+            else
+            {
+                // 베팅하지 않은 관전은 바로 퇴장
+                gameResult.ExitBattle();
+            }
         });
     }
 

@@ -480,33 +480,33 @@ public class OutGameUIManager : MonoBehaviour
             sortContestantsListDropdown.RelocalizeOptions();
         };
 
-        //bool colorChanged = false;
-        //GameManager.Instance.ObjectUpdate += () =>
-        //{
-        //    if (selectSurvivorGetSurgeryDropdown.dropdown.IsExpanded)
-        //    {
-        //        if (!colorChanged)
-        //        {
-        //            var dropdownSprites = selectSurvivorGetSurgeryDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
-        //            for (int i = 0; i < mySurvivorsData.Count; i++)
-        //            {
-        //                bool exit = false;
-        //                foreach (var injury in mySurvivorsData[i].injuries)
-        //                {
-        //                    if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged) || injury.degree >= 1)
-        //                    {
-        //                        dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
-        //                        exit = true;
-        //                        break;
-        //                    }
-        //                }
-        //                if(!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
-        //            }
-        //            colorChanged = true;
-        //        }
-        //    }
-        //    else colorChanged = false;
-        //};
+        bool colorChanged = false;
+        GameManager.Instance.ObjectUpdate += () =>
+        {
+            if (selectSurvivorGetSurgeryDropdown.dropdown.IsExpanded)
+            {
+                if (!colorChanged)
+                {
+                    var dropdownSprites = selectSurvivorGetSurgeryDropdown.transform.Find("Dropdown List").Find("Viewport").Find("Content").GetComponentsInChildren<NullClass>();
+                    for (int i = 0; i < mySurvivorsData.Count; i++)
+                    {
+                        bool exit = false;
+                        foreach (var injury in mySurvivorsData[i].injuries)
+                        {
+                            if ((injury.degree > 0 && injury.type != InjuryType.ArtificialPartsDamaged && injury.type != InjuryType.AugmentedPartsDamaged && injury.type != InjuryType.TranscendantPartsDamaged) || injury.degree >= 1)
+                            {
+                                dropdownSprites[i].GetComponent<Image>().color = new Color(1, 0.6467f, 0.6467f);
+                                exit = true;
+                                break;
+                            }
+                        }
+                        if (!exit) dropdownSprites[i].GetComponent<Image>().color = Color.white;
+                    }
+                    colorChanged = true;
+                }
+            }
+            else colorChanged = false;
+        };
 
         LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
     }
@@ -1745,7 +1745,7 @@ public class OutGameUIManager : MonoBehaviour
 
         var trainingType = new LocalizedString(
             "Basic",
-            $"Training:{(Training_FreeManagement)(trainingRoomIndex + 1)}"
+            $"Training:{(Training_FreeManagement)(trainingRoomIndex)}"
         );
 
         string localizedTrainingName = trainingType.GetLocalizedString();
@@ -2057,14 +2057,11 @@ public class OutGameUIManager : MonoBehaviour
         resultText.gameObject.SetActive(true);
         resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Surgery Result");
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
-        trainingResultDetailText.text = new LocalizedString("Injury", mySurvivorsData[0].localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", mySurvivorsData[0].surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
-        if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = mySurvivorsData[0];
-        else survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
-        //Surgery(survivorWhoWantSurgery);
+        trainingResultDetailText.text = new LocalizedString("Injury", survivorWhoWantSurgery.localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", survivorWhoWantSurgery.surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
         selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
         operatingRoom.SetActive(false);
 
-        GameManager.Instance.Save(0);
+        GameManager.Instance.Save(gameMode == GameMode.SingleCareerRun ? 0 : 100, false);
     }
 
     public void ScheduleSurgery()
@@ -2465,14 +2462,30 @@ public class OutGameUIManager : MonoBehaviour
 
     void Search(string word)
     {
-        deleteSearchText.SetActive(!string.IsNullOrEmpty(word));
-        if(string.IsNullOrEmpty(word))
+        word = string.Concat(
+            (word ?? string.Empty)
+            .Where(x => !char.IsWhiteSpace(x)));
+
+        if (string.IsNullOrEmpty(word))
         {
-            foreach(Strategy strategy in strategies) strategy.gameObject.SetActive(true);
+            foreach (Strategy strategy in strategies)
+            {
+                strategy.gameObject.SetActive(true);
+            }
         }
         else
         {
-            foreach (Strategy strategy in strategies) strategy.gameObject.SetActive(strategy.CaseName.ToUpper().Contains(word.ToUpper()));
+            foreach (Strategy strategy in strategies)
+            {
+                string caseName = string.Concat(
+                    (strategy.CaseName ?? string.Empty)
+                    .Where(x => !char.IsWhiteSpace(x)));
+
+                strategy.gameObject.SetActive(
+                    caseName.IndexOf(
+                        word,
+                        StringComparison.CurrentCultureIgnoreCase) >= 0);
+            }
         }
     }
 
@@ -2549,7 +2562,7 @@ public class OutGameUIManager : MonoBehaviour
     public void SaveStrategy()
     {
         bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
-        if (itemNotNull) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
+        if (itemNotNull && survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.SniperRifleFanatic || x.type == CharacteristicType.BazookaFanatic) == -1) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
         else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
 
         itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum2);
@@ -2691,7 +2704,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = "<i>Empty Slot</i>";
                 strategyPresetDeletes[i].SetActive(false);
-                if (!strategyPresetSave) strategyPresets[i].GetComponentInChildren<Button>().interactable = false;
+                strategyPresets[i].GetComponentInChildren<Button>().interactable = strategyPresetSave;
             }
             else
             {
@@ -2708,6 +2721,7 @@ public class OutGameUIManager : MonoBehaviour
         OpenConfirmWindow("Confirm:Delete Save Data", () =>
         {
             GameManager.Instance.DeleteStrategy(slot);
+            LoadPresetData();
         });
     }
 
@@ -2746,6 +2760,7 @@ public class OutGameUIManager : MonoBehaviour
             switch (strategy.strategyCase)
             {
                 case StrategyCase.WeaponPriority:
+                    if (!strategy.ActionDropdown.dropdown.interactable) break;
                     strategy.ActionDropdown.Value = (int)saveData.priority1Weapon - (int)ItemManager.Items.Knife;
                     strategy.ElseActionDropdown.Value = (int)saveData.priority2Weapon - (int)ItemManager.Items.Knife;
                     break;
@@ -3523,7 +3538,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 survivor.injuries.Remove(recovered);
             }
-            if (checkFullRecover) Alert("Alert:Fully Recovery");
+            if (checkFullRecover) Alert("Alert:Fully Recovery", survivor.localizedSurvivorName.GetLocalizedString());
         }
         ResetSelectedSurvivorInfo();
     }

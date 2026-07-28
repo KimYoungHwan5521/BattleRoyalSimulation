@@ -1825,6 +1825,14 @@ MonoBehaviour:
     m_Key: Minimum Quality
     m_Metadata:
       m_Items: []
+  - m_Id: 151688594494910464
+    m_Key: Alert:Reached the Silver tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 151688596508176384
+    m_Key: Alert:Reached the Gold tier
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

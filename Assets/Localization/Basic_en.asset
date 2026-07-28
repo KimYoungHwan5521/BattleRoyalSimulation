@@ -1563,9 +1563,10 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359340
   - m_Id: 134541266474561536
-    m_Localized: Injury fully recovered.
+    m_Localized: '{param0}''s injury has fully healed.'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 7835753295874359340
   - m_Id: 135927653132201984
     m_Localized: Perform Surgery
     m_Metadata:
@@ -1934,6 +1935,16 @@ MonoBehaviour:
     m_Localized: 'Minimum Quality : '
     m_Metadata:
       m_Items: []
+  - m_Id: 151688594494910464
+    m_Localized: '{param0} has reached the Silver tier.'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
+  - m_Id: 151688596508176384
+    m_Localized: '{param0} has reached the Gold tier.'
+    m_Metadata:
+      m_Items:
+      - rid: 7835753295874359340
   references:
     version: 2
     RefIds:
@@ -1998,3 +2009,6 @@ MonoBehaviour:
         - id: 141426194537574400
         - id: 143567613515591680
         - id: 144322008930906112
+        - id: 134541266474561536
+        - id: 151688594494910464
+        - id: 151688596508176384
