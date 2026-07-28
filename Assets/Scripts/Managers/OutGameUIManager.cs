@@ -1842,7 +1842,12 @@ public class OutGameUIManager : MonoBehaviour
     {
         survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.Value], false);
         if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = MySurvivorsData[0];
-        else survivorWhoWantSurgery = MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorGetSurgeryDropdown.keys[selectSurvivorGetSurgeryDropdown.Value]);
+        else
+        {
+            int index = selectSurvivorGetSurgeryDropdown.Value;
+            if (index < 0 || index >= MySurvivorsData.Count) return;
+            survivorWhoWantSurgery = MySurvivorsData[index];
+        }
         
         GetListOfSurgeryCanUndergo();
     }
@@ -1851,11 +1856,11 @@ public class OutGameUIManager : MonoBehaviour
     {
         surgeryList = new();
         LocalizedString surgeryName;
-        int cost = 0;
         if(surgeryType_Transplantation.isOn)
         {
             foreach(Injury injury in survivorWhoWantSurgery.injuries)
             {
+                int cost = 0;
                 if(injury.degree >= 1 || injury.degree > 0 && (injury.type == InjuryType.ArtificialPartsDamaged || injury.type == InjuryType.AugmentedPartsDamaged || injury.type == InjuryType.TranscendantPartsDamaged))
                 {
                     if(injury.degree < 1)
@@ -2029,24 +2034,36 @@ public class OutGameUIManager : MonoBehaviour
         }
     }
 
-    bool CheckSubpartDamaged(InjurySite upperpart, int upperpartsTier)
+    bool CheckSubpartDamaged(
+    InjurySite upperpart,
+    int upperpartsTier)
     {
-        foreach (var subpart in Injury.GetSubparts(upperpart))
+        foreach (InjurySite subpart
+                 in Injury.GetSubparts(upperpart))
         {
-            Injury subpartInjury = survivorWhoWantSurgery.injuries.Find(x => x.site == subpart);
-            if (subpartInjury != null)
-            {
-                if (subpartInjury.degree > 0) return true;
-                else
+            Injury subpartInjury =
+                survivorWhoWantSurgery.injuries.Find(
+                    x => x.site == subpart);
+
+            if (subpartInjury == null)
+                continue;
+
+            if (subpartInjury.degree > 0)
+                return true;
+
+            int subpartsTier =
+                subpartInjury.type switch
                 {
-                    int subpartsTier = 0;
-                    if (subpartInjury.type == InjuryType.ArtificialPartsTransplanted) subpartsTier = 1;
-                    else if (subpartInjury.type == InjuryType.AugmentedPartsTransplanted) subpartsTier = 2;
-                    else if (subpartInjury.type == InjuryType.TranscendantPartsTransplanted) subpartsTier = 3;
-                    return upperpartsTier > subpartsTier;
-                }
-            }
+                    InjuryType.ArtificialPartsTransplanted => 1,
+                    InjuryType.AugmentedPartsTransplanted => 2,
+                    InjuryType.TranscendantPartsTransplanted => 3,
+                    _ => 0
+                };
+
+            if (upperpartsTier > subpartsTier)
+                return true;
         }
+
         return false;
     }
 
@@ -2059,6 +2076,7 @@ public class OutGameUIManager : MonoBehaviour
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
         trainingResultDetailText.text = new LocalizedString("Injury", survivorWhoWantSurgery.localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", survivorWhoWantSurgery.surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
         selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
+        Surgery(survivorWhoWantSurgery);
         operatingRoom.SetActive(false);
 
         GameManager.Instance.Save(gameMode == GameMode.SingleCareerRun ? 0 : 100, false);
@@ -2077,7 +2095,7 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
 
-        if (index > surgeryList.Count)
+        if (index < 0 || index >= surgeryList.Count)
         {
             Debug.LogWarning("Wrong surgeryList index");
             return;
