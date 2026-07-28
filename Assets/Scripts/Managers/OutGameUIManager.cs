@@ -3931,6 +3931,7 @@ public class OutGameUIManager : MonoBehaviour
         SurvivorData player = mySurvivorsData[0];
 
         contestantsData ??= new List<SurvivorData>();
+        championshipDatas ??= new List<ChampionshipData>();
 
         int playerIndex = contestantsData.FindIndex(
             x => x != null && x.id == player.id);
@@ -3977,14 +3978,7 @@ public class OutGameUIManager : MonoBehaviour
             }
         }
 
-        string playerNameKey =
-            player.localizedSurvivorName.TableEntryReference.Key;
-
-        if (!championshipDatas.Exists(
-            x => x.SurvivorName.TableEntryReference.Key == playerNameKey))
-        {
-            championshipDatas.Insert(0, new ChampionshipData(player));
-        }
+        SynchronizeChampionshipDatas();
     }
 
     void RestoreReserverReference()
@@ -4007,6 +4001,41 @@ public class OutGameUIManager : MonoBehaviour
 
         leagueInfo.reserver = reserver;
         contestantsData[0] = reserver;
+    }
+
+    void SynchronizeChampionshipDatas()
+    {
+        championshipDatas ??= new List<ChampionshipData>();
+
+        HashSet<string> contestantNameKeys =
+            contestantsData
+                .Where(x => x != null)
+                .Select(x =>
+                    x.localizedSurvivorName
+                        .TableEntryReference.Key)
+                .ToHashSet();
+
+        // 실제 참가자 목록에서 제거된 데이터 삭제
+        championshipDatas.RemoveAll(x =>
+            x == null ||
+            !contestantNameKeys.Contains(
+                x.SurvivorName.TableEntryReference.Key));
+
+        // 실제 참가자에게 ChampionshipData가 없으면 추가
+        foreach (SurvivorData contestant in contestantsData)
+        {
+            string nameKey =
+                contestant.localizedSurvivorName
+                    .TableEntryReference.Key;
+
+            if (!championshipDatas.Exists(x =>
+                x.SurvivorName.TableEntryReference.Key ==
+                nameKey))
+            {
+                championshipDatas.Add(
+                    new ChampionshipData(contestant));
+            }
+        }
     }
 
     void OnLocaleChanged(Locale newLocale)

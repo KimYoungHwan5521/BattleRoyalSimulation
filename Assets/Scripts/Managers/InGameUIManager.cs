@@ -60,7 +60,8 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] otherSurvivorsResults;
     [SerializeField] RectTransform otherSurvivorsBox;
     List<int> targetRank;
-    List<float> rankChangeDistances;
+    List<float> rankChangeDistances; 
+    List<int> otherSurvivorRanks;
 
     [Header("Middle Top")]
     [SerializeField] TextMeshProUGUI currentBattleTimer;
@@ -397,6 +398,7 @@ public class InGameUIManager : MonoBehaviour
 
         targetRank = new();
         rankChangeDistances = new();
+        otherSurvivorRanks = new();
         curRankChangeAnimTime = 0;
         rankChangeAnimation = false;
         otherSurvivorsFolded = false;
@@ -442,6 +444,9 @@ public class InGameUIManager : MonoBehaviour
                     targetRank.Add(rowIndex);
                     rankChangeDistances.Add(0);
 
+                    // 아직 순위가 결정되지 않음
+                    otherSurvivorRanks.Add(-1);
+
                     otherSurvivorsNames[rowIndex].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
 
                     otherSurvivorsPortraits[rowIndex].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
@@ -476,6 +481,7 @@ public class InGameUIManager : MonoBehaviour
                     targetRank.Add(i);
                     otherSurvivorsResultRows[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (i) * -30);
                     rankChangeDistances.Add(0);
+                    otherSurvivorRanks.Add(-1);
                     otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
                     otherSurvivorsPortraits[i].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
                     otherSurvivorsResultBGs[i].color = Color.white;
@@ -519,6 +525,12 @@ public class InGameUIManager : MonoBehaviour
             {
                 if (otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference.TableEntryReference.Key == survivorName.TableEntryReference.Key)
                 {
+                    LocalizedString rowName = otherSurvivorsNames[i].GetComponent<LocalizeStringEvent>().StringReference;
+
+                    if (rowName.TableEntryReference.Key != survivorName.TableEntryReference.Key)
+                    {
+                        continue;
+                    }
                     otherSurvivorsResults[i].text = survivorRank switch
                     {
                         0 => "1st",
@@ -527,14 +539,12 @@ public class InGameUIManager : MonoBehaviour
                         _ => $"{survivorRank + 1}th",
                     };
                     if(survivorRank > 0) otherSurvivorsResultBGs[i].color = new Color(0.88f, 0.43f, 0.43f);
-                    //for(int k=0; k<targetRank.Count; k++) Debug.Log($"Bef targetRank[{k}] = {targetRank[k]}");
-                    targetRank[i] = survivorRank;
-                    for(int j=i+1; j < outGameUIManager.contestantsData.Count - predictionNumber; j++)
-                    {
-                        if (targetRank[j] <= survivorRank)targetRank[j]--;
-                    }
-                    //for(int k=0; k<targetRank.Count; k++) Debug.Log($"Aft targetRank[{k}] = {targetRank[k]}");
-                    RankChangeAnimation();
+
+                    // 실제 전체 등수는 별도로 저장
+                    otherSurvivorRanks[i] = survivorRank;
+
+                    // 비예측자끼리 빈 공간 없이 다시 배치
+                    RefreshOtherSurvivorRankPositions();
                     break;
                 }
             }
@@ -550,6 +560,34 @@ public class InGameUIManager : MonoBehaviour
         }
         curRankChangeAnimTime = 0;
         rankChangeAnimation = true;
+    }
+
+    void RefreshOtherSurvivorRankPositions()
+    {
+        List<int> orderedRows =
+            Enumerable.Range(0, otherSurvivorRanks.Count)
+                // 생존자가 위, 순위가 결정된 참가자가 아래
+                .OrderBy(i => otherSurvivorRanks[i] >= 0 ? 1 : 0)
+
+                // 생존자는 기존 표시 순서 유지
+                .ThenBy(i =>
+                    otherSurvivorRanks[i] < 0
+                        ? i
+                        : otherSurvivorRanks[i])
+
+                .ToList();
+
+        for (int position = 0;
+             position < orderedRows.Count;
+             position++)
+        {
+            int rowIndex = orderedRows[position];
+
+            // 실제 등수가 아니라 압축된 UI 위치
+            targetRank[rowIndex] = position;
+        }
+
+        RankChangeAnimation();
     }
 
     bool otherSurvivorsFolded;
