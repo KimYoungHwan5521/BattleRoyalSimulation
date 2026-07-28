@@ -93,7 +93,7 @@ public class Calendar : CustomObject
         {
             for (int i = today + 1; i < today + 83; i++)
             {
-                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.SeasonChampionship) return i;
+                if (leagueReserveInfo.ContainsKey(i) && leagueReserveInfo[i].league == League.WorldChampionship) return i;
             }
             return -1;
         }
@@ -105,69 +105,79 @@ public class Calendar : CustomObject
         get { return today; }
         set
         {
+            int previousToday = today;
             today = value;
-            //tip.SetActive(leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null);
-            outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value));
-            //if (outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(value)) outGameUIManager.Alert("Click today's league in the schedule to go to the Battle Royale.");
-            if (leagueReserveInfo.ContainsKey(value) && leagueReserveInfo[value].reserver != null)
-            {
-                if (today == 24 || today == 53 || today == 81) outGameUIManager.Alert("Alert:Last Chance For Objective");
-                else outGameUIManager.Alert("Alert:Reserve Reminder");
-            }
-                        
-            if (leagueReserveInfo.ContainsKey(value - 1) && leagueReserveInfo[value - 1].reserver != null)
-            {
-                leagueReserveInfo[value - 1].reserver.isReserved = false;
-                leagueReserveInfo[value - 1].reserver.reservedDate = -1;
-                leagueReserveInfo[value - 1].reserver = null;
-            }
-            participationConfirmed = false;
 
-            string localizedMonth = new LocalizedString("Basic", monthName[(Month - 1) % 12]).GetLocalizedString();
-            string localizedDateName = new LocalizedString("Basic", dateName[today % 7]).GetLocalizedString();
+            outGameUIManager.scheduleAnim.SetBool("Tutorial", outGameUIManager.tutorial && leagueReserveInfo.ContainsKey(today));
 
-            LocalizedString date;
-            if(outGameUIManager.GameMode == GameMode.SingleCareerRun)
+            // 오늘 예약 알림
+            if (leagueReserveInfo.TryGetValue(today, out LeagueReserveData todayReserve) && todayReserve.reserver != null)
             {
-                date = new("Basic", "Weeks");
-                date.Arguments = new[] { $"{(today / 7) + 1}" };
-                todayText.text = $"{date.GetLocalizedString()} ({localizedDateName})";
-            }
-            else
-            {
-                date = new("Basic", "Date Format");
-                date.Arguments = new[] { Year.ToString(), localizedMonth, (today % 28 + 1).ToString(), localizedDateName };
-                todayText.text = date.GetLocalizedString();
-            }
-            GameManager.Instance.FixLayout(todayText.transform.parent.GetComponent<RectTransform>());
-            outGameUIManager.HideEndTheWeekend(outGameUIManager.GameMode == GameMode.SingleCareerRun || value % 7 > 4);
-            if (value > 0)
-            {
-                outGameUIManager.SurvivorsRecovery();
-                outGameUIManager.ResetHireMarket();
-                if (value % 336 == 0) AddLeagueReserveInfo(1);
-            }
-            if (outGameUIManager.GameMode == GameMode.SingleCareerRun && value > 83)
-            {
-                outGameUIManager.SetChampionship(true);
-                if (value == 84) outGameUIManager.Alert("Alert:TheChampionshipHasBegun");
-            }
-
-            if (Today > 0)
-            {
-                if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
+                if (today == 24 || today == 53 || today == 81)
                 {
-                    // Auto save
-                    GameManager.Instance.Save(0);
-
-                    SetSingleCareerRunCalendar();
+                    outGameUIManager.Alert("Alert:Last Chance For Objective");
                 }
                 else
                 {
-                    GameManager.Instance.Save(100);
+                    outGameUIManager.Alert("Alert:Reserve Reminder");
                 }
             }
 
+            // 이전 날짜의 예약 상태 정리
+            if (leagueReserveInfo.TryGetValue(previousToday, out LeagueReserveData previousReserve) && previousReserve.reserver != null)
+            {
+                previousReserve.reserver.isReserved = false;
+                previousReserve.reserver.reservedDate = -1;
+                previousReserve.reserver = null;
+            }
+
+            participationConfirmed = false;
+
+            RefreshTodayUI();
+
+            outGameUIManager.HideEndTheWeekend(
+                outGameUIManager.GameMode ==
+                    GameMode.SingleCareerRun ||
+                today % 7 > 4
+            );
+
+            if (today > 0)
+            {
+                outGameUIManager.SurvivorsRecovery();
+                outGameUIManager.ResetHireMarket();
+
+                if (today % 336 == 0)
+                {
+                    AddLeagueReserveInfo(1);
+                }
+            }
+
+            if (outGameUIManager.GameMode ==
+                    GameMode.SingleCareerRun &&
+                today > 83)
+            {
+                outGameUIManager.SetChampionship(true);
+
+                if (today == 84)
+                {
+                    outGameUIManager.Alert(
+                        "Alert:TheChampionshipHasBegun");
+                }
+            }
+
+            if (today <= 0)
+                return;
+
+            if (outGameUIManager.GameMode ==
+                GameMode.SingleCareerRun)
+            {
+                SetSingleCareerRunCalendar();
+                GameManager.Instance.Save(0);
+            }
+            else
+            {
+                GameManager.Instance.Save(100);
+            }
         }
     }
     public int Month { get { return 1 + today / 28; } }
@@ -282,6 +292,48 @@ public class Calendar : CustomObject
         {
             leagueReserveInfo.Clear();
             AddLeagueReserveInfo(1);
+        }
+    }
+    void RefreshTodayUI()
+    {
+        string localizedMonth =
+            new LocalizedString(
+                "Basic",
+                monthName[(Month - 1) % 12]
+            ).GetLocalizedString();
+
+        string localizedDateName =
+            new LocalizedString(
+                "Basic",
+                dateName[today % 7]
+            ).GetLocalizedString();
+
+        LocalizedString date;
+
+        if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            date = new("Basic", "Weeks")
+            {
+                Arguments = new object[] { today / 7 + 1 }
+            };
+
+            todayText.text =
+                $"{date.GetLocalizedString()} ({localizedDateName})";
+        }
+        else
+        {
+            date = new("Basic", "Date Format")
+            {
+                Arguments = new object[]
+                {
+                Year,
+                localizedMonth,
+                today % 28 + 1,
+                localizedDateName
+                }
+            };
+
+            todayText.text = date.GetLocalizedString();
         }
     }
 
@@ -822,7 +874,8 @@ public class Calendar : CustomObject
 
     public void TurnPageCalendar(int value)
     {
-        CalendarPage = Mathf.Clamp(calendarPage + value, 1, 3);
+        int maxPage = Mathf.Max(curMaxYear * 12, 1);
+        CalendarPage = Mathf.Clamp(calendarPage + value, 1, maxPage);
     }
 
     void OpenSelectLeagueForm()
@@ -1278,16 +1331,30 @@ public class Calendar : CustomObject
 
     public void CancelReservation()
     {
-        leagueReserveInfo[wantReserveDate].reserver.isReserved = false;
-        leagueReserveInfo[wantReserveDate].reserver = null;
+        if (!leagueReserveInfo.TryGetValue(
+            wantReserveDate,
+            out LeagueReserveData reserveInfo) ||
+        reserveInfo.reserver == null)
+        {
+            return;
+        }
+
+        reserveInfo.reserver.isReserved = false;
+        reserveInfo.reserver.reservedDate = -1;
+        reserveInfo.reserver = null;
+
         TurnPageCalendar(0);
     }
 
     public void CancelAllReservation()
     {
-        foreach(var (date, reserveInfo) in leagueReserveInfo)
+        foreach (var reserveInfo in leagueReserveInfo.Values)
         {
-            if(reserveInfo.reserver != null) reserveInfo.reserver.isReserved |= false;
+            if (reserveInfo.reserver == null)
+                continue;
+
+            reserveInfo.reserver.isReserved = false;
+            reserveInfo.reserver.reservedDate = -1;
             reserveInfo.reserver = null;
         }
         outGameUIManager.contestantsData = null;
@@ -1340,20 +1407,15 @@ public class Calendar : CustomObject
 
     void OnLocaleChanged(Locale newLocale)
     {
-        Today = today;
+        RefreshTodayUI();
         if (!leagueReserveInfo.ContainsKey(wantReserveDate)) return;
         farmableItemsText.text = "";
         foreach (var item in itemPool[leagueReserveInfo[wantReserveDate].itemPool])
         {
             farmableItemsText.text += $"{new LocalizedString("Item", item.Key.ToString()).GetLocalizedString()} x {item.Value},\n";
         }
-        //if (leagueReserveInfo.ContainsKey(Today))
-        //    watchableLeagueTodayText.text = $"{new LocalizedString("Basic", "League you can spectate if you skip today").GetLocalizedString()} : {new LocalizedString("Basic", leagueReserveInfo[wantReserveDate].league.ToString()).GetLocalizedString()}";
-        //else watchableLeagueTodayText.text = "";
-        //SetBattleRoyaleReserveBox(GetNeedTier(leagueReserveInfo[wantReserveDate].league));
-        //SetBattleRoyaleReserveBox();
-        CalendarPage = calendarPage;
-        OpenScheduleByEachSurvivor();
+        CalendarPage = calendarPage; 
+        if (scheduleByEachSurvivor.activeSelf) OpenScheduleByEachSurvivor();
     }
 
     public IEnumerator LoadLeagueReserveInfo(Dictionary<int, LeagueReserveData> data)
@@ -1366,10 +1428,21 @@ public class Calendar : CustomObject
 
     public void LoadToday(ETCData saveData)
     {
-        Today = saveData.today;
+        today = saveData.today;
         curMaxYear = saveData.curMaxYear;
         participationConfirmed = saveData.participationConfirmed;
-        TurnPageCalendar(0);
+        RefreshTodayUI(); 
+        
+        outGameUIManager.HideEndTheWeekend(outGameUIManager.GameMode == GameMode.SingleCareerRun || today % 7 > 4);
+
+        if (outGameUIManager.GameMode == GameMode.SingleCareerRun)
+        {
+            SetSingleCareerRunCalendar();
+        }
+        else
+        {
+            CalendarPage = today / 28 + 1;
+        }
     }
 
     Sprite LoadSprite(League league, string localeCode)

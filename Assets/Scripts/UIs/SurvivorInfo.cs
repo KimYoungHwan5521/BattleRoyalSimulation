@@ -248,6 +248,12 @@ public class SurvivorInfo : MonoBehaviour
         shootingBar.fillAmount = (float)wantSurvivorData.Shooting / survivorData.MaxShooting;
         craftingBar.fillAmount = (float)wantSurvivorData.Crafting / survivorData.MaxCrafting;
         knowledgeBar.fillAmount = (float)wantSurvivorData.Knowledge / survivorData.MaxKnowledge;
+        
+        if (priceText != null)
+        {
+            priceText.gameObject.SetActive(GameManager.Instance.OutGameUIManager.GameMode == GameMode.FreeManagement);
+            priceText.text = $"$ {wantSurvivorData.price}";
+        }
 
         if (strenthRank != null)
         {

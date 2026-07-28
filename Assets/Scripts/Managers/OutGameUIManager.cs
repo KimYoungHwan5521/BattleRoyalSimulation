@@ -887,23 +887,52 @@ public class OutGameUIManager : MonoBehaviour
 
     LocalizedString GetRandomName(int depth = 0)
     {
-        if (depth > 10000)
+        HashSet<string> usedNames = new();
+
+        foreach (SurvivorInfo survivorInfo in survivorsInHireMarket)
         {
-            Debug.LogWarning("Infinite recursion detected");
+            if (survivorInfo.survivorData != null)
+            {
+                usedNames.Add(survivorInfo.survivorData.SurvivorName);
+            }
+        }
+
+        foreach (SurvivorData survivor in mySurvivorsData)
+        {
+            usedNames.Add(survivor.SurvivorName);
+        }
+
+        if (contestantsData != null)
+        {
+            foreach (SurvivorData contestant in contestantsData)
+            {
+                if (contestant != null)
+                {
+                    usedNames.Add(contestant.SurvivorName);
+                }
+            }
+        }
+
+        List<string> availableNames = new();
+
+        foreach (string name in Names.SurvivorName)
+        {
+            if (!usedNames.Contains(name))
+            {
+                availableNames.Add(name);
+            }
+        }
+
+        if (availableNames.Count == 0)
+        {
+            Debug.LogError("There are no available survivor names.");
             return default;
         }
 
-        string candidate = Names.SurvivorName[UnityEngine.Random.Range(0, Names.SurvivorName.Length)];
-        for (int i = 0; i < survivorsInHireMarket.Length; i++)
-            if (survivorsInHireMarket[i].survivorData != null && survivorsInHireMarket[i].survivorData.SurvivorName == candidate) return GetRandomName(depth + 1);
-        for (int i = 0; i < mySurvivorsData.Count; i++)
-            if (mySurvivorsData[i].SurvivorName == candidate) return GetRandomName(depth + 1);
-        if(contestantsData != null)
-        {
-            for(int i = 0; i < contestantsData.Count; i++)
-                if(contestantsData[i].SurvivorName == candidate) return GetRandomName(depth + 1);
-        }
-        return new("Name", candidate);
+        string selectedName =
+            availableNames[UnityEngine.Random.Range(0, availableNames.Count)];
+
+        return new LocalizedString("Name", selectedName);
     }
 
     public void ResetSurvivorsDropdown()
