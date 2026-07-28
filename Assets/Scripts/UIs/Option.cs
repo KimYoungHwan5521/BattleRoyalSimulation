@@ -714,6 +714,7 @@ public class Option : MonoBehaviour
         saveSlotsObject.SetActive(false);
         GameManager.Instance.outCanvas.SetActive(true);
         GameManager.Instance.ResetData(GameMode.FreeManagement, 0);
+        GameManager.Instance.Title.selectGameMode.SetActive(false);
         GameManager.Instance.Title.title.SetActive(false);
         GameManager.Instance.Option.SetSaveButtonInteractable(false, false, true);
     }

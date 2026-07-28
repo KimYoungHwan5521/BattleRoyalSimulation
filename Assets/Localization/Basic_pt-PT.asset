@@ -560,10 +560,9 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359334
   - m_Id: 2220595640594432
-    m_Localized: Encerrar o dia?{param0}
+    m_Localized: Encerrar o dia?
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359334
+      m_Items: []
   - m_Id: 2220597318316032
     m_Localized: "H\xE1 sobreviventes aos quais n\xE3o \xE9 atribu\xEDdo treino.:"
     m_Metadata:
@@ -1970,7 +1969,6 @@ MonoBehaviour:
         - id: 4011113273946112
         - id: 4011114574180352
         - id: 4014292761899008
-        - id: 2220595640594432
         - id: 4006778280407040
         - id: 4087018927222784
         - id: 9113970310443008

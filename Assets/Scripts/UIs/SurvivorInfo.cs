@@ -184,7 +184,11 @@ public class SurvivorInfo : MonoBehaviour
         survivorNameText.StringReference = survivorName;
         CharacteristicManager.AddRandomCharacteristics(survivorData, characteristicsCount, true);
         survivorData._stamina = survivorData.MaxStamina;
-        if (scheduledTrainingText != null) scheduledTrainingText.StringReference = new("Basic", $"{survivorData.assignedTraining}");
+        if (scheduledTrainingText != null)
+        {
+            if (survivorData.assignedTraining == Training_FreeManagement.None) scheduledTrainingText.StringReference = new("Basic", "None");
+            else scheduledTrainingText.StringReference = new("Basic", $"Training:{survivorData.assignedTraining}");
+        }
         strengthText.text = $"{survivorData.Strength}";
         agilityText.text = $"{survivorData.Agility}";
         fightingText.text = $"{survivorData.Fighting}";
@@ -234,6 +238,11 @@ public class SurvivorInfo : MonoBehaviour
         {
             staminaText.text = $"{wantSurvivorData.Stamina} / {wantSurvivorData.MaxStamina}";
             staminaBar.fillAmount = (float)wantSurvivorData.Stamina / wantSurvivorData.MaxStamina;
+        }
+        if (scheduledTrainingText != null)
+        {
+            if(survivorData.assignedTraining == Training_FreeManagement.None) scheduledTrainingText.StringReference = new("Basic", "None");
+            else scheduledTrainingText.StringReference = new("Basic", $"Training:{survivorData.assignedTraining}");
         }
         strengthText.text = $"{wantSurvivorData.Strength}";
         agilityText.text = $"{wantSurvivorData.Agility}";

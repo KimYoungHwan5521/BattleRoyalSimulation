@@ -562,10 +562,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2220595640594432
-    m_Localized: "\xBFTerminar el d\xEDa?{param0}"
+    m_Localized: "\xBFTerminar el d\xEDa?"
     m_Metadata:
-      m_Items:
-      - rid: 4743152768665780226
+      m_Items: []
   - m_Id: 2220597318316032
     m_Localized: "Hay sobreviventes a quienes no se les asigna ning\xFAn entrenamiento.:"
     m_Metadata:
@@ -1969,7 +1968,6 @@ MonoBehaviour:
         - id: 1780920513785856
         - id: 1875851668418560
         - id: 1875853614575616
-        - id: 2220595640594432
         - id: 2220598824071168
         - id: 2479579412885504
         - id: 2481288361078784

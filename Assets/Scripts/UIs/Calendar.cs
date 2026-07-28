@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -172,11 +171,11 @@ public class Calendar : CustomObject
                 GameMode.SingleCareerRun)
             {
                 SetSingleCareerRunCalendar();
-                GameManager.Instance.Save(0);
+                GameManager.Instance.Save(0, false);
             }
             else
             {
-                GameManager.Instance.Save(100);
+                GameManager.Instance.Save(100, false);
             }
         }
     }
@@ -210,12 +209,12 @@ public class Calendar : CustomObject
                     datesEvent[i].sprite = LoadSprite(leagueReserveInfo[i + 28 * (calendarPage - 1)].league, LocalizationSettings.SelectedLocale.Identifier.Code);
                     if (outGameUIManager.tutorial && i + 28 * (calendarPage - 1) == Today && datesAnimator[i].gameObject.activeInHierarchy) datesAnimator[i].SetBool("Tutorial", true);
                     else if (datesAnimator[i] != null && datesAnimator[i].gameObject.activeInHierarchy) datesAnimator[i].SetBool("Tutorial", false);
-                    if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
-                    {
-                        reserved[i].SetActive(true);
-                        reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.localizedSurvivorName.GetLocalizedString());
-                    }
-                    else reserved[i].SetActive(false);
+                    //if (leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver != null)
+                    //{
+                    //    reserved[i].SetActive(true);
+                    //    reserved[i].GetComponent<Help>().SetDescriptionWithKey("Reserved:", leagueReserveInfo[(calendarPage - 1) * 28 + i].reserver.localizedSurvivorName.GetLocalizedString());
+                    //}
+                    //else reserved[i].SetActive(false);
                 }
                 else
                 {
@@ -929,6 +928,7 @@ public class Calendar : CustomObject
                         };
 
                         leagueReserveInfo[Today].itemPool = selectLeagueDropdown_FreeManagement_EventLeague.dropdown.value + 5;
+                        leagueReserveInfo[Today].map = ResourceEnum.Prefab.Map_5x5_01;
                     }
                     else
                     {
@@ -942,6 +942,13 @@ public class Calendar : CustomObject
                         };
 
                         leagueReserveInfo[Today].itemPool = selectLeagueDropdown_FreeManagement_RegularLeague.dropdown.value;
+                        leagueReserveInfo[Today].map = leagueReserveInfo[Today].league switch
+                        {
+                            League.BronzeLeague => (ResourceEnum.Prefab)(UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_2x2_01, (int)ResourceEnum.Prefab.Map_3x3_01)),
+                            League.SilverLeague => (ResourceEnum.Prefab)(UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_3x3_01, (int)ResourceEnum.Prefab.Map_4x4_01)),
+                            League.GoldLeague => (ResourceEnum.Prefab)(UnityEngine.Random.Range((int)ResourceEnum.Prefab.Map_4x4_01, (int)ResourceEnum.Prefab.Map_5x5_01)),
+                            _ => ResourceEnum.Prefab.Map_5x5_01
+                        };
                     }
                     var reserver = outGameUIManager.MySurvivorsData.Find(x => x.localizedSurvivorName == selectSurvivorWhoParticipateLeagueDropdown.keys[selectSurvivorWhoParticipateLeagueDropdown.Value]);
                     if (reserver == null) Debug.LogWarning($"Not Valid Reserver : {selectSurvivorWhoParticipateLeagueDropdown.keys[selectSurvivorWhoParticipateLeagueDropdown.Value]}");
@@ -958,7 +965,9 @@ public class Calendar : CustomObject
                 CalendarObject.SetActive(false);
                 leagueReserveInfo[Today].league = League.SeasonChampionship;
                 leagueReserveInfo[Today].itemPool = 3;
+                leagueReserveInfo[Today].map = ResourceEnum.Prefab.Map_5x5_01;
                 leagueReserveInfo[Today].reserver = null;
+                outGameUIManager.contestantsData?.Clear();
                 outGameUIManager.OpenBettingRoom();
             }
         }
@@ -1010,7 +1019,7 @@ public class Calendar : CustomObject
                             break;
                     }
                 }
-                if (selectSurvivorWhoParticipateLeagueDropdown.keys.Count == 0) selectSurvivorWhoParticipateLeagueDropdown.dropdown.captionText.text = $"<i><alpha=#80>[{new LocalizedString("Basic", "No eligible survivor").GetLocalizedString()}]</alpha></i>";
+                if (selectSurvivorWhoParticipateLeagueDropdown.keys.Count == 0) selectSurvivorWhoParticipateLeagueDropdown.dropdown.captionText.text = $"<i><alpha=#80>[{new LocalizedString("Basic", "No eligible survivor").GetLocalizedString()}]</i>";
             }
         }
     }
@@ -1064,6 +1073,7 @@ public class Calendar : CustomObject
                 if(wantReserveDate == Today)
                 {
                     selectLeagueBG_FreeManagement.SetActive(true);
+                    GameManager.Instance.openedWindows.Push(selectLeagueBG_FreeManagement);
                     bool regularLeague = leagueReserveInfo[wantReserveDate].league switch
                     {
                         League.MeleeLeague or League.RangeLeague or League.CraftingLeague => false,

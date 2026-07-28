@@ -544,13 +544,6 @@ public class SurvivorData
         Shooting = _shooting + shooting;
         Crafting = _crafting + crafting;
         Knowledge = _knowledge + knowledge;
-
-        //increaseComparedToPrevious_strength += strength;
-        //increaseComparedToPrevious_agility += agility;
-        //increaseComparedToPrevious_fighting += fighting;
-        //increaseComparedToPrevious_shooting += shooting;
-        //increaseComparedToPrevious_crafting += crafting;
-        //increaseComparedToPrevious_knowledge += knowledge;
     }
 
     public void IncreaseStatsReserve(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
@@ -561,6 +554,26 @@ public class SurvivorData
         increaseComparedToPrevious_shooting += shooting;
         increaseComparedToPrevious_crafting += crafting;
         increaseComparedToPrevious_knowledge += knowledge;
+    }
+
+    public void IncreaseStatsReserveFreeManagement(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
+    {
+        if (strength > 0) increaseComparedToPrevious_strength = strength;
+        if (agility > 0) increaseComparedToPrevious_agility = agility;
+        if (fighting > 0) increaseComparedToPrevious_fighting = fighting;
+        if (shooting > 0) increaseComparedToPrevious_shooting = shooting;
+        if (crafting > 0) increaseComparedToPrevious_crafting = crafting;
+        if (knowledge > 0) increaseComparedToPrevious_knowledge = knowledge;
+    }
+
+    public void ResetStatIncreaseResult()
+    {
+        increaseComparedToPrevious_strength = -1;
+        increaseComparedToPrevious_agility = -1;
+        increaseComparedToPrevious_fighting = -1;
+        increaseComparedToPrevious_shooting = -1;
+        increaseComparedToPrevious_crafting = -1;
+        increaseComparedToPrevious_knowledge = -1;
     }
 
     public void StaminaConsomtionReserve(int value)

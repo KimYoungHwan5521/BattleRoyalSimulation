@@ -394,10 +394,21 @@ public class InGameUIManager : MonoBehaviour
     public void SetPredictionUI()
     {
         exitBattleRoyale.SetActive(false);
+
+        targetRank = new();
+        rankChangeDistances = new();
+        curRankChangeAnimTime = 0;
+        rankChangeAnimation = false;
+        otherSurvivorsFolded = false;
+
+        bool hasBetting = outGameUIManager.GameMode == GameMode.FreeManagement && outGameUIManager.BettingAmount > 0;
+        predictionLeft = hasBetting ? outGameUIManager.PredictionNumber : 0;
+
+        otherSurvivorsBox.sizeDelta = new Vector2(otherSurvivorsBox.rect.width, 30 * outGameUIManager.contestantsData.Count);
+
         if (outGameUIManager.BettingAmount > 0)
         {
             predictionResult.SetActive(true);
-            predictionLeft = outGameUIManager.PredictionNumber;
             int j = 0;
             for (int i=0; i < GameManager.Instance.BattleRoyaleManager.Survivors.Count; i++)
             {
@@ -406,7 +417,7 @@ public class InGameUIManager : MonoBehaviour
                 {
                     for (int k = 0; k < outGameUIManager.PredictionNumber; k++)
                     {
-                        if (GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName == outGameUIManager.Predictions[k])
+                        if (GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName.TableEntryReference.Key == outGameUIManager.Predictions[k].TableEntryReference.Key)
                         {
                             predictionResultRows[k].SetActive(true);
                             predictionResultPredictions[k].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
@@ -422,12 +433,22 @@ public class InGameUIManager : MonoBehaviour
                 }
                 if(!isPredictedOne)
                 {
-                    otherSurvivorsResultRows[i - j].SetActive(true);
-                    otherSurvivorsNames[i - j].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
-                    otherSurvivorsPortraits[i - j].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
-                    otherSurvivorsResultBGs[i - j].color = Color.white;
-                    otherSurvivorsResults[i - j].text = "";
-                    otherSurvivorsResultRows[i - j].GetComponent<PredictedSurvivor>().linkedSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[i];
+                    int rowIndex = i - j;
+
+                    otherSurvivorsResultRows[rowIndex].SetActive(true);
+                    otherSurvivorsResultRows[rowIndex].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, rowIndex * -30);
+
+                    targetRank.Add(rowIndex);
+                    rankChangeDistances.Add(0);
+
+                    otherSurvivorsNames[rowIndex].GetComponent<LocalizeStringEvent>().StringReference = GameManager.Instance.BattleRoyaleManager.Survivors[i].LinkedSurvivorData.localizedSurvivorName;
+
+                    otherSurvivorsPortraits[rowIndex].color = GameManager.Instance.BattleRoyaleManager.Survivors[i].GetComponent<SpriteRenderer>().color;
+
+                    otherSurvivorsResultBGs[rowIndex].color = Color.white;
+                    otherSurvivorsResults[rowIndex].text = "";
+
+                    otherSurvivorsResultRows[rowIndex].GetComponent<PredictedSurvivor>().linkedSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[i];
                 }
             }
             for(int i=outGameUIManager.PredictionNumber; i < predictionResultRows.Length; i++)
@@ -446,7 +467,6 @@ public class InGameUIManager : MonoBehaviour
             rankChangeDistances = new();
             curRankChangeAnimTime = 0;
             rankChangeAnimation = false;
-            otherSurvivorsBox.sizeDelta = new Vector2(otherSurvivorsBox.rect.width, 30 * outGameUIManager.contestantsData.Count);
             for (int i=0; i<otherSurvivorsResultRows.Length; i++)
             {
                 if (i < outGameUIManager.contestantsData.Count)

@@ -565,10 +565,9 @@ MonoBehaviour:
       m_Items:
       - rid: 7835753295874359338
   - m_Id: 2220595640594432
-    m_Localized: Tag beenden?{param0}
+    m_Localized: Tag beenden?
     m_Metadata:
-      m_Items:
-      - rid: 7835753295874359338
+      m_Items: []
   - m_Id: 2220597318316032
     m_Localized: "Es gibt \xDCberlebende, denen keine Ausbildung zugewiesen wird.:"
     m_Metadata:
@@ -1980,7 +1979,6 @@ MonoBehaviour:
         - id: 4011113273946112
         - id: 4011114574180352
         - id: 4014292761899008
-        - id: 2220595640594432
         - id: 4006778280407040
         - id: 4087018927222784
         - id: 9113970310443008

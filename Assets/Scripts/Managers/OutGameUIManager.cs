@@ -1,9 +1,7 @@
-using Steamworks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -38,6 +36,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GraphicRaycaster championshipCanvasRaycaster;
     EventSystem eventSystem;
     bool isClicked;
+    [SerializeField] GameObject restObject;
     [SerializeField] GameObject survivorsList;
     [SerializeField] GameObject leaguePoint;
     [SerializeField] GameObject stamina;
@@ -308,6 +307,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] GameObject strategyPresetBG;
     [SerializeField] LocalizeStringEvent strategyPresetSaveLoadText;
     [SerializeField] GameObject[] strategyPresets;
+    [SerializeField] GameObject[] strategyPresetDeletes;
     [SerializeField] GameObject strategyNameBG;
     [SerializeField] TMP_InputField strategyPresetNameInputField;
 
@@ -331,7 +331,7 @@ public class OutGameUIManager : MonoBehaviour
 
     [Header("Daily Result")]
     [SerializeField] GameObject buttonEndTheDay;
-    [SerializeField] GameObject buttonEndTheWeek;
+    //[SerializeField] GameObject buttonEndTheWeek;
     [SerializeField] GameObject dailyResult;
     [SerializeField] GameObject[] survivorTrainingResults;
     TextMeshProUGUI[][] resultTexts;
@@ -608,12 +608,13 @@ public class OutGameUIManager : MonoBehaviour
         gameMode = wantMode;
 
         survivorsList.SetActive(gameMode == GameMode.FreeManagement);
+        restObject.SetActive(gameMode == GameMode.SingleCareerRun);
         leaguePoint.SetActive(gameMode == GameMode.SingleCareerRun);
         stamina.SetActive(gameMode == GameMode.SingleCareerRun);
         dismissSurvivor.SetActive(gameMode == GameMode.FreeManagement);
         hireSurvivorBtn.SetActive(gameMode == GameMode.FreeManagement);
         buttonEndTheDay.SetActive(gameMode == GameMode.FreeManagement);
-        buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
+        //buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
         difficultyText.gameObject.SetActive(gameMode == GameMode.SingleCareerRun);
 
         StartCoroutine(RefreshRooms());
@@ -839,7 +840,7 @@ public class OutGameUIManager : MonoBehaviour
             mySurvivorsData[^1].characteristics = new List<Characteristic>(survivorsInHireMarket[candidate].survivorData.characteristics);
             PostApplyCharacteristics(mySurvivorsData[^1]);
             mySurvivorsData[^1]._stamina = mySurvivorsData[^1].MaxStamina;
-            //mySurvivorDataInBattleRoyale = survivorsInHireMarket[candidate].survivorData;
+            mySurvivorsData[^1].ResetStatIncreaseResult();
             survivorCountText.text = $"( {mySurvivorsData.Count} / {survivorHireLimit} )";
 
             if (mySurvivorsData.Count == 1)
@@ -1104,6 +1105,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
+            AssignTraining();
             RelocalizeTrainingRoom();
             trainingRoomFreeManagement.SetActive(true);
             GameManager.Instance.openedWindows.Push(trainingRoomFreeManagement);
@@ -1406,7 +1408,7 @@ public class OutGameUIManager : MonoBehaviour
         SetTrainingRoomSurvivorsInfo();
     }
 
-    void ApplyTraining(SurvivorData survivor, Training_FreeManagement training, int week = 0)
+    void ApplyTraining(SurvivorData survivor, Training_FreeManagement training)
     {
         int survivorStrengthLv = survivor._strength / 20;
         int survivorAgilityLv = survivor._agility / 20;
@@ -1415,47 +1417,31 @@ public class OutGameUIManager : MonoBehaviour
         int survivorCrfLv = survivor._crafting / 20;
         int survivorKnowledgeLv = survivor._knowledge / 20;
 
-        if (week == 0)
-        {
-            survivor.increaseComparedToPrevious_strength = -1;
-            survivor.increaseComparedToPrevious_agility = -1;
-            survivor.increaseComparedToPrevious_fighting = -1;
-            survivor.increaseComparedToPrevious_shooting = -1;
-            survivor.increaseComparedToPrevious_crafting = -1;
-            survivor.increaseComparedToPrevious_knowledge = -1;
-        }
-
         switch (training)
         {
             case Training_FreeManagement.Weight:
                 int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_strength = 0;
-                survivor.IncreaseStats(increaseStrength, 0, 0, 0, 0, 0);
+                survivor.IncreaseStatsReserveFreeManagement(increaseStrength, 0, 0, 0, 0, 0);
                 break;
             case Training_FreeManagement.Running:
                 int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_agility = 0;
-                survivor.IncreaseStats(0, increseAgility, 0, 0, 0, 0);
+                survivor.IncreaseStatsReserveFreeManagement(0, increseAgility, 0, 0, 0, 0);
                 break;
             case Training_FreeManagement.Fighting:
                 int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_fighting = 0;
-                survivor.IncreaseStats(0, 0, increseFighting, 0, 0, 0);
+                survivor.IncreaseStatsReserveFreeManagement(0, 0, increseFighting, 0, 0, 0);
                 break;
             case Training_FreeManagement.Shooting:
                 int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_shooting = 0;
-                survivor.IncreaseStats(0, 0, 0, increseShooting, 0, 0);
+                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, increseShooting, 0, 0);
                 break;
             case Training_FreeManagement.Crafting:
                 int increseCrafting = Mathf.Max(craftingTrainingLevel + 1 - survivorCrfLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_crafting = 0;
-                survivor.IncreaseStats(0, 0, 0, 0, increseCrafting, 0);
+                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, 0, increseCrafting, 0);
                 break;
             case Training_FreeManagement.Studying:
                 int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
-                if (week == 0) survivor.increaseComparedToPrevious_knowledge = 0;
-                survivor.IncreaseStats(0, 0, 0, 0, 0, increseKnowledge);
+                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, 0, 0, increseKnowledge);
                 break;
             default:
                 break;
@@ -2703,7 +2689,8 @@ public class OutGameUIManager : MonoBehaviour
 
             if (saveData == null)
             {
-                strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = $"StrategyPreset{i + 1}";
+                strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = "<i>Empty Slot</i>";
+                strategyPresetDeletes[i].SetActive(false);
                 if (!strategyPresetSave) strategyPresets[i].GetComponentInChildren<Button>().interactable = false;
             }
             else
@@ -2711,8 +2698,17 @@ public class OutGameUIManager : MonoBehaviour
                 presets[i] = saveData;
                 strategyPresets[i].GetComponentInChildren<TextMeshProUGUI>().text = string.IsNullOrEmpty(saveData.strategyName) ? $"StrategyPreset{i + 1}" : saveData.strategyName;
                 strategyPresets[i].GetComponentInChildren<Button>().interactable = true;
+                strategyPresetDeletes[i].SetActive(true);
             }
         }
+    }
+
+    public void DeletePresetData(int slot)
+    {
+        OpenConfirmWindow("Confirm:Delete Save Data", () =>
+        {
+            GameManager.Instance.DeleteStrategy(slot);
+        });
     }
 
     public void SaveLoadStrategyPreset(int slot)
@@ -2736,23 +2732,73 @@ public class OutGameUIManager : MonoBehaviour
     {
         if(!string.IsNullOrEmpty(strategyPresetNameInputField.text))
         {
-            GameManager.Instance.SaveStrategy(strategyPresetSlot, strategyPresetNameInputField.text);
+            GameManager.Instance.SaveStrategy(strategyPresetSlot, survivorWhoWantEstablishStrategy, strategyPresetNameInputField.text);
             Alert("Alert:Strategy Saved");
+            strategyNameBG.SetActive(false);
             LoadPresetData();
         }
     }
 
     void LoadStrategyPreset(StrategyDictionarySaveData saveData, SurvivorData wantSurvivor)
     {
-        wantSurvivor.priority1Weapon = saveData.priority1Weapon;
-        wantSurvivor.priority2Weapon = saveData.priority2Weapon;
-        wantSurvivor.priority1Crafting = saveData.priority1Crafting;
-        wantSurvivor.priority2Crafting = saveData.priority2Crafting;
-        wantSurvivor.priority1CraftingToInt = saveData.priority1CraftingToInt;
-        wantSurvivor.priority2CraftingToInt = saveData.priority2CraftingToInt;
-        wantSurvivor.craftingAllows = saveData.craftingAllows;
-        wantSurvivor.repairCondition = saveData.repairCondition;
-        wantSurvivor.strategyDictionary = saveData.CreateStrategyDictionary();
+        foreach (var strategy in strategies)
+        {
+            switch (strategy.strategyCase)
+            {
+                case StrategyCase.WeaponPriority:
+                    strategy.ActionDropdown.Value = (int)saveData.priority1Weapon - (int)ItemManager.Items.Knife;
+                    strategy.ElseActionDropdown.Value = (int)saveData.priority2Weapon - (int)ItemManager.Items.Knife;
+                    break;
+                case StrategyCase.CraftingPriority:
+                    strategy.ActionDropdown.Value = strategy.ActionDropdown.keys.Count + 1 > saveData.priority1CraftingToInt + 1 ? saveData.priority1CraftingToInt + 1 : 0;
+                    strategy.ElseActionDropdown.Value = strategy.ElseActionDropdown.keys.Count + 1 > saveData.priority2CraftingToInt + 1 ? saveData.priority2CraftingToInt + 1 : 0;
+                    strategy.SpareDropdown1.Value = saveData.craftingPriority1MinimumQuality;
+                    strategy.SpareDropdown2.Value = saveData.craftingPriority2MinimumQuality;
+                    break;
+                default:
+                    if (strategy.ActionDropdown != null) strategy.ActionDropdown.Value = saveData.strategyDictionary[strategy.strategyCase].action;
+                    if (strategy.ElseActionDropdown != null) strategy.ElseActionDropdown.Value = saveData.strategyDictionary[strategy.strategyCase].elseAction;
+                    if (strategy.IntagerInput != null)
+                    {
+                        strategy.IntagerInput.text = saveData.strategyDictionary[strategy.strategyCase].action.ToString();
+                    }
+                    break;
+            }
+        }
+
+        for (int i = 0; i < survivorWhoWantEstablishStrategy.craftingAllows.Length; i++)
+        {
+            craftableAllows[i].GetComponentsInChildren<Toggle>(true)[0].isOn = saveData.craftingAllows[i];
+            craftableAllows[i].GetComponentsInChildren<Toggle>(true)[1].isOn = !saveData.craftingAllows[i];
+        }
+
+        // 조건 불러오기
+        foreach (Strategy strategy in strategies) strategy.ResetConditions();
+        foreach (var strategyDictionary in saveData.strategyDictionary)
+        {
+            Strategy strategy = strategies[0];
+            foreach (Strategy st in strategies)
+            {
+                if (st.strategyCase == strategyDictionary.Key)
+                {
+                    strategy = st;
+                    break;
+                }
+            }
+            for (int j = 0; j < 5; j++)
+            {
+                if (j < strategyDictionary.Value.conditionConut)
+                {
+                    strategy.AddCondition();
+                    strategy.andOrs[j].value = strategyDictionary.Value.conditions[j].andOr;
+                    strategy.variable1s[j].value = strategyDictionary.Value.conditions[j].variable1;
+                    strategy.operators[j].value = strategyDictionary.Value.conditions[j].operator_;
+                    strategy.variable2s[j].value = strategyDictionary.Value.conditions[j].variable2;
+                    strategy.inputFields[j].text = strategyDictionary.Value.conditions[j].inputInt.ToString();
+                }
+                else break;
+            }
+        }
     }
     #endregion
 
@@ -2956,7 +3002,7 @@ public class OutGameUIManager : MonoBehaviour
             contestantsData = new();
         }
 
-        //if (calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+        if (gameMode == GameMode.SingleCareerRun)
         {
             calendar.LeagueReserveInfo[calendar.Today].reserver = mySurvivorsData[0];
             if(!championship || championship && calendar.LeagueReserveInfo[calendar.Today].league != League.WorldChampionship)
@@ -2964,6 +3010,14 @@ public class OutGameUIManager : MonoBehaviour
                 championshipDatas.Clear();
                 contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
                 championshipDatas.Add(new(MySurvivorsData[0]));
+                index++;
+            }
+        }
+        else
+        {
+            if(calendar.LeagueReserveInfo[calendar.Today].reserver != null)
+            {
+                contestantsData.Add(calendar.LeagueReserveInfo[calendar.Today].reserver);
                 index++;
             }
         }
@@ -3045,6 +3099,7 @@ public class OutGameUIManager : MonoBehaviour
     public void OpenMapInfo()
     {
         mapInfo.SetActive(true);
+        GameManager.Instance.openedWindows.Push(mapInfo);
         string minimapName = $"Minimap{calendar.LeagueReserveInfo[calendar.Today].map.ToString()[3..]}";
         if (Enum.TryParse(minimapName, out ResourceEnum.Sprite sprite))
         {
@@ -3260,7 +3315,8 @@ public class OutGameUIManager : MonoBehaviour
             foreach (GameObject survivorTrainingResult in survivorTrainingResults) survivorTrainingResult.SetActive(false);
             foreach (SurvivorData survivor in mySurvivorsData)
             {
-                ApplyTraining(survivor, survivor.assignedTraining, week);
+                survivor.ResetStatIncreaseResult();
+                ApplyTraining(survivor, survivor.assignedTraining);
                 if (survivor.assignedTraining != Training_FreeManagement.None)
                 {
                     survivorTrainingResults[index].SetActive(true);
@@ -3337,7 +3393,7 @@ public class OutGameUIManager : MonoBehaviour
 
     public void HideEndTheWeekend(bool hide)
     {
-        buttonEndTheWeek.SetActive(!hide);
+        //buttonEndTheWeek.SetActive(!hide);
     }
 
     void Surgery(SurvivorData survivor)

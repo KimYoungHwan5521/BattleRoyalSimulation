@@ -362,10 +362,10 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
-    public void SaveStrategy(int slot, string presetName = "")
+    public void SaveStrategy(int slot, SurvivorData survivor, string presetName = "")
     {
         if (OutGameUIManager.MySurvivorsData != null && OutGameUIManager.MySurvivorsData.Count == 0) return;
-        var wrapper = new StrategyDictionarySaveData(slot, OutGameUIManager.MySurvivorsData[0], presetName);
+        var wrapper = new StrategyDictionarySaveData(slot, survivor, presetName);
 
         string json = JsonUtility.ToJson(wrapper);
         PlayerPrefs.SetString($"StrategyPreset{slot}", json);
@@ -375,6 +375,23 @@ public class GameManager : MonoBehaviour
         byte[] bytes = Encoding.UTF8.GetBytes(json);
         bool success = SteamRemoteStorage.FileWrite($"StrategyPreset{slot}.json", bytes, bytes.Length);
         if (!success) Debug.LogWarning("Steam Cloud 저장 실패");
+    }
+
+    public bool DeleteStrategy(int slot)
+    {
+        string key = $"StrategyPreset{slot}";
+        string fileName = $"{key}.json";
+
+        PlayerPrefs.DeleteKey(key);
+        PlayerPrefs.Save();
+
+        if (!SteamManager.Initialized ||
+            !SteamRemoteStorage.FileExists(fileName))
+        {
+            return true;
+        }
+
+        return SteamRemoteStorage.FileDelete(fileName);
     }
 
     public StrategyDictionarySaveData LoadStrategy(int slot)
@@ -395,19 +412,25 @@ public class GameManager : MonoBehaviour
         if (json.Equals("{}")) return null;
 
         StrategyDictionarySaveData saveData = JsonUtility.FromJson<StrategyDictionarySaveData>(json);
-        return saveData;
-}
 
-    public void Save(int slot)
+        if (saveData == null) return null;
+
+        // JsonUtility가 Dictionary를 불러올 수 없으므로 entries로 복원
+        saveData.strategyDictionary = saveData.CreateStrategyDictionary();
+
+        return saveData;
+    }
+
+    public void Save(int slot, bool alert = true)
     {
         SaveSaveDataInfo(slot);
         SaveMySurvivorList(outGameUIManager.MySurvivorsData, slot);
         SaveLeagueReserve(calendar.LeagueReserveInfo, slot);
         SaveETCData(slot);
-        if(outGameUIManager.GameMode == GameMode.SingleCareerRun) SaveStrategy(0);
+        if(outGameUIManager.GameMode == GameMode.SingleCareerRun) SaveStrategy(0, OutGameUIManager.MySurvivorsData[0]);
         Option.ReloadSavedata();
         //string message = slot == 0 ? "Alert:Game Autosaved." : "Alert:Game Saved.";
-        OutGameUIManager.Alert("Alert:Game Saved.");
+        if(alert) OutGameUIManager.Alert("Alert:Game Saved.");
     }
 
     public IEnumerator Load(int slot)
@@ -429,6 +452,7 @@ public class GameManager : MonoBehaviour
         ClaimLoadInfo("Version checking...", 1, 1);
         CloseLoadInfo();
         gameReady = true;
+        title.selectGameMode.SetActive(false);
         title.title.SetActive(false);
 
         if (slot == 0) option.SetSaveButtonInteractable(false, false, true);

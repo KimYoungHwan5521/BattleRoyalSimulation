@@ -39,11 +39,13 @@ public class StrategyDictionarySaveData
     public string strategyName;
     public ItemManager.Items priority1Weapon = ItemManager.Items.LASER;
     public ItemManager.Items priority2Weapon = ItemManager.Items.AssaultRifle;
-    public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
+    [NonSerialized] public Dictionary<StrategyCase, StrategyData> strategyDictionary = new();
     public ItemManager.Craftable priority1Crafting = null;
     public ItemManager.Craftable priority2Crafting = null;
     public int priority1CraftingToInt = -1;
     public int priority2CraftingToInt = -1;
+    public int craftingPriority1MinimumQuality = 0;
+    public int craftingPriority2MinimumQuality = 0;
     public bool[] craftingAllows;
     public int repairCondition = 70;
 

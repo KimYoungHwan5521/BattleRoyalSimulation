@@ -13,7 +13,7 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject credits;
     [SerializeField] RectTransform buttonsRect;
 
-    [SerializeField] GameObject selectGameMode;
+    public GameObject selectGameMode;
     [SerializeField] GameObject askLoadData;
     [SerializeField] GameObject selectDifficulty;
     [SerializeField] Toggle[] difficulties;

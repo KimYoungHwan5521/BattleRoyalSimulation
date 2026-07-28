@@ -118,6 +118,9 @@ public class GameResult : MonoBehaviour
         winWC = false;
 
         resultCalculated = false;
+        resultClaimed = false;
+        curResultDelay = 0;
+
         cachedDidPlayerParticipate = false;
         cachedPlayerSurvivor = null;
         cachedTreatments.Clear();
@@ -127,6 +130,11 @@ public class GameResult : MonoBehaviour
         cachedPromotePointKill = 0;
         cachedBettingRewards = 0;
         cachedBettingOdds = 0;
+        cachedHasBetting = false;
+
+        rememberTotalProfit = 0;
+        rememberPromotePoint_Rank = 0;
+        rememberPromotePoint_Kill = 0;
     }
 
     int rememberTotalProfit;
@@ -222,8 +230,7 @@ public class GameResult : MonoBehaviour
             if (manager.rankings[i] != playerSurvivor.survivorName)
                 continue;
 
-            float percentile =
-                ((float)i + 1) / manager.rankings.Length;
+            float percentile = ((float)i + 1) / GameManager.Instance.BattleRoyaleManager.Survivors.Count;
 
             if (percentile <= 0.25f)
                 playerWin = 25;
@@ -1098,13 +1105,18 @@ public class GameResult : MonoBehaviour
     {
         outGameUIManager.Money += rememberTotalProfit;
 
+        if (outGameUIManager.MySurvivorDataInBattleRoyale == null)
+        {
+            return;
+        }
+
         Survivor playerSurvivor = GameManager.Instance.BattleRoyaleManager.Survivors[0];
         if (GameManager.Instance.BattleRoyaleManager.BattleWinner != null && GameManager.Instance.BattleRoyaleManager.BattleWinner.survivorID == 0) playerWin = 1;
         else
         {
             for (int i = 0; i < GameManager.Instance.BattleRoyaleManager.rankings.Length; i++)
             {
-                float percentile = ((float)i + 1) / GameManager.Instance.BattleRoyaleManager.rankings.Length;
+                float percentile = ((float)i + 1) / GameManager.Instance.BattleRoyaleManager.Survivors.Count;
                 if (GameManager.Instance.BattleRoyaleManager.rankings[i] == playerSurvivor.survivorName)
                 {
                     if (percentile <= 0.25f) playerWin = 25;
@@ -1212,6 +1224,15 @@ public class GameResult : MonoBehaviour
     public void ExitBattle(bool goTitle = false)
     {
         gameResult.SetActive(false);
+
+        if (!resultCalculated)
+        {
+            cachedDidPlayerParticipate = outGameUIManager.MySurvivorDataInBattleRoyale != null;
+
+            CalculateResult(cachedDidPlayerParticipate);
+            resultCalculated = true;
+        }
+
         ExitBattleEvent();
         ClearBattleRoyale();
         if (!goTitle)
@@ -1594,7 +1615,7 @@ public class GameResult : MonoBehaviour
 
     void OnLocaleChanged(Locale newLocale)
     {
-        if (GameManager.Instance.BattleRoyaleManager == null || GameManager.Instance.BattleRoyaleManager.BattleWinner == null) return;
+        if (!resultCalculated || !gameResult.activeSelf) return;
         RefreshResultUI();
 
         GameManager.Instance.FixLayout(gameResult.GetComponent<RectTransform>());
