@@ -383,6 +383,9 @@ public class ResourcesPath
         "Sprites/Achievements/Hardcore",
         "Sprites/Achievements/Nightmare",
         "Sprites/Achievements/Hell",
+        "Sprites/Achievements/KingofBetting",
+        "Sprites/Achievements/GodofBetting",
+        "Sprites/Achievements/FullHouse",
 
         "Sprites/Achievements/HundredThousandaire_unlock",
         "Sprites/Achievements/RoyalLoader_unlock",
@@ -434,6 +437,9 @@ public class ResourcesPath
         "Sprites/Achievements/Hardcore_unlock",
         "Sprites/Achievements/Nightmare_unlock",
         "Sprites/Achievements/Hell_unlock",
+        "Sprites/Achievements/KingofBetting_unlock",
+        "Sprites/Achievements/GodofBetting_unlock",
+        "Sprites/Achievements/FullHouse_unlock",
     };
 
     public static string[] MaterialPathArray =

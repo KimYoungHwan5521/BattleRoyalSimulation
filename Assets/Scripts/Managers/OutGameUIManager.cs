@@ -1840,15 +1840,11 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SelectSurvivorToSurgery()
     {
-        survivorInfoGetSurgery.SetInfo(MySurvivorsData[selectSurvivorGetSurgeryDropdown.Value], false);
-        if (gameMode == GameMode.SingleCareerRun) survivorWhoWantSurgery = MySurvivorsData[0];
-        else
-        {
-            int index = selectSurvivorGetSurgeryDropdown.Value;
-            if (index < 0 || index >= MySurvivorsData.Count) return;
-            survivorWhoWantSurgery = MySurvivorsData[index];
-        }
-        
+        int index = gameMode == GameMode.SingleCareerRun ? 0 : selectSurvivorGetSurgeryDropdown.Value;
+        if (index < 0 || index >= MySurvivorsData.Count) return;
+        survivorWhoWantSurgery = MySurvivorsData[index];
+        survivorInfoGetSurgery.SetInfo(survivorWhoWantSurgery, false);
+
         GetListOfSurgeryCanUndergo();
     }
 
@@ -2075,8 +2071,9 @@ public class OutGameUIManager : MonoBehaviour
         resultText.GetComponent<LocalizeStringEvent>().StringReference = new LocalizedString("Basic", "Surgery Result");
         trainingResultText.text = new LocalizedString("Basic", "Surgery Successful").GetLocalizedString();
         trainingResultDetailText.text = new LocalizedString("Injury", survivorWhoWantSurgery.localizedScheduledSurgeryName.TableEntryReference.Key) { Arguments = new[] { new LocalizedString("Injury", survivorWhoWantSurgery.surgerySite.ToString()).GetLocalizedString() } }.GetLocalizedString();
-        selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
         Surgery(survivorWhoWantSurgery);
+        selectedSurvivor.SetInfo(survivorWhoWantSurgery, false);
+        survivorInfoGetSurgery.SetInfo(survivorWhoWantSurgery, false);
         operatingRoom.SetActive(false);
 
         GameManager.Instance.Save(gameMode == GameMode.SingleCareerRun ? 0 : 100, false);
@@ -3436,9 +3433,9 @@ public class OutGameUIManager : MonoBehaviour
             //hadSurgery = false;
             return;
         }
-        hadSurgery = true;
-        whoUnderwentSurgery.Add(survivor.localizedSurvivorName);
-        performedSurgery.Add(survivor.localizedScheduledSurgeryName);
+        //hadSurgery = true;
+        //whoUnderwentSurgery.Add(survivor.localizedSurvivorName);
+        //performedSurgery.Add(survivor.localizedScheduledSurgeryName);
         if(survivor.surgeryType == SurgeryType.ArtificialPartTransplant)
         {
             Injury surgeryInjury = survivor.injuries.Find(x => x.site == survivor.surgerySite);
@@ -3591,10 +3588,19 @@ public class OutGameUIManager : MonoBehaviour
             League.WorldChampionship => 5,
             _ => 4
         };
-        int check = 0;
         int[] distribute = new int[6];
-        int min = value * 45 + difficulty * (value * value + 5) * 2;
-        int max = min + 30;
+        int min;
+        int max;
+        if(gameMode == GameMode.SingleCareerRun)
+        {
+            min = value * 45 + difficulty * (value * value + 5) * 2;
+            max = min + 30;
+        }
+        else
+        {
+            min = value * 30;
+            max = value * 60;
+        }
         int totalValue = UnityEngine.Random.Range(min, max + 1);
         if(totalValue >= 600)
         {
@@ -3602,22 +3608,34 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
+            float[] weights = CreateStatWeights(6, 3);
+
             while (totalValue > 0)
             {
-                int rand = UnityEngine.Random.Range(0, Mathf.Min(101, totalValue + 1));
-                int target = UnityEngine.Random.Range(0, 6);
-                if (distribute[target] + rand > 100)
+                float totalWeight = 0;
+
+                for (int i = 0; i < distribute.Length; i++)
                 {
-                    check++;
-                    if (check >= 10000)
+                    if (distribute[i] < 100)
                     {
-                        Debug.LogWarning("Infinite roof has detected");
-                        break;
+                        totalWeight += weights[i];
                     }
-                    continue;
                 }
-                distribute[target] += rand;
-                totalValue -= rand;
+
+                float randomValue = UnityEngine.Random.Range(0f, totalWeight);
+
+                for (int i = 0; i < distribute.Length; i++)
+                {
+                    if (distribute[i] >= 100) continue;
+
+                    randomValue -= weights[i];
+
+                    if (randomValue > 0) continue;
+
+                    distribute[i]++;
+                    totalValue--;
+                    break;
+                }
             }
         }
         int randStrength = distribute[0];
@@ -3649,6 +3667,30 @@ public class OutGameUIManager : MonoBehaviour
         survivorData.priority2Weapon = ItemManager.Items.AssaultRifle;
         return survivorData;
         
+    }
+
+    // balance°¡ ³ôÀ»¼ö·Ï ±ÕµîÇØÁü
+    float[] CreateStatWeights(int statCount, int balance)
+    {
+        float[] weights = new float[statCount];
+
+        for (int i = 0; i < weights.Length; i++)
+        {
+            float weight = 0;
+
+            for (int j = 0; j < balance; j++)
+            {
+                float randomValue = Mathf.Max(
+                    UnityEngine.Random.value,
+                    0.000001f);
+
+                weight -= Mathf.Log(randomValue);
+            }
+
+            weights[i] = weight;
+        }
+
+        return weights;
     }
 
     public void OpenChampionshipProgress()

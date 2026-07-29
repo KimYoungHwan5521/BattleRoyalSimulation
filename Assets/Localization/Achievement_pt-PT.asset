@@ -418,6 +418,30 @@ MonoBehaviour:
     m_Localized: "Ven\xE7a o Campeonato Mundial na dificuldade Inferno"
     m_Metadata:
       m_Items: []
+  - m_Id: 15394380040433664
+    m_Localized: Full House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394381315502080
+    m_Localized: Ter 10 sobreviventes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394368694841344
+    m_Localized: Rei das apostas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394374667530240
+    m_Localized: Deus das apostas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394370880073728
+    m_Localized: Receber pagamento superior a 10 vezes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394378123636736
+    m_Localized: Receber pagamento superior a 100 vezes
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

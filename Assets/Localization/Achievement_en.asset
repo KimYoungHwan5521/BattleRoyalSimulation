@@ -418,6 +418,30 @@ MonoBehaviour:
     m_Localized: Win the World Championship on Hell difficulty
     m_Metadata:
       m_Items: []
+  - m_Id: 15394368694841344
+    m_Localized: King of Betting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394374667530240
+    m_Localized: God of Betting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394380040433664
+    m_Localized: Full House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394381315502080
+    m_Localized: Own 10 survivors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394378123636736
+    m_Localized: Win a payout over 100x
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394370880073728
+    m_Localized: Win a payout over 10x
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

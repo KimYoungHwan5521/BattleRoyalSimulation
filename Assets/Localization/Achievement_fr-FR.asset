@@ -418,6 +418,30 @@ MonoBehaviour:
     m_Localized: "Remporter le Championnat du monde en difficult\xE9 Enfer"
     m_Metadata:
       m_Items: []
+  - m_Id: 15394380040433664
+    m_Localized: Main pleine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394381315502080
+    m_Localized: "Poss\xE9der 10 survivants"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394368694841344
+    m_Localized: Roi des paris
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394374667530240
+    m_Localized: Dieu des paris
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394370880073728
+    m_Localized: "Obtenir un gain sup\xE9rieur \xE0 10 fois"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394378123636736
+    m_Localized: "Obtenir un gain sup\xE9rieur \xE0 100 fois"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

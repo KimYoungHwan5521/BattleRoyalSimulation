@@ -169,6 +169,10 @@ public class AchievementUIManager
         achivementInfos.Add(new("Hardcore", UnlockElement.Characteristic, "Zombie"));
         achivementInfos.Add(new("Nightmare", UnlockElement.Characteristic, "ScentofBlood"));
         achivementInfos.Add(new("Hell", UnlockElement.Characteristic, "Challenger"));
+        // 2.3
+        achivementInfos.Add(new("King of Betting"));
+        achivementInfos.Add(new("God of Betting"));
+        achivementInfos.Add(new("Full House"));
 
         yield return null;
     }

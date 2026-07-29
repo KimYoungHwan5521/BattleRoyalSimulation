@@ -418,6 +418,30 @@ MonoBehaviour:
     m_Localized: "Die Weltmeisterschaft auf dem Schwierigkeitsgrad H\xF6lle gewinnen"
     m_Metadata:
       m_Items: []
+  - m_Id: 15394380040433664
+    m_Localized: Volles Haus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394381315502080
+    m_Localized: "10 \xDCberlebende besitzen"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394368694841344
+    m_Localized: "Wettk\xF6nig"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394374667530240
+    m_Localized: Wettgott
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394370880073728
+    m_Localized: "Auszahlung \xFCber das 10-Fache erhalten"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394378123636736
+    m_Localized: "Auszahlung \xFCber das 100-Fache erhalten"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

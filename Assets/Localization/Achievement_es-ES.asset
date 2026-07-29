@@ -418,6 +418,30 @@ MonoBehaviour:
     m_Localized: Gana el Campeonato Mundial en dificultad Infierno
     m_Metadata:
       m_Items: []
+  - m_Id: 15394380040433664
+    m_Localized: Full House
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394381315502080
+    m_Localized: Poseer 10 supervivientes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394368694841344
+    m_Localized: Rey de las apuestas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394374667530240
+    m_Localized: Dios de las apuestas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394370880073728
+    m_Localized: Obtener una recompensa mayor de 10 veces
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15394378123636736
+    m_Localized: Obtener una recompensa mayor de 100 veces
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

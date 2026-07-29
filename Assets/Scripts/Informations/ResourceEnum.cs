@@ -379,6 +379,9 @@ namespace ResourceEnum
         Hardcore,
         Nightmare,
         Hell,
+        KingofBetting,
+        GodofBetting,
+        FullHouse,
 
         HundredThousandaire_unlock,
         RoyalLoader_unlock,
@@ -430,6 +433,9 @@ namespace ResourceEnum
         Hardcore_unlock,
         Nightmare_unlock,
         Hell_unlock,
+        KingofBetting_unlock,
+        GodofBetting_unlock,
+        FullHouse_unlock,
     }
 
     public enum Material
