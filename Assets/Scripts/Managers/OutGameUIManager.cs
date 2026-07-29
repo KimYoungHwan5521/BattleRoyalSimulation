@@ -286,6 +286,7 @@ public class OutGameUIManager : MonoBehaviour
     [SerializeField] LocalizedDropdown selectSurvivorEstablishStrategyDropdown;
     [SerializeField] SurvivorInfo survivorInfoEstablishStrategy;
     [SerializeField] SurvivorData survivorWhoWantEstablishStrategy;
+    public SurvivorData SurvivorWhoWantEstablishStrategy => survivorWhoWantEstablishStrategy;
 
     [SerializeField] GameObject strategyButtonCopyPate;
     [SerializeField] TMP_InputField search;
@@ -2621,7 +2622,7 @@ public class OutGameUIManager : MonoBehaviour
             {
                 foreach (var craftableAllow in craftableAllows)
                 {
-                    if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value - 1].TableEntryReference.Key}"
+                    if (craftableAllow.GetComponentInChildren<LocalizeStringEvent>().StringReference.TableEntryReference.Key == $"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}"
                     && craftableAllow.GetComponentsInChildren<Toggle>()[1].isOn)
                     {
                         Alert("Alert:Crafting Priority Not Valid");

@@ -328,7 +328,7 @@ public class Strategy : MonoBehaviour
             return;
         }
         if(ActionDropdown != null && ActionDropdown.keys.Count > copyStrategy.action && ActionDropdown.dropdown.interactable) ActionDropdown.Value = copyStrategy.action;
-        if(ElseActionDropdown != null && ElseActionDropdown.keys.Count > copyStrategy.action) ElseActionDropdown.Value = copyStrategy.elseAction;
+        if(ElseActionDropdown != null && ElseActionDropdown.keys.Count > copyStrategy.elseAction) ElseActionDropdown.Value = copyStrategy.elseAction;
         if (intagerInput != null) intagerInput.text = copyStrategy.action.ToString();
         if(!noCondition)
         {
@@ -342,45 +342,373 @@ public class Strategy : MonoBehaviour
                 variable2s[i].value = copyStrategy.conditions[i].variable2;
                 inputFields[i].text = copyStrategy.conditions[i].inputInt.ToString();
             }
-            ElseActionDropdown.Value = copyStrategy.elseAction;
         }
     }
 
     public void PasteThisStrategyToAllOtherSurvivor(bool all)
     {
-        foreach(var survivor in GameManager.Instance.OutGameUIManager.MySurvivorsData)
+        OutGameUIManager outGameUIManager = GameManager.Instance.OutGameUIManager;
+
+        SurvivorData sourceSurvivor = outGameUIManager.SurvivorWhoWantEstablishStrategy;
+
+        bool CanCraft(SurvivorData survivor, ItemManager.Craftable craftable)
         {
-            if (strategyCase == StrategyCase.CraftingAllow)
+            if (craftable == null)
             {
-                for (int i = 0; i < craftableAllows.Length; i++)
-                {
-                    survivor.craftingAllows[i] = GameManager.Instance.OutGameUIManager.craftableAllows[i].GetComponentsInChildren<Toggle>()[0].isOn;
-                }
+                return false;
             }
-            else if (!noCondition)
-            {
-                ConditionData[] conditionsData = null;
-                List<ConditionData> conditionsList = new();
-                for(int i = 0; i < activeConditionCount; i++)
-                {
-                    conditionsList.Add(new ConditionData(andOrs[i].value, variable1s[i].value, operators[i].value, variable2s[i].value, int.Parse(inputFields[i].text)));
-                }
-                conditionsData = conditionsList.ToArray();
-                survivor.strategyDictionary[strategyCase] = new(
-                    ActionDropdown != null ? ActionDropdown.Value : 0,
-                    ElseActionDropdown != null ? ElseActionDropdown.Value : 0,
-                    activeConditionCount,
-                    conditionsData
-                    );
-            }
-            else
-                survivor.strategyDictionary[strategyCase] = new(
-                    ActionDropdown != null ? ActionDropdown.Value : (intagerInput != null ? int.Parse(intagerInput.text) : 0),
-                    ElseActionDropdown != null ? ElseActionDropdown.Value : 0,
-                    0
-                    );
+
+            bool trapExpertAndTraps = survivor.characteristics.FindIndex(x => x.type == CharacteristicType.TrapExpert) != -1
+                &&
+                (
+                    craftable.itemType == ItemManager.Items.BearTrap ||
+                    craftable.itemType == ItemManager.Items.NoiseTrap ||
+                    craftable.itemType == ItemManager.Items.ShrapnelTrap ||
+                    craftable.itemType == ItemManager.Items.ChemicalTrap ||
+                    craftable.itemType == ItemManager.Items.ExplosiveTrap ||
+                    craftable.itemType ==
+                        ItemManager.Items.TrapDetectionDevice
+                );
+
+            return craftable.requiredKnowledge <= survivor.Knowledge || trapExpertAndTraps;
         }
-        if(!all) GameManager.Instance.OutGameUIManager.Alert("Strategy pasted and saved.");
+
+        int GetVisibleCraftableIndex(SurvivorData survivor, ItemManager.Craftable selectedCraftable)
+        {
+            if (selectedCraftable == null) return -1;
+
+            int visibleIndex = 0;
+
+            foreach (ItemManager.Craftable craftable in ItemManager.craftables)
+            {
+                if (!CanCraft(survivor, craftable)) continue;
+
+                if (craftable.itemType == selectedCraftable.itemType)
+                {
+                    return visibleIndex;
+                }
+
+                visibleIndex++;
+            }
+            return -1;
+        }
+
+        int GetMaximumCraftingQuality(SurvivorData survivor)
+        {
+            if (survivor.Crafting > 60)
+            {
+                return 4; // Masterpiece
+            }
+
+            if (survivor.Crafting > 40)
+            {
+                return 3; // Excellent
+            }
+
+            if (survivor.Crafting > 20)
+            {
+                return 2; // Average
+            }
+
+            if (survivor.Crafting > 0)
+            {
+                return 1; // Shoddy
+            }
+
+            return 0; // Botched
+        }
+
+        ItemManager.Craftable GetSelectedCraftable(
+            LocalizedDropdown dropdown)
+        {
+            if (dropdown == null ||
+                dropdown.Value <= 0 ||
+                dropdown.Value >= dropdown.keys.Count)
+            {
+                return null;
+            }
+
+            string itemKey =
+                dropdown.keys[dropdown.Value]
+                    .TableEntryReference.Key;
+
+            return ItemManager.craftables.Find(x =>
+                x.itemType.ToString() == itemKey);
+        }
+
+        ItemManager.Craftable selectedPriority1Crafting =
+            strategyCase == StrategyCase.CraftingPriority
+                ? GetSelectedCraftable(ActionDropdown)
+                : null;
+
+        ItemManager.Craftable selectedPriority2Crafting =
+            strategyCase == StrategyCase.CraftingPriority
+                ? GetSelectedCraftable(ElseActionDropdown)
+                : null;
+
+        foreach (SurvivorData survivor in
+                 outGameUIManager.MySurvivorsData)
+        {
+            if (survivor.strategyDictionary == null)
+            {
+                survivor.strategyDictionary = new();
+                Strategy.ResetStrategyDictionary(
+                    survivor.strategyDictionary);
+            }
+
+            switch (strategyCase)
+            {
+                case StrategyCase.WeaponPriority:
+                    {
+                        string priority1Key =
+                            ActionDropdown.keys[ActionDropdown.Value]
+                                .TableEntryReference.Key;
+
+                        string priority2Key =
+                            ElseActionDropdown.keys[ElseActionDropdown.Value]
+                                .TableEntryReference.Key;
+
+                        bool priority1Parsed =
+                            Enum.TryParse(
+                                priority1Key,
+                                out ItemManager.Items priority1Weapon);
+
+                        bool priority2Parsed =
+                            Enum.TryParse(
+                                priority2Key,
+                                out ItemManager.Items priority2Weapon);
+
+                        bool priority1Fixed =
+                            survivor.characteristics.FindIndex(x =>
+                                x.type ==
+                                    CharacteristicType.SniperRifleFanatic ||
+                                x.type ==
+                                    CharacteristicType.BazookaFanatic) != -1;
+
+                        if (priority1Parsed && !priority1Fixed)
+                        {
+                            survivor.priority1Weapon = priority1Weapon;
+                        }
+
+                        if (priority2Parsed)
+                        {
+                            survivor.priority2Weapon = priority2Weapon;
+                        }
+
+                        break;
+                    }
+
+                case StrategyCase.CraftingPriority:
+                    {
+                        bool targetCanCraftPriority1 =
+                            selectedPriority1Crafting != null &&
+                            CanCraft(
+                                survivor,
+                                selectedPriority1Crafting);
+
+                        if (!targetCanCraftPriority1)
+                        {
+                            // 우선순위 1을 제작할 수 없으면
+                            // 우선순위 1과 2를 모두 None으로 설정합니다.
+                            survivor.priority1Crafting = null;
+                            survivor.priority1CraftingToInt = -1;
+
+                            survivor.priority2Crafting = null;
+                            survivor.priority2CraftingToInt = -1;
+                        }
+                        else
+                        {
+                            survivor.priority1Crafting =
+                                selectedPriority1Crafting;
+
+                            survivor.priority1CraftingToInt =
+                                GetVisibleCraftableIndex(
+                                    survivor,
+                                    selectedPriority1Crafting);
+
+                            bool targetCanCraftPriority2 =
+                                selectedPriority2Crafting != null &&
+                                CanCraft(
+                                    survivor,
+                                    selectedPriority2Crafting);
+
+                            if (targetCanCraftPriority2)
+                            {
+                                survivor.priority2Crafting =
+                                    selectedPriority2Crafting;
+
+                                survivor.priority2CraftingToInt =
+                                    GetVisibleCraftableIndex(
+                                        survivor,
+                                        selectedPriority2Crafting);
+                            }
+                            else
+                            {
+                                // 우선순위 2만 제작 불가능한 경우
+                                // 우선순위 2만 None으로 설정합니다.
+                                survivor.priority2Crafting = null;
+                                survivor.priority2CraftingToInt = -1;
+                            }
+                        }
+
+                        int maximumQuality =
+                            GetMaximumCraftingQuality(survivor);
+
+                        int priority1MinimumQuality =
+                            Mathf.Min(
+                                SpareDropdown1.Value,
+                                maximumQuality);
+
+                        int priority2MinimumQuality =
+                            Mathf.Min(
+                                SpareDropdown2.Value,
+                                maximumQuality);
+
+                        survivor.craftingPriority1MinimumQuality =
+                            priority1MinimumQuality;
+
+                        survivor.craftingPriority2MinimumQuality =
+                            priority2MinimumQuality;
+
+                        StrategyData craftingPriorityData =
+                            new(
+                                ActionDropdown.Value,
+                                ElseActionDropdown.Value,
+                                0);
+
+                        craftingPriorityData.etcValue1 =
+                            priority1MinimumQuality;
+
+                        craftingPriorityData.etcValue2 =
+                            priority2MinimumQuality;
+
+                        survivor.strategyDictionary[
+                            StrategyCase.CraftingPriority
+                        ] = craftingPriorityData;
+
+                        break;
+                    }
+
+                case StrategyCase.CraftingAllow:
+                    {
+                        int count = Mathf.Min(
+                            ItemManager.craftables.Count,
+                            survivor.craftingAllows.Length);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            ItemManager.Craftable craftable =
+                                ItemManager.craftables[i];
+
+                            /*
+                             * 원본 생존자가 제작할 수 있는 범위까지만
+                             * 제작 허용 설정을 복사합니다.
+                             *
+                             * 대상 생존자가 제작할 수 없는 항목이어도
+                             * 원본 생존자가 제작 가능한 항목이면 값을
+                             * 복사합니다. 대상 UI에서는 숨겨져 있어도
+                             * craftingAllows에는 값이 저장됩니다.
+                             */
+                            if (!CanCraft(sourceSurvivor, craftable))
+                            {
+                                continue;
+                            }
+
+                            Toggle[] toggles =
+                                outGameUIManager.craftableAllows[i]
+                                    .GetComponentsInChildren<Toggle>(true);
+
+                            if (toggles.Length > 0)
+                            {
+                                survivor.craftingAllows[i] =
+                                    toggles[0].isOn;
+                            }
+                        }
+
+                        break;
+                    }
+
+                case StrategyCase.RepairCondition:
+                    {
+                        if (int.TryParse(
+                            IntagerInput.text,
+                            out int repairCondition))
+                        {
+                            survivor.strategyDictionary[
+                                StrategyCase.RepairCondition
+                            ] = new(
+                                repairCondition,
+                                0,
+                                0);
+                        }
+
+                        break;
+                    }
+
+                default:
+                    {
+                        if (noCondition)
+                        {
+                            survivor.strategyDictionary[strategyCase] =
+                                new(
+                                    ActionDropdown != null
+                                        ? ActionDropdown.Value
+                                        : 0,
+                                    ElseActionDropdown != null
+                                        ? ElseActionDropdown.Value
+                                        : 0,
+                                    0);
+
+                            break;
+                        }
+
+                        /*
+                         * Survivor.ApplyStrategies()가 conditions[0]부터
+                         * conditions[4]까지 접근하므로 항상 길이 5로
+                         * 생성합니다.
+                         */
+                        ConditionData[] conditionData =
+                            new ConditionData[5];
+
+                        for (int i = 0;
+                             i < conditionData.Length;
+                             i++)
+                        {
+                            int inputValue = 0;
+
+                            if (inputFields[i] != null)
+                            {
+                                int.TryParse(
+                                    inputFields[i].text,
+                                    out inputValue);
+                            }
+
+                            conditionData[i] =
+                                new ConditionData(
+                                    andOrs[i].value,
+                                    variable1s[i].value,
+                                    operators[i].value,
+                                    variable2s[i].value,
+                                    inputValue);
+                        }
+
+                        survivor.strategyDictionary[strategyCase] =
+                            new StrategyData(
+                                ActionDropdown.Value,
+                                ElseActionDropdown.Value,
+                                activeConditionCount,
+                                conditionData);
+
+                        break;
+                    }
+            }
+        }
+
+        if (!all)
+        {
+            outGameUIManager.Alert(
+                "Strategy pasted and saved.");
+        }
     }
 
     void OnLocaleChanged(Locale locale)

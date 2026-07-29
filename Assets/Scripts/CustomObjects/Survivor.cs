@@ -8,7 +8,6 @@ using UnityEngine.AI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class Survivor : CustomObject
 {
@@ -2658,7 +2657,7 @@ public class Survivor : CustomObject
                     foreach(var item in inventory.FindAll(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType))
                     {
                         int value = item.quality == CraftingQuality.NotCrafted ? 3 : (int)item.quality;
-                        if(value >= linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1)
+                        if(value >= linkedSurvivorData.craftingPriority1MinimumQuality + 1)
                         {
                             checkNeeds = false;
                             break;
@@ -2681,8 +2680,8 @@ public class Survivor : CustomObject
                     // 이미 장비하고 있으면 재료 보존x
                     // 헬멧과 조끼가 이미 상위티어여도 보존x
                     if(!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority1Crafting.itemType
-                        || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1))
-                        || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue1 + 1))))
+                        || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.craftingPriority1MinimumQuality + 1))
+                        || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.craftingPriority1MinimumQuality + 1))))
                     {
                         var priority1 = craftables.Find(x => x.itemType == linkedSurvivorData.priority1Crafting.itemType);
                         if (priority1 != null)
@@ -2700,44 +2699,73 @@ public class Survivor : CustomObject
                 // cp2 체크
                 if (linkedSurvivorData.priority2Crafting != null && linkedSurvivorData.priority2Crafting.itemType != ItemManager.Items.NotValid)
                 {
-                    if (inventory.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType) == null)
+                    checkNeeds =
+                        inventory.Find(x =>
+                            x.itemType == linkedSurvivorData.priority2Crafting.itemType) == null;
+
+                    if (ItemManager.CheckUseQuality(
+                        linkedSurvivorData.priority2Crafting.itemType))
                     {
-                        // 0: weapon, 1: helmet, 2: vest
-                        int check = linkedSurvivorData.priority2Crafting.itemType switch
+                        foreach (var item in inventory.FindAll(x =>
+                            x.itemType == linkedSurvivorData.priority2Crafting.itemType))
                         {
-                            ItemManager.Items.Revolver or ItemManager.Items.Pistol or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun
-                            or ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER => 0,
-                            ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet
-                            or ItemManager.Items.LegendaryBulletproofHelmet => 1,
-                            ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest
-                            or ItemManager.Items.LegendaryBulletproofVest => 2,
-                            _ => -1
-                        };
-                        // 이미 장비하고 있으면 재료 보존x
-                        if (!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority2Crafting.itemType
-                            || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 + 1))
-                            || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority1Crafting.itemType, (CraftingQuality)(linkedSurvivorData.strategyDictionary[StrategyCase.CraftingPriority].etcValue2 + 1))))
-                        {
-                            var priority2 = craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
-                            if (priority2 != null)
+                            int value =
+                                item.quality == CraftingQuality.NotCrafted
+                                    ? 3
+                                    : (int)item.quality;
+
+                            if (value >=
+                                linkedSurvivorData.craftingPriority2MinimumQuality + 1)
                             {
-                                // cp1의 재료를 남기는 선에서 cp2 제작
-                                if (AdvancedComponentCount - priority2.needAdvancedComponentCount >= needLefts[0]
-                                    && ComponentsCount - priority2.needComponentsCount >= needLefts[1]
-                                    && ChemicalsCount - priority2.needChemicalsCount >= needLefts[2]
-                                    && GunpowderCount - priority2.needGunpowderCount >= needLefts[3]
-                                    && SalvagesCount - priority2.needSalvagesCount >= needLefts[4])
-                                currentCrafting = priority2;
-                                return true;
+                                checkNeeds = false;
+                                break;
                             }
-                            else
+                        }
+                    }
+
+                    if (checkNeeds)
+                    {
+                        if (inventory.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType) == null)
+                        {
+                            // 0: weapon, 1: helmet, 2: vest
+                            int check = linkedSurvivorData.priority2Crafting.itemType switch
                             {
-                                var original = ItemManager.craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
-                                needLefts[0] += original.needAdvancedComponentCount;
-                                needLefts[1] += original.needComponentsCount;
-                                needLefts[2] += original.needChemicalsCount;
-                                needLefts[3] += original.needGunpowderCount;
-                                needLefts[4] += original.needSalvagesCount;
+                                ItemManager.Items.Revolver or ItemManager.Items.Pistol or ItemManager.Items.SubMachineGun or ItemManager.Items.ShotGun
+                                or ItemManager.Items.AssaultRifle or ItemManager.Items.SniperRifle or ItemManager.Items.Bazooka or ItemManager.Items.LASER => 0,
+                                ItemManager.Items.LowLevelBulletproofHelmet or ItemManager.Items.MiddleLevelBulletproofHelmet or ItemManager.Items.HighLevelBulletproofHelmet
+                                or ItemManager.Items.LegendaryBulletproofHelmet => 1,
+                                ItemManager.Items.LowLevelBulletproofVest or ItemManager.Items.MiddleLevelBulletproofVest or ItemManager.Items.HighLevelBulletproofVest
+                                or ItemManager.Items.LegendaryBulletproofVest => 2,
+                                _ => -1
+                            };
+                            // 이미 장비하고 있으면 재료 보존x
+                            if (!(check == 0 && currentWeapon != null && currentWeapon.itemType == linkedSurvivorData.priority2Crafting.itemType
+                                || check == 1 && currentHelmet != null && GetBulletproofHelmetTier(currentHelmet.itemType, currentHelmet.quality) >= GetBulletproofHelmetTier(linkedSurvivorData.priority2Crafting.itemType, (CraftingQuality)(linkedSurvivorData.craftingPriority2MinimumQuality + 1))
+                                || check == 2 && currentVest != null && GetBulletproofVestTier(currentVest.itemType, currentVest.quality) >= GetBulletproofVestTier(linkedSurvivorData.priority2Crafting.itemType, (CraftingQuality)(linkedSurvivorData.craftingPriority2MinimumQuality + 1))))
+                            {
+                                var priority2 = craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
+                                if (priority2 != null)
+                                {
+                                    // cp1의 재료를 남기는 선에서 cp2 제작
+                                    if (AdvancedComponentCount - priority2.needAdvancedComponentCount >= needLefts[0]
+                                        && ComponentsCount - priority2.needComponentsCount >= needLefts[1]
+                                        && ChemicalsCount - priority2.needChemicalsCount >= needLefts[2]
+                                        && GunpowderCount - priority2.needGunpowderCount >= needLefts[3]
+                                        && SalvagesCount - priority2.needSalvagesCount >= needLefts[4])
+                                    {
+                                        currentCrafting = priority2;
+                                        return true;
+                                    }
+                                }
+                                else
+                                {
+                                    var original = ItemManager.craftables.Find(x => x.itemType == linkedSurvivorData.priority2Crafting.itemType);
+                                    needLefts[0] += original.needAdvancedComponentCount;
+                                    needLefts[1] += original.needComponentsCount;
+                                    needLefts[2] += original.needChemicalsCount;
+                                    needLefts[3] += original.needGunpowderCount;
+                                    needLefts[4] += original.needSalvagesCount;
+                                }
                             }
                         }
                     }
