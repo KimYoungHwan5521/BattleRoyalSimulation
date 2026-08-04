@@ -618,6 +618,9 @@ public class OutGameUIManager : MonoBehaviour
         //buttonEndTheWeek.SetActive(gameMode == GameMode.FreeManagement);
         difficultyText.gameObject.SetActive(gameMode == GameMode.SingleCareerRun);
 
+        strategyButtonCopyPate.SetActive(gameMode == GameMode.FreeManagement);
+        foreach(var strategy in strategies) strategy.transform.Find("Case Name/Copy Paste").gameObject.SetActive(gameMode == GameMode.FreeManagement);
+
         StartCoroutine(RefreshRooms());
 
         //mySurvivorsData = new();
@@ -649,7 +652,6 @@ public class OutGameUIManager : MonoBehaviour
 
         selectSurvivorGetSurgeryDropdown.gameObject.SetActive(isFreeManagement);
         strategyRoomSelectSurvivor.SetActive(isFreeManagement);
-        strategyButtonCopyPate.SetActive(isFreeManagement);
 
         yield return null; // UI 레이아웃 갱신 대기
 
@@ -2577,13 +2579,42 @@ public class OutGameUIManager : MonoBehaviour
 
     public void SaveStrategy()
     {
-        bool itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum);
-        if (itemNotNull && survivorWhoWantEstablishStrategy.characteristics.FindIndex(x => x.type == CharacteristicType.SniperRifleFanatic || x.type == CharacteristicType.BazookaFanatic) == -1) survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
-        else Debug.LogWarning($"Item enum not found : {weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
+        bool itemParsed = Enum.TryParse(weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key, out ItemManager.Items itemEnum);
 
-        itemNotNull = Enum.TryParse<ItemManager.Items>($"{weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}", out var itemEnum2);
-        if (itemNotNull) survivorWhoWantEstablishStrategy.priority2Weapon = itemEnum2;
-        else Debug.LogWarning($"Item enum not found : {weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
+        if (!itemParsed)
+        {
+            Debug.LogWarning($"Item enum not found : " + weaponPriority1Dropdown.keys[weaponPriority1Dropdown.dropdown.value].TableEntryReference.Key);
+        }
+        else
+        {
+            bool priority1Fixed =
+                survivorWhoWantEstablishStrategy.characteristics.FindIndex(x =>
+                    x.type == CharacteristicType.SniperRifleFanatic ||
+                    x.type == CharacteristicType.BazookaFanatic) != -1;
+
+            if (!priority1Fixed)
+            {
+                survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
+            }
+        }
+        itemParsed = Enum.TryParse(weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key, out itemEnum);
+
+        if (!itemParsed)
+        {
+            Debug.LogWarning($"Item enum not found : " + weaponPriority2Dropdown.keys[weaponPriority2Dropdown.dropdown.value].TableEntryReference.Key);
+        }
+        else
+        {
+            bool priority1Fixed =
+                survivorWhoWantEstablishStrategy.characteristics.FindIndex(x =>
+                    x.type == CharacteristicType.SniperRifleFanatic ||
+                    x.type == CharacteristicType.BazookaFanatic) != -1;
+
+            if (!priority1Fixed)
+            {
+                survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
+            }
+        }
 
         if (craftingPriority1Dropdown.dropdown.value == 0)
         {
@@ -2605,8 +2636,8 @@ public class OutGameUIManager : MonoBehaviour
             }
 
             ItemManager.Craftable craftable = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority1Dropdown.keys[craftingPriority1Dropdown.dropdown.value].TableEntryReference.Key}");
-            itemNotNull = craftable != null;
-            if (itemNotNull)
+            itemParsed = craftable != null;
+            if (itemParsed)
             {
                 survivorWhoWantEstablishStrategy.priority1Crafting = craftable;
                 survivorWhoWantEstablishStrategy.priority1CraftingToInt = craftingPriority1Dropdown.dropdown.value - 1;
@@ -2631,8 +2662,8 @@ public class OutGameUIManager : MonoBehaviour
                 }
 
                 ItemManager.Craftable craftable2 = ItemManager.craftables.Find(x => x.itemType.ToString() == $"{craftingPriority2Dropdown.keys[craftingPriority2Dropdown.dropdown.value].TableEntryReference.Key}");
-                itemNotNull = craftable2 != null;
-                if (itemNotNull)
+                itemParsed = craftable2 != null;
+                if (itemParsed)
                 {
                     survivorWhoWantEstablishStrategy.priority2Crafting = craftable2;
                     survivorWhoWantEstablishStrategy.priority2CraftingToInt = craftingPriority2Dropdown.dropdown.value - 1;
@@ -3666,6 +3697,7 @@ public class OutGameUIManager : MonoBehaviour
 
         survivorData.priority1Weapon = ItemManager.Items.LASER;
         survivorData.priority2Weapon = ItemManager.Items.AssaultRifle;
+        PostApplyCharacteristics(survivorData);
         return survivorData;
         
     }

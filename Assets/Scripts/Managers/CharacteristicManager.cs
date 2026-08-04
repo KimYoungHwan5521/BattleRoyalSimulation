@@ -278,14 +278,16 @@ public class CharacteristicManager
     {
         int hasAleady = survivor.characteristics.FindIndex(x => x.type  == wantCharacteristic);
         if(hasAleady > -1 || !UnlockCheck(wantCharacteristic)) return false;
+
+
+        Characteristic characteristic = characteristics.Find(x => x.type == wantCharacteristic);
         foreach(Characteristic survivorChar in survivor.characteristics)
         {
-            if(survivorChar.notPossibleTogether.ToList().Contains(wantCharacteristic))
+            if(survivorChar.notPossibleTogether.ToList().Contains(wantCharacteristic) || characteristic.notPossibleTogether.ToList().Contains(survivorChar.type))
             {
                 return false;
             }
         }
-        Characteristic characteristic = characteristics.Find(x => x.type == wantCharacteristic);
         if(rarity > -1 && (int)characteristic.rarity != rarity) return false;
         if (!isPlayer && characteristic.playerOnly) return false;
         if (characteristic.singleCareerRunOnly && GameManager.Instance.OutGameUIManager.GameMode != GameMode.SingleCareerRun) return false;

@@ -330,7 +330,12 @@ public class Strategy : MonoBehaviour
         if(ActionDropdown != null && ActionDropdown.keys.Count > copyStrategy.action && ActionDropdown.dropdown.interactable) ActionDropdown.Value = copyStrategy.action;
         if(ElseActionDropdown != null && ElseActionDropdown.keys.Count > copyStrategy.elseAction) ElseActionDropdown.Value = copyStrategy.elseAction;
         if (intagerInput != null) intagerInput.text = copyStrategy.action.ToString();
-        if(!noCondition)
+        if (strategyCase == StrategyCase.CraftingPriority)
+        {
+            SpareDropdown1.Value = copyStrategy.etcValue1;
+            SpareDropdown2.Value = copyStrategy.etcValue2;
+        }
+        if (!noCondition)
         {
             ResetConditions();
             for (int i = 0; i < copyStrategy.conditionConut; i++)
