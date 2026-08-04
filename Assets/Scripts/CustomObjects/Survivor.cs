@@ -550,6 +550,11 @@ public class Survivor : CustomObject
                 curBlood += 300;
             }
 
+            if (value > killCount && characteristics.FindIndex(x => x.type == CharacteristicType.ScentofBlood) != -1)
+            {
+                vampireStack++;
+            }
+
             if (playerSurvivor)
             {
                 if(value > killCount)
@@ -558,10 +563,6 @@ public class Survivor : CustomObject
                     PlayerPrefs.SetInt("Total Kill", curTotalKill + 1);
                     AchievementManager.SetStat("Total_Kill", curTotalKill + 1);
                     linkedSurvivorData.totalKill++;
-                    if (characteristics.FindIndex(x => x.type == CharacteristicType.ScentofBlood) != -1)
-                    {
-                        vampireStack++;
-                    }
                     if (linkedSurvivorData.totalKill >= 30) AchievementManager.UnlockAchievement("Notorious");
                     if (PlayerPrefs.GetInt("Total Kill") >= 100) AchievementManager.UnlockAchievement("Bloody Arms");
                     else if (PlayerPrefs.GetInt("Total Kill") >= 10) AchievementManager.UnlockAchievement("Bloody Hand");
@@ -4196,7 +4197,7 @@ public class Survivor : CustomObject
                     increaseFighting++;
                 }
             }
-            else if (probability > 1 - criticalRate || attacker.characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && IsValid(CurrentWeapon) && CurrentWeapon.itemType == ItemManager.Items.Knife)
+            else if (probability > 1 - criticalRate || attacker.characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && IsValid(CurrentWeapon) && attacker.CurrentWeapon.itemType == ItemManager.Items.Knife)
             {
                 // Ä¡¸íÅ¸
                 damage *= 2;

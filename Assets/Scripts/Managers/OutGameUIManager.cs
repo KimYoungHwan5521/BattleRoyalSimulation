@@ -2605,15 +2605,7 @@ public class OutGameUIManager : MonoBehaviour
         }
         else
         {
-            bool priority1Fixed =
-                survivorWhoWantEstablishStrategy.characteristics.FindIndex(x =>
-                    x.type == CharacteristicType.SniperRifleFanatic ||
-                    x.type == CharacteristicType.BazookaFanatic) != -1;
-
-            if (!priority1Fixed)
-            {
-                survivorWhoWantEstablishStrategy.priority1Weapon = itemEnum;
-            }
+            survivorWhoWantEstablishStrategy.priority2Weapon = itemEnum;
         }
 
         if (craftingPriority1Dropdown.dropdown.value == 0)
