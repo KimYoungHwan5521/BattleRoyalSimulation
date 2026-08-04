@@ -62,6 +62,7 @@ public class Title : MonoBehaviour
         if (haveSaveData)
         {
             askLoadData.SetActive(true);
+            GameManager.Instance.openedWindows.Push(askLoadData);
             //Continue();
         }
         else OpenSelectDifficulty();

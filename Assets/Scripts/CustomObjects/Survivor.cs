@@ -4197,7 +4197,7 @@ public class Survivor : CustomObject
                     increaseFighting++;
                 }
             }
-            else if (probability > 1 - criticalRate || attacker.characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && IsValid(CurrentWeapon) && attacker.CurrentWeapon.itemType == ItemManager.Items.Knife)
+            else if (probability > 1 - criticalRate || attacker.characteristics.FindIndex(x => x.type == CharacteristicType.KnifeFighter) != -1 && IsValid(attacker.CurrentWeapon) && attacker.CurrentWeapon.itemType == ItemManager.Items.Knife)
             {
                 // Ä¡¸íÅ¸
                 damage *= 2;
