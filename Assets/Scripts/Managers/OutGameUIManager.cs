@@ -1424,27 +1424,27 @@ public class OutGameUIManager : MonoBehaviour
         {
             case Training_FreeManagement.Weight:
                 int increaseStrength = Mathf.Max(weightTrainingLevel + 1 - survivorStrengthLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(increaseStrength, 0, 0, 0, 0, 0);
+                survivor.IncreaseStatsFreeManagement(increaseStrength, 0, 0, 0, 0, 0);
                 break;
             case Training_FreeManagement.Running:
                 int increseAgility = Mathf.Max(runningLevel + 1 - survivorAgilityLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(0, increseAgility, 0, 0, 0, 0);
+                survivor.IncreaseStatsFreeManagement(0, increseAgility, 0, 0, 0, 0);
                 break;
             case Training_FreeManagement.Fighting:
                 int increseFighting = Mathf.Max(fightTrainingLevel + 1 - survivorFightingLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(0, 0, increseFighting, 0, 0, 0);
+                survivor.IncreaseStatsFreeManagement(0, 0, increseFighting, 0, 0, 0);
                 break;
             case Training_FreeManagement.Shooting:
                 int increseShooting = Mathf.Max(shootingTrainingLevel + 1 - survivorShtLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, increseShooting, 0, 0);
+                survivor.IncreaseStatsFreeManagement(0, 0, 0, increseShooting, 0, 0);
                 break;
             case Training_FreeManagement.Crafting:
                 int increseCrafting = Mathf.Max(craftingTrainingLevel + 1 - survivorCrfLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, 0, increseCrafting, 0);
+                survivor.IncreaseStatsFreeManagement(0, 0, 0, 0, increseCrafting, 0);
                 break;
             case Training_FreeManagement.Studying:
                 int increseKnowledge = Mathf.Max(studyingLevel + 1 - survivorKnowledgeLv, 0);
-                survivor.IncreaseStatsReserveFreeManagement(0, 0, 0, 0, 0, increseKnowledge);
+                survivor.IncreaseStatsFreeManagement(0, 0, 0, 0, 0, increseKnowledge);
                 break;
             default:
                 break;

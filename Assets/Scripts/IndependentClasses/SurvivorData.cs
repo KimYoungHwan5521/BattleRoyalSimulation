@@ -556,14 +556,46 @@ public class SurvivorData
         increaseComparedToPrevious_knowledge += knowledge;
     }
 
-    public void IncreaseStatsReserveFreeManagement(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
+    public void IncreaseStatsFreeManagement(int strength, int agility, int fighting, int shooting, int crafting, int knowledge)
     {
-        if (strength > 0) increaseComparedToPrevious_strength = strength;
-        if (agility > 0) increaseComparedToPrevious_agility = agility;
-        if (fighting > 0) increaseComparedToPrevious_fighting = fighting;
-        if (shooting > 0) increaseComparedToPrevious_shooting = shooting;
-        if (crafting > 0) increaseComparedToPrevious_crafting = crafting;
-        if (knowledge > 0) increaseComparedToPrevious_knowledge = knowledge;
+        int beforeStrength = _strength;
+        int beforeAgility = _agility;
+        int beforeFighting = _fighting;
+        int beforeShooting = _shooting;
+        int beforeCrafting = _crafting;
+        int beforeKnowledge = _knowledge;
+
+        IncreaseStats(
+        strength,
+        agility,
+        fighting,
+        shooting,
+        crafting,
+        knowledge);
+
+        if (strength > 0)
+            increaseComparedToPrevious_strength =
+                _strength - beforeStrength;
+
+        if (agility > 0)
+            increaseComparedToPrevious_agility =
+                _agility - beforeAgility;
+
+        if (fighting > 0)
+            increaseComparedToPrevious_fighting =
+                _fighting - beforeFighting;
+
+        if (shooting > 0)
+            increaseComparedToPrevious_shooting =
+                _shooting - beforeShooting;
+
+        if (crafting > 0)
+            increaseComparedToPrevious_crafting =
+                _crafting - beforeCrafting;
+
+        if (knowledge > 0)
+            increaseComparedToPrevious_knowledge =
+                _knowledge - beforeKnowledge;
     }
 
     public void ResetStatIncreaseResult()
