@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Localization;
@@ -615,7 +616,34 @@ public class Option : MonoBehaviour
         for (int i = 0; i < saveSlots.Length; i++)
         {
             int dataIndex = i == 0 ? 100 : i;
-            string json = PlayerPrefs.GetString($"SaveDataInfo{dataIndex}", "{}");
+            string json;
+            if (SteamRemoteStorage.FileExists($"SaveDataInfo{dataIndex}.json"))
+            {
+                int fileSize =
+                    SteamRemoteStorage.GetFileSize($"SaveDataInfo{dataIndex}.json");
+
+                byte[] bytes = new byte[fileSize];
+
+                int bytesRead = SteamRemoteStorage.FileRead($"SaveDataInfo{dataIndex}.json", bytes, fileSize);
+
+                if (bytesRead == fileSize && bytesRead > 0)
+                {
+                    json = Encoding.UTF8.GetString(bytes, 0, bytesRead);
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        $"Failed to read Steam Cloud save data: " +
+                        $"SaveDataInfo{dataIndex}.json ({bytesRead}/{fileSize} bytes)");
+
+                    json = PlayerPrefs.GetString($"SaveDataInfo{dataIndex}", "{}");
+                }
+            }
+            else
+            {
+                json = PlayerPrefs.GetString($"SaveDataInfo{dataIndex}", "{}");
+            }
+
             if (json != "{}")
             {
                 var saveData = JsonUtility.FromJson<SaveDataInfo>(json);
@@ -650,9 +678,16 @@ public class Option : MonoBehaviour
         }
     }
 
+    private bool HasSaveData(int slot)
+    {
+        return
+            PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}") != "{}" ||
+            SteamRemoteStorage.FileExists($"SaveDataInfo{slot}.json");
+    }
+
     public void Load(int slot)
     {
-        if (PlayerPrefs.GetString($"SaveDataInfo{slot}", "{}") == "{}") return;
+        if (!HasSaveData(slot)) return;
         else
         {
             saveSlotsObject.SetActive(false);
